@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" type="text/css" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+       <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+      <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="control">
+                    <div style="height:auto; min-width: 200px; width:auto ;white-space:nowrap; overflow:hidden">PivotTreeMap showing customer count over a period of fiscal years across different customer geographic locations.</div>
+                    <div id="PivotTreeMap" style="min-height: 275px; height: 460px; width: 99%;">
+                    </div>
+                    <script type="text/javascript">
+                        $(function () {
+                            $("#PivotTreeMap").ejPivotTreeMap({
+                                url: window.baseurl + "wcf/PivotTreeMap/Olap.svc", serviceMethodSettings: { initialize: "Initialize", drillDown: "Drill" },
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Tooltip labels can be localized here-->
+    <script id="tooltipTemplate" type="application/jsrender"> 
+        <div style="background:White; color:black; font-size:12px; font-weight:normal; border: 1px solid #4D4D4D; white-space: nowrap;border-radius: 2px; margin-right: 25px; min-width: 110px;padding-right: 5px; padding-left: 5px; padding-bottom: 2px ;width: auto; height: auto;">
+            <div>Measure(s) : {{:~Measures(#data)}}</div><div>Row : {{:~Row(#data)}}</div><div>Column : {{:~Column(#data)}}</div><div>Value : {{:~Value(#data)}}</div>
+        </div>
+    </script>
+    <style>
+        .control {
+            padding-left: 10px;
+        }
+    </style>
+  
+</body>
+</html>

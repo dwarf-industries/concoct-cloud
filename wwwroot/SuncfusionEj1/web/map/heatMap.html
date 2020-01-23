@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+           <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+       <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/MapsData/USA.js"></script>
+    <script src="../scripts/MapsData/USA_State_PopulationData.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div style="background-color: #FAFAF9;border-color: lightgray;margin-left:0px;border-width: 2px;opacity: 0.7;height: 45px;width:250px;">
+                    <label style="color:Black;font-size:22px;margin:15px;margin-top:7px;margin-left:20px;margin-right:20px;height:25px;font-weight:Normal;">USA Population 2013</label>
+                </div>
+                <div style="min-height:435px">
+                    <div id="map" style="height:inherit;min-height:435px;">
+                    </div>
+                </div>
+            </div>
+            <div id="sampleProperties">
+                <div class="row">
+                    <div class="col-md-3">
+                        Enable RTL
+                    </div>
+                    <div class="col-md-3">
+                        <input type="checkbox" onchange="enableRTL(this)" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function enableRTL(args) {
+            var map = $("#map").ejMap("instance");
+            if (args.checked)
+                map.model.enableRTL = true;
+            else
+                map.model.enableRTL = false;
+            map.refresh();
+        }
+        jQuery(function ($) {
+                $("#map").ejMap({
+
+                enableResize: false,
+                enableAnimation: true,
+                layers: [
+                    {
+                        showTooltip: true,
+                        tooltipTemplate: 'template',
+                        enableSelection: false,
+                        layerType: "geometry",
+                        shapeDataPath: "name",
+                        shapePropertyPath: "name",
+                        showMapItems: false,
+                        dataSource: USA_State_PopulationData,
+                        enableMouseHover: true,
+                        legendSettings: {
+                            showLegend: true,
+                            position: "bottomright",
+                            positionX: 3,
+                            positionY: 80,
+                            height: 18,
+                            width: 190,
+                            type: "layers",
+                            mode: "interactive",
+                            title: "Population",
+                            leftLabel: "0.5M",
+                            rightLabel: "40M"
+                        },
+                        shapeSettings: {
+                            fill: "#9CBF4E",
+                            strokeThickness: "0.5",
+                            stroke: "White",
+                            highlightStroke: "White",
+                            autoFill: false,
+                            highlightColor: "#BC5353",
+                            selectionColor: "#BC5353",
+                            highlightBorderWidth: "1",
+                            valuePath: "population",
+                            colorMappings:
+                                  {
+                                      rangeColorMapping: [
+                              {
+
+                                  from: 10000001,
+                                  to: 40000000,
+                                  color: "#F1ECD8"
+                              },
+                                 {
+
+                                     from: 5000001,
+                                     to: 10000000,
+                                     color: "#DEE2B9"
+                                 },
+                                 {
+                                     from: 1000001,
+                                     to: 5000000,
+                                     color: "#CBD89A"
+                                 },
+                                 {
+                                     from: 500000,
+                                     to: 1000000,
+                                     color: "#B8CE7B"
+
+                                 }
+                                      ]
+                                  }
+                        },
+                        shapeData: usMap
+                    }
+                ]
+            });
+        });
+        $("#sampleProperties").ejPropertiesPanel();
+        $.views.helpers({
+            parseDouble: function (amount) {
+
+                var delimiter = ",";
+                var i = parseInt(amount);
+                if (isNaN(i)) { return ''; }
+                var origi = i;  // store original to check sign
+                i = Math.abs(i);
+                var minus = '';
+                if (origi < 0) { minus = '-'; } // sign based on original
+                var n = new String(i);
+                var a = [];
+                while (n.length > 3) {
+                    var nn = n.substr(n.length - 3);
+                    a.unshift(nn);
+                    n = n.substr(0, n.length - 3);
+                }
+                if (n.length > 0) { a.unshift(n); }
+                n = a.join(delimiter);
+                amount = minus + n;
+                return amount;
+            }
+        });
+    </script>
+    <script id="template" type="application/jsrender">
+
+        <div style="margin-left:17px;margin-top:-45px;">
+            <div class="tip">
+                <p class="small" style="margin-top:8px">
+                    <label style="color:white;font-size:14px;font-weight:normal;">{{:name}}</label>
+                </p>
+                <p class="big">
+                    <label style="color:white;font-size:11px;font-weight:normal;">Population : {{:~parseDouble(population)}}</label>
+                </p>
+            </div>
+        </div>
+    </script>
+    <style type="text/css">
+        .e-map {
+            background-color: white;
+        }
+
+        p.small {
+            line-height: 70%;
+        }
+
+        p.big {
+            line-height: 110%;
+        }
+
+        .tip {
+            border: 1px solid #4D4D4D;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 7px;
+            margin-right: 25px;
+            min-width: 110px;
+            padding-top: 9px;
+            padding-right: 10px;
+            padding-left: 10px;
+            width: auto;
+            height: auto;
+            background: #4D4D4D;
+        }
+    </style>
+
+</body>
+</html>
+

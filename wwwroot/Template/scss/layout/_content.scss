@@ -1,0 +1,17 @@
+//
+// wrapping layout for contnet
+//
+
+.content {
+  min-width: 100vw;
+  @include media-breakpoint-up('md') {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+.content-box {
+  padding: rem(20);
+  @include font-size($font-size);
+  @include border-radius($border-radius);
+}

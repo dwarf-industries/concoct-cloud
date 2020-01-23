@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1: Toolbar - Events</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div class="control">
+                        <div id="toolbarEvents">
+                            <ul>
+                                <li title="Mail">
+                                    <div class="mailtools movetofolder" />
+                                </li>
+                                <li title="Scheduler">
+                                    <div class="mailtools categorize" />
+                                </li>
+                                <li title="Calculator">
+                                    <div class="mailtools flag" />
+                                </li>
+                                <li title="Sticky Notes">
+                                    <div class="mailtools forward" />
+                                </li>
+                                <li title="Calendar">
+                                    <div class="mailtools newmail" />
+                                </li>
+                                <li title="Notes">
+                                    <div class="mailtools reply" />
+                                </li>
+                                <li title="Delete">
+                                    <div class="mailtools done" />
+                                    </span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cols-prop-area event-tracer">
+                <div>
+                    <div class="heading">
+                        <span>Event Trace</span>
+                        <div class="pull-right">
+                            <select name="selectevtprops" id="selectControls">
+                                <option value="click">Click</option>
+                                <option value="itemHover">Item Hover</option>
+                                <option value="itemLeave">Item Leave</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="prop-grid content">
+                        <div class="eventarea">
+                            <div class="EventLog" id="EventLog">
+                            </div>
+                        </div>
+                        <div class="evtbtn">
+                            <input type="button" class="eventclear e-btn" value="Clear" onclick="onClear()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style type="text/css" class="cssStyles">
+        /*controls*/
+        .darktheme .cols-sample-area .e-tooltxt .mailtools {
+            background-image: url('../content/images/toolbar/maild.png');
+        }
+
+        .cols-sample-area .e-tooltxt .mailtools {
+            display: block;
+            background-image: url('../content/images/toolbar/maill.png');
+            height: 24px;
+            width: 24px;
+            background-repeat: no-repeat;
+        }
+
+        .e-tooltxt:hover .mailtools, .darktheme .cols-sample-area .e-tooltxt:hover .mailtools {
+            background-image: url('../content/images/toolbar/mailh.png');
+        }
+
+        .mailtools.done {
+            background-position: -11px -140px;
+        }
+
+        .mailtools.movetofolder {
+            background-position: -12px -40px;
+        }
+
+        .mailtools.categorize {
+            background-position: -14px -248px;
+        }
+
+        .mailtools.flag {
+            background-position: -13px -282px;
+        }
+
+        .mailtools.forward {
+            background-position: -14px -314px;
+        }
+
+        .mailtools.newmail {
+            background-position: -14px -348px;
+        }
+
+        .mailtools.reply {
+            background-position: -14px -388px;
+        }
+		.material .frame{
+			width: 430px;
+		}
+		.office-365 .frame{
+			width: 370px;
+		}
+    </style>
+    <script type="text/javascript">
+        var toolbarObj;
+        $(function () {
+            // declaration
+            $("#toolbarEvents").ejToolbar({
+                orientation: "horizontal",
+                create: "toolbarLoad",
+                click: "toolbarClick",
+                itemHover: "toolbarChecked",
+                itemLeave: "toolbarUnChecked",
+				width: "100%"
+            });
+            toolbarObj = $("#toolbarEvents").data("ejToolbar");
+
+            $('#selectControls').ejDropDownList({
+                popupShown: "adjustpopupposition",
+                showCheckbox: true,
+                checkAll: true,
+                change: "evtpropscheckedevent"
+            });
+        });
+
+        function toolbarLoad(args) {
+            jQuery.addEventLog("Toolbar control has been <span class='eventTitle'>created </span>.");
+        }
+        function toolbarClick(args) {
+            jQuery.addEventLog("Toolbar item is <span class='eventTitle'>clicked </span>.");
+        }
+        function toolbarChecked(args) {
+            jQuery.addEventLog("Mouse pointer <span class='eventTitle'>hovered on</span> toolbar item. </br>");
+        }
+        function toolbarUnChecked(args) {
+            jQuery.addEventLog("Mouse pointer <span class='eventTitle'>hovered away</span> from toolbar item. </br>");
+        }
+
+        function onClear() {
+            jQuery.clearEventLog();
+        }
+        function evtpropscheckedevent(args) {
+            if (args.isChecked) {
+                switch (args.selectedValue) {
+                    case "create": toolbarObj.option(args.selectedValue, "toolbarLoad"); break;
+                    case "click": toolbarObj.option(args.selectedValue, "toolbarClick"); break;
+                    case "itemHover": toolbarObj.option(args.selectedValue, "toolbarChecked"); break;
+                    case "itemLeave": toolbarObj.option(args.selectedValue, "toolbarUnChecked"); break;
+                }
+            }
+            else toolbarObj.option(args.selectedValue, null);
+        }
+    </script>
+</body>
+</html>

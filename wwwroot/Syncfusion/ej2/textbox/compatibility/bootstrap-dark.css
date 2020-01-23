@@ -1,0 +1,3 @@
+.e-control .e-js [class^='e-'], .e-control .e-js [class*=' e-'] {
+  box-sizing: content-box;
+}

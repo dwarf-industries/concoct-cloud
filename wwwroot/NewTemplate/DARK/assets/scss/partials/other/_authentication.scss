@@ -1,0 +1,295 @@
+/* =======================================
+      Authentication-page css start
+ ========================================= */
+
+.common-img-bg {
+    background-size: cover;
+    background: url(../images/bg.jpg) no-repeat center center fixed;
+    height: 100%;
+    @media only screen and (max-width: 992px){
+        background:#f3f3f3 !important;
+    }
+}
+
+.auth-body {
+    min-width: 450px;
+}
+
+.login-card {
+    border-radius: 30px;
+    position: relative;
+    display: block;
+    h1 {
+        font-size: 25px;
+        font-weight: 400;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+}
+
+.login {
+    text-align: left;
+    ul li label {
+        color: #757575;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+    h3 {
+        color: #666666;
+        font-size: 24px;
+        font-weight: 600;
+        margin-top: 20px;
+    }
+}
+
+.login.header {
+    align-items: flex-start;
+}
+
+.header .login-card {
+    margin-top: 30px;
+}
+
+.social-login {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding-bottom: 30px;
+    .btn {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+}
+
+.login-card {
+    .card-footer {
+        background: #fff;
+    }
+    h1 {
+        color: #1b8bf9;
+    }
+    .forget {
+        border-bottom: 1px solid #fff;
+        font-size: 24px;
+        line-height: 0.6;
+    }
+    h3 {
+        color: #666666;
+        font-size: 24px;
+        font-weight: 600;
+        margin-top: 20px;
+    }
+}
+
+.btn-signup,
+.btn-singin1,
+.btn-singin2 {
+    .btn-md {
+        font-size: 22px;
+        font-weight: 400;
+        width: 400px;
+    }
+}
+
+.form-group-main .form-group {
+    margin: 30px 0;
+}
+
+.login-card {
+    .unlock,
+    .btn-forgot {
+        text-align: center;
+    }
+}
+
+.imgs-screen .img-circle {
+    padding: 4px;
+    border: 1px solid #E6E6E4;
+}
+
+.sign-in-with {
+    font-weight: 600;
+    margin: 24px auto 16px;
+    position: relative;
+    text-align: center;
+    .text {
+        display: inline-block;
+        padding: 0 8px;
+        position: relative;
+        vertical-align: baseline;
+        z-index: 9999;
+        &:after {
+            left: 100%;
+        }
+        &:before {
+            right: 100%;
+        }
+        &:after,
+        &:before {
+            border-top: 1px solid rgba(0, 0, 0, .28);
+            content: '';
+            display: block;
+            position: absolute;
+            top: 8px;
+            width: 60px;
+        }
+    }
+}
+
+.error-500,
+.error-503,
+.error-404,
+.error-400,
+.error-403,
+.login {
+    align-items: center;
+    background-color: #2196F3;
+    display: flex;
+    height: 100%;
+    position: fixed;
+    text-align: center;
+    width: 100%;
+}
+.pos-relative.login{
+    position: relative !important;
+}
+.auth-box {
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 20px 0 50px 0;
+    padding: 20px;
+    .confirm h3 {
+        color: $primary-color;
+        font-size: 34px;
+    }
+    i.icofont-check-circled {
+        font-size: 42px;
+    }
+}
+
+.btn-facebook {
+    background-color: #3c5a99;
+    border-color: #3c5a99;
+    border-radius: 2px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btn-twitter {
+    background-color: #41abe1;
+    border-color: #41abe1;
+    border-radius: 2px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btn-google-plus,
+.btn-linkedin,
+.btn-pinterest {
+    border-radius: 2px;
+}
+
+.footer {
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 9;
+}
+
+.footer p {
+    margin-bottom: 0;
+    padding: 18px;
+    width: 100%;
+}
+
+.login-card-modal {
+    margin: 0 auto;
+}
+
+.login.login-modal-main {
+    background-color: #fff;
+}
+
+.mixed-form .tabbed-modal .nav-link h6 {
+    padding: 10px 0;
+}
+
+.mixed-form .tabbed-modal .nav-link {
+    background-color: #f5f5f5;
+    border-radius: none;
+    color: #888;
+}
+
+.mixed-form .tabbed-modal .nav-link.active {
+    background-color: transparent;
+    border-color: transparent;
+    color: $inverse-color;
+}
+
+.mixed-form .modal-body {
+    padding: 0;
+}
+
+.mixed-form .auth-box {
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 10px;
+    padding: 10px;
+    h3 {
+        color: #666666;
+        font-size: 22px;
+        font-weight: 600;
+        margin-top: 20px;
+    }
+    i.icofont-check-circled {
+        font-size: 42px;
+    }
+}
+
+.auth-box-main .navbar-nav li {
+    color: #fff;
+    line-height: 40px;
+}
+
+.offline-404 {
+    background-color: #f3f3f3;
+    .auth-body {
+        margin-top: -100px;
+    }
+    h1 {
+        color: #2c3e50;
+        font-size: 160px;
+        font-weight: 600;
+        letter-spacing: 5px;
+        text-shadow: 3px -2px 4px rgba(128, 128, 128, 0.57);
+    }
+    h2 {
+        color: #aaa;
+        font-weight: 600;
+        margin-bottom: 40px;
+        margin-top: 30px;
+    }
+}
+@media only screen and (max-width:992px){
+    .header-navbar{
+        width: 100%;
+    }
+    .auth-body .text-center img{
+        display: none;
+    }
+    .error-500, .error-503, .error-404, .error-400, .error-403, .login{
+        display: block !important;
+        position: relative !important;
+    }
+    .offline-404{
+        .auth-body {
+            margin-top: 100px;
+        }
+    }
+}
+@media only screen and (max-width:480px){
+    .auth-body{
+        margin-bottom: 45px;
+    }
+}
+
+/**====== Authentication-page css end ======**/

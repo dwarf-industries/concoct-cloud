@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Signature Events</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="control">
+                    <h3>Sign here</h3>
+                    <div id="signature"></div>
+                </div>
+            </div>
+            <div class="cols-prop-area event-tracer">
+                <div>
+                    <div class="heading">
+                        <span>Event Trace</span>
+                        <div class="pull-right">
+                            <select name="selectevtprops" id="selectControls">
+                                <option value="mouseDown">mouseDown</option>
+                                <option value="mouseMove">mouseMove</option>
+                                <option value="mouseUp">mouseUp</option>
+                                <option value="change">change</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="prop-grid content">
+                        <div class="eventarea">
+                            <div class="EventLog" id="EventLog">
+                            </div>
+                        </div>
+                        <div class="evtbtn">
+                            <input type="button" class="eventclear e-btn" value="Clear" onclick="onClear()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var sliderObj;
+        $(function () {
+            // declaration
+            $("#signature").ejSignature({
+                height: "400px",
+                strokeWidth: 3,
+                isResponsive: true,
+                mouseDown: "onmousedown",
+                change: "onchange",
+                mouseMove: "onmousemove",
+                mouseUp: "onmouseup",
+            });
+            signatureObj = $("#signature").data("ejSignature");
+
+            $("#selectControls").ejDropDownList({
+                popupShown: "adjustpopupposition",
+                showCheckbox: true,
+                checkAll: true,
+                change: "evtpropscheckedevent"
+            });
+        });
+
+        function evtpropscheckedevent(args) {
+            if (args.isChecked) {
+                switch (args.selectedValue) {
+                    case "mouseDown": signatureObj.option(args.selectedValue, "onmousedown"); break;
+                    case "mouseMove": signatureObj.option(args.selectedValue, "onmousemove"); break;
+                    case "mouseUp": signatureObj.option(args.selectedValue, "onmouseup"); break;
+                    case "change": signatureObj.option(args.selectedValue, "onchange"); break;
+                }
+            }
+            else signatureObj.option(args.selectedValue, null);
+        }
+
+        function onmousedown(args) {
+            jQuery.addEventLog("Signature <span class='eventTitle'>mousedown</span> is triggered.");
+        }
+        function onmousemove(args) {
+            jQuery.addEventLog("Signature <span class='eventTitle'>mousemove</span> is triggered.");
+        }
+        function onmouseup(args) {
+            jQuery.addEventLog("Signature <span class='eventTitle'>mouseup</span> is triggered.");
+        }
+        function onchange(args) {
+            jQuery.addEventLog("Signature <span class='eventTitle'>change</span> is triggered.");
+        }
+        function onClear() {
+            $("#EventLog").html("");
+        }
+    </script>
+    <style>
+        .cols-sample-area {
+            height: 460px;
+        }
+    </style>
+</body>
+</html>

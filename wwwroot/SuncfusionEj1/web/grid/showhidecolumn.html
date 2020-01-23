@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Show or hide Columns</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsondata.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="Grid"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Column
+                        </div>
+                        <div class="col-md-3">
+                            <select id="columnName" class="e-ddl" data-bind="value: field">
+                                <option value="Order ID" selected="selected">Order ID</option>
+                                <option value="Customer ID">Customer ID</option>
+                                <option value="Employee ID">Employee ID</option>
+                                <option value="Freight">Freight</option>
+                                <option value="Order Date">Order Date</option>
+                            </select>
+                        </div>
+                   
+                        <div class="col-md-3">
+                            <input id="btnHide" type="button" value="Hide" class="e-btn" />
+                        </div>
+                        <div class="col-md-3">
+                            <input id="btnShow" type="button" value="Show" class="e-btn" />
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-md-3">
+                            Hidden Columns
+                        </div>
+                        <div class="col-md-3">
+                            <textarea id="hideColumns" class="ejinputtext" style="width: 108px;height:40px" readonly="readonly"></textarea>
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#Grid").ejGrid({
+                // the datasource "window.gridData" is referred from jsondata.min.js
+                dataSource: window.gridData,
+                allowPaging: true,
+                pageSettings: { pageCount: 7 },
+                columns: [
+                         { field: "OrderID", isPrimaryKey: true, headerText: "Order ID", textAlign: ej.TextAlign.Right, width: 90 },
+                         { field: "CustomerID", headerText: 'Customer ID', textAlign: ej.TextAlign.Left, width: 90 },
+                         { field: "EmployeeID", headerText: 'Employee ID', textAlign: ej.TextAlign.Right, width: 75 },
+                         { field: "Freight", headerText: 'Freight', textAlign: ej.TextAlign.Right, width: 75, format: "{0:C}" },
+                         { field: "OrderDate", headerText: 'Order Date', width: 80, format: "{0:MM/dd/yyyy}", textAlign: ej.TextAlign.Right }
+                ]
+            });            
+			$("#columnName").ejDropDownList({width:"120",selectedItemIndex: 0,change:"Onchange"});
+        });
+
+        $("#sampleProperties").ejPropertiesPanel();
+        $("#btnHide").ejButton({ size: "small", click: "showhide" });
+        $("#btnShow").ejButton({ size: "small", click: "showhide" });
+
+        $("#btnShow").ejButton("disable");
+
+
+
+
+        function Onchange() {
+            var gridObj = $("#Grid").data("ejGrid");
+            var columnName = $("#columnName").ejDropDownList("getSelectedValue");
+            if ($.inArray(columnName, gridObj.getVisibleColumnNames()) == -1) {
+                $("#btnHide").ejButton({ enabled: false });
+                $("#btnShow").ejButton({ enabled: true });
+            }
+            else {
+                $("#btnHide").ejButton({ enabled: true });
+                $("#btnShow").ejButton({ enabled: false });
+            }
+        }
+
+        function showhide() {
+            var gridObj = $("#Grid").data("ejGrid");
+            var selectedItem = $("#columnName").ejDropDownList("getSelectedValue");
+            if (this.element[0].id == "btnHide") {
+                if (gridObj.getColumnByHeaderText(selectedItem).visible) {
+                    if (gridObj.getVisibleColumnNames().length > 1) {
+                        gridObj.hideColumns(selectedItem);
+                        $("#hideColumns").val().indexOf(selectedItem) == -1 && $("#hideColumns").val($("#hideColumns").val() + (selectedItem + "\n"));
+                        $("#btnHide").ejButton("disable");
+                        $("#btnShow").ejButton("enable");
+                    }
+                    else
+                        alert("Atleast one column must be displayed in grid");
+                }
+            }
+            else {
+                $("#hideColumns").val($("#hideColumns").val().replace(selectedItem + "\n", ""));
+                gridObj.showColumns(selectedItem);
+                $("#btnHide").ejButton("enable");
+                $("#btnShow").ejButton("disable");
+            }
+        }
+    </script>
+</body>
+</html>

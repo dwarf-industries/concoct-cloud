@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1: Tooltip - Integration with Slider Control</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div id="loanheading">
+                        Details of Loan
+                    </div>
+
+                    <span class="ColumnLeft">
+                        <span class="loan">Loan Amount</span>
+                    </span>
+                    <span class="ColumnRight">
+                        <span class="value">25000</span><span id="loantext">$ </span>
+                    </span>
+                    <div id="loanSlider">
+                    </div>
+
+                    <span class="ColumnLeft">
+                        <span class="interest">Interest Rate</span>
+                    </span>
+                    <span class="ColumnRight">
+                        <span id="interesttext">% pa</span><span class="value">8</span>
+                    </span>
+                    <div id="interestSlider">
+                    </div>
+
+                    <span class="ColumnLeft">
+                        <span class="tenure">Tenure</span>
+                    </span>
+                    <span class="ColumnRight">
+                        <span id="tenuretext">Years</span><span class="value">3</span>
+                    </span>
+                    <div id="tenureSlider">
+                    </div>
+
+                    <div id="result">
+                        Your Monthly EMI Amount is
+                        <span id="EventLog"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var loanObj, interestObj, tenureObj, loanValue = 0, interestValue = 0, tenureValue = 0;
+        $(function () {
+
+            var loanvalue = 25000, interestvalue = 8, tenurevalue = 3;
+
+            $("#loanSlider").ejSlider({
+                height: 16,
+                value: loanvalue,
+                showTooltip : false,
+                minValue: 10000,
+                maxValue: 100000,
+                incrementStep: 10,
+				change: "onSlide",
+                slide: "onSlide",
+				stop : "onStop",
+            });
+
+
+            $("#interestSlider").ejSlider({
+                height: 16,
+                value: interestvalue,
+                showTooltip: false,
+                minValue: 5,
+                maxValue: 25,
+                incrementStep: 1,
+				change: "onSlide",
+                slide: "onSlide",
+				stop : "onStop",
+            });
+            $("#tenureSlider").ejSlider({
+                height: 16,
+                value: tenurevalue,
+                showTooltip: false,
+                minValue: 1,
+                maxValue: 15,
+                incrementStep: 1,
+				change: "onSlide",
+                slide: "onSlide",
+				stop : "onStop",
+            });
+            loanObj = $('#loanSlider').data('ejSlider');
+            interestObj = $('#interestSlider').data('ejSlider');
+            tenureObj = $('#tenureSlider').data('ejSlider');
+
+            var loadTip = $($('#loanSlider').find(".e-handle")).ejTooltip({
+                content: "$ " + loanObj.getValue().toString(),
+                showRoundedCorner: true,
+                isBalloon : false,
+                
+            }).data("ejTooltip");
+            var interestTip = $($('#interestSlider').find(".e-handle")).ejTooltip({
+                content: interestObj.getValue().toString() + " %",
+                showRoundedCorner: true,
+                isBalloon: false,
+                
+            }).data("ejTooltip");
+            var tenureTip = $($('#tenureSlider').find(".e-handle")).ejTooltip({
+                content: tenureObj.getValue().toString() + " years",
+                showRoundedCorner: true,
+                isBalloon: false,
+              
+            }).data("ejTooltip");
+            calculate();
+			
+        });
+		function onStop(args){
+			setTimeout( function(){ 
+				var target = "#" + args.id;
+				var tipObj = $($("div" + target).find(".e-handle")).data("ejTooltip");
+				tipObj.hide();
+			}, 1000);
+		}
+	
+        function onSlide(args) {
+		
+            this.wrapper.prev().children('span.value').html(args.value);
+			var target = "#" + args.id, value = args.value.toString();
+			if(args.id == "loanSlider")
+				value =  "$ " +value;
+			else if(args.id == "interestSlider")
+				value = value + " %";
+			else if(args.id == "tenureSlider"){
+				if(value == 1)value = value + " year";
+				else value = value + " years";
+			}
+            var tipWidth = (value < 10) ? "13px" : (10 <= value >= 100) ? "25px" : "auto";
+            var tipObj = $($("div" + target).find(".e-handle")).data("ejTooltip");
+            tipObj.setModel({content : value, width : tipWidth});
+			tipObj.show($("div" + target).find(".e-handle"));
+            calculate();
+        }
+        function calculate() {
+            var loan = loanObj.getValue(), interest = interestObj.getValue(), tenure = tenureObj.getValue();
+
+            var P = loan;
+            var y = interest / 1200;
+            var tenureamt = tenure * 12;
+
+            //actual processing
+            var top = y * (Math.pow((1 + y), tenureamt));
+            var bottom = (Math.pow((1 + y), tenureamt)) - 1;
+            var ans = top / bottom;
+            var final = P * ans;
+            var z = Math.round(final);
+
+
+            $('#EventLog').html("$ " + z);
+        }
+
+
+    </script>
+
+    <style type="text/css" class="cssStyles">
+        .e-tooltip-wrap {
+            min-width: auto;
+        }
+
+        .loan, .interest, .tenure {
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .value, #loantext, #interesttext, #tenuretext {
+            float: right;
+            position: relative;
+            width: auto;
+            padding-left: 3px;
+        }
+
+        #loantext, #interesttext, #tenuretext {
+            width: auto;
+        }
+
+        #result {
+            margin-top: 25px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .frame .e-slider-wrap {
+            display: block;
+            margin-top: 50px;
+        }
+
+        .ColumnLeft {
+            width: 50%;
+            float: left;
+            font-weight: 400;
+            margin-top: 10px;
+        }
+
+        .ColumnRight {
+            width: 50%;
+            float: right;
+            font-weight: 600;
+            margin-top: 14px;
+        }
+
+        #loanheading {
+            font-family: 'Arial Black', Gadget, sans-serif;
+            font-size: larger;
+            padding-bottom: 15px;
+        }
+    </style>
+</body>
+</html>

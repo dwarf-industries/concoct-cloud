@@ -1,0 +1,742 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1: Tab - Scrollable</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/jsondata.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+	<script src="../scripts/jsonTabWiz.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div>
+                    <div style="margin: 20px; padding: 20px; height: 600px;">
+                        <div class="sampleheadingtext samplename sbsamplename">
+                            <span class="sbtxt">Ticket Pundit</span>
+                        </div>
+                        <div style="width: 800px">
+                            <div id="wizardTab">
+                                <ul>
+                                    <li><a href="#Search">Search</a><div class="e-icon e-wiz1">
+                                    </div>
+                                    </li>
+                                    <li><a href="#Train">Train</a><div class="e-icon e-wiz2">
+                                    </li>
+                                    <li><a href="#Passenger">Passenger</a><div class="e-icon e-wiz3">
+                                    </li>
+                                    <li><a href="#Payment">Payment</a><div class="e-icon e-wiz4">
+                                    </li>
+                                </ul>
+                                <div id="Search">
+                                    <div class="tab-title">
+                                        <h4>
+                                            <i>SEARCH TRAIN </i>
+                                        </h4>
+                                    </div>
+                                    <div class="frame-tab">
+                                        <table>
+                                            <tr>
+                                                <td class="wizAlign">From
+                                                </td>
+                                                <td class="wizAlign" style="padding-left: 27px;">To
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="wizAlign">
+                                                    <input id="startpoint"></input>
+                                                </td>
+                                                <td class="wizAlign" style="padding-left: 27px;">
+                                                    <input id="endpoint"></input>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="wizAlign">Journey date
+                                                </td>
+                                                <td class="wizAlign" style="padding-left: 27px;">Ticket Type
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="wizAlign">
+                                                    <input id="journeydate" type="text"></input>
+                                                </td>
+                                                <td class="wizAlign" style="padding-left: 27px;">
+                                                    <input id="tickettype" type="text"></input>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="wizAlign">
+                                                    <span id="tab1_err"></span>
+                                                </td>
+                                                <td class="wizAlign nextTab" style="margin-right: 5px;">
+                                                    <button id="searchTrain">
+                                                        Go</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div id="Train">
+                                    <div class="tab-title1">
+                                        <h4>
+                                            <i>SELECT TRAIN </i>
+                                        </h4>
+                                    </div>
+                                    <div id="trainAvailability">
+                                    </div>
+                                    <br />
+                                    <div style="height: 40px">
+                                        <div style="float: left; padding-left: 500px;">
+                                            <button id="gotosearch">
+                                                Back</button>
+                                        </div>
+                                        <div style="float: right; width: 18.8%">
+                                            <button id="booktickets">
+                                                Continue</button>
+                                        </div>
+                                    </div>
+                                    <span id="tab2_err" style="margin-left: 60px;"></span>
+                                </div>
+                                <div id="Passenger">
+                                    <div class="tab-title1">
+                                        <h4>
+                                            <i>PASSENGER DETAILS </i>
+                                        </h4>
+                                    </div>
+                                    <div id="PassengersList">
+                                        <table id="Table1">
+                                            <colgroup>
+                                                <col />
+                                                <col />
+                                                <col />
+                                                <col />
+                                                <col />
+                                                <col />
+                                            </colgroup>
+                                            <thead>
+                                                <tr>
+                                                    <th>Name
+                                                    </th>
+                                                    <th>Age
+                                                    </th>
+                                                    <th>Gender
+                                                    </th>
+                                                    <th>Berth Preference
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input id="pass_name1" type="text"></input>
+                                                    </td>
+                                                    <td>
+                                                        <input id="pass_age1" type="text"></input>
+                                                    </td>
+                                                    <td>
+                                                        <input id="pass_gender1" type="text"></input>
+                                                    </td>
+                                                    <td>
+                                                        <input id="pass_berth1" type="text"></input>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="pass_name2" type="text"></input>
+                                                    </td>
+                                                    <td>
+                                                        <input id="pass_age2" type="text"></input>
+                                                    </td>
+                                                    <td>
+                                                        <input id="pass_gender2" type="text"></input>
+                                                    </td>
+                                                    <td>
+                                                        <input id="pass_berth2" type="text"></input>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="pass_name3" type="text"></input>
+                                                    </td>
+                                                    <td>
+                                                        <input id="pass_age3" type="text"></input>
+                                                    </td>
+                                                    <td>
+                                                        <input id="pass_gender3" type="text"></input>
+                                                    </td>
+                                                    <td>
+                                                        <input id="pass_berth3" type="text"></input>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="pass_name4" type="text"></input>
+                                                    </td>
+                                                    <td>
+                                                        <input id="pass_age4" type="text"></input>
+                                                    </td>
+                                                    <td>
+                                                        <input id="pass_gender4" type="text"></input>
+                                                    </td>
+                                                    <td>
+                                                        <input id="pass_berth4" type="text"></input>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="pass_name5" type="text"></input>
+                                                    </td>
+                                                    <td>
+                                                        <input id="pass_age5" type="text"></input>
+                                                    </td>
+                                                    <td>
+                                                        <input id="pass_gender5" type="text"></input>
+                                                    </td>
+                                                    <td>
+                                                        <input id="pass_berth5" type="text"></input>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br />
+                                    <div style="height: 40px">
+                                        <div style="float: left; padding-left: 500px;">
+                                            <button id="gobacktobook">
+                                                Back</button>
+                                        </div>
+                                        <div style="float: right; width: 18.8%">
+                                            <button id="confirmtickets">
+                                                Continue</button>
+                                        </div>
+                                    </div>
+                                    <span id="tab3_err" style="margin-left: 60px;"></span>
+                                </div>
+                                <div id="Payment">
+                                    <div class="tab-title1">
+                                        <h4>
+                                            <i>TICKET DETAILS </i>
+                                        </h4>
+                                    </div>
+                                    <div id="TicketConfirmation">
+                                    </div>
+                                    <br />
+                                    <div style="height: 40px">
+                                        <div style="float: left; padding-left: 500px;">
+                                            <button id="gobacktodetails">
+                                                Back</button>
+                                        </div>
+                                        <div style="float: right; width: 18.8%">
+                                            <button id="payment">
+                                                Pay</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var tabctrl, trainchosen;
+        var today = new Date();
+        $(function () {
+            // tab 1
+            var location = [
+                "Amsterdam", "Warsaw", "Emmerich am Rhein",
+				"Berlin", "Konin", "Moscow", "Poznan",
+				"Milan", "Paris", "Brussels", "Strasbourg", "Chur",
+				"Budapest", "Vienna", "Prague", "Dortmund", "Cologne",
+				"Munchen"
+            ];
+            var quota = [
+                 { id: "1", text: "First Class" }, { id: "2", text: "Second Class" }, { id: "3", text: "Soft" }, { id: "4", text: "Common Class" }
+            ];
+            $("#wizardTab").ejTab({
+                disabledItemIndex: [1, 2, 3],
+                heightAdjustMode: "auto"
+            });
+            $("#startpoint").ejAutocomplete({
+                width: 235,
+                dataSource: location,
+                filterType: "startsWith",
+                highlightSearch: true
+            });
+            $("#endpoint").ejAutocomplete({
+                width: 235,
+                dataSource: location,
+                filterType: "startsWith",
+                highlightSearch: true
+            });
+            $("#searchTrain").ejButton({
+                size: "small",
+                showRoundedCorner: true,
+                click: "tabNavigations"
+
+            });
+            $('#tickettype').ejDropDownList({
+
+                width: 235,
+
+                watermarkText: "Select ticket type", // set watermark text
+                dataSource: quota,
+                fields: { id: "id", text: "text", value: "text" }
+
+
+            });
+            $("#journeydate").ejDatePicker({
+                width: 235,
+                minDate: new Date(today.getTime()),
+                maxDate: new Date(today.getTime() + 60 * 24 * 60 * 60 * 1000)
+            });
+
+            //tab 2
+
+            $("#gotosearch").ejButton({
+                size: "small",
+                showRoundedCorner: true,
+                click: "tabNavigations"
+
+            });
+            $("#booktickets").ejButton({
+                size: "small",
+                showRoundedCorner: true,
+                click: "tabNavigations"
+
+            });
+
+            $("#trainAvailability").ejGrid({
+
+                dataSource: window.tabWizarddata,
+                allowSelection: true,
+                selectionType: "single",
+                columns: [
+				{ field: "TrainNo", headerText: "Train No", width: 75 },
+				{ field: "TrainName", headerText: "Name", width: 150 },
+				{ field: "Depature", headerText: "Depature", width: 140 },
+				{ field: "Arrival", headerText: "Arrival", width: 155 },
+				{ field: "Availability", headerText: "Availability", width: 100 }
+
+                ],
+                recordClick: "selectedTrain"
+
+            });
+            //tab 3
+            var gender = [
+	{ id: "1", text: "Male" }, { id: "2", text: "Female" }
+            ];
+            var berths = [
+	{ id: "1", text: "Upper" }, { id: "2", text: "Lower" },
+	{ id: "3", text: "Middle" }, { id: "4", text: "Window" },
+	{ id: "5", text: "Aisle" }
+            ];
+            $("#pass_berth5").ejDropDownList({
+                dataSource: berths,
+                fields: { id: "id", text: "text", value: "text" }
+            });
+            $("#pass_gender5").ejDropDownList({
+                dataSource: gender,
+                width: 110,
+                fields: { id: "id", text: "text", value: "text" }
+            });
+            $("#pass_berth4").ejDropDownList({
+                dataSource: berths,
+                fields: { id: "id", text: "text", value: "text" }
+            });
+            $("#pass_gender4").ejDropDownList({
+                dataSource: gender,
+                width: 110,
+                fields: { id: "id", text: "text", value: "text" }
+            });
+            $("#pass_berth3").ejDropDownList({
+                dataSource: berths,
+                fields: { id: "id", text: "text", value: "text" }
+            });
+            $("#pass_gender3").ejDropDownList({
+                dataSource: gender,
+                width: 110,
+                fields: { id: "id", text: "text", value: "text" }
+            });
+            $("#pass_berth2").ejDropDownList({
+                dataSource: berths,
+                fields: { id: "id", text: "text", value: "text" }
+            });
+            $("#pass_gender2").ejDropDownList({
+                dataSource: gender,
+                width: 110,
+                fields: { id: "id", text: "text", value: "text" }
+            });
+            $("#pass_berth1").ejDropDownList({
+                dataSource: berths,
+                fields: { id: "id", text: "text", value: "text" }
+            });
+            $("#pass_gender1").ejDropDownList({
+                dataSource: gender,
+                width: 110,
+                fields: { id: "id", text: "text", value: "text" }
+            });
+
+            $("#gobacktobook").ejButton({
+                size: "small",
+                showRoundedCorner: true,
+                click: "tabNavigations"
+
+            });
+            $("#confirmtickets").ejButton({
+                size: "small",
+                showRoundedCorner: true,
+                click: "tabNavigations"
+
+            });
+            //Tab 4
+            $("#gobacktodetails").ejButton({
+                size: "small",
+                showRoundedCorner: true,
+                click: "tabNavigations"
+
+            });
+            $("#payment").ejButton({
+                size: "small",
+                showRoundedCorner: true,
+                click: "tabNavigations"
+
+            });
+            $("#TicketConfirmation").ejGrid({
+
+                columns: [
+				{ field: "TrainNo", headerText: "Train No", width: 75 },
+				{ field: "PassName", headerText: "Name", width: 170 },
+				{ field: "Gender", headerText: "Gender", width: 160 },
+				{ field: "CoachNo", headerText: "Wagon", width: 165 },
+				{ field: "SeatNo", headerText: "Seat No", width: 80 }
+
+                ]
+
+            });
+            if ($(".darktheme").length == 1) {
+                $(".frame-tab").css("background-color", "#1f1f1f");
+                $(".frame-tab").css("border", "1px solid #5e5f5e");
+                $(".frame-tab").css("color", "#8f8f8f");
+                $("table#Table1, #Table1 th, #Table1 td").css("background-color", "#1f1f1f");
+                $("table#Table1, #Table1 th, #Table1 td").css("border", "1px solid #5e5f5e");
+                $("table#Table1, #Table1 th, #Table1 td").css("color", "#fff");
+                $("#Table1 #pass_age1,#Table1 #pass_age2,#Table1 #pass_age3,#Table1 #pass_age4,#Table1 #pass_age5,#Table1 #pass_name1,#Table1 #pass_name2,#Table1 #pass_name3,#Table1 #pass_name4,#Table1 #pass_name5").css("background-color", "#000");
+                $("#Table1 #pass_age1,#Table1 #pass_age2,#Table1 #pass_age3,#Table1 #pass_age4,#Table1 #pass_age5,#Table1 #pass_name1,#Table1 #pass_name2,#Table1 #pass_name3,#Table1 #pass_name4,#Table1 #pass_name5").css("border", "1px solid #5e5f5e");
+                $("#Table1 #pass_age1,#Table1 #pass_age2,#Table1 #pass_age3,#Table1 #pass_age4,#Table1 #pass_age5,#Table1 #pass_name1,#Table1 #pass_name2,#Table1 #pass_name3,#Table1 #pass_name4,#Table1 #pass_name5").css("color", "#fff");
+            }
+            tabctrl = $("#wizardTab").data("ejTab");
+            from = $("#startpoint").data("ejAutocomplete");
+            to = $("#endpoint").data("ejAutocomplete");
+            jdate = $("#journeydate").data("ejDatePicker");
+            tktype = $("#tickettype").data("ejDropDownList");
+        });
+
+        function tabNavigations(args) {
+
+            switch (this._id) {
+                case "searchTrain":
+                    if (from.getValue() != "" && to.getValue() != "" && tktype.getValue() != "" && jdate.getValue() != null) {
+                        if (from.getValue() != "" && from.getValue() == to.getValue()) {
+                            $("#tab1_err").text("");
+                            $("#tab1_err").append("*Arrival point can't be same as Depature");
+                        }
+                        else {
+                            $("#wizardTab").ejTab({
+                                disabledItemIndex: [0, 2, 3],
+                                enabledItemIndex: [1],
+                                selectedItemIndex: 1
+                            });
+                            filterTrains(args);
+                        }
+                    }
+                    else {
+                        $("#tab1_err").text("");
+                        $("#tab1_err").append("*Please fill all the details before proceeding");
+                    }
+                    break;
+                case "gotosearch":
+                    trainchosen = [];
+                    $("#wizardTab").ejTab({
+                        disabledItemIndex: [1, 2, 3],
+                        enabledItemIndex: [0],
+                        selectedItemIndex: 0
+                    });
+                    break;
+                case "booktickets":
+                    if (trainchosen == undefined || trainchosen.length == 0) {
+                        $("#tab2_err").text("");
+                        $("#tab2_err").append("*Select your convenient train");
+                    }
+                    else {
+                        $("#wizardTab").ejTab({
+                            disabledItemIndex: [0, 1, 3],
+                            enabledItemIndex: [2],
+                            selectedItemIndex: 2
+                        });
+                        var colorvalue = $("#wizardTab .e-header").css("background-color");
+                        var digits = /(.*?)rgb\((\d+), (\d+), (\d+)\)/.exec(colorvalue);
+
+                        var red = parseInt(digits[2]);
+                        var green = parseInt(digits[3]);
+                        var blue = parseInt(digits[4]);
+
+                        var rgb = blue | (green << 8) | (red << 16);
+                        hexcol = digits[1] + '#' + rgb.toString(16);
+                        $("table#Table1 th").css("border-bottom", "3px solid " + hexcol);
+                    }
+                    break;
+                case "gobacktobook":
+                    $("#wizardTab").ejTab({
+                        disabledItemIndex: [0, 2, 3],
+                        enabledItemIndex: [1],
+                        selectedItemIndex: 1
+                    });
+                    break;
+                case "confirmtickets":
+                    if ($("#pass_name1").val() == "") {
+                        $("#tab3_err").text("");
+                        $("#tab3_err").append("*Please enter passenger details");
+                    }
+                    else {
+                        $("#wizardTab").ejTab({
+                            disabledItemIndex: [0, 1, 2],
+                            enabledItemIndex: [3],
+                            selectedItemIndex: 3
+                        });
+                        finaldetails(args);
+                    }
+                    break;
+                case "gobacktodetails":
+                    $("#wizardTab").ejTab({
+                        disabledItemIndex: [0, 1, 3],
+                        enabledItemIndex: [2],
+                        selectedItemIndex: 2
+                    });
+                    var colorvalue = $("#wizardTab .e-header").css("background-color");
+                    var digits = /(.*?)rgb\((\d+), (\d+), (\d+)\)/.exec(colorvalue);
+                    var red = parseInt(digits[2]);
+                    var green = parseInt(digits[3]);
+                    var blue = parseInt(digits[4]);
+
+                    var rgb = blue | (green << 8) | (red << 16);
+                    hexcol = digits[1] + '#' + rgb.toString(16);
+                    $("table#Table1 th").css("border-bottom", "3px solid " + hexcol);
+                    break;
+                case "searchTrain":
+                    $("#wizardTab").ejTab({
+                        disabledItemIndex: [0, 1, 2],
+                        enabledItemIndex: [3],
+                        selectedItemIndex: 3
+                    });
+                    break;
+            }
+
+        }
+        function filterTrains(args) {
+            $("#tab1_err").text("");
+            var fromCity = document.getElementById("startpoint").value;
+            var toCity = document.getElementById("endpoint").value;
+
+            var query = ej.Query()
+     .search(fromCity, ["Depature"])
+     .search(toCity, ["Arrival"])
+            var result;
+            var dataManager = ej.DataManager(window.tabWizarddata);
+            $(function () {
+                result = dataManager.executeLocal(query);
+            });
+
+            if (result && !result[0]) {
+                query = ej.Query()
+   .search(fromCity, ["Depature"])
+                result = dataManager.executeLocal(query);
+
+            }
+
+            if (result && !result[0]) {
+                query = ej.Query()
+   .search(fromCity, ["Arrival"])
+                result = dataManager.executeLocal(query);
+
+            }
+
+            var gridObj = $("#trainAvailability").data("ejGrid");
+            gridObj.option("dataSource", result);
+        }
+
+        function finaldetails(args) {
+            var reserved = [];
+            $("#tab3_err").text("");
+            for (i = 1; i <= 5; i++) {
+                if ($("#pass_name" + i).val() != "") {
+                    details = {}
+                    details["TrainNo"] = trainchosen.TrainNo.toString();
+                    details["PassName"] = $("#pass_name" + i).val();
+                    details["Gender"] = $("#pass_gender" + i).val();
+                    details["CoachNo"] = "S" + i;
+                    details["SeatNo"] = i * 2;
+                    reserved.push(details);
+
+                }
+            }
+
+            $("#TicketConfirmation").ejGrid({ dataSource: reserved });
+        }
+
+        function selectedTrain(args) {
+            trainchosen = args.data;
+        }
+
+    </script>
+    <style>
+        .e-tab .e-icon.e-wiz1:before {
+            content: "\e746";
+        }
+
+        .e-tab .e-icon.e-wiz2:before {
+            content: "\e747";
+        }
+
+        .e-tab .e-icon.e-wiz3:before {
+            content: "\e748";
+        }
+
+        .e-tab .e-icon.e-wiz4:before {
+            content: "\e745";
+        }
+
+        .e-tab .e-header .e-icon {
+            background-color: transparent;
+            background-image: none;
+            cursor: pointer;
+            float: right;
+            font-size: large;
+            height: 16px;
+            margin-left: -11px;
+            margin-right: 13px;
+            margin-top: 11px;
+            padding: 3px;
+            width: 16px;
+        }
+
+        #Train {
+            height: 400px;
+            max-height: 500px;
+        }
+
+        .frame-tab {
+            border: 1px solid #BBBCBB;
+            background-color: #f9f8fa;
+            padding: 23px 10px 20px 10px;
+            margin-bottom: 30px;
+            width: 532px;
+            margin: 0 auto;
+            color: #5C5C5C;
+        }
+
+        .wizAlign {
+            padding: 10px;
+        }
+
+        .e-btn.e-select {
+            border: 1px solid #bbbcbb;
+        }
+
+        .nextTab {
+            float: right;
+        }
+
+        .headingwiz {
+            color: #333333;
+            font-size: large;
+            text-align: left;
+            font-weight: lighter;
+            font-family: segoe ui;
+        }
+
+        #Search {
+            padding-bottom: 53px !important;
+        }
+
+        .tab-title {
+            margin-left: auto;
+            margin-right: auto;
+            width: 74%;
+        }
+
+        #pass_age1, #pass_age2, #pass_age3, #pass_age4, #pass_age5 {
+            width: 60px;
+            height: 24px;
+        }
+
+        #pass_name1, #pass_name2, #pass_name3, #pass_name4, #pass_name5 {
+            width: 180px;
+            height: 24px;
+        }
+
+        #TicketConfirmation, #trainAvailability, #PassengersList {
+            margin-left: auto;
+            margin-right: auto;
+            width: 650px;
+        }
+
+        .tab-title1 {
+            margin-left: auto;
+            margin-right: auto;
+            width: 87%;
+        }
+
+        table {
+            width: 100%;
+        }
+
+            table#Table1, #Table1 th, #Table1 td {
+                border: 1px solid #c4c4c4;
+                border-collapse: collapse;
+            }
+
+        #Table1 th, #Table1 td {
+            padding: 5px;
+            text-align: center;
+        }
+
+        table#Table1 tr:nth-child(even) {
+            background-color: #eee;
+        }
+
+        table#Table1 tr:nth-child(odd) {
+            background-color: #fff;
+        }
+
+        #Table1 td span.e-ddl.e-widget {
+            margin: 0 auto;
+        }
+
+        table#Table1 th {
+            height: 38x;
+            text-align: center;
+            border-bottom: 3px solid #169dd8;
+        }
+
+        #tab1_err, #tab2_err, #tab3_err {
+            color: #e40917;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+	<link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+	<script src="../scripts/properties.js" type="text/javascript"></script>     
+ </head>
+ <body>
+    <div class="content-container-fluid">      
+        <div class="row">                
+            <div class="cols-sample-area">                                  				
+				<div id="container"></div> 					                   
+            </div>				
+        </div>
+    </div>
+ <script type="text/javascript" language="javascript">
+	$(function ()
+	{
+        $("#container").ejChart(
+        {
+            //Initializing Primary X Axis	
+			primaryXAxis:
+            {
+                title: { text: 'Month' },
+				range: { min: 2005, max: 2012, interval: 1 },
+                labelRotation: 45
+            },			
+			
+			//Initializing Primary Y Axis	
+            primaryYAxis:
+            {
+				range: { min: -20, max: 100, interval: 20 },
+				labelFormat:"{value}%",
+                title: { text: 'Percentage' }
+            },			
+			
+            //Initializing Common Properties for all the series
+			commonSeriesOptions: 
+			{
+                type: 'stackingbar', 
+				enableAnimation: true,
+                tooltip :{visible:true , format: "#series.name# <br/> #point.x# : #point.y#"}
+            },			
+			
+			//Initializing Series
+			series: 
+			[
+				{
+                    points: [{ x: "Jan", y: 6 }, { x: "Feb", y: 8 }, { x: "Mar", y: 12}, { x: "Apr", y: 15.5},
+							 { x: "May", y: 20 }, { x: "Jun", y: 24 }, { x: "Jul", y: 28 }, { x: "Aug", y: 32},
+                             { x: "Sep", y: 33}, { x: "Oct", y: 35}, { x: "Nov", y: 40}, { x: "Dec", y: 42 }],
+                    name: 'Apple',
+					fill:"#1ABC9C" 
+                },                               
+				{
+                    points: [{ x: "Jan", y: 6 }, { x: "Feb", y: 8 }, { x: "Mar", y: 11}, { x: "Apr", y: 16},
+							 { x: "May", y: 21 }, { x: "Jun", y: 25}, { x: "Jul", y: 27 }, { x: "Aug", y: 31},
+                             { x: "Sep", y: 34},{ x: "Oct", y: 34}, { x: "Nov", y: 41 } , { x: "Dec", y: 42 }],
+                    name: 'Orange',
+					fill:"#3498DB"
+                },				
+				{
+                    points: [{ x: "Jan", y: -1 },{ x: "Feb", y: -1.5}, { x: "Mar", y: -2}, { x: "Apr", y: -2.5},
+							 { x: "May", y: -3 },{ x: "Jun", y: -3.5 }, { x: "Jul", y: -4 },{ x: "Aug", y: -4.5 },
+                             { x: "Sep", y: -5},{ x: "Oct", y: -5.5}, { x: "Nov", y: -6 } , { x: "Dec", y: -6.5 }],
+                    name: 'Wastage',
+					fill:"#34495E" ,
+					opacity:0.7
+                } 
+			],
+			load:"loadTheme",
+            title:{text: 'Sales Comparison'},
+            size: { height: "600" },			
+            isResponsive: true,
+            legend: { visible: true, position: 'right', alignment:"near" }
+         });
+    });     
+ </script>            
+ </body>
+</html>
+

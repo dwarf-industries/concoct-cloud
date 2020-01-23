@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Schedule JS Events</title>
+    <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+     <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script type="text/javascript" src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsonscheduledata.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div style="float: left" id="Schedule1"></div>
+            </div>
+            <div class="cols-prop-area event-tracer">
+                <div>
+                    <div class="heading">
+                        <span>Event Trace</span>
+                        <div class="pull-right">
+                            <select name="selectevtprops" id="selectControls">
+                                <option value="create">Create</option>
+                                <option value="cellClick">Cell Click</option>
+                                <option value="appointmentClick">App Click</option>
+                                <option value="cellDoubleClick">Double Click</option>
+                                <option value="appointmentWindowOpen">Window Open</option>
+                                <option value="beforeAppointmentCreate">App Save</option>
+                                <option value="beforeAppointmentChange">App Edit</option>
+                                <option value="beforeAppointmentRemove">App Delete</option>
+                                <option value="appointmentCreated">App Created</option>
+                                <option value="appointmentChanged">App Changed</option>
+                                <option value="appointmentRemoved">App Removed</option>
+                                <option value="navigation">Navigation</option>
+                                <option value="resizeStart">Resize Start</option>
+                                <option value="resizeStop">Resize Stop</option>
+                                <option value="dragStart">Drag Start</option>
+                                <option value="dragStop">Drag Stop</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="prop-grid content">
+                        <div class="eventarea">
+                            <div class="EventLog" id="EventLog"></div>
+                        </div>
+                        <div class="evtbtn">
+                            <input type="button" class="eventclear e-btn" value="Clear" onclick="onClear()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $("#Schedule1").ejSchedule({
+                width: "100%",
+                height: "525px",
+                currentDate: new Date(2017, 5, 5),
+                appointmentSettings: {
+                    dataSource: $.extend(true, [], window.Events),
+                    id: "Id",
+                    subject: "Subject",
+                    startTime: "StartTime",
+                    endTime: "EndTime",
+                    description: "Description",
+                    allDay: "AllDay",
+                    recurrence: "Recurrence",
+                    recurrenceRule: "RecurrenceRule"
+                },
+                create: "onCreate",
+                cellClick: "OnCellClick",
+                appointmentClick: "OnAppointmentClick",
+                cellDoubleClick: "OnCellDoubleClick",
+                appointmentWindowOpen: "OnAppointmentWindowOpen",
+                beforeAppointmentCreate: "OnBeforeAppointmentCreate",
+                beforeAppointmentChange: "OnBeforeAppointmentChange",
+                beforeAppointmentRemove: "OnBeforeAppointmentRemove",
+                appointmentCreated: "OnAppointmentCreated",
+                appointmentChanged: "OnAppointmentChanged",
+                appointmentRemoved: "OnAppointmentRemoved",
+                navigation: "OnNavigation",
+                resizeStart: "OnResizeStart",
+                resizeStop: "OnResizeStop",
+                dragStart: "OnDragStart",
+                dragStop: "OnDragStop",
+            });
+
+            $('#selectControls').ejDropDownList({
+                cssClass: "metroblue",
+                popupShown: "adjustpopupposition",
+                showCheckbox: true,
+                checkAll: true,
+                change: "evtpropscheckedevent"
+            });
+        });
+
+        function evtpropscheckedevent(args) {
+            var scheduleObj = $("#Schedule1").data("ejSchedule");
+            if (args.isChecked) {
+                switch (args.value) {
+                    case "create": scheduleObj.option(args.value, "onCreate"); break;
+                    case "cellClick": scheduleObj.option(args.value, "OnCellClick"); break;
+                    case "appointmentClick": scheduleObj.option(args.value, "OnAppointmentClick"); break;
+                    case "cellDoubleClick": scheduleObj.option(args.value, "OnCellDoubleClick"); break;
+                    case "appointmentWindowOpen": scheduleObj.option(args.value, "OnAppointmentWindowOpen"); break;
+                    case "beforeAppointmentCreate": scheduleObj.option(args.value, "OnBeforeAppointmentCreate"); break;
+                    case "beforeAppointmentChange": scheduleObj.option(args.value, "OnBeforeAppointmentChange"); break;
+                    case "beforeAppointmentRemove": scheduleObj.option(args.value, "OnBeforeAppointmentRemove"); break;
+                    case "appointmentCreated": scheduleObj.option(args.value, "OnAppointmentCreated"); break;
+                    case "appointmentChanged": scheduleObj.option(args.value, "OnAppointmentChanged"); break;
+                    case "appointmentRemoved": scheduleObj.option(args.value, "OnAppointmentRemoved"); break;
+                    case "navigation": scheduleObj.option(args.value, "OnNavigation"); break;
+                    case "resizeStart": scheduleObj.option(args.value, "OnResizeStart"); break;
+                    case "resizeStop": scheduleObj.option(args.value, "OnResizeStop"); break;
+                    case "dragStart": scheduleObj.option(args.value, "OnDragStart"); break;
+                    case "dragStop": scheduleObj.option(args.value, "OnDragStop"); break;
+                }
+            }
+            else {
+                scheduleObj.option(args.value, null);
+            }
+        }
+
+        // Client side Events
+        function OnCellClick() {
+            jQuery.addEventLog("Cell has been <span class='eventTitle'>Clicked.</span>");
+        }
+        function onCreate() {
+            jQuery.addEventLog("Schedule has been <span class='eventTitle'>Created.</span>");
+        }
+        function OnAppointmentClick() {
+            jQuery.addEventLog("Appointment has been <span class='eventTitle'>Clicked.</span>");
+        }
+        function OnCellDoubleClick() {
+            jQuery.addEventLog("<span class='eventTitle'>Double Clickd.</span> the cells");
+        }
+        function OnAppointmentWindowOpen() {
+            jQuery.addEventLog("Appointment window has been <span class='eventTitle'>Opened.</span>");
+        }
+        function OnBeforeAppointmentCreate() {
+            jQuery.addEventLog("Appointment window opened to <span class='eventTitle'>Save.</span>");
+        }
+        function OnBeforeAppointmentChange() {
+            jQuery.addEventLog("Appointment opened for <span class='eventTitle'>Edit.</span>");
+        }
+        function OnBeforeAppointmentRemove() {
+            jQuery.addEventLog("Appointment opened for <span class='eventTitle'>Delete.</span>");
+        }
+        function OnAppointmentCreated() {
+            jQuery.addEventLog("Appointment has been <span class='eventTitle'>Created.</span>");
+        }
+        function OnAppointmentChanged() {
+            jQuery.addEventLog("Appointment has been <span class='eventTitle'>Updated.</span>");
+        }
+        function OnAppointmentRemoved() {
+            jQuery.addEventLog("Appointment has been <span class='eventTitle'>Deleted.</span>");
+        }
+        function OnNavigation() {
+            jQuery.addEventLog("Changed the <span class='eventTitle'>Date / View </span>");
+        }
+        function OnResizeStart() {
+            jQuery.addEventLog("Appointment <span class='eventTitle'>Resize Started </span>");
+        }
+        function OnResizeStop() {
+            jQuery.addEventLog("Appointment <span class='eventTitle'>Resize Stopped </span>");
+        }
+        function OnDragStart() {
+            jQuery.addEventLog("Appointment <span class='eventTitle'>Drag Started </span>");
+        }
+        function OnDragStop() {
+            jQuery.addEventLog("Appointment <span class='eventTitle'>Drag Stopped </span>");
+        }
+        function onClear() {
+            jQuery.clearEventLog();
+        }
+    </script>
+</body>
+</html>

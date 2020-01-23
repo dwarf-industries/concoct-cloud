@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+	<link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+	<link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+	 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+	<script src="../scripts/properties.js" type="text/javascript"></script>
+ </head>
+  <body>
+	<div class="content-container-fluid">      
+			<div class="row">                
+                <div class="cols-sample-area">                                  				
+					<div id="container"></div> 					                   
+                </div>
+				<div id="sampleProperties">
+					<div class="prop-grid">
+						<div class="row">
+							<div class="col-md-3">
+								 Enable Highlight
+							</div>
+							<div class="col-md-3 aligntop">
+                                <input type="checkbox" checked="checked" id="enablehigh"/>
+							</div>
+						</div>
+                        <div class="row">
+							<div class="col-md-3">
+								 Enable Selection
+							</div>
+							<div class="col-md-3 aligntop">
+                                <input type="checkbox" checked="checked" id="enablesel"/>
+							</div>
+						</div>
+                        <div class="row">
+							<div class="col-md-3">
+								 Enable 3D
+							</div>
+							<div class="col-md-3 aligntop">
+                                <input type="checkbox" id="enable3d"/>
+							</div>
+						</div>
+                         <div class="row">
+							<div class="col-md-3">
+								 Enable Legend Selection
+							</div>
+							<div class="col-md-3 aligntop">
+                                <input type="checkbox" checked="checked" id="enablelege"/>
+							</div>
+						</div>
+						<div class="row" style="margin: 10px 0;">
+							<div class="col-md-3">
+								  Type
+							</div>
+							<div class="col-md-3 aligntop">
+								<select name="selectIndex" autocomplete="off" id="type">
+									<option value="column">Column</option>
+									<option value="bar">Bar</option>
+									<option value="doughnut">Doughnut</option>
+									<option value="pie">Pie</option>
+								</select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								  Highlight Color
+							</div>
+							<div class="col-md-3 aligntop">
+								<div class="element"><input type="text" id="colorPick" /></div>
+
+							</div>
+						</div>
+                        <div class="row" style="margin: 10px 0;">
+							<div class="col-md-3">
+								  Highlight Pattern
+							</div>
+							<div class="col-md-3 aligntop">
+								<select name="selectIndex" autocomplete="off" id="highpattern" style="width:100px;">
+									<option value="diagonalForward">Diagonal Forward</option>
+									<option value="chessboard">Chessboard</option>
+									<option value="none">None</option>
+									<option value="dots">Dots</option>
+								</select>
+							</div>
+						</div>
+						 <div class="row" style="margin: 10px 0;">
+							<div class="col-md-3">
+								  Highlight Mode
+							</div>
+							<div class="col-md-3 aligntop">
+								<select name="selectIndex" autocomplete="off" id="highmode" style="width:100px;">
+									<option value="point">Point</option>
+									<option value="series">Series</option>
+									<option value="cluster">Cluster</option>
+							    </select>
+							</div>
+						</div>
+                        <div class="row">
+							<div class="col-md-3">
+								  Selection Color
+							</div>
+							<div class="col-md-3 aligntop">
+								<div class="element"><input type="text" id="colorPick1" /></div>
+
+							</div>
+						</div>
+                        <div class="row" style="margin: 10px 0;">
+							<div class="col-md-3">
+								  Selection Pattern
+							</div>
+							<div class="col-md-3 aligntop">
+								<select name="selectIndex" autocomplete="off" id="selpattern" style="width:100px;">
+									<option value="dots">Dots</option>
+									<option value="diagonalForward">Diagonal Forward</option>
+								<option value="chessboard">Chessboard</option>
+									<option value="none">None</option>
+								</select>
+							</div>
+						</div>
+						<div class="row" style="margin: 10px 0;">
+							<div class="col-md-3">
+								  Selection Mode
+							</div>
+							<div class="col-md-3 aligntop">
+								<select name="selectIndex" autocomplete="off" id="selmode" style="width:100px;">
+									<option value="point">Point</option>
+									<option value="series">Series</option>
+									<option value="cluster">Cluster</option>
+								</select>
+							</div>
+						</div>
+						<div class="row" style="margin: 10px 0;">
+							<div class="col-md-3">
+								  Selection Type
+							</div>
+							<div class="col-md-3 aligntop">
+								<select name="selectIndex" autocomplete="off" id="selctionOption" style="width:100px;">
+									<option value="Single">Single</option>
+									<option value="Multiple">Multiple</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+ <script type="text/javascript">
+	$(function () 
+	{
+        $("#container").ejChart(
+        {
+			//Initializing Primary X Axis
+            primaryXAxis:
+            {
+                title: { text: 'Countries' },
+                labelIntersectAction: 'multiplerows'                     
+            },			
+			//Initializing Primary Y Axis	
+            primaryYAxis:
+            {
+                labelFormat: "{value}%",
+                title: { text: 'Percentage' }
+            }, 
+			//Initializing Common Properties for all the series
+			commonSeriesOptions:
+			{
+                type: 'column', 
+				enableAnimation: true, 
+				tooltip: { visible: false },
+				highlightSettings: {enable:true, mode:'point', border: { width: '1'}, opacity: 1, pattern:'diagonalforward' },
+				selectionSettings: {enable:true, mode: 'point', border: { width: '1'}, opacity: 1, pattern: 'dots' },
+            },            
+			//Initializing Series
+			series: 
+			[ 
+				{
+				    points: [
+                             { x: "China", y: 17 },
+                             { x: "United States", y: 19},
+							 { x: "India", y: 29},
+                             { x: "Japan", y: 13},
+							 { x: "Brazil", y: 24},
+                             { x: "Russia", y: 16},
+                             { x: "Germany", y: 13},
+							 { x: "Nigeria", y: 44},
+                             { x: "United Kingdom", y: 18},
+							 { x: "France", y: 19}
+				    ],
+				     name: 'Age 0-14',
+				     doughnutCoefficient: 0.5,
+				     doughnutSize: 0.9
+				},
+				{
+				    points: [
+                             { x: "China", y: 74},
+                             { x: "United States", y: 67},
+							 { x: "India", y: 65 },
+                             { x: "Japan", y: 61 },
+							 { x: "Brazil", y: 68 },
+                             { x: "Russia", y: 70},
+                             { x: "Germany", y: 66},
+							 { x: "Nigeria", y: 53},
+                             { x: "United Kingdom", y: 65},
+							 { x: "France", y: 63}
+				    ],
+				    name: 'Age 15-64'
+				    
+				},
+				{
+				    points: [
+                             { x: "China", y: 9 },
+                             { x: "United States", y: 14},
+							 { x: "India", y: 6},
+                             { x: "Japan", y: 26},
+							 { x: "Brazil", y: 8},
+                             { x: "Russia", y: 14},
+                             { x: "Germany", y: 21},
+							 { x: "Nigeria", y: 3},
+                             { x: "United Kingdom", y: 17},
+							 { x: "France", y: 18}
+				    ],
+				    name: 'Age 65 & above'
+				   
+				}
+			],
+            title: { text: 'Age Distribution By Country In Percentage' },
+            load: "loadTheme",
+            isResponsive: true,
+            size:{height:'550'},
+            legend: { visible: true, toggleSeriesVisibility: false }
+        });
+		       
+            $("#colorPick").ejColorPicker({
+                value: '#278787',
+                select: "onChange"
+            });
+
+          
+            $("#colorPick1").ejColorPicker({
+                value: '#278787',
+                select: "onChange1"
+            });
+
+          
+		
+        $('#enablehigh').change(function () 
+		{
+		 $("#container").ejChart("option", { "commonSeriesOptions": {highlightSettings:{enable:$('#enablehigh').is(":checked")}} });
+          
+               
+        });
+        $('#enablesel').change(function () {
+		$("#container").ejChart("option", { "commonSeriesOptions": {selectionSettings:{enable:$('#enablesel').is(":checked")}} });
+           
+        });
+        $('#enable3d').change(function () {
+            var chart = $("#container").ejChart("instance");
+            chart.model.enable3D = $('#enable3d').is(":checked");
+            chart.model.enableRotation = true;
+            chart.model.depth = 40;
+            chart.model.wallSize = 2;
+            chart.model.tilt = 0;
+            chart.model.rotation = 34;
+            chart.model.perspectiveAngle = 90;
+            chart.model.sideBySideSeriesPlacement = true;
+            chart.redraw();
+
+        });
+        $('#enablelege').change(function () {
+            var chart = $("#container").ejChart("instance");
+            chart.model.legend.toggleSeriesVisibility = !$('#enablelege').is(":checked");
+            chart.redraw();
+
+        });
+        $('#type').change(function () {
+            var chart = $("#container").ejChart("instance");
+            if ($('#type')[0].value.toLowerCase() == "pie" || $('#type')[0].value.toLowerCase() == "doughnut") {
+               
+                chart.model.series[0].type = ($('#type')[0].value);
+                chart.model.series[1].type = "column";
+                chart.model.series[2].type = "column"; 
+            }
+            else {
+                chart.model.series[0].type = ($('#type')[0].value);
+                chart.model.series[1].type = ($('#type')[0].value);
+                chart.model.series[2].type = ($('#type')[0].value);
+            }
+            chart.redraw();
+           
+		 });
+
+       
+        $('#highpattern').change(function () {
+		 $("#container").ejChart("option", { "commonSeriesOptions": {highlightSettings:{pattern:$('#highpattern')[0].value}} });
+          
+        });
+		$('#highmode').change(function () {
+            $("#container").ejChart("option", { "commonSeriesOptions": {highlightSettings:{mode:$('#highmode')[0].value}} });
+
+        });
+
+       
+        $('#selpattern').change(function () {
+            $("#container").ejChart("option", { "commonSeriesOptions": {selectionSettings:{pattern:$('#selpattern')[0].value}} });
+
+        });
+        $('#selmode').change(function () {
+           $("#container").ejChart("option", { "commonSeriesOptions": {selectionSettings:{mode:$('#selmode')[0].value}} });
+
+        });		
+		$('#selctionOption').change(function () {
+           $("#container").ejChart("option", { "commonSeriesOptions": {selectionSettings:{type:$('#selctionOption')[0].value}} });
+        });
+    });	
+    function onChange(args) {
+
+            var color = args.value;
+            var chart = $("#container").ejChart("instance");
+
+            for (var i = 0; i < chart.model.series.length; i++) {
+                chart.model.series[i].highlightSettings.color = color;
+
+            }
+        }
+        function onChange1(args) {
+		
+            var color = args.value;
+            var chart = $("#container").ejChart("instance");
+
+            for (var i = 0; i < chart.model.series.length; i++) {
+                chart.model.series[i].selectionSettings.color = color;
+
+            }
+        }
+
+	$("#sampleProperties").ejPropertiesPanel();
+ </script>
+ </body>
+</html>

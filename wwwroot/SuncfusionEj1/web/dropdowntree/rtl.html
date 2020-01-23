@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1: DropDownTree - RTL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div class="control">
+                        <input type="text" id="selectItem" />
+                        <div style="display:table" id="itemList">
+                            <ul id="treeView">
+                                <li>
+                                    كتب
+                                    <ul>
+                                        <li>الإصدارات الجديدة</li>
+                                        <li>جديد إصدارات الكتب السمعية</li>
+                                        <li>أكثر الكتب مبيعا</li>
+                                        <li>قادمة</li>
+                                        <li>مجموعات مربع</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    الألعاب
+                                    <ul>
+                                        <li>قادمة</li>
+                                        <li>اكس بوكس</li>
+                                        <li>لوحات المفاتيح</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    متنقل
+                                    <ul>
+                                        <li>القادمون الجدد</li>
+                                        <li>أكثر الكتب مبيعا</li>
+                                        <li>منخفض السعر</li>
+                                        <li>أقراص</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    الكاميرات
+                                    <ul>
+                                        <li>حدد و صور</li>
+                                        <li>كاميرات الفيديو الرقمية</li>
+                                        <li>أكثر الكتب مبيعا</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    موسيقى
+                                    <ul>
+                                        <li>الإصدارات الجديدة</li>
+                                        <li>أكثر الكتب مبيعا </li>
+                                        <li>موسيقى الروك</li>
+                                        <li>التعبدية والروحية </li>
+                                        <li>الصوفية وغزال</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#selectItem').ejDropDownTree({
+                enableRTL: true,
+                targetId: "itemList",
+                watermarkText: "Please select",
+                width: "100%"
+            });
+        });
+    </script>
+</body>
+</html>

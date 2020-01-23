@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+   <!--[if lt IE 9]>
+        <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jquery.validate.min.js"></script>
+    <script src="../scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/jsontreegriddata.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #TreeGridContainer {
+            position: absolute;
+        }
+    </style>
+
+
+</head>
+<body>
+<div id="TreeGridContainer" style="width: 100%; height: 100%;"></div>
+
+<script>
+    $(function () {
+        var dateFormat = "{0:" + ej.preferredCulture()["calendars"]["standard"]["patterns"]["d"] + "}";
+        $("#TreeGridContainer").ejTreeGrid({
+            allowSorting: true,
+            allowMultiSorting: true,
+            allowVirtualization: true,
+            editSettings: {
+                allowAdding: true,
+                allowEditing: true,
+                allowDeleting: true,
+                editMode: "dialogEditing",
+                rowPosition: "belowSelectedRow"
+            },
+            isResponsive: true,
+            childMapping: "subtasks",
+            allowFiltering: true,
+            filterSettings: {
+                filterType: "menu"
+            },
+            allowColumnResize: true,
+            allowColumnReordering: true,
+            dataSource: sampleData,
+            treeColumnIndex: 1,
+            showColumnChooser: true,
+            showColumnOptions: true,
+            showGridCellTooltip:true,
+            contextMenuSettings: {
+                showContextMenu: true,
+                contextMenuItems: ["add", "edit", "delete"]
+            },
+            columns: [
+                { field: "taskID", headerText: "Task Id", width: "45", editType: "numericedit" },
+                { field: "taskName", headerText: "Task Name", width: "90", clipMode: ej.TreeGrid.ClipMode.Ellipsis, editType: "stringedit" },
+                { field: "startDate", headerText: "Start Date", editType: "datepicker", format: dateFormat },
+                { field: "endDate", headerText: "End Date", format: dateFormat, editType: "datetimepicker",priority:5 },
+                { field: "duration", headerText: "Duration", editType: "numericedit", priority: 6 },
+                { field: "progress", headerText: "Progress", editType: "numericedit",priority:6 }
+            ],
+            columnDialogFields: ["field", "headerText", "width", "filterEditType", "allowSorting"],
+            selectionSettings: {
+                selectionType: ej.TreeGrid.SelectionType.Multiple,
+                selectionMode: ej.TreeGrid.SelectionMode.Row,
+            },
+            allowPaging: true,
+            allowKeyboardNavigation: true,
+            allowDragAndDrop: true,
+            dragTooltip: {
+                showTooltip: true,
+            },
+            toolbarSettings: {
+                showToolbar: true,
+                toolbarItems: [ej.TreeGrid.ToolbarItems.Add,
+                ej.TreeGrid.ToolbarItems.Edit,
+                ej.TreeGrid.ToolbarItems.Delete,
+                ej.TreeGrid.ToolbarItems.Update,
+                ej.TreeGrid.ToolbarItems.Cancel,
+                ej.TreeGrid.ToolbarItems.ExpandAll,
+                ej.TreeGrid.ToolbarItems.CollapseAll
+                ]
+            },
+        })
+    });
+</script>
+</body>
+</html>

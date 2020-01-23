@@ -1,0 +1,557 @@
+
+html, body {
+    margin: 0;
+    font-family: 'Segoe UI';
+    background-color: #ffffff;
+}
+
+.healthTracker {
+    height: 100%;
+    width: 100% !important;
+    margin: 0px;
+}
+
+.container {
+    min-width: 320px;
+}
+
+.col-xs-3, .col-md-3, .col-md-6, .col-md-12, .col-xs-6, .col-lg-6, .col-sm-6 {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+    position: inherit;
+}
+
+#HistoryDetails {
+    border-bottom: 1px solid #EEEFEF;
+}
+
+    #HistoryDetails > div:first-child {
+        border-right: 1px solid #EEEFEF;
+    }
+
+    #HistoryDetails ~ div {
+        border-top: 0 none;
+    }
+
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.trackerheader {
+    background-color: #53B2C1;
+    color: white;
+    font-size: x-large;
+    height: 46px;
+    width: 100%;
+}
+
+.samplecontainer {
+    width: 75%;
+}
+
+.sampleheader {
+    background: none repeat scroll 0 0 #53B2C1;
+    height: 46px;
+    width: 75%;
+    padding:0;
+}
+
+.sampleheader .col-xs-12 {
+    padding:0;
+}
+
+.sampleheader .title {
+    float: left;
+    padding-top: 7px;
+}
+
+.topspace.row {
+    position: relative;
+}
+
+.addbutton.col-xs-6 {
+    position: absolute;
+    right: 0;
+    width: 111px;
+}
+
+.heartsym {
+    height: 36px;
+    margin-top: -29px;
+}
+
+.boardpicdiv {
+    float: right;
+    margin-top: -3px;
+    margin-left: 18px;
+}
+
+.dashboardpic > b {
+    font-size: 16px;
+    font-weight: normal;
+    margin-left: 12px;
+    position: absolute;
+    top: 11px;
+}
+
+.dashboardpic {
+    background-image: url("../../content/images/HealthTracker/dashboardimg.png");
+    background-repeat: no-repeat;
+    height: 58px;
+    width: 102px;
+}
+
+.nopicdiv {
+    float: right;
+}
+
+.nopic > b {
+    color: #53b2c1;
+    font-size: medium;
+    margin-left: 12px;
+    margin-top: -1px;
+    position: absolute;
+}
+
+.nopic {
+    background-image: url("../../content/images/HealthTracker/noimg.png");
+    height: 33px;
+    width: 33px;
+    background-repeat: no-repeat;
+    margin-top: 11px;
+    margin-right: -6px;
+}
+
+.personpic {
+    width: 65px;
+    height: 65px;
+    vertical-align: bottom;
+}
+
+.persondet {
+    color: #294548;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.personsym {
+    height: 30px;
+    vertical-align: baseline;
+}
+
+.bmi {
+    background-image: url("../../content/images/HealthTracker/bmiimg.png");
+    background-repeat: no-repeat;
+}
+
+.weight {
+    background-image: url("../../content/images/HealthTracker/weightimg.png");
+    background-repeat: no-repeat;
+}
+
+.weight, .bmi {
+    color: white;
+    font-size: 16px;
+    height: 50px;
+    text-align: center;
+    width: 90px;
+}
+
+.weightdiv, .bmidiv {
+    float: left;
+    margin-left: 15px;
+}
+
+.bmidiv > label, .weightdiv > label {
+    color: #5D6665;
+    font-size: 14px;
+}
+
+.titlecss {
+    color: #333333;
+    font-size: x-large;
+    text-align: left;
+    font-weight: lighter;
+    font-family: segoe ui;
+}
+
+label {
+    font-weight: normal;
+    margin-bottom: 0px;
+}
+
+#todayDetails > div label {
+    color: #898989;
+    font-size: 16px;
+}
+
+.ptiles:first-child {
+    border-left: 1px solid #EEEFEF;
+}
+
+.ptiles {
+    border-width: 1px 1px 1px 0px;
+    border-style: solid;
+    border-color: #EEEFEF;
+}
+
+#MealSummary .ptiles:first-child {
+    text-align: center;
+}
+
+.bmiwight {
+    float: right;
+}
+
+.gauge1, .chart1 {
+    border-color: #EEEFEF;
+    border-style: solid;
+    border-width: 0 1px 0 0;
+}
+
+.chart3, .chart4 {
+    border-bottom: 0 none;
+}
+
+.chart5 {
+    border-top: 0 none;
+}
+
+.gauge1 div, .gauge2 div {
+    margin-bottom: 32px;
+}
+
+#ChartStep, #ChartFloor {
+    margin-bottom: 12px;
+}
+
+@media screen and (max-width:500px) {
+    .container, .col-xs-12 {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .boardpicdiv {
+    margin-right: -40px;
+    }
+    .nopic {
+        margin-right: -7px;
+        margin-top: 12px;
+    }
+   
+    .nopic > b {
+        margin-top: 0px;
+    }
+
+    .col-xs-6 {
+        width: auto;
+    }
+
+    .weightdiv, .bmidiv {
+        /*float: left;*/
+        margin-left: 15px;
+        margin-top: 10px;
+    }
+
+    .col-xs-6 {
+        padding-left: 55px;
+    }
+    .topspace.row .col-xs-6 {
+         padding-left: 0px;
+    }
+    .addbutton.col-xs-6{
+        padding: 0;
+        width: 109px;
+    }
+    .heartsym {
+        height: 32px;
+        margin-top: -28px;
+    }
+
+    .trackerheader {
+        color: #FFFFFF;
+        font-family: helvetica;
+        font-size: 21px;
+    }
+}
+
+@media (max-width:991px) {
+    .gauge1 {
+        border: 1px;
+    }
+
+    .gauge2 {
+        border-width: 1px 1px 1px 0px;
+    }
+
+    .chart1 {
+        border-width: 0px 1px 1px 1px;
+    }
+
+    .chart2 {
+        border-width: 0px 1px 1px 0px;
+    }
+    .gauge1, .chart1, .gauge2, .chart2 {
+        border-color: #EEEFEF;
+        border-style: solid;
+    }
+    .chart4 {
+        border-left: 1px solid #EEEFEF;
+    }
+
+    #todayDetails .ptiles {
+        border: 0px;
+    }
+}
+
+.gauge1, .gauge2, .chart1, .chart2 {
+    text-align: center;
+    height: 260px;
+}
+
+#GaugeRDI, #GaugeBurnt {
+    display: inline-block;
+}
+
+#ChartStep, #ChartFloor {
+    display: inline-block;
+}
+
+@media (max-width:766px) {
+
+    #todayDetails .ptiles {
+        border: 0px;
+    }
+
+    .gauge1 {
+        border-width: 1px 1px 1px 1px;
+    }
+
+    .gauge2, .chart1, .chart2 {
+        border-width: 0px 1px 1px 1px;
+    }
+}
+
+.topspace {
+    margin-top: 6%;
+    margin-bottom: 3%;
+}
+
+.chartimage {
+    position: relative;
+    display: inline-block;
+}
+
+.add, .addlabel {
+    float: right;
+    margin-right: 5px;
+}
+
+.addlabel {
+    color: #b2b2b2;
+    font-size: 16px;
+    margin-top: 2px;
+    font-weight: normal;
+}
+
+#validation {
+    color: #FF0000;
+}
+
+.ChartCal_svg,.ChartCal_vml {
+    height: 110px !important;
+    width: 110px !important;
+    border: none !important;
+    overflow: hidden !important;
+    background-color: transparent !important;
+    opacity: 1;
+}
+
+.MealDetails_svg ,.MealDetails_vml{
+    border: 2px solid #303030 !important;
+}
+.ChartBurnt_svg,.ChartBurnt_vml
+{
+	border:1px solid #727272 !important;
+}
+.tooltipDiv td {
+    color: white !important;
+}
+.tooltipDiv {    
+    font-family: Segeo UI;
+    font-size: 14px;
+    font-weight: 200;
+    opacity: 1;
+}
+
+#stepTool {
+    background-image: url("../../content/images/HealthTracker/steps.png");
+    height: 50px;
+}
+
+#hydrateTool, #fatTool, #proteinTool {
+    background-image: url("../../content/images/HealthTracker/calories.png");
+    height: 32px;
+    margin-left: 14px;
+    margin-top: 8px;
+}
+
+#stepTool, #calTool {
+    margin-left: 3px;
+    margin-top: 10px;
+}
+
+#stepTool, #hydrateTool, #fatTool, #proteinTool, #calTool {
+    width: 45px;
+    background-repeat: no-repeat;
+}
+
+#BurntTooltip > div:first-child, #HydrateTooltip > div:first-child, #FatTooltip > div:first-child, #ProteinTooltip > div:first-child {
+    float: left;
+}
+
+#burntmonth {
+    color: #8CC640;
+}
+
+#hydratemonth, #fatmonth, #proteinmonth {
+    color: black;
+}
+
+#burntmonth, #hydratemonth, #fatmonth, #proteinmonth {
+    font-family: segoe ui;
+    font-size: 17px;
+}
+
+#stepTool ~ div {
+    background: none repeat scroll 0 0 #666666;
+    width: 105px;
+}
+
+.fatLabel, .proLabel, .hydlabel {
+    background: none repeat scroll 0 0 #FFFFFF;
+    width: 96px;
+}
+
+#stepTool ~ div, .fatLabel, .proLabel, .hydlabel {
+    float: right;
+    height: 64px;
+    padding-left: 10px;
+}
+
+#burntday {
+    color: #FFFFFF;
+    font-family: segoe ui;
+    font-size: 26px;
+}
+
+#hydrateday, #fatday, #proteinday {
+    color: #000000;
+    font-family: segoe ui;
+    font-size: 26px;
+}
+
+#calday {
+    color: #666666;
+    font-family: segoe ui;
+    font-size: 34px;
+    margin-top: 20px;
+    position: absolute;
+    text-align: center;
+    width: 76px;
+}
+
+#calmonth {
+    color: white;
+    font-family: segoe ui;
+    font-size: 18px;
+    font-weight: normal;
+    padding-left: 25px;
+}
+
+#calday ~ span {
+    color: #666666;
+    font-family: segoe ui;
+    font-size: 18px;
+    margin-left: 65px;
+    margin-top: 38px;
+    position: absolute;
+}
+
+.calldiv {
+    height: 100px;
+    width: 100px;
+    background-image: url("../../content/images/HealthTracker/circle.png");
+    background-repeat: no-repeat;
+}
+
+.monthdiv {
+    margin-left: -3px;
+    position: absolute;
+    top: 67px;
+}
+
+.addbutton:hover {
+    background: #f6f6f6;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#MealSummary #EditDialog_Grid_Save {
+    margin-left: 209px !important;
+}
+
+.chartimg {
+    left: 164px;
+    top: 163px;
+}
+
+.historytooltip {
+    display: none;
+    height: 55px;
+    width: 165px;
+}
+
+.burntlabel, .tooltiplabel {
+    color: white;
+    font-size: 16px;
+    font-family: 'Segoe UI';
+}
+
+.tooltiplabel {
+    margin-left: 5px;
+}
+
+.diatxt {
+    width: 120px;
+}
+
+.mealdiv {
+    min-height: 1000px;
+}
+
+.todaylabel {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 32px;
+}
+
+.pending {
+    color: #606060 !important;
+    font-weight: normal;
+}
+
+.healthtext {
+    vertical-align: super;
+}
+ #healthAddTemplate #validation {
+    color: red;
+    font-size: 12px;
+    font-style: italic;
+}
+.foodlist.ejinputtext.valid {
+    text-indent:10px;
+}

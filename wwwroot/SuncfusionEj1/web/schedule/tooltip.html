@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Schedule Tool Tip</title>
+    <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script type="text/javascript" src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsonscheduledata.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div style="float: left" id="Schedule1"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">Enable Tooltip</div>
+                        <div class="col-md-3">
+                            <input type="checkbox" id="enableToolTip" class="nodetext" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">Enable Tooltip Template</div>
+                        <div class="col-md-3">
+                            <input type="checkbox" id="enableToolTipTemp" class="nodetext" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script id="tooltipTemp" type="text/x-jsrender">
+        <div style="width:275px;">
+            <div style='float:left;width:80px;'>{{:~format("1_"+ownerId.toString())}}</div>
+            <div>
+                <div>
+                    <div class="temphead" style="float:left;">Name:&nbsp;</div>
+                    <div class="temp">{{:~format("2_"+ownerId.toString())}}</div>
+                </div>
+                <div style="padding-top:3px;">
+                    <div class="temphead" style="float:left;">Subject:&nbsp;</div>
+                    <div class="temp">{{:Subject.length>0 ? Subject:"NoTitle"}}</div>
+                </div>
+                <div style="padding-top:3px">
+                    <div class="temphead" style="float:left;">StartTime:&nbsp;</div>
+                    <div class="temp">{{:StartTime.toLocaleString()}}</div>
+                </div>
+                <div style="padding-top:3px;padding-bottom:2px">
+                    <div class="temphead" style="float:left;">EndTime:&nbsp;</div>
+                    <div class="temp">{{:EndTime.toLocaleString()}}</div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#sampleProperties").ejPropertiesPanel();
+            var dManager = ej.DataManager($.extend(true, [], window.ResourcesData)).executeLocal(ej.Query().take(10));
+            $("#Schedule1").ejSchedule({
+                width: "100%",
+                height: "525px",
+                currentDate: new Date(2017, 5, 5),
+                resources: [
+                {
+                    field: "ownerId",
+                    title: "Owner",
+                    name: "Owners", allowMultiple: true,
+                    resourceSettings: {
+                        dataSource: [
+                        { text: "Nancy", id: 1, groupId: 1, color: "#f8a398" },
+                        { text: "Steven", id: 3, groupId: 2, color: "#56ca85" },
+                        { text: "Michael", id: 5, groupId: 1, color: "#51a0ed" }
+                        ],
+                        text: "text", id: "id", groupId: "groupId", color: "color"
+                    }
+                }],
+                tooltipSettings: { enable: true },
+                appointmentSettings: {
+                    dataSource: dManager,
+                    id: "Id",
+                    subject: "Subject",
+                    startTime: "StartTime",
+                    endTime: "EndTime",
+                    description: "Description",
+                    allDay: "AllDay",
+                    recurrence: "Recurrence",
+                    recurrenceRule: "RecurrenceRule",
+                    resourceFields: "ownerId"
+                },
+            });
+            obj = $("#Schedule1").data("ejSchedule");
+            $("#enableToolTip").ejCheckBox({ "change": "onTooltipChange", checked: true });
+            $("#enableToolTipTemp").ejCheckBox({ "change": "onTooltipTemp", checked: false });
+        });
+
+        function _getResources(id) {
+            var resid = id.split("_");
+            switch (parseInt(resid[1])) {
+                case 1:
+                    if (parseInt(resid[0]) == 2)
+                        return "<div>Nancy<div>"
+                    else
+                        return "<img class='imgheight' src='../content/images/Employees/3.png'/>";
+                    break;
+                case 3:
+                    if (parseInt(resid[0]) == 2)
+                        return "<div>Steven<div>"
+                    else
+                        return "<img class='imgheight' src='../content/images/Employees/5.png'>";
+                case 5:
+                    if (parseInt(resid[0]) == 2)
+                        return "<div>Michael<div>"
+                    else
+                        return "<img class='imgheight' src='../content/images/Employees/7.png'>";
+                default:
+                    return null;
+            }
+        }
+        $.views.helpers({ format: _getResources });
+
+        function onTooltipChange(args) {
+            $("#Schedule1").ejSchedule({ tooltipSettings: { enable: args.isChecked } });
+        }
+
+        function onTooltipTemp(args) {
+            $("#Schedule1").ejSchedule({ tooltipSettings: { templateId: (args.isChecked) ? "#tooltipTemp" : null } });
+        }
+    </script>
+    <style>
+        .imgheight {
+            width: 70px;
+            height: 72px;
+        }
+
+        .temp {
+            padding-top: 2px;
+            font: 12px Segoe UI SemiBold;
+        }
+
+        .temphead {
+            font: 13px Segoe UI;
+            font-weight: bold;
+        }
+    </style>
+</body>
+</html>

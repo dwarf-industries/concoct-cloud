@@ -1,0 +1,162 @@
+<!doctype html>
+
+<html>
+<head>
+    <title>Essential JS 1: Rating - API's</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <input id="apiRating" type="text" class="rating" />
+                </div>
+            </div>
+
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            Set Value
+                        </div>
+                        <div class="col-md-6">
+                            <select name="ddlSetValue" id="ddlRating" class="e-ddl">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+					</div>
+					<div class="row">
+                        <div class="col-md-6">
+                            Get Current Value
+                        </div>
+                        <div class="col-md-6">
+                            <input type="button" id="btnGetValue" value="GetValue" class="e-btn" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            Reset
+                        </div>
+                        <div class="col-md-6">
+                            <input type="button" id="btnReset" class="e-btn" value="Reset" />
+                        </div>
+					</div>
+					<div class="row">
+                        <div class="col-md-6">
+                            Reset Button
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="chkResetbtn" class="e-togglebtn" />
+                        </div>
+                    </div>
+					<div class="row">
+                        <div class="col-md-6">
+                            Rating
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="chkShowHideRating" class="e-togglebtn" />
+                        </div>
+					</div>
+					<div class="row">
+                        <div class="col-md-6">
+                            Destroy
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="chkDestroy" class="e-togglebtn" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var ratingObj, ddlObj;
+        $(function () {
+            // declaration
+            $("#apiRating").ejRating();
+            ratingObj = $("#apiRating").data("ejRating");
+            $("#ddlRating").ejDropDownList({ "width": "107px", "change": "setRatingValue", watermarkText: "Select", selectedItemIndex: 1 });
+			ddlObj = $("#ddlRating").data("ejDropDownList");
+            $("#btnGetValue").ejButton({ "width": "107px", "click": "onGetValueClck" });
+			$("#btnReset").ejButton({ "width": "107px", "click": "onResetClck" });
+			$("#chkResetbtn").ejToggleButton({ "width": "107px", "change": "onShowHideReset", "defaultText": "Hide", "activeText": "Show" });
+			$("#chkShowHideRating").ejToggleButton({ "width": "107px", "change": "onShowHideRating", "defaultText": "Hide", "activeText": "Show" });
+			$("#chkDestroy").ejToggleButton({ "width": "107px", "change": "onDestoryRestore", "defaultText": "Destory", "activeText": "Restore" });
+        });
+        function onGetValueClck(args) {
+            if (ratingObj.model) {
+                var val = ratingObj.getValue();
+                alert("Current Value : " + val);
+            }
+        }
+        function setRatingValue(args) {
+            if (ratingObj.model)
+                ratingObj.setValue(args.value);
+        }
+        function onResetClck() {
+            if (ratingObj.model)
+                ratingObj.reset();
+            ddlObj.option("selectedItemIndex", 0);
+        }
+        function onShowHideRating(args) {
+            if (ratingObj.model) {
+                if (args.isChecked)
+                    ratingObj.hide();
+                else
+                    ratingObj.show();
+            }
+        }
+        function onShowHideReset(args) {
+            if (ratingObj.model) {
+                if (args.isChecked)
+                    ratingObj.option({ allowReset: false });
+                else
+                    ratingObj.option({ allowReset: true });
+            }
+        }
+        function onDestoryRestore(args) {
+            if (args.isChecked){
+                ratingObj.destroy();
+				stateChange("disable");
+				}
+            else {
+                $("#apiRating").ejRating();
+                ratingObj = $("#apiRating").data("ejRating");
+                ddlObj.option('value', "");
+				stateChange("enable");
+            }
+        }
+		function stateChange(state){
+			    
+                $("#ddlRating").ejDropDownList(state);
+				$("#btnGetValue").ejButton(state);
+				$("#btnReset").ejButton(state);
+				$("#chkResetbtn").ejToggleButton(state);
+				$("#chkShowHideRating").ejToggleButton(state);
+				
+		}
+		$("#sampleProperties").ejPropertiesPanel();
+    </script>
+</body>
+</html>

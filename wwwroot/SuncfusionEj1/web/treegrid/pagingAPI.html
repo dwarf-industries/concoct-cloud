@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Essential JS 1 : TreeGrid</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+     <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsontreegriddata.js"></script>
+</head>
+
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="TreeGridContainer" style="width:100%;"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3 colwidth">
+                            Allow Paging
+                        </div>
+                        <div class="col-md-3 colwidth">
+                            <input type="checkbox" id="allowPaging" checked="checked" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 colwidth">
+                            Page Size Mode
+                        </div>
+                        <div class="col-md-3 colwidth">
+
+                            <input type="text" id="pageSizeMode" />
+                            <div id="pageList">
+                                <ul>
+                                    <li>All</li>
+                                    <li>Root</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 colwidth">
+                            Page Size
+                        </div>
+                        <div class="col-md-3 colwidth">
+                            <input type="text" id="pageSize" />
+                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 colwidth">
+                                Page Count
+                            </div>
+                            <div class="col-md-3 colwidth">
+                                <input type="text" id="pageCount" />
+                            </div>
+                            </div>
+                    <div class="row">
+                            <div class="col-md-3 colwidth">
+                                Current Page
+                            </div>
+                            <div class="col-md-3 colwidth">
+                                <input type="text" id="currentPage" />
+                            </div>
+                        </div>
+
+                </div>
+            </div>
+         </div>
+      </div>
+
+    <script type="text/javascript">
+        var x = 0, l = 0, z = "", data = [];
+        for (var p = 1; p < 11; p++) {
+
+            for (var i = 0; i < 3; i++) {
+                var parent = {};
+                parent["taskID"] = ++x;
+                parent["taskName"] = pagingdata[i].taskName + z;
+                parent["startDate"] = pagingdata[i].startDate
+                parent["endDate"] = pagingdata[i].endDate;
+                parent["duration"] = pagingdata[i].duration
+                parent["status"] = Math.round(Math.random() * 100);
+                var d = [];
+                if (ej.isNullOrUndefined(pagingdata[i].subtasks)) {
+                    parent["subtasks"] = d;
+                    data[i] = parent;
+                    continue;
+                }
+                for (var j = 0; j < pagingdata[i].subtasks.length; j++) {
+                    child = {};
+                    child["taskID"] = ++x;
+                    child["taskName"] = pagingdata[i].subtasks[j].taskName + z;
+                    child["startDate"] = pagingdata[i].subtasks[j].startDate;
+                    child["endDate"] = pagingdata[i].subtasks[j].endDate;
+                    child["duration"] = pagingdata[i].subtasks[j].duration;
+                    child["status"] = Math.round(Math.random() * 100);
+                    var y = [];
+                    if (ej.isNullOrUndefined(pagingdata[i].subtasks[j].subtasks)) {
+                        d.push(child);
+                        continue;
+                    }
+                    for (var k = 0; k < pagingdata[i].subtasks[j].subtasks.length; k++) {
+                        c = {};
+                        c["taskID"] = ++x;
+                        c["taskName"] = pagingdata[i].subtasks[j].subtasks[k].taskName + z;
+                        c["startDate"] = pagingdata[i].subtasks[j].subtasks[k].startDate;
+                        c["endDate"] = pagingdata[i].subtasks[j].subtasks[k].endDate;
+                        c["duration"] = pagingdata[i].subtasks[j].subtasks[k].duration;
+                        c["status"] = Math.round(Math.random() * 100);
+                        y.push(c);
+                    }
+                    child["subtasks"] = y;
+                    d.push(child);
+                }
+                parent["subtasks"] = d;
+                data[l++] = parent;
+            }
+            z = p;
+        }
+        $(function () {
+            var dateFormat = "{0:" + ej.preferredCulture()["calendars"]["standard"]["patterns"]["d"] + "}";
+            $("#TreeGridContainer").ejTreeGrid({
+                dataSource: data,
+                childMapping: "subtasks",
+                treeColumnIndex: 1,
+                allowColumnResize: true,
+                isResponsive: true,
+                actionComplete: "Complete",
+                allowPaging: true,
+                pageSettings:{
+                    pageCount: 5
+                },
+                rowHeight: window.theme == "material" ? 48 : window.theme == "office-365" ? 36 : 30,
+                load: function () {
+                    if (window.theme == "material")
+                        this.treeIndentLevelWidth = 16;
+                },
+                columns: [
+                    { field: "taskID", headerText: "Task Id", width: window.theme == "material" ? 90 : 55 },
+                    { field: "taskName", headerText: "Task Name" },
+                    { field: "startDate", headerText: "Start Date", format: dateFormat },
+                    { field: "endDate", headerText: "End Date", format: dateFormat },
+                    { field: "duration", headerText: "Duration" }                   
+                ],
+                editSettings: {
+                    allowDeleting: false,
+                },
+            })
+            $("#allowPaging").ejCheckBox({ "change": "AllowPaging", checked: true });
+            $("#pageCount").ejNumericTextbox({ value: 5,  minValue: 1, maxValue: 8, change: "PageCount", width: 100, decimalPlaces:0 });
+            $("#currentPage").ejNumericTextbox({ value: 1, minValue: 1, maxValue: 30, change: "CurrentPage", width: 100, decimalPlaces: 0 });
+            $("#pageSize").ejNumericTextbox({ value: 12, minValue: 1, maxValue: 20, change: "PageSize", width: 100, decimalPlaces: 0 });
+            $('#pageSizeMode').ejDropDownList({
+                targetID: "pageList",
+                watermarkText: "All",
+                width: "100",
+                change:"PageSizeMode"
+            });
+        });
+        function Complete(args) {            
+            var page = this.model.pageSettings;
+            $("#currentPage").ejNumericTextbox({ value: page.currentPage, maxValue: page.totalPages, });
+            
+        }
+        function AllowPaging() {
+            var obj = $("#TreeGridContainer").data("ejTreeGrid");
+            if ($('#allowPaging').is(":checked")) {
+
+                obj.option("allowPaging", true);
+                $("#currentPage, #pageCount, #pageSize").ejNumericTextbox("enable");
+                $("#pageSizeMode").ejDropDownList("enable");
+            }
+            else{
+                obj.option("allowPaging", false);
+                $("#currentPage, #pageCount, #pageSize").ejNumericTextbox("disable");
+                $("#pageSizeMode").ejDropDownList("disable");
+            }
+
+        }
+        $("#sampleProperties").ejPropertiesPanel();
+        function PageCount(args) {
+            var model = $("#TreeGridContainer").ejTreeGrid("model");
+            var pagermodel = $("#TreeGridContainer").ejTreeGrid("getPager").ejPager("model");            
+            if (args.value > pagermodel.totalPages) {
+                $("#pageCount").ejNumericTextbox({ value: pagermodel.totalPages });
+                return;
+            }            
+            $("#TreeGridContainer").ejTreeGrid({ "pageSettings": { pageCount: parseInt(args.value) } });
+         
+        }
+        function CurrentPage(args) {
+            var obj = $("#TreeGridContainer").data("ejTreeGrid");             
+            
+            var pagesettings = { currentPage: args.value};
+            obj.option("pageSettings", pagesettings);
+        }
+        function PageSize(args) {
+            var obj = $("#TreeGridContainer").data("ejTreeGrid"),
+               pagermodel = obj.getPager().ejPager("model");
+            //pagermodel.pageSize = args.value;
+            var pagesettings = { pageSize: parseInt(args.value) };
+            obj.option("pageSettings", pagesettings);
+        }
+        function PageSizeMode(args) {
+            var obj = $("#TreeGridContainer").data("ejTreeGrid"),
+                mode;
+            mode = args.value == "Root" ? "root" : "all";
+            var pagesettings = { pageSizeMode: mode };
+            obj.option("pageSettings", pagesettings);
+        }     
+    </script>
+</body>
+
+</html>

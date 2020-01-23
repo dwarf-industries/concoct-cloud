@@ -1,0 +1,174 @@
+<!doctype html>
+<html>
+<head>
+    <title>Essential JS 1 : Rotator keyboard navigation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <ul id="sliderContent" accesskey="e">
+                        <li>
+                            <img class="image" src="../content/images/rotator/nature.jpg" title="Nature" alt="nature"/></li>
+                        <li>
+                            <img class="image" src="../content/images/rotator/bird.jpg" title="Beautiful Bird" alt="bird"/></li>
+                        <li>
+                            <img class="image" src="../content/images/rotator/sculpture.jpg" title="Amazing Sculptures" alt="sculpture"/></li>
+                        <li>
+                            <img class="image" src="../content/images/rotator/seaview.jpg" title="Sea-View" alt="seaview"/></li>
+                        <li>
+                            <img class="image" src="../content/images/rotator/snowfall.jpg" title="Snow Fall" alt="snowfall"/></li>
+                        <li>
+                            <img class="image" src="../content/images/rotator/card.jpg" title="Credit Card" alt="card"/></li>
+                        <li>
+                            <img class="image" src="../content/images/rotator/night.jpg" title="Colorful Night" alt="night"/></li>
+                    </ul>
+                    <ul id="slide" style="display: none">
+                        <li>
+                            <img src="../content/images/rotator/nature.jpg" title="Nature" alt="night"/></li>
+                        <li>
+                            <img src="../content/images/rotator/bird.jpg" title="Beautiful Bird" alt="bird"/></li>
+                        <li>
+                            <img src="../content/images/rotator/sculpture.jpg" title="Amazing Sculptures" alt="sculpture"/></li>
+                        <li>
+                            <img src="../content/images/rotator/seaview.jpg" title="Sea-View" alt="seaview"/></li>
+                        <li>
+                            <img src="../content/images/rotator/snowfall.jpg" title="Snow Fall" alt="snowfall"/></li>
+                        <li>
+                            <img src="../content/images/rotator/card.jpg" title="Credit Card" alt="card"/></li>
+                        <li>
+                            <img src="../content/images/rotator/night.jpg" title="Colorful Night" alt="night"/></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="sampleProperties">
+                <div class="prop-grid keyboard">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Alt + j
+                        </div>
+                        <div class="col-md-3">
+                            Focuses the control
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Up / Right
+                        </div>
+                        <div class="col-md-3">
+                            Move to next slide
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Down / Left
+                        </div>
+                        <div class="col-md-3">
+                            Move to previous slide
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Space
+                        </div>
+                        <div class="col-md-3">
+                            Play/Pause slide
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Alt+Right
+                        </div>
+                        <div class="col-md-3">
+                            Move thumbnail item to left and select item
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            Alt+left
+                        </div>
+                        <div class="col-md-3">
+                            Move thumbnail item to right and select item
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            Enter
+                        </div>
+                        <div class="col-md-3">
+                            Move to selected thumbnail item
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            // declaration
+            $("#sliderContent").ejRotator({
+                slideWidth: "100%",
+                isResponsive: true,
+                frameSpace: "0px",
+                displayItemsCount: "1",
+                slideHeight: "auto",
+                navigateSteps: "1",
+                pagerPosition: ej.Rotator.PagerPosition.Outside,
+                showThumbnail: true,
+                thumbnailSourceID: "slide",
+                orientation: ej.Orientation.Horizontal,
+                showPager: false,
+                enabled: true,
+                showCaption: false,
+                allowKeyboardNavigation: true,
+                showPlayButton: true,
+                animationType: "slide",
+            });
+            //Control focus key
+            $(document).on("keydown", function (e) {
+                if (e.altKey && e.keyCode === 74) { // j- key code.
+                    $("#sliderContent")[0].focus();
+                }
+            });
+            $("#sampleProperties").ejPropertiesPanel();
+        });
+    </script>
+    <style type="text/css" class="cssStyles">
+        .frame {
+            width: 350px;
+        }
+
+        #sliderContent > li .image {
+            width: 100%;
+            height: auto;
+        }
+
+        .e-rotator-wrap .e-thumb .e-thumb-items li img {
+            width: 130px;
+            height: 82px;
+        }
+		
+		.content-container-fluid .cols-prop-area .row .col-md-3 {
+            height: 48px;
+        }
+    </style>
+</body>
+</html>

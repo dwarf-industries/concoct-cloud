@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div id="zoomButtons" style="float:left">
+                            <div style="display:inline-block;font-size:12px">Zoom</div>
+                            <button class="monthButton" id="1M" onclick="myFunction('1M')" value="1M">1M</button>
+                            <button class="monthButton" id="3M" onclick="myFunction('3M')" value="3M">3M</button>
+                            <button class="monthButton" id="6M" onclick="myFunction('6M')" value="6M">6M</button>
+                            <button class="monthButton" id="YTD" onclick="myFunction('YTD')" value="YTD">YTD</button>
+                            <button class="monthButton button-hit" id="1Y" onclick="myFunction('1Y')" value="1Y">1Y</button>
+                            <button class="monthButton" id="All" onclick="myFunction('All')" value="All">All</button>
+                        </div>
+
+                        <div style="float:right;">
+                            <div class="move" style="float:left;padding-top: 2px;font-size:12px;">From</div>
+                            <div class="move" style="float:left;">
+                                <input type="text" id="datepick" style="width:90px;height:20px" />
+                            </div>
+                            <div class="move" style="float:left;margin-left:5px;padding-top: 2px;font-size:12px;">To</div>
+                            <div class="move" style="float:left;">
+                                <input type="text" id="datepick2" style="width:90px;height:20px" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="container"></div>
+                <div id="scrollcontent"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $("#container").ejChart(
+            {
+                //Initializing Primary X Axis
+                primaryXAxis:
+                {
+                    valueType: 'datetime',
+                    majorGridLines: { visible: false },
+                    labelIntersectAction: "trim"
+                },
+                //Initializing Primary Y Axis
+                primaryYAxis:
+                {
+				range:{min:0, max:120,interval:20},
+                    majorGridLines: { visible: false },
+                    labelFormat: "${value}",
+                },
+
+                commonSeriesOptions: { type: "area", enableAnimation: true },
+                //Initializing Series
+                series:
+                   [
+                    {
+                        name: 'India', xName: "XValue", yName: "YValue", fill: "rgba(124,181,236,0.75)",
+                        border: { color: "rgba(124,181,236,1)", width: 2 }
+                    }
+                ],
+                load: 'chartLoad',
+                trackToolTip: "trackballTooltip",
+                title: { text: 'Stock Price History' },
+                crosshair: {
+                    visible: true, type: "trackball", line: { color: 'transparent' },
+                },
+                isResponsive: true,
+                size: { height: "300" },
+                legend: { visible: false },
+            });
+
+            $("#1M").ejButton({
+                height: 18,
+                width: 35,
+                showRoundedCorner: true,
+            });
+            $("#3M").ejButton({
+                height: 18,
+                width: 35,
+                showRoundedCorner: true,
+            });
+            $("#6M").ejButton({
+                height: 18,
+                width: 35,
+                showRoundedCorner: true,
+            });
+            $("#YTD").ejButton({
+                height: 18,
+                width: 35,
+                showRoundedCorner: true,
+            });
+            $("#1Y").ejButton({
+                height: 18,
+                width: 35,
+                showRoundedCorner: true,
+            });
+            $("#All").ejButton({
+                height: 18,
+                width: 35,
+                showRoundedCorner: true,
+            });
+            $("#datepick").ejDatePicker({
+                value: startDate,
+                minDate: startDate,
+                maxDate: endDate,
+                select: "changeStartDate",
+            });
+
+            $("#datepick2").ejDatePicker({
+                value: endDate,
+                minDate: startDate,
+                maxDate: endDate,
+                select: "changeEndDate",
+            });
+
+            $("#scrollcontent").ejRangeNavigator({
+                enableDeferredUpdate: true,
+                sizeSettings: { height: "75" },
+                selectedRangeSettings: {
+                    start: new Date(endDate.getFullYear(), endDate.getMonth() - 12, endDate.getDate()).toLocaleString(),
+                    end: endDate.toLocaleString()
+                },
+                labelSettings: {
+                    higherLevel: {
+                        visible: true, labelPlacement: "inside"
+
+                    },
+                    lowerLevel: {
+                        visible: false,
+                        intervalType: 'quarters',
+                    }
+                },
+                valueAxisSettings: {
+                    visble: true, axisLine: { visible: true },
+						range:{min:0, max:120,interval:20},
+				},
+                navigatorStyleSettings: { thumbColor: "#ffffff", unselectedRegionColor: "#999999", unselectedRegionOpacity: 0.3, selectedRegionColor: "#0f4f4f4" },
+                isResponsive: true,
+                series: [{
+                    name: 'Product A',
+                    enableAnimation: false,
+                    type: 'line',
+                    fill: '#357cd2',
+                    width: 1
+                }],
+                loaded: "loadingtheme",
+                load: "loadingdata",
+                rangeChanged: "onchartloaded"
+            });
+        });
+
+        Date.prototype.subMonths = function (month) {
+            var dat = new Date(this.valueOf())
+            dat = new Date(dat.getFullYear(), dat.getMonth() - month, dat.getDate());
+            return dat;
+        }
+
+        function changeStartDate(sender) {
+            $("#" + previousFocusedButton).removeClass("button-hit");
+            var rangeobj = $("#scrollcontent").data("ejRangeNavigator");
+            rangeobj.model.selectedRangeSettings.start = sender.value;
+            rangeobj.redraw();
+        }
+
+        function changeEndDate(sender) {
+            $("#" + previousFocusedButton).removeClass("button-hit");
+            var rangeobj = $("#scrollcontent").data("ejRangeNavigator");
+            rangeobj.model.selectedRangeSettings.end = sender.value;
+            rangeobj.redraw();
+        }
+
+        var rangeNavigator;
+        function loadingdata(sender) {
+            datePicker1 = $("#datepick").data("ejDatePicker");
+            datePicker2 = $("#datepick2").data("ejDatePicker");;
+            rangeNavigator = $("#scrollcontent").ejRangeNavigator("instance");
+            sender.model.series[0].dataSource = data;
+            sender.model.series[0].xName = "XValue";
+            sender.model.series[0].yName = "YValue";
+        }
+
+        function onchartloaded(sender) {
+            var chartobj = $("#container").data("ejChart");
+            if (chartobj != null) {
+                chartobj.model.primaryXAxis.zoomPosition = sender.zoomPosition;
+                chartobj.model.primaryXAxis.zoomFactor = sender.zoomFactor;
+                datePicker1.setModel({ value: sender.selectedRangeSettings.start });
+                datePicker2.setModel({ value: sender.selectedRangeSettings.end });
+                if (!buttonFlag) {
+                    $("#" + previousFocusedButton).removeClass("button-hit");
+                    buttonFlag = true;
+                }
+            }
+            $("#container").ejChart("redraw");
+
+        }
+        $("#scrollcontent").mousedown(function (event) {
+            buttonFlag = false
+        });
+        var data = allYearData().Open;
+        function chartLoad(sender) {
+            loadTheme(sender);
+            var chart = $("#container").ejChart("instance");
+            sender.model.series[0].dataSource = data;
+        }
+
+        function trackballTooltip(sender) {
+            var seriesIndex = sender.data.serIndex;
+            var pointIndex = sender.data.pointIndex;
+            var point = sender.model.series[seriesIndex].points[pointIndex];
+            sender.data.currentText = point.x.toDateString() + "<br/>" + "Stock price : " + "$" + point.y.toFixed(2);
+        }
+
+        function allYearData() {
+            var currentDate = new Date();
+            var series1 = [];
+            var series2 = [];
+            var value = 70;
+            var value1 = 120;
+            for (var i = 0; i < 2555; i++) {
+
+                if (Math.random() > .5) {
+                    value += Math.random();
+                    value1 += Math.random();
+                } else {
+                    value -= Math.random();
+                    value1 -= Math.random();
+                }
+				if(value>=110) value = 110;
+				if(value<=20) value = 20;
+                var point1 = { XValue: new Date(currentDate.getFullYear(), currentDate.getMonth(), (currentDate.getDate() - i)), YValue: value };
+                series1.push(point1);
+                if (i == 0) endDate = point1.XValue;
+                if (i == 2554) startDate = point1.XValue;
+            }
+
+            data = { Open: series1 };
+            return data;
+        }
+        var buttonFlag = true;
+        var previousFocusedButton = "1Y"
+        function myFunction(value) {
+            $("#" + previousFocusedButton).removeClass("button-hit");
+            $("#" + value).addClass("button-hit")
+            previousFocusedButton = value;
+            var rangeobj = $("#scrollcontent").data("ejRangeNavigator");
+            var hitElement = document.getElementById(value);
+            var dateStart = rangeobj.model.selectedRangeSettings.start;
+            var dateEnd = rangeobj.model.selectedRangeSettings.end;
+            var currentMonth = dateEnd.getMonth();
+            eDate = new Date(dateEnd);
+            if (value == "1M")
+                startDate = eDate.subMonths(1);
+            else if (value == "3M")
+                startDate = eDate.subMonths(3);
+            else if (value == "6M")
+                startDate = eDate.subMonths(6);
+            else if (value == "YTD") {
+                var currentYTD = new Date().subMonths(new Date().getMonth());
+                startDate = new Date(currentYTD.getFullYear(), 0, 1);
+                rangeobj.model.selectedRangeSettings.end = endDate.toString();
+            }
+            else if (value == "1Y")
+                startDate = eDate.subMonths(12);
+            else if (value == "All") {
+                rangeobj.model.selectedRangeSettings.end = endDate.toString();
+                startDate = new Date(eDate.getFullYear(), eDate.getMonth(), (eDate.getDate() - 2553));
+            }
+            datePicker1.setModel({ value: startDate });
+            datePicker2.setModel({ value: endDate });
+            rangeobj.model.selectedRangeSettings.start = startDate.toString();
+            buttonFlag = true;
+            rangeobj.redraw();
+
+        }
+        function loadingtheme(sender) {
+            var theme = window.themestyle + window.themecolor + window.themevarient;
+            if (theme) {
+                switch (theme) {
+                    case "flatazurelight":
+                        theme = "azurelight";
+                        break;
+                    case "flatlimelight":
+                        theme = "limelight";
+                        break;
+                    case "flatsaffronlight":
+                        theme = "saffronlight";
+                        break;
+                    case "gradientazurelight":
+                        theme = "gradientazure";
+                        break;
+                    case "gradientlimelight":
+                        theme = "gradientlime";
+                        break;
+                    case "gradientsaffronlight":
+                        theme = "gradientsaffron";
+                        break;
+                    case "flatazuredark":
+                        theme = "azuredark";
+                        break;
+                    case "flatlimedark":
+                        theme = "limedark";
+                        break;
+                    case "flatsaffrondark":
+                        theme = "saffrondark";
+                        break;
+                    case "gradientazuredark":
+                        theme = "gradientazuredark";
+                        break;
+                    case "gradientlimedark":
+                        theme = "gradientlimedark";
+                        break;
+                    case "gradientsaffrondark":
+                        theme = "gradientsaffrondark";
+                        break;
+                    case "flathigh-contrast-01dark":
+                        theme = "highcontrast01";
+                        break;
+                    case "flathigh-contrast-02dark":
+                        theme = "highcontrast02";
+                        break;
+                    case "flatmateriallight":
+                        theme = "material";
+                        break;
+                    case "flatoffice-365light":
+                        theme = "office";
+                        break;
+                    default:
+                        theme = "flatlight";
+                        break;
+                }
+                if (theme == "azuredark" || theme == "limedark" || theme == "saffrondark" || theme == "gradientazuredark" || theme == "gradientlimedark" || theme == "gradientsaffrondark" ||
+                    theme == "highcontrast01" || theme == "highcontrast02") {
+                    sender.model.labelSettings.higherLevel.style.font.color = "white";
+                    var buttonFont = document.getElementsByClassName("monthButton");
+                    for (var i = 0; i < buttonFont.length; i++)
+                        buttonFont[i].style.color = "white";
+                    sender.model.navigatorStyleSettings.unselectedRegionOpacity = 0.4;
+					sender.model.navigatorStyleSettings.opacity = 0.08;
+				  
+                }
+                else {
+                    sender.model.labelSettings.higherLevel.style.font.color = "black";
+                    var buttonFont = document.getElementsByClassName("monthButton");
+                    for (var i = 0; i < buttonFont.length; i++)
+                        buttonFont[i].style.color = "black";
+                }
+				sender.model.navigatorStyleSettings.thumbColor = "#ffffff";
+                sender.model.navigatorStyleSettings.unselectedRegionColor = "#999999";
+                sender.model.navigatorStyleSettings.selectedRegionColor = "#0f4f4f4";
+
+
+            }
+        }
+    </script>
+    <style>
+        .move {
+            padding-left: 2px;
+        }
+
+        .button-hit {
+            border: 1px solid #357cd2 !important;
+        }
+
+        .monthButton, .e-datepicker {
+            font-size: 12px !important;
+            padding-top:2px;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+    <title>Essential JS 1: RTE Keyboardnavigation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+	 <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <textarea id="rteSample" rows="10" cols="30" style="width: 100%; height: 440px;display:none;">
+                  <p><b>Description:</b></p>
+        <p>The Rich Text Editor (RTE) control is an easy to render in
+        client side. Customer easy to edit the contents and get the HTML content for
+        the displayed content. A rich text editor control provides users with a toolbar
+        that helps them to apply rich text formats to the text entered in the text
+        area. </p>
+       <p><b>Functional
+        Specifications/Requirements:</b></p>
+        <ol><li><p>Provide
+        the tool bar support, it’s also customizable.</p></li><li><p>Options
+        to get the HTML elements with styles.</p></li><li><p>Support
+        to insert image from a defined path.</p></li><li><p>Footer
+        elements and styles(tag / Element information , Action button (Upload, Cancel))</p></li><li><p>Re-size
+        the editor support.</p></li><li><p>Provide
+        efficient public methods and client side events.</p></li><li><p>Keyboard
+        navigation support.</p></li></ol>
+                    </textarea>
+            </div>
+            <div class="cols-prop-area event-tracer">
+                <div>
+                    <div class="heading">
+                        <span>Event Trace</span>
+                        <div class="pull-right">
+                            <select name="selectevtprops" id="selectControls">
+                                <option value="change">Change</option>
+                                <option value="keydown">Keydown</option>
+                                <option value="keyup">Keyup</option>
+                                <option value="execute">onExecute</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="prop-grid content">
+                        <div class="eventarea">
+                            <div class="EventLog" id="EventLog">
+                            </div>
+                        </div>
+                        <div class="evtbtn">
+                            <input type="button" class="eventclear e-btn" value="Clear" onclick="onClear()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" class="jsScript">
+        var rteObj;
+        $(function () {
+            $("#rteSample").ejRTE({
+                width: "100%",
+				minWidth: "150px",
+                create: "onCreate",
+                preRender: "onPreRender",
+                change: "onChange",
+                keydown: "onKeydown",
+                keyup: "onKeyup",
+                execute: "onExecute"
+            });
+            rteObj = $("#rteSample").data("ejRTE");
+            $("#selectControls").ejDropDownList(
+                {
+                    popupShown: "adjustpopupposition",
+                    showCheckbox: true,
+                    checkAll: true,
+                    change: "evtpropscheckedevent"
+                });
+            $(document.getElementsByTagName("iframe")[0].contentWindow).click(function () {
+                var dropObj = $("#selectControls").data("ejDropDownList");
+                if (dropObj._isPopupShown())
+                    dropObj.hidePopup();
+            });
+        });
+        function evtpropscheckedevent(args) {
+            if (args.isChecked) {
+                switch (args.selectedValue) {
+                    case "create": rteObj.option(args.selectedValue, "onCreate"); break;
+                    case "prerender": rteObj.option(args.selectedValue, "onPreRender"); break;
+                    case "change": rteObj.option(args.selectedValue, "onChange"); break;
+                    case "keydown": rteObj.option(args.selectedValue, "onKeydown"); break;
+                    case "keyup": rteObj.option(args.selectedValue, "onKeyup"); break;
+                    case "execute": rteObj.option(args.selectedValue, "onExecute"); break;
+                }
+            }
+            else rteObj.option(args.selectedValue, null);
+        }
+        function onCreate(args) {
+            jQuery.addEventLog("RTE has been <span class='eventTitle'>created</span>.");
+        }
+        function onPreRender(args) {
+            jQuery.addEventLog("RTE <span class='eventTitle'>onPreRender</span> has been triggered.");
+        }
+        function onChange(args) {
+            jQuery.addEventLog("RTE value has been <span class='eventTitle'>changed</span>.");
+        }
+
+        function onKeydown(args) {
+            jQuery.addEventLog("<span class='eventTitle'>Keydown</span> event is fired.");
+        }
+
+        function onKeyup(args) {
+            jQuery.addEventLog("<span class='eventTitle'>Keyup</span> event is fired.");
+        }
+
+        function onExecute(args) {
+            jQuery.addEventLog(args.commandName.toUpperCase() + " command has been <span class='eventTitle'>Executed</span>");
+        }
+
+        function onClear() {
+            jQuery.clearEventLog();
+        }
+    </script>
+</body>
+</html>

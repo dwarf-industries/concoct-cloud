@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Essential JS 1 : Gantt Localization</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+     <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/cultures/ej.culture.fr-FR.min.js"></script>
+    <script src="../scripts/cultures/ej.culture.vi-VN.min.js"></script> 
+    <script src="../scripts/properties.js" type="text/javascript"></script>    
+</head>
+
+<body>   
+    
+     <div class="content-container-fluid">
+	     <div class="row">
+		    <div class="cols-sample-area">												 
+               
+                  <div style="float:right;">
+                   
+                     <input type="text" id="culture" />
+                    
+                       <div id="target">
+                          <ul>        
+                              <li>en-US</li>       
+                              <li>fr-FR</li>        
+                              <li>vi-VN</li>                                              
+                          </ul>
+                       </div>
+
+                 </div>
+
+				 <div id="GanttContainer" style="height:450px;width:100%;padding-top:5px;"/>			
+    
+
+		</div>
+     </div>		
+	</div>
+
+	 <script type="text/javascript">
+
+	     var localeData = [
+           {
+               "TaskId": 1,
+               "TaskName": "Task 1",
+               "StartDate": new Date("10/16/2017"),
+               "Duration": 10,
+               "Progress": 70,
+               "Children": [
+                   { "TaskId": 2, "TaskName": "Child task 1", "StartDate": new Date("10/16/2017"), "Duration": 4, "Progress": 80 },
+                   { "TaskId": 3, "TaskName": "Child task 2", "StartDate": new Date("10/17/2017"), "Duration": 5, "Progress": 65, "Predecessor": "2" },
+                   {
+                       "TaskId": 4,
+                       "TaskName": "Child task 3",
+                       "StartDate": new Date("10/21/2017"),
+                       "Duration": 6,
+                       "Progress": 77,
+                       "Children": [
+                           { "TaskId": 5, "TaskName": "Grand child task 1", "StartDate": new Date("10/21/2017"), "Duration": 3, "Progress": 60 },
+                           { "TaskId": 6, "TaskName": "Grand child task 2", "StartDate": new Date("10/22/2017"), "Duration": 2, "Progress": 77, "Predecessor": "5" },
+                           { "TaskId": 7, "TaskName": "Grand child task 3", "StartDate": new Date("10/23/2017"), "Duration": 0, "Progress": 0, "Predecessor": "6" }
+                       ]
+                   }
+               ]
+           }
+	     ];
+
+	     $(function () {
+	         $("#GanttContainer").ejGantt({
+	             dataSource: localeData,
+	             allowSelection: true,
+	             allowColumnResize: true,
+	             rowHeight: window.theme == "material" ? 48 : window.theme == "office-365" ? 36 : 30,
+	             taskIdMapping: "TaskId",
+	             taskNameMapping: "TaskName",
+	             scheduleStartDate: new Date("10/13/2017"),
+	             scheduleEndDate: new Date("11/03/2017"),
+	             startDateMapping: "StartDate",
+	             durationMapping: "Duration",
+	             progressMapping: "Progress",
+	             childMapping: "Children",
+	             treeColumnIndex: 1,
+	             locale: "fr-FR",
+	             allowGanttChartEditing: false,
+	             isResponsive: true,
+	             load: function () {
+	                 this.getColumns()[0].width = window.theme == "material" ? 70 : 30;
+	             },
+	         });
+
+	         $('#culture').ejDropDownList({
+	             targetID: "target",
+	             change: "onChange",
+	             value: "fr-FR",
+                     text:"fr-FR"
+	         });
+	     });           
+
+	     function onChange(args) {
+	         var ganttObject = $("#GanttContainer").data("ejGantt");
+	         ganttObject.setModel({ locale: args.text });
+	     }
+
+	     ej.Gantt.Locale["fr-FR"] = {
+	         //string to display with dataSource contains 0 objects
+	         emptyRecord: "Aucun enregistrement à afficher",
+
+	         //headerText to be displayed in gridtree
+	         columnHeaderTexts: {
+	             taskId: "Tâche Ia",
+	             taskName: "Tâche Tâche",
+	             startDate: "Démarrer Date",
+	             endDate: "Fin Date",
+	             resourceInfo: "Resources",
+	             duration: "Durée",
+	             status: "Progrès",
+	             predecessor: "Prédécesseur",
+	             baselineStartDate: "Baseline Démarrer Date",
+	             baselineEndDate: "Baseline Fin Date"
+	         },
+             //String to display in tooltip duration Unit.
+             durationUnitTexts: {
+	             minutes: "procès-verbal",
+	             hours: "heures",
+	             days: "journées",
+	         },
+	         //string to display in dialog
+	         editDialogTexts: {
+	             addFormTitle: "Nouveau Tâche",
+	             editFormTitle: "Modifier Tâche",
+	             saveButton: "Sauver",
+	             cancelButton: "Annuler"
+	         }
+	     }
+
+	     ej.Gantt.Locale["vi-VN"] = {
+	         //string to display with dataSource contains 0 objects
+	         emptyRecord: "trống ghi",
+
+	         //headerText to be displayed in gridtree
+	         columnHeaderTexts: {
+	             taskId: "nhiệm vụ Ia",
+	             taskName: "Tâche các",
+	             startDate: "bắt đầu ngày",
+	             endDate: "cuối ngày",
+	             resourceInfo: "tài nguyên thông tin",
+	             duration: "thời gian",
+	             status: "tình trạng",
+	             predecessor: "người tiền nhiệm",
+	             baselineStartDate: "cơ sở bắt đầu ngày",
+	             baselineEndDate: "cơ sở cuối ngày"
+	         },
+             //String to display in tooltip duration Unit.
+             durationUnitTexts: {
+	             minutes: "từ phút",
+	             hours: "giờ",
+	             days: "ngày",
+	         },
+	         //string to display in dialog
+	         editDialogTexts: {
+	             addFormTitle: "thêm  hình thức tiêu đề",
+	             editFormTitle: "chỉnh sửa  hình thức tiêu đề",
+	             saveButton: "tiết kiệm",
+	             cancelButton: "hủy bỏ"
+	         }
+	     } 
+			
+    </script>
+
+</body>
+
+</html>

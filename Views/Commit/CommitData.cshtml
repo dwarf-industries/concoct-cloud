@@ -1,0 +1,121 @@
+@{
+    ViewData["Title"] = "Commits";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var commitKey = ViewData["CommitKey"];
+    var BranchId = ViewData["BranchId"];
+    var ProjectId = ViewData["PrijectId"];
+}
+<link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
+ 
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="main-card mb-3 card">
+            <div class="control-section">
+                <div class="content-wrapper">
+                    <div id="tree"style="height:80vh; width:300px" ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div id="container" style="width:89vh;height:100%;border:1px solid grey"></div>
+    </div>
+</div>
+ 
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+ <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
+
+<script src="/Syncfusion/node_modules/monaco-editor/min/vs/loader.js"></script>
+
+<script>
+var editor;
+require.config({ paths: { 'vs': '/Syncfusion/node_modules/monaco-editor/min/vs' }});
+	require(['vs/editor/editor.main'], function() {
+	    editor = monaco.editor.create(document.getElementById('container'), {
+			value: [
+				 "Console.WriteLine(\"Works\")"
+			].join('\n'),
+			language: 'csharp'
+		});
+	});
+
+    
+    var BindingData ;
+    $( document ).ready(function() 
+    {
+        $.ajax({
+            type: 'GET',
+            url: '/Commit/GetCommitFiles?commitId=@commitKey&&projectId=@ProjectId',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                LoadCommitHirarchy(response);
+            },
+            error: function (xhr, status, error) {
+    
+            }
+        });
+     
+    });
+
+    function LoadCommitHirarchy(data)
+    {
+        BindingData = data;
+        var treeObj = new ej.navigations.TreeView({
+            fields: { dataSource: data, id: 'id', text: 'name', child: 'subChild', value: 1 },
+            nodeSelected: ItemSelected
+        });
+        treeObj.appendTo('#tree');
+            
+    }
+    
+    function ItemSelected(args)
+    {
+        console.log(args.nodeData.id);
+        BindingData.forEach(function(cData) {
+            console.log(cData );
+            if(cData.id === args.nodeData.id)
+                ShowSelectedFile(cData);
+            else
+            {
+                if(cData.subChild !== null)
+                {
+                    cData.subChild.forEach(function(bData){
+                        console.log(bData);
+                        if(bData.id === args.nodeData.id)
+                            ShowSelectedFile(bData);
+                    });
+                }
+            }
+        });
+    }
+
+    function ShowSelectedFile(file)
+    {
+        $("#container").html("");
+           $.ajax({
+            type: 'GET',
+            url: '/Commit/GetCommitFileData?fileId='+file.itemId+"&branch=@BranchId",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                editor = monaco.editor.create(document.getElementById('container'), {
+                    value:  response.data,
+                    language:  response.languageType
+                });
+             
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr);
+            }
+        });
+    }
+        
+    
+</script>

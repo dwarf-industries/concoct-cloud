@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Pager API</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+	<script src="../scripts/jsrender.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div class="control">
+                        <div id="Pager"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-6">PageCount</div>
+                        <div class="col-md-6">
+                            <input type="text" id="pagecount" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">Current Page</div>
+                        <div class="col-md-6">
+                            <input type="text" id="currentpage" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">Page Size</div>
+                        <div class="col-md-6">
+                            <input type="text" id="psize" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">Total Records Count</div>
+                        <div class="col-md-6">
+                            <input type="text" id="recordscount" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+
+    <script type="text/javascript">
+        $(function () {
+
+            $("#Pager").ejPager({
+                currentPage: 1,
+                pageSize: 1,
+                totalPages: 20,
+                totalRecordsCount: 20,
+                pageCount: 5,
+                pagerInfo: "{0} of {1} pages ({2} items)",
+                click: "onClick1",
+                isResponsive: true
+            });
+            obj = $("#Pager").ejPager('instance');
+        });
+
+        $("#pagecount").ejNumericTextbox({ minValue: 1, value: 5, change: pageChange, width: "100px" });
+
+        $("#currentpage").ejNumericTextbox({minValue: 1, value: 1, change: currentPageChange, width: "100px" });
+
+        $("#psize").ejNumericTextbox({ maxValue: 5, minValue: 1, value: 1, change: pageSizeChange, width: "100px" });
+
+        $("#recordscount").ejNumericTextbox({ minValue: 1, value: 20, change: recrodsCountChange, width: "100px" });
+
+        pageCountObj = $("#pagecount").ejNumericTextbox("instance");
+        currentpageObj = $("#currentpage").ejNumericTextbox("instance");
+        psizeObj = $("#psize").ejNumericTextbox("instance");
+        recordsCountObj = $("#recordscount").ejNumericTextbox("instance");
+
+        function onClick1(args) {
+
+            if (!ej.isNullOrUndefined(args.event)) {
+                this.goToPage(args.model.currentPage);
+                currentpageObj.option("value", obj.model.currentPage);
+                this.refreshPager();
+            }
+        }
+        function pageChange(args) {
+            if (args.value < 10) {
+                obj.option("pageCount", args.value);
+            }
+            else {
+                obj.option("pageCount", 10);
+                pageCountObj.option("maxValue", 10);
+            }
+
+        }
+        function currentPageChange (args) {
+            obj.option("currentPage", args.value);
+            currentpageObj.option("maxValue", obj.model.totalPages);
+
+        }
+        function pageSizeChange (args) {
+            obj.option("pageSize", args.value);
+            currentpageObj.option("maxValue", obj.model.totalPages);
+            pageCountObj.option("maxValue", obj.model.totalPages);
+
+        }
+        function recrodsCountChange (args) {
+            obj.option("totalRecordsCount", args.value);
+            currentpageObj.option("maxValue", obj.model.totalPages);
+            pageCountObj.option("maxValue", obj.model.totalPages);
+        }
+
+        $("#sampleProperties").ejPropertiesPanel();
+
+    </script>
+
+    <style>
+        .frame {
+            width: auto;
+        }
+    </style>
+</body>
+</html>

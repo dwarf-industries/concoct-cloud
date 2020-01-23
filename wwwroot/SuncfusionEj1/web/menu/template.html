@@ -1,0 +1,214 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1: Menu - template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+	<link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <ul id="template">
+                    <li><a>Books</a>
+                        <ul>
+                            <li>
+                                <div class="temp temp1">
+                                    <span>BOOKS</span>
+                                    <ul>
+                                        <li><a>New Releases</a></li>
+                                        <li><a>Bestsellers</a></li>
+                                        <li><a>Upcoming</a></li>
+                                        <li><a>Box Sets</a></li>
+                                    </ul>
+                                    <ul>
+                                        <li><a>HTML Basics</a></li>
+                                        <li><a>JavaScript</a></li>
+                                        <li><a>JQuery</a></li>
+                                        <li><a>PHP Basics</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a>Cameras</a>
+                        <ul>
+                            <li>
+                                <div class=" temp temp2">
+                                    <div>
+                                        <span>CAMERAS</span>
+                                        <ul>
+                                            <li><a>Point & Shoots</a></li>
+                                            <li><a>Digital SLR</a></li>
+                                            <li><a>Camcorders</a></li>
+                                            <li><a>Bestsellers</a></li>
+                                        </ul>
+                                        <ul>
+                                            <li><a>Still Camera</a></li>
+                                            <li><a>Digital Camera</a></li>
+                                            <li><a>Video Camera</a></li>
+                                            <li><a>Virtual Camera</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a>Movies</a>
+                        <ul>
+                            <li>
+                                <div class="temp temp3">
+                                    <div>
+                                        <span>MOVIES</span>
+                                        <ul>
+                                            <li><a>Genobili Actions</a></li>
+                                            <li><a>Jackie Rocks</a></li>
+                                            <li><a>Men In Blue</a></li>
+                                            <li><a>Human vs Alien</a></li>
+                                        </ul>
+                                        <ul>
+                                            <li><a>Million Dreams</a></li>
+                                            <li><a>Kung-fu</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a>Musics</a>
+                        <ul>
+                            <li>
+                                <div class="temp temp4">
+                                    <div>
+                                        <span>MUSICS</span>
+                                        <ul>
+                                            <li><a>New Releases</a></li>
+                                            <li><a>Bestsellers</a></li>
+                                            <li><a>Devotional</a></li>
+                                            <li><a>Sufi & Ghazal</a></li>
+                                        </ul>
+                                        <ul>
+                                            <li><a>Pop songs</a></li>
+                                            <li><a>Rock Music</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a>Gaming</a>
+                        <ul>
+                            <li>
+                                <div class="temp temp5">
+                                    <div>
+                                        <span>GAMING</span>
+                                        <ul>
+                                            <li><a>Upcoming</a></li>
+                                            <li><a>PC</a></li>
+                                            <li><a>PS Vista</a></li>
+                                            <li><a>PS3</a></li>
+                                            <li><a>XBox</a></li>
+                                            <li><a>Consoles</a></li>
+                                        </ul>
+                                        <ul>
+                                            <li><a>FIFA 2999</a></li>
+                                            <li><a>NBA Actions</a></li>
+                                            <li><a>Crick Champions</a></li>
+                                            <li><a>Carom legend</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script type="text/javascript">
+            jQuery(function ($) {
+                $("#template").ejMenu();
+            });
+
+        </script>
+        <style type="text/css">
+            .temp {
+                height: 237px;
+                width: 375px;
+                font-family: segoe UI;
+                cursor: default;
+            }
+
+                .temp span {
+                    color: red;
+                    float: left;
+                    font-size: 20px;
+                    left: 20px !important;
+                    position: relative;
+                    top: 25px;
+                    width: 100px;
+                }
+
+                .temp ul {
+                    float: left;
+                    font-size: 14px;
+                    left: -79px !important;
+                    list-style-type: none;
+                    margin: 0;
+                    padding: 0;
+                    position: relative;
+                    top: 50px;
+                    width: 128px;
+                }
+
+                    .temp ul li {
+                        font-size: 13px;
+                    }
+
+                        .temp ul li a {
+                            text-decoration: underline;
+                            cursor: pointer;
+                            color: #000;
+                        }
+
+            .temp1 {
+                background-image: url("../content/images/menu/books-bg.png");
+            }
+
+            .temp2 {
+                background-image: url("../content/images/menu/digital-bg.png");
+            }
+
+            .temp3 {
+                background-image: url("../content/images/menu/smile-bg.png");
+            }
+
+            .temp4 {
+                background-image: url("../content/images/menu/mp3-bg.png");
+            }
+
+            .temp5 {
+                background-image: url("../content/images/menu/toy-bg.png");
+            }
+
+            #template > li > ul li:hover {
+                background: none;
+            }
+
+            #template > li > ul > li div > ul > li a {
+                background: none;
+            }
+        </style>
+</body>
+</html>

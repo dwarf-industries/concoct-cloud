@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Frozen Rows And Columns</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jquery.validate.min.js"></script>
+    <script src="../scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../scripts/jsondata.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="Grid"></div>
+                <div id="template" style="display: none">
+                    <b>Order Details</b>
+                    <table cellspacing="10">
+                        <tr>
+                            <td style="text-align: right;">Order ID
+                            </td>
+                            <td style="text-align: left">
+                                <input id="OrderID" name="OrderID" value="{{: OrderID}}" disabled="disabled" class="e-field e-ejinputtext valid e-disable" style="text-align: right; width: 116px; height: 28px" />
+                            </td>
+                            <td style="text-align: right;">Customer ID
+                            </td>
+                            <td style="text-align: left">
+                                <input id="CustomerID" name="CustomerID" value="{{: CustomerID}}" class="e-field e-ejinputtext valid" style="width: 116px; height: 28px" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Freight
+                            </td>
+                            <td style="text-align: left">
+                                <input type="text" id="Freight" name="Freight" value="{{:Freight}}" style="text-align: right;" />
+                            </td>
+                            <td style="text-align: right;">Ship Country
+                            </td>
+                            <td style="text-align: left">
+                                <select id="ShipCountry" name="ShipCountry">
+                                    <option value="Argentina">Argentina</option>
+                                    <option value="Austria">Austria</option>
+                                    <option value="Belgium">Belgium</option>
+                                    <option value="Brazil">Brazil</option>
+                                    <option value="Canada">Canada</option>
+                                    <option value="Denmark">Denmark</option>
+                                    <option value="Finland">Finland</option>
+                                    <option value="France">France</option>
+                                    <option value="Germany">Germany</option>
+                                    <option value="Ireland">Ireland</option>
+                                    <option value="Italy">Italy</option>
+                                    <option value="Mexico">Mexico</option>
+                                    <option value="Norway">Norway</option>
+                                    <option value="Poland">Poland</option>
+                                    <option value="Portugal">Portugal</option>
+                                    <option value="Spain">Spain</option>
+                                    <option value="Sweden">Sweden</option>
+                                    <option value="Switzerland">Switzerland</option>
+                                    <option value="UK">UK</option>
+                                    <option value="USA">USA</option>
+                                    <option value="Venezuela">Venezuela</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Ship City
+                            </td>
+                            <td style="text-align: left">
+                                <input id="ShipCity" name="ShipCity" value="{{: ShipCity}}" class="e-field e-ejinputtext valid" style="width: 116px; height: 28px" />
+                            </td>
+                            <td style="text-align: right;">Ship Name
+                            </td>
+                            <td style="text-align: left">
+                                <input id="ShipName" name="ShipName" value="{{: ShipName}}" class="e-field e-ejinputtext valid" style="width: 116px; height: 28px" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Ship Address
+                            </td>
+                            <td style="text-align: left">
+                                <textarea id="ShipAddress" name="ShipAddress" class="e-ejinputtext" value="{{: ShipAddress}}">{{: ShipAddress}}</textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Frozen Columns
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="frozenColumns" value="2"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Frozen Rows
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="frozenRows" value="1" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="button" id="set" value="Set" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Edit Mode
+                        </div>
+                        <div class="col-md-3">
+                            <select id="editMode" name="ShipCountry">
+                                <option selected="selected" value="normal">Normal</option>
+                                <option value="dialog">Dialog</option>
+                                <option value="inlineform">Inline</option>
+                                <option value="externalform">External</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#Grid").ejGrid({
+                // the datasource "window.gridData" is referred from jsondata.min.js
+                dataSource: ej.DataManager(window.gridData).executeLocal(ej.Query().take(30)),
+                commonWidth: 200,
+                actionComplete: complete,
+                scrollSettings: { width: 600, height: 337, frozenRows: 1 },
+                editSettings: { allowEditing: true, allowDeleting: true, allowAdding: true },
+                toolbarSettings: { showToolbar: true, toolbarItems: [ej.Grid.ToolBarItems.Add, ej.Grid.ToolBarItems.Edit, ej.Grid.ToolBarItems.Delete, ej.Grid.ToolBarItems.Update, ej.Grid.ToolBarItems.Cancel] },
+                allowScrolling: true,
+                columns: [
+                             { field: "OrderID", headerText: "Order ID", isPrimaryKey: true, isFrozen: true, validationRules: { required: true, number: true }, textAlign: ej.TextAlign.Right, width: 90 },
+                             { field: "CustomerID", headerText: "Customer ID", isFrozen: true, width: 100, validationRules: { required: true, minlength: 3 } },
+                             { field: "EmployeeID", headerText: "Employee ID", textAlign: ej.TextAlign.Right, width: 100, validationRules: { number: true, min:0 } },
+                             { field: "Freight", headerText: "Freight", textAlign: ej.TextAlign.Right, validationRules: { min: 0 }, width: 90, format: "{0:C}", editType: ej.Grid.EditingType.Numeric, editParams: { decimalPlaces: 2 } },
+                             { field: "ShipCity", headerText: "Ship City", width: 110 },
+                             { field: "ShipName", headerText: "Ship Name", width: 170 },
+                             { field: "OrderDate", headerText: "Order Date", editType: ej.Grid.EditingType.DatePicker, textAlign: ej.TextAlign.Right, format: "{0:MM/dd/yyyy}", width: 100, editType: ej.Grid.EditingType.DatePicker, defaultValue: new Date(), validationRules: { date: true } },
+                             { field: "ShipPostalCode", headerText: "Postal Code", textAlign: ej.TextAlign.Right, width: 140 },
+                             { field: "Verified", headerText: "Verified", width: 100, editType: ej.Grid.EditingType.Boolean }
+
+                ]
+            });
+            function complete(args) {
+                if ((args.requestType == "beginedit" || args.requestType == "add") && args.model.editSettings.editMode == "dialogtemplate") {
+                    if (args.requestType == "beginedit") $("#OrderID").attr("disabled", "disabled");
+                    $("#Freight").ejNumericTextbox({ value: parseFloat($("#Freight").val()), width: "116px", height: "28px", decimalPlaces: 2 });
+                    $("#Freight").css({ 'text-align': 'left' });
+                    $("#ShipCountry").ejDropDownList({ width: '116px' });
+                    args.requestType == "beginedit" && $("#ShipCountry").ejDropDownList("setSelectedValue", args.currentTr.children().eq(3).text());
+                    $(".e-field").css({ 'width': '116px', 'text-align': 'left' });
+                }
+            }
+            $("#sampleProperties").ejPropertiesPanel().find("[type='text']").ejNumericTextbox({ maxValue: 5, minValue: 1, width: 120 });
+            $("#set").ejButton({ width: "120px" });
+            $("#editMode").ejDropDownList({
+                width: "120px",
+                selectedItemIndex: 0,
+                change: function (args) {
+				var gridObj = $("#Grid").ejGrid("instance");
+				gridObj.option("model.editSettings.editMode", args.selectedValue)
+				if (gridObj.model.isEdit)
+				    gridObj.cancelEdit();
+                }
+            });
+            
+            var columnname = "OrderID";
+            $("#set").click(function () {
+                var scrolling = {};
+                scrolling = { frozenRows: parseInt($("#frozenRows").ejNumericTextbox("model.value"), 10), frozenColumns: parseInt($("#frozenColumns").ejNumericTextbox("model.value"), 10), height: 337 };
+                $("#Grid").ejGrid("model.scrollSettings", scrolling);
+            });
+
+        });
+    </script>
+</body>
+</html>

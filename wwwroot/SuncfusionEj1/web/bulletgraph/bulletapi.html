@@ -1,0 +1,419 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Bullet Graph Options</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+        <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js" type="text/javascript"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" align="center">
+                <div id="BulletGraph1">
+                </div>
+            </div>
+
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Label Prefix
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="text" id="labelprefix" autocomplete="off" onchange="AddPrefix(this)" style="width:100px; height:22px;" value="" />
+                        </div>
+                        <div class="col-md-3">
+                            Label Suffix
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="text" id="labelsuffix" autocomplete="off" onchange="AddSuffix(this)" style="width:100px; height:22px;" value="" />
+                        </div>
+                        <div class="col-md-3">
+                            Range Stroke to Ticks
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="checkbox" id="chkStrokeToTicks" class="e-chkbox" value="StrokeToTicks" />
+                        </div>
+                        
+                        <div class="col-md-3">
+                            Range Stroke to Labels
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="checkbox" id="chkStrokeToLabels" class="e-chkbox" value="StrokeToLabels" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            Enable Animation
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="checkbox" id="chkEnableAnimation" class="e-chkbox" value="EnableAnimation" />
+                        </div>
+                        <div class="col-md-3">
+                            Featured Measure
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <div id="featureMeasuresValue"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            Comparative Measure
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <div id="comparativeMeasureValue"></div>
+                        </div>
+                        <div class="col-md-3">
+                            Range1 Stroke
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="text" id="range1Stroke" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            Range2 Stroke
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="text" id="range2Stroke" />
+                        </div>
+                        <div class="col-md-3">
+                            Range3 Stroke
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="text" id="range3Stroke" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            Orientation
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="text" id="orientation" />
+                        </div>
+                        <div class="col-md-3">
+                            Flow Direction
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="text" id="flowDirection" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            MajorTick Stroke
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="text" id="majorTickStroke" />
+                        </div>
+                        <div class="col-md-3">
+                            MinorTick Stroke
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="text" id="minorTickStroke" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            FeatureMeasures Stroke
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="text" id="featureMeasuresStroke" />
+                        </div>
+                        <div class="col-md-3">
+                            Comparative Symbol Stroke
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="text" id="comparativeSymbolStroke" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+ </div>
+
+<script type="text/javascript">
+    $(function () {
+
+        $("#featureMeasuresValue").ejSlider({
+            sliderType: ej.SliderType.MinRange,
+            value: 8,
+            height: 10,
+            minValue: 1,
+            maxValue: 9,
+            width: 110,
+            enableAnimation: true,
+            slide: "onValuechange",
+            change: "onValuechange"
+        });
+
+        $("#comparativeMeasureValue").ejSlider({
+            sliderType: ej.SliderType.MinRange,
+            value: 6.7,
+            height: 10,
+            minValue: 1,
+            maxValue: 9,
+            width: 110,
+            enableAnimation: true,
+            slide: "onValuechange",
+            change: "onValuechange"
+        });
+
+        $("#chkStrokeToTicks").ejCheckBox({ "change": "onTickStroke" });
+        $("#chkStrokeToLabels").ejCheckBox({ "change": "onLabelStroke" }); 
+        $("#chkEnableAnimation").ejCheckBox({ "change": "onAnimateClick", checked: true });
+
+        $('#range1Stroke').ejDropDownList({
+            dataSource: ["--Select--", "red", "yellow", "green"],
+            select: "onRangeStroke1change", width: "110px", selectedItemIndex: 0, height: "22px"
+        });
+
+        $('#range2Stroke').ejDropDownList({
+            dataSource: ["--Select--", "red", "yellow", "green"],
+            select: "onRangeStroke2change", width: "110px", selectedItemIndex: 0, height: "22px"
+        });
+
+        $('#range3Stroke').ejDropDownList({
+            dataSource: ["--Select--", "red", "yellow", "green"],
+            select: "onRangeStroke3change", width: "110px", selectedItemIndex: 0, height: "22px"
+        });
+
+        $('#orientation').ejDropDownList({
+            dataSource: ["horizontal", "vertical"],
+            select: "onOrientationchange", selectedItemIndex: 0, width: "110px", height: "22px"
+        });
+
+        $('#flowDirection').ejDropDownList({
+            dataSource: ["forward", "backward"],
+            select: "onFlowDirectionchange", selectedItemIndex: 0, width: "110px", height: "22px"
+        });
+
+        $('#majorTickStroke').ejDropDownList({
+            dataSource: ["--Select--", "red", "yellow", "green"],
+            select: "onMajorTickchange", width: "110px", selectedItemIndex: 0, height: "22px"
+        });
+
+        $('#minorTickStroke').ejDropDownList({
+            dataSource: ["--Select--", "red", "yellow", "green"],
+            select: "onMinorTickchange", width: "110px", selectedItemIndex: 0, height: "22px"
+        });
+
+        $('#featureMeasuresStroke').ejDropDownList({
+            dataSource: ["--Select--", "red", "yellow", "green"],
+            select: "onFeaturebarchange", width: "110px", selectedItemIndex: 0, height: "22px"
+        });
+
+        $('#comparativeSymbolStroke').ejDropDownList({
+            dataSource: ["--Select--", "red", "yellow", "green"],
+            select: "onComparativechange", width: "110px", selectedItemIndex: 0, height: "22px"
+        });
+
+        $("#sampleProperties").ejPropertiesPanel();
+    });
+
+    $(document).ready(function () {
+        orienttarg = $("#orientation").data("ejDropDownList");
+        orienttarg.option({selectedItemByIndex:0});
+
+        flowDirect = $("#flowDirection").data("ejDropDownList");
+        flowDirect.option({selectedItemByIndex:0});
+    });
+
+    function AddPrefix(sender) {
+        $("#BulletGraph1").ejBulletGraph("option", "quantitativeScaleSettings.labelSettings", { labelPrefix: sender.value });
+    }
+
+    function AddSuffix(sender) {
+        $("#BulletGraph1").ejBulletGraph("option", "quantitativeScaleSettings.labelSettings", { labelSuffix: sender.value });
+    }
+
+    function onTickStroke(args) {
+        if (args.isChecked)
+            $("#BulletGraph1").ejBulletGraph("option", "applyRangeStrokeToTicks", true);
+        else
+            $("#BulletGraph1").ejBulletGraph("option", "applyRangeStrokeToTicks", false);
+    };
+
+    function onLabelStroke(args) {
+        if (args.isChecked)
+            $("#BulletGraph1").ejBulletGraph("option", "applyRangeStrokeToLabels", true);
+        else
+            $("#BulletGraph1").ejBulletGraph("option", "applyRangeStrokeToLabels", false);
+    }
+
+    function onAnimateClick(args) {
+        if (args.isChecked)
+            $("#BulletGraph1").ejBulletGraph("option", "enableAnimation", true);
+        else
+            $("#BulletGraph1").ejBulletGraph("option", "enableAnimation", false);
+    }
+
+    function onValuechange(args) {
+        var dat = $("#BulletGraph1").data("ejBulletGraph");
+        if (dat) {
+            if (args.id == "featureMeasuresValue")
+                dat.setFeatureMeasureBarValue(0, args.value);
+            else if (args.id == "comparativeMeasureValue")
+                dat.setComparativeMeasureSymbol(0, args.value);
+        }
+    }
+
+    function onRangeStroke1change(args) {
+        if (args.itemId != 0)
+            $("#BulletGraph1").ejBulletGraph("option", "qualitativeRanges", [{ rangeStroke: args.text }]);
+    }
+
+    function onRangeStroke2change(args) {
+        if (args.itemId != 0)
+            $("#BulletGraph1").ejBulletGraph("option", "qualitativeRanges", [{},{ rangeStroke: args.text }]);
+    }
+
+    function onRangeStroke3change(args) {
+        if (args.itemId != 0)
+            $("#BulletGraph1").ejBulletGraph("option", "qualitativeRanges", [{}, {}, { rangeStroke: args.text }]);
+    } 
+
+    function onMajorTickchange(args) {
+        if (args.itemId != 0)
+            $("#BulletGraph1").ejBulletGraph("option", "quantitativeScaleSettings.majorTickSettings", { stroke: args.text });
+    }
+
+    function onMinorTickchange(args) {
+        if (args.itemId != 0)
+            $("#BulletGraph1").ejBulletGraph("option", "quantitativeScaleSettings.minorTickSettings", { stroke: args.text });
+    }
+
+    function onFeaturebarchange(args) {
+        if (args.itemId != 0)
+            $("#BulletGraph1").ejBulletGraph("option", "quantitativeScaleSettings.featuredMeasureSettings", { stroke: args.text });
+    }
+
+    function onComparativechange(args) {
+        if (args.itemId != 0)
+            $("#BulletGraph1").ejBulletGraph("option", "quantitativeScaleSettings.comparativeMeasureSettings", { stroke: args.text });
+    }
+
+    function onOrientationchange(args) {
+        var dat = $("#BulletGraph1").data("ejBulletGraph");
+        if (dat) {
+            $("#BulletGraph1").ejBulletGraph("option", "orientation", args.text);
+        }
+    }
+
+    function onFlowDirectionchange(args) {
+    var dat = $("#BulletGraph1").data("ejBulletGraph");
+    if (dat)
+        $("#BulletGraph1").ejBulletGraph("option", "flowDirection", args.text);
+    }
+
+    $(function () {
+
+        $("#BulletGraph1").ejBulletGraph({
+            qualitativeRangeSize: 32, load: "loadBulletTheme", height: 600, width: 600,
+            quantitativeScaleLength: 475, tooltipSettings: {template: "Tooltip", visible: true}, orientation: ej.datavisualization.BulletGraph.Orientation.Horizontal,
+            flowDirection: ej.datavisualization.BulletGraph.FlowDirection.Forward,
+            quantitativeScaleSettings: {
+                location: { x: 100, y: 200 },
+                minimum: 0,
+                maximum: 10,
+                interval: 1,
+                minorTicksPerInterval: 4,
+				majorTickSettings:{
+	                          size: 13,
+	                          width: 1,
+                              stroke: 'gray'
+							  },
+				minorTickSettings:{
+	                          size: 5,
+	                          width: 1,
+	                          stroke: 'gray'
+							  },
+                tickPosition: ej.datavisualization.BulletGraph.TickPosition.Far,
+                labelSettings: {
+                    position: ej.datavisualization.BulletGraph.LabelPosition.Below, offset: 14, size: 10
+                },
+				featuredMeasureSettings: { width: 5 },                
+				comparativeMeasureSettings:{
+                                           width: 5
+                },
+                featureMeasures: [{ value: 8, comparativeMeasureValue: 6.7, category: ""}]
+            },
+            qualitativeRanges: [{
+                rangeEnd: 4.3
+            }, {
+                rangeEnd: 7.3
+            }, {
+                rangeEnd: 10
+            }],
+            captionSettings: {
+                textPosition: 'left', textAlignment: 'center', padding:5, text: "Revenue YTD", font: { color: null, fontFamily: 'Segoe UI', fontStyle: ej.datavisualization.BulletGraph.FontStyle.Normal, size: '12px', fontWeight: ej.datavisualization.BulletGraph.FontWeight.Normal, opacity: 1 }, //'#707070'
+                subTitle: { 
+                    text: "$ in Thousands", textPosition: 'left', textAlignment:'center', padding:5, font: { color: null, fontFamily: 'Segoe UI', fontStyle: ej.datavisualization.BulletGraph.FontStyle.Normal, size: '12px', fontWeight: ej.datavisualization.BulletGraph.FontWeight.Normal, opacity: 1 } //'#707070'
+                }
+            }
+
+
+        });
+
+        
+
+    });
+</script>
+
+<div id="Tooltip" style="display:none; width:125px;padding-top: 10px;padding-bottom:10px">
+
+                <div align="center" style="font-weight:bold">
+                    Sales
+                </div>                
+           <table>
+           <tr>
+                <td>
+                    Current
+                </td>
+                <td>
+                    : {{:currentValue}}
+                </td>
+               
+            </tr>
+            <tr>
+                <td>
+                    Target
+                </td>
+                <td>
+                    : {{:targetValue}}
+                </td>
+               
+            </tr>
+            
+                          
+        </table>    
+
+        
+</div>
+    <style>
+        .aligntop .e-ddl .e-input {
+            line-height:20px;
+        }
+    </style>
+</body>
+</html>

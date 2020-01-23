@@ -1,0 +1,87 @@
+﻿ <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css"  rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ejgrid.responsive.css" type="text/css"  rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jquery.validate.min.js"></script>
+    <script src="../scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../scripts/jsondata.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+   
+</head>
+<body>
+    <div id="Grid"></div>
+
+    <script type="text/javascript">
+        $(function () {
+            // the datasource "window.gridData" is referred from jsondata.min.js
+            var gridObj = $("#Grid").ejGrid({
+                dataSource: window.gridData,
+                allowPaging: true,
+				editSettings:{allowAdding:true,allowDeleting:true,allowEditing:true},
+				toolbarSettings: { showToolbar: true, toolbarItems: [ej.Grid.ToolBarItems.Add, ej.Grid.ToolBarItems.Edit, ej.Grid.ToolBarItems.Delete, ej.Grid.ToolBarItems.Update, ej.Grid.ToolBarItems.Cancel] },
+                pageSettings: { pageCount: 3, pageSize:7},
+				scrollSettings:{height:307},
+				minWidth:700,
+                isResponsive: true,
+                enableResponsiveRow: true,
+				actionComplete: "actionComplete",
+                columns: [			
+					 { field: "OrderID", isPrimaryKey: true, headerText: "Order ID", validationRules: { required: true, number: true }, width:90, textAlign: ej.TextAlign.Right },
+					 { field: "CustomerID", headerText: "CustomerID", validationRules: { required: true}, width:100 },
+					 { field: "EmployeeID", headerText: "Employee ID", editType: ej.Grid.EditingType.Dropdown, width:90, textAlign: ej.TextAlign.Right },
+                     { field: "OrderDate", headerText: "Order Date",  format: "{0:MM/dd/yyyy}", width:120, textAlign: ej.TextAlign.Right, editType: ej.Grid.EditingType.DatePicker },
+                     { field: "Freight", headerText: 'Freight', width:110, editParams: { decimalPlaces: 2 },editType:ej.Grid.EditingType.Numeric, width: 80, format: "{0:C}" }
+                ]
+            }).ejGrid("instance");
+            var browserDetails = gridObj.getBrowserDetails();
+            if (browserDetails.browser == "msie" && parseInt(browserDetails.version, 10) <= 9)
+                $("#Grid").ejGrid("model.enableResponsiveRow", false);
+				if(window.addEventListener){
+            window.addEventListener('message', function (e) {
+			var gridObj = $("#Grid").ejGrid("instance");
+			   gridObj.refreshContent();
+                if (typeof e.data == "boolean") {
+                    
+					if(gridObj.model.isEdit)
+						gridObj.cancelEdit();
+					$("#Grid").ejGrid("model.enableResponsiveRow", e.data);
+                }
+                else {
+                    var links = $(document.head || document.getElementsByTagName('head')[0]).find("link");
+                    for (var i = 0; i < links.length; i++) {
+                        if (links[i].href.indexOf("ej.theme.min.css") != -1) {
+                            var cssref = links[i].href,
+                                serverconfig = cssref.substr(0, cssref.indexOf("Content") - 1),
+                                fileref = $('<link rel="stylesheet" type="text/css" href="' + serverconfig + window.parent.themes[e.data.split('_')[1]] + '" />');
+                            $(fileref).insertAfter(links[i]);
+                            $(links[i]).remove();
+                            break;
+                        }
+                    }
+
+                }
+                });
+				}
+          });
+		  function actionComplete(args){
+			   this.getContent().addClass("e-widget"); 
+		  }
+		
+    </script>
+</body>
+</html>

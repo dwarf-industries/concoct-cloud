@@ -1,0 +1,266 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>Essential JS 1 : Radial Gauge - Range Features</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <script src="../scripts/excanvas.min.js" type="text/javascript"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" align="center">
+                <div id="circularframe">
+                    <div id="RangeCircularGauge">
+                    </div>
+                </div>
+            </div>
+
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Range Size
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <div id="rangesize"></div>
+                        </div>
+                        <div class="col-md-3">
+                            Range Distance
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <div id="distancefromscale"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            Pointer Value
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <div id="pointervalue"></div>
+                        </div>
+                        <div class="col-md-3">
+                            Select Range
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="rangeid" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            Start Value
+                        </div>
+                        <div class="col-md-3" style="margin-top:8px;">
+                            <div id="startvalue"></div>
+                        </div>
+                        <div class="col-md-3">
+                            End Value
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <div id="endvalue"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            // declaration 
+            $("#RangeCircularGauge").ejCircularGauge({enableAnimation:false,
+                backgroundColor: "transparent", width: 500, load: "loadGaugeTheme",isResponsive:true,
+                scales: [{
+                    showRanges: true, 
+                    startAngle: 122, sweepAngle: 296, radius: 130, showScaleBar: true, size: 1, border: { width: 0.5 }, maximum: 120, majorIntervalValue: 20, minorIntervalValue: 10,
+                    pointers: [{
+                        value: 60,
+                        showBackNeedle: true,
+                        backNeedleLength: 20,
+                        length: 95,
+                        width: 7,
+                        pointerCap: { radius: 12 }
+                    }],
+                    labels: [{
+                        color: "#8c8c8c"
+                    }],
+                    ticks: [{
+                        type: "major",
+                        distanceFromScale: 2,
+                        height: 16,
+                        width: 1, color: "#8c8c8c"
+                    }, { type: "minor", height: 8, width: 1, distanceFromScale: 2, color: "#8c8c8c" }],
+                    ranges: [{
+                        distanceFromScale: -28,
+                        startValue: 0,
+                        endValue: 50
+                    }, {
+                        distanceFromScale: -28,
+                        startValue: 50,
+                        endValue: 100,
+                        backgroundColor: "#fc0606",
+                        border: { color: "#fc0606" }
+                    },
+                    {
+                        distanceFromScale: -28,
+                        startValue: 100,
+                        endValue: 120,
+                        backgroundColor: "#f5b43f",
+                        border: { color: "#f5b43f" }
+                    }]
+                }]
+            });
+        });
+
+        $(function () {
+            $("#rangesize").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                value: 7,
+                height: 10,
+                minValue: 2,
+                maxValue: 12,
+                width: 110,
+                enableAnimation: true,
+                slide: "onchange",
+                change: "onchange"
+            });
+
+            $("#startvalue").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                height: 10,
+                width: 110,
+                enableAnimation: true,
+                change: "onchange",
+                minValue: 0,
+                maxValue:50,
+                value:0
+            });
+
+            $("#endvalue").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                height: 10,
+                width: 110,
+                enableAnimation: true,
+                change: "onchange",
+                maxValue: 120,
+                minValue:0,
+                value:50
+            });
+
+            $("#distancefromscale").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                value: -28,
+                height: 10,
+                minValue: -30,
+                maxValue: 0,
+                width: 110,
+                enableAnimation: true,
+                slide: "onchange",
+                change: "onchange"
+            });
+
+            $("#pointervalue").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                height: 10,
+                width: 110,
+                minValue: 0,
+                maxValue: 120,
+                value: 60,
+                enableAnimation: true,
+                change: "pointerchange"
+            });
+
+
+            $('#rangeid').ejDropDownList({
+                dataSource: ["Range1", "Range2", "Range3"],
+                select: "onchange1", width: "110px", height: "22px",
+                selectedItemIndex:0
+            });
+
+        });
+
+        $("#sampleProperties").ejPropertiesPanel();
+
+        $(document).ready(function () {
+            var rangetarg = $("#rangeid").data("ejDropDownList");
+            rangetarg.option({ selectedItemIndex: 0 });
+        });
+
+        function pointerchange(args) {
+            var pointerg = $("#RangeCircularGauge").data("ejCircularGauge");
+            pointerg.setPointerValue(0,0,args.value);
+        }
+
+        function onchange1(args) {
+            var startslide = $("#startvalue").data("ejSlider");
+            var endslide = $("#endvalue").data("ejSlider");
+            var gaugestart = $("#RangeCircularGauge").data("ejCircularGauge");
+
+            if (args.text == "Range1") {
+                startslide.setModel({ maxValue: gaugestart.model.scales[0].ranges[0].startValue, value: gaugestart.model.scales[0].ranges[0].startValue });
+                endslide.setModel({ minValue: gaugestart.model.scales[0].ranges[0].endValue, value: gaugestart.model.scales[0].ranges[0].endValue });
+            }
+            else if (args.text == "Range2") {
+                startslide.setModel({ maxValue: gaugestart.model.scales[0].ranges[1].endValue, value: gaugestart.model.scales[0].ranges[1].startValue });
+                endslide.setModel({ minValue: gaugestart.model.scales[0].ranges[1].startValue, value: gaugestart.model.scales[0].ranges[1].endValue });
+            }
+            else if (args.text == "Range3") {
+                startslide.setModel({ maxValue: gaugestart.model.scales[0].ranges[2].endValue, value: gaugestart.model.scales[0].ranges[2].startValue });
+                endslide.setModel({ minValue: gaugestart.model.scales[0].ranges[2].startValue, value: gaugestart.model.scales[0].ranges[2].endValue });
+            }
+        }
+
+
+        function onchange(args) {
+            var rangetarget = $("#rangeid").data("ejDropDownList");
+            var target1 = $("#RangeCircularGauge").data("ejCircularGauge");
+            var endslide = $("#endvalue").data("ejSlider");
+            var startslide = $("#startvalue").data("ejSlider");
+            if (args.id == "startvalue") {
+                endslide.setModel({ minValue: args.value });
+                target1.setRangeStartValue(0, rangetarget.selectedIndexValue, args.value);
+            }
+            else if (args.id == "endvalue") {
+                startslide.setModel({ maxValue: args.value });
+                target1.setRangeEndValue(0, rangetarget.selectedIndexValue, args.value);
+            }
+            if (args.id == "rangesize") {
+                for (var i = 0; i <= 2; i++) {
+                    target1.setRangeSize(0, i, args.value);
+                }
+            }
+            else if (args.id == "distancefromscale") {
+                for (var j = 0; j <= 2; j++) {
+                    target1.setRangeDistanceFromScale(0, j, args.value);
+                }
+            }
+        }
+
+
+
+    </script>
+
+     <style>
+        .col-md-3 .e-ddl .e-input {
+            line-height:20px;
+        }
+    </style>
+</body>
+
+</html>
+

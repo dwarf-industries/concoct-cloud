@@ -1,0 +1,103 @@
+<!doctype html>
+
+<html>
+<head>
+    <title>Essential JS 1 : Dialog - Custom Actions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <input class="e-btn" id="btnOpen" value="Click to open dialog" />
+                <div class="control">
+                    <div id="dialogIcon" title="Audi-R8">
+                        <img class="r8Audi" src="../content/images/dialog/r8-coupe.png"  alt="r8-coupe"/>
+                        <div class="cnt">
+                            The Audi R8 was initially equipped with a 4.2 litre V8 engine. Specifically, it is an all-aluminum alloy 32-valve (four valves per cylinder) petrol engine, utilising Fuel Stratified Injection (FSI), and has a displacement of 4,163 cubic centimetres (254.0 cu in).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            // declaration
+            $("#dialogIcon").ejDialog({
+                width: 295,
+                actionButtons: ["close", "collapsible", "maximize", "minimize", "pin"],
+                close: "onDialogClose",
+                enableResize: false,
+                containment: ".cols-sample-area"
+            });
+            $("#btnOpen").ejButton({ size: "medium", "click": "onOpen", type: "button", height: 30, width: 172 });
+        });
+        function onDialogClose(args) {
+            $("#btnOpen").show();
+        }
+        function onOpen() {
+            $("#btnOpen").hide();
+            $("#dialogIcon").ejDialog("open");
+        }
+    </script>
+    <style class="cssStyles">
+        #dialogIcon span {
+            color: skyblue;
+        }
+
+        .control {
+            height: 500px;
+        }
+
+        .row .cols-sample-area {
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+				
+		.r8Audi{
+		    width: 266px;
+		}
+
+        #dialogIcon {
+            text-align: justify;
+        }
+		.fixedlayout:not(.material):not(.office-365) .cols-sample-area {
+            padding: 15px;
+            height:600px;
+        }
+		
+		.office-365 img {
+			width: 245px;
+		}
+
+        .fixedlayout.material #dialogIcon img {
+            width: 247px;
+            overflow: hidden;
+            position: relative;
+        }
+       .fixedlayout.material .cols-sample-area{
+           height:600px;
+       }
+
+       #dialogIcon .cnt {
+           padding-top: 5px;
+       }
+    </style>
+</body>
+</html>

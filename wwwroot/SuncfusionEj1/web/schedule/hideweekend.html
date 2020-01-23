@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Schedule JS Hide Weekend Functionalities</title>
+    <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script type="text/javascript" src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsonscheduledata.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="Schedule1"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid content">
+                    <div class="row">
+                        <div class="col-md-3">Non-Working Days</div>
+                        <div class="col-md-3">
+                            <input type="checkbox" id="showrhideweekends" />
+                            <label for="showrhideweekends">Toggle</label>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-3">Orientation</div>
+                        <div class="col-md-3">
+                            <input type="text" id="orientation" />
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-3">Working Days</div>
+                        <div class="col-md-3">
+                            <input type="text" id="workingdays" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#sampleProperties").ejPropertiesPanel();
+            $("#Schedule1").ejSchedule({
+                width: "100%",
+                height: "525px",
+                views: ["Day", "Week", "Month", "Agenda"],
+                currentDate: new Date(2017, 5, 5),
+                showWeekend: false,
+                appointmentSettings: {
+                    dataSource: ej.DataManager($.extend(true, [], window.Default)).executeLocal(ej.Query().take(10)),
+                    id: "Id",
+                    subject: "Subject",
+                    startTime: "StartTime",
+                    endTime: "EndTime",
+                    description: "Description",
+                    allDay: "AllDay",
+                    recurrence: "Recurrence",
+                    recurrenceRule: "RecurrenceRule"
+                }
+            });
+
+            $("#showrhideweekends").ejToggleButton({
+                showRoundedCorner: true,
+                defaultText: "Show",
+                activeText: "Hide",
+                size: "medium",
+                change: "onShowOrHideDays"
+            });
+
+            $("#orientation").ejDropDownList({
+                width: "110px",
+                dataSource: ["Vertical", "Horizontal"],
+                selectedItemIndex: 0,
+                select: "onOrientationChange"
+            });
+
+            $("#workingdays").ejDropDownList({
+                width: "110px",
+                dataSource: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                change: "onChangeWorkingDays",
+                checked: true,
+                showCheckbox: true,
+                selectedItems: [1, 2, 3, 4, 5]
+            });
+        });
+
+        function onShowOrHideDays(args) {
+            $("#Schedule1").ejSchedule({ showWeekend: args.isChecked });
+        }
+
+        function onOrientationChange(args) {
+            $("#Schedule1").ejSchedule({ orientation: args.value.toLowerCase() });
+        }
+
+        function onChangeWorkingDays(args) {
+            var workweek = [], array = args.model.selectedItems.sort();
+            for (i = 0; i < args.model.selectedItems.length; i++) {
+                workweek.push(args.model.dataSource[array[i]]);
+            }
+            $("#Schedule1").ejSchedule({ workWeek: workweek });
+        }
+    </script>
+</body>
+</html>

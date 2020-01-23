@@ -1,0 +1,158 @@
+<!doctype html>
+
+<html>
+<head>
+    <title>Essential JS 1 : Dialog - Keyboard Navigation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <input class="e-btn" id="btnOpen" value="Click to open dialog" />
+                <div class="control">
+                    <div id="keyboardDialog" title="Amazon">
+                        Amazon.com, Inc., often referred to as simply Amazon, is an American electronic commerce and cloud computing company with headquarters in Seattle, Washington. It is the largest Internet-based retailer in the United States. Amazon.com started as an online bookstore, later diversifying to sell DVDs, Blu-rays, CDs, video downloads/streaming, MP3 downloads/streaming, audiobook downloads/streaming, software, video games, electronics, apparel, furniture, food, toys and jewelry. The company also produces consumer electronics—notably, Amazon Kindle e-book readers, Fire tablets, Fire TV and Fire Phone—and is the world's largest provider of cloud infrastructure services (IaaS). Amazon also sells certain low-end products like USB cables under its in-house brand AmazonBasics.
+                        Amazon has separate retail websites for United States, United Kingdom and Ireland, France, Canada, Germany, Italy, Spain, Netherlands, Australia, Brazil, Japan, China, India and Mexico. Amazon also offers international shipping to certain other countries for some of its products.In 2011, it professed an intention to launch its websites in Poland and Sweden.
+                    </div>
+                </div>
+            </div>
+
+            <div id="sampleProperties">
+                <div class="prop-grid keyboard">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Alt + j
+                        </div>
+                        <div class="col-md-3">
+                            Focuses the control.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Up
+                        </div>
+                        <div class="col-md-3">
+                            Dialog move up.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Right
+                        </div>
+                        <div class="col-md-3">
+                            Dialog move right.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Down
+                        </div>
+                        <div class="col-md-3">
+                            Dialog move down.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Left
+                        </div>
+                        <div class="col-md-3">
+                            Dialog move left.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Ctrl + Right
+                        </div>
+                        <div class="col-md-3">
+                            Dialog resize to right direction.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Ctrl + Down
+                        </div>
+                        <div class="col-md-3">
+                            Dialog resize to bottom direction.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            // declaration
+            $("#keyboardDialog").ejDialog({
+                width: 450,
+                minWidth: 300,
+                minHeight: 150,
+                close: "onDialogClose",
+                containment: ".control",
+                target: ".control"
+            });
+            $("#btnOpen").ejButton({ size: "medium", click: "onOpen", type: "button", height: 30, width: 172 });
+            //Control focus key
+            $(document).on("keydown", function (e) {
+                if (e.altKey && e.keyCode === 74) { // j- key code.
+                    $("#keyboardDialog_wrapper").focus();
+                }
+            });
+        });
+        function onDialogClose(args) {
+            $("#btnOpen").show();
+        }
+        function onOpen() {
+            $("#btnOpen").hide();
+            $("#keyboardDialog").ejDialog("open");
+        }
+    </script>
+    <style class="cssStyles">
+        .control {
+            height: 500px;
+        }
+
+        .row .cols-sample-area {
+            padding: 0px;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: auto;
+        }
+
+        .cols-prop-area .content {
+            height: 450px;
+        }
+
+        .row .cols-prop-area {
+            height: 500px;
+        }
+
+        #keyboardDialog {
+            text-align: justify;
+        }
+		.fixedlayout:not(.material):not(.office-365) #keyboardDialog {
+            padding: 10px;
+        }
+        .fixedlayout.material .control{
+            height:700px;
+        }
+    </style>
+    <script type="text/javascript">
+        $("#sampleProperties").ejPropertiesPanel();
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" style="height: 100%; width: 100%;">
+<head>
+    <title>Essential JS 1: Report Viewer</title>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta name="description" content="Shows invoice details of dynamically selected bill ID. The report viewer renders RDL report that contains report parameter, expression, table, aggregates, etc." />
+    <link href="../../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../../content/ejthemes/ej.widgets.core.min.css" rel="stylesheet" />
+    <link href="../../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../../content/default.css" rel="stylesheet" />
+    <link href="../../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+       <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+      <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../../scripts/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body style="overflow: hidden; position: static; margin: 0; padding: 0; height: 100%; width: 100%;">
+
+    <div id="container" style="position: absolute; height: 100%; width: 100%;"></div>
+    <script type="text/javascript">
+        $(function () {
+         if (!(ej.browserInfo().name === "msie" && Number(ej.browserInfo().version) < 9)) { 
+            $("#container").ejReportViewer(
+                {
+                    reportServiceUrl: window.baseurl + 'api/ReportViewer',
+                    processingMode: ej.ReportViewer.ProcessingMode.Remote,
+                    reportPath: "InvoiceTemplate.rdl",                    
+                    reportLoaded:"onReportLoaded"
+                });
+            }else {
+               alert("ReportViewer will not be supported in IE Version < 9");
+            }
+        });
+
+        function onReportLoaded(senderobj) {
+            var reportObj = $('#container').data("ejReportViewer");
+            var reportParam = [];
+            reportParam.push({ name: 'InvoiceID', labels: ['InvoiceID'], values: [10250], nullable: false });
+            reportObj.model.parameters = reportParam;
+        }
+    </script>
+</body>
+</html>
+

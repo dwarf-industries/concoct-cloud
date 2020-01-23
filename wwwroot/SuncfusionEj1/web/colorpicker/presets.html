@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : ColorPicker Presets</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" style="min-height: 450px">
+                <div class="frame">
+                    <div class="control">
+                        <div class="presets-col">
+                            <span>Basic</span>
+                            <div id="basicPreset"></div>
+                        </div>
+                        <div class="presets-col">
+                            <span>Mono Chrome</span>
+                            <div id="monoChromePreset"></div>
+                        </div>
+                        <div class="presets-col">
+                            <span>Flat Colors</span>
+                            <div id="flatColorsPreset"></div>
+                        </div>
+                        <div class="presets-col">
+                            <span>Sea Wolf</span>
+                            <div id="seaWolfPreset"></div>
+                        </div>
+                        <div class="presets-col">
+                            <span>Web Colors</span>
+                            <div id="webColorsPreset"></div>
+                        </div>
+                        <div class="presets-col">
+                            <span>Sandy</span>
+                            <div id="sandyPreset"></div>
+                        </div>
+                        <div class="presets-col">
+                            <span>Pink Shades</span>
+                            <div id="pinkShadesPreset"></div>
+                        </div>
+                        <div class="presets-col">
+                            <span>Misty</span>
+                            <div id="mistyPreset"></div>
+                        </div>
+                        <div class="presets-col">
+                            <span>Citrus</span>
+                            <div id="citrusPreset"></div>
+                        </div>
+                        <div class="presets-col">
+                            <span>Vintage</span>
+                            <div id="vintagePreset"></div>
+                        </div>
+                        <div class="presets-col">
+                            <span>Moon Light</span>
+                            <div id="moonLightPreset"></div>
+                        </div>
+                        <div class="presets-col">
+                            <span>Candy Crush</span>
+                            <div id="candyCrushPreset"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        jQuery(function ($) {
+            $("#basicPreset").ejColorPicker({ displayInline: true, modelType: "palette", presetType: "basic", value: "#9494c8" });
+            $("#monoChromePreset").ejColorPicker({ displayInline: true, modelType: "palette", presetType: "monochrome", value: "#8e8e8e" });
+            $("#flatColorsPreset").ejColorPicker({ displayInline: true, modelType: "palette", presetType: "flatcolors", value: "#f79853" });
+            $("#seaWolfPreset").ejColorPicker({ displayInline: true, modelType: "palette", presetType: "seawolf", value: "#13647F" });
+            $("#webColorsPreset").ejColorPicker({ displayInline: true, modelType: "palette", presetType: "webcolors", value: "#E7C36F" });
+            $("#sandyPreset").ejColorPicker({ displayInline: true, modelType: "palette", presetType: "sandy", value: "#EFECCA" });
+            $("#pinkShadesPreset").ejColorPicker({ displayInline: true, modelType: "palette", presetType: "pinkshades", value: "#996072" });
+            $("#mistyPreset").ejColorPicker({ displayInline: true, modelType: "palette", presetType: "misty", value: "#0A0D0C" });
+            $("#citrusPreset").ejColorPicker({ displayInline: true, modelType: "palette", presetType: "citrus", value: "#F29727" });
+            $("#vintagePreset").ejColorPicker({ displayInline: true, modelType: "palette", presetType: "vintage", value: "#557359" });
+            $("#moonLightPreset").ejColorPicker({ displayInline: true, modelType: "palette", presetType: "moonlight", value: "#383A47" });
+            $("#candyCrushPreset").ejColorPicker({ displayInline: true, modelType: "palette", presetType: "candycrush", value: "#97cacb" });
+        });
+    </script>
+    <style>
+        .color_control {
+            margin-left: 40%;
+        }
+
+        .presets-col {
+            margin-bottom: 25px;
+            display: inline-block;
+            margin-right: 35px;
+        }
+
+        .frame {
+            width: auto;
+            border: 0px;
+            padding: 30px;
+        }
+    </style>
+</body>
+</html>

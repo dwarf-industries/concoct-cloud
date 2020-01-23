@@ -1,0 +1,210 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>Essential JS 1 : Linear Gauge - Thermometer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <script src="../scripts/excanvas.min.js" type="text/javascript"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" align="center">
+                <div id="thermoframe">
+                    <div id="thermoLinear">
+                    </div>
+                </div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Temperature
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="temperaturetype" />
+                        </div>
+                        <div class="col-md-3">
+                            Value (° C)
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <div id="pointervalue">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        function DrawLabel(args) {
+            if (args.label.index == 1) {
+                args.style.textValue = (args.label.value * (9 / 5)) + 32;
+                args.style.font = "Normal 10px Segoe UI";
+            }
+        }
+
+        function DrawCustomLabel(args) {
+            if (args.customLabelIndex == 2) {
+                var temp = args.scaleElement.barPointers[0].value;
+                var fahValue = (temp * (9 / 5)) + 32;
+                if (temp == -10) {
+                    args.style.textValue = "Very Cold Weather" + "(" + fahValue.toFixed(1) + "° F)";
+                }
+                else if ((temp > -10 && temp < 0) || (temp > 0 && temp < 15)) {
+                    args.style.textValue = "Cool Weather" + " (" + fahValue.toFixed(1) + "° F)";
+                }
+                else if (temp == 0) {
+                    args.style.textValue = "Freezing point of Water" + " (" + fahValue.toFixed(1) + "° F)";
+                }
+                else if (temp >= 15 && temp < 30) {
+                    args.style.textValue = "Room Temperature" + " (" + fahValue.toFixed(1) + "° F)";
+                }
+                else if (temp == 30) {
+                    args.style.textValue = "Beach Weather" + " (" + fahValue.toFixed(1) + "° F)";
+                }
+                else if (temp == 37) {
+                    args.style.textValue = "Body Temperature" + " (" + fahValue.toFixed(1) + "° F)";
+                }
+                else if (temp == 40) {
+                    args.style.textValue = "Hot Bath Temperature" + " (" + fahValue.toFixed(1) + "° F)";
+                }
+                else if (temp > 40 && temp < 100) {
+                    args.style.textValue = "Very Hot Temperature" + " (" + fahValue.toFixed(1) + "° F)";
+                }
+                else if (temp == 100) {
+                    args.style.textValue = "Boiling point of Water" + " (" + fahValue.toFixed(1) + "° F)";
+                }
+            }
+        }
+
+        $(function () {
+            // declaration 
+
+            $("#thermoLinear").ejLinearGauge({
+                labelColor: "#8c8c8c", load: "loadGaugeTheme",
+                height: 550, width: 500, drawLabels: "DrawLabel", drawCustomLabel: "DrawCustomLabel", enableAnimation: false,
+                scales: [{
+                    type: "thermometer", backgroundColor: "transparent", minimum: -10, maximum: 110, minorIntervalValue: 5, scaleBarSize: 20, position: { x: 50, y: 18 }, length: 355, border: { width: 0.5 },
+                    showCustomLabels: true,
+                    markerPointers: [{ opacity: 0 }],
+                    barPointers: [{
+                        width: 10, distanceFromScale: -0.5,
+                        value: 100, backgroundColor: "#DB3738"
+                    }],
+                    labels: [{
+                        placement: "near", font: { size: "10px", fontFamily: "Segoe UI", fontStyle: "Normal" }
+                    }, {
+                        placement: "far",
+                        distanceFromScale: { x: 10 }
+                    }],
+                    ticks: [{
+                        type: "majorinterval", height: 8, width: 1, color: "#8c8c8c"
+                    }, {
+                        type: "minorinterval", height: 4, width: 1, color: "#8c8c8c"
+                    }, {
+                        type: "majorinterval", placement: "far", height: 8, width: 1, color: "#8c8c8c"
+                    }, {
+                        type: "minorinterval", placement: "far", height: 4, width: 1, color: "#8c8c8c"
+                    }],
+                    customLabels: [{
+                        value: "(° C)",
+                        position: { x: 44, y: 78 },
+                        font: { size: "12px", fontFamily: "Segoe UI", fontStyle: "bold" }, color: "#666666"
+                    }, {
+                        value: "(° F)",
+                        position: { x: 56, y: 78 },
+                        font: { size: "12px", fontFamily: "Segoe UI", fontStyle: "bold" }, color: "#666666"
+                    },
+                    {
+                        position: { x: 51, y: 90 },
+                        font: { size: "13px", fontFamily: "Segoe UI", fontStyle: "bold" },
+                        color: "#666666"
+                    }]
+                }]
+            });
+        });
+
+
+        $(function () {
+            $("#pointervalue").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                value: 100,
+                height: 10,
+                width: 110,
+                minValue: -10,
+                maxValue: 110,
+                enableAnimation: false,
+                slide: "change",
+                change: "change"
+            });
+
+            $('#temperaturetype').ejDropDownList({
+                dataSource: ["Boiling Point", "Hot Bath", "Body Temp", "Beach Weather", "Cool Day", "Freezing Point", "Extreme Cold"],
+                select: "change", width: "110px", selectedItemIndex: 0, height: "22px"
+            });
+
+
+        });
+
+        $("#sampleProperties").ejPropertiesPanel();
+
+        function change(args) {
+            var slider=$("#pointervalue").data("ejSlider");
+            var thermotarget = $("#thermoLinear").data("ejLinearGauge");
+            if (args.id == "pointervalue") {
+                thermotarget.setBarPointerValue(0, 0, args.value);
+            }
+            else if (args.text == "Boiling Point") {
+                thermotarget.setBarPointerValue(0, 0, 100);
+            }
+
+            else if (args.text == "Hot Bath") {
+                thermotarget.setBarPointerValue(0, 0, 40);
+            }
+
+            else if (args.text == "Body Temp") {
+                thermotarget.setBarPointerValue(0, 0, 37);
+            }
+
+            else if (args.text == "Beach Weather") {
+                thermotarget.setBarPointerValue(0, 0, 30);
+            }
+
+            else if (args.text == "Cool Day") {
+                thermotarget.setBarPointerValue(0, 0, 10);
+            }
+
+            else if (args.text == "Freezing Point") {
+                thermotarget.setBarPointerValue(0, 0, 0);
+            }
+
+            else if (args.text == "Extreme Cold") {
+                thermotarget.setBarPointerValue(0, 0, -10);
+            }
+            slider.option({value:thermotarget.getBarPointerValue(0,0)})
+        }
+    </script>
+     <style>
+        .col-md-3 .e-ddl .e-input {
+            line-height:20px;
+        }
+    </style>
+</body>
+
+</html>
+

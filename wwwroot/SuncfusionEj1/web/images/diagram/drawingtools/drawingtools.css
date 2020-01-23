@@ -1,0 +1,61 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('fonts/drawingtools.eot?-7id2qi');
+	src:url('fonts/drawingtools.eot?#iefix-7id2qi') format('embedded-opentype'),
+		url('fonts/drawingtools.woff?-7id2qi') format('woff'),
+		url('fonts/drawingtools.ttf?-7id2qi') format('truetype'),
+		url('fonts/drawingtools.svg?-7id2qi#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-Ellipse:before {
+	content: "\e600";
+}
+
+.icon-HTML:before {
+	content: "\e601";
+}
+
+.icon-Image:before {
+	content: "\e602";
+}
+
+.icon-Native:before {
+	content: "\e603";
+}
+
+.icon-Path:before {
+	content: "\e604";
+}
+
+.icon-Polygon:before {
+	content: "\e605";
+}
+
+.icon-Rectangle:before {
+	content: "\e606";
+}
+
+.icon-RoundedRectangle:before {
+	content: "\e607";
+}
+
+.icon-Textbox:before {
+	content: "\e608";
+}
+

@@ -1,0 +1,104 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- Authentication card start -->
+<div class="login-card card-block auth-body">
+        <div class="text-center">
+            <img src="assets/images/auth/logo.png" alt="logo.png">
+        </div>
+        <div class="auth-box">
+            <div class="row m-b-20">
+                <div class="col-md-12">
+                    <h3 class="text-left txt-primary">Sign In</h3>
+                </div>
+            </div>
+            <hr/>
+            <div class="input-group">
+                <input id="exampleEmail11" type="email" class="form-control" placeholder="Your Email Address">
+                <span class="md-line"></span>
+            </div>
+            <div class="input-group">
+                <input id="examplePassword11" type="password" class="form-control" placeholder="Password">
+                <span class="md-line"></span>
+            </div>
+            <div class="row m-t-25 text-left">
+                <div class="col-sm-7 col-xs-12">
+                    <div class="checkbox-fade fade-in-primary">
+                        <label>
+                            <input type="checkbox" value="">
+                            <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                            <span class="text-inverse">Remember me</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-5 col-xs-12 forgot-phone text-right">
+                    <a href="auth-reset-password.html" class="text-right f-w-600 text-inverse"> Forgot Your Password?</a>
+                </div>
+            </div>
+            <div class="row m-t-30">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20" onclick="LoginUser()">Sign in</button>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-10">
+                    <p class="text-inverse text-left m-b-0">Thank you and enjoy our website.</p>
+                    <p class="text-inverse text-left"><b>Your Autentification Team</b></p>
+                </div>
+                <div class="col-md-2">
+                    <img src="assets/images/auth/Logo-small-bottom.png" alt="small-logo.png">
+                </div>
+            </div>
+
+        </div>
+ 
+    <!-- end of form -->
+</div>
+<!-- Authentication card end -->
+
+ 
+ <script>
+
+    $( document ).ready(function() 
+    {
+        $.ajax({
+            type: 'GET',
+            url: '/Authenication/GetUsers',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                LoadAccounts(response);
+            },
+            error: function (xhr, status, error) {
+    
+            }
+        });
+        
+    });
+    function LoginUser() {
+        console.log("In");
+        var dto = {
+            "Email": $("#exampleEmail11").val(),
+            "Password": $("#examplePassword11").val(),
+
+        }
+        console.log(dto);
+        $.ajax({
+            type: 'POST',
+            url: '/Authenication/Login',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                window.location = '/Dashboard/Index';
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+   
+</script>

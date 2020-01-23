@@ -1,0 +1,289 @@
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Rotator - Properties</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div class="control">
+                        <ul id="sliderContent">
+                            <li>
+                                <img class="image" src="../content/images/rotator/nature.jpg" title="Nature" alt="nature"/></li>
+                            <li>
+                                <img class="image" src="../content/images/rotator/bird.jpg" title="Beautiful Bird"  alt="bird"/><//></li>
+                            <li>
+                                <img class="image" src="../content/images/rotator/sculpture.jpg" title="Amazing Sculptures"  alt="sculpture"/><//></li>
+                            <li>
+                                <img class="image" src="../content/images/rotator/seaview.jpg" title="Sea-View"  alt="seaview"/><//></li>
+                            <li>
+                                <img class="image" src="../content/images/rotator/snowfall.jpg" title="Snow Fall"  alt="snowfall"/><//></li>
+                            <li>
+                                <img class="image" src="../content/images/rotator/card.jpg" title="Credit Card"  alt="card"/><//></li>
+                            <li>
+                                <img class="image" src="../content/images/rotator/night.jpg" title="Colorful Night"  alt="night"/><//></li>
+                        </ul>
+                    </div>
+                </div>
+		    </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Item Display
+                        </div>
+                        <div class="col-md-3">
+                            <select id="changeDisplay">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            Item Move
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="itemMove" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            PagerPosition
+                        </div>
+                        <div class="col-md-3">
+                            <select id="changePager">
+                                <option value="topleft">TopLeft</option>
+                                <option value="topright">TopRight</option>
+                                <option value="bottomleft">BottomLeft</option>
+                                <option value="bottomright">BottomRight</option>
+                                <option value="outside">Outside</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Animation
+                        </div>
+                        <div class="col-md-3">
+                            <select id="changeAnimation">
+                                <option value="slide">Slide</option>
+                                <option value="slowSlide">SlowSlide</option>
+                                <option value="fastSlide">FastSlide</option>
+                                <option value="slideshow">Slideshow</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Orientation
+                        </div>
+                        <div class="col-md-3">
+                            <select id="changeOrientation">
+                                <option value="horizontal">Horizontal</option>
+                                <option value="vertical">Vertical</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">Show/Hide Pager</div>
+                        <div class="col-md-3">
+                            <input type="checkbox" id="ChkPager" class="e-chkbox" value="Pager" checked="checked" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">Enable/Disable</div>
+                        <div class="col-md-3">
+                            <input type="checkbox" id="ChkEnable" class="e-chkbox" checked="checked" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Action
+                        </div>
+                        <div class="col-md-3">
+                            <input type="button" class="e-btn e-input" id="previous" value="Previous" onclick="previous()" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <input type="button" class="e-btn e-input" id="Button2" value="Next" onclick="next()" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Current Index
+                        </div>
+                        <div class="col-md-3">
+                            <input type="button" class="e-btn e-input" id="GetValue" value="Get Index" onclick="getValue()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var slideObj, dropObj;
+        $(function () {
+            // declaration
+            $("#sliderContent").ejRotator({
+                slideWidth: "200px",
+                isResponsive: true,
+                frameSpace: "0px",
+                displayItemsCount: "3",
+                slideHeight: "auto",
+                frameSpace: "4px",
+                pagerPosition: ej.Rotator.PagerPosition.Outside,
+                showThumbnail: false,
+                orientation: ej.Orientation.Horizontal,
+                showPager: true,
+                enabled: true,
+                showCaption: false,
+                allowKeyboardNavigation: true,
+                showPlayButton: false,
+                animationType: "slide"
+            });
+            first = [{ text: "1" }];
+            second = [{ text: "1" }, { text: "2" }];
+            third = [{ text: "1" }, { text: "2" }, { text: "3" }];
+            slideObj = $("#sliderContent").data("ejRotator");
+            $("#changePager").ejDropDownList({
+                selectedItemIndex: 4,
+                "change": "onPagerChange",
+                width: "120px"
+            });
+            $("#changeAnimation").ejDropDownList({
+                selectedItemIndex: 0,
+                "change": "onAnimationChange",
+                width: "120px"
+            });
+            $("#itemMove").ejDropDownList({
+                dataSource: third,
+                selectedItemIndex: 0,
+                "change": "onMoveChange",
+                width: "120px"
+            });
+            dropObj = $('#itemMove').data('ejDropDownList');
+            $("#changeDisplay").ejDropDownList({
+                selectedItemIndex: 2,
+                "change": "onDisplayChange",
+                width: "120px"
+            });
+            $("#changeOrientation").ejDropDownList({
+                selectedItemIndex: 0,
+                "change": "onOrientationChange",
+                width: "120px"
+            });
+            $("#chkAutoplay").ejCheckBox({ "change": "onAutoplay" });
+            $("#ChkPager").ejCheckBox({ "change": "onPager" });
+            $("#ChkEnable").ejCheckBox({ "change": "EnableDisable" });
+        });
+        function onPagerChange(args) {
+            slideObj.option({ pagerPosition: args.value });
+        }
+        function onAnimationChange(args) {
+            slideObj.option({ animationType: args.value });
+        }
+        function onDisplayChange(args) {
+            slideObj.option({ displayItemsCount: args.value });
+            if (args.value == 1) {
+                dropObj.setModel({ dataSource: first, value: args.value });
+                slideObj.option({ navigateSteps: args.value });
+            }
+            else if (args.value == 2) {
+                dropObj.setModel({ dataSource: second, value: args.value });
+                slideObj.option({ navigateSteps: args.value });
+            }
+            else {
+                dropObj.setModel({ dataSource: third, value: args.value });
+                slideObj.option({ navigateSteps: args.value });
+            }
+        }
+        function onMoveChange(args) {
+            slideObj.option({ navigateSteps: args.text });
+        }
+        function onOrientationChange(args) {
+            slideObj.option({ orientation: args.value });
+        }
+        function onAutoplay(args) {
+            slideObj.option({ showPlayButton: args.isChecked });
+        };
+        function onPager(args) {
+            slideObj.option({ showPager: args.isChecked });
+        };
+        function EnableDisable(args) {
+            if (args.isChecked)
+                slideObj.enable();
+            else
+                slideObj.disable();
+        };
+
+        function previous() {
+            slideObj.slidePrevious();
+        }
+        function next() {
+            slideObj.slideNext();
+        }
+        function getValue() {
+            alert("Current Slide Index : " + slideObj.getIndex());
+        }
+        $("#sampleProperties").ejPropertiesPanel();
+    </script>
+    <style type="text/css" class="cssStyles">
+        .frame {
+            padding-left: 12px;
+            width: 610px;
+        }
+		
+		.e-btn.e-input{
+            text-align:center;
+            padding:0px;
+        }
+
+        #sliderContent > li .image {
+            width: 200px;
+            height: 165px;
+        }
+
+        input {
+            line-height: normal;
+            width: 113px;
+        }
+
+            input.ejinputtext {
+                text-indent: 10px;
+            }
+
+        .e-btn {
+            width: 120px;
+        }
+
+        .e-togglebutton {
+            width: 100px;
+        }
+
+        #itemMove {
+            line-height: normal;
+            width: 117px;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1: DropDownTree - Template sample</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div class="control">
+                        <input type="text" id="empList" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script id="treeTemplate" type="text/x-jsrender">
+        {{if hasChild}}
+        <div class={{>cls}}>{{>text}}</div>
+        {{else}}
+        <div class="cont-list">
+            <img class="eimg" src="../content/images/combobox/{{>eimg}}.png" alt="employee" />
+            <div class="ename"> {{>text}} </div>
+            <div class="cont"> {{>country}} </div>
+        </div>
+        {{/if}}
+    </script>
+    <script type="text/javascript">
+        var treeData = [
+               { id: 1, text: "Software Engineer", hasChild: true, expanded: true },
+                   { id: 2, pid: 1, imgId: "3", text: "Erik Linden", eimg: "3", country: "England" },
+                   { id: 3, pid: 1, imgId: "8", text: "Louis", eimg: "7", country: "Australia" },
+               { id: 4, text: "Tester", hasChild: true, expanded: true },
+                   { id: 5, pid: 4, imgId: "6", text: "John Linden", eimg: "6", country: "Norway" },
+                   { id: 6, pid: 4, imgId: "7", text: "Lawrence", eimg: "8", country: "India" }
+        ];
+        $(function () {
+            $('#empList').ejDropDownTree({
+                watermarkText: "Please select",
+                width: "100%",
+				popupSettings: {
+					height: "500px"
+				},
+				headerTemplate: "<div class='e-tree-header'> <span style='padding-left:26px'> Photo </span> <span style='padding-left:5px'> Employee's Info </span></div>",
+                treeViewSettings: {
+                    fields: {
+                        dataSource: treeData,
+                        id: "id", parentId: "pid", text: "text", hasChild: "hasChild"
+                    },
+                    template: "#treeTemplate"
+                }
+            });
+        });
+    </script>
+    <style type="text/css" class="cssStyles">
+        .e-treeview .e-node-hover, .e-treeview .e-active {
+            background: transparent;
+            border-color: transparent;
+            color: black;
+        }
+		
+        .e-treeview .e-node-hover {
+            opacity: 0.8;
+        }
+        .e-tree-header, .e-tree-footer {
+             background-color: #a9a9a9;
+            height: 35px;
+            font-weight: bold;
+            padding: 10px 0 0 18px;
+            font-size: 15px;
+        }
+        .e-tree-footer {
+            background-color: #dadada;
+        }
+        .eimg {
+            margin: 0;
+            padding: 3px 10px 3px 0px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            float: left;
+        }
+
+        .ename {
+            font-weight: bold;
+            padding: 6px 3px 1px 3px;
+        }
+        .cont-list{
+            color : black;
+        }
+
+        .desig, .cont {
+            font-size: smaller;
+            padding: 3px 3px -1px 0px;
+        }
+    </style>
+</body>
+</html>

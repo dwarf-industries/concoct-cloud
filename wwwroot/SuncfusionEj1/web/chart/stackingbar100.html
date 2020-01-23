@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+	<link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+	<script src="../scripts/properties.js" type="text/javascript"></script>      
+ </head>
+ <body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="container"></div>
+            </div>
+        </div>
+    </div>
+ <script type="text/javascript" language="javascript">
+    $(function ()
+	{
+        $("#container").ejChart(
+        {
+			//Initializing Primary X Axis
+            primaryXAxis:
+            {
+                title: { text: 'Year' },
+                range:{min:2006,max:2015,interval:1}							   
+            },
+			
+			//Initializing Primary Y Axis
+            primaryYAxis:
+            {                            
+                title: { text: 'Sales Percentage(%)' }
+            },
+			
+			//Initializing Common Properties for all the series
+            commonSeriesOptions: 
+			{
+                type:'stackingbar100', 
+				enableAnimation: true,
+                tooltip: 
+				{ 
+					visible: true, 
+					format: "  #series.name# <br/> X :  #point.x# <br/> Y :  #point.y#  <br/>Percentage :  #point.percentage# %"
+				}
+            },
+			
+			//Initializing Series
+            series: 
+			[                                                      
+                {
+                    points: [{ x: 2007, y:453 }, { x: 2008, y: 354 }, { x: 2009, y: 282 }, { x: 2010, y: 321 }, 
+							 { x: 2011, y: 333 }, { x: 2012, y:351 }, { x: 2013, y:403 }, { x: 2014,y:421 }], 
+					name: "John",
+					fill:"#1ABC9C" 
+                },
+                {
+                    points: [{ x: 2007, y:876 }, { x: 2008, y: 564 }, { x: 2009, y: 242 }, { x: 2010, y: 121 },
+							 { x: 2011, y: 343 }, { x: 2012, y: 451 }, { x: 2013, y:203 },{ x: 2014,y:431 }], 
+					name: "Andrew",
+					fill:"#3498DB"
+                },								  
+                {
+                    points: [{ x: 2007, y:356 }, { x: 2008, y:876 }, { x: 2009, y: 898 }, { x: 2010, y: 567 }, 
+							 { x: 2011, y: 456 }, { x: 2012, y: 345 }, { x: 2013, y: 543 }, { x: 2014, y:654 }], 
+					name: "Thomas",
+					fill:"#34495E"
+				},								   
+                {
+                    points: [{ x: 2007, y: 122 }, { x: 2008, y: 444 }, { x: 2009, y: 222 }, { x: 2010, y: 231 },
+							 { x: 2011, y: 122 }, { x: 2012, y: 333}, { x: 2013, y: 354}, { x: 2014,y:100 }], 
+					name: "Hendry",
+					fill:"#00FFFF"
+                }
+			],                          
+            load:"loadTheme",
+            title: { text: 'Sales by year'},           
+			size: { height: "600"},
+			legend: { visible: true,position: 'right', alignment:"near" }
+        });
+    });
+ </script>
+ </body>
+</html>
+

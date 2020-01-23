@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Weather Analysis</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta name="description" content="Analyze weather data using charts and grids. It displays the Temperature, Humidity, Precipitation and Sunlight.">
+	<link href="../../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../content/ejthemes/flat-lime/ej.web.all.min.css" rel="stylesheet" />
+    <link href="css/weatheranalysis.css" rel="stylesheet" />	 
+    <link rel="shortcut icon" href="../../content/images/favicon.ico">
+	<script src="../../scripts/respond.js"></script>  
+    <!--[if lt IE 9]>
+	<script src="../../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+	<!--[if IE 9]><!-->
+	<script src="../../scripts/jquery-2.1.4.min.js" type="text/javascript"> </script>
+	<!--<![endif]-->
+    <script src="../../scripts/jsrender.min.js"></script>
+    <script src="../../scripts/ej.web.all.min.js"></script>
+	 
+    
+</head>
+<body>
+    <div class="top-section">
+        <div class="topbox"></div>
+        <img src="images/WeatherIcon.png" id="WeatherIcon" />
+        <div class="top-inner-section container">
+                    <div class="row boxcompress">
+                        <div id="Circle1" class="col-sm-4">
+                            <div id="Circle_Temperature">
+                            </div>
+                            <div id="Circle_SkyCondition">
+                            </div>
+                        </div>
+                        <div id="Circle2" class="col-sm-4">
+                            <div id="Circle_City">
+                                New York
+                            </div>
+                            <div id="Circle_Time">
+                            </div>
+                            <div id="Circle_Day">
+                            </div>
+                        </div>
+                        <div id="Circle3" class="col-sm-4">
+                            <div id="tophalf">
+                                <div id="Circle_Humidity">
+                                </div>
+                                <div id="HumidityCaption">
+                                    Humidity
+                                </div>
+                            </div>
+                            <div id="bottomhalf">
+                                <div id="Circle_DewPoint">
+                                </div>
+                                <div id="DewPointCaption">
+                                    Dew Point
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+    </div>
+    <div class="weather-samples container">
+        <div id="ScreenLeft" class="row">
+            <div id="HeaderBar1">
+                <div>
+                    <label id="CurrentDay"></label>
+                    <div class="buttons">
+                        <a class="signal inactive" id="ChartHour"></a>
+                        <a class="square active" id="GridHour"></a>
+                    </div>
+                </div>
+            </div>
+            <div id="HourData">
+                <div id="HourGrid"></div>
+                <div id="HourChart"></div>
+            </div>
+        </div>
+        <div id="ScreenRight" class="row">
+            <div id="HeaderBar2">
+                <div>
+                    Average Conditions
+                    <div class="buttons">
+                        <a class="signal active" id="ChartAverage"></a>
+                        <a class="square inactive" id="GridAverage"></a>
+                    </div>
+                </div>
+            </div>
+            <div id="AverageData">
+                <div id="AverageChart"></div>
+                <div class="averagegridwrapper"><div id="AverageGrid"></div></div>
+            </div>
+        </div>
+        <div id="precipitationTooltip" style="display: none;">
+            <div class="value">
+                <div>
+                    <label class="month">#point.x#</label><br />
+                    <label class="precipitation">Avg Precipitation (mm) : <b>#point.y#</b></label>
+                </div>
+            </div>
+        </div>
+        <div id="sunlightTooltip" style="display: none;">
+            <div class="value">
+                <div>
+                    <label class="month">#point.x#</label><br />
+                    <label class="sunlight">Avg Sunlight (Hrs): <b>#point.y#</b></label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="weatherscript.js"></script>
+</body>
+</html>

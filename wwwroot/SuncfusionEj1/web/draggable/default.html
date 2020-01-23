@@ -1,0 +1,70 @@
+﻿<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Essential JS 1: Default-Draggable</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div class="sampleContent">
+                        <div class="dragelement">
+                        <button id="drag">Drag</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#drag").ejButton({
+                height: "42px",
+                width: "80px",
+                create: "onCreate"
+            });
+        });
+        function onCreate(args) {
+            $('#drag').ejDraggable({
+                dragArea: ".sampleContent",
+                helper: function (event) {
+                    return $(event.element);
+                }
+            });
+        }
+    </script>
+    <style type="text/css" class="cssStyles">
+        #drag {
+            cursor: pointer;
+            width: 50px;
+            height: 30px;
+            font-size: 18px;
+            border-radius: 4px;
+        } 
+        .sampleContent {
+            height: 200px;
+            border: 1px solid #c8c8c8;
+            text-align: center;
+        }
+        .dragelement{
+            position: relative;
+        }
+    </style>
+</body> 
+</html>

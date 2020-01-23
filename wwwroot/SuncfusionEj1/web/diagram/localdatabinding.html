@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Local Data</title>
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js"></script>
+    <script src="../scripts/diagramscripts/diagramcommon.js"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="diagram"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var data = [
+        { "Id": "parent", "Role": "Marketing Director", "Color": "#f79663" },
+        { "Id": "1", "Role": "Manager", "TeamLead": "parent", "Color": "#f79663" },
+        { "Id": 3, "Role": "Fundraiser", "TeamLead": "1", "Color": "#5cc3b5" },
+        { "Id": 4, "Role": "Programmer", "TeamLead": "1", "Color": "#5cc3b5" },
+        { "Id": 6, "Role": "Communicator", "TeamLead": 3, "Color": "#67a961" },
+        { "Id": 7, "Role": "Advertisor", "TeamLead": 3, "Color": "#67a961" },
+        { "Id": 8, "Role": "Funding Officer", "TeamLead": 3, "Color": "#67a961" },
+        { "Id": 9, "Role": "Inter", "TeamLead": 6, "Color": "#67a961" },
+        { "Id": 10, "Role": " Officer", "TeamLead": 7, "Color": "#67a961" },
+        { "Id": 11, "Role": " Officer", "TeamLead": 7, "Color": "#67a961" },
+        { "Id": 12, "Role": " Asst.Director", "TeamLead": 4, "Color": "#e9b833" },
+        { "Id": 13, "Role": " Asst.Director", "TeamLead": 4, "Color": "#e9b833" },
+        { "Id": 14, "Role": " Asst.Director", "TeamLead": 4, "Color": "#e9b833" }
+        ];
+
+        //creating the node template
+        function nodeTemplate(diagram, node) {
+            node.labels[0].text = node.Role;
+            node.fillColor = node.Color;
+        }
+        $(function () {
+        if (!(ej.browserInfo().name === "msie" && Number(ej.browserInfo().version) < 9)) {
+            $("#diagram").ejDiagram({
+                width: "100%", height: "490px",
+                //use automatic layout to arranging elements on the page
+                layout: {
+                    type: "hierarchicaltree", marginY: 50, horizontalSpacing: 30, verticalSpacing: 40
+
+                },
+                defaultSettings: {
+                    //set the default properties of the nodes.
+                    node: {
+                        width: 110, height: 40, shape: "rectangle", borderColor: "transparent", fillColor: "#253737",
+
+                        labels: [{ name: "label1", fontColor: "#ffffff", margin: { left: 5, right: 5 } }]
+                    },
+                    //set the default properties of the connectors.
+                    connector: {
+                        segments: [{ "type": "orthogonal" }],
+                        targetDecorator: { fillColor: "#4F4F4F", borderColor: "#4F4F4F" }
+                    }
+                },
+                //initialize the node template.
+                nodeTemplate: "nodeTemplate",
+                pageSettings: { scrollLimit: "diagram" },
+                snapSettings: { snapConstraints: ej.datavisualization.Diagram.SnapConstraints.None },
+                tool: ej.datavisualization.Diagram.Tool.ZoomPan,
+                enableContextMenu: false,
+                //configure data source for diagram
+                dataSourceSettings: {
+                    id: "Id", parent: "TeamLead",
+                    //specifies the dataSource
+                    dataSource: data
+                }
+            });
+            diagramFitToPage("diagram");
+        }
+        else {
+            alert("Diagram will not be supported in IE Version < 9");
+        }
+        });
+    </script>
+    <style>
+        #content {
+            width: 160px;
+            height: 80px;
+            display: block;
+            position: absolute;
+            pointer-events: none;
+            text-align: left;
+            vertical-align: bottom;
+            margin-top: -100px;
+        }
+    </style>
+</body>
+</html>

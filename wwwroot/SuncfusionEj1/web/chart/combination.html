@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+	<link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+	<script src="../scripts/properties.js" type="text/javascript"></script>
+ </head>
+ <body>
+	<div class="content-container-fluid">      
+        <div class="row">                
+            <div class="cols-sample-area">                                  				
+				<div id="container"></div> 					                   
+            </div>				
+        </div>
+	</div>
+ <script type="text/javascript" language="javascript">
+    $(function ()
+	{
+        $("#container").ejChart(
+        {
+			//Initializing Primary X Axis
+			primaryXAxis:
+            {
+                title: { text: "Month" }
+            },
+			
+			//Initializing Primary Y Axis	
+            primaryYAxis:
+            {
+                title: { text: "Unit Sold" }
+			},
+            axes: 
+			[
+                {
+                    majorGridLines:
+                    {
+						visible: false
+                    },
+                    orientation: 'Vertical',
+                    opposedPosition: true,
+                    axisLine: { visible: false },
+                    rangePadding: 'normal',
+                    name: 'yAxis',
+                    labelFormat: '${value}',
+                    title: { text: "Total Transactions" }
+                }
+            ],	
+			
+			//Initializing Common Properties for all the series
+			commonSeriesOptions:
+			{
+                tooltip: { visible: true }
+        	}, 
+			
+			//Initializing Series
+			series:
+			[
+				{
+                    points: [{ x: "Jan", y: 45 }, { x: "Feb", y: 100 }, { x: "March", y: 25 },
+							 { x: "April", y: 100 }, { x: "May", y: 85 }, { x: "June", y: 140 }],
+                    fill:"#69D2E7",
+                    name: 'Unit Sold', 
+					type: 'column', 
+					enableAnimation: true,
+                    tooltip: 
+					{
+						format: "#point.x# <br/> Unit Sold : #point.y# <br/>"
+					}
+                },				
+				{
+                    points: [{ x: "Jan", y: 1000 }, { x: "Feb", y: 3000 }, { x: "March", y: 1000 },
+							 { x: "April", y: 7000 }, { x: "May", y: 5000 }, { x: "June", y: 7000 }],
+					name: 'Total Transaction', 
+					type: 'line', 
+					enableAnimation: true, 
+					yAxisName: 'yAxis',                    
+					tooltip:
+					{
+						format: "#point.x# <br/> Profit : #point.y# <br/>" 
+					},
+                    marker:
+                    {
+                        shape: 'circle',
+                        size:
+                        {
+                            height: 8, width: 8
+                        },
+                        visible: true
+                    },
+                    border:{width: 2 }
+				}
+            ],
+            load: "loadTheme",
+            isResponsive: true,
+			title: { text: 'Sales Report ' },
+            size: { height: "600" },
+            legend: 
+			{ 
+				visible: true,
+				font: { size: '15px' }, 
+				shape: 'seriesType',
+				position: 'Top',
+				itemStyle: { width: 15, height: 15 } 
+			}
+        });
+	});         
+ </script>
+ </body>
+</html>
+

@@ -1,0 +1,84 @@
+@{
+    ViewData["Title"] = "New Work Item";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var result = ViewData["UserAccounts"] as List<UserAccounts>;
+
+}
+<link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body text-center">
+               <div class="row">
+                   <h3>User Account Managment</h3>
+               </div>
+               <div class="row">
+                    <a href="/Dashboard/AddNewAccount" class="btn btn-block btn-info"  ><span class="glyphicon glyphicon-file"></span> Add New User</a>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="control-section">
+        <div class="content-wrapper">
+            <div id="Grid"></div>        
+        </div>
+    </div>
+</div>
+
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+ <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
+
+ <script>
+    $( document ).ready(function() 
+    {
+        $.ajax({
+            type: 'GET',
+            url: '/Authenication/GetManagmentUsers',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                LoadAccounts(response);
+            },
+            error: function (xhr, status, error) {
+    
+            }
+        });
+        
+    });
+
+    function LoadAccounts(data){
+        var grid = new ej.grids.Grid({
+            dataSource: data,
+            editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true, allowEditOnDblClick: false },
+            beginEdit : EditClicked,
+             columns: [
+                { field: 'name', headerText: 'Name', width: 120, textAlign: 'Right' },
+                { field: 'email', headerText: 'Email', width: 150 },
+                { field: 'type', headerText: 'Account Type', width: 130, format: 'yMd', textAlign: 'Right' },
+                { field: 'createdAt', headerText: 'Created At', width: 130, format: 'yMd', textAlign: 'Right' },
+                { headerText: 'Manage Records', width: 160,
+                commands: 
+                    [
+                        { type: 'Edit', buttonOption: { iconCss: ' e-icons e-edit', cssClass: 'e-flat' }, click: EditClicked },
+                        { type: 'Delete', buttonOption: { iconCss: 'e-icons e-delete', cssClass: 'e-flat' }, click: DeleteClicked },
+   
+                    ]
+                }
+            ]
+        });
+        grid.appendTo('#Grid');
+    }
+    function EditClicked(args){
+        console.log(args);
+        window.location.href="/Dashboard/EditAccount?id="+args.rowData.accountId;
+    }
+    function DeleteClicked(args){
+
+    }
+</script>

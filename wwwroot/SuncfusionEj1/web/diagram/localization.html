@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Localization</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/diagramscripts/diagramcommon.js"></script>
+</head>
+<body>
+
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="DiagramContent"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Selection Culture
+                        </div>
+                        <div class="col-md-3">
+                            <select id="language">
+                                <option value="en-US">English</option>
+                                <option value="de-DE">Deutsch</option>
+                                <option value="es-ES">Español</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        ej.datavisualization.Diagram.Locale["es-ES"] = {
+            cut: "Corte",
+            copy: "Copia",
+            paste: "Pasta",
+            undo: "Deshacer",
+            redo: "Rehacer",
+            selectAll: "Seleccionar todo",
+            grouping: "Agrupación",
+            group: "Grupo",
+            ungroup: "Desagrupar",
+            order: "Fin",
+            bringToFront: "Traer a delante",
+            moveForward: "Movimiento adelante",
+            sendToBack: "Enviar a espalda",
+            sendBackward: "Enviar hacia atrás"
+
+        };
+        ej.datavisualization.Diagram.Locale["de-DE"] = {
+            cut: "Schnitt",
+            copy: "Kopie",
+            paste: "Klebstoff",
+            undo: "Rückgängig ",
+            redo: "Rehacer",
+            selectAll: "Wählen alle",
+            grouping: "Gruppierung",
+            group: "Gruppe",
+            ungroup: "Aufheben",
+            order: "Bestellen",
+            bringToFront: "Bringen zu Front",
+            moveForward: "Umzug vorwärts",
+            sendToBack: "Senden zu zurück",
+            sendBackward: "Senden rückwärts"
+
+        };
+        var Labels = [];
+        this.Labels["en-US"] = [
+            { nodeName: "NewIdea", label: "Start Terminator" },
+            { nodeName: "Meeting", label: "Progress" },
+            { nodeName: "BoardDecision", label: "Decision" },
+            { nodeName: "Data", label: "Data" },
+            { nodeName: "End", label: "End Terminator" },
+            { nodeName: "Document", label: "Document" },
+            { nodeName: "connector3", label: "Yes" },
+            { nodeName: "connector6", label: "No" }
+        ]
+        this.Labels["de-DE"] = [
+            { nodeName: "NewIdea", label: "Start Terminator" },
+            { nodeName: "Meeting", label: "Fortschritt" },
+            { nodeName: "BoardDecision", label: "Entscheidung" },
+            { nodeName: "Data", label: "Daten" },
+            { nodeName: "End", label: "Ende Terminator" },
+            { nodeName: "Document", label: "Dokument" },
+            { nodeName: "connector3", label: "Ja" },
+            { nodeName: "connector6", label: "Keine" }
+        ]
+        this.Labels["es-ES"] = [
+            { nodeName: "NewIdea", label: "Comienzo Terminator" },
+            { nodeName: "Meeting", label: "Progreso" },
+            { nodeName: "BoardDecision", label: "Decisión" },
+            { nodeName: "Data", label: "Datos" },
+            { nodeName: "End", label: "Fin  Terminator" },
+            { nodeName: "Document", label: "Documento" },
+            { nodeName: "connector3", label: "Sí" },
+            { nodeName: "connector6", label: "No" }
+        ]
+        var margin = { "left": 20, "top": 0, "right": 20, "bottom": 0 };
+        var FlowShapes = ej.datavisualization.Diagram.FlowShapes;
+        var nodes =
+            [
+                { name: "NewIdea", width: 150, height: 60, offsetY: 60, labels: [{ "text": "Start Terminator", "fontColor": "white" }], type: "flow", shape: FlowShapes.Terminator },
+                { name: "Meeting", width: 150, height: 60, offsetY: 165, labels: [{ "text": "Progress" }], type: "flow", shape: FlowShapes.Process },
+                { name: "BoardDecision", width: 150, height: 100, offsetY: 285, labels: [{ text: "Decision" }], type: "flow", shape: FlowShapes.Decision },
+                { name: "Data", width: 150, height: 100, offsetY: 425, labels: [{ "text": "Data" }], type: "flow", shape: FlowShapes.Data },
+                { name: "Document", width: 150, height: 60, offsetY: 545, labels: [{ "text": "Document" }], type: "flow", shape: FlowShapes.Document },
+                { name: "End", width: 150, height: 60, offsetY: 650, labels: [{ "text": "End Terminator" }], type: "flow", shape: FlowShapes.Terminator }];
+
+        var connectors = [
+            { name: "connector1", sourceNode: "NewIdea", targetNode: "Meeting" },
+            { name: "connector2", sourceNode: "Meeting", targetNode: "BoardDecision" },
+            { name: "connector3", sourceNode: "BoardDecision", targetNode: "Data", labels: [{ "text": "Yes" }] },
+            { name: "connector4", sourceNode: "Data", targetNode: "Document", labels: [{ "text": "" }] },
+            { name: "connector5", sourceNode: "Document", targetNode: "End", labels: [{ "text": "" }] },
+            { name: "connector6", sourceNode: "BoardDecision", targetNode: "Meeting", segments: [{ "type": "orthogonal", length: 50, direction: "right" }], labels: [{ "text": "No", horizontalAlignment: "left" }], sourceDecorator: { shape: "none", }, targetDecorator: { shape: "arrow" } },
+        ];
+        $(function () {
+        if (!(ej.browserInfo().name === "msie" && Number(ej.browserInfo().version) < 9)) {
+            $("#DiagramContent").ejDiagram({
+                width: "100%",
+                height: "700px",
+                nodes: nodes,
+                connectors: connectors,
+				pageSettings: { scrollLimit: "diagram" },
+                defaultSettings: {
+                    node: { offsetX: 340, borderColor: "#1BA0E2", fillColor: "darkcyan", labels: [{ "fontColor": "white" }] },
+                    connector: { targetDecorator: { shape: "arrow", borderColor: "#606060", width: "10", height: "10" }, segments: [{ "type": "orthogonal" }], lineWidth: 2, lineColor: "#606060", labels: [{ "fillColor": "white", "fontColor": "black" }] }
+                },
+                locale: $("#language").val(),
+                contextMenu: contextmenu
+
+            });
+            var diagram = $("#DiagramContent").ejDiagram("instance");
+            var contextmenu = diagram.model.contextMenu.items;
+            diagramFitToPage("DiagramContent");
+        }
+        else {
+            alert("Diagram will not be supported in IE Version < 9");
+        }
+
+        $("#sampleProperties").ejPropertiesPanel();
+        $("#language").ejDropDownList({ width: "100px", enableFilterSearch: true, change: "Change" }).ejDropDownList("option", "selectedItemIndex", 0);
+        });
+        function Change(args) {
+            if (!(ej.browserInfo().name === "msie" && Number(ej.browserInfo().version) < 9)) {
+                $("#DiagramContent").ejDiagram("model.locale", args.value);
+                var diagram = $("#DiagramContent").ejDiagram("instance");
+                var currentCulture = Labels[args.value];
+                for (var i = 0; i < currentCulture.length; i++) {
+                    var node = diagram.nameTable[currentCulture[i].nodeName];
+                    if (node)
+                        diagram.updateLabel(node.name, node.labels[0], { text: currentCulture[i].label });
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

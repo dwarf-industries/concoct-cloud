@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Syncfusion SpellChecker - Dialog Mode</title>
+    <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+     <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script type="text/javascript" src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="TextArea" contenteditable="true">
+                    Facebook is a social networking service headquartered in Menlo Park, California. Its website was launched on February 4, 2004, by Mark Zuckerberg with his Harvard College roommates and fellow students Eduardo, Andrew McCollum, Dustin and Chris Hughes.
+                    The fouders had initially limited the websites membrship to Harvard students, but later expanded it to collges in the Boston area, the Ivy League, and Stanford Univrsity. It graually added support for students at various other universities and later to high-school students.
+                </div>
+                <div>
+                    <input type="button" id="SpellCheck"/>
+                </div>
+            </div>
+        </div>
+    </div>
+	<style>
+        #TextArea{
+			padding-bottom:15px;
+		}
+		.fixedlayout.office-365 #SpellCheck{
+			width:193px !important;
+		}
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $("#TextArea").ejSpellCheck({
+                dictionarySettings: {
+                    dictionaryUrl: window.baseurl + "api/SpellCheck/CheckWords",
+                    customDictionaryUrl: window.baseurl + "api/SpellCheck/AddToDictionary"
+                },
+                contextMenuSettings: { enable: false }
+            });
+            $("#SpellCheck").ejButton({ click: "showDialog", text: "Spell check using dialog" });
+        });
+
+        function showDialog() {
+            var spellObj = $("#TextArea").data("ejSpellCheck");
+            spellObj.showInDialog();
+        }
+    </script>
+</body>
+</html>

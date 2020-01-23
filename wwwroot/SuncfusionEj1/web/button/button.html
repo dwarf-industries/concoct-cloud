@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Button</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div class="control">
+                        <table>
+							<tr>
+								<th colspan="2" style="padding-left:30px"> Button </th>
+							</tr>
+                            <tr>
+                                <td> Normal</td>
+                                <td class="btnsht">
+                                    <button id="button11">login</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> Mini</td>
+                                <td class="btnsht">
+                                    <button id="button21">login</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td> Small</td>
+                                <td class="btnsht">
+                                    <button id="button31">login</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> Medium</td>
+                                <td class="btnsht">
+                                    <button id="button41">login</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td> Large</td>
+                                <td class="btnsht">
+                                    <button id="button51">login</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+
+            //  declaration 
+            $("#button11").ejButton({
+                size: "normal",
+                showRoundedCorner: true,
+                contentType: "imageonly",
+                prefixIcon: "e-icon e-uiLight e-handup"
+            });
+
+            $("#button21").ejButton({
+                showRoundedCorner: true,
+                size: "mini"
+            });
+
+
+            $("#button31").ejButton({
+                showRoundedCorner: true,
+                size: "small"
+            });
+
+
+            $("#button41").ejButton({
+                showRoundedCorner: true,
+                size: "medium"
+            });
+
+
+            $("#button51").ejButton({
+                size: "large",
+                showRoundedCorner: true,
+                contentType: "textandimage",
+                prefixIcon: "e-icon e-uiLight e-handup"
+            });
+
+
+        });
+    </script>
+    <style>
+        .e-bgdefault:hover .e-buttondiv .e-icon.e-uiLight, .e-bgdefault:active .e-buttondiv .e-icon.e-uiLight {
+            background-image: url('../content/ejthemes/common-images/icons-white.png');
+        }
+		.control{
+			padding: 30px;
+		}
+		td{
+			padding:5px;
+		}
+		.frame{
+			padding: 0 20px;
+		}
+
+    </style>
+</body>
+</html>

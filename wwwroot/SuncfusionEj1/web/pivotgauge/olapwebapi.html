@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" type="text/css" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+       <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+      <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/excanvas.min.js" type="text/javascript"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" style="width: 100%">
+                <div id="circularframe">
+                    <div id="PivotGauge" style="height: 350px; width: 100%; overflow: auto; position:relative">
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $("#PivotGauge").ejPivotGauge({
+                            url: window.baseurl + "api/PivotGauge/Olap",
+							serviceMethodSettings: { initialize: "Initialize" },
+                            enableTooltip: true, isResponsive: true,
+                            load: "loadGaugeTheme", backgroundColor: "transparent",
+                            scales: [{
+                                showRanges: true,
+                                radius: 150, showScaleBar: true, size: 1,
+                                border: {
+                                    width: 0.5
+                                },
+                                showIndicators: true, showLabels: true,
+                                pointers: [{
+                                    showBackNeedle: true,
+                                    backNeedleLength: 20,
+                                    length: 120,
+                                    width: 7
+                                },
+								{
+									type: "marker",
+									markerType: ej.datavisualization.CircularGauge.MarkerType.Diamond,
+									distanceFromScale: 5,
+									placement: "center",
+									backgroundColor: "#29A4D9",
+									length: 25,
+									width: 15
+								}],
+                                ticks: [{
+                                    type: "major",
+                                    distanceFromScale: 2,
+                                    height: 16,
+                                    width: 1, color: "#8c8c8c"
+                                },
+                                {
+                                    type: "minor",
+                                    height: 6,
+                                    width: 1,
+                                    distanceFromScale: 2,
+                                    color: "#8c8c8c"
+                                }],
+                                labels: [{
+                                    color: "#8c8c8c"
+                                }],
+                                ranges: [{
+                                    distanceFromScale: -5,
+                                    backgroundColor: "#fc0606",
+                                    border: { color: "#fc0606" }
+                                }, {
+                                    distanceFromScale: -5
+                                }],
+                                customLabels: [{
+                                    position: { x: 180, y: 290 },
+                                    font: { size: "10px", fontFamily: "Segoe UI", fontStyle: "Normal" }, color: "#666666"
+                                }, {
+                                    position: { x: 180, y: 320 },
+                                    font: { size: "10px", fontFamily: "Segoe UI", fontStyle: "Normal" }, color: "#666666"
+                                }, {
+                                    position: { x: 180, y: 150 },
+                                    font: { size: "12px", fontFamily: "Segoe UI", fontStyle: "Normal" }, color: "#666666"
+                                }]
+                            }],
+                            labelFormatSettings: { decimalPlaces: 2 }
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+    <style>
+        .circulardarkgradient, .circularlightgradient {
+            width: 360px;
+            position: relative;
+        }
+
+        .radioBtnLabel {
+            margin-left: 5px;
+        }
+    </style>
+
+</body>
+</html>

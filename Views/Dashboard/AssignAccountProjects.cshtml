@@ -1,0 +1,96 @@
+@{
+   
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var result = ViewData["UserAccount"] as OutgoingAccountManagment;
+    var User = ViewData["UserId"] as int?;
+    ViewData["Title"] = $"Editing {result.Name}";
+}
+
+<link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
+
+
+<div class="row" style="margin:0px;">
+    <div class="col-md-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body text-center">
+         
+               <div class="row" style="padding:50px;">
+                   <div class="col-md-6" id="ProjSettings">
+                       <div class="row">
+                           <h3 class="text-center"> Project Rights </h3>
+                       </div>
+                       <div class="row" style="padding:10px;">
+                           <div class="col-md-6">
+                                <div id="commit">
+                                    <label for="PCanCommit" style="padding: 10px 70px 10px 0"> Can Commit </label>
+                                    <input id="PCanCommit" type="checkbox" />
+                                </div>
+                           </div>
+                            <div class="col-md-6">
+                                <div id="clone">
+                                    <label for="PCanClone" style="padding: 10px 70px 10px 0"> Can Clone </label>
+                                    <input id="PCanClone" type="checkbox" />
+                                </div>
+                           </div>
+                       </div>
+                       <div class="row" style="padding:10px;">
+                           <div class="col-md-6">
+                                <div class="InnerPadding" id="create">
+                                    <label for="PCanCreateWork" style="padding: 10px 70px 10px 0"> Can Create Work Items </label>
+                                    <input id="PCanCreateWork" type="checkbox" />
+                                </div>
+                           </div>
+                            <div class="col-md-6">
+                                <div id="delete">
+                                    <label for="PCanDeleteWork" style="padding: 10px 70px 10px 0"> Can Delete Work Items</label>
+                                    <input id="PCanDeleteWork" type="checkbox" />
+                                </div>
+                           </div>
+                       </div>
+                       <div class="row" style="padding:10px;">
+                           <div class="col-md-6">
+                                <div id="view">
+                                    <label for="PCanViewWork" style="padding: 10px 70px 10px 0"> Can View Work </label>
+                                    <input id="PCanViewWork" type="checkbox" />
+                                </div>
+                           </div>
+                       </div>
+                   </div>
+                    <div class="col-md-6">
+                        <div class="row" style="padding:10px;">
+                            <h4>Projects</h4>
+                            <a href="#" class="btn btn-block btn-info" data-toggle="modal" data-target="#ProjectsModal" onclick="OpenProjects()" ><span class="glyphicon glyphicon-file"></span> Assign to new project</a>
+                        </div>
+                        <div class="row" style="padding:10px;">
+                             <div class="control-section">
+                                <div class="content-wrapper">
+                                    <div id="Grid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                   </div> 
+               </div>
+               <div class="row">
+                    <a href="#" class="btn btn-block btn-info" onclick="Close()"><span class="glyphicon glyphicon-file" ></span> Save Changes</a>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+ <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
+ <script>
+var UserId = @User;
+var projectsRaw = '@result.Projects';
+var projects = JSON.parse(projectsRaw.replace(/&quot;/g, '"'));
+var CProject;
+    
+</script>
+<script src="~/js/AssignAccountProjects.js"></script>

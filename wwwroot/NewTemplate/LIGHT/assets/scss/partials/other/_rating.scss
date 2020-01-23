@@ -1,0 +1,123 @@
+/**  =====================
+      Rating css start
+==========================  **/
+
+.br-wrapper {
+    margin: 20px 0 50px;
+}
+
+.br-theme-bars-1to10 .br-widget .br-current-rating {
+    clear: both;
+    padding: 0;
+    font-size: 16px;
+    color: #757575;
+    font-weight: 600;
+}
+
+.br-theme-bars-reversed .br-widget .br-current-rating {
+    clear: both;
+    padding: 0;
+    line-height: 2;
+    font-size: 16px;
+}
+
+.br-theme-bars-movie .br-widget .br-current-rating {
+    color: #757575;
+    font-weight: 600;
+    text-align: left;
+}
+
+.br-theme-bars-horizontal,
+.br-theme-bars-reversed {
+    .br-widget .br-current-rating {
+        color: #757575;
+        font-weight: 600;
+    }
+}
+
+span.value {
+    display: inline;
+}
+
+.current-rating {
+    position: relative;
+    top: -50px;
+    &.hidden {
+        display: none;
+    }
+}
+
+.your-rating {
+    position: relative;
+    top: -50px;
+    &.hidden {
+        display: none;
+    }
+}
+
+.br-theme-bars-1to10,
+.br-theme-bars-movie,
+.br-theme-bars-reversed,
+.br-theme-bars-horizontal {
+    .br-widget a {
+        background-color: #8CDDCD;
+        &.br-active,
+        &.br-selected {
+            background-color: #1ABC9C;
+        }
+    }
+}
+
+.br-theme-bars-pill {
+    .br-widget a {
+        background-color: #8CDDCD;
+        color: #1ABC9C;
+        &.br-active,
+        &.br-selected {
+            background-color: #1ABC9C;
+        }
+    }
+}
+
+.br-theme-fontawesome-stars {
+    .br-widget {
+        a.br-active:after,
+        a.br-selected:after {
+            color: #1ABC9C;
+        }
+    }
+}
+
+.br-theme-css-stars {
+    .br-widget {
+        a.br-active:after,
+        a.br-selected:after {
+            color: #1ABC9C;
+        }
+    }
+}
+
+.br-theme-bars-square {
+    .br-widget a {
+        border: 2px solid #8CDDCD;
+        color: #8CDDCD;
+        &.br-active,
+        &.br-selected {
+            border: 2px solid #1ABC9C;
+            color: #1ABC9C;
+        }
+    }
+}
+
+.br-theme-fontawesome-stars-o {
+    .br-widget {
+        a.br-selected:after,
+        a:after,
+        a.br-active:after,
+        a.br-fractional:after {
+            color: #1ABC9C;
+        }
+    }
+}
+
+/**====== Rating css end ======**/

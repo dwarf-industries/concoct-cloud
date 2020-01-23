@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Tile - Default Functionalities</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+	<script src="../scripts/ej.unobtrusive.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+		  <div class="tiles">
+            <div class="cols-sample-area">
+                <div id="scrollTarget" style="height: 100%">
+                    <div class="e-tile-group">
+                        <div class="e-tile-column">
+							<div id="tile1" ></div>
+							<div class="e-tile-small-col-2">
+								<div id="tile2" >
+								</div>
+								<div id="tile3" >
+								</div>
+								<div id="tile4">
+								</div>
+								<div id="tile5" >
+								</div>
+							</div>
+							<div id="tile6">
+							</div>
+							<div id="tile7" >
+							</div>
+							<div id="tile8" >
+							</div>
+						</div>
+                        <div class="e-tile-column">
+							<div id="tile9" >
+							</div>
+							<div id="tile10">
+							</div>
+							<div id="tile11">
+							</div>
+							<div id="tile12">
+							</div>
+							<div id="tile13">
+							</div>
+						</div>
+                    </div>
+                </div>
+            </div>
+			</div>
+        </div>
+    </div>
+	<script>	
+	   $(function () {
+            $("#tile1").ejTile({ imageUrl: '../content/images/tile/windows/people_1.png', imagePosition: "fill", tileSize: "medium", text: "People" });
+            $("#tile2").ejTile({ imageUrl: '../content/images/tile/windows/alerts.png'});
+            $("#tile3").ejTile({ imageUrl: '../content/images/tile/windows/bing.png'});
+            $("#tile4").ejTile({ imageUrl: '../content/images/tile/windows/camera.png'});
+            $("#tile5").ejTile({ imageUrl: '../content/images/tile/windows/messages.png'});
+            $("#tile6").ejTile({ imageUrl: '../content/images/tile/windows/games.png', tileSize: "medium", text: "Play" });
+            $("#tile7").ejTile({ imageUrl: '../content/images/tile/windows/map.png', tileSize: "medium", text: "Maps" });
+            $("#tile8").ejTile({ imageUrl: '../content/images/tile/windows/sports.png', imagePosition: "fill", tileSize: "wide", text: "Sports" });
+            $("#tile9").ejTile({ imageUrl: '../content/images/tile/windows/people_2.png', imagePosition: "fill", tileSize: "medium", text: "People" });
+            $("#tile10").ejTile({ imageUrl: '../content/images/tile/windows/pictures.png', tileSize: "medium", text: "Photo" });
+            $("#tile11").ejTile({ imageUrl: '../content/images/tile/windows/weather.png',  tileSize: "wide", text: "Weather" });
+            $("#tile12").ejTile({ imageUrl: '../content/images/tile/windows/music.png', tileSize: "medium", text: "Music" });
+            $("#tile13").ejTile({ imageUrl: '../content/images/tile/windows/favs.png', tileSize: "medium", text: "Favorites" });
+        });
+	</script>
+	<style>
+	.cols-sample-area{
+		text-align: center;
+	}
+	#scrollTarget{
+		display: inline-block;
+	}
+	#scrollTarget .e-tile-group{
+		padding: 0;
+	}
+	</style>
+</body>
+</html>

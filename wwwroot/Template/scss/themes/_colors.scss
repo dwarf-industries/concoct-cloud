@@ -1,0 +1,40 @@
+//
+// theme colors
+//
+
+$white: rgb(255, 255, 255);
+$dark:  rgb(38, 42, 47);
+$theme-colors: (
+  'lighten': (
+  'body-bg':           darken($white, 4.5),
+  'body-color':        darken($white, 75),
+  'sidebar-bg':        darken($white, 0),
+  'list-color':        darken($white, 35),
+  'list-link':         darken($white, 75),
+  'list-border':       darken($white, 6),
+  'list-link-bg':      darken($white, 4.5),
+  'content-bg':        darken($white, 0),
+  'navbar-link':       darken($white, 75),
+  'scrollbar-bg':      darken($white, 10),
+  'nanobar-bg':        darken($white, 75),
+  'dropdown-link':     darken($white, 75),
+  'dropdown-bg':       darken($white, 7),
+  'dropdown-item-bg':  darken($white, 0),
+  ),
+  'darken': (
+  'body-bg':           lighten($dark, 4.5),
+  'body-color':        lighten($dark, 65),
+  'sidebar-bg':        lighten($dark, 0),
+  'list-color':        lighten($dark, 35),
+  'list-link':         lighten($dark, 65),
+  'list-border':       lighten($dark, 6),
+  'list-link-bg':      lighten($dark, 4.5),
+  'content-bg':        lighten($dark, 0),
+  'navbar-link':       lighten($dark, 65),
+  'scrollbar-bg':      lighten($dark, 10),
+  'nanobar-bg':        lighten($dark, 75),
+  'dropdown-link':     lighten($dark, 65),
+  'dropdown-bg':       lighten($dark, 4.5),
+  'dropdown-item-bg':  lighten($dark, 0),
+  )
+);

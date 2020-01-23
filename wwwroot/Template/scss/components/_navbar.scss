@@ -1,0 +1,13 @@
+//
+// customize navbar items
+//
+
+.navbar-link {
+  margin-left: rem(3);
+}
+
+.navbar-bars {
+  transition: 0.2s all;
+  margin-left: rem(5);
+  @include font-size($font-size);
+}

@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+    <title>Essential JS 1 : FileExplorer Custom Context Menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/jsrender.min.js" type="text/javascript"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="fileExplorer"></div>
+                <h6>
+                    <span style="font-style:italic; margin-top: 5px;margin-left: 20%;">
+                        Note: A new custom ContextMenu item ("View") is added to Current Working Directory's ContextMenu
+                    </span>
+                </h6>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            var localServ, ajaxDataType;
+            localServ = window.baseurl + "api/FileExplorer/FileOperations"; 
+            if (isRestrictCrossOrigin()) {
+                //IE8, IE9 browser restrict CORS, so we set ajax request as JSONP to enable CORS
+                ajaxDataType = "jsonp";
+                //we have called "PerformJSONPAction" method to handle JSONP AJAX requests
+                localServ = window.baseurl + "api/FileExplorer/FileOperationsCors"; 
+            }
+
+            $("#fileExplorer").ejFileExplorer({
+                isResponsive: true,
+                width: "100%",
+                minWidth: "150px",
+                contextMenuSettings: {
+                    //define the ContextMenu items
+                    items: {
+                        // removed the "NewFolder" item from NavigationPane ContextMenu
+                        navbar: ["Upload", "|", "Delete", "Rename", "|", "Cut", "Copy", "Paste", "|", "Getinfo"],
+                        // added the custom ContextMenu item (View) to Current working directory ContextMenu
+                        cwd: ["Refresh", "Paste", "|", "SortBy", "View", "|", "NewFolder", "Upload", "|", "Getinfo"],
+                        // removed "Upload" item from Selected files/ folder's ContextMenu
+                        files: ["Open", "Download", "|", "Delete", "Rename", "|", "Cut", "Copy", "Paste", "|",
+                            "OpenFolderLocation", "Getinfo"]
+                    },
+                    //added the custom ContextMenu item's (View) functionality
+                    customMenuFields: [
+                    {
+                        id: "View",
+                        text: "View by",
+                        spriteCssClass: "custom-grid",
+                        child: [
+                        {
+                            id: "tile",
+                            text: "Tile view",
+                            action: "onLayout"
+                        },
+                        {
+                            id: "grid",
+                            text: "Grid view",
+                            action: "onLayout"
+                        },
+                        {
+                            id: "largeicons",
+                            text: "Large icons view",
+                            action: "onLayout"
+                        }, ]
+                    }, ]
+                },
+                path: window.baseurl + "Content/FileBrowser/",
+                ajaxAction: localServ,
+                ajaxDataType: ajaxDataType,
+                layoutChange: "onLayoutChange",
+                menuOpen: "onMenuOpen"
+            });
+        });
+
+        function isRestrictCrossOrigin() {
+            browserInfo = ej.browserInfo();
+            return (browserInfo.name == 'msie' && browserInfo.version <= 9) ? true : false;
+        }
+        function onLayout(args) {
+            var feObj = $('#fileExplorer').data("ejFileExplorer");
+            feObj && feObj.option("layout", args.ID);
+        }
+        function onMenuOpen(args) {
+            if (args.contextMenu == "cwd") {
+                $(".fe-context-menu").find(".e-fe-activeicon").removeClass("e-fe-activeicon");
+                $(".fe-context-menu").find("." + this.model.layout).addClass("e-fe-activeicon");
+            }
+        }
+        function onLayoutChange(args) {
+            $(".fe-context-menu .View").removeClass("custom-grid custom-tile custom-largeicons");
+            $(".fe-context-menu .View").addClass("custom-" + this.model.layout);
+        }
+    </script>
+    <style>
+        .fe-context-menu .custom-grid:before {
+            content: "\e7b9";
+        }
+
+        .fe-context-menu .custom-largeicons:before {
+            content: "\e7bb";
+        }
+
+        .fe-context-menu .custom-tile:before {
+            content: "\e7be";
+        }
+    </style>
+</body>
+</html>

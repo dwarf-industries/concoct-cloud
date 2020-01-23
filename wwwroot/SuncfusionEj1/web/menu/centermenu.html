@@ -1,0 +1,87 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1: Menu - center menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+	<link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <ul id="docfile">
+
+                    <li><a>File</a>
+                        <ul>
+                            <li><a>New</a></li>
+                            <li><a>Open</a></li>
+                            <li><a>Save</a></li>
+                            <li><a>PrintPreview</a></li>
+                            <li><a>Print</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a>Edit</a>
+                        <ul>
+                            <li><a>Undo</a></li>
+                            <li><a>Redo</a></li>
+                            <li><a>Cut</a></li>
+                            <li><a>Copy</a></li>
+                            <li><a>Paste</a></li>
+                            <li><a>Select All</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a>View</a>
+                        <ul>
+                            <li><a>Print Layout</a></li>
+                            <li><a>Show ruler</a></li>
+                            <li><a>Show spelling suggestion</a></li>
+                            <li><a>Compact controls</a></li>
+                            <li><a>Full screen</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a>Insert</a>
+                        <ul>
+                            <li><a>Image</a></li>
+                            <li><a>Link</a></li>
+                            <li><a>Comments</a></li>
+                            <li><a>Foot note</a></li>
+                            <li><a>Header</a></li>
+                            <li><a>Footer</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a>Help</a>
+                        <ul>
+                            <li><a>Docs Help</a></li>
+                            <li><a>User Forums</a></li>
+                            <li><a>Report an Issue</a></li>
+                            <li><a>Keyboard Shortcuts</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $("#docfile").ejMenu({ enableCenterAlign: true, width: "100%" });
+        });
+    </script>
+</body>
+</html>

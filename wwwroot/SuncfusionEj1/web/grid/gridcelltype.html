@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Cell Edit Type</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ejgrid.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsondata.min.js"></script>
+    <script src="../scripts/jquery.validate.min.js"></script>
+    <script src="../scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="Grid"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#Grid").ejGrid({
+                // the datasource "window.gridData" is referred from jsondata.min.js
+                dataSource: window.gridData,
+                allowPaging: true,
+                isResponsive: true,
+                enableResponsiveRow: true,
+                editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true },
+                toolbarSettings: { showToolbar: true, toolbarItems: [ej.Grid.ToolBarItems.Add, ej.Grid.ToolBarItems.Edit, ej.Grid.ToolBarItems.Delete, ej.Grid.ToolBarItems.Update, ej.Grid.ToolBarItems.Cancel] },
+                columns: [
+                        { field: "OrderID", isPrimaryKey: true, headerText: "Order ID", textAlign: ej.TextAlign.Right, validationRules: { required: true, number: true }, width: 85 },
+                        { field: "CustomerID", headerText: 'Customer ID', validationRules: { required: true, minlength: 3 }, width: 100, editType: ej.Grid.EditingType.String },
+                        { field: "OrderDate", headerText: 'Order Date', width: 100, editType: ej.Grid.EditingType.DateTimePicker, format: "{0:MM/dd/yyyy hh:mm:ss}", validationRules: { date: true }, priority: 4 },
+                        { field: "EmployeeID", headerText: 'Employee ID', textAlign: ej.TextAlign.Right, width: 80, validationRules: { number: true }, priority: 2 },
+                        { field: "Freight", headerText: 'Freight', textAlign: ej.TextAlign.Right, editType: ej.Grid.EditingType.Numeric, editParams: { decimalPlaces: 2 }, validationRules: { range: [0, 1000] }, width: 80, format: "{0:c2}", priority: 3 },
+                        { field: "ShipCity", headerText: 'Ship City', width: 100, editType: ej.Grid.EditingType.Dropdown, priority: 4 },
+                        { field: "Verified", headerText: 'Verified', width: 90, editType: ej.Grid.EditingType.Boolean, priority: 5 }
+                ]
+            });
+        });
+    </script>
+</body>
+</html>

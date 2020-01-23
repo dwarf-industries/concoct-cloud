@@ -1,0 +1,404 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Connectors</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/diagramscripts/diagramcommon.js"></script>
+</head>
+<body>
+
+
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="diagram"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Connectors</b>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 aligntop" style="margin-right: -10px;">
+                            Segment
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="segment" />
+                            <div id="segmentlistDiv">
+                                <ul>
+                                    <li value="orthogonal">Orthogonal</li>
+                                    <li value="straight">Straight</li>
+                                    <li value="bezier">Bezier</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 aligntop" style="margin-right: -10px;">
+                            Corner Radius
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="cornerRadius" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 aligntop" style="margin-right: -10px;">
+                            Bridging
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" id="bridge" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 aligntop" style="margin-right: -10px;">
+                            Bridge Obstacle
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" id="bridgeobstacle" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 aligntop" style="margin-right: -10px;">
+                            Bridge Direction
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="direction" />
+                            <div id="directionlistDiv">
+                                <ul>
+                                    <li value="top">Top</li>
+                                    <li value="bottom">Bottom</li>
+                                    <li value="left">Left</li>
+                                    <li value="right">Right</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Drag</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 aligntop" style="margin-right: -10px;">
+                            Connector
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" id="dragable" class="example" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 aligntop" style="margin-right: -10px;">
+                            Source
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" id="dragablesource" class="example" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 aligntop" style="margin-right: -10px;">
+                            Target
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" id="dragabletarget" class="example" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 aligntop" style="margin-right: -10px;">
+                            Segments
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" id="dragablesegment" class="example" />
+                        </div>
+                    </div>
+
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type='text/javascript'>
+
+        //region initialize controls
+
+        //Diagram Control
+        var ports = [{ name: "in", offset: { x: 0.4, y: 0.01 }, shape: "circle", },
+                    { name: "inn", offset: { x: 0.6, y: 0.01 }, shape: "circle" }
+        ];
+        var FlowShapes = ej.datavisualization.Diagram.FlowShapes;
+        var nodes =
+            [
+            { name: "node1", width: 90, height: 40, offsetX: 80, offsetY: 90, labels: [{ "text": "Start" }], type: "flow", shape: FlowShapes.Terminator },
+            { name: "node2", width: 130, height: 100, offsetX: 260, offsetY: 90, labels: [{ "text": "Already installed the software?" }], type: "flow", shape: FlowShapes.Decision },
+            { name: "node3", width: 100, height: 50, offsetX: 440, offsetY: 90, labels: [{ "text": "Show license agreement" }], type: "flow", shape: FlowShapes.Process },
+            { name: "node4", width: 110, height: 90, offsetX: 610, offsetY: 90, labels: [{ "text": "Agreed?" }], type: "flow", shape: FlowShapes.Decision },
+            { name: "node5", width: 130, height: 100, offsetX: 260, offsetY: 240, labels: [{ "text": "Can \n override existing version?", margin: { left: 10, right: 10, top: 2, bottom: 2 } }], type: "flow", shape: FlowShapes.Decision },
+            { name: "node6", width: 90, height: 50, offsetX: 610, offsetY: 240, labels: [{ "text": "Select destination folder" }], type: "flow", shape: FlowShapes.Process },
+            { name: "node7", width: 110, height: 90, offsetX: 610, offsetY: 410, labels: [{ "text": "Enough disk space?" }], type: "flow", shape: FlowShapes.Decision },
+            { name: "node8", width: 90, height: 50, offsetX: 440, offsetY: 410, labels: [{ "text": "Free Space" }], type: "flow", shape: FlowShapes.Process },
+            { name: "node9", width: 90, height: 50, offsetX: 260, offsetY: 410, labels: [{ "text": "Copy files" }], type: "flow", shape: FlowShapes.Process, ports: ports },
+            { name: "node10", width: 90, height: 40, offsetX: 80, offsetY: 410, labels: [{ "text": "End" }], type: "flow", shape: FlowShapes.Terminator }
+            ];
+        var addInfo;
+        var connectors =
+            [
+            { name: "connector1", sourceNode: "node1", targetNode: "node2" },
+            { name: "connector2", sourceNode: "node2", targetNode: "node3", labels: [{ "text": "No", fillColor: "white" }] },
+            { name: "connector3", sourceNode: "node3", targetNode: "node4" },
+            { name: "connector4", sourceNode: "node4", targetNode: "node10", labels: [{ "text": "No", fillColor: "white", offset: { x: 0.44, y: 0.27 } }], segments: [{ type: "orthogonal", length: 30, direction: "right" }, { type: "orthogonal", length: 80, direction: "bottom" }, { type: "orthogonal", length: 620, direction: "left" }, { type: "orthogonal", length: 220, direction: "bottom" }], addInfo: { segments: [{ type: "orthogonal", length: 30, direction: "right" }, { type: "orthogonal", length: 80, direction: "bottom" }, { type: "orthogonal", length: 620, direction: "left" }, { type: "orthogonal", length: 220, direction: "bottom" }] } },
+            { name: "connector5", sourceNode: "node2", targetNode: "node5", labels: [{ "text": "Yes", fillColor: "white", offset: { x: 0.2, y: 0.2 } }] },
+            { name: "connector6", sourceNode: "node4", targetNode: "node6", labels: [{ "text": "Yes", fillColor: "white", offset: { x: 0.4, y: 0.2 } }] },
+            { name: "connector7", sourceNode: "node6", targetNode: "node7" },
+            { name: "connector8", sourceNode: "node7", targetNode: "node8", labels: [{ "text": "No", fillColor: "white" }] },
+            { name: "connector9", sourceNode: "node8", targetNode: "node9" },
+            { name: "connector10", sourceNode: "node9", targetNode: "node10" },
+            { name: "connector11", sourceNode: "node5", targetNode: "node9", labels: [{ "text": "Yes", fillColor: "white", offset: { x: 0.01, y: 0.38 } }], targetPort: "in", segments: [{ type: "orthogonal", length: 20, direction: "left" }, { type: "orthogonal", length: 72, direction: "bottom" }, { type: "orthogonal", length: 20, direction: "right" }], addInfo: { segments: [{ type: "orthogonal", length: 20, direction: "left" }, { type: "orthogonal", length: 72, direction: "bottom" }, { type: "orthogonal", length: 20, direction: "right" }] } },
+            { name: "connector12", sourceNode: "node7", targetNode: "node9", labels: [{ "text": "Yes", fillColor: "white", offset: { x: 0.22, y: 0.01 } }], targetPort: "inn", segments: [{ type: "orthogonal", length: 20, direction: "right" }, { type: "orthogonal", length: 97, direction: "top" }, { type: "orthogonal", length: 416, direction: "left" }], addInfo: { segments: [{ type: "orthogonal", length: 20, direction: "right" }, { type: "orthogonal", length: 97, direction: "top" }, { type: "orthogonal", length: 416, direction: "left" }] } }
+            ];
+        $(function () {
+            $("#diagram").ejDiagram({
+                height: "500px",
+                width: "100%",
+                nodes: nodes,
+                connectors: connectors,
+                snapSettings: { snapConstraints: ej.datavisualization.Diagram.SnapConstraints.None },
+                selectionChange: "selectionChanged",
+                pageSettings: { scrollLimit: "diagram" },
+                defaultSettings: {
+                    node: {
+                        borderColor: "#000000",
+                        constraints: ej.datavisualization.Diagram.NodeConstraints.Default & ~ej.datavisualization.Diagram.NodeConstraints.Drag,
+                        fillColor: "#6bbd45", labels: [{ "fontColor": "white", margin: { left: 20, right: 20, top: 2, bottom: 2 } }]
+                    },
+                    connector: {
+                        addInfo: addInfo, cornerRadius: 10,
+                        segments: [{ "type": "orthogonal" }], lineWidth: 2,
+                        constraints: ej.datavisualization.Diagram.ConnectorConstraints.Default | ej.datavisualization.Diagram.ConnectorConstraints.Bridging, lineColor: "black"
+                    }
+                }
+            });
+
+            diagramFitToPage("diagram");
+            //Property Panel
+            $("#sampleProperties").ejPropertiesPanel();
+
+            //Check Box to enable/disable dragging
+            $('#dragable').ejCheckBox({
+                checked: true,
+                change: function () {
+                    updateConnectors("dragable", ej.datavisualization.Diagram.ConnectorConstraints.Drag);
+                }
+            });
+
+            //Check Box to enable/disable dragging source end
+            $("#dragablesource").ejCheckBox({
+                checked: true,
+                change: function () {
+                    updateConnectors("dragablesource", ej.datavisualization.Diagram.ConnectorConstraints.DragSourceEnd);
+                }
+            });
+
+            //Check Box to enable/disable dragging target end
+            $("#dragabletarget").ejCheckBox({
+                checked: true,
+                change: function () {
+                    updateConnectors("dragabletarget", ej.datavisualization.Diagram.ConnectorConstraints.DragTargetEnd);
+                }
+            });
+
+            //Check Box to enable/disable dragging segment thumbs
+            $("#dragablesegment").ejCheckBox({
+                checked: true,
+                change: function () {
+                    updateConnectors("dragablesegment", ej.datavisualization.Diagram.ConnectorConstraints.DragSegmentThumb);
+                }
+            });
+
+            //Check Box to enable/disable bridging
+            $("#bridge").ejCheckBox({
+                checked: true,
+                change: function () {
+                    updateConnectors("bridge", ej.datavisualization.Diagram.ConnectorConstraints.Bridging);
+                }
+            });
+
+            //Check Box to enable/disable bridging
+            $("#bridgeobstacle").ejCheckBox({
+                checked: true,
+                change: function () {
+                    updateConnectors("bridgeobstacle", ej.datavisualization.Diagram.ConnectorConstraints.BridgeObstacle);
+                }
+            });
+
+            //Drop down to change the bridge direction
+            $("#direction").ejDropDownList({
+                targetID: "directionlistDiv",
+                text: "Top",
+                value: "value",
+                change: function changedirection(args) {
+                    $("#diagram").ejDiagram({ bridgeDirection: args.value });
+                },
+                width: "120px"
+            });
+
+            //Dropdown to change the segments
+            $("#segment").ejDropDownList({
+                targetID: "segmentlistDiv",
+                text: "Orthogonal",
+                value: "value",
+                change: "changeSegment",
+                width: "120px"
+            });
+
+            //Numeric text box to change the corner radius
+            $("#cornerRadius").ejNumericTextbox({
+                value: 10,
+                minValue: 0,
+                maxValue: 10,
+                change: "changeCornerRadius",
+                width: "120px"
+            });
+
+
+        });
+
+         
+        //end region
+
+        //region helper methods
+
+        //Enable/Disable a particular behavior of connector
+        function updateConnectors(id, constraints) {
+            var diagram = $("#diagram").ejDiagram("instance");
+            var checkbox = $("#" + id).ejCheckBox("instance");
+            var selectedConnectors = getSelectedConnectors(diagram.model.selectedItems.children);
+            var connectors = selectedConnectors.length ? selectedConnectors : diagram.model.connectors;
+            for (var i = 0; i < connectors.length; i++) {
+                var connector = connectors[i];
+                if (diagram.getObjectType(connector) == "connector") {
+                    diagram.updateConnector(connector.name, {
+                        constraints: checkbox.isChecked() ?
+                           connector.constraints | constraints : connector.constraints & ~constraints
+                    });
+                }
+            }
+        }
+
+        //Modify the segment type
+        function changeSegment(args) {
+            var diagram = $("#diagram").ejDiagram("instance");
+            var selectedConnectors = getSelectedConnectors(diagram.model.selectedItems.children);
+            var connectors = selectedConnectors.length ? selectedConnectors : diagram.model.connectors;
+            for (var i = 0; i < connectors.length; i++) {
+                var connector = connectors[i];
+                if (args.value == "orthogonal") {
+                    if (connector.addInfo.segments) {
+                        diagram.updateConnector(connector.name, { segments: connector.addInfo.segments });
+                    }
+                    else {
+                        diagram.updateConnector(connector.name, { segments: [{ type: args.value }] });
+                    }
+                }
+                else
+                    diagram.updateConnector(connector.name, { segments: [{ type: args.value }] });
+            }
+        }
+
+        //Update the corner radius
+        function changeCornerRadius(args) {
+            var diagram = $("#diagram").ejDiagram("instance");
+            var selectedConnectors = getSelectedConnectors(diagram.model.selectedItems.children);
+            var connectors = selectedConnectors.length ? selectedConnectors : diagram.model.connectors;
+            for (var i = 0; i < connectors.length; i++) {
+                var connector = connectors[i];
+                diagram.updateConnector(connector.name, { cornerRadius: args.value });
+            }
+        }
+
+        //Selection change event handler
+        function selectionChanged(args) {
+		    if(args.state==="changing"){
+            var diagram = $("#diagram").ejDiagram("instance");
+            var ConnectorConstraints = ej.datavisualization.Diagram.ConnectorConstraints;
+            var selectedConnectors = getSelectedConnectors(args.selectedItems);
+            var connectors = selectedConnectors.length ? selectedConnectors : diagram.model.connectors;
+            updateCheckBox("dragable", connectors, ConnectorConstraints.Drag);
+            updateCheckBox("dragablesource", connectors, ConnectorConstraints.DragSourceEnd);
+            updateCheckBox("dragabletarget", connectors, ConnectorConstraints.DragTargetEnd);
+            updateCheckBox("dragablesegment", connectors, ConnectorConstraints.DragSegmentThumb);
+            updateCheckBox("bridge", connectors, ConnectorConstraints.Bridging);
+            updateCheckBox("bridge", connectors, ConnectorConstraints.BridgeObstacle);
+
+            var checked;
+            var radius = connectors[0].cornerRadius;
+            for (i = 1; i < connectors.length; i++) {
+                if (radius != connectors[i].cornerRadius) {
+                    $("#cornerRadius").ejNumericTextbox({ enabled: false });
+                    checked = true;
+                    break;
+                }
+            }
+            if (!checked) {
+                $("#cornerRadius").ejNumericTextbox({ enabled: true });
+                $("#cornerRadius").ejNumericTextbox({ value: radius });
+            }
+        }
+		}
+
+        //Get the selected connectors
+        function getSelectedConnectors(selectedItems) {
+            var diagram = $("#diagram").ejDiagram("instance");
+            var connectors = [];
+            for (var i = 0; i < selectedItems.length; i++) {
+                if (diagram.getObjectType(selectedItems[i]) == "connector")
+                    connectors.push(selectedItems[i]);
+            }
+            return connectors;
+        }
+
+        //Update the check boxes based on the selected connectors
+        function updateCheckBox(id, connectors, constraints) {
+            var enabled, connector, checked;
+            var diagram = $("#diagram").ejDiagram("instance");
+            enabled = connectors[0].constraints & constraints ? true : false;
+            if (connectors.length == 1) $("#" + id).ejCheckBox({ enabled: enabled });
+            else {
+                for (var i = 1; i < connectors.length; i++) {
+                    connector = connectors[i];
+                    if (diagram.getObjectType(connector) == "connector") {
+                        if ((connector.constraints & constraints ? true : false) != enabled) {
+                            $("#" + id).ejCheckBox({ enabled: false });
+                            checked = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (!checked) {
+                $("#" + id).ejCheckBox({ enabled: true });
+                $("#" + id).ejCheckBox({ checked: enabled });
+            }
+        }
+    </script>
+</body>
+</html>

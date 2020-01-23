@@ -1,0 +1,53 @@
+﻿<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : ListView - Default Functionalities</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js" type="text/javascript"></script>
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid listview-sample">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="defaultlistbox">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        window.dbitem =
+            [{ "Texts": "Discover Music" },
+            { "Texts": "Sales and Events" },
+            { "Texts": "Categories" },
+            { "Texts": "MP3 Albums" },
+            { "Texts": "More in Music" }];
+        window.musicFields = {
+            "text": "Texts"
+        };
+        $(function () {
+            $("#defaultlistbox").ejListView({ dataSource: window.dbitem, fieldSettings: window.musicFields, width: 400, loadComplete: "Refresh" });
+        });
+        function Refresh() {
+            if (document.body.className == "fixedlayout material") {
+                setTimeout(function () {
+                    var obj = $("#defaultlistbox").ejListView("instance");
+                    obj.option("_refreshScroller", true);
+                }, 300);
+            }
+        }
+    </script>
+</body>
+</html>

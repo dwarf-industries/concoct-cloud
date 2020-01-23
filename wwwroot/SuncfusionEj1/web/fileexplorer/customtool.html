@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+    <title>Essential JS 1 : File Explorer Custom Tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/jsrender.min.js" type="text/javascript"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/cultures/ej.culture.en-US.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="fileExplorer">
+                    <div id="helpDialog" title="Use of FileExplorer">
+                        <div class="text-content">
+                            <div class="header-content">Need assistance?</div>
+                            <div class="header-content">Our help document assists you to know more about FileExplorer control.</div>
+                            <div class="header-content">Please refer -> <a href="http://help.syncfusion.com/js/fileexplorer/overview" target="_blank">Help Document</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var toolsList = ["layout", "creation", "navigation", "addressBar", "editing", "copyPaste", "getProperties", "customTool", "searchBar"];
+        var tools = ej.FileExplorer.prototype.defaults.tools;
+        tools.customTool = [{
+            name: "Help",
+            tooltip: "Help ",
+            css: "e-fileExplorer-toolbar-icon Help",
+            action: function () {
+                $("#helpDialog").ejDialog("open");
+            }
+        }];
+
+        $(function () {
+            var localServ, ajaxDataType;
+            localServ = window.baseurl + "api/FileExplorer/FileOperations"; 
+
+            if (isRestrictCrossOrigin()) {
+                //IE8, IE9 browser restrict CORS, so we set ajax request as JSONP to enable CORS
+                ajaxDataType = "jsonp";
+                //we have called "PerformJSONPAction" method to handle JSONP AJAX requests
+                localServ = window.baseurl + "api/FileExplorer/FileOperationsCors"; 
+            }
+
+            $("#fileExplorer").ejFileExplorer({
+                isResponsive: true,
+                width: "100%",
+                minWidth: "150px",
+                fileTypes: "*.png,*.gif,*.jpg,*.jpeg,*.docx",
+                toolsList: toolsList,
+                layout: "largeicons",
+                tools: tools,
+                 path: window.baseurl + "Content/FileBrowser/",
+                ajaxAction: localServ,
+                ajaxDataType: ajaxDataType
+            });
+
+            $("#helpDialog").ejDialog({
+                enableResize: false, enableModal: true, showOnInit: false, width: 350, maxWidth: "100%", cssClass: "e-fe-dialog"
+            });
+        });
+        function isRestrictCrossOrigin() {
+            browserInfo = ej.browserInfo();
+            return (browserInfo.name == 'msie' && browserInfo.version <= 9) ? true : false;
+        }
+    </script>
+    <style class="cssStyles">
+        .e-fileExplorer-toolbar-icon {
+            height: 22px;
+            width: 22px;
+            font-family: 'ej-webfont';
+            font-size: 18px;
+            margin-top: 2px;
+            text-align: center;
+        }
+
+            .e-fileExplorer-toolbar-icon.Help:before {
+                content: "\e72b";
+            }
+
+        .e-dialog .header-content:not(:last-child) {
+            margin-bottom: .5em;
+        }
+
+        .e-dialog > .e-titlebar {
+            padding: .25em .25em .25em 1em;
+        }
+
+        .e-dialog.e-dialog-wrap {
+            border: none;
+        }
+
+        .e-dialog .e-dialog-icon {
+            right: 0;
+        }
+    </style>
+</body>
+</html>

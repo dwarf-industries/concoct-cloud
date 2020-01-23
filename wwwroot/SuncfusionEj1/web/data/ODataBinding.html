@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS : OData binding</title>
+    <script src="../scripts/jquery-3.3.1.min.js"></script> 
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="datatable">
+                    <table id="table1">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer ID</th>
+                                <th>Order Date</th>
+                                <th>Employee Name</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <script type="text/javascript">
+                    var dataManger = ej.DataManager(
+                            "//js.syncfusion.com/demos/ejServices/Wcf/Northwind.svc/"
+                        );
+
+                    // Query creation
+                    var query = ej.Query()
+                        .from("Orders")
+                        .sortBy("OrderID desc")
+                        .group("Employee.FirstName")
+                        .page(function () {
+                            return $("#pageIndex").val();
+                        }, 15)
+                        .select("OrderID", "CustomerID", "OrderDate", "Employee.FirstName")
+                        .expand("Employee")
+                        .requiresCount();
+
+                    var execute = function () {
+                        dataManger.executeQuery(query) // executing query
+                            .done(function (e) {
+                                $("#table1 tbody").html($("#groupTemplate").render(e.result));
+
+                                $("#total").html(parseInt(e.count / 15, 10));
+                                $(".datatable:first").ejWaitingPopup("hide");
+                            });
+
+                        $(".datatable:first").ejWaitingPopup()
+                            .ejWaitingPopup("show");
+                    };
+
+                    $(function () {
+                        execute();
+                        $("#execute").click(execute);
+                        $("#sampleProperties").ejPropertiesPanel();
+                    });
+                </script>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Goto Page
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="pageIndex" value="1" size="3" /> of 
+                            <span id="total"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <button id="execute">Execute</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script id="tableTemplate" type="text/x-jsrender">
+        <tr>
+            <td>{{>OrderID}}</td>
+            <td>{{>CustomerID}}</td>
+            <td>{{>OrderDate.toDateString()}}</td>
+            <td>{{>Employee.FirstName}}</td>
+
+        </tr>
+    </script>
+    <script id="groupTemplate" type="text/x-jsrender">
+        <tr class='caption'>
+            <th>Key: {{>key}}</td>
+            <th colspan='3'>
+                Count: {{>count}}</td>
+        </tr>
+        {{if items.GROUPGUID}}
+        {{for items tmpl="#groupTemplate"/}}
+        {{else}}
+        {{for items tmpl="#tableTemplate"/}}
+        {{/if}}
+    </script>
+    <style type="text/css">
+
+        .datatable,.darktheme .datatable ,.datatable td {
+            background:none;
+            border-color:#C4C4C4;
+        }
+            .datatable th {
+                border-bottom: 2px solid #169DD8;
+            }
+
+    </style>
+</body>
+
+</html>

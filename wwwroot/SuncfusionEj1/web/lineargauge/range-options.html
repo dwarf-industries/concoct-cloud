@@ -1,0 +1,254 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>Essential JS 1 : Linear Gauge - Range Features</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <script src="../scripts/excanvas.min.js" type="text/javascript"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" align="center">
+                <div id="linearframe">
+                    <div id="RangeGauge">
+                    </div>
+                </div>
+            </div>
+
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Select Range
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="rangeid" />
+                        </div>
+                        <div class="col-md-3 aligntop1">
+                            Start Width
+                        </div>
+                        <div class="col-md-3" style="margin-top:12px;">
+                            <div id="startwidth">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            End Width
+                        </div>
+                        <div class="col-md-3 aligntop1">
+                            <div id="endwidth">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            Start Value
+                        </div>
+                        <div class="col-md-3 aligntop1">
+                            <div id="startvalue">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            End Value
+                        </div>
+                        <div class="col-md-3 aligntop1">
+                            <div id="endvalue">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            Pointer Value
+                        </div>
+                        <div class="col-md-3 aligntop1">
+                            <div id="pointervalue">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            Placement
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="rangeplacement" />
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        $(function () {
+            // declaration 
+
+            $("#RangeGauge").ejLinearGauge({
+                labelColor: "#8c8c8c", width: 500, load: "loadGaugeTheme",isResponsive:true,
+                scales: [{
+                    width: 4, backgroundColor: "transparent", border: { color: "transparent", width: 0 }, showRanges: true, showMarkerPointers: false, length: 310, 
+
+                    position: { x: 50, y: 50 }, barPointers: [{
+                        value: 100, width: 4, backgroundColor: "#6FAAB0"
+                    }], labels: [{ font: { size: "11px", fontFamily: "Segoe UI", fontStyle: "bold" }, distanceFromScale: { x: -12 } }],
+                    ticks: [{ type: "majorinterval", width: 1, color: "#8c8c8c" }],
+                    ranges: [{
+                        distanceFromScale: 8,
+                        endValue: 50,
+                        startValue: 0,
+                        backgroundColor: "#F6B53F",
+                        border: { color: "#F6B53F" }, startWidth: 3, endWidth: 18
+                    }, {
+                        distanceFromScale: 8,
+                        endValue: 100,
+                        startValue: 70,
+                        backgroundColor: "#E94649",
+                        border: { color: "#E94649" }, startWidth: 18, endWidth: 3
+                    }]
+                }]
+            });
+        });
+
+        $(function () {
+            $("#startwidth").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                height: 10,
+                width: 110,
+                enableAnimation: true,
+                slide: "onchange",
+                change: "onchange"
+            });
+
+            $("#endwidth").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                height: 10,
+                width: 110,
+                enableAnimation: true,
+                slide: "onchange",
+                change: "onchange"
+            });
+
+            $("#startvalue").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                height: 10,
+                width: 110,
+                value: 0,
+                minValue: 0,
+                maxValue:50,
+                enableAnimation: true,
+                change: "onchange"
+            });
+
+            $("#endvalue").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                height: 10,
+                width: 110,
+                value: 50,
+                maxValue: 100,
+                minValue:0,
+                enableAnimation: true,
+                change: "onchange"
+            });
+
+            $("#pointervalue").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                value: 100,
+                height: 10,
+                width: 110,
+                minValue: 0,
+                maxValue: 100,
+                enableAnimation: true,
+                slide: "onchange",
+                change: "onchange"
+            });
+
+            $('#rangeplacement').ejDropDownList({
+                dataSource: ["far", "near", "center"],
+                select: "onchange", width: "110px", height: "22px"
+            });
+
+            $('#rangeid').ejDropDownList({
+                dataSource: ["Range1", "Range2"],
+                select: "onchange1", width: "110px", height: "22px"
+            });
+
+        });
+
+        $("#sampleProperties").ejPropertiesPanel();
+        $(document).ready(function () {
+            var placement = $("#rangeplacement").data("ejDropDownList");
+            placement.option({ selectedItemIndex: 0 });
+            var rangeid = $("#rangeid").data("ejDropDownList");
+            rangeid.option({ selectedItemIndex: 0 });
+        });
+
+        function onchange1(args) {
+            var startslide = $("#startvalue").data("ejSlider");
+            var endslide = $("#endvalue").data("ejSlider");
+            var startwidth = $("#startwidth").data("ejSlider");
+            var endwidth = $("#endwidth").data("ejSlider");
+            var gaugestart = $("#RangeGauge").data("ejLinearGauge");
+            startslide.setModel({ maxValue:gaugestart.model.scales[0].ranges[args.itemId].endValue ,value: gaugestart.model.scales[0].ranges[args.itemId].startValue });
+            endslide.setModel({ minValue:gaugestart.model.scales[0].ranges[args.itemId].startValue,value: gaugestart.model.scales[0].ranges[args.itemId].endValue });
+            startwidth.setModel({ value: gaugestart.model.scales[0].ranges[args.itemId].startWidth });
+            endwidth.setModel({ value: gaugestart.model.scales[0].ranges[args.itemId].endWidth });
+        }
+
+        function onchange(args) {
+            var gaugetarget = $("#RangeGauge").data("ejLinearGauge");
+            var target1 = $("#rangeid").data("ejDropDownList");
+            var endslide = $("#endvalue").data("ejSlider");
+            var startslide = $("#startvalue").data("ejSlider");
+            if (args.id == "startvalue") {
+                endslide.setModel({ minValue: args.value });
+                gaugetarget.setRangeStartValue(0, target1.selectedIndexValue, args.value);
+            }
+            else if (args.id == "endvalue") {
+                startslide.setModel({ maxValue: args.value });
+                gaugetarget.setRangeEndValue(0, target1.selectedIndexValue, args.value);
+            }
+            if (args.id == "startwidth")
+                gaugetarget.setRangeStartWidth(0, target1.selectedIndexValue, args.value);
+            if (args.id == "endwidth")
+                gaugetarget.setRangeEndWidth(0, target1.selectedIndexValue, args.value);
+            if (args.id == "pointervalue") {
+                gaugetarget.setBarPointerValue(0, 0, args.value);
+            }
+            if (args.text == "far" || args.text == "near" || args.text == "center") {
+                gaugetarget.setRangePosition(0, 0, args.text);
+                gaugetarget.setRangePosition(0, 1, args.text);
+            }
+        }
+
+    </script>
+     <style>
+        .col-md-3 .e-ddl .e-input {
+            line-height:20px;
+        }
+    </style>
+
+
+</body>
+
+</html>
+
+

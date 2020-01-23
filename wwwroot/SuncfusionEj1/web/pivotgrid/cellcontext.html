@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" type="text/css" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+       <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+      <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/pivotgrid.datasource.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" style=" width:100%">
+                <div id="PivotGrid" style="height: 380px; width: 72%; overflow: auto; float:left; display:block">
+                </div>
+                <div class="cols-prop-area event-tracer" style="width:25%">
+                    <div>
+                        <div class="heading">
+                            <span>Event Trace</span>
+                        </div>
+                        <div class="prop-grid content">
+                            <div class="eventarea">
+                                <div class="EventLog" id="EventLog">
+                                </div>
+                            </div>
+                            <div class="evtbtn">
+                                <input type="button" class="eventclear e-btn" value="Clear" onclick="onClear()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $(document).bind("click", function () {
+                            $(".contextMenuPopup").remove();
+                        });
+                        $("#PivotGrid").ejPivotGrid({
+                            dataSource: {
+                                data: pivot_dataset,
+                                rows: [
+                                    {
+                                        fieldName: "Country",
+                                        fieldCaption: "Country"
+                                    },
+                                    {
+                                        fieldName: "State",
+                                        fieldCaption: "State"
+                                    }
+                                ],
+                                columns: [
+                                    {
+                                        fieldName: "Product",
+                                        fieldCaption: "Product"
+                                    }
+                                ],
+                                values: [
+                                    {
+                                        fieldName: "Amount",
+                                        fieldCaption: "Amount"
+                                    },
+                                    {
+                                        fieldName: "Quantity",
+                                        fieldCaption: "Quantity"
+                                    }
+                                ]
+                            },
+                            isResponsive: true,
+                            enableCellContext: true,
+                            cellContext: "cell_RightClick"
+                        });
+                    });
+                    onClear = function () {
+                        jQuery.clearEventLog();
+                    },
+                    cell_RightClick = function (evt) {
+                        jQuery.addEventLog("Cell Context Menu is opened");
+                        $(".contextMenuPopup").remove();
+                        var contextMenu = $('<div class="contextMenuPopup"></div>');
+                        $(contextMenu[0]).html('<div class="menuItem">Cell Type</div><div class="menuItem">Position</div><div class="menuItem">Value</div>');
+                        $(contextMenu[0]).css("left", evt.args.args.clientX + 10).css("top", evt.args.args.clientY + 10);
+                        $("#PivotGrid").append(contextMenu[0]);
+                        $(".menuItem").click(function (e) {
+                            if (e.target.innerHTML == "Value")
+                                jQuery.addEventLog("Cell Value: " + evt.args.cellValue);
+                            else if (e.target.innerHTML == "Cell Type") {
+                                var cellType = evt.args.cellType == "value" ? "Value Cell" : (evt.args.cellType == "colheader" ? "Column Header" : (evt.args.cellType == "rowheader" ? "Row Header" : ((evt.args.role == "rowheader" || evt.args.role == "columnheader") ? "Summary Header" : "Summary Cell")));
+                                jQuery.addEventLog("Cell Type: " + cellType);
+                            }
+                            else if (e.target.innerHTML == "Position")
+                                jQuery.addEventLog("Cell Position: Column-" + (parseInt(evt.args.cellPosition.split(',')[0]) + 1) + " Row-" + (parseInt(evt.args.cellPosition.split(',')[1]) + 1));
+                        });
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+    <style>
+        .menuItem {
+            padding: 5px 50px 5px 20px;
+        }
+
+        .row .cols-prop-area {
+            min-height: 170px !important;
+            float: right;
+        }
+
+        .EventLog {
+            height: 230px !important;
+        }
+
+        .eventarea {
+            height: 300px !important;
+        }
+
+        .contextMenuPopup {
+            position: absolute;
+            background-color: #e6e6e6;
+            border: #BBBCBB solid 1px;
+            padding: 1px;
+            color: #565656;
+        }
+    </style>
+</body>
+</html>

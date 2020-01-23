@@ -1,0 +1,418 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential Studio for JavaScript  : Stock Analysis</title>
+	<meta charset="utf-8" />
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta name="description" content="Displays the historical stock price and volume in a graphical form using chart control."/>
+	<link href="../../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />    
+    <link href="stockCss.css" rel="stylesheet" />
+	<link href="../../content/bootstrap.min.css" rel="stylesheet" />
+    
+	<link rel="shortcut icon" href="../../content/images/favicon.ico">
+    <!--[if lt IE 9]>
+	<script src="../../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+	<!--[if IE 9]><!-->
+	<script src="../../scripts/jquery-2.1.4.min.js" type="text/javascript"> </script>
+	<!--<![endif]-->
+    <script src="../../scripts/jsrender.min.js"></script>
+    <script src="../../scripts/ej.web.all.min.js"></script>
+  
+</head>
+<body>
+    <div class="stockanalysis">
+        <div class="samplecontent">
+		
+            <div class="sampletitle container">
+                <div class="sampleimg">
+                    <div class="leftHeader">
+                        <img src="../../content/images/StockAnalysis/stock_logo.png" class="stockImg" />
+                        <label class="imgLabel">STOCK ANALYSIS</label>
+						<div  class="tile">
+					<img src="../../content/images/StockAnalysis/tile.png" class="stockImg" />
+					</div>
+                    </div>
+					
+                    <div class="ownerdetails">
+                        <table>
+                            <tr>
+                                <td>
+                                    <img src="../../content/images/StockAnalysis/person.png" />
+                                </td>
+                                <td class="ownname">Andrew Fuller<br />
+                                    <span>My Watch List</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+			<div class="container">
+            <div class="chartdetail">
+                <div class="stockstatus">
+                    <div class="row">
+                     
+                           
+                                
+                                    <div id="GOOG" class="ptiles col-xs-2">
+									<div>
+                                        <table class="titletab" cellspacing="0.1em">
+										   
+                                            <tr>
+                                                <td>
+                                                    <span class="ptext">GOOG</span>
+                                                </td>
+                                                <td id="goog-wait"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="decrement">
+                                                        70.39
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="down">
+                                                        <div class="downarrow"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="high">
+                                                    <div class="higharrow">
+                                                        <span>High: 764.8</span>
+                                                    </div>
+                                                </td>
+                                                <td class="low">
+                                                    <div class="lowarrow">
+                                                        <span>Low: 673.5</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+										</div>
+                                    </div>
+                                
+                                
+                                    <div id="MSFT" class="ptiles col-xs-2">
+									<div>
+                                        <table class="titletab" cellspacing="0.1em">
+                                            <tr>
+                                                <td>
+                                                    <span class="ptext">MSFT</span>
+                                                </td>
+                                                <td id="msft-wait"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="increment">
+                                                        1.82
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="up">
+                                                        <div class="uparrow"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="high">
+                                                    <div class="higharrow">
+                                                        <span>High: 37.5</span>
+                                                    </div>
+                                                </td>
+
+                                                <td class="low">
+                                                    <div class="lowarrow">
+                                                        <span>Low: 32.68</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+										</div>
+                                    </div>
+                                
+                                
+                                <div id="AAPL" class="ptiles col-xs-2">
+								<div>
+                                        <table class="titletab" cellspacing="0.1em">
+                                            <tr>
+                                                <td>
+                                                    <span class="ptext">AAPL</span>
+                                                </td>
+                                                <td id="aapl-wait"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="increment">
+                                                        7.61
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="up">
+                                                        <div class="uparrow"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="high">
+                                                    <div class="higharrow">
+                                                        <span>High: 705.7</span>
+                                                    </div>
+                                                </td>
+                                                <td class="low">
+                                                    <div class="lowarrow">
+                                                        <span>Low: 656.0</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+										</div>
+                                    </div>
+                               
+                              
+                                    <div id="NOK" class="ptiles col-xs-2">
+									<div>
+                                        <table class="titletab" cellspacing="0.1em">
+                                            <tr>
+                                                <td>
+                                                    <span class="ptext">NOK</span>
+                                                </td>
+                                                <td id="nok-wait"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="decrement">
+                                                        10.35
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="down">
+                                                        <div class="downarrow"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="high">
+                                                    <div class="higharrow">
+                                                        <span>High: 42.22
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td class="low">
+                                                    <div class="lowarrow">
+                                                        <span>Low: 36.6
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+										</div>
+                                    </div>
+                                 
+                             
+                         
+                </div>
+				</div>
+                <div class="chartbody">
+                    <div class="stockdetails">
+                         <div class="row">
+                                <div id="hiloOpenClose"></div>
+                             
+                                <div id="colChart"></div>
+                             
+                                <div class="yearlabel">
+                                    <label id="5y" class="changeyear">5Y</label>
+                                    <label id="3y" class="changeyear">3Y</label>
+                                    <label id="2y" class="changeyear">2Y</label>
+                                    <label id="1y" class="changeyear">1Y</label>                                    
+                                </div>
+                             </div>
+                    </div>
+                </div>
+            </div>
+			</div>
+        </div>
+    </div>
+
+    <div id="Tooltip" style="display: none;">
+        <table bgcolor="transparent" cellspacing="0.1em">
+            <tr>
+                <td>Date:
+                </td>
+                <td class="vponits">#point.x#
+                </td>
+            </tr>
+            <tr>
+                <td>Open:
+                </td>
+                <td class="vponits">#point.open#
+                </td>
+            </tr>
+            <tr>
+                <td>High:
+                </td>
+                <td class="vponits">#point.high#
+                </td>
+            </tr>
+            <tr>
+                <td>Low:
+                </td>
+                <td class="vponits">#point.low#
+                </td>
+            </tr>
+            <tr>
+                <td>Close:
+                </td>
+                <td class="vponits">#point.close#
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript" lang="javascript">
+	$( window ).resize(function() {
+	$(".tile").css("display","none");
+ var marginResize=getWidth();
+  $(".stockstatus").find(".row").css("padding-left",marginResize);
+
+});
+	$( window ).ready(function() {
+	$(".tile").css("display","none");
+ var marginReady=getWidth();
+   $(".stockstatus").find(".row").css("padding-left",marginReady);
+
+});
+$(".tile").bind( "click", function() {
+          if ($(".stockstatus").css("display") == "inline")
+               $(".stockstatus").css("display", "none");
+          else
+               $(".stockstatus").css("display", "inline");
+});
+
+ function getWidth(){
+     var ownerWindth=$(".sampletitle").width();
+	 if(ownerWindth<700)
+	    $(".sampletitle").find(".ownerdetails").css("display","none");
+		else
+		 $(".sampletitle").find(".ownerdetails").css("display", "inline");
+     var width=$(".stockstatus").width();
+	 if(width<418){
+	 $(".tile").css("display","inline");
+	 $(".stockstatus").css("display","none");
+	 $(".imgLabel").css("font-size","20px");
+	 }
+	 else{
+	 $(".tile").css("display","none");
+	 $(".stockstatus").css("display","block");
+	 $(".imgLabel").css("font-size","27px");
+	 }
+	 var eleWidth=209;
+	 var value;
+	 var div=width%eleWidth ;
+	 if(width >0)
+	 {
+	     if(width>825)
+	       return value=0;
+		else if(width%eleWidth<200)
+		   return value=(width%eleWidth)/2;
+	    else if(width%(eleWidth*2)<200)
+		   return value=(width%(eleWidth*2))/2;
+	    else if(width%(eleWidth*3)<200)
+		  return  value=(width%(eleWidth*2))/2;
+	    
+		 else
+		 return value=0;
+	 } 
+ }
+        $(function () {
+            $("#hiloOpenClose").ejChart(
+            {
+			   chartArea:{border:{color:"transparent"}},
+                primaryXAxis:
+                            {
+                                majorGridLines: { visible: false },
+                                majorTickLines: { visible: false },
+                                labelFormat: 'MMM-yy',
+                                valueType: 'datetime',
+						
+                                rangePadding: 'none'
+                            },
+
+                primaryYAxis:
+               {
+                   axisLine: { visible: false },
+                   majorTickLines: { visible: false },
+                   majorGridLines: { visible: true },
+                   rangePadding: 'none',
+                   range: { min: 0, max: 800, interval: 200 },
+                   font: { color: 'transparent' }
+               },
+              commonSeriesOptions:{
+                                   tooltip:{
+                                     visible: true
+                                      }
+								},
+                series: [{
+                    name: 'Bank', type: 'hiloopenclose',
+                    border: { width: 1 },
+                   tooltip: { template: 'Tooltip'}
+                }
+
+                ],
+                background: 'transparent',
+                isResponsive: true,
+                title: { text: 'GOOG', font: { size: "45px", color: "#b9cfe7", fontWeight: 'lighter' }, textAlignment: "far" },
+                load: "chartload",
+                size: { height: "300"  },
+                legend: { visible: false, },
+                margin: { right:20}
+            });
+        });
+
+        $(function () {
+            $("#colChart").ejChart(
+                        {
+                            primaryXAxis:
+                            {
+                                range: { min: new Date(2008, 2, 1), max: new Date(2013, 01, 1), interval: 1 },
+                                intervalType: 'Years',
+                                labelFormat: 'yyyy',
+                                valueType: 'datetime',
+                                majorGridLines: { visible: false },
+                                majorTickLines: { visible: false }
+                            },
+
+                            primaryYAxis:
+                           {
+                               range: { min: 100, max: 800, interval: 100 },
+                               axisLine: { visible: false },
+                               majorTickLines: { visible: false },
+                               rangePadding: 'none',
+                               font: { color: 'transparent' }
+                           },
+
+                            series: [
+                                {
+                                    name: 'Gold', type: 'column',
+                                    enableAnimation: true,
+                                    fill: "#ba4558"
+                                },
+                                {
+                                    name: 'silver', type: 'column',
+                                    enableAnimation: true,
+                                    fill: "#1d9059"
+                                }
+
+                            ],
+                            load: "onchartload",
+							canResize:true,
+                            background: 'transparent',
+                            size: { height: "250" },
+                            legend: { visible: false },
+                        });
+
+        });  
+    </script>
+    <script src="stockanalysis.js"></script>
+</body>
+</html>

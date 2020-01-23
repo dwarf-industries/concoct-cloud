@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" type="text/css" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+       <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+      <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/pivotgrid.datasource.js"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" style=" width:100%">
+                <div id="PivotGrid" style="height: 350px; width: 100%; overflow: auto">
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $("#PivotGrid").ejPivotGrid({
+                            dataSource: {
+                                data: pivot_dataset,
+                                rows: [
+                                    {
+                                        fieldName: "Country",
+                                        fieldCaption: "Country"
+                                    },
+                                    {
+                                        fieldName: "State",
+                                        fieldCaption: "State"
+                                    }
+                                ],
+                                columns: [
+                                    
+                                    {
+                                        fieldName: "Product",
+                                        fieldCaption: "Product"
+                                    }
+                                ],
+                                values: [
+                                    {
+                                        fieldName: "Amount",
+                                        fieldCaption: "Amount"
+                                    },
+                                    {
+                                        fieldName: "Quantity",
+                                        fieldCaption: "Quantity"
+                                    }
+                                ]
+                            },
+                            enableGroupingBar: true,enableDrillThrough: true, drillThrough: "drillData",renderSuccess: "onRenderSuccess"
+                        });
+                        $("#sampleProperties").ejPropertiesPanel();
+                        $("#rdbServer, #rdbClient").ejRadioButton({ change: "renderGrid" });
+                        pivotGrid = $("#PivotGrid").data("ejPivotGrid");
+                    });
+                    function renderGrid(args) {
+                        $(pivotGrid.element).html("");
+                        if (args.model.id == "rdbClient") {
+                            pivotGrid.model.url = "";
+                            pivotGrid.model.operationalMode = "clientmode";
+                            pivotGrid.model.dataSource = {
+                                data: pivot_dataset, cube: "",
+                                rows: [{ fieldName: "Country", fieldCaption: "Country" }, { fieldName: "State", fieldCaption: "State" }],
+                                columns: [{ fieldName: "Product", fieldCaption: "Product" }],
+                                values: [{ fieldName: "Amount", fieldCaption: "Amount" }, { fieldName: "Quantity", fieldCaption: "Quantity" }],
+                                filters:[]
+                            };
+                        }
+                        else {
+                            pivotGrid.model.dataSource = { data: null, cube: "" };
+                            pivotGrid.model.operationalMode = "servermode";
+                            pivotGrid.model.url = window.baseurl + "api/PivotGrid/Relational";
+                            pivotGrid.model.serviceMethodSettings.initialize= "Initialize";
+                            pivotGrid.model.serviceMethodSettings.drillDown= "Drill";
+                            pivotGrid.model.serviceMethodSettings.nodeStateModified= "ModifyNodeState";
+                            pivotGrid.model.serviceMethodSettings.nodeDropped= "DropNode";
+                            pivotGrid.model.serviceMethodSettings.removeButton= "RemoveButton";
+                            pivotGrid.model.serviceMethodSettings.memberExpand = "ExpandMember";
+                        }
+                        pivotGrid._tempFilterData = [];
+                        pivotGrid._load();
+                    }
+					function drillData(args) {
+                        gridData = args.selectedData;
+                        var dialogContent = ej.buildTag("div#Grid", {height:"50px"})[0].outerHTML;
+                        ejDialog = ej.buildTag("div#clientDialog.clientDialog", dialogContent, { "opacity": "1", "overflow":"auto" }).attr("title", "Drill Through Information")[0].outerHTML;
+                        $(ejDialog).appendTo("#" + this._id);
+                        this.element.find(".clientDialog").ejDialog({ width: "70%", height: "auto", content: "#" + this._id, enableResize: false, close: ej.proxy(ej.Pivot.closePreventPanel, this) });
+                         
+                        $("#Grid").ejGrid({
+                            dataSource: gridData,
+                        });
+                        
+					}
+					function onRenderSuccess() {
+					    if (window.themecolor == "material" || window.themecolor == "office-365")
+					        window.loadPivotGridFrameTheme();
+					}
+
+					window.loadPivotGridFrameTheme = function () {
+					    window.setTimeout(function () {
+					        var pivotGridElement = $("#PivotGrid").data("ejPivotGrid");
+					        if (pivotGridElement && pivotGridElement.model.enableGroupingBar && pivotGridElement.getJSONRecords() != null)
+					            pivotGridElement.renderControlFromJSON();
+					    }, 800);
+					}
+                </script>
+            </div>
+            <div id="sampleProperties">
+
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3" style="width:20%">
+                            Mode :
+                        </div>
+                        <div class="col-md-3" style="width:30%">
+                            <input type="radio" name="dftView" id="rdbClient" checked="checked" /><label for="rdbClient" class="clslab">Client</label>
+                        </div>
+                        <div class="col-md-3" style="width:30%">
+                            <input type="radio" name="dftView" id="rdbServer" /><label for="rdbServer" class="clslab">Server</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+    </div>
+	<style>
+        .clientDialog { max-height:250px;}
+	        .row .cols-prop-area {
+            min-height: 100px;
+			width:30%;
+        }
+	</style>
+</body>
+</html>

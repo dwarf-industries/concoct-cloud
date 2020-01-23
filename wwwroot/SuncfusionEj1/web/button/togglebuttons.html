@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Togglebutton</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div class="control">
+                        <table>
+							<tr>
+								<th colspan="2" style="padding-left:30px"> Toggle button </th>
+							</tr>
+                            <tr>
+                                <td> Normal</td>
+                                <td class="btnsht">
+                                    <input type="checkbox" id="check11" />
+                                    <label for="check11">Toggle</label>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td> Mini</td>
+                                <td class="btnsht">
+                                    <input type="checkbox" id="check21" />
+                                    <label for="check21">Toggle</label>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td> Small</td>
+                                <td class="btnsht">
+                                    <input type="checkbox" id="check31" />
+                                    <label for="check31">Toggle</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> Medium</td>
+                                <td class="btnsht">
+                                    <input type="checkbox" id="check41" />
+                                    <label for="check41">Toggle</label>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td> Large</td>
+                                <td class="btnsht">
+                                    <input type="checkbox" id="check51" />
+                                    <label for="check51">Toggle</label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+
+            //  declaration 
+            $("#check11").ejToggleButton({
+                size: "normal",
+                showRoundedCorner: true,
+                contentType: "imageonly",
+                defaultPrefixIcon: "e-icon e-mediaplay e-uiLight",
+                activePrefixIcon: "e-icon e-mediapause e-uiLight",
+            });
+
+
+
+            $("#check21").ejToggleButton({
+                defaultText: "Play",
+                showRoundedCorner: true,
+                activeText: "Pause",
+                size: "mini",
+            });
+
+
+            $("#check31").ejToggleButton({
+                showRoundedCorner: true,
+                defaultText: "Play",
+                activeText: "Pause",
+                size: "small",
+            });
+
+
+            $("#check41").ejToggleButton({
+                showRoundedCorner: true,
+                defaultText: "Play",
+                activeText: "Pause",
+                size: "medium",
+            });
+
+
+            $("#check51").ejToggleButton({
+                showRoundedCorner: true,
+                defaultText: "Play",
+                activeText: "Pause",
+                size: "large",
+                contentType: "textandimage",
+                defaultPrefixIcon: "e-icon e-mediaplay e-uiLight",
+                activePrefixIcon: "e-icon e-mediapause e-uiLight",
+            });
+        });
+    </script>
+    <style>
+        .e-bghover .e-tglebuttondiv .e-icon.e-uiLight, .e-bgselected .e-tglebuttondiv .e-icon.e-uiLight {
+            background-image: url('../content/ejthemes/common-images/icons-white.png');
+        }
+		.control{
+			padding: 30px;
+		}
+		td{
+			padding:5px;
+		}
+		.frame{
+			padding: 0 20px;
+		}
+
+    </style>
+</body>
+</html>

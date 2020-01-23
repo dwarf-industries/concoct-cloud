@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Signature - API properties</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="control">
+                    <h3>Sign here</h3>
+                    <div id="apisignature">
+                    </div>
+                </div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3 col-xs-4">Stroke Color</div>
+                        <div class="col-md-3 col-xs-4">
+                            <input type="text" id="signstroke" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-xs-4">StrokeWidth</div>
+                        <div class="col-md-3 col-xs-4">
+                            <input type="text" class="color" id="selectwidth" />
+                            <div id="width">
+                                <ul>
+                                    <li>1</li>
+                                    <li>2</li>
+                                    <li>3</li>
+                                    <li>4</li>
+                                    <li>5</li>
+                                    <li>6</li>
+                                    <li>7</li>
+                                    <li>8</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-xs-4">Undo</div>
+                        <div class="col-md-3 col-xs-4">
+                            <input type="button" class="e-btn" id="signundo" value="Undo" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-xs-4">Redo</div>
+                        <div class="col-md-3 col-xs-4">
+                            <input type="button" class="e-btn" id="signredo" value="Redo" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 col-xs-4">Clear</div>
+                        <div class="col-md-3 col-xs-4">
+                            <input type="button" class="e-btn" id="signclear" value="Clear" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-xs-4">Save</div>
+                        <div class="col-md-3 col-xs-4">                           
+                                <input id="signsave" class="e-btn" type="button" value="Save" />                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-xs-4">Hide/Show</div>
+                        <div class="col-md-3 col-xs-4">
+                            <input type="checkbox" id="signshow" class="e-togglebtn" />
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $("#apisignature").ejSignature({
+                height: "400px",
+                isResponsive: true,
+                saveWithBackground: true,
+                strokeWidth: 3,
+                backgroundImage: "../content/images/progressbar/water.png",
+            });
+
+            $("#signstroke").ejColorPicker({ value: "#000000", change: onstrokecolorchange, });
+
+            $('#selectwidth').ejDropDownList({
+                watermarkText: "width", width: "100px",
+                targetID: "width",
+                change: onchange,
+            });
+            $("#signclear").ejButton({
+                size: "normal", width: "70px",
+                showRoundedCorner: true,
+                click: onclear
+            });
+            $("#signundo").ejButton({
+                size: "normal", width: "70px",
+                showRoundedCorner: true,
+                click: onundo
+            });
+            $("#signredo").ejButton({
+                size: "normal", width: "70px",
+                showRoundedCorner: true,
+                click: onredo
+            });
+            $("#signsave").ejButton({
+                size: "normal", width: "70px",
+                showRoundedCorner: true,
+                click: onsave
+            });       
+
+            $("#signshow").ejToggleButton({ width: "70px", change: signshowChange, defaultText: "Hide", activeText: "Show", showRoundedCorner: true, });
+        });
+
+        function onstrokecolorchange(args) {
+            var sig = $("#apisignature").ejSignature("instance");
+            sig.model.strokeColor = args.value;
+        }
+
+        function onchange(args) {
+            var sig = $("#apisignature").ejSignature("instance");
+            sig.model.strokeWidth = parseInt(args.value);
+        }
+
+        function onclear() {
+            var sig = $("#apisignature").ejSignature("instance");
+            sig.clear();
+        }
+
+        function onundo() {
+            var sig = $("#apisignature").ejSignature("instance");
+            sig.undo();
+        }
+
+        function onredo() {
+            var sig = $("#apisignature").ejSignature("instance");
+            sig.redo();
+        }
+
+        function onsave(args) {
+            var sig = $("#apisignature").ejSignature("instance");
+            sig.save("MySignature");
+        }
+
+
+        function signshowChange(args) {
+            $("#apisignature").ejSignature(args.isChecked ? "hide" : "show");
+        }
+
+        $("#sampleProperties").ejPropertiesPanel();
+    </script>
+</body>
+
+</html>

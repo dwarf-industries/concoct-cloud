@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : TreeView - Drag and Drop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div style="display:table">
+                    <div style="float:left">
+                        <span class="treeCaption">TREEVIEW - 1</span>
+                        <ul id="treeViewDrag">
+                            <li class="expanded">
+                                ASP.NET MVC Team
+                                <ul>
+                                    <li>Smith</li>
+                                    <li>Johnson</li>
+                                    <li>Anderson</li>
+                                </ul>
+                            </li>
+                            <li>
+                                Windows Team
+                                <ul>
+                                    <li>Clark</li>
+                                    <li>Wright</li>
+                                    <li>Lopez</li>
+                                </ul>
+                            </li>
+                            <li>
+                                Web Team
+                                <ul>
+                                    <li>Joshua </li>
+                                    <li>Matthew </li>
+                                    <li>David </li>
+                                </ul>
+                            </li>
+                            <li>
+                                Build Team
+                                <ul>
+                                    <li>Ryan </li>
+                                    <li>Justin </li>
+                                    <li>Robert </li>
+                                </ul>
+                            </li>
+                            <li>
+                                WPF Team
+                                <ul>
+                                    <li>Brown </li>
+                                    <li>Johnson </li>
+                                    <li>Miller </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="float:left">
+                        <span class="treeCaption">TREEVIEW - 2</span>
+                        <ul id="treeViewDrop">
+                            <li class="expanded">
+                                WinRT Team
+                                <ul>
+                                    <li>Valentina</li>
+                                    <li>Williams </li>
+                                    <li>Jones </li>
+                                </ul>
+                            </li>
+                            <li id="test">
+                                Website Team
+                                <ul>
+                                    <li>Thomas</li>
+                                    <li>Rodriguez</li>
+                                    <li>Michael </li>
+                                </ul>
+                            </li>
+                            <li id="net">
+                                Support Team
+                                <ul>
+                                    <li>Christopher </li>
+                                    <li>Williams Smith</li>
+                                    <li>Jack</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            // declaration
+            $("#treeViewDrag").ejTreeView({
+                allowDragAndDrop: true,
+                width: 200,
+                allowDropChild: true,
+                allowDropSibling: true,
+                allowDragAndDropAcrossControl: true
+            });
+            $("#treeViewDrop").ejTreeView({
+                allowDragAndDrop: true,
+                width: 200,
+                allowDropChild: true,
+                allowDropSibling: true,
+                allowDragAndDropAcrossControl: true
+            });
+        });
+    </script>
+    <style>
+        .treeCaption {
+            padding: 5px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .material .treeCaption{
+            padding: 5px 30px;
+        }
+
+        .e-treeview-wrap {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .material .e-treeview-wrap {
+            width: 250px !important;
+        }
+    </style>
+</body>
+</html>

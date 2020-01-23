@@ -1,0 +1,435 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 | Showcase Sample | Expense Analysis</title>
+	<meta charset="utf-8" />
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta name="description" content="The Essential JS 1 Expense Analysis application is used to categorize and analyze the expenses details against budget using Grid and Chart component.">
+    <link href="../../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="../../content/images/favicon.ico" />
+    <link href="css/expense-css.css" rel="stylesheet" />
+    <script src="../../scripts/respond.js"></script>
+    <link href="../../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <link href="../../content/ejthemes/responsive-css/ejgrid.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../../scripts/jquery-2.1.4.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    
+    <script src="../../scripts/jquery.validate.min.js"></script>
+    <script src="../../scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../../scripts/jsrender.min.js"></script>
+    <script src="../../scripts/ej.web.all.min.js"></script>
+    <script src="../../scripts/properties.js"></script>
+</head>
+<body>
+    <h1 style="display: none">Essential JS1 | Showcase Sample | Expense Analysis </h1>
+    <div class="sample-title">
+    </div>
+    <div class="container">
+        <div class="sample-container">
+            <div id="control-container">
+                <div class="text-title">
+                </div>
+                <div class="row imagetile">
+                    <div class="col-md-5">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="left-image">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="horz-align: right;">
+                                        <div class="e-exptitle">
+                                            <label class="e-name">
+                                                David Carter</label><br />
+                                            <label class="e-phone">
+                                                Phone : +1 919.494.1974
+                                            </label>
+                                            <br />
+                                            <label class="e-mail">
+                                                email : davidc@syncfusion.com</label>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-7 e-values-td">
+                        <div class="initborder">
+                            <table class="e-values">
+                                <tr>
+                                    <td class="pos-amt-td sideborder">
+                                        <p class="pos-amt"></p>
+                                        <p class="pos-text">
+                                            Positive
+                                        </p>
+                                        <p class="pos-transc">
+                                        </p>
+                                    </td>
+                                    <td class="neg-amt-td sideborder">
+                                        <p class="neg-amt"></p>
+                                        <p class="neg-text">
+                                            Negative
+                                        </p>
+                                        <p class="neg-transc"></p>
+                                    </td>
+                                    <td class="bal-amt-td">
+                                        <p class="bal-amt"></p>
+                                        <p class="bal-text">
+                                            Balance
+                                        </p>
+                                        <p class="bal-empty" style="visibility: hidden">
+                                            Transaction
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="chartgridtable">
+                    <div id="control-panel" class="add-filter-panel">
+                        <div class="row">
+                            <div class="col-md-1" style="DISPLAY: inline">
+                                <label class="sample-t">
+                                    Transactions</label>
+                            </div>
+                            <div class="col-md-8" style="DISPLAY: inline"></div>
+                            <div class="col-md-3" style="DISPLAY: inline;">
+                                <table style="float: left;">
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <input type="text" id="selectMonth" />
+                                                <div id="MonthList">
+                                                    <ul>
+                                                        <li>All</li>
+                                                        <li>January</li>
+                                                        <li>February</li>
+                                                        <li>March</li>
+                                                        <li>April</li>
+                                                        <li>May</li>
+                                                        <li>June</li>
+                                                        <li>July</li>
+                                                        <li>August</li>
+                                                        <li>September</li>
+                                                        <li>October</li>
+                                                        <li>November</li>
+                                                        <li>December</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="add-image">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="expensegridborder">
+                        <div class="col-xs-13 grid-container">
+                            <div id="ExpenseGrid">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <div class="col-xs-13 chart-inner">
+                            <div class="samplesec">
+                                <div>
+                                    <div class="samplename">
+                                        <span>Expense Analysis Chart </span>
+                                    </div>
+                                    <div class="samplebody">
+                                        <div class="samplecontent">
+                                            <div class="chart-back-button">
+                                                <button id="btnBack">Back</button>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <div id="ExpenseChart">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="spend-div">
+                                                        <table cellspacing="10">
+                                                            <tr>
+                                                                <td class="most-spent">
+                                                                    <p class="most-spent-text">
+                                                                        Most Spent
+                                                                    </p>
+                                                                    <p class="most-spent-amt">
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="least-spent">
+                                                                    <p class="least-spent-text">
+                                                                        Least Spent
+                                                                    </p>
+                                                                    <p class="least-spent-amt">
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="avg-spent">
+                                                                    <p class="avg-spent-text">
+                                                                        Average Spent
+                                                                    </p>
+                                                                    <p class="avg-spent-amt">
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $('#selectMonth').ejDropDownList({
+                targetID: "MonthList",
+                width: "150px",
+                height: "30px",
+                select: "changeMonth"
+            });
+            $('#selectMonth').data("ejDropDownList").selectItemByText(ej.preferredCulture().calendars.standard.months.names[new Date().getMonth()]); 
+            $("#btnBack").ejButton({
+                size: "mini",
+                click: "btnClick"
+            });
+            $("#btnBack").hide();
+        });
+        function changeMonth(sender) {
+            $(".add-filter-panel").ejWaitingPopup();
+            $(".add-filter-panel").ejWaitingPopup("show");
+            UpdateGridChart(sender.selectedText); //updating content of grid and chart on change of month
+        }
+
+        $(".add-image").bind("click", function () {
+            var gridObj = $("#ExpenseGrid").ejGrid("instance");
+            gridObj.addRecord(); //adding new record in grid
+            $("#ExpenseGrid_dialogEdit").ejDialog({isResponsive:true});			
+        });
+        $("#ExpenseGrid").ejGrid({
+            allowPaging: true,
+            allowSorting: true,
+            enableRowHover: false,
+            allowKeyboardNavigation: true,
+            editSettings: { allowEditing: false, allowAdding: true, editMode: ej.Grid.EditMode.Dialog },
+            pageSettings: { pageCount: 4 },
+            isResponsive: true,
+            enableResponsiveRow: false,
+            columns: [
+            { field: "DateTime", headerText: 'Date', textAlign: ej.TextAlign.Right, width: 40, validationRules: { required: true }, format: "{0:MMM dd yyyy}", editType: ej.Grid.EditingType.DatePicker },
+            { field: "CategoryName", headerText: 'CategoryName', validationRules: { required: true, minlength: 3 }, width: 100, visible: false },
+            { field: "Description", headerText: 'Description', validationRules: { required: true, minlength: 3 }, width: 100 },
+            { field: "SubCategory", headerText: 'Category', validationRules: { required: true, minlength: 3 }, width: 70,priority: 3 },
+            { field: "Amount", headerText: 'Amount', validationRules: { required: true }, textAlign: ej.TextAlign.Right, editType: ej.Grid.EditingType.Numeric, editParams: { decimalPlaces: 2, minValue: 0 }, format: "{0:C}", width: 50, priority: 4 }
+            ]
+        });
+
+        $("#ExpenseChart").ejChart(
+                      {
+                          isResponsive: true,
+                          series: [{
+                              type: 'pie',
+                              name: "ExpenseChart",
+                              enableAnimation: true,
+                              labelPosition: 'outside',
+                              marker: { connectorLine: { height: 20 }, dataLabel: { visible: true, } },
+                              border: { width: 1 },
+                              explode: true,
+                              xName: "ExpenseCategory",
+                              yName: "Amount"
+                          }
+                          ],
+                          pointRegionClick: 'onclick',
+                          animationComplete: 'completeAnimation',
+                          seriesRendering: "seriesRender",
+                          background: 'transparent',
+                          enableSmartLabels: true,
+                          legend: { visible: false },
+                      });
+
+        // Updating the grid and chart contents
+        function UpdateGridChart(month) {
+            // Getting json data from web api
+            var dataManger = ej.DataManager({
+                url:  window["baseurl"]  + "api/expense/get?month=" + month,
+                offline: true, crossDomain:true,
+                requiresFormat: false
+            });
+            dataManger.ready.done(function (e) {
+                $("#ExpenseGrid").data("ejGrid").dataSource(e.result[1]);
+                $("#ExpenseChart").ejChart("option", {
+                    "model": {
+                        series: [{
+                            dataSource: e.result[0],
+                            type: 'pie',
+                            name: "ExpenseChart",
+                            enableAnimation: true,
+                            labelPosition: 'outside',
+                            marker: { connectorLine: { height: 20 }, dataLabel: { visible: true, } },
+                            border: { width: 1 },
+                            explode: true,
+                            xName: "ExpenseCategory",
+                            yName: "Amount"
+                        }]
+                    }
+                });
+                $('.pos-amt').html("$" + formatNumber(parseInt(e.result[5])));
+                $('.neg-amt').html("$" + formatNumber(parseInt(e.result[6])));
+                $('.bal-amt').html("$" + formatNumber(parseInt(e.result[7])));
+                $('.most-spent-amt').html(e.result[2]);
+                $('.least-spent-amt').html(e.result[3]);
+                $('.avg-spent-amt').html(e.result[4]);
+                $('.pos-transc').html(e.result[8] + " Transactions");
+                $('.neg-transc').html(e.result[9] + " Transactions");
+                window.chartDS = e.result[0];
+                window.Home = e.result[10]
+                window.DailyLiving = e.result[11]
+                window.Entertainment = e.result[12]
+                window.Health = e.result[13]
+                window.Transportation = e.result[14]
+                window.Personal = e.result[15]
+                $(".add-filter-panel").ejWaitingPopup("hide");
+            });
+        }
+
+        function formatNumber(number) {
+            return ej.format(number, "n0"); //formating numbers  for spent amounts
+        }
+		//function chartLoaded(sender){
+		//sender.model.series[0].animation=false ;
+		//}
+        function seriesRender(e) {
+            //Adding text to the series points to chart
+            $.each(e.data.series.points, function () {
+                this.text = this.x + "- $" + formatNumber(parseInt((this.YValues)));
+            });
+        }
+        function btnClick(sender) {
+            $("#ExpenseChart").ejChart("option", { "pie": pieSeries() });
+            $("#btnBack").hide();
+        }
+        function onclick(sender) {
+            {
+                var isIe8 = ej.browserInfo().name == "msie" && parseInt(ej.browserInfo().version) == 8;
+                //Rendering drilldown dhart based on the points clicked
+                if (sender.model.AnimationComplete || isIe8) {
+                    var index = sender.data.region.Region.PointIndex;
+                    var name = sender.model.series[0].points[index].x;
+                    if (sender.model.series[0].name == "ExpenseChart")
+                        $("#ExpenseChart").ejChart("option", { "drilldown": pieSeries(name) });
+                    if (isIe8)
+                        $("#btnBack").show();
+                }
+            }
+        }
+        function completeAnimation(sender) {
+            //show or hide back button based on the series name
+            if (sender.model.series[0].name != "ExpenseChart")
+                $("#btnBack").show();
+            else
+                $("#btnBack").hide();
+        }
+
+        function genarateSeries(sName) {
+            var seriesData = {
+                series: [{
+                    dataSource: window[sName],
+                    xName: "ExpenseCategory",
+                    yName: "Amount",
+                    type: 'pie',
+                    labelPosition: 'outside',
+                    pieCoefficient: 0.8,
+                    enableAnimation: true,
+                    explode: false,
+                    marker: {
+                        dataLabel: {
+                            visible: true,
+                            shape: 'none',
+                            connectorLine: { color: 'black', width: 0.5 },
+                            font: { fontFamily: 'Segoe UI', fontStyle: 'Normal ', fontWeight: 'Regular', size: '12px', color: '#707070', opacity: 1 }
+                        }
+                    }
+
+                }],
+                legend: { visible: false },
+            }
+            return seriesData;
+        }
+
+        function pieSeries(seriesName) {
+            //Choosing the series points based on the series name to drilldown chart
+            switch (seriesName) {
+            case "Home":
+                return genarateSeries(seriesName);
+                break;
+            case "Entertainment":
+                window.Entertainment[1].Amount = 45;
+                return genarateSeries(seriesName);
+                break;
+            case "Daily Living":
+                return genarateSeries("DailyLiving");
+                break;
+            case "Health":
+                return genarateSeries(seriesName);
+                break;
+            case "Transportation":
+                return genarateSeries(seriesName);
+                break;
+            case "Personal":
+                return genarateSeries(seriesName);
+                break;
+            default:
+            {
+                return {
+                    series: [
+                        {
+                            name: "ExpenseChart",
+                            dataSource: window.chartDS,
+                            xName: "ExpenseCategory",
+                            yName: "Amount",
+                            type: 'pie',
+                            labelPosition: 'outside',
+                            pieCoefficient: 0.8,
+                            explode: true,
+                            explodeOffset: 25,
+                            enableAnimation: true,
+                            AnimationComplete: false,
+                            marker: {
+                                dataLabel: {
+                                    visible: true,
+                                    shape: 'none',
+                                    connectorLine: { color: null, width: 0.5 },
+                                    font: { fontFamily: 'Segoe UI', fontStyle: 'Normal ', fontWeight: 'Regular', size: '12px', color: '#707070', opacity: 1 }
+                                }
+                            }
+                        }
+                    ],
+                    legend: { visible: false },
+                    AnimationComplete: false
+                };
+            }
+            }
+        }
+    </script>
+</body>
+</html>

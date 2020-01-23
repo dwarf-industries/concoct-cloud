@@ -1,0 +1,1003 @@
+﻿
+/*define the body style*/
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+}
+
+/*define the header section style which contains menu and toolbar control.*/
+.sample-header {
+    background-color: #28B1BF;
+    width: 100%;
+    margin: 0;
+}
+
+/* define the content section style which contains palette, diagram and property editor */
+.sample-main {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+/*define the style of symbol palette section */
+#main-left {
+    height: 100%;
+    width: 270px;
+    float: left;
+}
+
+/*define the style of diagram section */
+#main-right {
+    height: 100%;
+    float: left;
+    position: relative;
+}
+
+/*define the style of property editor section */
+#propertyEditor {
+    height: 100%;
+    width: 220px;
+    background-color: #F7F7F7;
+}
+
+/* -----------------------------------------Dropdown Controls - Customization --------------------------------------- */
+
+/*
+    In our diagram builder, we have separated dropdown control into two types by using dropdown control "cssClass" property.
+    The value set as "ddl-standard" is default visual type of dropdown control.
+    The value set as "ddl-custom" is customized visual type of dropdown control.
+
+    In ddl-standard related dropdown controls, we have done some customization such as background-color of selectedItem in dropdown list,
+    mouse hover on drop down items and its explained in the below code snippet.
+    
+    In ddl-custom related dropdown controls, we have done some customization such as hide expand icon, 
+    hide input type textbox which is used to show the selectedItems of the dropdown and its explained in the each code snippet. 
+
+    In ddl-custom related dropdown controls are used in property panel except font size and font style.
+
+*/
+
+/*
+    Here we have customized drop down height and margin. for example, take a fillColor dropdown available in property panel.
+    Here We have placed image(svg font icon) over the drop down. So when we set the margin, expand option will be placed behind image element.
+    When click on the image, we will get the dropdown functionality.
+    
+    However we dont need show the expand option for those dropdown control, we have customized that appearance here.
+*/
+.ddl-custom {
+    height: 46px;
+    margin-left: -40px;
+    margin-top: 0px;
+    background-color: transparent;
+    float: left;
+}
+
+    .ddl-custom .e-in-wrap {
+        width: 0px;
+        border: none;
+        padding: 0 44px 0 0;
+    }
+
+    .ddl-custom .e-select > .e-icon.e-arrow-sans-down {
+        display: none;
+    }
+
+/*
+    Since we have used the pageBackgroundColor dropdown list in the toolbar control. We have customized this separately to position the expand option behind the image.
+*/
+#pageBackgroundColor_wrapper {
+    height: 27px;
+    margin-left: -18px;
+}
+
+#pageBackgroundColor_dropdown {
+    background: transparent;
+    width: 26px;
+}
+
+/* 
+    When mover hover on expand option in dropdown control, some default appearance will appear and we have prevented this here.
+    You can check this option with standard dropdown control.
+*/
+.ddl-custom .e-select,
+.ddl-custom .e-select:hover {
+    background: transparent;
+    width: 45px;
+}
+
+/*
+    Here we have customized the standard dropdown control appearance such as font size, font style, zoomPercentage dropdown list.
+*/
+
+/* Override the default background color of the selectedItem in the dropdown list. */
+.e-ddl-popup .e-active {
+    background: #1B6D67;
+}
+
+/* Override the default background color when mouse hover on the drop down item. */
+.e-ddl-popup .e-hover,
+.e-ddl-popup .e-select:hover,
+.ddl-standard .e-select:hover {
+    background: #308c81;
+}
+
+/* Override the background and border color of the dropdown list popup. */
+.ddl-standard .e-in-wrap {
+    background-color: white;
+    border: 1px solid rgb(187, 188, 187);
+}
+
+/*
+    By default, when mouse hover on the drop down item, highlighter will be shown.
+    But we have used color palettes in fillColor, borderColor, fontColor, lineColor and pageBackgroundColor dropdowns.
+    So highlighter wont be adoptable when mouse hover on above drop down items. 
+    So we have set the background as transparent on mouse hover.
+*/
+.ddl-color-palette .e-hover,
+.ddl-color-palette .e-active {
+    background: transparent;
+}
+
+/* set the padding to color palette container i.e dropdown list popup */
+.e-ddl-popup.ddl-color-palette {
+    padding-bottom: 7px;
+}
+
+/* 
+   The color palette used in drop down in which each color will be represented via div element.
+   The below code used to set the default style to that element.
+*/
+.ddl-color-list {
+    height: 30px;
+    width: 30px;
+    float: left;
+    margin-left: 4px;
+    margin-top: 4px;
+    margin-right: 3px;
+    border: 1px solid;
+    border-color: #3A3A3A;
+}
+
+/* We have placed the description of the custom drop down list control at the bottom of the image. Here we have customized that appearance. */
+.ddl-custom-text {
+    margin-top: -50px;
+    margin-left: 40px;
+    background-color: transparent;
+    height: 47px;
+}
+
+/* we have used the svg font icons as a background image for element over the custom drop down controls. Here we set the font size for that icon*/
+.ddl-custom-icon {
+    font-size: 22px;
+    margin-left: 8px;
+}
+
+/* We have positioned the svg font icon inside the div element and its appearance customized here. */
+.ddl-custom-icon-parent {
+    width: 45px;
+    height: 45px;
+    border: 1px solid;
+    border-color: #bbbcbb;
+}
+
+/* 
+    We have provided different type of decoration option in head and tail decorator dropdown list.
+    Each option is rendered as a font icon and its size has been defined here.
+*/
+.decorator-icon {
+    font-size: 25px;
+    margin-left: 12px;
+}
+
+/*
+    Here we have customized the popup position and appearance of the custom (ddl-cusom) drop down controls.
+    We cant use the cssClass to achieve this requirement since each element were placed in different position.
+*/
+
+#borderWidth_popup_list_wrapper {
+    margin-left: -75px;
+    background-color: #F9F9F9;
+}
+
+#borderColor_popup_list_wrapper {
+    margin-left: -50px;
+    margin-top: 4px;
+    background-color: #F9F9F9;
+    border: 1px solid;
+    border-color: #bbbcbb;
+}
+
+#fillColor_popup_list_wrapper, #lineColor_popup_list_wrapper, #fontColor_popup_list_wrapper {
+    background: #F9F9F9;
+    margin-left: -9px;
+    margin-top: 4px;
+    border: 1px solid;
+    border-color: #bbbcbb;
+}
+
+#pageBackgroundColor_popup_list_wrapper {
+    margin-left: 0px;
+    background: #F9F9F9;
+    margin-left: -148px;
+    margin-top: 4px;
+    border: 1px solid;
+    border-color: #bbbcbb;
+}
+
+#lineWidth_popup_list_wrapper {
+    margin-left: -80px;
+    background-color: #F9F9F9;
+}
+
+#lineType_popup_list_wrapper,
+#lineStyle_popup_list_wrapper {
+    background-color: #F9F9F9;
+}
+
+#headDecorator_popup_list_wrapper,
+#tailDecorator_popup_list_wrapper {
+    margin-left: -10px;
+    background-color: #F9F9F9;
+    border: none;
+}
+
+/* Here we customized the standard (ddl-standard) drop down control size and its appearance based on the element id. */
+#zoompercentage_popup_list_wrapper, #fontSize_popup_list_wrapper {
+    width: 55px;
+    border: 1px solid #AFAFAF;
+}
+
+#fontSize_container {
+    width: 55px;
+}
+
+#ddlExportMode_container, #ddlExportFormat_container, #fontStyle_container {
+    width: 100px;
+}
+
+/* Hide the expand option for zoomPercentage dropdown list. */
+#zoompercentage_dropdown {
+    display: none;
+}
+
+/* ------------------------------------------ Menu Control - Customization ----------------------------------------- */
+
+/* Override the default background color of menu control. */
+.e-menu {
+    background-color: #28B1BF;
+    border: 0px;
+}
+    /* Override the default border style of the parent menu items */
+    .e-menu.e-horizontal > li .e-arrow-space {
+        border: 1px solid transparent;
+    }
+
+    /* Override the expand icon of the menu control. */
+    .e-menu.e-horizontal > li > a > .e-arrowhead-down {
+        color: white;
+    }
+
+    /* 
+        Separator will be shown after each parent menu item. To avoid this, set the border style as none.
+    */
+    .e-menu.e-separator.e-horizontal > .e-list {
+        border: none;
+    }
+
+    /* Override the background color of the sub menu items. */
+    .e-menu li > ul > li {
+        background-color: White;
+    }
+
+
+    /* Override the border color of when mouse hover on the parent menu item and its in focused state.(i.e when mouse hover on its sub items) */
+    .e-menu.e-horizontal .e-mhover > .e-menulink,
+    .e-menu.e-horizontal .e-mfocused > .e-menulink {
+        border-color: transparent;
+    }
+
+    /* Override the font-color when mouse hover on the menu item and diagram context menu item. */
+    .e-menu.e-horizontal .e-list:hover > .e-menulink,
+    .e-menu.e-context .e-list:hover > .e-menulink {
+        color: #fff;
+    }
+
+    /* Override the background color when mouse hover on the menu item and diagram context menu item. */
+    .e-menu.e-horizontal .e-mhover > a,
+    .e-menu.e-horizontal .e-mhover > .e-menulink,
+    .e-menu.e-horizontal .e-mfocused > a,
+    .e-menu.e-horizontal .e-mfocused > .e-menulink,
+    .e-menu.e-horizontal .e-list > ul li.e-haschild.e-active > a,
+    .e-menu.e-horizontal .e-list > ul li.e-haschild.e-active > .e-menulink,
+    .e-menu.e-context .e-mhover > a,
+    .e-menu.e-context .e-mhover > .e-menulink,
+    .e-menu.e-context .e-mfocused > a,
+    .e-menu.e-context .e-mfocused > .e-menulink,
+    .e-menu.e-context .e-list.e-active,
+    .e-menu.e-context .e-active,
+    .e-menu.e-horizontal .e-list:hover, .e-menu.e-context .e-list:hover {
+        background: #229499;
+    }
+
+    /* Override the default padding around context menu item text */
+    .e-menu .e-list > .e-menulink {
+        padding: 3px 18px 5px;
+    }
+
+#SnapToGrid .icon-checkmark2, #EnableOverView .icon-checkmark2, #ShowRulers .icon-checkmark2 {
+    display: none;
+}
+/*
+   We have provided the enable/disable option for Overview, SnapToGrid, SmartGrid and Grid lines.
+    Here we set the background image and its appearance to identify the state.
+*/
+.icon-checkmark2 {
+    background-image: url(../images/tick2.png);
+    background-repeat: no-repeat;
+    height: 12px;
+    width: 12px;
+    display: block;
+}
+    /*
+        Highlight the background image when mouse hover on it.
+    */
+    .icon-checkmark2.iconhover {
+        background-image: url(../images/tick1.png);
+    }
+
+/* Customizing the font color of the parent menu items */
+#menufile > a, #menuedit > a, #menuview > a, #menuaction > a {
+    color: white;
+    margin-left: 10px;
+}
+
+/* When menu item in expanded state, shadow around the border has been included. */
+.e-menu.e-horizontal .e-list > ul {
+    box-shadow: 2px 2px 2px #AFAFAF;
+}
+
+/* ------------------------------------------ Toolbar - Customization ------------------------------------------ */
+
+/*set the background color entire region of the toolbar control*/
+.Diagram-Toolbar {
+    background-color: #F7F5F5;
+}
+
+/* Override the default background style of the toolbar control */
+#toolbarEvents {
+    border: none;
+    background-color: transparent;
+}
+
+/*  
+        Override the background color of ZoomPercentage control when mouse hover on it.
+        Unlike other toolbar items, we have used dropdown list in that toolbar item.
+        So we have customized this separately.
+    */
+.e-toolbar .e-horizontal .e-hover, .e-toolbar .e-vertical .e-hover {
+    background: #DDDDDD;
+    border: 1px solid #DDDDDD;
+}
+
+/* set the appearance of the artboard labels available in the toolbar. */
+.tb-artboard-label {
+    font-weight: normal;
+    font-size: 14px;
+    margin-top: 2px;
+    margin-left: 18px;
+    float: left;
+}
+
+/* set the margin between toolbar items and its size. */
+.tb-item-child {
+    margin: 0px 5px 5px 5px;
+    border: 1px solid transparent;
+    width: 25px;
+    height: 25px;
+}
+
+/* set the separator (border style) between each toolbar items. */
+.tb-item-default-style {
+    border-right: 1px solid #7F7F7F;
+    padding-right: 5px;
+}
+
+/* we have used the svg font icons as a background image for toolbar items and here we set the font size for that icon. */
+.tb-icon {
+    font-size: 17px;
+    color: #6B6B6B;
+    margin-top: 4px;
+    margin-left: 4px;
+}
+
+/* artboardToolbarItem having different element compared to other toolbar item. So when mouse hover on it, we have cusomized that element appearance separately */
+#artboardToolbarItem > li:hover {
+    background-color: #F7F5F5;
+    color: #5c5c5c;
+    border: 1px solid transparent;
+}
+
+.e-toolbar div:first-child {
+    overflow: inherit;
+}
+
+
+/* ----------------------------------------- Symbol Palette Cusomization --------------------------------------- */
+
+/* Override the default background color of symbol palette. */
+.e-datavisualization-symbolpalette {
+    background-color: #FBF9F9;
+}
+
+    /* Override the default symbol palette header style. */
+    .e-datavisualization-symbolpalette .e-header {
+        background: #f9f9f9;
+        border-color: #e2e2e2;
+        color: black;
+    }
+
+    /* Override the default expand/collapse icon of symbol palette header. */
+    .e-datavisualization-symbolpalette .e-header-arrow {
+        background-image: url("../images/icons-gray.png");
+        background-repeat: no-repeat;
+        border: 0px none transparent;
+        height: 16px;
+        width: 16px;
+        left: 2px;
+        position: absolute;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+        /* 
+       In diagram builder sample, lot of icons used as a background image. 
+       Instead of managing a separate file for each icon, we have created a single file with multiple images (like sprite image).
+       So we have set the background image for header in the above code snippet and will set the position based on the state (expanded or collapsed).
+       You can check icons-gray.png file located in images folder to know how images are placed.
+    */
+        .e-datavisualization-symbolpalette .e-header-arrow.expanded,
+        .e-datavisualization-symbolpalette .e-header-arrow.expanded.selected {
+            background-position: -27px -24px;
+        }
+
+        .e-datavisualization-symbolpalette .e-header-arrow.collapsed,
+        .e-datavisualization-symbolpalette .e-header-arrow.collapsed.selected {
+            background-position: -1px -24px;
+        }
+
+    /* Override the default appearance of active(selected) palette header */
+    .e-datavisualization-symbolpalette .e-header.collapsed.selected,
+    .e-datavisualization-symbolpalette .e-header.expanded.selected {
+        background: #E7E7E7;
+        color: black;
+    }
+
+    /* Override the default appearance of palette header when mouse hover on it. */
+    .e-datavisualization-symbolpalette .e-header.collapsed.hover,
+    .e-datavisualization-symbolpalette .e-header.expanded.hover {
+        background: white;
+        color: black;
+    }
+
+    /* Override the default appearance of palette items when mouse hover on it. */
+    .e-datavisualization-symbolpalette .e-paletteItem.hover {
+        border-color: transparent;
+        background: #DDDDDD;
+    }
+
+    /* Override the default appearance of palette items when it gets selected. */
+    .e-datavisualization-symbolpalette .e-paletteItem.selected {
+        border-color: transparent;
+        background: #D8D8D8;
+    }
+
+    .e-datavisualization-symbolpalette .e-anchor {
+        display: block;
+    }
+
+    /* Override the default background color of palette content. */
+    .e-datavisualization-symbolpalette .e-scontent {
+        background-color: #F1F1F3;
+    }
+
+    /* Hide the default expand/collapse icon available in the palette header. */
+    .e-datavisualization-symbolpalette .e-header-arrow.expanded.selected:before,
+    .e-datavisualization-symbolpalette .e-header-arrow.expanded.hover:before,
+    .e-datavisualization-symbolpalette .e-header-arrow.expanded:before,
+    .e-datavisualization-symbolpalette .e-header-arrow.collapsed:before {
+        content: none;
+    }
+
+/*
+    We have rendered a two symbol palette in which one is in maximized state and other one is used to filter the shapes.
+    For filtered shapes symbol palette, we have hide the header by default.
+*/
+#searchPalette_canvas > .e-header {
+    display: none;
+}
+
+/* Override the border style for filteredShape symbol palette. */
+#searchPalette {
+    border: none;
+}
+
+/*
+   Override the default background color of filtershape symbol palette content.
+*/
+#searchPalette_canvas > .e-scontent {
+    background-color: white;
+}
+
+/*------------------------------------ Context Menu - Customization ----------------------------------------------*/
+
+/* set the default background color for diagram context menu. */
+.e-menu.e-context {
+    background: #ecedee;
+}
+
+    /*Override the padding style of context menu sub items */
+    .e-menu.e-context li.e-list > ul li.e-list > .e-menulink {
+        padding: 1px 18px 1px 28px;
+    }
+
+/* set the background image as node for custom context menu item has no image. */
+.cm-no-image {
+    background-image: none;
+}
+
+/* set the default background image size for custom context menu item. */
+.cm-image-size {
+    background-size: 18px;
+}
+
+/* 
+    We havent set the background image for context menu item. So when mouse hover on those items, default background image will appear.
+    We have prevented this functionality here.
+*/
+.sf-d-menuitem.eventType {
+    background-image: none;
+}
+
+.sf-d-menuitem.triggerResult {
+    background-image: none;
+}
+
+.sf-d-menuitem.gateway {
+    background-image: none;
+}
+
+.sf-d-menuitem.dataObject {
+    background-image: none;
+}
+
+.sf-d-menuitem.collection {
+    background-image: none;
+}
+
+.sf-d-menuitem.activityType {
+    background-image: none;
+}
+
+.sf-d-menuitem.loop {
+    background-image: none;
+}
+
+.sf-d-menuitem.taskType {
+    background-image: none;
+}
+
+.sf-d-menuitem.compensation {
+    background-image: none;
+}
+
+.sf-d-menuitem.taskCall {
+    background-image: none;
+}
+
+.sf-d-menuitem.adhoc {
+    background-image: none;
+}
+
+.sf-d-menuitem.subProcessType {
+    background-image: none;
+}
+
+.sf-d-menuitem.boundary {
+    background-image: none;
+}
+
+/*--------------------------------------- Slider - Customization -------------------------------------------------*/
+/* set the default style for opacity control. */
+#opacity {
+    width: 100px;
+    height: 8px;
+    margin-top: 3px;
+    margin-left: 5px;
+}
+    /* override the drag handle size of the opacity control (slider control) */
+    #opacity .e-handle {
+        height: 20px !important;
+        width: 6px !important;
+    }
+
+    /*set the margin to opacity control*/
+    #opacity .e-select {
+        margin-top: -4px !important;
+    }
+
+/* Override the background color of all slider controls used in the diagrambuilder application */
+.e-slider .e-range {
+    background-color: #308c81;
+}
+
+/* -------------------------------- Tab - Customization ----------------------------------------------- */
+
+/*set the default style to tab content*/
+#tabContent {
+    height: 100%;
+    width: 100%;
+    border: 1px solid;
+    border-color: #C6C6C6;
+    border-right: none;
+    border-top: none;
+}
+
+/* Override the default size of tab header. */
+.tab-header {
+    width: 57px;
+    height: 45px;
+    background-color: #E2E2E2;
+    float: left;
+    border-top-color: lightgray;
+    outline: none;
+}
+
+    /* set the default style for tab header contents */
+    .tab-header > a {
+        width: 28px;
+        height: 30px;
+    }
+
+/* set the default appearance for labels used in the tab contents. */
+.tab-label {
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #1E989E;
+}
+
+/* Override the default background and border color appearance of the tab header */
+.e-js.e-tab .e-content {
+    background-color: #F7F7F7;
+    border: none;
+}
+
+/* Override the default background color of selected (active) tab item. */
+.e-js.e-tab .e-header > .e-active a {
+    background-color: #F7F7F7;
+}
+
+/* we have used the svg font icons as a background image for tab header and here we set the font size for that icon. */
+.tab-icon {
+    font-size: 20px;
+}
+
+/* Override the default background color of selected (active) tab item. */
+.e-js.e-tab.e-js .e-header > .e-select, .e-js.e-tab.e-js .e-header > .e-active {
+    background: #E2E2E2;
+}
+
+/* Override the default background color of when mouse hover on tab item. */
+.e-js.e-tab.e-js .e-header > .e-item:hover {
+    background: darkgray;
+}
+
+/* set the padding as 0 for all text elements and tab headers. */
+.e-menu, input.e-input, input[type="text"].e-input,
+.e-tab .e-header {
+    padding: 0;
+}
+
+/* Override the margin style between each tab headers.*/
+.e-tab .e-bottom-line {
+    margin-right: -4px;
+}
+
+/* set the default font-size for all content rendered in the tab control*/
+.e-widget.e-js.e-tab {
+    font-size: small;
+}
+
+/*Override the border style for tab header*/
+.e-tab .e-header.e-addborderbottom {
+    border-bottom: 0px;
+}
+
+    /*Override the border style for active tab item.*/
+    .e-tab .e-header.e-addborderbottom .e-active {
+        border-top: 0.5px solid transparent;
+    }
+
+/*------------------------------------- ScrollBar - Customization ---------------------------------------- */
+
+/* Override the default background color when mouse hover on the scrollbar button and handle. */
+.e-scrollbar .e-button:hover,
+.e-scrollbar .e-vhandle:hover, .e-scrollbar .e-hhandle:hover {
+    background: #A0A0A0;
+}
+
+/* Override the default background color of the scrollbar handle height */
+.e-scrollbar .e-vscroll, .e-scrollbar .e-hscroll, .e-scrollbar .e-vhandlespace {
+    background: #ecedee;
+}
+
+/* Override the default background color of the scrollbar handle. */
+.e-scrollbar .e-vhandle, .e-scrollbar .e-hhandle {
+    border-left: 1px solid #c8c8c8;
+}
+
+/* -------------------------------Controls At Minimized State - Customization -------------------------------------- */
+
+/* 
+    Set the default style to minmax_SymbolPalette element.
+*/
+#minmax_symbolPalette {
+    height: 32px;
+    width: 29px;
+    background-image: url(../images/leftArrow.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    float: right;
+    border-left: 1px solid lightgray;
+}
+
+    /* Set the background color of minmax_SymbolPalette element on mouse hovering. */
+    #minmax_symbolPalette:hover {
+        background-color: #e0e0e0;
+    }
+
+/* We have provided the option to change the zoom level via slider control and its appearance customized here. */
+.Overview-div {
+    background-color: #E7E7E7;
+    border: 1px solid #D3D3D3;
+    padding: 8px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+    /* set the default background color for overview. */
+    .Overview-div > div {
+        background-color: white;
+    }
+
+/* 
+        We have exposed some features when symbol palette in collapsed state. Here we have customized the apperance for elements available in collapsed state.
+    */
+.collapsedPaletteStyle {
+    display: block;
+    height: 24px;
+    width: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    border-bottom: 1px solid lightgray;
+}
+
+    .collapsedPaletteStyle:hover {
+        background-color: #E0E0E0;
+    }
+
+/* ---------------------------------- Dialog control - Customization --------------------------------- */
+
+/* set the default background and border color for all dialog controls used in the diagram builder sample.*/
+.e-dialog .e-header {
+    border-color: #28B1BF;
+    background: #28B1BF;
+}
+
+/* set the default font color for all diaglog header text. */
+.e-dialog > .e-header .e-title {
+    color: #fff;
+}
+
+/* Override the default background color for when mouse hover on the dialog header icon. */
+.e-dialog .e-dialog-icon:hover {
+    background: #229499;
+}
+
+/*hide the resizing the option for all dialog controls used in the diagram builder.*/
+.e-icon.e-resize-handle.e-resizable.e-js {
+    visibility: hidden;
+}
+
+/* -------------------------------------Search option - Customization -------------------------------------- */
+
+/*
+   While filtering the shapes from symbol palette on minimized or maximized state, you can see the element like arrow indicator.
+   Here we customized the arrow indicator appearance.
+*/
+.chat-bubble-mini, .chat-bubble-maxi {
+    border-style: solid;
+    border-width: 10px;
+    bottom: -22px;
+    height: 0;
+    position: absolute;
+    top: 28px;
+    width: 0;
+}
+
+    .chat-bubble-mini.arrow-border-mini {
+        border-color: rgba(0, 0, 0, 0) lightgray rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+        left: -20px;
+    }
+
+    .chat-bubble-mini.arrow-mini {
+        border-color: rgba(0, 0, 0, 0) white rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+        left: -19px;
+    }
+
+    .chat-bubble-maxi.arrow-border-maxi {
+        border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) lightgray;
+        left: 103px;
+        top: -21px;
+    }
+
+    .chat-bubble-maxi.arrow-maxi {
+        border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #FAF6FF;
+        left: 103px;
+        top: -19px;
+    }
+
+/*
+    When symbol palette in minimized or maximized state, you can see the search icon which is set as background-image for dive element.
+    Here we customize the appearance of that element.
+*/
+.searchClear_Maxi, .searchClear_Mini {
+    display: block;
+    background-image: url('../images/Search-Find.png');
+    height: 30px;
+    width: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/*
+    The searchTextbox and searchIcon element available in both minimized and maximized state, which is placed under this element.
+    Here we customize the appearance of that element.
+*/
+.searchParent_Mini, .searchParent_Maxi {
+    width: 100%;
+    border: 1px solid #D3D3D3;
+    height: 32px;
+}
+
+/*---------------------------------Numeric Textbox - Customization -----------------------------------*/
+
+/* set the default size and position for all numeric text boxes used in the diagram builder sample. */
+.e-numeric {
+    height: 25px;
+    width: 64px;
+    float: left;
+}
+
+    /* Override the default background color when mouse hover on numeric up down options. */
+    .e-numeric .e-select:hover {
+        background: #308c81;
+    }
+
+
+/* ------------------------------- File Tree View - Customization (saved diagrams list) ---------------------------------*/
+
+/*
+    We have created a file tree for saved diagram list and its size and border has been defined here.
+*/
+#parent_tree {
+    height: calc(100% - 15%);
+    width: calc(100% - 9%);
+    border: 1px solid #D6D6D6;
+}
+
+/* We have created list (li) element for each diagram saved in the local storage and here we set the default size.*/
+.fileItemHover {
+    height: 23px;
+    margin-left: -40px;
+}
+    /* set the background color when mouse hover on list element in the file tree.*/
+    .fileItemHover:hover {
+        background-color: #E6E6E6;
+    }
+
+    /* set the background color when list element is selected in the file tree.*/
+    .fileItemHover.selected {
+        background-color: #D1D1D1;
+    }
+
+/* set the background as none for delete icon in the file tree. */
+.deleteIconfileItem:hover {
+    background: none;
+}
+
+/* --------------------------------- User handles - Customization ----------------------------- */
+
+/* set the default background color for userhandles on mouse hovering. */
+.userHandle:hover {
+    fill: #8B8C8C;
+}
+
+/* disable the mouse event for user handles icon. */
+.userHandle-icon {
+    pointer-events: none;
+}
+
+/* ------------------------------- Common - Customization ---------------------------------- */
+
+/* set the list style as none for all list style elements used in the diagram builder */
+.e-widget, .e-widget [class^="e-"], .e-widget [class*=" e-"] {
+    list-style-type: none;
+}
+
+/* set the text indent (i.e text where to start in the textbox) for all numeric text box used in the diagram builder, */
+input.e-input, input[type="text"].e-input, .e-input.e-placeholder {
+    text-indent: 10px;
+}
+
+
+/* set the background image for gradientDiv positioned in the property panel. */
+#gradientDiv {
+    background-image: -moz-linear-gradient(#ffffff, #aaaaaa);
+    background-image: -o-linear-gradient(#ffffff, #aaaaaa);
+    background-image: linear-gradient(#ffffff, #aaaaaa);
+}
+
+/* We will display the slider value in the textbox and its customization has been defined here.*/
+.sliderValue {
+    border: 2px solid #D3D3D3;
+    width: 42px;
+}
+
+#save_icon {
+    height: 25px;
+    background: #28B1BF;
+    color: #fff;
+    margin-bottom: 7px;
+}
+
+    /* Override the default background color for save button available in the toolbar. */
+    #save_icon:hover {
+        background: #229499;
+    }
+
+/* Once you selected the node in the diagram, you can see the rotate option. 
+   When mouse hover on the rotate element, we have change cursor in the diagram control.
+*/
+.svg-rotate-ie {
+    cursor: url("../../common-images/diagram/Rotate.cur"),url("../content/ejthemes/common-images/diagram/Rotate.cur"),url("../../content/ejthemes/common-images/diagram/Rotate.cur"),default;
+}
+
+.e-datavisualization-diagram.e-js .sf-diagram_overlap {
+    background-color: #e5e5e5;
+}
+
+.e-datavisualization-diagram.e-js .sf-diagram_hRuler,
+.e-datavisualization-diagram.e-js .sf-diagram_vRuler {
+    background-color: #F7F5F5;
+}
+
+.sf-diagram_hRuler.e-datavisualization-ejruler.e-js .ej-ruler-space {
+    background-color: #F7F5F5;
+}
+
+.sf-diagram_hRuler.e-datavisualization-ejruler.e-js .ej-ruler-tick {
+    stroke: #aaaaaa;
+}
+
+.sf-diagram_hRuler.e-datavisualization-ejruler.e-js .ej-ruler-tick-label {
+    font-size: 9px;
+    fill: #7c7c7c;
+}

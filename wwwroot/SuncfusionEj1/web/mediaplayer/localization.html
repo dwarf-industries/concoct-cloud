@@ -1,0 +1,174 @@
+﻿<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Media Player Methods</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <script src="../scripts/jsrender.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/cultures/ej.culture.en-US.min.js"></script>
+    <script src="../scripts/cultures/ej.culture.fr-FR.min.js"></script>
+    <script src="../scripts/cultures/ej.culture.ar-AE.min.js"></script>
+    <script src="../scripts/cultures/ej.culture.zh-CN.min"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="locale_basicPlayer"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span>Select Culture</span>
+                        </div>
+                        <div class="col-md-6">
+                            <select id="culture" class="e-ddl">
+                                <option>en-US</option>
+                                <option>fr-FR</option>
+                                <option>ar-AE</option>
+                                <option>zh-CN</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var mediaPlayer;
+        jQuery(function ($) {
+            if (!(ej.browserInfo().name === "msie" && Number(ej.browserInfo().version) < 9)) {
+                var isMobile = screen.width < 640 ? true : false;
+                var width = "700px";
+                var height = "400px";
+                if (isMobile) {
+                    width = "100%";
+                    height = "250px";
+                }
+                $("#locale_basicPlayer").ejMediaPlayer({
+                    width: width,
+                    height: height,
+                    toolbarHeight: "70px",
+                    playlistTitle: "Syncfusion Plaforms",
+                    source: [
+                        {
+                            "url": "http://files2.syncfusion.com/Videos/samples/Managing+Static+Files+in+ASP.NET+Core%2C+presented+by+Ugo+Latt.mp4",
+                            "title": "Managing Static Files in ASP.NET",
+                            "posterUrl": "images/mediaplayer/SFFlatLicense.png",
+                            "author": "syncfusion"
+                        },
+                        {
+                            "url": "http://files2.syncfusion.com/Videos/samples/Syncfusion+Metro+Studio+5+Demo.mp4",
+                            "title": "Syncfusion Metro Studio 5 Demo",
+                            "posterUrl": "images/mediaplayer/mertoStudio.png",
+                            "author": "syncfusion"
+                        },
+                        {
+                            "url": "http://files2.syncfusion.com/Videos/samples/Syncfusion+Essential+Studio+for+WinRT+(XAML).mp4",
+                            "title": "About Syncfusion",
+                            "posterUrl": "images/mediaplayer/winRT.png",
+                            "author": "syncfusion"
+                        },
+                    ],
+                    renderMode: "advanced",
+                });
+                $("#culture").ejDropDownList({ width: "100px", change: "onChange", selectedItemIndex: 0 });
+                var ddobject = $("#locale_basicPlayer").data("ejDropDownList");
+                $("#sampleProperties").ejPropertiesPanel();
+                ej.MediaPlayer.Locale["ar-AE"] = {
+                    "Play": "لعب",
+                    "Pause": "وقفة",
+                    "Mute": "كتم الصوت",
+                    "Unmute": "غير الصامت",
+                    "Settings": "إعدادات",
+                    "FullScreen": "تكبير الشاشة",
+                    "ExitFullScreen": "الخروج من الشاشة الكاملة",
+                    "HidePlaylist": "إخفاء قائمة التشغيل",
+                    "Previous": "سابق",
+                    "Next": "التالى",
+                    "TogglePlaylist": "تبديل قائمة التشغيل",
+                    "Rewind": "الترجيع",
+                    "Forward": "إلى الأمام",
+                    "Playlist": "قائمة التشغيل",
+                    "RepeatPlaylist": "كرر قائمة التشغيل",
+                    "Shuffle": "خلط"
+                };
+                ej.MediaPlayer.Locale["fr-FR"] = {
+                    "Play": "jouer",
+                    "Pause": "Pause",
+                    "Mute": "Muet",
+                    "Unmute": "Réactiver",
+                    "Settings": "Paramètres",
+                    "FullScreen": "Plein écran",
+                    "ExitFullScreen": "Quitter le mode plein écran",
+                    "HidePlaylist": "Cacher la playlist",
+                    "Previous": "précédent",
+                    "Next": "Prochain",
+                    "TogglePlaylist": "Toggle Playlist",
+                    "Rewind": "Rembobiner",
+                    "Forward": "Vers l'avant",
+                    "Playlist": "Playlist",
+                    "RepeatPlaylist": "Répéter la liste de lecture",
+                    "Shuffle": "Shuffle"
+                };
+                ej.MediaPlayer.Locale["zh-CN"] = {
+                    "Play": "玩",
+                    "Pause": "暂停",
+                    "Mute": "静音",
+                    "Unmute": "取消静音",
+                    "Settings": "设置",
+                    "FullScreen": "全屏",
+                    "ExitFullScreen": "退出全屏",
+                    "HidePlaylist": "隐藏播放列表",
+                    "Previous": "以前",
+                    "Next": "下一个",
+                    "TogglePlaylist": "切换播放列表",
+                    "Rewind": "倒带",
+                    "Forward": "前锋",
+                    "Playlist": "播放列表",
+                    "RepeatPlaylist": "重复播放列表",
+                    "Shuffle": "拖曳"
+                };
+                ej.MediaPlayer.Locale["en-US"] = {
+                    Play: "Play",
+                    Pause: "Pause",
+                    Mute: "Mute",
+                    Unmute: "Unmute",
+                    Settings: "Settings",
+                    FullScreen: "Full Screen",
+                    ExitFullScreen: "Exit Full Screen",
+                    HidePlaylist: "Hide Playlist",
+                    Previous: "Previous",
+                    Next: "Next",
+                    TogglePlaylist: "Toggle Playlist",
+                    Rewind: "Rewind",
+                    Forward: "Forward",
+                    Playlist: "Playlist",
+                    RepeatPlaylist: "Repeat Playlist",
+                    Shuffle: "Shuffle"
+                };
+            }
+            else {
+                alert("Media Player (HTML5) will not be supported in IE Version < 9");
+            }
+        });
+        function onChange(args) {
+            var mediabject = $("#locale_basicPlayer").data("ejMediaPlayer");
+            mediabject.setModel({ locale: args.value });
+        }
+    </script>
+</body>
+</html>

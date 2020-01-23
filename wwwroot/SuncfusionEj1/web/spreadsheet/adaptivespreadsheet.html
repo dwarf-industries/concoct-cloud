@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Essential JS 1 : Border and Wrap Text</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta charset="utf-8" />
+		<link href="../content/bootstrap.min.css" rel="stylesheet" />
+		<link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+		<link href="../content/default.css" rel="stylesheet" />
+		<link href="../content/default-responsive.css" rel="stylesheet" />
+		<link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+		<!--[if lt IE 9]>
+			<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+		<![endif]-->
+		<!--[if IE 9]><!-->
+			<script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+		<!--<![endif]-->
+		<script src="../scripts/jquery.validate.min.js"></script>
+		<script src="../scripts/jquery.validate.unobtrusive.min.js"></script>
+		<script src="../scripts/jsrender.min.js"></script>
+		<script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+		<script src="../scripts/properties.js" type="text/javascript"></script>
+		<script src="../scripts/xljsondata.min.js" type="text/javascript"></script>
+	</head>
+	<body>
+		<div class = "e-panel">
+			<div id="Spreadsheet"></div>
+		</div>
+        <style type="text/css">
+            .e-panel, body, html {
+                height: 100%;
+                width: 100%;
+            }
+        </style>
+		<script type="text/javascript">
+			$(function () {
+				$("#Spreadsheet").ejSpreadsheet({
+				importSettings: {
+				    importMapper: window.baseurl + "api/Spreadsheet/Import"
+                },
+                exportSettings: {
+                    excelUrl: window.baseurl + "api/Spreadsheet/ExcelExport",
+                    csvUrl: window.baseurl + "api/Spreadsheet/CsvExport",
+                    pdfUrl: window.baseurl + "api/Spreadsheet/PdfExport"
+                },
+					sheets: [{ rangeSettings: [{ dataSource: window.defaultData }] }],
+					loadComplete: "loadComplete"
+				});
+			});
+			function loadComplete(args) {
+					if(!this.model.isImport){
+						var xlFormat = this.XLFormat;
+						this.setWidthToColumns([140, 128, 105, 100, 100, 110, 120, 120, 100]);          
+						xlFormat.format({ "style": { "font-weight": "bold" } }, "A1:H1");
+						xlFormat.format({ "type": "currency" }, "E2:H11");            
+						this.XLRibbon.updateRibbonIcons();
+					}
+				}
+		</script>
+	</body>
+</html>

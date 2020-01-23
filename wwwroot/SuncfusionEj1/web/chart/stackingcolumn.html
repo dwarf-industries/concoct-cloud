@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+	<link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+	<script src="../scripts/properties.js" type="text/javascript"></script>
+ </head>
+ <body>  
+    <div class="content-container-fluid">      
+        <div class="row">                
+            <div class="cols-sample-area">                                  				
+				<div id="container"></div> 					                   
+            </div>				
+         </div>
+    </div>
+ <script type="text/javascript" language="javascript">
+    $(function () 
+	{
+        $("#container").ejChart(
+        {
+			//Initializing Primary X Axis	 
+            primaryXAxis:
+            {
+                title: { text: 'Month' },
+                majorGridLines: { visible: false }
+            },			
+			
+			//Initializing Primary Y Axis	
+            primaryYAxis:
+            {
+				title: { text: 'Number of visitors in Millions' },
+                range: { min: 0, max: 1800, interval: 200 }
+            },			
+			
+			//Initializing Common Properties for all the series
+			commonSeriesOptions: 
+			{
+                type: 'stackingcolumn', 
+				enableAnimation: true,
+                tooltip :
+				{
+					visible :true , 
+					format: " #series.name#  <br/> #point.x# : #point.y# Million Visitors "
+				}
+            },	
+			
+            //Initializing Series
+			series: 
+			[
+                {
+                    points: [{ x: 'Jan', y: 900 }, { x: 'Feb', y: 820 }, { x: 'Mar', y: 880 }, { x: 'Apr', y: 725 },
+							 { x: 'May', y: 765 }, { x: 'June', y: 679 }, { x: 'July', y: 770 }, { x: 'Aug', y: 825 }, 
+							 { x: 'Sep', y: 704 }, { x: 'Oct', y: 781 }, { x: 'Nov', y: 799 }, { x: 'Dec', y: 882 }],
+                    name: 'Google'
+                },
+                {
+                    points: [{ x: 'Jan', y: 190 }, { x: 'Feb', y: 226 }, { x: 'Mar', y: 194 }, { x: 'Apr', y: 250 },
+                             { x: 'May', y: 222 }, { x: 'June', y: 181 }, { x: 'July', y: 128 }, { x: 'Aug', y: 239 },
+							 { x: 'Sep', y: 268 }, { x: 'Oct', y: 236 }, { x: 'Nov', y: 285 }, { x: 'Dec', y: 199 }],                                  
+                    name: 'Bing'
+                },
+                {
+                    points: [{ x: 'Jan', y: 250 }, { x: 'Feb', y: 145 },{ x: 'Mar', y: 190 }, { x: 'Apr', y: 220 },
+                             { x: 'May', y: 225 }, { x: 'June', y: 135 }, { x: 'July', y: 152 },{ x: 'Aug', y: 216 },
+							 { x: 'Sep', y: 137 }, { x: 'Oct', y: 147 }, { x: 'Nov', y: 242 }, { x: 'Dec', y: 230 }],                                  
+                    name: 'Yahoo'
+                },
+                {
+                    points: [{ x: 'Jan', y: 150 }, { x: 'Feb', y: 120 },{ x: 'Mar', y: 115 }, { x: 'Apr', y: 125 },
+                             { x: 'May', y: 132 }, { x: 'June', y: 137 }, { x: 'July', y: 110 },{ x: 'Aug', y: 126 }, 
+							 { x: 'Sep', y: 97 }, { x: 'Oct', y: 122 }, { x: 'Nov', y: 85 }, { x: 'Dec', y: 120 }],
+                    name: 'Ask'
+                }
+            ],
+			isResponsive: true,
+			load:"loadTheme",
+			title :{text: 'Most Popular Search Engines'},
+			size: { height: "600" },
+			legend: { visible: true }
+        });
+    });	
+ </script>   
+ </body>
+</html>
+

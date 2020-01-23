@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Summary Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsondata.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="Grid"></div>
+            </div>
+        </div>
+    </div>
+    <script id="summaryTemplate" type="text/x-jsrender">
+        <input type="text" id="summaryType" />
+        <div style="padding-top:5px;text-align:center"> : {{:summaryValue}}</div>
+        <div id="typeList">
+            <ul>
+                <li value="sum">Sum</li>
+                <li value="average">Average</li>
+                <li value="count">Count</li>
+                <li value="minimum">Minimum</li>
+                <li value="maximum">Maximum</li>
+            </ul>
+        </div>
+    </script>
+    <script type="text/javascript">
+        var selectedText = null;
+        $(function () {
+            $("#Grid").ejGrid({
+                // the datasource "window.gridData" is referred from jsondata.min.js
+                dataSource: window.gridData,
+                allowPaging: true,
+                showSummary: true,
+                summaryRows: [{
+                    summaryColumns: [
+                    { summaryType: ej.Grid.SummaryType.Sum, displayColumn: "Freight", dataMember: "Freight", template: "#summaryTemplate", format: "{0:C2}" }
+                    ]
+                }],
+                columns: [
+                    { field: "OrderID", headerText: "Order ID", textAlign: ej.TextAlign.Right, width: 70 },
+                    { field: "CustomerID", headerText: "Customer ID", textAlign: ej.TextAlign.Left, width: 70 },
+                    { field: "EmployeeID", headerText: "Employee ID", textAlign: ej.TextAlign.Right, width: 70 },
+                    { field: "Freight", headerText: "Freight", textAlign: ej.TextAlign.Right, width: 120, format: "{0:C2}" },
+                    { field: "ShipCity", headerText: "Ship City", width: 70 }
+                ],
+                actionComplete: "complete",
+                dataBound: "complete",
+            });
+        });
+        function complete(args) {
+            if (args.requestType == "refresh" || args.type == "dataBound" || args.requestType == "paging") {
+                $("#summaryType").ejDropDownList({
+                    targetID: "typeList",
+                    change: "change",
+                    value: ej.isNullOrUndefined(selectedText) ? "sum" : selectedText,
+                    htmlAttributes: { style: "float:left;width:100px" }
+                });
+            }
+        }
+        function change(args) {
+            selectedText = args.selectedValue;
+            var gridObj = $("#Grid").ejGrid("instance");
+            var summaryColumn = gridObj.model.summaryRows[0].summaryColumns[0];
+            summaryColumn.summaryType = selectedText;
+            summaryColumn.format = selectedText == "count" ? "{0:N0}" : "{0:C2}";
+            gridObj.refreshContent();
+        }
+    </script>
+</body>
+</html>

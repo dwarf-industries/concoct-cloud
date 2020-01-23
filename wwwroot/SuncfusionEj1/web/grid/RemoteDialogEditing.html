@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 :Dialog on remote data</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jquery.validate.min.js"></script>
+    <script src="../scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="Grid"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Edit mode
+                        </div>
+                        <div class="col-md-3">
+                            <select id="editMode" style="width: 143px" data-bind="value: field">
+                                <option value="dialog" selected="selected">Dialog Edit Mode</option>
+                                <option value="dialogTemplate">Dialog Template Edit Mode</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="remotetemplate" style="display: none">
+        <b>Order Details</b>
+        <table>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td>Order ID
+                            </td>
+                            <td>
+                                <input type="text" id="OrderID" value="{{:OrderID}}" />
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Customer ID
+                            </td>
+                            <td>
+                                <input type="text" id="CustomerID" value="{{:CustomerID}}" />
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ship Country
+                            </td>
+                            <td>
+                                <input type="text" id="Employee ID" value="{{:EmployeeID}}" />
+
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td>Freight
+                            </td>
+                            <td>
+                                <input type="text" id="Freight" value="{{:Freight}}" />
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ShipCity
+                            </td>
+                            <td>
+                                <input type="text" id="OrderDate" value="{{:OrderDate}}" />
+
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+
+    <script type="text/javascript">
+        $(function () {
+            var localServ = window.baseurl + "Wcf/Northwind.svc/Orders";
+            var dataManger = ej.DataManager({
+                url: localServ
+            });
+            $("#Grid").ejGrid({
+                dataSource: dataManger,
+                allowPaging: true,
+                editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true, editMode: ej.Grid.EditMode.Dialog },
+                toolbarSettings: { showToolbar: true, toolbarItems: [ej.Grid.ToolBarItems.Add, ej.Grid.ToolBarItems.Edit, ej.Grid.ToolBarItems.Delete, ej.Grid.ToolBarItems.Update, ej.Grid.ToolBarItems.Cancel] },
+                columns: [
+                        { field: "OrderID", isPrimaryKey: true, headerText: "Order ID", textAlign: ej.TextAlign.Right, validationRules: { required: true }, width: 90 },
+                        { field: "CustomerID", headerText: 'Customer ID', validationRules: { required: true, minlength: 3 }, width: 90 },
+                        { field: "EmployeeID", headerText: 'Employee ID', editType: ej.Grid.EditingType.DropdownEdit, textAlign: ej.TextAlign.Right, width: 80 },
+                        { field: "Freight", headerText: 'Freight', textAlign: ej.TextAlign.Right, editType: ej.Grid.EditingType.NumericEdit, numericEditParams: { decimalPlaces: 2 }, validationRules: { range: [0, 1000] }, width: 80, format: "{0:C}" },
+                        { field: "ShipCity", headerText: 'Ship City', width: 90 }
+                ]
+            });
+
+        });
+
+        $("#sampleProperties").ejPropertiesPanel();
+        $(document).on("change", "#editMode", function (e) {
+            if (e.target.value == "dialogTemplate") {
+                $("#remotetemplate").css("display", "");
+                $("#Grid").ejGrid("option", { "edit": { editMode: e.target.value, dialogEditorTemplateId: "#remotetemplate" } });
+            }
+            else
+                $("#Grid").ejGrid("option", { "edit": { editMode: e.target.value } });
+        });
+    </script>
+</body>
+
+</html>

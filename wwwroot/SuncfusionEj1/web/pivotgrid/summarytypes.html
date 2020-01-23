@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" type="text/css" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+       <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+      <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/pivotgrid.datasource.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" style="width: 100%">
+                <div class="control">
+
+                    <div id="PivotGrid" style="height: 350px; width: 70%; overflow: auto;float :left">
+                    </div>
+                </div>
+                <div id="sampleProperties">
+                    <div class="prop-grid content">
+                        <div class="row" style=" margin-right: 10px !important;">
+                            <div class="col-md-3 aligntop; margin-top:15px">
+                                Amount
+                            </div>
+                            <div class="summarTypes">
+                                <select id="Amount">
+                                    <option>Sum</option>
+                                    <option>Average</option>
+                                    <option>Count</option>
+                                    <option>Min</option>
+                                    <option>Max</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="row" style=" margin-right: 10px !important;">
+                            <div class="col-md-3 aligntop; margin-top:15px">
+                                Quantity
+                            </div>
+                            <div class="summarTypes">
+                                <select id="Quantity">
+                                    <option>Sum</option>
+                                    <option>Average</option>
+                                    <option>Count</option>
+                                    <option>Min</option>
+                                    <option>Max</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var pivotGrid;
+        $(function () {
+            $("#sampleProperties").ejPropertiesPanel();
+
+            $("#PivotGrid").ejPivotGrid({
+                dataSource: {
+                    data: pivot_dataset,
+                    rows: [
+                        {
+                            fieldName: "Country",
+                            fieldCaption: "Country"
+                        },
+                        {
+                            fieldName: "State",
+                            fieldCaption: "State"
+                        }
+                    ],
+                    columns: [
+
+                        {
+                            fieldName: "Product",
+                            fieldCaption: "Product"
+                        }
+                    ],
+                    values: [
+                        {
+                            fieldName: "Amount",
+                            fieldCaption: "Amount",
+                            summaryType: ej.PivotAnalysis.SummaryType.Average
+                        },
+                        {
+                            fieldName: "Quantity",
+                            fieldCaption: "Quantity",
+                            summaryType: ej.PivotAnalysis.SummaryType.Sum
+                        }
+                    ]
+                }
+            });
+            $("#Amount,#Quantity").ejDropDownList({
+                width: "100px"
+            });
+            ddlTarget = $('#Amount').data("ejDropDownList");
+            ddlTarget.selectItemByText(ddlTarget.items[1].innerHTML);
+            ddlTarget1 = $('#Quantity').data("ejDropDownList");
+            ddlTarget1.selectItemByText(ddlTarget1.items[0].innerHTML);
+            $("#Amount,#Quantity").ejDropDownList("option", "change", "onChange");
+            pivotGrid = $('#PivotGrid').data("ejPivotGrid");
+        });
+
+        function onChange(args) {
+            var selectedValue = this._id;
+            $.grep(pivotGrid.model.dataSource.values, function (item) { return item.fieldName == selectedValue; })[0]["summaryType"] = args.text.toLowerCase();
+            pivotGrid._populatePivotGrid();
+        }
+    </script>
+    <style>
+        .row .cols-prop-area {
+            min-height: 140px;
+            width: 27%;
+            float: right;
+        }
+
+        .summarTypes {
+            float: left;
+            margin-left: -6px;
+        }
+
+        #drpdwn_input_wrapper {
+            width: 120px;
+        }
+    </style>
+
+</body>
+
+</html>

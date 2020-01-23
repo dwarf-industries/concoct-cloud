@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1: Tooltip - Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+	<script>
+    window.sample = { name: "" };
+  </script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+	
+                <div class="frame">
+                    <div class="ctrl col-md-4" id="leftImg">
+                        <img class="ctrImg" id="tooltipimg5" />
+                        <div class="new">Delphi Succinctly</div>
+                    </div>
+                    <div class="ctrl col-md-4" id="centerImg">
+                        <img class="ctrImg" id="tooltipimg4" />
+                        <div class="new">Roslyn Succinctly</div>
+                    </div>
+                    <div class="ctrl col-md-4" id="RightImg">
+                        <img class="ctrImg" id="tooltipimg6" />
+                        <div class="new">Python Succinctly</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+  
+ 
+    <script type="text/javascript">
+    var tooltipimg5, tooltipimg4, tooltipimg6;
+	$(function(){
+	tooltipimg5 = window.location.hash.indexOf(window.sample.name) ? "images/tooltip/template-05.png" : "../images/tooltip/template-05.png";
+	tooltipimg4 = window.location.hash.indexOf(window.sample.name) ? "images/tooltip/template-04.png" : "../images/tooltip/template-04.png";
+	tooltipimg6 = window.location.hash.indexOf(window.sample.name) ? "images/tooltip/template-06.png" : "../images/tooltip/template-06.png";
+	$('#tooltipimg5').attr('src', tooltipimg5);
+	$('#tooltipimg4').attr('src', tooltipimg4);
+	$('#tooltipimg6').attr('src', tooltipimg6);
+    $("#leftImg").ejTooltip(
+     {
+        width: "440px",
+		 height : "200px",
+         position : {
+             target:{
+                 horizontal : "center",
+                 vertical : "center",
+             },
+             stem:{
+                 horizontal :"center",
+                 vertical :"bottom",
+             },
+         },
+         content: '<div class="main"> <div class="poster"> <img src='+tooltipimg5+' class="logo"> </div> <div class="def"> <h4> Delphi Succinctly </h4><div class="link"><div class="author"> <b> Author: </b></div> <div class="category"> Marco Breveglieri </div></div><div class="description"> Learn the fundamentals of Delphi to build a variety of solutions for many devices and platforms. <a href="#">More...</a></div><div class="rate"> <div class="rateDef"> Rate this: </div><input class="rating"></input></div><div class="btnGroup"><button class="button1"> Download Now</button> <button class="button2"> Review Comments</button></div><div></div>',
+     });
+    $("#centerImg").ejTooltip(
+     {
+         width: "440px",
+		 height : "200px",
+		          position : {
+             target:{
+                 horizontal : "center",
+                 vertical : "center",
+             },
+             stem:{
+                 horizontal :"center",
+                 vertical :"bottom",
+             },
+         },
+         content: '<div class="main"> <div class="poster"> <img src='+tooltipimg4+' class="logo"> </div> <div class="def"> <h4> Roslyn Succinctly </h4><div class="link"> <div class="author"><b> Author:</b> </div> <div class="category"> Alessandro Del Sole </div></div><div class="description">Microsoft has only recently embraced the world of open source software, offering <a href="#">More...</a> </div><div class="rate"><div class="rateDef"> Rate this: </div><input class="rating"></input></div><div class="btnGroup"><button class="button1">Download Now</button> <button class="button2"> Review Comments </button></div><div></div>',
+     });
+    $("#RightImg").ejTooltip(
+     {
+         width: "440px",
+		 height : "200px",
+         position : {
+             target:{
+                 horizontal : "center",
+                 vertical : "center",
+             },
+             stem:{
+                 horizontal :"center",
+                 vertical :"bottom",
+             },
+         },
+         content: '<div class="main"> <div class="poster"> <img src='+tooltipimg6+' class="logo"> </div> <div class="def"> <h4> Python Succinctly </h4><div class="link"> <div class="author"><b> Author:</b> </div> <div class="category"> Jason Cannon </div></div><div class="description">Learn to use the Python language to create programs of all kindsto creating practical applications. <a href="#">More...</a> </div><div class="rate"><div class="rateDef"> Rate this: </div><input class="rating"></input></div><div class="btnGroup"><button class="button1">Download Now</button> <button class="button2"> Review Comments </button></div><div></div>',
+    });
+    $(".rating").ejRating({ height: "30", allowReset: false, value : 4 });
+    $(".button1").ejButton({ width: "120px", height: "32px", showRoundedCorner: true });
+    $(".button2").ejButton({ width: "135px", height: "32px", showRoundedCorner: true });
+});
+    </script>
+    <style>
+        h4{
+            margin-top: 0px;
+            margin-bottom: 2px;
+        }
+        #leftImg {
+            margin-top: 140px;
+            margin-left: 115px;
+        }
+        #centerImg{
+             margin-top: 140px;
+            margin-left: 105px;
+        }
+        #RightImg{
+             margin-top: 140px;
+            margin-left: 105px;
+        }
+        .poster {
+              
+				float: left;
+				box-sizing: border-box;
+				padding: 4px 0px;
+        }
+		.new{
+			text-align: center;
+		}
+
+        .frame {
+            width: 100%;
+            box-sizing: border-box;
+            height: 430px;
+        }
+
+        .def {
+               width: 280px;
+                float: right;
+                height: 230px;
+        }
+		.e-tooltip-wrap .e-tipContainer .e-tipcontent {
+			padding: 4px 1px;
+		}
+        .e-tooltip-wrap {
+            max-width: 485px;
+        }
+
+        .ctrl {
+            border: 1px solid #ebebe0;
+            width: 150px;
+            padding: 5px;
+            height: 225px;
+            margin-bottom: 50px;
+            float: left;
+        }
+
+        .ctrImg {
+            width: 150px; 
+        }
+
+        .logo {
+            float: left;
+			 height: 175px;
+			padding-left: 10px;
+        }
+
+        .category {
+            float: left;
+            margin-left: 10px;
+        }
+
+        .link {
+            padding: 2px;
+        }
+
+   
+
+        .main {
+            width: 430px;
+            height: 190px;
+            box-sizing: border-box;
+        }
+
+        .description {
+            width: 285px;
+            margin-top: 20px;
+            height: 60px;
+            background-color: inherit;
+            line-height: 20px;
+        }
+
+        .author {
+            float: left;
+        }
+
+        .rate {
+            height: 50px;
+            clear: both;
+        }
+
+        .e-button {
+            margin-right: 10px;
+        }
+		
+      img{
+	      padding-top: 8px;
+	  }
+    </style>
+</body>
+</html>

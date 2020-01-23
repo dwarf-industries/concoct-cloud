@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" type="text/css" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+       <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+      <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/pivotgrid.datasource.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" style=" width:100%">
+                <div id="PivotGrid" style="height: 450px; width: 99%; overflow: auto; float:left">
+                </div>
+            </div>
+            <div id="sampleProperties">
+                    <div class="prop-grid">
+                        <div class="row">
+                            <table>
+                                <tr>
+                                    <td class="col-md-3" style="width:150px">
+                                        DataSource:
+                                    </td>
+                                    <td class="col-md-3" style="width:120px">
+                                        <input type="radio" name="dataSource" id="rdbRelational" checked="checked" /><label for="rdbRelational" class="radioBtnLabel">Relational</label>
+                                    </td>
+                                    <td class="col-md-3" style="width:120px">
+                                        <input type="radio" name="dataSource" id="rdbOlap" /><label for="rdbOlap" class="radioBtnLabel">OLAP</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="row grandtot">
+                            <div class="col-md-3" style="width:150px">
+                                Hide GrandTotal:
+                            </div>
+                            <div class="col-md-3" style="width:120px">
+                                <input type="radio" name="hidetotal" id="hiderowgdtot" checked="checked" /><label for="rdbRelational" class="radioBtnLabel">Row</label>
+                            </div>
+                            <div class="col-md-3" style="width:120px">
+                                <input type="radio" name="hidetotal" id="hidecolumngdtot" /><label for="rdbOlap" class="radioBtnLabel">Column</label>
+                            </div>
+                            <div class="col-md-3" style="width:50px">
+                                <input type="radio" name="hidetotal" id="hidegdtot" /><label for="rdbOlap" class="radioBtnLabel">Both</label>
+                            </div>
+                        </div>
+                        <div class="row sourcefield">
+                            <div class="col-md-3" style="width:150px">
+                                Hide SubTotal:
+                            </div>
+                            <div class="col-md-3">
+                                <div class="row" style="padding:0; margin-top:-5px">
+                                    <select id="Row">
+                                        <option value="Date">Date</option>
+                                        <option value="Product">Product</option>
+                                        <option value="Country">Country</option>
+                                        <option value="State">State</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+    $(function () {
+        $("#PivotGrid").ejPivotGrid({
+            dataSource: {
+                data: pivot_dataset,
+                columns: [
+                    {
+                        fieldName: "Date",
+                        fieldCaption: "Date"
+                    },
+                     {
+                         fieldName: "Product",
+                         fieldCaption: "Product"
+                     }
+                ],
+                rows: [
+                     {
+                         fieldName: "Country",
+                         fieldCaption: "Country"
+                     },
+                    {
+                        fieldName: "State",
+                        fieldCaption: "State"
+                    }
+                ],
+                values: [
+                    {
+                        fieldName: "Amount",
+                        fieldCaption: "Amount"
+                    },
+                    {
+                        fieldName: "Quantity",
+                        fieldCaption: "Quantity"
+                    }
+                ]
+            }, enableGroupingBar: true, enableRowGrandTotal: false, renderSuccess: "onRenderSuccess"
+        });
+    });
+
+    var rdbRelational, rdbOlap, rdbRowHide, rdbColumnHide, rdbHideAll, pivotGrid;
+    var pivotdataSource = { data: pivot_dataset, cube: "", rows: [{ fieldName: "Date", fieldCaption: "Date" }, { fieldName: "Product", fieldCaption: "Product" }], columns: [{ fieldName: "Country", fieldCaption: "Country" }, { fieldName: "State", fieldCaption: "State" }], values: [{ fieldName: "Amount", fieldCaption: "Amount" }, { fieldName: "Quantity", fieldCaption: "Quantity" }], filters: [] };
+    var olapDataSource = { data: window.biurl + "olap/msmdpump.dll", catalog: "Adventure Works DW 2008 SE", cube: "Adventure Works", rows: [{ fieldName: "[Date].[Fiscal]" }], columns: [{ fieldName: "[Customer].[Customer Geography]" }], values: [{ measures: [{ fieldName: "[Measures].[Internet Sales Amount]" }], axis: "columns" }], filters: [] };
+
+    $(function () {
+        $("#sampleProperties").ejPropertiesPanel();
+        $("#rdbRelational,#rdbOlap,#hiderowgdtot,#hidecolumngdtot,#hidegdtot").ejRadioButton({ change: "renderPivotGrid" });
+        rdbRelational = $('#rdbRelational').data("ejRadioButton"); rdbOlap = $('#rdbOlap').data("ejRadioButton"); rdbRowHide = $('#hiderowgdtot').data("ejRadioButton"); rdbColumnHide = $('#hidecolumngdtot').data("ejRadioButton"); rdbHideAll = $('#hidegdtot').data("ejRadioButton");
+        pivotGrid = $('#PivotGrid').data("ejPivotGrid");
+        $("#Amount,#Quantity,#Row,#Column").ejDropDownList({
+        watermarkText: "Hide SubTotals",
+        showCheckbox: true,
+        width: "150px"
+        });
+        ddlTarget = $('#Row').data("ejDropDownList");
+        $("#Row").ejDropDownList("option", "change", "onChange");
+        });
+
+    function onChange(args) {
+        var selectedValues = this.target.value.split(",");
+        if (rdbRelational.model.checked) {
+            if (pivotGrid.model.dataSource.rows.length > 0)
+                $.each(pivotGrid.model.dataSource.rows, function (e, item) { if (item.fieldName.length > 0) item["showSubTotal"] = true; });
+            if (pivotGrid.model.dataSource.columns.length > 0)
+                $.each(pivotGrid.model.dataSource.columns, function (e, item) { if (item.fieldName.length > 0) item["showSubTotal"] = true; });
+            $.each(selectedValues, function (e, selectedValue) {
+                if (pivotGrid.model.dataSource.rows.length > 0)
+                    $.each(pivotGrid.model.dataSource.rows, function (e, item) { if (item.fieldName.length > 0 && item.fieldName == selectedValue) item["showSubTotal"] = false; });
+                if (pivotGrid.model.dataSource.columns.length > 0)
+                    $.each(pivotGrid.model.dataSource.columns, function (e, item) { if (item.fieldName.length > 0 && item.fieldName == selectedValue) item["showSubTotal"] = false; });
+            });
+            pivotGrid._populatePivotGrid();
+        }
+    }
+    function renderPivotGrid(args) {
+        ddlTarget.unCheckAll();
+        $(pivotGrid.element).html("");
+        if (rdbRelational.model.checked) {
+            $(".sourcefield").css("display", "");
+        }
+        else {
+            $(".sourcefield").css("display", "none");
+        }
+            pivotGrid.model.dataSource = rdbRelational.model.checked ? pivotdataSource : rdbOlap.model.checked ? olapDataSource : pivotdataSource;
+            pivotGrid.model.enableGroupingBar = true;
+            if (rdbRowHide.model.checked) {
+                pivotGrid.model.enableColumnGrandTotal = pivotGrid.model.enableGrandTotal = true;
+                pivotGrid.model.enableRowGrandTotal = false;
+            }
+            else if (rdbColumnHide.model.checked) {
+                pivotGrid.model.enableRowGrandTotal = pivotGrid.model.enableGrandTotal = true;
+                pivotGrid.model.enableColumnGrandTotal = false;
+            }
+            else {
+                pivotGrid.model.enableRowGrandTotal = pivotGrid.model.enableColumnGrandTotal = true;
+                pivotGrid.model.enableGrandTotal = false;
+            }
+            pivotGrid._currentReportItems = [];
+            pivotGrid._tempFilterData = [];
+        pivotGrid._load();
+    }
+    function onRenderSuccess() {
+        if (window.themecolor == "material" || window.themecolor == "office-365")
+            window.loadPivotGridFrameTheme();
+    }
+    window.loadPivotGridFrameTheme = function () {
+        window.setTimeout(function () {
+            var pivotGridElement = $("#PivotGrid").data("ejPivotGrid");
+            if (pivotGridElement && pivotGridElement.model.enableGroupingBar && pivotGridElement.getJSONRecords() != null)
+                pivotGridElement.renderControlFromJSON();
+        }, 800);
+    }
+        </script>
+    </div>
+
+    <style>
+        .row .cols-prop-area {
+            margin-top: 10px;
+            width: 55%;
+            height: auto;
+            min-height: 80px;
+        }
+
+        .radioBtnLabel {
+            margin-left: 5px;
+        }
+
+        #Column_wrapper {
+            margin-left: 110px;
+        }
+
+        label {
+            font-weight: normal;
+        }
+
+        @media (min-width: 1920px) { .row .cols-prop-area { width: 32.6% !important; } }
+
+    </style>
+</body>
+</html>

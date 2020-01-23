@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+	<title></title>
+	<link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+	<link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+	 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+	<script src="../scripts/properties.js" type="text/javascript"></script>
+ </head>
+ <body>
+	<div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="container"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">					
+						<div class="col-md-3">
+                            Start Angle
+                        </div>
+						<div class="col-md-3">
+                            <div id="startAngleSlider"></div>
+                        </div>
+                        <div class="col-md-3">
+                            End Angle
+                        </div>
+                        <div class="col-md-3">
+                            <div id="endAngleSlider"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Series Type
+                        </div>
+                        <div class="col-md-3">
+                            <div id="dropdown">
+                                <select id="optSeriesType">
+                                    <option value="doughnut">Doughnut</option>
+                                    <option value="pie">Pie</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ <script type="text/javascript" language="javascript">
+	$(function () 
+	{
+        $("#container").ejChart(
+        {
+            //Initializing Series
+			series: 
+			[
+				{
+                    points:[{ x: 'Australia', y:53.3, text:"Australia" },
+							{ x: 'China', y: 55.7, text:"China" },
+							{ x: 'India', y: 60.5, text: "India" },
+							{ x: 'Japan', y: 12.5, text:"Japan" },
+							{ x: 'South Africa', y: 79.4, text:"South Africa" },
+							{ x: 'United Kingdom', y: 70.9, text:"United Kingdom" },
+							{ x: 'United States', y: 45.0, text:"United States" }],
+                    marker: 
+					{
+                        dataLabel: 
+						{
+                            visible: true,
+                            shape: 'none', 
+							connectorLine: { type: 'line', color: 'black' },
+                            font: { size: '14px' },
+							enableContrastColor:true
+                        }
+                    },
+                    tooltip: { visible: true, format : "#point.x# : #point.y#%" },
+                    border: { width: 1, color: 'white' },
+                    name: 'Agricultural land', 
+					type: "doughnut", 
+					enableAnimation: true,
+					labelPosition: 'outside',
+					enableSmartLabels: true,
+					explode:true, 
+					startAngle: -90, 
+					endAngle: 90
+                }
+            ],
+            title: { text: 'Agricultural land in 2011 (% of land area)' },
+            isResponsive: true,
+            size:{height:"600"},
+			seriesRendering:"seriesRender",
+			load: "loadTheme",
+            legend: { visible: false, shape: 'circle' },                        
+        });
+    });
+	
+	function seriesRender(sender)
+	{
+		if(sender.model.theme=="flatdark" || sender.model.theme=="gradientdark" || sender.model.theme == "high-contrast-01")
+		sender.data.series.marker.dataLabel.connectorLine.color="white";
+	}
+	
+	$('#startAngleSlider').ejSlider(
+	{
+		height:16,
+		value:-90,
+		minValue:-360,
+		maxValue:360,
+		incrementStep:1,
+		change: "startAngleChange",
+	});
+	
+	$('#endAngleSlider').ejSlider(
+	{
+		height:16,
+		value:90,
+		minValue:-360,
+		maxValue:360,
+		incrementStep:1,
+		change: "endAngleChange",			
+	});
+	
+	$("#optSeriesType").ejDropDownList({ "change": "seriesTypeChanged", width: "110px",selectedItemIndex:0 });
+	
+    function startAngleChange(args)
+    {
+        var chart = $("#container").ejChart("instance");
+		endAngle=$("#endAngleSlider a").attr("aria-label");
+		chart.model.series[0].startAngle = parseInt(args.value);
+		chart.model.series[0].endAngle = parseInt(endAngle);
+		chart.model.series[0].enableAnimation =false;
+		chart.redraw();
+    }
+	
+	function endAngleChange(args)
+    {
+		var chart = $("#container").ejChart("instance");
+		startAngle=$("#startAngleSlider a").attr("aria-label");
+		chart.model.series[0].startAngle = parseInt(startAngle);
+        chart.model.series[0].endAngle = parseInt(args.value);
+		chart.model.series[0].enableAnimation =false;
+        chart.redraw();
+    }
+	
+	function seriesTypeChanged(sender)
+	{
+		var option = sender.selectedText;
+        var chart = $("#container").ejChart("instance");
+        chart.model.series[0].type = option.toLowerCase();;
+		chart.model.series[0].enableAnimation =true;
+        chart.redraw();
+	}
+	
+	$("#sampleProperties").ejPropertiesPanel();
+ </script>	 
+ </body>
+</html>

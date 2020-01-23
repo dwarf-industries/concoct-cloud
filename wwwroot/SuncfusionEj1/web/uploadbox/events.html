@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1: Upload Box - Events</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+	<script>
+        window.sample = { name: "" };
+  </script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div class="control">
+                        <div class="posupload">Select a files to upload </div>
+                        <div id="UploadEvents"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="cols-prop-area event-tracer">
+                <div>
+                    <div class="heading">
+                        <span>Event Trace</span>
+                        <div class="pull-right">
+                            <select name="selectevtprops" id="selectControls">
+                                <option value="fileSelect">File Select</option>
+                                <option value="begin">Upload Begin</option>
+                                <option value="cancel">Upload Cancel</option>
+                                <option value="inProgress">Upload Progress</option>
+                                <option value="complete">Upload Complete</option>
+                                <option value="remove">Upload Remove</option>
+                                <option value="error">Upload Error</option>
+								 <option value="success">Upload Success</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="prop-grid content">
+                    <div class="eventarea">
+                        <div class="EventLog" id="EventLog">
+                        </div>
+                    </div>
+                    <div class="evtbtn">
+                        <input type="button" class="eventclear e-btn" value="Clear" onclick="onClear()" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <style type="text/css">
+         #UploadEvents {
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        .posupload {
+            text-align: center;
+        }
+    </style>
+    <script type="text/javascript">
+        var uploadObj;
+        $(function () {
+			saveUrl = window.location.hash.indexOf(window.sample.name) ? "uploadbox/saveFiles.ashx" : "saveFiles.ashx";
+			removetUrl = window.location.hash.indexOf(window.sample.name) ? "uploadbox/removeFiles.ashx" : "removeFiles.ashx";
+            $("#UploadEvents").ejUploadbox({ 
+                saveUrl: saveUrl,
+                removeUrl: removetUrl,
+                create: "uploadload",
+                fileSelect: "fileselect",
+                begin: "fileuploadbegin",
+                cancel: "fileuploadcancel",
+                inProgress: "fileInprogress",
+                complete: "fileuploadcomplete",
+                remove: "fileuploadremove",
+                error: "fileuploaderror",
+                destroy: "fileuploadDestroy",
+				success:"fileuploadsuccess", 
+				beforeSend: "beforesend"
+            });
+
+            uploadObj = $("#UploadEvents").data("ejUploadbox");
+
+            $('#selectControls').ejDropDownList({
+                popupShown: "adjustpopupposition",
+                showCheckbox: true,
+                checkAll: true,
+                change: "evtpropscheckedevent"
+            });
+        });
+
+         function formatSize(bytes)
+        {
+            var i = -1;
+            if (!bytes)
+                return "0.0KB";
+            do {
+                bytes = bytes / 1024;
+                i++;
+            } while (bytes > 99);
+            return Math.max(bytes, 0).toFixed(1) + ['KB', 'MB', 'GB', 'TB', 'PB', 'EB'][i];
+        }
+
+        function uploadload(e) {
+            jQuery.addEventLog("Upload box control has been <span class='eventTitle'> created </span>.");
+        }
+        function fileselect(e) {
+                for (var i = 0; i < e.files.length ;i++)
+                {
+                jQuery.addEventLog(e.files[i].name + "- file has been <span class='eventTitle'>selected </span>.");
+            }
+        }
+        function fileuploadbegin(e) {
+            jQuery.addEventLog("Upload has been<span class='eventTitle'> started </span> -" + e.files.name);
+        }
+        function fileuploadcancel(e) {
+            jQuery.addEventLog("Upload has been <span class='eventTitle'>canceled </span>.");
+        }
+        function fileInprogress(e) {
+            jQuery.addEventLog("Upload <span class='eventTitle'>is InProgress</span> - " + e.percentage + "% - " + e.file.name + " (" + formatSize(e.e.loaded) + ").");
+        }
+        function fileuploadcomplete(e) {
+            jQuery.addEventLog("Upload action has been <span class='eventTitle'>completed </span>successfully .");
+        }
+        function fileuploadremove(e) {
+            jQuery.addEventLog("Uploaded file has been <span class='eventTitle'> removed </span>successfully.");
+        }
+        function fileuploaderror(e) {
+            jQuery.addEventLog("Upload action has <span class='eventTitle'>thrown an error </span>.");
+        }
+        function fileuploadDestroy(e) {
+            jQuery.addEventLog("Upload control has been <span class='eventTitle'>destroyed </span>.");
+        }
+        function fileuploadSuccess(e) {
+            jQuery.addEventLog("Upload of " + e.files.name + " is <span class='eventTitle'> success </span>.");
+        } 
+		function beforesend(e){
+		jQuery.addEventLog("Upload of " + e.files.name + " is <span class='eventTitle'> beforesend </span>.");
+		}
+        function onClear() {
+            jQuery.clearEventLog();
+        }
+
+        function evtpropscheckedevent(args) {
+            if (args.isChecked) {
+                switch (args.selectedValue) {
+                    case "create": uploadObj.option(args.selectedValue, "uploadload"); break;
+                    case "fileSelect": uploadObj.option(args.selectedValue, "fileselect"); break;
+                    case "begin": uploadObj.option(args.selectedValue, "fileuploadbegin"); break;
+                    case "cancel": uploadObj.option(args.selectedValue, "fileuploadcancel"); break;
+                    case "inProgress": uploadObj.option(args.selectedValue, "fileInprogress"); break;
+                    case "complete": uploadObj.option(args.selectedValue, "fileuploadcomplete"); break;
+                    case "remove": uploadObj.option(args.selectedValue, "fileuploadremove"); break;
+                    case "error": uploadObj.option(args.selectedValue, "fileuploaderror"); break;
+                    case "destroy": uploadObj.option(args.selectedValue, "fileuploadDestroy"); break;
+					case "success": uploadObj.option(args.selectedValue, "fileuploadSuccess"); break;
+					case "beforesend": uploadObj.option(args.selectedValue, "beforesend"); break; 
+                }
+            }
+            else uploadObj.option(args.selectedValue, null);
+        }
+    </script>
+</body>
+</html>

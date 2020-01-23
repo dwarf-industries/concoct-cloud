@@ -1,0 +1,284 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Essential JS 1 :Gantt Schedule Modes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+     <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsonganttdata.js"></script>
+</head>
+
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="GanttContainer" style="height:450px;width:100%;"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Schedule Mode
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="mode" />
+                            <div id="target">
+                                <ul>
+                                    <li>Hour</li>
+                                    <li>Day</li>
+                                    <li>Week</li>
+                                    <li>Month</li>
+                                    <li>Year</li>
+                                    <li>Quarter Year</li>
+                                    <li>Half Year</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Mintues Interval
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="interval" />
+                            <div id="mintues">
+                                <ul>
+                                    <li>Auto</li>
+                                    <li>OneMinute</li>
+                                    <li>FiveMinutes</li>
+                                    <li>FifteenMinutes</li>
+                                    <li>ThirtyMinutes</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Week Start Day
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="startDay" />
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        $(function () {
+            $("#GanttContainer").ejGantt({
+                dataSource: weekData,
+                allowSelection: true,
+                allowColumnResize: true,
+                rowHeight: window.theme == "material" ? 48 : window.theme == "office-365" ? 36 : 30,
+                taskIdMapping: "TaskID",
+                taskNameMapping: "TaskName",
+                scheduleStartDate: new Date("02/27/2017"),
+                scheduleEndDate: new Date("04/10/2017"),
+                startDateMapping: "StartDate",
+                progressMapping: "Progress",
+                endDateMapping: "EndDate",
+                dateFormat: "M/d/yyyy",
+                childMapping: "Children",
+                treeColumnIndex: 1,
+                isResponsive: true,
+                workingTimeScale: "TimeScale24Hours",
+                durationUnit: ej.Gantt.DurationUnit.Day,
+                allowGanttChartEditing: false,
+                scheduleHeaderSettings: {
+                    scheduleHeaderType: ej.Gantt.ScheduleHeaderType.Week,
+                },
+                load: function () {
+                    this.getColumns()[0].width = window.theme == "material" ? 60 : 30;
+                }
+            });
+
+            $('#mode').ejDropDownList({
+                targetID: "target",
+                change: "onChange",
+                value: "Week",
+                text: "Week",
+                width: "114px"
+            });
+            $('#interval').ejDropDownList({
+                targetID: "mintues",
+                value: "FiveMinutes",
+                change: "onIntervalChange",
+                width:"114px",
+                enabled: false
+            });
+            var workWeek = [{ "text": "Sunday", "value": 0 }, { "text": "Monday", "value": 1 }, { "text": "Tuesday", "value": 2 }, { "text": "Wednesday", "value": 3 },
+                { "text": "Thursday", "value": 4 }, { "text": "Friday", "value": 5 }, { "text": "Saturday", "value": 6 }];
+            $('#startDay').ejDropDownList({
+                selectedItemIndex: 0,
+                dataSource:workWeek,
+                width: "114px",
+                enabled: true,
+                change: "onStartDayChange"
+            });
+            $("#sampleProperties").ejPropertiesPanel();
+        });
+
+        function onChange(args) {
+            var ganttObject = $("#GanttContainer").data("ejGantt");
+            ganttObject.model.columns = null;
+            if (args.text === "Week") {
+                ganttObject.model.scheduleEndDate = new Date("04/10/2017");
+                ganttObject.model.scheduleStartDate = new Date("02/27/2017");
+                ganttObject.model.endDateMapping = "EndDate";
+                ganttObject.model.dateFormat = "M/d/yyyy";
+                ganttObject.model.durationUnit = ej.Gantt.DurationUnit.Day;
+                ganttObject.model.durationMapping = "";
+                ganttObject.model.scheduleHeaderSettings.weekHeaderFormat = "MMM dd , yyyy";
+                ganttObject.model.scheduleHeaderSettings.dayHeaderFormat = "";
+                ganttObject.model.scheduleHeaderSettings.scheduleHeaderType = ej.Gantt.ScheduleHeaderType.Week;
+                ganttObject.model.dataSource = weekData;
+                $("#startDay").ejDropDownList({ enabled: true, selectedItemIndex: ganttObject.model.scheduleHeaderSettings.weekStartDay });
+                ganttObject.reRenderChart(ej.Gantt.ScheduleHeaderType.Week);
+                $("#interval").ejDropDownList({ enabled: false });
+            }
+            if (args.text === "Day") {
+                ganttObject.model.scheduleStartDate = new Date("02/27/2017"),
+                ganttObject.model.scheduleEndDate = new Date("03/10/2017"),
+                ganttObject.model.endDateMapping = "";
+                ganttObject.model.dateFormat = "M/d/yyyy hh:mm:ss tt";
+                ganttObject.model.durationMapping = "duration";
+                ganttObject.model.durationUnit = ej.Gantt.DurationUnit.Hour;
+                ganttObject.model.scheduleHeaderSettings.scheduleHeaderType = ej.Gantt.ScheduleHeaderType.Day;
+                ganttObject.model.dataSource = dayData;
+                ganttObject.reRenderChart(ej.Gantt.ScheduleHeaderType.Day);
+                $("#interval").ejDropDownList({ enabled: false });
+                $("#startDay").ejDropDownList({ enabled: false});
+            }
+            if (args.text === "Month") {
+                ganttObject.model.scheduleStartDate = new Date("02/20/2017"),
+                ganttObject.model.scheduleEndDate = new Date("07/20/2017"),
+                ganttObject.model.endDateMapping = "EndDate";
+                ganttObject.model.durationMapping = "";
+                ganttObject.model.dateFormat = "M/d/yyyy";
+                ganttObject.model.scheduleHeaderSettings.monthHeaderFormat = "MMM yyyy";
+                ganttObject.model.scheduleHeaderSettings.weekHeaderFormat = "M/dd";
+                ganttObject.model.durationUnit = ej.Gantt.DurationUnit.Day;
+                ganttObject.model.scheduleHeaderSettings.scheduleHeaderType = ej.Gantt.ScheduleHeaderType.Month;
+                ganttObject.model.dataSource = monthData;
+                ganttObject.reRenderChart(ej.Gantt.ScheduleHeaderType.Month);
+                $("#interval").ejDropDownList({ enabled: false });
+                $("#startDay").ejDropDownList({ enabled: false });
+            }
+
+            if (args.text === "Year") {
+                ganttObject.model.scheduleEndDate = new Date("07/20/2017"),
+                ganttObject.model.scheduleStartDate = new Date("02/20/2017"),
+                ganttObject.model.endDateMapping = "EndDate";
+                ganttObject.model.dateFormat = "M/d/yyyy";
+				ganttObject.model.scheduleHeaderSettings.yearHeaderFormat = "MMM/yyyy";
+                ganttObject.model.durationMapping = "";
+                ganttObject.model.durationUnit = ej.Gantt.DurationUnit.Day;
+                ganttObject.model.scheduleHeaderSettings.scheduleHeaderType = ej.Gantt.ScheduleHeaderType.Year;
+                ganttObject.model.dataSource = monthData;
+                ganttObject.reRenderChart(ej.Gantt.ScheduleHeaderType.Year);
+                $("#interval").ejDropDownList({ enabled: false });
+                $("#startDay").ejDropDownList({ enabled: false });
+            }
+            if (args.text === "Hour") {
+                ganttObject.model.scheduleEndDate = new Date("02/27/2017 07:00:00 AM"),
+                ganttObject.model.scheduleStartDate = new Date("02/27/2017 00:00:00 AM"),
+                ganttObject.model.dateFormat = "M/d/yyyy hh:mm:ss tt";
+                ganttObject.model.durationMapping = "duration";
+                ganttObject.model.endDateMapping = "";
+                ganttObject.model.durationUnit = ej.Gantt.DurationUnit.Minute;
+                ganttObject.model.scheduleHeaderSettings.minutesPerInterval = "fiveMinutes";
+                ganttObject.model.scheduleHeaderSettings.scheduleHeaderType = ej.Gantt.ScheduleHeaderType.Hour;
+                ganttObject.model.dataSource = hourData;
+                ganttObject.reRenderChart(ej.Gantt.ScheduleHeaderType.Hour);
+                $("#interval").ejDropDownList({ enabled: true, value: "FiveMinutes" });
+                $("#startDay").ejDropDownList({ enabled: false });
+            }
+            if (args.text === "Quarter Year") {
+                ganttObject.model.scheduleEndDate = new Date("10/14/2018"),
+                ganttObject.model.scheduleStartDate = new Date("02/20/2017"),
+                ganttObject.model.endDateMapping = "EndDate";
+                ganttObject.model.dateFormat = "M/d/yyyy";
+                ganttObject.model.scheduleHeaderSettings.yearHeaderFormat = "yyyy";
+                ganttObject.model.durationMapping = "";
+                ganttObject.model.durationUnit = ej.Gantt.DurationUnit.Day;
+                ganttObject.model.scheduleHeaderSettings.scheduleHeaderType = ej.Gantt.ScheduleHeaderType.QuarterYear;
+                ganttObject.model.dataSource = quarterYearData;
+                ganttObject.reRenderChart(ej.Gantt.ScheduleHeaderType.QuarterYear);
+                $("#interval").ejDropDownList({ enabled: false });
+                $("#startDay").ejDropDownList({ enabled: false });
+            }
+            if (args.text === "Half Year") {
+                ganttObject.model.scheduleEndDate = new Date("10/20/2020"),
+                ganttObject.model.scheduleStartDate = new Date("02/20/2017"),
+                ganttObject.model.endDateMapping = "EndDate";
+                ganttObject.model.dateFormat = "M/d/yyyy";
+                ganttObject.model.scheduleHeaderSettings.yearHeaderFormat = "yyyy";
+                ganttObject.model.durationMapping = "";
+                ganttObject.model.durationUnit = ej.Gantt.DurationUnit.Day;
+                ganttObject.model.scheduleHeaderSettings.scheduleHeaderType = ej.Gantt.ScheduleHeaderType.HalfYear;
+                ganttObject.model.dataSource = halfYearData;
+                ganttObject.reRenderChart(ej.Gantt.ScheduleHeaderType.HalfYear);
+                $("#interval").ejDropDownList({ enabled: false });
+                $("#startDay").ejDropDownList({ enabled: false });
+            }
+        }
+
+        function onIntervalChange(args) {
+            var ganttObject = $("#GanttContainer").data("ejGantt");
+            switch (args.text) {
+                case "Auto":
+                    ganttObject.model.scheduleStartDate = new Date("02/27/2017 00:00:00 AM");
+                    ganttObject.model.scheduleEndDate = new Date("02/27/2017 04:00:00 AM");
+                    ganttObject.model.scheduleHeaderSettings.minutesPerInterval = "auto";
+                    break;
+                case "OneMinute":
+                    ganttObject.model.scheduleStartDate = new Date("02/27/2017 00:00:00 AM");
+                    ganttObject.model.scheduleEndDate = new Date("02/27/2017 04:00:00 AM");
+                    ganttObject.model.scheduleHeaderSettings.minutesPerInterval = "oneMinute";
+                    break;
+                case "FiveMinutes":
+                    ganttObject.model.scheduleStartDate = new Date("02/27/2017 00:00:00 AM");
+                    ganttObject.model.scheduleEndDate = new Date("02/27/2017 07:00:00 AM");
+                    ganttObject.model.scheduleHeaderSettings.minutesPerInterval = "fiveMinutes";
+                    break;
+                case "FifteenMinutes":
+                    ganttObject.model.scheduleStartDate = new Date("02/26/2017 09:00:00 PM"),
+                    ganttObject.model.scheduleEndDate = new Date("02/27/2017 10:00:00 AM");
+                    ganttObject.model.scheduleHeaderSettings.minutesPerInterval = "fifteenMinutes";
+                    break;
+                case "ThirtyMinutes":
+                    ganttObject.model.scheduleStartDate = new Date("02/26/2017 10:00:00 PM");
+                    ganttObject.model.scheduleEndDate = new Date("02/28/2017");
+                    ganttObject.model.scheduleHeaderSettings.minutesPerInterval = "thirtyMinutes";
+                    break;
+            }
+            ganttObject.reRenderChart(ej.Gantt.ScheduleHeaderType.Hour);
+        }
+        function onStartDayChange(args)
+        {
+            var ganttObject = $("#GanttContainer").ejGantt("instance");
+            ganttObject.model.scheduleHeaderSettings.weekStartDay = args.selectedValue;
+            ganttObject.reRenderChart(ganttObject.model.scheduleHeaderSettings.scheduleHeaderType);
+        }
+    </script>
+
+</body>
+
+</html>

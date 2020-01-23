@@ -1,0 +1,355 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Essential JS 1 : Events</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+     <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsontreegriddata.js"></script>
+
+</head>
+
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="TreeGridContainer" style="height:450px;width:100%;"></div>
+            </div>
+            <div class="cols-prop-area event-tracer">
+                <div>
+                    <div class="heading">
+                        <span>Event Trace</span>
+                        <div class="pull-right">
+                            <select name="selectevtprops" id="selectControls">
+                                <option value="create">create</option>
+                                <option value="load">load</option>
+                                <option value="recordClick">recordClick</option>
+                                <option value="recordDoubleClick">recordDoubleClick</option>
+                                <option value="toolbarClick">toolbarClick</option>
+                                <option value="rowDrag">rowDrag</option>
+                                <option value="rowDragStart">rowDragStart</option>
+                                <option value="rowDragStop">rowDragStop</option>
+                                <option value="rowDropActionBegin">rowDropActionBegin</option>
+                                <option value="columnResizeStart">columnResizeStart</option>
+                                <option value="columnResizeEnd">columnResizeEnd</option>
+                                <option value="columnResized">columnResized</option>
+                                <option value="columnDragStart">columnDragStart</option>
+                                <option value="columnDrag">columnDrag</option>
+                                <option value="columnDrop">columnDrop</option>
+                                <option value="contextMenuOpen">contextMenuOpen</option>
+                                <option value="actionBegin">actionBegin</option>
+                                <option value="actionComplete">actionComplete</option>
+                                <option value="beginEdit">beginEdit</option>
+                                <option value="endEdit">endEdit</option>
+                                <option value="queryCellInfo">queryCellInfo</option>
+                                <option value="rowDataBound">rowDataBound</option>
+                                <option value="rowSelecting">rowSelecting</option>
+                                <option value="rowSelected">rowSelected</option>
+                                <option value="expanding">expanding</option>
+                                <option value="expanded">expanded</option>
+                                <option value="collapsing">collapsing</option>
+                                <option value="collapsed">collapsed	</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="prop-grid content">
+                        <div class="eventarea">
+                            <div class="EventLog" id="EventLog">
+                            </div>
+                        </div>
+                        <div class="evtbtn">
+                            <input type="button" class="eventclear e-btn" value="Clear" onclick="onClear()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        //DATA SOURCE DECLARATION OF Treegrid CONTROL
+        var data = [
+            {
+                "TaskID": 1,
+                "TaskName": "Parent Task 1",
+                "StartDate": new Date("02/23/2017"),
+                "EndDate": new Date("04/28/2017"),
+                "Progress": "40",
+                "Children": [
+                     { "TaskID": 2, "TaskName": "Child Task 1", "StartDate": new Date("02/23/2017"), "EndDate": new Date("03/28/2017"), "Progress": "40" },
+                     { "TaskID": 3, "TaskName": "Child Task 2", "StartDate": new Date("02/23/2017"), "EndDate": new Date("03/28/2017"), "Progress": "40", },
+                     { "TaskID": 4, "TaskName": "Child Task 3", "StartDate": new Date("02/23/2017"), "EndDate": new Date("03/28/2017"), "Progress": "40", }
+                ]
+            },
+     {
+         "TaskID": 5,
+         "TaskName": "Parent Task 2",
+         "StartDate": new Date("05/03/2017"),
+         "EndDate": new Date("07/07/2017"),
+         "Progress": "40",
+         "Children": [
+              { "TaskID": 6, "TaskName": "Child Task 1", "StartDate": new Date("04/13/2017"), "EndDate": new Date("05/20/2017"), "Progress": "40" },
+              { "TaskID": 7, "TaskName": "Child Task 2", "StartDate": new Date("04/13/2017"), "EndDate": new Date("05/20/2017"), "Progress": "40", },
+              { "TaskID": 8, "TaskName": "Child Task 3", "StartDate": new Date("04/13/2017"), "EndDate": new Date("05/20/2017"), "Progress": "40", },
+              { "TaskID": 9, "TaskName": "Child Task 4", "StartDate": new Date("04/13/2017"), "EndDate": new Date("05/20/2017"), "Progress": "40" }
+         ]
+     },
+     {
+         "TaskID": 10,
+         "TaskName": "Parent Task 3",
+         "StartDate": new Date("08/10/2017"),
+         "EndDate": new Date("10/14/2017"),
+         "Progress": "40",
+         "Children": [
+              { "TaskID": 11, "TaskName": "Child Task 1", "StartDate": new Date("06/10/2017"), "EndDate": new Date("07/14/2017"), "Progress": "40" },
+              { "TaskID": 12, "TaskName": "Child Task 2", "StartDate": new Date("06/10/2017"), "EndDate": new Date("07/14/2017"), "Progress": "40", },
+              { "TaskID": 13, "TaskName": "Child Task 3", "StartDate": new Date("06/10/2017"), "EndDate": new Date("07/14/2017"), "Progress": "40", },
+              { "TaskID": 14, "TaskName": "Child Task 4", "StartDate": new Date("06/10/2017"), "EndDate": new Date("07/14/2017"), "Progress": "40", },
+              { "TaskID": 15, "TaskName": "Child Task 5", "StartDate": new Date("06/10/2017"), "EndDate": new Date("07/14/2017"), "Progress": "40", }
+         ]
+     }
+
+        ];
+
+        $(function () {
+            var dateFormat = "{0:" + ej.preferredCulture()["calendars"]["standard"]["patterns"]["d"] + "}";
+            $("#TreeGridContainer").ejTreeGrid({
+                dataSource: data,
+                childMapping: "Children",
+                treeColumnIndex: 1,
+                allowColumnResize: true,
+                rowHeight: window.theme == "material" ? 48 : window.theme == "office-365" ? 36 : 30,
+                isResponsive: true, editSettings:
+                    {
+                        allowEditing: true,
+                        allowAdding: true,
+                        allowDeleting: true,
+                        editMode: "cellEditing"
+                    },
+                allowDragAndDrop: true,
+                allowColumnReordering: true,
+                contextMenuSettings: {
+                    showContextMenu: true,
+                    contextMenuItems: ["add", "edit", "delete"]
+                },
+                toolbarSettings: {
+                    showToolbar: true,
+                    toolbarItems: [ej.TreeGrid.ToolbarItems.Add,
+                    ej.TreeGrid.ToolbarItems.Edit,
+                    ej.TreeGrid.ToolbarItems.Delete,
+                    ej.TreeGrid.ToolbarItems.Update,
+                    ej.TreeGrid.ToolbarItems.Cancel,
+                    ej.TreeGrid.ToolbarItems.ExpandAll,
+                    ej.TreeGrid.ToolbarItems.CollapseAll,
+                    ej.TreeGrid.ToolbarItems.Search
+                    ]
+                },
+                load: "load",
+                recordClick: "recordClick",
+                recordDoubleClick: "recordDoubleClick",
+                toolbarClick: "toolbarClick",
+                rowDrag: "rowDrag",
+                rowDragStart: "rowDragStart",
+                rowDragStop: "rowDragStop",
+                rowDropActionBegin: "rowDropActionBegin",
+                columnResizeStart: "columnResizeStart",
+                columnResizeEnd: "columnResizeEnd",
+                columnResized: "columnResized",
+                columnDragStart: "columnDragStart",
+                columnDrag: "columnDrag",
+                columnDrop: "columnDrop",
+                contextMenuOpen: "contextMenuOpen",
+                create: "create",
+                actionBegin: "actionBegin",
+                actionComplete: "actionComplete",
+                queryCellInfo: "queryCellInfo",
+                beginEdit: "beginEdit",
+                endEdit: "endEdit",
+                rowDataBound: "rowDataBound",
+                rowSelecting: "rowSelecting",
+                rowSelected: "rowSelected",
+                expanding: "expanding",
+                expanded: "expanded",
+                collapsing: "collapsing",
+                collapsed: "collapsed",
+                columns: [
+                    { field: "TaskID", headerText: "Task Id", width: window.theme == "material" ? 90 : 45, editType: "numericedit" },
+                    { field: "TaskName", headerText: "Task Name" },
+                    { field: "StartDate", headerText: "Start Date", editType: "datepicker", format: dateFormat },
+                    { field: "EndDate", headerText: "End Date", editType: "datepicker", format: dateFormat },
+                    { field: "Progress", headerText: "Progress", editType: "numericedit"}
+                ]
+
+            });
+
+            $("#selectControls").ejDropDownList(
+               {
+                   cssClass: "metroblue",
+                   popupShown: "adjustpopupposition",
+                   showCheckbox: true,
+                   checkAll: true,
+                   change: "evtpropscheckedevent"
+               });
+        });
+
+
+        function evtpropscheckedevent(args) {
+            var treegridObj = $("#TreeGridContainer").data("ejTreeGrid");
+            if (args.isChecked && treegridObj != undefined) {
+                switch (args.value) {
+                    case "load": treegridObj.option(args.value, "load"); break;
+                    case "recordClick": treegridObj.option(args.value, "recordClick"); break;
+                    case "recordDoubleClick": treegridObj.option(args.value, "recordDoubleClick"); break;
+                    case "toolbarClick": treegridObj.option(args.value, "toolbarClick"); break;
+                    case "rowDrag": treegridObj.option(args.value, "rowDrag"); break;
+                    case "rowDragStart": treegridObj.option(args.value, "rowDragStart"); break;
+                    case "rowDragStop": treegridObj.option(args.value, "rowDragStop"); break;
+                    case "rowDropActionBegin": treegridObj.option(args.value, "rowDropActionBegin"); break;
+                    case "columnResizeStart": treegridObj.option(args.value, "columnResizeStart"); break;
+                    case "columnResizeEnd": treegridObj.option(args.value, "columnResizeEnd"); break;
+                    case "columnResized": treegridObj.option(args.value, "columnResized"); break;
+                    case "columnDragStart": treegridObj.option(args.value, "columnDragStart"); break;
+                    case "columnDrag": treegridObj.option(args.value, "columnDrag"); break;
+                    case "columnDrop": treegridObj.option(args.value, "columnDrop"); break;
+                    case "contextMenuOpen": treegridObj.option(args.value, "contextMenuOpen"); break;
+                    case "create": treegridObj.option(args.value, "create"); break;
+                    case "actionBegin": treegridObj.option(args.value, "actionBegin"); break;
+                    case "actionComplete": treegridObj.option(args.value, "actionComplete"); break;
+                    case "queryCellInfo": treegridObj.option(args.value, "queryCellInfo"); break;
+                    case "beginEdit": treegridObj.option(args.value, "beginEdit"); break;
+                    case "endEdit": treegridObj.option(args.value, "endEdit"); break;
+                    case "rowDataBound": treegridObj.option(args.value, "rowDataBound"); break;
+                    case "rowSelecting": treegridObj.option(args.value, "rowSelecting"); break;
+                    case "rowSelected": treegridObj.option(args.value, "rowSelected"); break;
+                    case "expanding": treegridObj.option(args.value, "expanding"); break;
+                    case "expanded": treegridObj.option(args.value, "expanded"); break;
+                    case "collapsing": treegridObj.option(args.value, "collapsing"); break;
+                    case "collapsed": treegridObj.option(args.value, "collapsed"); break;
+
+                }
+            }
+            else treegridObj.option(args.value, "");
+        }
+
+        function load(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>load</span> event called");
+            if (window.theme == "material")
+                this.treeIndentLevelWidth = 16;
+        }
+        function recordClick(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>recordClick</span> event called");
+            
+        }
+        function recordDoubleClick(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>recordDoubleClick</span> event called");
+
+        }
+        function toolbarClick(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>toolbarClick</span> event called");
+
+        }
+        function rowDrag(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>rowDrag</span> event called");
+           
+        }
+        function rowDragStart(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>rowDragStart</span> event called");
+
+        }
+        function rowDragStop(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>rowDragStop</span> event called");
+
+        }
+        function rowDropActionBegin(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>rowDropActionBegin</span> event called");
+
+        }
+        function columnResizeStart(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>columnResizeStart</span> event called");
+
+        }
+        function columnResizeEnd(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>columnResizeEnd</span> event called");
+
+        }
+        function columnResized(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>columnResized</span> event called");
+
+        }
+        function columnDragStart(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>columnDragStart</span> event called");
+
+        }
+        function columnDrag(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>columnDrag</span> event called");
+
+        }
+        function columnDrop(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>columnDrop</span> event called");
+
+        }
+        function contextMenuOpen(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>contextMenuOpen</span> event called");
+
+        }
+        function create(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>create</span> event called");
+        }
+        function actionBegin(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>actionBegin</span> event called");
+        }
+        function actionComplete(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>actionComplete</span> event called");
+        }
+        function beginEdit(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>beginEdit</span> event called");
+        }
+        function endEdit(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>endEdit</span> event called");
+        }
+        function queryCellInfo(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>queryCellInfo</span> event called");
+        }
+        function rowDataBound(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>rowDataBound</span> event called");
+        }
+        function rowSelecting(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>rowSelecting</span> event called");
+        }
+        function rowSelected(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>rowSelected</span> event called");
+        }
+        function expanding(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>expanding</span> event called");
+        }
+        function expanded(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>expanded</span> event called");
+        }
+        function collapsing(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>collapsing</span> event called");
+        }
+        function collapsed(args) {
+            jQuery.addEventLog("Treegrid <span class='eventTitle'>collapsed</span> event called");
+        }
+
+        function onClear() {
+            $("#EventLog").html("");
+        }
+
+    </script>
+</body>
+</html>

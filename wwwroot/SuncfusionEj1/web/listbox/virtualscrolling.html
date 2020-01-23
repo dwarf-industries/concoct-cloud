@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : ListBox - Virtual scrolling</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="listbox frame">
+                    <div class="ctrllabel">Select a customer</div>
+                    <ul id="selectcustomer"></ul>
+                </div>
+            </div>
+
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-6">Select mode</div>
+                        <div class="col-md-6">
+                            <input type="text" id="dropdwn" />
+                            <div id="dropdown">
+                                <ul>
+                                    <li value="disablevirtual">Normal Mode</li>
+                                    <li value="enablevirtual">Continuous Mode</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        jQuery(function ($) {
+
+            //$("#syncfusionProducts").ejListBox({ targetID: "syncfusionProducts", width: 40, height: 40 });
+            var dataManger = ej.DataManager({
+                url: window.baseurl + "Wcf/Northwind.svc/", crossDomain: true
+            });
+            // Query creation
+            var query = ej.Query()
+                   .from("Customers");
+
+            $('#selectcustomer').ejListBox({
+                dataSource: dataManger,
+                fields: { text: "CustomerID" },
+                itemRequestCount: 10,
+                query: query, allowVirtualScrolling: true
+            });
+            $('#dropdwn').ejDropDownList({
+                targetID: "dropdown",
+                width: "120px", "change": "onValueChange", selectedItemIndex: 0
+            });
+            $("#sampleProperties").ejPropertiesPanel();
+
+        });
+		
+        function onValueChange(args) {
+            var target = $('#selectcustomer').data("ejListBox");
+            //target.destroy();
+            var dataManger = ej.DataManager({
+                url: window.baseurl + "Wcf/Northwind.svc/", crossDomain: true
+            });
+            // Query creation
+            var query = ej.Query()
+                   .from("Customers");
+            if (args.value == "enablevirtual") {
+                $("#selectcustomer").ejListBox({
+                    dataSource: dataManger,
+                    fields: { text: "CustomerID" },
+                    query: query, virtualScrollMode: ej.VirtualScrollMode.Continuous, allowVirtualScrolling: true
+
+                });
+            }
+            if (args.value == "disablevirtual") {
+                $("#selectcustomer").ejListBox({
+                    dataSource: dataManger,
+                    fields: { text: "CustomerID" },
+                    query: query, allowVirtualScrolling: true
+                });
+            }
+        }
+    </script>
+    <style type="text/css" class="cssStyles">
+        .e-ddl-popup {
+            margin: 0 auto;
+        }
+
+        .ctrllabel {
+            font-weight: 600;
+            padding-bottom: 12px;
+        }
+    </style>
+</body>
+</html>

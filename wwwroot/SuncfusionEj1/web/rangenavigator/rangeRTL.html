@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+        <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div style="width:96% !important;position: relative;">
+                    <div id="scrollcontent" style="position: relative; left: 36px;"></div>
+                </div>
+                <div id="container"></div>
+
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" language="javascript">
+        var currentDate = new Date(2011, 0, 1);
+        window.chartData = [];
+        $(function () {
+
+            $("#container").ejChart(
+                        {
+
+                            primaryXAxis:
+                               {
+                                   majorGridLines: { visible: false },
+                                   valueType: 'datetime',
+                                   labelFormat: "MMM dd",
+                                   isInversed: true
+
+                               },
+
+                            primaryYAxis:
+                           {
+                               labelFormat: '${value}',
+                               range: { min: 60, max: 160, interval: 20 }
+                           },
+                            crosshair: {
+                                visible: true,
+                                type: 'trackball',
+                                marker:
+                               {
+                                   shape: 'circle',
+
+                                   size:
+                                   {
+                                       height: 9, width: 9
+                                   },
+                                   visible: true,
+                                   border: { width: 1 }
+                               },
+                                line: {
+                                    color: 'transparent'
+                                }
+                            },
+
+                            series: [{
+                                type: 'line',
+                                name: 'Product X',
+                                enableAnimation: true,
+                                tooltip: { format: "#point.x#  : #point.y#", visible: true },
+                                border: { width: 2 },
+                                tooltip:
+                                        {
+                                            format: "#point.x#  : ej.format(#point.y#,n2)"
+                                        },
+                            },
+                                {
+                                    type: 'line',
+                                    name: 'Product Y',
+                                    enableAnimation: true,
+                                    tooltip: { format: "#point.x#  : #point.y#", visible: true },
+                                    style: { borderWidth: 2 },
+                                    tooltip:
+                                        {
+                                            format: "#point.x#  : ej.format(#point.y#,n2)"
+                                        },
+                                }
+
+                            ],
+                            load: 'onchartload',
+                            size: { height: "400" },
+                            legend: { visible: true }
+                        });
+
+
+
+            $("#scrollcontent").ejRangeNavigator({
+
+                enableDeferredUpdate: true,
+                padding: "15",
+                allowSnapping: true,
+                selectedRangeSettings: {
+                    start: "2010/5/1", end: "2011/10/1"
+                },
+                isResponsive: true,
+                tooltipSettings: {
+                    visible: true, labelFormat: "MMM/dd/yyyy", backgroundColor: "gray", tooltipDisplayMode: "ondemand",
+
+                    font: {
+                        color: 'white',
+                        family: 'Segoe UI',
+                        style: 'Normal',
+                        size: '12px',
+                        opacity: 1,
+                        weight: 'regular'
+                    }
+
+                },
+
+                series: [
+                                {
+
+                                    name: 'Product A',
+                                    enableAnimation: false,
+                                    type: 'line',
+                                    dataSource: data.Open, xName: "XValue", yName: "YValue",
+                                    opacity: 0.5, interior: '#69D2E7',
+                                    border: { color: 'transparent', width: 2 }
+
+                                }
+
+                ],
+
+                seriesSettings: {
+                    type: 'column', enableAnimation: true,
+                },
+
+
+                enableRTL: true,
+
+                loaded: loadingtheme,
+                rangeChanged: onchartloaded
+
+
+            });
+
+
+        });
+
+        var data;
+        function onchartload(sender) {
+            loadTheme(sender);
+            data = GetData();
+            sender.model.series[0].dataSource = data.Open;
+            sender.model.series[0].xName = "XValue";
+            sender.model.series[0].yName = "YValue";
+            sender.model.series[1].dataSource = data.Close;
+            sender.model.series[1].xName = "XValue";
+            sender.model.series[1].yName = "YValue";
+        }
+        function loadingtheme(sender) {
+            var theme = window.themestyle + window.themecolor + window.themevarient;
+            if (theme) {
+                switch (theme) {
+                    case "flatazurelight":
+                        theme = "azurelight";
+                        break;
+                    case "flatlimelight":
+                        theme = "limelight";
+                        break;
+                    case "flatsaffronlight":
+                        theme = "saffronlight";
+						break;
+					case "gradientazurelight":
+						 theme = "gradientazure";
+						break;
+					case "gradientlimelight":
+						 theme = "gradientlime";
+						break;
+					case "gradientsaffronlight":
+						 theme = "gradientsaffron";
+						break;
+					case "flatazuredark":
+						 theme = "azuredark";
+						break;
+					case "flatlimedark":
+						 theme = "limedark";
+						break;
+					case "flatsaffrondark":
+						 theme = "saffrondark";
+						break;
+					case "gradientazuredark":
+						 theme = "gradientazuredark";
+						break;
+					case "gradientlimedark":
+						 theme = "gradientlimedark";
+						break;
+					case "gradientsaffrondark":
+						 theme = "gradientsaffrondark";
+						break;
+					case "flathigh-contrast-01dark":
+						 theme = "highcontrast01";
+						 break;
+					case "flathigh-contrast-02dark":
+						 theme = "highcontrast02";
+						 break;
+					case "flatmateriallight":
+						 theme = "material";
+						 break;
+					case "flatoffice-365light":
+						 theme = "office";
+						 break;
+                    default:
+                        theme = "flatlight";
+                        break;
+                }
+                sender.model.theme = theme;
+            }
+        }
+
+        function onchartloaded(sender) {
+            var chartobj = $("#container").data("ejChart");
+            if (chartobj != null) {
+                chartobj.model.primaryXAxis.zoomPosition = sender.zoomPosition;
+                chartobj.model.primaryXAxis.zoomFactor = sender.zoomFactor;
+            }
+            $("#container").ejChart("redraw");
+        }
+
+        function GetData() {
+            var series1 = [];
+            var series2 = [];
+            var value = 100;
+            var value1 = 120;
+            for (var i = 1; i < 730; i++) {
+
+                if (Math.random() > .5) {
+                    value += Math.random();
+                    value1 += Math.random();
+                } else {
+                    value -= Math.random();
+                    value1 -= Math.random();
+                }
+                var point1 = { XValue: new Date(2010, 0, i), YValue: value };
+                var point2 = { XValue: new Date(2010, 0, i), YValue: value1 };
+                series1.push(point1);
+                series2.push(point2);
+            }
+
+            data = { Open: series1, Close: series2 };
+            return data;
+        }
+
+    </script>
+</body>
+
+</html>

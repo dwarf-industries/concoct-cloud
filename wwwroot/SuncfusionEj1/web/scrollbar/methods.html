@@ -1,0 +1,236 @@
+﻿<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Scrollbar API's</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+           <div class="cols-sample-area">
+                <div class="control">
+                    <div id="scrollcontent">
+                        <div>
+                            <div class="sampleContent">
+                                <h3 style="font-size: 20px;">MVC</h3>
+                                <div>
+                                    <p>
+                                        Model–view–controller (MVC) is a software architecture pattern which separates the
+                                        representation of information from the user's interaction with it.
+                                        The model consists of application data, business rules, logic, and functions. A view can be any
+                                        output representation of data, such as a chart or a diagram. Multiple views of the same data
+                                        are possible, such as a bar chart for management and a tabular view for accountants.
+                                        The controller mediates input, converting it to commands for the model or view.The central
+                                        ideas behind MVC are code reusability and n addition to dividing the application into three
+                                        kinds of components, the MVC design defines the interactions between them.
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            <b>A controller </b>can send commands to its associated view to change the view's presentation of the model (e.g., by scrolling through a document).
+                                            It can also send commands to the model to update the model's state (e.g., editing a document).
+                                        </li>
+                                        <li>
+                                            <b>A model</b> notifies its associated views and controllers when there has been a change in its state. This notification allows the views to produce updated output, and the controllers to change the available set of commands.
+                                            A passive implementation of MVC omits these notifications, because the application does not require them or the software platform does not support them.
+                                        </li>
+                                        <li>
+                                            <b>A view</b> requests from the model the information that it needs to generate an output representation to the user.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            Enable / Disable
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="enabled" class="e-togglebtn" />
+                            <label for="enabled">Toggle</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            ScrollX
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" id="ScrollX" class="input ejinputtext" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            ScrollY
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" id="ScrollY" class="input ejinputtext" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            Destroy
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="destroy" class="e-togglebtn" />
+                            <label for="destroy">Toggle</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            AutoHide
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="autohide" class="e-togglebtn" />
+                            <label for="autohide">Toggle</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var scrollobj;  
+        $(function () {
+		    $("#sampleProperties").ejPropertiesPanel();
+            $("#ScrollX").ejNumericTextbox({ showSpinButton: false, minValue: 0, width: "95px", watermarkText: "scrollX", change: "setScrollX" });
+            $("#ScrollY").ejNumericTextbox({ showSpinButton: false, minValue: 0, width: "95px", watermarkText: "scrollY", change: "setScrollY" });            
+            $("#scrollcontent").ejScroller({ height: "300px", width: "100%",destroy:"destroy" });
+            scrollobj = $("#scrollcontent").data("ejScroller");
+            $(window).bind('resize', onResizeEvent);
+        });
+        function destroy(args){
+            $(window).unbind('resize', onResizeEvent);
+        }
+        function onResizeEvent() {
+            if ($("#scrollcontent").data("ejScroller"))
+                scrollobj.refresh();
+        }
+        function setScrollX(args) {
+            scrollobj.scrollX(args.value);
+        }
+        function setScrollY(args) {
+            scrollobj.scrollY(args.value);
+        }
+        $("#enabled").ejToggleButton({
+            change: "onEnabled", width: "95px", activeText: "True",
+            defaultText: "False",
+        });
+        $("#destroy").ejToggleButton({
+            change: "onDestroyRestore", width: "95px", activeText: "Restore",
+            defaultText: "Destroy",
+        });
+        $("#autohide").ejToggleButton({
+            change: "onAutoHide", width: "95px", activeText: "False",
+            defaultText: "True",
+        });
+        function onEnabled(args) {
+            if (args.isChecked) {
+                scrollobj.disable();
+            }
+            else {
+                scrollobj.enable();
+            }
+        }
+        function onDestroyRestore(args) {
+            if (args.isChecked) {
+                scrollobj.destroy();
+                enableOrDisableButtons(false);
+            }
+            else {
+                $("#scrollcontent").ejScroller({ height: "300px", width: "100%" });
+                scrollobj = $("#scrollcontent").data("ejScroller");
+                enableOrDisableButtons(true);
+            }
+        }
+        function enableOrDisableButtons(argsVal) {
+            if (argsVal) {
+                $(".cols-prop-area input.e-togglebutton[id!='destroy']").ejToggleButton("enable");
+                $(".cols-prop-area input.e-numerictextbox").ejNumericTextbox("enable");
+            }
+            else {
+                $(".cols-prop-area input.e-togglebutton[id!='destroy']").ejToggleButton("disable");
+                $(".cols-prop-area input.e-numerictextbox").ejNumericTextbox("disable");
+            }
+        }
+        function onAutoHide(args) {
+            if (args.isChecked) {
+                scrollobj.option("autoHide", true);
+            }
+            else {
+                scrollobj.option("autoHide", false);
+            }
+        }
+    </script>
+    <style type="text/css" class="cssStyles">
+        .control {
+            border: 1px solid #bbbcbb;
+            color: gray;
+           width: 65%;
+            height: 100%;
+        }
+
+        .sampleContent {
+            width: 700px;
+            padding: 15px;
+        }
+
+        .prop-grid .row .e-btn.e-select {
+            width: 95px;
+        }
+
+        .row #hexCode {
+            width: 95px;
+        }
+
+        .prop-grid .row .e-widget.e-numeric {
+            width: 95px;
+        }
+
+        .input.ejinputtext {
+            width: 93px;
+            height: 26px;
+        }
+
+        .e-btn {
+            height: 30px;
+        }
+
+        .e-prop.e-bootstrap .input.ejinputtext {
+            height: 30px;
+        }
+
+        input::-webkit-input-placeholder {
+            opacity: 0.5;
+            color: grey;
+            font-style: italic;
+        }
+
+        :-ms-input-placeholder {
+            opacity: 0.5;
+            color: grey;
+            font-style: italic;
+        }
+        @media (max-width: 700px) {
+            .control{
+               width:85%;
+            }
+        }
+    </style>
+</body>
+</html>

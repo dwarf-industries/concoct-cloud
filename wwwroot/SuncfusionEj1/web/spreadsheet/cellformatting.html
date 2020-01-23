@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Cell Formatting</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <link href="../content/spreadsheet-css/ej.spreadsheet.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    	<script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/jquery.validate.min.js"></script>
+    <script src="../scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+	<script src="../scripts/xljsondata.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="e-container-spreadsheet">
+                    <div id="Spreadsheet"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+        $("#Spreadsheet").ejSpreadsheet({
+            allowFormulaBar: false,
+            showRibbon: false,
+            sheets: [{ rangeSettings: [{ dataSource: window.cellFormat, showHeader: false }] }],
+            loadComplete: "loadComplete"
+        });
+    });
+    function loadComplete(args) {
+        var xlFormat = this.XLFormat;
+        this.setWidthToColumns([150, 140, 130, 168, 110, 110, 127, 130]);
+        xlFormat.format({ "style": { "font-weight": "bold", "color": "#4857a6" } }, "A1:A19");
+        xlFormat.format({ "style": { "font-family": "Arial" } }, "B1:B13");
+        xlFormat.format({ "style": { "font-family": "Times New Roman" } }, "C1:C13");
+        xlFormat.format({ "style": { "font-family": "Tahoma" } }, "D1:D13");
+        xlFormat.format({ "style": { "font-family": "Verdana" } }, "E1:E13");
+        xlFormat.format({ "style": { "font-family": "Calibri" } }, "F1:F13");
+        xlFormat.format({ "style": { "font-weight": "bold" } }, "B3");
+        xlFormat.format({ "style": { "font-style": "italic" } }, "C3");
+        xlFormat.format({ "style": { "color": "#ec2024" } }, "B7");
+        xlFormat.format({ "style": { "background-color": "#FFEB9C" } }, "C7");
+        xlFormat.format({ "style": { "color": "#006100", "background-color": "#C6EFCE" } }, "D7");
+        xlFormat.format({ "style": { "text-decoration": "underline" } }, "B9");
+        xlFormat.format({ "style": { "text-decoration": "line-through" } }, "C9");
+        xlFormat.format({ "style": { "text-align": "left" } }, "B11");
+        xlFormat.format({ "style": { "text-align": "center" } }, "C11");
+        xlFormat.format({ "style": { "text-align": "right" } }, "D11");
+        xlFormat.format({ "style": { "vertical-align": "top" } }, "B13");
+        xlFormat.format({ "style": { "vertical-align": "middle" } }, "C13");
+        xlFormat.format({ "style": { "vertical-align": "bottom" } }, "D13");
+        xlFormat.format({ "style": { "font-size": "8pt" } }, "B5");
+        xlFormat.format({ "style": { "font-size": "11pt" } }, "C5");
+        xlFormat.format({ "style": { "font-size": "12pt" } }, "D5");
+        xlFormat.format({ "style": { "font-size": "14pt" } }, "E5");
+        xlFormat.format({ "style": { "font-size": "16pt" } }, "F5");
+        xlFormat.addNewCustomStyle("Arial", { style: { "font-family": "Arial" } });
+        xlFormat.addNewCustomStyle("Bold", { style: { "font-weight": "Bold" } });
+        xlFormat.addNewCustomStyle("8pt", { style: { "font-size": "8pt" } });
+        xlFormat.addNewCustomStyle("Font Color", { style: { color: "#ec2024" } });
+        xlFormat.addNewCustomStyle("Underline", { style: { "text-decoration": "underline" } });
+        xlFormat.applyCustomCellStyle("Arial", "B17");
+        xlFormat.applyCustomCellStyle("Bold", "C17");
+        xlFormat.applyCustomCellStyle("8pt", "D17");
+        xlFormat.applyCustomCellStyle("Font Color", "E17");
+        xlFormat.applyCustomCellStyle("Underline", "F17");
+        xlFormat.addNewCustomStyle("currency", { NumFormat: { decimalPlaces: 4, thousandSeparator : false, type : "currency"},
+            style: { color: "#333333", "font-family": "Calibri", "font-size": "11pt", "font-style": "normal", "font-weight": "normal", "text-decoration": "none" }
+        });
+        xlFormat.addNewCustomStyle("percentage", {
+            NumFormat: { decimalPlaces: 4, thousandSeparator: false, type: "percentage" },
+            style: { color: "#333333", "font-family": "Calibri", "font-size": "11pt", "font-style": "normal", "font-weight": "normal", "text-decoration": "none" }
+        });
+        xlFormat.addNewCustomStyle("longdate", {
+            NumFormat: { type: "longdate" },
+            style: { color: "#333333", "font-family": "Calibri", "font-size": "11pt", "font-style": "normal", "font-weight": "normal", "text-decoration": "none" }
+        });
+        xlFormat.addNewCustomStyle("shortdate", {
+            NumFormat: {type: "shortdate" },
+            style: { color: "#333333", "font-family": "Calibri", "font-size": "11pt", "font-style": "normal", "font-weight": "normal", "text-decoration": "none" }
+        });
+        xlFormat.addNewCustomStyle("time", {
+            NumFormat: {type: "time" },
+            style: { color: "#333333", "font-family": "Calibri", "font-size": "11pt", "font-style": "normal", "font-weight": "normal", "text-decoration": "none" }
+        });
+        xlFormat.applyCustomCellStyle("currency", "B19");
+        xlFormat.applyCustomCellStyle("percentage", "C19");
+        xlFormat.applyCustomCellStyle("shortdate", "D19");
+        xlFormat.applyCustomCellStyle("longdate", "E19");
+        xlFormat.applyCustomCellStyle("time", "F19");
+        this.XLResize.setRowHeight(12, 50);
+        this.performSelection("A1");
+    }
+    </script>
+</body>
+</html>

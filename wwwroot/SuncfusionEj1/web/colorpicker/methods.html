@@ -1,0 +1,256 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : ColorPicker Methods</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" style="min-height: 450px">
+                <div class="frame">
+                    <div class="color_control">
+                        <label class="fadetext">Choose a color</label>
+                        <div class="element"><input type="text" id="picker" /></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            Value (prefix with '#')
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" id="color-value" class="input ejinputtext" placeholder="Value" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            Preview
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="preview" class="e-togglebtn" />
+                            <label for="preview">Toggle</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            Opacity
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="opacity" class="e-togglebtn" />
+                            <label for="opacity">Toggle</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            Opacity Value
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" id="opacityValue" class="input" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            Show Recent Color
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="recentColor" class="e-togglebtn" />
+                            <label for="recentColor">Toggle</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            Enable
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="enabled" class="e-togglebtn" />
+                            <label for="enabled">Toggle</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            Show Switcher
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="switcher" class="e-togglebtn" />
+                            <label for="switcher">Toggle</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            Show Buttons
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="showButton" class="e-togglebtn" />
+                            <label for="showButton">Toggle</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            Get HexCode
+                        </div>
+                        <div class="col-md-6">
+                            <input type="button" class="e-btn e-select" id="hexCode" value="Value" onclick="getHexCode()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var ColorObj, sizeObj, numericObj;
+        jQuery(function ($) {
+            $("#picker").ejColorPicker({ value: "#278787" });
+            $("#opacityValue").ejNumericTextbox({ minValue: 0, maxValue: 100, showSpinButton: false, width: "105px", focusOut: "onOpacityChange", watermarkText: "Opacity Value" });
+            numericObj = $("#opacityValue").data('ejNumericTextbox');
+            ColorObj = $("#picker").data('ejColorPicker');
+        });
+        $("#enabled").ejToggleButton({
+            click: "onEnabled", width: "105px", activeText: "True",
+            defaultText: "False",
+        });
+        $("#recentColor").ejToggleButton({
+            click: "onRecentColor", width: "105px", activeText: "False",
+            defaultText: "True",
+        });
+        $("#opacity").ejToggleButton({
+            click: "onEnableOpacity", width: "105px", activeText: "Enable",
+            defaultText: "Disable",
+        });
+        $("#preview").ejToggleButton({
+            click: "onPreview", width: "105px", activeText: "True",
+            defaultText: "False",
+        });
+        $("#switcher").ejToggleButton({
+            click: "onSwitcher", width: "105px", activeText: "True",
+            defaultText: "False",
+        });
+        $("#showButton").ejToggleButton({
+            click: "onShowButton", width: "105px", activeText: "True",
+            defaultText: "False",
+        });
+        $("#color-value").change(function () {
+            if ($("#color-value").val() !== "") {
+                if ($("#color-value").val().length == 4 || $("#color-value").val().length == 7)
+                    ColorObj.option('value', $("#color-value").val());
+            }
+        });
+        $("#color-value").keypress(function (event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                if ($("#color-value").val() !== "") {
+                    if ($("#color-value").val().length == 4 || $("#color-value").val().length == 7)
+                        ColorObj.option('value', $("#color-value").val());
+                }
+            }
+        });
+        $("#opacityValue").keypress(function (event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13')
+                ColorObj.option('opacityValue', $("#opacityValue").val());
+        });
+        function onSwitcher(args) {
+            if (args.isChecked) ColorObj.option('showSwitcher', false);
+            else ColorObj.option('showSwitcher', true);
+        }
+        function onShowButton(args) {
+            if (args.isChecked) ColorObj.option('showApplyCancel', false);
+            else ColorObj.option('showApplyCancel', true);
+        }
+        function onOpacityChange(args) {
+            args.value != "" && ColorObj.option('opacityValue', args.value);
+        }
+        function onEnabled(args) {
+            if (args.isChecked) {
+                ColorObj.option('enabled', false);
+                $(".fadetext").addClass("e-disable");
+            }
+            else {
+                ColorObj.option('enabled', true);
+                $(".fadetext").removeClass("e-disable");
+            }
+        }
+        function onRecentColor(args) {
+            if (args.isChecked) ColorObj.option('showRecentColors', true);
+            else ColorObj.option('showRecentColors', false);
+        }
+        function onEnableOpacity(args) {
+            if (args.isChecked) {
+                ColorObj.option('enableOpacity', false);
+                numericObj.disable();
+            }
+            else {
+                ColorObj.option('enableOpacity', true);
+                numericObj.enable();
+            }
+        }
+        function onPreview(args) {
+            if (args.isChecked) ColorObj.option('showPreview', false);
+            else ColorObj.option('showPreview', true);
+        }
+        function getHexCode() {
+            setTimeout(function () { alert("The Colorpicker value : " + ColorObj.getValue()); }, 250);
+        }
+        $("#sampleProperties").ejPropertiesPanel();
+    </script>
+    <style>
+        .color_control {
+            margin-left: 40%;
+        }
+
+        .prop-grid .row .e-btn.e-select {
+            width: 105px;
+        }
+
+        .row #hexCode {
+            width: 105px;
+        }
+
+        .prop-grid .row .e-widget.e-numeric {
+            width: 105px;
+        }
+
+        .input.ejinputtext {
+            text-indent: 10px;
+            width: 103px;
+            height: 26px;
+        }
+
+        .e-btn {
+            height: 30px;
+        }
+
+        .e-prop.e-bootstrap .input.ejinputtext {
+            height: 30px;
+        }
+
+        input::-webkit-input-placeholder {
+            opacity: 0.5;
+            color: grey;
+            font-style: italic;
+        }
+
+        :-ms-input-placeholder {
+            opacity: 0.5;
+            color: grey;
+            font-style: italic;
+        }
+    </style>
+</body>
+</html>

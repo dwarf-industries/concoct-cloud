@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Essential JS 1 : TreeGrid</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+     <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsontreegriddata.js"></script>
+</head>
+
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="TreeGridContainer" style="width: 100%; height: 400px;"></div>
+            </div>
+            <div id="sampleProperties">
+                <style>
+                    .colwidth {
+                        margin-left: 10px;
+                    }
+                </style>
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Select All
+                        </div>
+                        <div class="col-md-3 ">
+                            <div class="colwidth"><input type="checkbox" id="selectAll" checked="checked" /></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Hierarchy Selection
+                        </div>
+                        <div class="col-md-3 ">
+                            <div class="colwidth"><input type="checkbox" id="hierarchySelection" checked="checked" /></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Checkbox Column
+                        </div>
+                        <div class="col-md-3 ">
+                            <div class="colwidth"><input type="text" id="checkboxColumn" /></div>
+                            <div id="columnList">
+                                <ul>
+                                    <li>Default</li>
+                                    <li>Task Id</li>
+                                    <li>Task Name</li>
+                                    <li>Start Date</li>
+                                    <li>End Date</li>
+                                    <li>Duration</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        $(function () {
+            var dateFormat = "{0:" + ej.preferredCulture()["calendars"]["standard"]["patterns"]["d"] + "}";
+            $("#TreeGridContainer").ejTreeGrid({
+                dataSource: sampleData,
+                childMapping: "subtasks",
+                treeColumnIndex: 1,
+                selectionSettings: {
+                    selectionType: ej.TreeGrid.SelectionType.Checkbox,
+                    selectionMode: ej.TreeGrid.SelectionMode.Row,
+                    enableSelectAll: true,
+                    enableHierarchySelection: true
+                },
+                allowColumnResize: true,
+                isResponsive: true,
+                columns: [
+                    { field: "taskID", headerText: "Task Id", width: window.theme == "material" ? 120 : 75 },
+                    { field: "taskName", headerText: "Task Name", showCheckbox: true },
+                    { field: "startDate", headerText: "Start Date", format: dateFormat },
+                    { field: "endDate", headerText: "End Date", format: dateFormat },
+                    { field: "duration", headerText: "Duration" }
+                ],
+                rowHeight: window.theme == "material" ? 48 : window.theme == "office-365" ? 36 : 30,
+                load: function () {
+                    if (window.theme == "material") {
+                        this.treeIndentLevelWidth = 16;
+                    }
+                },
+                create: function () {
+                    if (window.theme == "material") {
+                        this._addCheckboxColumn.width = 70;
+                    }
+                }
+            });
+            $('#checkboxColumn').ejDropDownList({
+                targetID: "columnList",
+                watermarkText: "Task Name",
+                width: "100",
+                change: "checkboxselection",
+            });
+            $('#selectAll').ejCheckBox({
+                change: "selectAll",
+            });
+            $('#hierarchySelection').ejCheckBox({
+                change: "recursive",
+            });
+            $("#sampleProperties").ejPropertiesPanel();
+        });
+
+        
+        function selectAll(args) {
+            var obj = $('#TreeGridContainer').data("ejTreeGrid"),
+                selectionSettings;
+            selectionSettings = { enableSelectAll: args.isChecked, };
+            obj.option("selectionSettings", selectionSettings);
+        }
+        function recursive(args) {
+            var obj = $('#TreeGridContainer').data("ejTreeGrid"),
+                selectionSettings;
+            selectionSettings = { enableHierarchySelection: args.isChecked };
+            obj.option("selectionSettings", selectionSettings);
+        }
+        function checkboxselection(args) {
+            var obj = $('#TreeGridContainer').data("ejTreeGrid");
+
+            if (args.value == "Default") {
+                obj.updateCheckboxColumn();
+            }
+            else {
+                var column = obj.getColumnByHeaderText(args.value);
+                obj.updateCheckboxColumn(column.field);
+            }
+        }
+    </script>
+</body>
+
+</html>

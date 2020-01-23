@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Heatmap-Cell Binding</title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div style="border-width: 2px; opacity: 0.7; width: 290px; text-align: center;">
+                    <label style="color: Black; font-size: 22px; height: 25px; font-weight: Normal;">Product Sales by Year</label><br />
+                    <label style="color: Black; font-size: 22px; margin-top: -2px; height: 25px; font-weight: Normal;">(In Percentage)</label>
+                </div>
+                <br />
+                <div style="width: 100%; margin: 0 auto; text-align: center;">
+                    <div id="heatmap"></div>
+                    <div style="height: 15px; width: 100%;"></div>
+                    <div id="heatmap_legend" style=""></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        $(function () {
+            var colorMappingCollection = [
+                { value: 0, color: "#8ec8f8", label: { text: "0" } },
+                { value: 100, color: "#0d47a1", label: { text: "100" } }
+
+            ];
+            var columns = ["Vegie-spread", "Tofuaa", "Alice Mutton", "Konbu", "Fløtemysost"]
+
+            var itemSource = [];
+            for (var i = 0; i < columns.length; i++) {
+                for (var j = 0; j < 6; j++) {
+                    var value = Math.floor((Math.random() * 100) + 1);
+                    itemSource.push({ ProductName: columns[i], Year: "Y" + (2011 + j), Value: value })
+                }
+            }
+
+            var heatmap = $("#heatmap").ejHeatMap({
+                colorMappingCollection: colorMappingCollection,
+                isResponsive: true,
+                width: "100%",
+                itemsSource: itemSource,
+                itemsMapping: {
+                    column: { "propertyName": "ProductName", "displayName": "Product Name" },
+                    row: { "propertyName": "Year", "displayName": "Year", },
+                    value: { "propertyName": "Value" },
+                    columnMapping: [
+                        { "propertyName": columns[0], "displayName": columns[0] },
+                        { "propertyName": columns[1], "displayName": columns[1] },
+                        { "propertyName": columns[2], "displayName": columns[2] },
+                        { "propertyName": columns[3], "displayName": columns[3] },
+                        { "propertyName": columns[4], "displayName": columns[4] },
+                        { "propertyName": columns[5], "displayName": columns[5] },
+                    ],
+                    headerMapping: { "propertyName": "Year", "displayName": "Year", columnStyle: { width: 105, textAlign: "right" } },
+                },
+                legendCollection: ["heatmap_legend"]
+            });
+            var heatmaplegend = $("#heatmap_legend").ejHeatMapLegend({
+                colorMappingCollection: colorMappingCollection,
+                height: "50px",
+                width: "75%",
+                isResponsive: true
+            });
+        });
+
+    </script>
+    <style>
+        #heatmap_legend {
+            margin-left: 100px;
+        }
+
+        .row .cols-sample-area {
+            min-height: 250px;
+        }
+
+        @media (min-width: 1024px) and (max-width: 1920px) {
+
+            .row .cols-sample-area {
+                width: 98.956%;
+                *width: 72.956%;
+            }
+        }
+    </style>
+
+</body>
+</html>

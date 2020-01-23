@@ -1,0 +1,265 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Editing</title>
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <link href="../images/diagram/editing/editing.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="toolbarItem" class="e-toolbar e-js e-widget e-toolbarspan" style="background-color: #ebeced; border-bottom-color: #bbbbbb; border-top-style: none; border-left-style: none; border-right-style: none">
+        <ul id="toolblock3" class="toolblock3rightBorderVisible">
+            <li id="insertData" title="Insert">
+                <div class="sficon-add toolBarIconStyle" style="margin-left: 8px" />
+            </li>
+            <li id="updateData" title="Update">
+                <div class="sficon-edit toolBarIconStyle" style="margin-left: 8px" />
+            </li>
+            <li id="deleteData" title="Delete">
+                <div class="sficon-delete toolBarIconStyle" style="margin-left: 8px" />
+            </li>
+        </ul>
+    </div>
+    <div>
+        <div id="diagram">
+        </div>
+    </div>
+    <div id="editDialog" title="Export" style="margin-top: 12px;">
+        <table style="margin-left: 12px">
+            <tr style="height: 40px">
+                <td style="vertical-align: central">
+                    <div style="height: 30px; width: 100%; font-size: 16px; margin-right: 60px">
+                        Description
+                    </div>
+                </td>
+                <td style="vertical-align: central">
+                    <div style="border: 1px solid #D3D1D1; height: 30px; width: 200px;">
+                        <input type="text" id="Description" value="" style="width: 200px; height: 23px; border: none; outline: none;" />
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 40px">
+                <td style="vertical-align: central">
+                    <div style="height: 30px; width: 100%; font-size: 16px; margin-right: 60px">
+                        Color
+                    </div>
+                </td>
+                <td style="vertical-align: central">
+                    <div style="border: 1px solid #D3D1D1; height: 30px; width: 200px;">
+                        <input type="text" id="Color" value="" style="width: 200px; height: 23px; border: none; outline: none;" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <div style="height: 30px; margin-bottom: 6px; margin-top: 6px; width: 100%;">
+                        <input type="button" id="btnUpdate" onclick="addOrUpdate(this)" value="Export" style="background-color: #28B1BF; border: medium none; color: #FFFFFF; font-family: Segoe UI; font-size: 16px; height: 29px; width: 90px;" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            var nodeConstraints = ej.datavisualization.Diagram.NodeConstraints;
+            var connectorConstraints = ej.datavisualization.Diagram.ConnectorConstraints;
+            $("#diagram").ejDiagram({
+                height: "550px",
+                width: "700px",
+                dataSourceSettings:
+                {
+                    id: "Name",
+                    customFields: [
+                        "Description",
+                        "Color"
+                    ],
+                    crudAction:
+                    {
+                        read: window.baseurl + "api/Diagram/GetNodes",
+                        create: window.baseurl + "api/Diagram/AddNodes",
+                        update: window.baseurl + "api/Diagram/UpdateNodes",
+                        destroy: window.baseurl + "api/Diagram/DeleteNodes"
+                    },
+                    connectionDataSource:
+                    {
+                        id: "Name",
+                        sourceNode: "SourceNode",
+                        targetNode: "TargetNode",
+                        crudAction: {
+                            read: window.baseurl + "api/Diagram/GetConnectors",
+                            create: window.baseurl + "api/Diagram/AddConnectors",
+                            update: window.baseurl + "api/Diagram/UpdateConnectors",
+                            destroy: window.baseurl + "api/Diagram/DeleteConnectors"
+                        }
+                    }
+                },
+                layout:
+                {
+                    type: "hierarchicaltree",
+                    horizontalSpacing: 40,
+                    verticalSpacing: 40,
+                    margin:
+                    {
+                        top: 50
+                    }
+                },
+                defaultSettings: {
+                    node:
+                    {
+                        width: 100,
+                        height: 50,
+                        constraints: (nodeConstraints.Select | nodeConstraints.PointerEvents | nodeConstraints.Delete | nodeConstraints.Connect),
+                        borderColor: "black",
+                        borderWidth: 1,
+                        labels: [{ fontColor: "white", fontSize: 12 }]
+                    },
+                    connector:
+                    {
+                        lineColor: "#000000",
+                        constraints: connectorConstraints.Default & ~connectorConstraints.Drag,
+                        segments: [{ type: "orthogonal" }]
+                    },
+                },
+                nodeTemplate: nodeTemplate,
+                connectorSourceChange: connectionChange,
+                connectorTargetChange: connectionChange,
+                selectionChange: selectionChange,
+            });
+
+
+            $("#toolbarItem").ejToolbar({
+                width: "700px",
+                height: "33px",
+                click: "onItemClick",
+                enabled: false
+            });
+
+            $("#editDialog").ejDialog({
+                width: 400,
+                showOnInit: false,
+                enableModal: true,
+                enableResize: false
+            });
+
+        });
+        var sourceNode, targetNode, connectorsChanged;
+        function nodeTemplate(diagram, node) {
+            node.labels[0].text = node.Description;
+            node.fillColor = node.Color;
+        }
+
+        function onItemClick(args) {
+            var diagram = $("#diagram").ejDiagram("instance");
+            var selectedItem = diagram.model.selectedItems.children[0];
+            if (selectedItem && (selectedItem.type !== "connector" || args.currentTarget.id === "deleteData")) {
+                switch (args.currentTarget.id) {
+                    case "insertData":
+                        openDialog("Add", "", "");
+                        break;
+                    case "updateData":
+                        openDialog("Update", selectedItem.Description, selectedItem.Color);
+                        break;
+                    case "deleteData":
+                        diagram.remove(selectedItem);
+                        diagram.layout();
+                        diagram.removeData();
+                        break;
+                }
+            }
+            else if (connectorsChanged) {
+                if (args.currentTarget.id === "updateData") {
+                    diagram.updateData();
+                    connectorsChanged = false;
+                    $("#toolbarItem").ejToolbar("disableItemByID", "updateData");
+                }
+            }
+        }
+
+        function openDialog(title, description, color) {
+            document.getElementById("btnUpdate").value = title;
+            document.getElementById("Description").value = description;
+            document.getElementById("Color").value = color;
+            $("#editDialog").ejDialog({ "title": title });
+            $("#editDialog").ejDialog("open");
+        }
+
+        function addOrUpdate(evt) {
+            var diagram = $("#diagram").ejDiagram("instance");
+            var description = document.getElementById("Description").value;
+            var color = document.getElementById("Color").value;
+            var selectedItem = diagram.model.selectedItems.children[0];
+            if (evt.value === "Add") {
+                var node = {
+                    name: "node" + ej.datavisualization.Diagram.Util.randomId(), fillColor: color,
+                    labels: [{ "text": description }], Description: description, Color: color
+                };
+                var connector = {
+                    name: "node" + ej.datavisualization.Diagram.Util.randomId(),
+                    sourceNode: selectedItem.name, targetNode: node.name
+                };
+                diagram.add([node, connector]);
+                diagram.layout();
+                diagram.insertData();
+            }
+            else {
+                selectedItem.Description = description;
+                selectedItem.Color = color;
+                diagram.updateNode(selectedItem.name, { fillColor: color });
+                diagram.updateLabel(selectedItem.name, selectedItem.labels[0], { text: description });
+                diagram.updateData();
+            }
+            $("#editDialog").ejDialog("close");
+        }
+
+        function connectionChange(args) {
+            if (args.dragState === "completed") {
+                if (!args.element.targetNode || !args.element.sourceNode)
+                    args.cancel = true;
+                if (!args.cancel) {
+                    connectorsChanged = true;
+                    $("#toolbarItem").ejToolbar("enableItemByID", "updateData");
+                }
+            }
+        }
+
+        function selectionChange(args) {
+		if(args.state==="changing"){
+            $("#toolbarItem").ejToolbar("disable");
+            if (args.changeType === "insert") {
+                if (args.element.type !== "connector")
+                    $("#toolbarItem").ejToolbar("enable");
+                else {
+                    $("#toolbarItem").ejToolbar("enableItemByID", "deleteData");
+                }
+            }
+            else if (connectorsChanged) {
+                $("#toolbarItem").ejToolbar("enableItemByID", "updateData");
+            }
+			}
+        }
+    </script>   
+    <link href="images/diagram/editing/editing.css" rel="stylesheet" />
+    <style>
+        .e-toolbar > .e-horizontal.e-ul > li {
+            width: 36px;
+            height: 25px;
+        }
+
+        .toolBarIconStyle {
+            font-size: 16px;
+            color: #6B6B6B;
+            margin-top: 4px;
+            margin-left: 4px;
+        }
+    </style>
+</body>
+</html>

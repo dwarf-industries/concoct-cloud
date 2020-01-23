@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1: DropDownList - Key Board Navigation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div class="control">
+						<div class="ctrllabel">Select a Company Name</div>
+                        <input type="text" id="CompanyNames" />
+                    </div>
+                </div>
+            </div>
+			<div id="sampleProperties">
+				<div class="prop-grid">
+					<div class="row">
+						<div class="col-md-6">
+							VirtualScroll mode
+						</div>
+						<div class="col-md-6">
+							<select id="scrollMode" class="e-ddl" data-bind="value: field">
+								<option value="normal" selected="selected"> Normal </option>
+								<option value="continuous"> Continuous </option>
+							</select>
+						</div>
+					</div>
+
+				</div>
+			</div>                
+                          
+        </div>
+    </div>
+    <script type="text/javascript">
+	
+        var dm = ej.DataManager({url:window.baseurl + "Wcf/Northwind.svc/Customers", crossDomain: true});
+		
+		var controlProperty = 
+			{
+				dataSource: dm , 
+				fields : { text: "CompanyName", value: 'ContactName' },
+				width : 260, 
+				itemsCount : 10 , 
+				allowVirtualScrolling : true
+			};
+		
+		$(function () 
+		{
+			$('#CompanyNames').ejDropDownList(controlProperty);
+			$("#scrollMode").ejDropDownList({ "change": "selectChange", width: "120px", selectedIndex: 0 });
+		});
+		
+		$("#sampleProperties").ejPropertiesPanel();
+		
+		function selectChange(args) 
+		{ 
+			var target = $('#CompanyNames').data("ejDropDownList");
+            target.destroy();
+			controlProperty.virtualScrollMode = args.itemId == 1 ? "continuous": "normal";
+			$('#CompanyNames').ejDropDownList(controlProperty);
+			
+		}
+    </script>
+	<style type="text/css" class="cssStyles">
+        .e-ddl-popup {
+            margin: 0 auto;
+        }
+		.frame{
+			width : 250px;
+		}
+
+        
+    </style>
+</body>
+</html>

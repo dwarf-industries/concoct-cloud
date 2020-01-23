@@ -1,0 +1,1905 @@
+/*
+* WAVE - Sliding Coming Soon Template
+* Build Date: June 2016
+* Last Update: June 2016
+* Author: Madeon08
+* Copyright (C) 2016 Madeon08
+* This is a premium product available exclusively here : http://themeforest.net/user/Madeon08/portfolio
+*/
+
+/*  TABLE OF CONTENTS
+    ---------------------------
+    *. @Import & Reset
+    *. Loading overlay
+    1. Generic styles
+    2. Slider wrapper
+    3. Slider effect
+    4. Arrow navigation
+    5. Main navigation
+    6. Top info bar
+    7. Slide content
+
+        7.1 About
+        7.2 Portfolio
+        7.3 Services
+        7.4 Contact
+
+    8. Newsletter
+    9. Scroll Bar
+   10. Photo gallery
+   11. Media Queries
+*/
+
+/* ------------------------------------- */
+/* *. @Import & Reset .................. */
+/* ------------------------------------- */
+
+// http://bourbon.io/ Sass Mixin Library
+@import "bourbon";
+
+// colors, fonts, sizes etc...
+@import "vars";
+
+// custom mixins
+@import "mixins";
+
+/* custom CSS files */
+@import "font-awesome.min.css";
+@import "ionicons.min.css";
+@import "bootstrap.min.css";
+@import "animate.css";
+@import "photoswipe.css";
+@import "default-skin/default-skin.css";
+@import "jquery.mCustomScrollbar.css";
+
+/* Google Fonts */
+@import url("http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
+
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,500,700");
+
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+
+/*
+* http://meyerweb.com/eric/tools/css/reset/ 
+* v2.0 | 20110126
+* License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, main {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* ------------------------------------- */
+/* Loading overlay ..................... */
+/* ------------------------------------- */
+
+#loading {
+    width: 100vw;
+    height: 100vh;
+    background: rgba($outer-space, 0.7);
+    position: fixed;
+    z-index: 1000000;
+    @include bezier-transition(all, $average-transition, ease-in-out);
+
+    &.dark-back {
+        background: rgba($outer-space, 1);
+    }
+
+    .loading-bar {
+        position: relative;
+        overflow: hidden;
+        top: 0;
+        height: 0.3rem;
+        width: 100vw;
+        background: rgba($outer-space, 0.3);
+
+        &:after {
+            content: '';
+            position: fixed;
+            top: 0;
+            z-index: 10;
+            background: $white;
+            height: 0.3rem;
+            width: 30vw;
+            @include border-radius(10rem);
+            @include animation(baranim 4s infinite linear);
+        }
+    }
+
+    span {
+        position: fixed;
+        width: 100%;
+        top: 49vh;
+            z-index: 10;
+        font-size: 1rem;
+        letter-spacing: 0.5rem;
+        text-align: center;
+        text-transform: uppercase;
+    }
+}
+
+@include keyframes(baranim) {
+    0% {
+        @include transform(translateX(-30vw));
+    }
+
+    100% {
+        @include transform(translateX(130vw));
+    }
+}
+
+/* ------------------------------------- */
+/* 1. Generic styles ................... */
+/* ------------------------------------- */
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    background: $ebony-clay;
+    font-family: $montserrat-font;
+    color: $white;
+    @include font-smoothing(on);
+    font-weight: normal;
+    font-style: normal;
+    font-size: 1.4rem;
+    line-height: 1.8;
+    font-weight: $normal;
+    letter-spacing: 0;
+    position: absolute;
+    height: 100%;
+}
+
+.scroll-touch {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    width: 100%;
+}
+
+body, input, select, textarea {
+    @include bezier-transition(all, $fast-transition, ease-in-out);
+}
+
+a {
+    @include bezier-transition(all, $fast-transition, ease-in-out);
+    cursor: pointer;
+    text-decoration: none;
+    color: $white;
+
+    &:hover {
+        color: darken($torea-bay, 5%);
+        text-decoration: none !important;
+        outline: none !important;
+    }
+
+    &:active, &:focus {
+        outline: none !important;
+        text-decoration: none !important;
+        color: $white;
+    }
+}
+
+button {
+    @include bezier-transition(all, $fast-transition, ease-in-out);
+    cursor: pointer;
+
+    &:hover, &:active, &:focus {
+        outline: none !important;
+        text-decoration: none !important;
+        color: $shark;
+    }
+}
+
+strong, b {
+    font-weight: $bold;
+}
+
+em, i {
+    font-style: italic;
+}
+
+i {
+
+        @include bezier-transition(all, $fast-transition, ease-in-out);
+}
+
+p {
+    margin: 0;
+    font-size: 1.4rem;
+    line-height: 1.8;
+    color: $dove-gray;
+    font-weight: $normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: $outer-space;
+    font-family: $montserrat-font;
+    font-weight: $normal;
+    line-height: 1;
+    margin: 0 0 1.5rem 0;
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    small {
+        color: inherit;
+    }
+}
+
+h1 {
+    font-size: 7rem;
+}
+
+h2 {
+    font-size: 5rem;
+}
+
+h3 {
+    font-size: 2.3rem;
+}
+
+h4 {
+    font-size: 1.8rem;
+}
+
+h5 {
+    font-size: 1.6rem;
+}
+
+h6 {
+    font-size: 1.2rem;
+}
+
+sub {
+    font-size: 0.8em;
+    position: relative;
+    top: 0.5em;
+}
+
+sup {
+    font-size: 0.8em;
+    position: relative;
+    top: -0.5em;
+}
+
+.clear {
+    clear: both;
+}
+
+.display-none {
+    display: none !important;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.no-margin-bottom {
+    margin-bottom: 0;
+}
+
+.opacity-0 {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+.opacity-03 {
+    opacity: 0.3 !important;
+}
+
+.opacity-1 {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.index-999 {
+    z-index: -999 !important;
+}
+
+.copyright {
+    position: absolute;
+    right: 1rem;
+    top: -2rem;
+    font-size: 1rem;
+    font-family: $raleway-font;
+
+    a {
+        color: $torea-bay;
+    }
+}
+
+/* ------------------------------------- */
+/* 2. Slider wrapper ................... */
+/* ------------------------------------- */
+
+.sl-slider-wrapper {
+	overflow: hidden;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+
+	.sl-slider {
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		/* Slide wrapper and slides */
+		.sl-slide,
+		.sl-slides-wrapper,
+		.sl-slide-inner {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+		}
+
+		.sl-slide-inner {
+            @include align-items(center);
+            @include display(flex);
+            @include justify-content(center);
+
+			&:after {
+				content: '';
+				display: block;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: $white;
+				opacity: 0.7;
+			}
+		}
+
+		.sl-slide-inner, .sl-content-slice {
+			background-size: cover;
+		}
+
+		.sl-slide {
+			z-index: 1;
+		}
+	}
+}
+
+/* ------------------------------------- */
+/* 3. Slider effect .................... */
+/* ------------------------------------- */
+
+/* The duplicate parts/slices */
+
+.sl-content-slice {
+	overflow: hidden;
+	position: absolute;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	background: #fff;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	-o-backface-visibility: hidden;
+	-ms-backface-visibility: hidden;
+	backface-visibility: hidden;
+	opacity : 1;
+}
+
+/* Horizontal slice */
+
+.sl-slide-horizontal .sl-content-slice {
+	width: 100%;
+	height: 50%;
+	left: -200px;
+	-webkit-transform: translateY(0%) scale(1);
+	-moz-transform: translateY(0%) scale(1);
+	-o-transform: translateY(0%) scale(1);
+	-ms-transform: translateY(0%) scale(1);
+	transform: translateY(0%) scale(1);
+
+	&:first-child {
+		top: -200px;
+		padding: 200px 200px 0px 200px;
+	}
+
+	&:nth-child(2) {
+		top: 50%;
+		padding: 0px 200px 200px 200px;
+	}
+}
+
+/* Vertical slice */
+
+.sl-slide-vertical .sl-content-slice {
+	width: 50%;
+	height: 100%;
+	top: -200px;
+	-webkit-transform: translateX(0%) scale(1);
+	-moz-transform: translateX(0%) scale(1);
+	-o-transform: translateX(0%) scale(1);
+	-ms-transform: translateX(0%) scale(1);
+	transform: translateX(0%) scale(1);
+
+	&:first-child {
+		left: -200px;
+		padding: 200px 0px 200px 200px;
+	}
+
+	&:nth-child(2) {
+		left: 50%;
+		padding: 200px 200px 200px 0px;
+	}
+}
+
+/* Content wrapper */
+/* Width and height is set dynamically */
+.sl-content-wrapper {
+	position: absolute;
+}
+
+.sl-content {
+	width: 100%;
+	height: 100%;
+}
+
+/* Animations for content elements */
+
+.sl-trans-elems .brand-logo{
+    @include animation(moveDown 1s ease-in-out both);
+}
+.sl-trans-elems h1{
+    @include animation(moveUp 1s ease-in-out both);
+}
+.sl-trans-elems h2{
+    @include animation(moveUp 1s ease-in-out both);
+}
+.sl-trans-elems h3{
+    @include animation(moveUp 1s ease-in-out both);
+}
+.sl-trans-elems p{
+    @include animation(fadeIn 0.5s linear 0.5s both);
+}
+
+.sl-trans-elems figure{
+    @include animation(fadeIn 0.5s linear 0.5s both);
+}
+
+.sl-trans-elems .icon{
+    @include animation(fadeIn 0.5s linear 0.5s both);
+}
+
+.sl-trans-elems #contact-form , .sl-trans-elems .info-contact {
+    @include animation(moveUp 1s ease-in-out both);
+}
+
+.sl-trans-elems .action-btn{
+    @include animation(moveUp 1s ease-in-out both);
+}
+.sl-trans-back-elems .deco{
+    @include animation(scaleDown 1s ease-in-out both);
+}
+.sl-trans-back-elems h2{
+    @include animation(fadeOut 1s ease-in-out both);
+}
+.sl-trans-back-elems blockquote{
+    @include animation(fadeOut 1s linear both);
+}
+
+@include keyframes(roll) {
+    0% {
+        @include transform(translateX(500px) rotate(360deg));
+    }
+
+    100% {
+        @include transform(translateX(0px) rotate(0deg));
+    }
+}
+
+@include keyframes(moveUp) {
+    0% {
+        @include transform(translateY(40px));
+    }
+
+    100% {
+        @include transform(translateY(0px));
+    }
+}
+
+@include keyframes(moveDown) {
+    0% {
+        @include transform(translateY(-40px));
+    }
+
+    100% {
+        @include transform(translateY(0px));
+    }
+}
+
+@include keyframes(fadeIn) {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@include keyframes(scaleDown) {
+    0% {
+        @include transform(scale(1));
+    }
+
+    100% {
+        @include transform(scale(0.5));
+    }
+}
+
+@include keyframes(fadeOut) {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* ------------------------------------- */
+/* 4. Arrow navigation ................. */
+/* ------------------------------------- */
+
+.nav-arrows span {
+	position: absolute;
+	z-index: 2000;
+	top: 50%;
+	width: 4rem;
+	height: 4rem;
+	border: 0.2rem solid rgba($dusty-gray, 0.3);
+	text-indent: -1000%;
+	margin-top: -4rem;
+	cursor: pointer;
+    opacity: 0;
+    @include transform(rotate(45deg));
+    @include bezier-transition(all, $slow-transition, ease-in-out);
+
+    &.show-arrows {
+        opacity: 1;
+    }
+
+	&:hover {
+		border-color: rgba($dusty-gray, 0.6);
+	}
+
+	&.nav-arrow-prev {
+		left: 5%;
+		border-right: none;
+		border-top: none;
+
+        &:hover {
+            left: 4.7%;
+        }
+	}
+
+	&.nav-arrow-next {
+		right: 5%;
+		border-left: none;
+		border-bottom: none;
+
+        &:hover {
+            right: 4.7%;
+        }
+	}
+
+}
+
+/* ------------------------------------- */
+/* 5. Main navigation .................. */
+/* ------------------------------------- */
+
+.nav-multi-square {
+	text-align: center;
+	position: absolute;
+	bottom: 0;
+	height: 12rem;
+	width: 100%;
+	left: 0;
+	z-index: 1000;
+	color: lighten($outer-space, 25%);
+	@include bezier-transition(all, $fast-transition, ease-in-out);
+
+	.nav-square {
+		font-family: $montserrat-font;
+		display: block;
+		background: $outer-space;
+		float: left;
+		position: relative;
+		width: calc(100% / 5);
+		height: 100%;
+		border-radius: 0;
+		margin: 0;
+		cursor: pointer;
+        overflow: hidden;
+		@include bezier-transition(all, $slow-transition, ease-in-out);
+
+		&:hover {
+			background: darken($outer-space, 2%);
+			box-shadow: 0 0 2rem rgba($black, 0.3) inset;
+			color: lighten($outer-space, 45%);
+
+            i {
+                color: $white;
+            }
+		}
+
+		&:before {
+			content: '';
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			opacity: 0;
+            @include transform(scale(0));
+			background: #FF512F; /* fallback for old browsers */
+			background: -webkit-linear-gradient(to left, #FF512F , #DD2476); /* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(to left, #FF512F , #DD2476); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+			@include bezier-transition(all, $medium-transition, ease-in-out);
+		}
+
+		&:after {
+			content: '';
+			width: 1px;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: lighten($outer-space, 5%);
+		}
+
+		&:first-child {
+			&:after {
+				display: none;
+			}
+		}
+
+		span {
+			width: 100%;
+			position: absolute;
+			top: 50%;
+		    height: auto;
+		    display: block;
+		    background: transparent;
+			@include transform(translateY(-50%));
+
+			&:hover {
+				box-shadow: none;
+			}
+		}
+
+		&.nav-square-current {
+			color: $white !important;
+
+            i {
+                color: $white;
+            }
+
+			&:before {
+                top: 0;
+				opacity: 1;
+                @include transform(scale(1));
+			}
+        
+		}
+
+		i {
+			display: block;
+			font-size: 3rem;
+        @include bezier-transition(all, $slow-transition, linear);
+		}
+	}
+
+}
+
+/* ------------------------------------- */
+/* 6. Top info bar ..................... */
+/* ------------------------------------- */
+
+.info-bar {
+	background: $outer-space;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: 2rem;
+	z-index: 1000;
+
+	#countdown {
+		color: $white;
+	}
+
+	p {
+		color: lighten($trout, 20%);
+	}
+
+    .info-bar-left {
+        p {
+            padding-top: 1rem;
+        }
+    }
+
+	.info-bar-right {
+		text-align: right;
+
+        .action-btn {
+            font-family: $montserrat-font;
+            background: $torea-bay;
+            font-weight: $normal;
+            padding: 1rem 2.5rem;
+            color: $white;
+            position: relative;
+            @include border-radius(10rem);
+            border: 1px solid $torea-bay;
+            @include display(inline-flex);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            overflow: hidden;
+
+            &:after {
+                font-family: 'FontAwesome';
+                content: '\f0a2';
+                position: absolute;
+                opacity: 0;
+                top: 4px;
+                right: -2rem;
+                font-size: 2rem;
+                @include bezier-transition(all, $fast-transition, ease-in-out);
+                @include animation(ring 1.5s infinite linear);
+            }
+
+            @include keyframes(ring) {
+                0% {
+                    @include transform(rotate(0deg));
+                }
+                6.25% {
+                    @include transform(rotate(-2deg));
+                }
+                12.5% {
+                    @include transform(rotate(5deg));
+                }
+                18.75% {
+                    @include transform(rotate(-10deg));
+                }
+                25% {
+                    @include transform(rotate(15deg));
+                }
+                31.25% {
+                    @include transform(rotate(-20deg));
+                }
+                37.5% {
+                    @include transform(rotate(25deg));
+                }
+                43.75% {
+                    @include transform(rotate(-30deg));
+                }
+                50% {
+                    @include transform(rotate(35deg));
+                }
+                56.25% {
+                    @include transform(rotate(-30deg));
+                }
+                62.5% {
+                    @include transform(rotate(25deg));
+                }
+                68.75% {
+                    @include transform(rotate(-20deg));
+                }
+                75% {
+                    @include transform(rotate(15deg));
+                }
+                81.25% {
+                    @include transform(rotate(-10deg));
+                }
+                87.5% {
+                    @include transform(rotate(5deg));
+                }
+                93.75% {
+                    @include transform(rotate(-2deg));
+                }
+                100% {
+                    @include transform(rotate(0deg));
+                }
+            }
+
+            &:hover {
+                background: lighten($torea-bay, 10%);
+                color: $white;
+                border-color: $torea-bay;
+                padding-right: 4.5rem;
+
+                &:after {
+                  opacity: 1;
+                  right: 1.5rem;
+                }
+            }
+        }
+	}
+}
+
+/* ------------------------------------- */
+/* 7. Slide content .................... */
+/* ------------------------------------- */
+
+.content-slide {
+	position: relative;
+    z-index: 10;
+    left: 0;
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-height: 100vh;
+    padding: 0;
+    @include bezier-transition(all, $average-transition, ease-in-out);
+    text-align: center;
+    @include font-smoothing;
+    opacity: 1;
+    visibility: visible;
+
+    .container {
+        padding: 13rem 10rem 20rem;
+    }
+
+    .brand-logo {
+        max-width: 14rem;
+	    margin-bottom: 2rem;
+    }
+
+    h1 {
+    	text-transform: uppercase;
+    }
+
+    h2 {
+        margin-bottom: 3rem;
+    }
+
+    p {
+    	font-family: $raleway-font;
+    	font-size: 1.7rem;
+    	color: $black;
+
+    	&.resume {
+    		padding: 0 10rem;
+    	}
+    }
+
+    p.social-text {
+        margin-top: 2rem;
+
+        a {
+            margin: 0 0.4rem;
+            color: lighten($trout, 20%);
+
+            &:hover {
+                color: $torea-bay;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    p.social-icon {
+        margin-top: 2rem;
+
+        a {
+            color: lighten($trout, 20%);
+            width: 3rem;
+            letter-spacing: 0;
+            background: transparent;
+            font-size: 1.8rem;
+            display: inline-block;
+            text-align: center;
+            border: none;
+            @include bezier-transition(all, $fast-transition, ease-in-out);
+
+            &:hover {
+                color: $torea-bay;
+
+                i {
+                    color: $torea-bay;
+                }
+            }
+        }
+
+    }
+}
+
+/* ------------------------------------- */
+/* 7.1 About ........................... */
+/* ------------------------------------- */
+
+.about-part {
+	text-align: left;
+}
+
+/* ------------------------------------- */
+/* 7.2 Portfolio ....................... */
+/* ------------------------------------- */
+
+.portfolio {
+    margin-top: 4rem;
+    overflow: hidden;
+
+    figure {
+        padding: 0 !important;
+        overflow: hidden;
+        cursor: pointer;
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 0;
+            opacity: 0;
+            background: $outer-space;
+            @include transform(scale(0.8));
+            @include bezier-transition(all, $slow-transition, cubic-bezier(0.215, 0.61, 0.355, 1));
+        }
+
+        .gallery-link {
+            position: relative;
+            float: left;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+
+            .gallery-img {
+                @include bezier-transition(all, $average-transition, cubic-bezier(0.215, 0.61, 0.355, 1));
+            }
+        }
+
+        figcaption {
+            background: transparent;
+            position: absolute;
+            text-align: center;
+            width: 100%;
+            z-index: 1;
+            top: 50%;
+            opacity: 0;
+            @include transform(translateY(0));
+            left: 0;
+            @include bezier-transition(all, $average-transition, cubic-bezier(0.215, 0.61, 0.355, 1));
+
+            .photo-details {
+                h4 {
+                    font-size: 1.5rem;
+                    font-family: $montserrat-font;
+                    text-transform: uppercase;
+                    color: $white;
+                    padding-left: 15px;
+                    margin-bottom: 0.3rem;
+
+                    small {
+                        display: block;
+                        text-transform: none;
+                        margin-top: 0.8rem;
+                        color: $gallery;
+                        font-family: $open-font;
+                        font-style: italic;
+                    }
+                }
+
+                i.icon {
+                    display: block;
+                    font-size: 3rem;
+                    position: absolute;
+                    left: calc(50% - 0.75rem);
+                    margin-top: 5rem;
+                    color: rgba($white, 0.7);
+                    @include bezier-transition(all, $average-transition, cubic-bezier(0.215, 0.61, 0.355, 1));
+
+                    &:hover , &:focus {
+                        color: $white;
+                    }
+                }
+
+                p {
+                    display: none;
+                }
+            }
+        }
+
+        &:hover {
+            &:after {
+                opacity: 0.7;
+                @include transform(scale(1));
+            }
+
+            figcaption {
+                opacity: 1;
+                @include transform(translateY(-50%));
+
+                i.icon {
+                    margin-top: 0;
+                }
+            }
+
+            .gallery-img {
+                @include transform(scale(1.2));
+            }
+        }
+    }
+
+    div {
+        padding: 0;
+        overflow: hidden;
+    }
+}
+
+/* ------------------------------------- */
+/* 7.3 Services ........................ */
+/* ------------------------------------- */
+
+.services {
+
+    .box-info {
+        padding: 0;
+        text-align: center;
+    }
+
+    .box-info-light {
+        padding: 3rem 3rem 0;
+        background: transparent;
+        @include border-radius(0);
+
+        span.icon {
+            color: $torea-bay;
+            font-size: 6rem;
+            line-height: 1.4;
+            display: inline-block;
+            padding: 2px;
+        }
+
+        h3 {
+            font-weight: $medium;
+        }
+    }
+}
+
+/* ------------------------------------- */
+/* 7.4 Contact ......................... */
+/* ------------------------------------- */
+
+#contact-form {
+    margin-top: 4rem;
+
+    .form-control {
+        background: rgba($outer-space, 0.4);
+        border: none;
+        @include border-radius(3px);
+        box-shadow: none;
+        font-weight: $normal;
+        outline: medium none;
+        padding: 1.6rem 3rem;
+        font-size: 1.4rem;
+        line-height: 1.4;
+        height: auto;
+        width: 100%;
+        color: $white;
+        margin-bottom: 2rem;
+        @include bezier-transition(all, $fast-transition, ease-in-out);
+        text-align: left;
+
+        &:hover, &:focus {
+            box-shadow: none;
+            background: rgba($outer-space, 0.6);
+        }
+
+        @include placeholder {
+            color: $gallery !important;
+        }
+    }
+
+    textarea.form-control {
+        min-height: 150px;
+    }
+
+    span.sub-text {
+        color: $outer-space;
+        position: absolute;
+        font-size: 0.8rem;
+        right: 15px;
+        bottom: 0;
+    }
+
+    button#valid-form {
+        padding: 1.3rem 2.5rem;
+        font-size: 1.4rem;
+        display: block;
+        margin: 0;
+        background: $torea-bay;
+        color: $white;
+        @include border-radius(10rem);
+        font-weight: $semi-bold;
+        width: auto;
+
+        &:hover {
+            background: lighten($torea-bay, 10%);
+            color: $white;
+        }
+    }
+}
+
+#block-answer {
+    position: absolute;
+    margin-top: 1rem;
+    text-align: left;
+    color: $raven;
+}
+
+.success-message, .error-message {
+
+    p {
+        color: $outer-space !important;
+        font-weight: $medium;
+    }
+
+    .ion-checkmark-round {
+        color: $green-alert;
+    }
+}
+
+.error-message {
+    .ion-close-round {
+        color: $torch-red;
+    }
+}
+
+.info-contact {
+	margin-top: 4rem;
+	text-align: left;
+
+    a {
+        color: rgba($outer-space, 0.4);
+
+        &:hover, &:focus {
+            color: rgba($outer-space, 0.8);
+        }
+    }
+
+    .list-info {
+        color: rgba($outer-space, 0.6);
+        font-family: $montserrat-font;
+    }
+}
+
+/* ------------------------------------- */
+/* 8. Newsletter ....................... */
+/* ------------------------------------- */
+
+.dialog,
+.dialog__overlay {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.dialog {
+    position: fixed;
+    z-index: 999999;
+    @include display(flex);
+    @include justify-content(center);
+    @include align-items(center);
+    pointer-events: none;
+}
+
+.dialog__overlay {
+    position: absolute;
+    z-index: 1;
+    background: rgba($outer-space, 0.9);
+    opacity: 0;
+    transition: opacity $fast-transition;
+}
+
+.dialog--open .dialog__overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.dialog__content {
+    width: 50%;
+    max-width: 50rem;
+    min-width: 290px;
+    padding: 0;
+    text-align: center;
+    position: relative;
+    z-index: 5;
+    opacity: 0;
+    overflow: hidden;
+    border: 1px solid $outer-space;
+    box-shadow: 0 1rem 2.5rem rgba($black, 0.4);
+    background: $white;
+    @include border-radius(5px);
+
+    .header-picture {
+        width: 100%;
+        height: 18rem;
+        background: url('../img/background-newsletter.jpg') center;
+        background-size: cover;
+    }
+
+    .dialog-inner {
+        padding: 5rem 5rem 0 5rem;
+        overflow: hidden;
+        background: url('../img/background-newsletter-inner.jpg') center;
+        background-size: cover;
+
+        &::before {
+            content: " ";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        h4 {
+            color: $outer-space;
+            font-size: 4rem;
+            line-height: 1.2;
+            font-weight: $bold;
+        }
+
+        p {
+            color: $dove-gray;
+            font-size: 1.4rem;
+
+            &.spam-news {
+                margin-top: 6rem;
+                margin-bottom: 2rem;
+                color: darken($seashell, 20%);
+                font-size: 1rem;
+            }
+        }
+    }
+}
+
+.dialog--open .dialog__content {
+    pointer-events: auto;
+}
+
+.dialog {
+    .close-newsletter {
+        position: absolute;
+        top: 0;
+        right: 0;
+        border: none;
+        background: rgba($white, 0.5);
+        @include border-radius(0 0 0 5px);
+        width: 50px;
+        height: 50px;
+        line-height: 0;
+        color: lighten($outer-space, 30%);
+        font-size: 2rem;
+        opacity: 1;
+
+        i {
+        display: inline-block;
+        @include bezier-transition(all, $fast-transition, ease-in-out);
+        }
+
+        &:hover {
+            i {
+                color: $outer-space;
+            }
+        }
+    }
+}
+
+#subscribe {
+    p {
+        font-weight: $normal;
+    }
+
+    #notifyMe {
+        max-width: 450px;
+        margin: auto;
+        margin-top: 2em;
+
+        .form-group {
+            margin-bottom: 1em;
+
+            .fa {
+                color: $raven;
+                position: absolute;
+                text-align: center;
+                top: 15px;
+                left: 15px;
+            }
+
+            .form-control {
+                text-align: center;
+                background: darken($athens-gray, 2%);
+                border: 1px solid $seashell;
+                @include border-radius(3px);
+                box-shadow: none;
+                height: 50px;
+                font-weight: $semi-bold;
+                outline: medium none;
+                padding: 0 1em;
+                width: 100%;
+                margin: auto;
+                color: $black;
+                @include bezier-transition(all, $fast-transition, ease-in-out);
+
+                &:hover, &:focus {
+                    box-shadow: none;
+                    background: darken($athens-gray, 5%);
+                }
+
+                @include placeholder {
+                    color: rgba($black, 0.4) !important;
+                }
+            }
+
+            button.submit {
+                padding: 1.3rem 2.5rem;
+                font-size: 1.4rem;
+                display: block;
+                margin: 2rem auto 0;
+                background: $torea-bay;
+                color: $white;
+                @include border-radius(10rem);
+                font-weight: $semi-bold;
+                width: auto;
+
+                &:hover {
+                    background: lighten($torea-bay, 10%);
+                    color: $white;
+                }
+            }
+        }
+    }
+
+    .block-message {
+        min-height: 50px;
+        position: absolute;
+        bottom: -100px;
+        width: 100%;
+        left: 0;
+        padding: 15px;
+        background: transparent;
+        @include bezier-transition(all, $fast-transition, ease-in-out);
+
+        &.show-block-error {
+            bottom: 0;
+            background: $torch-red;
+        }
+
+        &.show-block-valid {
+            bottom: 0;
+            background: $caribbean-green;
+        }
+    }
+
+    p.notify-valid {
+        color: $white;
+        text-transform: none;
+        font-size: 16px;
+        letter-spacing: 0;
+        font-weight: $semi-bold;
+    }
+}
+
+.dialog__overlay {
+    @include bezier-transition(all, $fast-transition, ease-in-out);
+}
+
+.dialog.dialog--open .dialog__content,
+.dialog.dialog--close .dialog__content {
+    @include animation-duration(0.4s);
+    @include animation-fill-mode(forwards);
+}
+
+.dialog.dialog--open .dialog__content {
+    @include animation-name(anim-open);
+}
+
+.dialog.dialog--close .dialog__content {
+    @include animation-name(anim-close);
+}
+
+@include keyframes(anim-open) {
+    0% {
+        opacity: 0;
+        @include transform-opal(-5rem, 0, 0);
+    }
+
+    100% {
+        opacity: 1;
+        @include transform-opal(0, 0, 0);
+    }
+}
+
+
+@include keyframes(anim-close) {
+    0% {
+        opacity: 1;
+        @include transform-opal(0, 0, 0);
+    }
+
+    100% {
+        opacity: 0;
+        @include transform-opal(5rem, 0, 0);
+    }
+}
+
+/* ------------------------------------- */
+/* 9. Scroll Bar ....................... */
+/* ------------------------------------- */
+
+.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
+.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar {
+    background: $white;
+}
+
+.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar {
+    background: $white;
+}
+
+.mCSB_scrollTools {
+    /* Scrollbar */
+    position: absolute;
+    width: 5px;
+    left: auto;
+    top: 10rem;
+    right: 2rem;
+    bottom: 0;
+    z-index: 100000;
+    height: calc(100% - 25rem);
+    @include bezier-transition(all, $average-transition, ease-in-out);
+
+    .mCSB_draggerRail {
+        width: 2px;
+        height: 100%;
+        margin: 0;
+        @include border-radius(5rem);
+        background-color: rgba($outer-space, 0.7);
+        filter: "alpha(opacity=40)";
+        -ms-filter: "alpha(opacity=40)";
+    }
+
+    .mCSB_dragger .mCSB_dragger_bar {
+        /* the dragger element */
+        position: relative;
+        width: 4px;
+        right: 2px;
+        height: 100%;
+        margin: 0 auto;
+        @include border-radius(5rem);
+        text-align: center;
+    }
+
+    .mCSB_dragger .mCSB_dragger_bar {
+        background-color: rgba($white, 0.5);
+    }
+}
+
+/* ------------------------------------- */
+/* 10. Photo gallery ................... */
+/* ------------------------------------- */
+
+.pswp__bg {
+    background: $outer-space;
+}
+
+.pswp__caption {
+    h4 {
+        font-family: $raleway-font;
+        font-weight: $light;
+        color: $white;
+        margin-bottom: 10px !important;
+
+        small {
+            display: block;
+            font-size: 1.4rem;
+            margin-top: 0.4rem;
+        }
+    }
+
+    i.icon {
+        display: none;
+    }
+
+    p {
+        color: $gallery;
+        font-weight: $light;
+    }
+}
+
+/* ------------------------------------- */
+/* 13. Media Queries ................... */
+/* ------------------------------------- */
+
+/* Large Devices, Wide Screens @media only screen and (max-width: 1600px) */
+@include desktop {
+}
+
+
+/* Notebook devices @media only screen and (max-width: 1199px) */
+@include notebook {
+}
+
+
+/* Medium Devices, Desktops @media only screen and (max-width: 993px) */
+@include medium {
+
+    .content-slide p.resume {
+        padding: 0;
+    }
+}
+
+
+/* Small Devices, Tablets @media only screen and (max-width: 768px) */
+@include tablet {
+
+    h1 {
+        font-size: 6rem;
+    }
+
+    .content-slide {
+
+        .container {
+            padding: 13rem 6rem 20rem;
+        }
+
+        .action-btn {
+
+            &:after {
+                display: none;
+            }
+
+            &:hover {
+                padding-right: 2.5rem;
+            }
+        }
+    }
+
+    #nav-arrows {
+        display: none !important;
+    }
+
+    .dialog__content {
+        width: auto;
+    }
+}
+
+
+/* Special media queries used for the width just under the tablet one */
+@include undertablet {
+    .info-bar {
+        padding: 1rem;
+        text-align: center;
+
+        .info-bar-right {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+    }
+}
+
+/* Extra Small Devices, Phones @media only screen and (max-width: 480px) */
+@include phone {
+
+    .content-slide {
+
+        .container {
+            padding-left: 2rem;
+            padding-right: 2rem;
+            padding-bottom: 15rem;
+
+            .brand-logo {
+                max-width: 10rem;
+            }
+
+            h1 {
+                font-size: 3rem;
+            }
+
+            h2 {
+                font-size: 3rem;
+                margin-bottom: 2rem;
+                text-align: left;
+            }
+
+            p {
+                font-size: 1.4rem;
+
+                &.resume {
+                    text-align: left;
+                }
+            }
+
+            .box-info-light {
+                text-align: left;
+            }
+        }
+    }
+
+    .mCSB_scrollTools {
+        right: 0;
+        height: calc(100% - 19rem);
+    }
+
+    .nav-multi-square {
+        height: 6rem;
+        font-size: 1rem;
+
+        .nav-square i {
+            font-size: 2rem;
+        }
+    }
+
+    .dialog__content {
+        width: 95%;
+        max-width: 95%;
+        min-width: 75%;
+
+        .header-picture {
+            display: none;
+        }
+    }
+
+    .dialog {
+        .close-newsletter {
+            top: 2px;
+            right: 5px;
+        }
+
+        .dialog-inner {
+
+            padding: 5rem 2rem 0 2rem;
+
+            h4 {
+                font-size: 25px;
+                margin-bottom: 20px;
+            }
+
+            p.spam-news {
+                margin-top: 2rem;
+            }
+        }
+    }
+
+    #subscribe {
+        .block-message {
+            padding: 5px 2px;
+        }
+
+        p.notify-valid {
+            font-size: 12px;
+        }
+    }
+}
+
+
+/* Only for tablet in landscape mode @media only screen and (max-device-width: 1024px) and (orientation: landscape) */
+@include landscape-tablet {
+    .dialog__content {
+
+        .header-picture {
+            display: none;
+        }
+    }
+}
+
+
+/* Only for phone in landscape mode @media screen and (max-device-width: 667px) and (orientation: landscape) */
+@include landscape-phone {
+
+    .info-bar {
+        padding: 1rem 2rem 0.7rem;
+
+        .info-bar-left , .info-bar-right {
+        }
+
+        .info-bar-left {
+            text-align: left;
+            width: 60%;
+            margin-top: 0;
+
+            p {
+                padding-top: 0.5rem;
+            }
+        }
+
+        .info-bar-right {
+            text-align: right;
+            width: 40%;
+            margin-top: 0;
+            margin-bottom: 0.2rem;
+            padding-left: 0;
+
+            .action-btn {
+                letter-spacing: 0;
+                padding: 0.5rem 2rem;
+            }
+        }
+    }
+
+    .nav-multi-square {
+        height: 6rem;
+        font-size: 1rem;
+
+        .nav-square i {
+            font-size: 2rem;
+        }
+    }
+
+    .content-slide {
+
+        .container {
+            padding: 9rem 6rem 10rem;
+
+            .brand-logo {
+                max-width: 10rem;
+            }
+
+            h1 {
+                font-size: 3rem;
+            }
+
+            h2 {
+                font-size: 3rem;
+                margin-bottom: 2rem;
+                text-align: left;
+            }
+
+            p {
+                font-size: 1.4rem;
+
+                &.resume {
+                    text-align: left;
+                }
+            }
+
+            .box-info-light {
+                text-align: left;
+            }
+        }
+    }
+    
+    .dialog__content {
+        width: 95%;
+        max-width: 95%;
+        min-width: 75%;
+
+        .header-picture {
+            display: none;
+        }
+    }
+
+    .dialog {
+        .close-newsletter {
+            top: 2px;
+            right: 5px;
+        }
+
+        .dialog-inner {
+
+            padding: 3rem 2rem 0 2rem;
+
+            h4 {
+                font-size: 25px;
+                margin-bottom: 20px;
+            }
+
+            p.spam-news {
+                margin-top: 2rem;
+            }
+        }
+    }
+
+    #subscribe {
+        #notifyMe .form-group {
+            .form-control {
+                width: 60%;
+                float: left;
+                @include border-radius(3px 0 0 3px);
+                border: 1px solid lighten($dusty-gray, 20%);
+            }
+
+            button.submit {
+                width: 40%;
+                float: left;
+                margin: 0;
+                @include border-radius(0 3px 3px 0);
+                height: 50px;
+            }
+        }
+
+        .block-message {
+            padding: 5px 2px;
+        }
+
+        p.notify-valid {
+            font-size: 12px;
+        }
+    }
+
+    .mCSB_scrollTools {
+        top: 7rem;
+        height: calc(100% - 15rem);
+    }
+}

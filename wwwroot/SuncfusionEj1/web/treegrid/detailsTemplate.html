@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : TreeGrid</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+     <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsontreegriddata.js"></script>
+</head>
+
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="TreeGridContainer" style="width: 100%; height: 400px;"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Show details view
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" id="showDetailsRow" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Show details view as a popup
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" id="showDetailsRowInfoColumn" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script id="descriptionTemplate" type="text/x-jsrender">
+
+        <div style="position: relative; display: inline-block; float: left; font-weight: bold; width: 10%">
+            <img src="../content/images/treegrid/{{:Name}}.png" style="margin-left: 10px;margin-top:15px;" />
+        </div>
+        <div style="padding-left: 10px; display: inline-block; width: 88%; text-wrap: normal;font-size:12px;font-family:'Segoe UI';margin-top:2px;">
+            <div class="e-description" style="word-wrap: break-word;">
+                <b>{{:Name}}</b> was born on {{:~_treeGridDateFormatter("DOB")}}. Now lives at {{:Address}},{{:Country}}. {{:Name}} holds a position of <b>{{:Designation}}</b> in our WA department, (Seattle USA). Joined our company on {{:~_treeGridDateFormatter("DOJ")}}.
+            </div>
+
+            <div class="e-description" style="word-wrap: break-word;margin-top:5px;">
+                <b style="margin-right:10px;">Contact:</b>{{:Contact}}
+            </div>
+
+        </div>
+    </script>
+
+    <script id="descriptionTemplatematerial" type="text/x-jsrender">
+
+        <div style="position: relative; display: inline-block; float: left; font-weight: bold; width: 10%;padding:30px 28px 22px 38px;">
+            <img src="../content/images/treegrid/{{:Name}}.png" style="" />
+        </div>
+        <div style="padding-left: 10px; display: inline-block; width: 66%; text-wrap: normal;font-size:13px;font-family:'Segoe UI';padding:16px 38px 15px 0px;">
+            <div class="e-description" style="word-wrap: break-word;">
+                <b>{{:Name}}</b> was born on {{:~_treeGridDateFormatter("DOB")}}. Now lives at {{:Address}},{{:Country}}. {{:Name}} holds a position of <b>{{:Designation}}</b> in our WA department, (Seattle USA). Joined our company on {{:~_treeGridDateFormatter("DOJ")}}.
+            </div>
+
+            <div class="e-description" style="word-wrap: break-word;margin-top:5px;">
+                <b style="margin-right:10px;">Contact:</b>{{:Contact}}
+            </div>
+
+        </div>
+    </script>
+
+    <script id="descriptionTemplate365" type="text/x-jsrender">
+
+        <div style="position: relative; display: inline-block; float: left; width: 10%;padding:10px 0px 10px 20px;">
+            <img src="../content/images/treegrid/{{:Name}}.png" style="margin-left: 10px;margin-top:10px;" />
+        </div>
+        <div style="padding-left: 30px;padding-top:10px; display: inline-block; width: 75%; text-wrap: normal;font-size:13px;font-family:'Segoe UI';margin-top:2px;">
+            <div class="e-description" style="word-wrap: break-word;">
+                <span style="font-weight:600;">{{:Name}}</span> was born on {{:~_treeGridDateFormatter("DOB")}}. Now lives at {{:Address}},{{:Country}}. {{:Name}} holds a position of <span style="font-weight:600;">{{:Designation}}</span> in our WA department, (Seattle USA). Joined our company on {{:~_treeGridDateFormatter("DOJ")}}.
+</div>
+
+            <div class="e-description" style="word-wrap: break-word;margin-top:5px;">
+                <span style="margin-right:10px;font-weight:600">Contact:</span>{{:Contact}}
+            </div>
+
+        </div>
+    </script><script type="text/javascript">
+        $(function () {
+            var dateFormat = "{0:" + ej.preferredCulture()["calendars"]["standard"]["patterns"]["d"] + "}";
+            $("#TreeGridContainer").ejTreeGrid({
+                showDetailsRow: true,
+                detailsTemplate: window.theme == "material" ? "descriptionTemplatematerial" : window.theme == "office-365" ? "descriptionTemplate365" : "descriptionTemplate",
+                detailsRowHeight: window.theme == "material" ? 150 : window.theme == "office-365" ? 135 : 100,
+                showDetailsRowInfoColumn: true,
+                dataSource: templateData,
+                childMapping: "Children",
+                treeColumnIndex: 0,
+                rowHeight: window.theme == "material" ? 48 : window.theme == "office-365" ? 36 : 30,
+                isResponsive: true,
+                load: function () {
+                    if (window.theme == "material")
+                        this.treeIndentLevelWidth = 16;
+                },
+                columns: [
+                       { field: "Name", headerText: "First Name", editType: "stringedit" },
+                       { field: "DOB", headerText: "DOB", editType: "datepicker", format: dateFormat },
+                       { field: "Designation", headerText: "Designation", editType: "stringedit", filterEditType: "stringedit" },
+                       { field: "Country", headerText: "Country", editType: "stringedit", filterEditType: "stringedit" }
+                ]
+            });
+            $("#sampleProperties").ejPropertiesPanel();
+
+            $("#showDetailsRow").ejCheckBox({ checked: true, change: showDetailsRowUpdate });
+            $("#showDetailsRowInfoColumn").ejCheckBox({ checked: true, change: showDetailsRowInfoColumnUpdate });
+        });
+
+        function showDetailsRowUpdate(args) {
+            $("#TreeGridContainer").ejTreeGrid("model.showDetailsRow", args.isChecked);
+            $("#TreeGridContainer").ejTreeGrid("model.showDetailsRowInfoColumn", false);
+
+            if (!args.isChecked)
+                $("#showDetailsRowInfoColumn").ejCheckBox({ checked: false, enabled: false });
+            else
+                $("#showDetailsRowInfoColumn").ejCheckBox({ enabled: true });
+        }
+
+        function showDetailsRowInfoColumnUpdate(args) {
+            $("#TreeGridContainer").ejTreeGrid("model.showDetailsRowInfoColumn", args.isChecked);
+        }
+    </script>
+
+    <script>
+        function _dateFormating(data) {
+            var dateFormat = ej.preferredCulture()["calendars"]["standard"]["patterns"]["d"];
+            var dateObj = new Date(this.data[data]);
+            return dateObj ? ej.format(dateObj, "dddd , dd MMMM yyyy") : "";
+        }
+        var helpers = {};
+        helpers["_treeGridDateFormatter"] = _dateFormating;
+        $.views.helpers(helpers);
+    </script>
+</body>
+</html>

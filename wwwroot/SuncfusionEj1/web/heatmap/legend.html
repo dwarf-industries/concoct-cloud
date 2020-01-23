@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Heatmap-Legend</title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div style="border-width: 2px; opacity: 0.7; width: 290px; text-align: center;">
+                    <label style="color: Black; font-size: 22px; height: 25px; font-weight: Normal;">Employee Rating in a Year</label>
+                </div>
+                <br />
+                <div style="width: 100%; margin: 0 auto; text-align: center;">
+                    <div id="heatmap"></div>
+                    <div style="height: 15px; width: 100%;"></div>
+                    <div id="heatmap_legend"></div>
+                </div>
+            </div>
+            <div id="Propertiespanel">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <b>Legend Type</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Gradient
+                        </div>
+                        <div class="col-md-3">
+                            <input type="radio" id="check1" checked="checked" onclick="checkBoxChecked(this)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            List
+                        </div>
+                        <div class="col-md-3">
+                            <input type="radio" id="check2" onclick="checkBoxChecked(this)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        function getValue() {
+            return Math.floor((Math.random() * 10) + 1);
+        }
+        function checkBoxChecked(args) {
+            if (args && args.id) {
+                if (args.id === "check2" && args.checked) {
+                    $("#check1")[0].checked = false;
+                    $("#heatmap_legend").ejHeatMapLegend({ legendMode: "list" });
+                }
+                if (args.id === "check1" && args.checked) {
+                    $("#check2")[0].checked = false;
+                    $("#heatmap_legend").ejHeatMapLegend({ legendMode: "gradient" });
+                }
+            }
+        }
+        $(function () {
+            $("#Propertiespanel").ejPropertiesPanel();
+            var colorMappingCollection = [
+                { value: 0, color: "#fe0002", label: { text: "Poor" } },
+                { value: 3, color: "#ffff01", label: { text: "Average" } },
+                { value: 6, color: "#13ab11", label: { text: "Good" } },
+                { value: 10, color: "#005ba2", label: { text: "Excellent" } }
+            ];
+            var rows = ["Peter Scott", "Maria Anders", "John Camino", "Philips Cramer", "Robert King", "Simon Crowther", ];
+            var itemsSource = [];
+            for (var i = 0; i < rows.length; i++) {
+                itemsSource.push({
+                    EmpName: rows[i],
+                    Jan: getValue(), Feb: getValue(), Mar: getValue(), Apr: getValue(), May: getValue(), Jun: getValue(),
+                    Jul: getValue(), Aug: getValue(), Sep: getValue(), Oct: getValue(), Nov: getValue(), Dec: getValue(),
+                });
+            }
+
+            var heatmap = $("#heatmap").ejHeatMap({
+                colorMappingCollection: colorMappingCollection,
+                isResponsive: true,
+                itemsSource: itemsSource,
+                width: "100%",
+                itemsMapping: {
+                    headerMapping: { "propertyName": "EmpName", "displayName": "Employee Name", columnStyle: { width: 110, textAlign: "right" } },
+                    columnMapping: [
+                    { "propertyName": "Jan", "displayName": "Jan" },
+                    { "propertyName": "Feb", "displayName": "Feb" },
+                    { "propertyName": "Mar", "displayName": "Mar" },
+                    { "propertyName": "Apr", "displayName": "Apr" },
+                    { "propertyName": "May", "displayName": "May" },
+                    { "propertyName": "Jun", "displayName": "Jun" },
+                    { "propertyName": "Jul", "displayName": "Jul" },
+                    { "propertyName": "Aug", "displayName": "Aug" },
+                    { "propertyName": "Sep", "displayName": "Sep" },
+                    { "propertyName": "Oct", "displayName": "Oct" },
+                    { "propertyName": "Nov", "displayName": "Nov" },
+                    { "propertyName": "Dec", "displayName": "Dec" }
+                    ]
+                },
+
+                legendCollection: ["heatmap_legend"]
+
+            });
+            var heatmaplegend = $("#heatmap_legend").ejHeatMapLegend({
+                colorMappingCollection: colorMappingCollection,
+                height: "50px",
+                width: "75%",
+                isResponsive: true
+            });
+
+        });
+
+    </script>
+    <style>
+        #heatmap_legend {
+            margin-left: 100px;
+        }
+
+        @media (min-width: 1024px) and (max-width: 1920px) {
+
+            .row .cols-sample-area {
+                width: 72.956%;
+                *width: 72.956%;
+            }
+        }
+    </style>
+
+</body>
+</html>

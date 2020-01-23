@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" type="text/css" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+       <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+      <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/pivotgrid.datasource.js"></script>
+    <script src="../scripts/excanvas.min.js" type="text/javascript"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" style="width: 100%">
+                <div id="circularframe">
+                    <div id="PivotGauge" style="height: 370px; width: 70%; overflow: auto; float: left; position:relative">
+                    </div>
+                </div>
+                <div class="cols-prop-area event-tracer" style="width: 25%">
+                    <div>
+                        <div class="heading">
+                            <span>Event Trace</span>
+                        </div>
+                        <div class="prop-grid content">
+                            <div class="eventarea">
+                                <div class="EventLog" id="EventLog">
+                                </div>
+                            </div>
+                            <div class="evtbtn">
+                                <input type="button" class="eventclear e-btn" value="Clear" onclick="onClear()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#PivotGauge").ejPivotGauge({
+                control: "gauge",
+                dataSource: {
+					data: window.biurl + "olap/msmdpump.dll",
+                    catalog: "Adventure Works DW 2008 SE",
+					cube: "Adventure Works",
+                    rows: [
+						{
+							fieldName: "[Date].[Fiscal]",
+                            filterItems: { filterType: "include", values: ["[Date].[Fiscal].[Fiscal Year].&amp;[2004]"] }
+                        },
+                    ],
+                    columns: [
+                        {
+                            fieldName: "[Customer].[Customer Geography]"
+                        }
+					],
+                    values: [
+                        {
+                            measures: [
+                                {
+									fieldName: "[Measures].[Internet Sales Amount]"
+                                },
+								{
+									fieldName: "[Measures].[Internet Revenue Status]"
+								},
+                                {
+                                    fieldName: "[Measures].[Internet Revenue Trend]"
+								},
+								{
+									fieldName: "[Measures].[Internet Revenue Goal]"
+								},
+                            ],
+                            axis: ej.PivotGauge.AxisName.Columns
+						}
+                    ]
+                },
+                labelFormatSettings: { decimalPlaces: 2 },
+                enableTooltip: true, isResponsive: true,
+                load: "loadGaugeTheme", backgroundColor: "transparent",
+                beforeServiceInvoke: "onBeforeServiceCall", afterServiceInvoke: "onAfterServiceCall",
+                renderSuccess: "onClientSuccess", drawLabels: "onLabelDraw",
+                scales: [{
+                    showRanges: true,
+                    radius: 150, showScaleBar: true, size: 1,
+                    border: {
+                        width: 0.5
+                    },
+                    showIndicators: true, showLabels: true,
+                    pointers: [{
+                        showBackNeedle: true,
+                        backNeedleLength: 20,
+                        length: 125,
+                        width: 7
+                    },
+					{
+                            type: "marker",
+                            markerType: ej.datavisualization.CircularGauge.MarkerType.Diamond,
+                            distanceFromScale: 5,
+                            placement: "center",
+                            backgroundColor: "#29A4D9",
+                            length: 25,
+                            width: 15
+                        }],
+                    ticks: [{
+                        type: "major",
+                        distanceFromScale: 2,
+                        height: 16,
+                        width: 1, color: "#8c8c8c"
+                    }, {
+                        type: "minor",
+                        height: 6,
+                        width: 1,
+                        distanceFromScale: 2,
+                        color: "#8c8c8c"
+                    }],
+                    labels: [{
+                        color: "#8c8c8c"
+                    }],
+                    ranges: [{
+                        distanceFromScale: -5,
+                        backgroundColor: "#fc0606",
+                        border: {
+                            color: "#fc0606"
+                        }
+                    }, {
+                        distanceFromScale: -5
+                    }],
+                    customLabels: [{
+                        position: { x: 180, y: 290 },
+                        font: { size: "10px", fontFamily: "Segoe UI", fontStyle: "Normal" }, color: "#666666"
+                    }, {
+                        position: { x: 180, y: 320 },
+                        font: { size: "10px", fontFamily: "Segoe UI", fontStyle: "Normal" }, color: "#666666"
+                    }, {
+                        position: { x: 180, y: 150 },
+                        font: { size: "12px", fontFamily: "Segoe UI", fontStyle: "Normal" }, color: "#666666"
+                    }]
+                }]
+            });
+        });
+
+        function onBeforeServiceCall() {
+            jQuery.addEventLog("Before service call event is invoked");
+        }
+        function onAfterServiceCall() {
+            jQuery.addEventLog("After service call event is invoked");
+        }
+        function onClientSuccess() {
+            jQuery.addEventLog("Gauge rendering succeeded");
+        }
+        function onLabelDraw(args) {
+            jQuery.addEventLog("Label drawn for " + this._id + " Label value: " + args.pointerValue);
+        }
+        function onClear() {
+            jQuery.clearEventLog();
+        }
+    </script>
+    <style>
+        .row .cols-prop-area {
+            min-height: 150px;
+            width: 27%;
+        }
+
+        .EventLog {
+            overflow: hidden;
+        }
+
+        .circulardarkgradient, .circularlightgradient {
+            width: 360px;
+            position: relative;
+        }
+    </style>
+
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Splitter - Properties</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area splitter-width">
+                <div id="outterSplitter">
+                    <div>
+                        <div class="content">
+                            <h3 class="h3">PARIS </h3>
+                            Paris, the city of lights and love - this short guide is full of ideas for how to make the most of the romanticism...
+                        </div>
+                    </div>
+                    <div>
+                        <div class="content">
+                            <h3 class="h3">CAMEMBERT </h3>
+                            The village in the Orne département of Normandy where the famous French cheese is originated from.
+                        </div>
+                    </div>
+                    <div>
+                        <div class="content">
+                            <h3 class="h3">GRENOBLE </h3>
+                            The capital city of the French Alps and a major scientific center surrounded by many ski resorts, host of the Winter Olympics in 1968.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Pane Index
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="paneindex" class="input ejinputtext" value="0" />
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="button" class="e-btn" id="Button2" value="Expand" onclick="expandpane()" />
+                        </div>
+                        <div class="col-md-3">
+                            <input type="button" class="e-btn" id="Button1" value="Collapse" onclick="collapsepane()" />
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <b>Add New Pane </b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span>Pane Index</span>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="index" class="input ejinputtext" value="0" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span>Pane Size</span>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="size" class="input ejinputtext" value="20"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span>Min Size</span>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="min" class="input ejinputtext" value="20" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span>Max Size</span>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="max" class="input ejinputtext" value="100" />
+                        </div>
+						<span id="error" style="color: red"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                           
+                        </div>
+                        <div class="col-md-3">
+                            <input type="button" class="e-btn" id="add" value="Add pane" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <b>Remove Pane </b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Remove Pane Index
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="removepaneidx" class="input ejinputtext" value="0" />
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                           
+                        </div>
+                        <div class="col-md-3">
+                            <input type="button" class="e-btn remove-pane" id="remove" value="Remove pane" onclick="removepane()" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var splitterObj, i = 0;
+        $(function () {
+            $("#outterSplitter").ejSplitter({
+                height: 280, width: "79%",
+                enableAutoResize: true,
+                properties: [{ paneSize: "35%", minSize: 70 },  { paneSize: "35%", minSize: 30 }]
+            });
+            $("#remove,#Button2,#Button1").ejButton({
+                size: "normal"
+            });
+            $("#add").ejButton({
+                size: "normal",
+                click: "add"
+            });
+            $("#index, #removepaneidx, #paneindex").ejNumericTextbox({
+                value: 0,
+                minValue: 0,
+                showSpinButton: false,
+                width: "100%",
+                maxValue:2
+            });
+            $("#max, #min, #size").ejNumericTextbox({
+                minValue: 0,
+                showSpinButton: false,
+                width: "100%"
+            });
+            $("#size").ejNumericTextbox({
+                value: 20,
+                change: "validate"
+            });
+            $("#min").ejNumericTextbox({
+                value: 20,
+                focusOut: "validate"
+            });
+            $("#max").ejNumericTextbox({
+                value: 100,
+                focusOut: "validate"
+            });
+
+            splitterObj = $("#outterSplitter").data("ejSplitter");
+        });
+        function expandpane() {
+            splitterObj.expand(parseInt($('#paneindex').val()));
+        }
+        function collapsepane() {
+            splitterObj.collapse(parseInt($('#paneindex').val()));
+        }
+        function add() {
+            var property = {};
+            property["paneSize"] = parseInt($('#size').val()) || 0;
+            property["minSize"] = parseInt($('#min').val()) || 0;
+            property["maxSize"] = parseInt($('#max').val()) || null;
+            splitterObj.addItem("<div class = 'content'> New Pane " + (i++) + " </div> ", property, parseInt($('#index').val()));
+            $("#index, #removepaneidx, #paneindex").ejNumericTextbox({ maxValue: splitterObj.panes.length - 1 });
+        }
+        function removepane() {
+            if ($("#" + splitterObj._id + ">.e-pane").length > 1)
+                splitterObj.removeItem(parseInt($('#removepaneidx').val()));
+            $("#index, #removepaneidx, #paneindex").ejNumericTextbox({ maxValue: splitterObj.panes.length - 1 });
+        }
+        function validate() {
+            var panesize = $("#size").ejNumericTextbox("model.value");
+            var minsize = $("#min").ejNumericTextbox("model.value");
+            var maxsize = $("#max").ejNumericTextbox("model.value");
+            if (isNaN(panesize) || panesize < minsize || panesize > maxsize) {
+                $("#error").html("Please enter the Pane size based on min and max size");
+                $("#add").ejButton("disable");
+            }
+            else {
+                $("#error").html("");
+                $("#add").ejButton("enable");
+            }
+        }
+        $("#sampleProperties").ejPropertiesPanel();
+    </script>
+    <style type="text/css" class="cssStyles">
+        input.e-btn {
+            width: 102px;
+        }
+
+        input.ejinputtext {
+            width: 98px;
+        }
+
+        .h3 {
+            font-size: 17px;
+            margin: 0;
+        }
+
+        .content {
+            padding: 15px;
+        }
+        .row .cols-sample-area {
+            padding: 28px;
+        }
+		.fixedlayout.material input.remove-pane{
+            width:120px;
+            left:-15px;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,199 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>Essential JS 1 : Radial Gauge - ToolTip</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <script src="../scripts/excanvas.min.js" type="text/javascript"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="Tooltip" style="height: 60px; display: none;">
+        <div id="icon">
+            <div id="eficon"></div>
+        </div>
+        <div id="value">
+            <div>
+                <label id="efpercentage">&nbsp;#label#</label>
+            </div>
+        </div>
+    </div>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" align="center">
+                <div id="digitalframe">
+                    <div id="tooltipGauge"></div>
+                </div>
+            </div>
+
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Enable Label tooltip
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="checkbox" id="chkEnableLabelTooltip" class="e-chkbox" value="EnableAnimation" />
+                        </div>
+                        <div class="col-md-3">
+                            Enable Custom Label tooltip
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="checkbox" id="chkEnableCustomLabelTooltip" class="e-chkbox" value="EnableCustomLabelTooltip" />
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            Enable tooltip template
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="checkbox" id="chkEnableTooltipTemplate" class="e-chkbox" value="EnableTooltipTemplate" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#sampleProperties").ejPropertiesPanel();
+            $("#chkEnableLabelTooltip").ejCheckBox({ "change": "onLabelTooltipChange", checked: true });
+            $("#chkEnableCustomLabelTooltip").ejCheckBox({ "change": "onCustomLabelTooltipChange", checked: true });
+            $("#chkEnableTooltipTemplate").ejCheckBox({ "change": "onTooltipTemplateChange", checked: true });
+
+
+            $("#tooltipGauge").ejCircularGauge({
+                    backgroundColor: "transparent", width: 500, load: "loadGaugeTheme", readOnly: false, enableAnimation:false,isResponsive:true,
+                    tooltip: {
+                        showLabelTooltip: true, showCustomLabelTooltip: true,
+                        templateID: "Tooltip",
+                    },
+                    scales: [{
+                        showRanges: true,
+                        startAngle: 122, sweepAngle: 296, radius: 130, showScaleBar: true, size: 1, maximum: 120, majorIntervalValue: 20, minorIntervalValue: 10,
+                        border: {
+                            width: 0.5,
+                        },
+                        customLabels: [{
+                            value: "0 9 5 4 3 5", position: { x: 250, y: 220 }, font: { size: "20px" }, color: "#8c8c8c"
+                        }],
+                        pointers: [{
+                            value: 60,
+                            showBackNeedle: true,
+                            backNeedleLength: 20,
+                            length: 95,
+                            width: 7,
+                            pointerCap: { radius: 12 }
+                        }],
+                        ticks: [{
+                            type: "major",
+                            distanceFromScale: 2,
+                            height: 16,
+                            width: 1, color: "#8c8c8c"
+                        }, { type: "minor", height: 8, width: 1, distanceFromScale: 2, color: "#8c8c8c" }],
+                        labels: [{
+                            color: "#8c8c8c"
+                        }],
+                        ranges: [{
+                            distanceFromScale: -30,
+                            startValue: 0,
+                            endValue: 70
+                        }, {
+                            distanceFromScale: -30,
+                            startValue: 70,
+                            endValue: 110,
+                            backgroundColor: "#fc0606",
+                            border: { color: "#fc0606" }
+                        },
+                        {
+                            distanceFromScale: -30,
+                            startValue: 110,
+                            endValue: 120,
+                            backgroundColor: "#f5b43f",
+                            border: { color: "#f5b43f" }
+                        }]
+                    }]
+                });
+            });
+        function onLabelTooltipChange(args) {
+            if (args.isChecked)
+                $("#tooltipGauge").ejCircularGauge("option", "tooltip", { showLabelTooltip: true });
+            else
+                $("#tooltipGauge").ejCircularGauge("option", "tooltip", { showLabelTooltip: false });
+        };
+        function onCustomLabelTooltipChange(args) {
+            if (args.isChecked)
+                $("#tooltipGauge").ejCircularGauge("option", "tooltip", { showCustomLabelTooltip: true });
+            else
+                $("#tooltipGauge").ejCircularGauge("option", "tooltip", { showCustomLabelTooltip: false });
+        };
+        function onTooltipTemplateChange(args) {
+            if (args.isChecked)
+                $("#tooltipGauge").ejCircularGauge("option", "tooltip", { templateID: "Tooltip" });
+            else
+                $("#tooltipGauge").ejCircularGauge("option", "tooltip", { templateID: null });
+        };
+    </script>
+ <STYLE type="text/css">
+        label{
+		margin-bottom : -25px !important ;
+		text-align :center !important;
+		}
+        .tooltipDiv {
+            background-color:#E94649;        
+            color: white;
+        }
+        #Tooltip >div:first-child {
+            float: left;
+        }
+        #Tooltip #value {
+            float: right;
+            height: 50px;
+            width: auto;
+            font-stretch:condensed;
+            text-align:left !important;
+        }
+        #Tooltip #value >div {
+            margin: 5px 5px 5px 5px;
+            text-align:left !important;
+            
+        }
+        #Tooltip #efpercentage {
+            font-size: 20px;
+            font-family: segoe ui;
+			padding-left: 2px;
+            width:auto;
+            font-stretch:condensed;
+            text-align:left !important;
+        }
+         #Tooltip #ef {
+             font-size: 12px;
+             font-family: segoe ui;
+             text-align:left !important;
+        }
+        #eficon {
+            background-image: url("../content/images/chart/eficon.png");
+            height: 60px;
+            width: 60px;
+            background-repeat: no-repeat;
+        }
+    </STYLE>
+</body>
+</html>

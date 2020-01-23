@@ -1,0 +1,264 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" type="text/css" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+       <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+      <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/pivotgrid.datasource.js"></script>
+    <script src="../scripts/excanvas.min.js" type="text/javascript"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" style="width: 70%;">
+                    <div id="PivotGauge" style="height: 340px; width: 100%; overflow: auto; float: left; position:relative">
+                </div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            ScaleBar Size
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <div id="scalesize">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Scale Radius
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <div id="scaleradius">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Border Width
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <div id="borderwidth">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3" style="line-height:2">
+                            Scale Direction
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="scaledirection" class="scaledirection" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#sampleProperties").ejPropertiesPanel();
+            $("#PivotGauge").ejPivotGauge({
+                dataSource: {
+					data: window.biurl + "olap/msmdpump.dll",
+                    catalog: "Adventure Works DW 2008 SE",
+					cube: "Adventure Works",
+                    rows: [
+						{
+							fieldName: "[Date].[Fiscal]",
+                            filterItems: { filterType: "include", values: ["[Date].[Fiscal].[Fiscal Year].&amp;[2004]"] }
+                        },
+                    ],
+                    columns: [
+                        {
+                            fieldName: "[Customer].[Customer Geography]"
+                        }
+					],
+                    values: [
+                        {
+                            measures: [
+                                {
+									fieldName: "[Measures].[Internet Sales Amount]"
+                                },
+								{
+									fieldName: "[Measures].[Internet Revenue Status]"
+								},
+                                {
+                                    fieldName: "[Measures].[Internet Revenue Trend]"
+								},
+								{
+									fieldName: "[Measures].[Internet Revenue Goal]"
+								},
+                            ],
+                            axis: ej.PivotGauge.AxisName.Columns
+						}
+                    ]
+                },
+                enableTooltip: true, load: "loadGaugeTheme", isResponsive: true,
+                backgroundColor: "transparent",
+                scales: [{
+                    showRanges: true,
+                    radius: 150, showScaleBar: true, size: 1,
+                    border: {
+                        width: 0.5
+                    },
+                    showIndicators: true, showLabels: true,
+                    pointers: [{
+                        showBackNeedle: true,
+                        backNeedleLength: 20,
+                        length: 125,
+                        width: 7
+						},
+                        {
+                            type: "marker",
+                            markerType: ej.datavisualization.CircularGauge.MarkerType.Diamond,
+                            distanceFromScale: 5,
+                            placement: "center",
+                            backgroundColor: "#29A4D9",
+                            length: 25,
+                            width: 15
+                        }],
+                    ticks: [{
+                        type: "major",
+                        distanceFromScale: 2,
+                        height: 16,
+                        width: 1, color: "#8c8c8c"
+                    }, {
+                        type: "minor",
+                        height: 6,
+                        width: 1,
+                        distanceFromScale: 2,
+                        color: "#8c8c8c"
+                    }],
+                    labels: [{
+                        color: "#8c8c8c"
+                    }],
+                    ranges: [{
+                        distanceFromScale: -5,
+                        backgroundColor: "#fc0606",
+                        border: {
+                            color: "#fc0606"
+                        }
+                    }, {
+                        distanceFromScale: -5
+                    }],
+                    customLabels: [{
+                        position: { x: 180, y: 290 },
+                        font: { size: "10px", fontFamily: "Segoe UI", fontStyle: "Normal" }, color: "#666666"
+                    }, {
+                        position: { x: 180, y: 320 },
+                        font: { size: "10px", fontFamily: "Segoe UI", fontStyle: "Normal" }, color: "#666666"
+                    }, {
+                        position: { x: 180, y: 150 },
+                        font: { size: "12px", fontFamily: "Segoe UI", fontStyle: "Normal" }, color: "#666666"
+                    }]
+                }],
+                labelFormatSettings: { decimalPlaces: 2 }
+            });
+
+            $("#scalesize").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                value: 1,
+                height: 10,
+                minValue: 0,
+                maxValue: 10,
+                width: 110,
+                animate: true,
+                change: "onchange"
+            });
+
+            $("#scaleradius").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                value: 150,
+                height: 10,
+                width: 110,
+                minValue: 120,
+                maxValue: 170,
+                animate: true,
+                slide: "onchange",
+                change: "onchange"
+            });
+
+            $("#borderwidth").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                value: 0.5,
+                height: 10,
+                minValue: 0,
+                maxValue: 5,
+                width: 110,
+                animate: true,
+                slide: "onchange",
+                change: "onchange"
+            });
+
+            $('#scaledirection').ejDropDownList({
+                dataSource: ["Clockwise", "Counterclockwise"],
+                select: "onchange", width: "130px", selectedIndices: [0]
+            });
+
+        });
+
+
+        function onchange(args) {
+            pivotGauges = $("#PivotGauge").find(".e-circulargauge");
+            if (args.id == "scalesize") {
+                $.each(pivotGauges, function (index, value) {
+                    gaugeval = $("#" + value.id).data("ejCircularGauge");
+                    for (var i = 0; i <= 2; i++)
+                        gaugeval.setScaleBarSize(0, args.value);
+                });
+
+            }
+            else if (args.id == "scaleradius") {
+                $.each(pivotGauges, function (index, value) {
+                    gaugeval = $("#" + value.id).data("ejCircularGauge");
+                    for (var i = 0; i <= 2; i++)
+                        gaugeval.setScaleRadius(0, args.value);
+                });
+            }
+            else if (args.id == "borderwidth") {
+                $.each(pivotGauges, function (index, value) {
+                    gaugeval = $("#" + value.id).data("ejCircularGauge");
+                    for (var i = 0; i <= 2; i++)
+                        gaugeval.setScaleBorderWidth(0, args.value);
+                });
+            }
+            else if (args.text) {
+                $.each(pivotGauges, function (index, value) {
+                    gaugeval = $("#" + value.id).data("ejCircularGauge");
+                    var direction = args.text == "Clockwise" ? "clockwise" : "counterClockwise";
+                    for (var i = 0; i <= 2; i++)
+                        gaugeval.setScaleDirection(0, direction);
+                });
+            }
+        }
+
+    </script>
+    <style>
+        .row .cols-prop-area {
+            min-height: 220px;
+            width: 27%;
+        }
+
+        .scaledirection {
+            line-height: 20px !important;
+        }
+
+        .circulardarkgradient, .circularlightgradient {
+            width: 360px;
+            position: relative;
+        }
+    </style>
+
+</body>
+</html>

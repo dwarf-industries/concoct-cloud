@@ -1,0 +1,234 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1: Menu - databind</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+	<link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <ul id="menujson">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var data = [
+            { id: 1, text: "Group A", parentId: null },
+            { id: 2, text: "Group B", parentId: null },
+            { id: 3, text: "Group C", parentId: null },
+            { id: 4, text: "Group D", parentId: null },
+            { id: 5, text: "Group E", parentId: null },
+            //first level child
+            { id: 11, parentId: 1, text: "Algeria", sprite: "flag-dz" },
+            { id: 12, parentId: 1, text: "Armenia", sprite: "flag-am" },
+            { id: 13, parentId: 1, text: "Bangladesh", sprite: "flag-bd" },
+            { id: 14, parentId: 1, text: "Cuba", sprite: "flag-cu" },
+            { id: 15, parentId: 2, text: "Denmark", sprite: "flag-dk" },
+            { id: 16, parentId: 2, text: "Egypt", sprite: "flag-eg" },
+            { id: 17, parentId: 3, text: "Finland", sprite: "flag-fi" },
+            { id: 18, parentId: 3, text: "India", sprite: "flag-in" },
+            { id: 19, parentId: 3, text: "Malaysia", sprite: "flag-my" },
+            { id: 20, parentId: 4, text: "New Zealand", sprite: "flag-nz" },
+            { id: 21, parentId: 4, text: "Norway", sprite: "flag-no" },
+            { id: 22, parentId: 4, text: "Poland", sprite: "flag-pl" },
+            { id: 23, parentId: 5, text: "Romania", sprite: "flag-ro" },
+            { id: 24, parentId: 5, text: "Singapore", sprite: "flag-sg" },
+            { id: 25, parentId: 5, text: "Thailand", sprite: "flag-th" },
+            { id: 26, parentId: 5, text: "Ukraine", sprite: "flag-ua" },
+            //second level child
+            {id: 111, parentId: 11, text: "First Place" },
+            { id: 112, parentId: 12, text: "Second Place" },
+            { id: 113, parentId: 13, text: "Third place" },
+            { id: 114, parentId: 14, text: "Fourth Place" },
+            { id: 115, parentId: 15, text: "First Place" },
+            { id: 116, parentId: 16, text: "Second Place" },
+            { id: 117, parentId: 17, text: "Third Place" },
+            { id: 118, parentId: 18, text: "First Place" },
+            { id: 119, parentId: 19, text: "Second Place" },
+            { id: 120, parentId: 20, text: "First Place" },
+            { id: 121, parentId: 21, text: "Second Place" },
+            { id: 122, parentId: 22, text: "Third place" },
+            { id: 123, parentId: 23, text: "Fourth Place" },
+            { id: 120, parentId: 24, text: "First Place" },
+            { id: 121, parentId: 25, text: "Second Place" },
+            { id: 122, parentId: 26, text: "Third place" }
+
+        ];
+        jQuery(function ($) {
+            $("#menujson").ejMenu({
+                fields: { dataSource: data, id: "id", parentId: "parentId", text: "text", spriteCssClass: "sprite" }
+            });
+        });
+    </script>
+    <style type="text/css">
+       
+        .e-menu li > ul > li > a {
+            padding: 3px 24px 3px 35px;
+        }
+
+        [class^="flag-"],
+        [class*="flag-"] {
+            background-image: url("../content/images/autocomplete/flags.png");
+            height: 14px;
+            left: 2px;
+            top: 4px;
+            width: 24px;
+        }
+
+        .flag-am {
+            background-position: -25px 0;
+        }
+
+        .flag-ar {
+            background-position: -50px 0;
+        }
+
+        .flag-bd {
+            background-position: -75px 0;
+        }
+
+        .flag-br {
+            background-position: -100px 0;
+        }
+
+        .flag-ca {
+            background-position: -125px 0;
+        }
+
+        .flag-cn {
+            background-position: 0 -15px;
+        }
+
+        .flag-cu {
+            background-position: -25px -15px;
+        }
+
+        .flag-dk {
+            background-position: -50px -15px;
+        }
+
+        .flag-dz {
+            background-position: -75px -15px;
+        }
+
+        .flag-ee {
+            background-position: -100px -15px;
+        }
+
+        .flag-eg {
+            background-position: -125px -15px;
+        }
+
+        .flag-es {
+            background-position: 0 -30px;
+        }
+
+        .flag-fi {
+            background-position: -25px -30px;
+        }
+
+        .flag-fr {
+            background-position: -50px -30px;
+        }
+
+        .flag-gl {
+            background-position: -75px -30px;
+        }
+
+        .flag-id {
+            background-position: -100px -30px;
+        }
+
+        .flag-in {
+            background-position: -125px -30px;
+        }
+
+        .flag-mx {
+            background-position: 0 -45px;
+        }
+
+        .flag-my {
+            background-position: -25px -45px;
+        }
+
+        .flag-nl {
+            background-position: -50px -45px;
+        }
+
+        .flag-no {
+            background-position: -75px -45px;
+        }
+
+        .flag-nz {
+            background-position: -100px -45px;
+        }
+
+        .flag-pl {
+            background-position: -125px -45px;
+        }
+
+        .flag-pt {
+            background-position: 0 -60px;
+        }
+
+        .flag-qa {
+            background-position: -25px -60px;
+        }
+
+        .flag-ro {
+            background-position: -50px -60px;
+        }
+
+        .flag-sa {
+            background-position: -75px -60px;
+        }
+
+        .flag-sg {
+            background-position: -100px -60px;
+        }
+
+        .flag-th {
+            background-position: -125px -60px;
+        }
+
+        .flag-tr {
+            background-position: 0 -75px;
+        }
+
+        .flag-ua {
+            background-position: -25px -75px;
+        }
+
+        .flag-us {
+            background-position: -50px -75px;
+        }
+
+        .flag-uy {
+            background-position: -75px -75px;
+        }
+
+        .flag-vn {
+            background-position: -100px -75px;
+        }
+
+        .flag-ye {
+            background-position: -125px -75px;
+        }
+    </style>
+</body>
+</html>

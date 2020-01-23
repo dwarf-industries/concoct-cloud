@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-2.1.4.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="control">
+                    <div id="container" style="width:100%; height:100%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            var reportdata;
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: window.baseurl + 'wcf/ReportViewer/Reportservice.svc/GetOrderDetails',
+                dataType: "json",
+                processData: false,
+                crossDomain: true,
+                success: function (result) {
+                    reportdata = result.d;
+                    var dataManger = ej.DataManager(reportdata);
+                    var query = ej.Query().select("OrderID", "CustomerID", "EmployeeID", "Freight", "ShipCity", "ShipCountry");
+                    var reportResult = dataManger.executeLocal(query);
+                    $("#container").ejReportViewer(
+                        {
+                            reportServiceUrl: window.baseurl + 'api/ReportViewer',
+                            processingMode: ej.ReportViewer.ProcessingMode.Local,
+                            reportPath: 'DatabindingRemote.rdlc',
+                            dataSources: [{
+                                value: reportResult,
+                                name: "remote"
+                            }],
+                        });
+                },
+                error: function (result) {
+                    alert(result);
+                }
+            });
+        });
+    </script>
+
+    <style type="text/css">
+        .control {
+            min-height: 680px !important;
+        }
+    </style>
+</body>
+</html>

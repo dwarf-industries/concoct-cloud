@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+    <title>Essential JS 1: RTE - API's</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+	 <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <textarea id="rteSample" rows="10" cols="30" style="display:none;">
+                  <p><b>Description:</b></p>
+        <p>The Rich Text Editor (RTE) control is an easy to render in
+        client side. Customer easy to edit the contents and get the HTML content for
+        the displayed content. A rich text editor control provides users with a toolbar
+        that helps them to apply rich text formats to the text entered in the text
+        area. </p>
+       <p><b>Functional
+        Specifications/Requirements:</b></p>
+        <ol><li><p>Provide
+        the tool bar support, it’s also customizable.</p></li><li><p>Options
+        to get the HTML elements with styles.</p></li><li><p>Support
+        to insert image from a defined path.</p></li><li><p>Footer
+        elements and styles(tag / Element information , Action button (Upload, Cancel))</p></li><li><p>Re-size
+        the editor support.</p></li><li><p>Provide
+        efficient public methods and client side events.</p></li><li><p>Keyboard
+        navigation support.</p></li></ol>
+                        </textarea>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="e-btn inputbtn" value="disableToolbarItem" onclick="ongetHtmlString()">Get HTML</button>
+                        </div>
+                        <div class="col-md-12">
+                            <button class="e-btn inputbtn" value="disableToolbarItem" onclick="ongetText()">Get Text</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="e-btn inputbtn" value="disableToolbarItem" onclick="onexec()">Exec Bold</button>
+                        </div>
+                        <div class="col-md-12">
+                            <button class="e-btn inputbtn" value="disableToolbarItem" onclick="oncmdStatus()">Bold Status</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="e-btn inputbtn" value="selectALL" onclick="onSelectAll()">Select All</button>
+                        </div>
+                        <div class="col-md-12">
+                            <button class="e-btn inputbtn" value="selectRange" onclick="onSeletcRange()">Select Range</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="e-btn inputbtn" value="pasteContent" onclick="onPasteContent()">Paste Content</button>
+                        </div>                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="checkbox" id="chkDestroy" class="e-togglebtn" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" class="jsScript">
+        var rte;
+        $(function () {
+            $("#rteSample").ejRTE({ width:"100%",minWidth:"150px"});
+            rte = $("#rteSample").data("ejRTE");
+            $("#chkShowHide").ejCheckBox({ "change": "onShowHide" });
+			 $(".e-btn.inputbtn").ejButton();
+            $("#chkDestroy").ejToggleButton({ "change": "onDestoryRestore", "width": "107px", "defaultText": "Destory", "activeText": "Restore" });
+        });
+        function ongetHtmlString() {
+            if (rte)
+                alert(rte.getHtml());
+        }
+        function ongetText() {
+            if (rte)
+                alert(rte.getText());
+        }
+        function onexec() {
+            if (rte)
+                rte.executeCommand("bold", true);
+        }
+        function oncmdStatus() {
+            if (rte) {
+                var status = rte.getCommandStatus("bold");
+                alert(status);
+            }
+        }
+        function onDestoryRestore(args) {
+            if (args.isChecked) {
+                rte.destroy();
+                rte = null;
+            }
+            else {
+                $("#rteSample").ejRTE({ width:"100%",minWidth:"150px",isResponsive:true});
+                rte = $("#rteSample").data("ejRTE");			
+            }
+        }
+        function onSelectAll()
+        {
+		if(!ej.isNullOrUndefined(rte))
+            rte.selectAll();
+        }
+        function onSeletcRange() {
+		if(!ej.isNullOrUndefined(rte)){
+            var range = rte.createRange();
+            var liTag = rte.getDocument().getElementsByTagName("li");           
+            if (!rte._isIE8()) {
+                range.setStart(liTag[2], 1);
+                range.setEnd(liTag[4], 0);
+            }
+            else {
+                range = rte.getDocument().body.createTextRange()
+                range.moveToElementText(liTag[3]);
+            }
+            rte.selectRange(range);
+        }
+        }
+        function onPasteContent() {
+		if(!ej.isNullOrUndefined(rte)){
+            select = rte.getSelectedHtml();
+            rte.pasteContent("<p style='background-color:yellow;color:skyblue'> " + select + " </p>");
+        }
+        }
+        $("#sampleProperties").ejPropertiesPanel();
+    </script>
+    <style>
+        .inputbtn {
+            width: 107px;
+        }
+    </style>
+</body>
+</html>

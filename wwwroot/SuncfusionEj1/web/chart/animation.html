@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+	<link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+	<script src="../scripts/properties.js" type="text/javascript"></script>
+ </head>
+ <body>
+	<div class="content-container-fluid">      
+        <div class="row">                
+            <div class="cols-sample-area">                                  				
+				<div id="container"></div> 					                   
+            </div>
+			<div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Series Type
+                        </div>
+                        <div class="col-md-3">
+                            <select name="selectIndex"  id="seriestype">
+								<option value="spline">Spline</option>
+                                <option value="area">Area</option>
+								<option value="column">Column</option>
+								<option value="bar">Bar</option>
+								<option value="scatter">Scatter</option>
+								<option value="bubble">Bubble</option>
+                                <option value="pie">Pie</option>
+								<option value="doughnut">Doughnut</option>
+								<option value="polar">Polar</option>
+                            </select>
+                        </div>
+                    </div>
+					<div class="row">
+						<div class="col-md-3">
+							 Series Animation
+						</div>
+						<div class="col-md-3 aligntop">
+                            <input type="checkbox" checked="checked" id="series"/>
+						</div>
+					</div>					
+					<div class="row">
+						<div class="col-md-3">
+							 Animation Duration
+						</div>
+						<div class="col-md-3 aligntop">
+                            <input type="text"  id="duration"><br>
+						</div>
+					</div>			
+				</div>
+			</div>			
+        </div>
+	</div>
+	 <div id="Tooltip" style="display: none;">
+		<div id="icon">	
+            <div id="airplaneicon">
+			</div>
+	    </div>
+        <div id="value">
+            <div>
+                <label id="no-of-airports">&nbsp;#point.y#
+			   </label>
+               <label id="airport">Airports
+			   </label>
+            </div>
+        </div>
+    </div>
+ <script type="text/javascript" language="javascript">
+	$(function ()
+	{
+        $("#container").ejChart(
+        {
+			//Initializing Primary X Axis
+            primaryXAxis:
+            {
+                title: { text: 'Countries' },
+				labelIntersectAction: "trim"
+            },	
+			
+			//Initializing Primary Y Axis	
+            primaryYAxis:
+            {
+                title: { text: 'Number of airports' }
+            },	
+			
+			//Initializing Series	
+            series: [{
+                    points: [{ x: "Australia", y: 480, size: 1.8 }, { x: "China", y: 507, size: 2 }, 
+							 { x: "France", y: 464, size: 1.7 }, { x: "Germany", y: 539, size: 2.4 },
+                             { x: "India", y: 346, size: 1 }, {x: "Indonesia", y: 663, size: 3}, { x: "Saudi Arabia", y: 214, size: 0.6 },
+							 { x: "South Afirca", y: 566, size: 2.6 }, { x: "United Kingdom", y: 460, size: 1.7 },
+							 {x: "Venezuela", y: 444, size: 1.6}],
+                    name: 'Airports', drawType: 'column', tooltip: {visible: true,template:"Tooltip"},
+					enableAnimation :true, type: "spline", fill: "#5e35b1",
+					marker:  { shape: 'circle',
+								size: { height: 10, width: 10 }, 
+                                visible: true
+							}
+                }],
+			load:"loadTheme",
+			isResponsive: true,
+            title :{text: 'Total number of Airports in various countries'},          
+            legend: { visible: false, columnCount:5 }
+        });
+		$("#duration").ejNumericTextbox({
+            groupSeparator:'', value: 2000, width: "85px", minValue :0, maxValue: 5000, incrementStep:500,change: "animationDuration" 
+         });
+    });
+	
+	$('#seriestype').change(function () {
+		var chart = $("#container").ejChart('instance');
+		var type = $('#seriestype')[0].value;
+		chart.model.series[0].type = type;
+		chart.model.legend.visible = type == 'pie' || type == 'doughnut';
+		if (type == 'column' || type == "bar" || type == "bubble" || type == "polar")
+			chart.model.series[0].marker.visible = false;
+		else
+			chart.model.series[0].marker.visible = true;
+		chart.redraw();
+	});	
+	
+	$('#series').change(function () {
+        var chart = $("#container").ejChart("instance");
+		chart.model.series[0].enableAnimation = $('#series').is(":checked");
+		if ($('#series').is(":checked"))
+			chart.animate();		
+	});
+	
+	function animationDuration(sender)
+	{
+		var chart = $("#container").ejChart("instance");
+		chart.model.series[0].animationDuration=parseInt(sender.value);
+		chart.animate();
+    }
+	$("#sampleProperties").ejPropertiesPanel();
+ </script>
+   <style class="cssStyles">
+        label{
+		margin-bottom : -25px !important ;
+		text-align :center !important;
+		}
+        .tooltipDiv {
+            background-color:#E94649;        
+            color: white;
+			width:130px;
+        }
+        #Tooltip >div:first-child {
+            float: left;
+        }
+        #Tooltip #value {
+            float: right;
+            height: 50px;
+            width: 60px;
+        }
+        #Tooltip #value >div {
+            margin: 5px 5px 5px 5px;            
+        }
+        #Tooltip #no-of-airports {
+            font-size: 20px;
+            font-family: segoe ui;
+			padding-left: 2px;
+			color: #ffffff;
+        }
+         #Tooltip #airport {
+            font-size: 12px;
+            font-family: segoe ui;
+			color: #ffffff;
+        }
+        #airplaneicon {			
+            background-image: url("../content/images/chart/airplane.png");
+            height: 60px;           
+            width: 60px;
+            background-repeat: no-repeat;
+        }		 
+  </style>
+ </body>
+</html>
+

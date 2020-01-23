@@ -1,0 +1,562 @@
+﻿html, body
+{
+    width: 100%;
+    margin: 0;
+}
+
+body
+{
+    font-family: Segoe UI;
+    font-size: 14px;
+}
+label {
+    font-weight:normal;
+}
+.container
+{
+    min-width: 290px;
+}
+.top-inner-section.container
+{
+    width: auto;
+}
+.topbox {
+    background-color: #000000;
+    min-height: 60px;
+    position: absolute;
+    min-width: 100%;
+}
+.e-gridcontent .e-table {
+    width:100% !important;
+}
+
+.e-gridheader .e-table {
+    width:100% !important;
+}
+/*.e-grid .e-headercell,.e-grid .e-scrollcss,.e-grid .e-grouptopleftcell {
+    background: none repeat scroll 0 0 #84C865;
+    color:white;
+}
+
+.e-grid .e-gridheader {
+    border-bottom-style: none;
+    border-bottom-width: 3px;
+}*/
+.top-section
+{
+    background-image: url("../images/weather-image.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center bottom;
+    background-color: #262626;
+    min-height: 433px;
+}
+
+.Innersection
+{
+    display: table;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.sample-body
+{
+    background-color: #F4F4F4;
+}
+
+#WeatherIcon
+{
+    display: table;
+    margin: auto;
+    position: relative;
+}
+
+#WeatherImage
+{
+    margin-top: -30px;
+    width: 100%;
+    height: 410px;
+}
+
+.sample-content
+{
+    display: table;
+    margin: auto;
+}
+
+.weather-samples
+{
+    padding-bottom: 130px;
+}
+
+#HourData
+{
+    padding-bottom: 50px;
+}
+
+.top-inner-section
+{
+    min-height: 370px;
+    margin-top: -30px;
+    width: 100%;
+}
+.top-inner-section .row
+{
+    margin-top: 62px;
+}
+#HeaderBar1, #HeaderBar2
+{
+    font-size: 32px;
+    height: 50px;
+    margin-top: 20px;
+    font-weight: 100;
+}
+
+#CircleTable
+{
+    padding-top: 30px;
+    margin: auto;
+    text-align: center;
+}
+
+#Circle1, #Circle2
+{
+    background-image: url("../images/weatherCircle12.png");
+}
+
+#Circle3
+{
+    background-image: url("../images/weatherCircle3.png");
+    padding-top: 20px;
+}
+
+#Circle1, #Circle2, #Circle3
+{
+    background-repeat: no-repeat;
+    background-size: 220px 220px;
+    background-position: center;
+    height: 220px;
+    margin: 20px 0;
+    text-align: center;
+}
+#Circle1
+{
+    padding-top: 55px;
+}
+#Circle2
+{
+    padding-top: 52px;
+}
+.buttons
+{
+    float: right;
+    padding-top: 6px;
+}
+
+.buttons > a
+{
+    float: left;
+    width: 32px;
+    height: 32px;
+    margin-left: 20px;
+}
+
+.signal.inactive
+{
+    background-position: 0px -46px;
+}
+
+.signal.inactive:hover
+{
+    background-position: 0px -137px;
+}
+
+.signal.active
+{
+    background-position: 0px -228px;
+}
+
+.square.inactive
+{
+    background-position: 0px -1px;
+}
+
+.square.inactive:hover
+{
+    background-position: 0px -92px;
+}
+
+.square.active
+{
+    background-position: 0px -183px;
+}
+
+.signal.inactive, .signal.inactive:hover, .signal.active, .square.inactive, .square.inactive:hover, .square.active
+{
+    background-image: url("../images/switch-icons.png");
+    background-repeat: no-repeat;
+}
+
+.e-grid .groupcaption, .e-grid .indentcell, .e-grid .recordpluscollapse, .e-grid .recordplusexpand, .e-grid .recordplusexpand > div
+{
+    background-color: white;
+}
+
+.e-grid .gridheader
+{
+    border-bottom: 1px solid #C4C4C4;
+}
+
+.e-grid .groupcaption
+{
+    font-size: 16px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.e-grid-core .headercell, .e-grid-core .headercell-hover
+{
+    border: none;
+    height: 30px;
+}
+
+.e-grid-core .headercelldiv
+{
+    text-align: center;
+    font-weight: normal;
+    display: table;
+    margin: auto;
+}
+
+.e-grid .indentcell
+{
+    border: none;
+}
+
+.e-grid .e-rowcell.date, .e-grid .e-rowcell.skycondition, .e-grid .e-rowcell.wind, .e-grid .e-rowcell.pressure
+{
+    font-size: 18px;
+    border-style: none;
+}
+
+.e-grid .e-rowcell.average
+{
+    font-size: 14px;
+    border-style: none;
+}
+
+.e-grid .e-rowcell.temperature
+{
+    font-size: 32px;
+    font-weight: 100;
+    border-style: none;
+}
+
+.enablerowhover
+{
+    color: #6D6D6D !important;
+}
+
+.Cloudy, .Partly.Cloudy, .Partly.Sunny
+{
+    background-position: 0 -98px;
+}
+
+.Rain.Storm
+{
+    background-position: 0 -294px;
+}
+
+.Rainy
+{
+    background-position: 0 -490px;
+}
+
+.Snow
+{
+    background-position: 0 -686px;
+}
+
+.Sunny
+{
+    background-position: 0 -882px;
+}
+
+.Thunder
+{
+    background-position: 0 -1078px;
+}
+
+.selectionbackground > .Cloudy, .selectionbackground > .Partly.Cloudy, .selectionbackground > .Partly.Sunny
+{
+    background-position: 0 0;
+}
+
+.selectionbackground > .Rainy.Storm
+{
+    background-position: 0 -196px;
+}
+
+.selectionbackground > .Rainy
+{
+    background-position: 0 -392px;
+}
+
+.selectionbackground > .Snow
+{
+    background-position: 0 -588px;
+}
+
+.selectionbackground > .Sunny
+{
+    background-position: 0 -784px;
+}
+
+.selectionbackground > .Thunder
+{
+    background-position: 0 -980px;
+}
+
+.Cloudy, .Partly.Cloudy, .Partly.Sunny, .Rain.Storm, .Rainy, .Snow, .Sunny, .Thunder, .selectionbackground > .Cloudy, .selectionbackground > .Partly.Cloudy, .selectionbackground > .Partly.Sunny, .selectionbackground > .Rain.Storm, .selectionbackground > .Rainy, .selectionbackground > .Snow, .selectionbackground > .Sunny, .selectionbackground > .Thunder
+{
+    background-image: url("../images/weather-icons.png");
+    background-repeat: no-repeat;
+    margin: auto;
+    height: 48px;
+    width: 48px;
+}
+
+#Circle_Temperature
+{
+    font-size: 54px;
+    color: white;
+    font-weight: 100;
+}
+
+#Circle_SkyCondition, #Circle_Day, #HumidityCaption, #DewPointCaption
+{
+    font-size: 16px;
+    color: white;
+    font-weight: 600;
+    opacity: 0.6;
+}
+
+#Circle_City
+{
+    font-size: 22px;
+    color: white;
+}
+
+#Circle_Time, #Circle_Humidity, #Circle_DewPoint
+{
+    color: white;
+    font-weight: 100;
+    font-size: 42px;
+}
+
+#HumidityCaption, #DewPointCaption
+{
+    margin-top: -7px;
+}
+
+#bottomhalf
+{
+    margin-top: 20px;
+}
+
+#ScreenLeft, #ScreenRight
+{
+    height: 600px;
+}
+
+#HourData, #AverageData
+{
+    height: 500px;
+}
+
+#HourChart, #AverageChart
+{
+    border: 1px solid #C4C4C4;
+}
+
+#precipitationTooltip .value, #sunlightTooltip .value
+{
+    float: right;
+    height: 60px;
+    width: 200px;
+    color: white;
+}
+
+#sunlightTooltip .value
+{
+    width: 150px;
+}
+
+#precipitationTooltip .value > div, #sunlightTooltip .value > div
+{
+    margin: 5px 5px 5px 5px;
+}
+
+#precipitationTooltip .month, #sunlightTooltip .month
+{
+    font-size: 20px;
+    font-family: segoe ui;
+}
+
+#precipitationTooltip .precipitation, #sunlightTooltip .sunlight
+{
+    font-size: 12px;
+    font-family: segoe ui;
+}
+#AverageGrid
+{
+    min-width: 630px;
+}
+.averagegridwrapper
+{
+    overflow: auto;
+}
+
+@media (max-width:1900px) {
+  .boxcompress {
+    margin-left: auto;
+    margin-right: auto;
+    width: 950px;
+}
+}
+@media (min-width: 1900px)
+{
+     .weather-samples {
+        display:inline-block;
+       margin:0 auto;
+        min-width: 100%;
+    }
+      #ScreenLeft,#ScreenRight {
+        position:relative;
+        width:947px;
+        margin-left: auto;
+        margin-right:auto;
+        padding:20px;
+    }
+       .boxcompress {
+    margin-left: auto;
+    margin-right: auto;
+    width: 950px;
+}
+    .top-inner-section
+    {
+        background-size: 100% 100%;
+    }
+}
+@media (max-width:920px) {
+    .boxcompress {
+        margin-left: auto;
+        margin-right: auto;
+        width: 765px;
+    }
+}
+@media (max-width:768px)
+{
+  #HeaderBar1, #HeaderBar2 {
+    padding-left: 15px;
+    padding-right: 30px;
+}
+
+    #Circle1, #Circle2, #Circle3
+    {
+        background: rgba(0,0,0,0.2);
+        border: 3px solid rgba(255,255,255,0.3);
+        display: inline-block;
+        float: left;
+        height: 145px;
+        margin-left: 25px;
+        margin-right: 25px;
+        padding-bottom: 30px;
+        padding-top: 30px;
+        width: 25%;
+    }
+    #bottomhalf, #tophalf
+    {
+        padding-top: 13px;
+        padding-bottom: 13px;
+    }
+    #Circle3
+    {
+        padding: 0px;
+    }
+    #tophalf
+    {
+        border-bottom: 3px solid rgba(255,255,255,0.3);
+    }
+    #bottomhalf
+    {
+        margin-top: 0px;
+    }
+    .top-section #Circle1
+    {
+        padding-top: 45px;
+    }
+    .top-inner-section.container
+    {
+        width: auto;
+    }
+    #Circle_Temperature, #Circle_Time, #Circle_Humidity, #Circle_DewPoint
+    {
+        font-size: 18px;
+    }
+           .boxcompress {
+    
+    width: 600px;
+}
+}
+@media (max-width:600px)
+{
+    #Circle1, #Circle2, #Circle3
+    {
+        margin-left: 100px;
+        margin-right: 100px;
+        display: block;
+        float: none;
+        height: auto;
+        width: auto;
+    }
+    #tophalf, #bottomhalf
+    {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+        .boxcompress {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 400px;
+}
+}
+@media (max-width:430px)
+{
+    #HeaderBar1, #HeaderBar2
+    {
+        font-size: 21px;
+    }
+    #AverageGrid
+    {
+        min-width: 630px;
+    }
+    .averagegridwrapper
+    {
+        overflow: auto;
+    }
+    body
+    {
+        min-width: 335px;
+        overflow: auto;
+    }
+    .boxcompress {
+    margin-left: 0;
+    margin-right: 0;
+    width: 320px;
+}
+    
+}

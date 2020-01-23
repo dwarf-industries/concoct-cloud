@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Show or Hide Columns</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->    
+    <script src="../scripts/jsonkanbandata.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/jquery.validate.min.js"></script>
+    <script src="../scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="Kanban"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row" style="margin-top: 8px;">
+                        <div class="col-md-3">
+                            Column
+                        </div>
+                        <div class="col-md-3">
+                            <select id="columnName" class="e-ddl" data-bind="value: field">
+                                <option value="Backlog" selected="selected">Backlog</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Testing">Testing</option>
+                                <option value="Done">Done</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 15px;">
+                        <div class="col-md-3">
+                            <input id="btnHide" type="button" value="Hide" class="e-btn" />
+                        </div>
+                        <div class="col-md-3">
+                            <input id="btnShow" type="button" value="Show" class="e-btn" />
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 15px;">
+                        <div class="col-md-3" style="height:20px;">
+                            Hidden Columns
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <textarea id="hideColumns" class="ejinputtext" style="width: 118px; height: 138px" readonly="readonly"></textarea>
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            var data = ej.DataManager(window.kanbanData).executeLocal(ej.Query().take(30));
+            $("#Kanban").ejKanban(
+            {
+                dataSource: data,
+                columns: [
+                    { headerText: "Backlog", key: "Open" },
+                    { headerText: "In Progress", key: "InProgress" },
+                    { headerText: "Testing", key: "Testing" },
+                    { headerText: "Done", key: "Close" }
+                ],
+                keyField: "Status",
+                allowTitle: true,
+                fields: {
+                    primaryKey: "Id",
+                    content: "Summary",
+                    imageUrl: "ImgUrl"
+                },
+                allowSelection: false
+            });
+            $("#columnName").ejDropDownList({ width: "110", selectedItemIndex: 0 ,change:"Onchange"});
+            $("#btnHide").ejButton({ size: "small", click: "showhide" });
+            $("#btnShow").ejButton({ size: "small", click: "showhide" });
+            $("#btnMultihide").ejButton({ size: "big", click: "hideMulti" });
+            $("#btnMutiShow").ejButton({ size: "big", click: "showMulti" });
+		    $("#btnShow").ejButton("disable");
+        });
+        $("#sampleProperties").ejPropertiesPanel();  
+		function Onchange() {
+            var kanbanObj = $("#Kanban").data("ejKanban");
+            var columnName = $("#columnName").ejDropDownList("getSelectedValue");
+            if ($.inArray(columnName, kanbanObj.getVisibleColumnNames()) == -1) {
+                $("#btnHide").ejButton({ enabled: false });
+                $("#btnShow").ejButton({ enabled: true });
+            }
+            else {
+                $("#btnHide").ejButton({ enabled: true });
+                $("#btnShow").ejButton({ enabled: false });
+            }
+        }
+        function showhide() {
+            var kanbanObj = $("#Kanban").data("ejKanban");
+            var selectedItem = $("#columnName").ejDropDownList("getSelectedValue");
+            if (this.element[0].id == "btnHide") {
+                if (kanbanObj.getColumnByHeaderText(selectedItem).visible) {
+                    if (kanbanObj.getVisibleColumnNames().length > 1) {
+                        kanbanObj.hideColumns(selectedItem);
+                        $("#hideColumns").val().indexOf(selectedItem) == -1 && $("#hideColumns").val($("#hideColumns").val() + (selectedItem + "\n"));
+						$("#btnHide").ejButton("disable");
+                        $("#btnShow").ejButton("enable");
+                    } else
+                        alert("Atleast one column must be displayed in kanban");
+                }
+            } else {
+                $("#hideColumns").val($("#hideColumns").val().replace(selectedItem + "\n", ""));
+                kanbanObj.showColumns(selectedItem);
+				 $("#btnHide").ejButton("enable");
+                $("#btnShow").ejButton("disable");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" style="height: 100%; width: 100%;">
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-2.1.4.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body style="overflow: hidden; position: static; margin: 0; padding: 0; height: 100%; width: 100%;">
+
+    <div id="container" style="position: absolute; height: 100%; width: 100%;"></div>   
+    <script type="text/javascript">
+        $(function () {
+            $("#container").ejReportViewer(
+                {
+                    reportServiceUrl: window.baseurl + 'api/ReportViewer',
+                    processingMode: ej.ReportViewer.ProcessingMode.Remote,
+                    reportPath: 'Sales Dashboard.rdl'
+                });
+        });
+    </script>
+</body>
+</html>

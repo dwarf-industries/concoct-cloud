@@ -1,0 +1,564 @@
+<!doctype html>
+<html>
+<head>
+    <title>Essential JS 1 : Ribbon - Gallery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/ribbon-css/ej.icons.css" rel="stylesheet" />
+	<link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+	<!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="defaultRibbon" style="margin-top: 20px">
+                </div>
+                <ul id="ribbonmenu">
+				<li><a>FILE</a>
+                    <ul>
+                    <li><a>New</a></li>
+                    <li><a>Open</a></li>
+                    <li><a>Save</a></li>
+                    <li><a>Save As</a></li>
+                    <li><a>Print</a></li>
+			    	</ul>
+			    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+		 <ul id="extramenu">
+				<li><a>New Quick Step</a>
+                    <ul>
+                    <li><a>Move to new folder</a></li>
+                    <li><a>Categorize & Move</a></li>
+                    <li><a>Flag & Move</a></li>
+			    	</ul>
+			    </li>
+                </ul>
+
+    <script type="text/javascript">
+        var ribbonObj;
+        $(function () {
+            var fontfamily = ["Segoe UI", "Arial", "Times New Roman", "Tahoma", "Helvetica"], fontsize = ["1pt", "2pt", "3pt", "4pt", "5pt"];
+              $("#defaultRibbon").ejRibbon({
+                width: "100%",
+				allowResizing:true,
+				expandPinSettings:{				   
+				    toolTip: "Collapse the Ribbon"                  
+				},
+                collapsePinSettings:{
+				    toolTip: "Pin the Ribbon"
+				},
+                applicationTab: { type: ej.Ribbon.ApplicationTabType.Menu, menuItemID: "ribbonmenu", menuSettings: { openOnClick: false } },
+                tabs: [{
+                    id: "home", text: "HOME", groups: [{
+                        text: "New", alignType: ej.Ribbon.AlignType.Rows, content: [{
+                            groups: [{
+                                id: "new",
+                                text: "New",
+                                toolTip: "New",
+                                buttonSettings: {
+                                    contentType: ej.ContentType.ImageOnly,
+                                    imagePosition: ej.ImagePosition.ImageTop,
+                                    prefixIcon: "e-icon e-ribbon e-new",
+                                    click: "executeAction"
+                                }
+                            }
+                            ],
+                            defaults: {
+                                type: ej.Ribbon.Type.Button,
+                                width: 60,
+                                height: 70
+                            }
+                        }]
+                    },
+					{
+                        text: "Font", alignType: "rows", content: [{
+                            groups: [{
+                                id: "fontfamily",
+                                toolTip: "Font",
+                                dropdownSettings: {
+                                    dataSource: fontfamily,
+                                    text: "Segoe UI",
+                                    width: 150
+                                }
+                            },
+                            {
+                                id: "fontsize",
+                                toolTip: "FontSize",
+                                dropdownSettings: {
+                                    dataSource: fontsize,
+                                    text: "1pt",
+                                    width: 65
+                                }
+                            }],
+                            defaults: {
+                                type: ej.Ribbon.Type.DropDownList,
+                                height: 28,
+                                isBig: false,
+                            }
+                        },
+                        {
+                            groups: [{
+                                id: "bold",
+                                text: "bold",
+                                toolTip: "Bold",
+                                buttonSettings: {
+                                    contentType: ej.ContentType.ImageOnly,
+                                    prefixIcon: "e-icon e-ribbon bold"
+                                }
+                            },
+                               {
+                                   id: "italic",
+                                   text: "italic",
+                                   text: "italic",
+                                   toolTip: "Italic",
+                                   buttonSettings: {
+                                       contentType: ej.ContentType.ImageOnly,
+                                       prefixIcon: "e-icon e-ribbon e-ribbonitalic"
+                                   }
+                               },
+                               {
+                                   id: "underline",
+                                   text: "underline",
+                                   text: "underline",
+                                   toolTip: "Underline",
+                                   buttonSettings: {
+                                       contentType: ej.ContentType.ImageOnly,
+                                       prefixIcon: "e-icon e-ribbon e-ribbonunderline"
+                                   }
+                               },
+                               {
+                                   id: "strikethrough",
+                                   text: "strikethrough",
+                                   toolTip: "Strikethrough",
+                                   buttonSettings: {
+                                       contentType: ej.ContentType.ImageOnly,
+                                       prefixIcon: "e-icon e-ribbon strikethrough"
+                                   }
+                               },
+                               {
+                                   id: "superscript",
+                                   text: "superscript",
+                                   toolTip: "Superscript",
+                                   buttonSettings: {
+                                       contentType: ej.ContentType.ImageOnly,
+                                       prefixIcon: "e-icon e-ribbon e-superscripticon"
+                                   }
+                               },
+                               {
+                                   id: "subscript",
+                                   text: "subscript",
+                                   toolTip: "Subscript",
+                                   enableSeparator: true,
+                                   buttonSettings: {
+                                       contentType: ej.ContentType.ImageOnly,
+                                       prefixIcon: "e-icon e-ribbon e-subscripticon"
+                                   }
+                               },
+                            {
+                                id: "uppercase",
+                                text: "Upper Case",
+                                toolTip: "Upper Case",
+                                buttonSettings: {
+                                    contentType: ej.ContentType.ImageOnly,
+                                    prefixIcon: "e-icon e-ribbon e-uppercase"
+                                }
+                            },
+                            {
+                                id: "lowercase",
+                                text: "Lower Case",
+                                toolTip: "Lower Case",
+                                buttonSettings: {
+                                    contentType: ej.ContentType.ImageOnly,
+                                    prefixIcon: "e-icon e-ribbon e-lowercase"
+                                }
+                            }],
+                            defaults: {
+                                type: ej.Ribbon.Type.Button,
+                                isBig: false,
+                            }
+                        }]
+                    },
+					{
+                        text: "Gallery", alignType: ej.Ribbon.AlignType.Rows, content: [{
+                            groups: [{
+                                id: "Gallery",
+								columns:3,
+								itemHeight:54,
+								itemWidth:68,
+								expandedColumns:4,
+								type:ej.Ribbon.type.gallery,
+                                galleryItems: [{
+                                    text:"GalleryContent1",
+									toolTip:"GalleryContent1",
+									buttonSettings: {
+                                    contentType: ej.ContentType.ImageOnly,
+                                    prefixIcon:  "e-icon e-gallerycontent1 e-gbtnimg",
+									cssClass:"e-gbtnposition"
+                                  }
+                                },
+								{
+                                    text:"GalleryContent2",
+									toolTip:"GalleryContent2",
+									buttonSettings: {
+                                    contentType: ej.ContentType.ImageOnly,
+                                    prefixIcon:  "e-icon e-gallerycontent2 e-gbtnimg",
+									cssClass:"e-gbtnposition"
+                                  }
+                                },
+								{
+                                    text:"GalleryContent3",
+									toolTip:"GalleryContent3",
+									buttonSettings: {
+                                    contentType: ej.ContentType.ImageOnly,
+                                    prefixIcon:  "e-icon e-gallerycontent3 e-gbtnimg",
+									cssClass:"e-gbtnposition"
+                                  }
+                                },
+								{
+                                    text:"GalleryContent4",
+									toolTip:"GalleryContent4",
+									buttonSettings: {
+                                    contentType: ej.ContentType.ImageOnly,
+                                    prefixIcon:  "e-icon e-gallerycontent4 e-gbtnimg",
+									cssClass:"e-gbtnposition"
+                                  }
+                                },
+								{
+                                    text:"GalleryContent5",
+									toolTip:"GalleryContent5",
+									buttonSettings: {
+                                    contentType: ej.ContentType.ImageOnly,
+                                    prefixIcon:  "e-icon e-gallerycontent5 e-gbtnimg",
+									cssClass:"e-gbtnposition"
+                                  }
+                                },
+								{
+                                    text:"GalleryContent6",
+									toolTip:"GalleryContent6",
+									buttonSettings: {
+                                    contentType: ej.ContentType.ImageOnly,
+                                    prefixIcon:  "e-icon e-gallerycontent6 e-gbtnimg",
+									cssClass:"e-gbtnposition"
+                                  }
+                                },
+								{
+                                    text:"GalleryContent7",
+									toolTip:"GalleryContent7",
+									buttonSettings: {
+                                    contentType: ej.ContentType.ImageOnly,
+                                    prefixIcon:  "e-icon e-gallerycontent7 e-gbtnimg",
+									cssClass:"e-gbtnposition"
+                                  }
+                                },
+								{
+                                    text:"GalleryContent8",
+									toolTip:"GalleryContent8",
+									buttonSettings: {
+                                    contentType: ej.ContentType.ImageOnly,
+                                    prefixIcon:  "e-icon e-gallerycontent8 e-gbtnimg",
+									cssClass:"e-gbtnposition"
+                                  }
+                                },
+								{
+                                    text:"GalleryContent9",
+									toolTip:"GalleryContent9",
+									buttonSettings: {
+                                    contentType: ej.ContentType.ImageOnly,
+                                    prefixIcon:  "e-icon e-gallerycontent9 e-gbtnimg",
+									cssClass:"e-gbtnposition"
+                                  }
+                                }],
+								customGalleryItems:[
+								{
+                                    text:"Save Selection as new quick style",
+									toolTip:"Save Selection as new quick style",
+									customItemType:ej.Ribbon.CustomItemType.Button,
+									buttonSettings:{cssClass:"e-extrabtnstyle"}
+                                },
+								{
+									customItemType:ej.Ribbon.CustomItemType.Menu,
+									menuId:"extramenu",
+									menuSettings:{ openOnClick: false}
+                                },
+								{
+                                    text:"Clear Formatting",
+									toolTip:"Clear Formatting",
+									customItemType:ej.Ribbon.CustomItemType.Button,
+									buttonSettings:{cssClass:"e-extrabtnstyle"}
+                                },
+								{
+                                    text:"Apply Styles",
+									toolTip:"Apply Styles",
+									customItemType:ej.Ribbon.CustomItemType.Button,
+									buttonSettings:{cssClass:"e-extrabtnstyle"}
+                                }
+							    ]
+                            }]
+                        }]
+                    }
+					]
+                },
+				{
+				    id: "Calculator", text: "CALCULATOR", groups: [{
+				        text: "Numbers", alignType: "rows", content: [
+                        {
+                            groups: [
+                            {
+                                id: "Zero",
+                                text: "0",
+                                toolTip: "Zero"
+                            },
+                            {
+                                id: "one",
+                                text: "1",
+                                toolTip: "One"
+                            },
+                                                    {
+                                                        id: "two",
+                                                        text: "2",
+                                                        toolTip: "Two"
+                                                    },
+                                                    {
+                                                        id: "three",
+                                                        text: "3",
+                                                        toolTip: "Three"
+                                                    },
+                                                    {
+                                                        id: "four",
+                                                        text: "4",
+                                                        toolTip: "Four"
+                                                    }],
+                            defaults: {
+                                type: ej.Ribbon.Type.Button,
+                                isBig: false,
+                            }
+                        },
+                        {
+                            groups: [
+                                                           {
+                                                               id: "five",
+                                                               text: "5",
+                                                               toolTip: "Five"
+                                                           },
+                           {
+                               id: "six",
+                               text: "6",
+                               toolTip: "Six"
+                           },
+                           {
+                               id: "seven",
+                               text: "7",
+                               toolTip: "Seven"
+                           },
+                                                   {
+                                                       id: "eight",
+                                                       text: "8",
+                                                       toolTip: "Eight"
+                                                   },
+                                                   {
+                                                       id: "nine",
+                                                       text: "9",
+                                                       toolTip: "Nine"
+                                                   }],
+                            defaults: {
+                                type: ej.Ribbon.Type.Button,
+                                isBig: false,
+                            }
+                        }]
+				    },
+                    {
+                        text: "Point", alignType: "rows", content: [
+                        {
+                            groups: [
+                            {
+                                id: "dot",
+                                text: "dot",
+                                toolTip: "Dot",
+                                buttonSettings: {
+                                    contentType: ej.ContentType.ImageOnly,
+                                    prefixIcon: "e-icon e-ribbon e-dot"
+                                }
+
+                            }],
+                            defaults: {
+                                type: ej.Ribbon.Type.Button,
+                                isBig: false,
+                            }
+                        }]
+                    },
+                    {
+                        text: "Operators", alignType: "rows", content: [
+                        {
+                            groups: [
+                            {
+                                id: "plus",
+                                text: " + ",
+                                toolTip: "Plus",
+                            },
+                            {
+                                id: "minus",
+                                text: " - ",
+                                toolTip: "Minus",
+                            },
+                                                    {
+                                                        id: "multiply",
+                                                        text: " * ",
+                                                        toolTip: "Multiply"
+                                                    }],
+                            defaults: {
+                                type: ej.Ribbon.Type.Button,
+                                isBig: false,
+                            }
+                        },
+                        {
+                            groups: [
+                           {
+                               id: "divide",
+                               text: " / ",
+                               toolTip: "Divide"
+                           },
+                           {
+                               id: "modulo",
+                               text: " % ",
+                               toolTip: "Modulo",
+                               width: "28px"
+                           }],
+                            defaults: {
+                                type: ej.Ribbon.Type.Button,
+                                isBig: false,
+                            }
+                        }]
+                    }
+				    ]
+				}]
+            });
+            $("#activeItem").ejDropDownList({ "change": "setActiveItem", watermarkText: "Select", width: "80px" });
+            $("#replaceItem").ejDropDownList({ watermarkText: "Select", width: "80px" });
+            $("#Disable").ejDropDownList({ "change": "onDisable", watermarkText: "Select", width: "80px" })
+            $("#Enable").ejDropDownList({ "change": "onEnable", watermarkText: "Select", width: "80px" });
+            $("#showtab").ejDropDownList({ "change": "onshow", watermarkText: "Select", width: "80px" })
+            $("#hidetab").ejDropDownList({ "change": "onhide", watermarkText: "Select", width: "80px" });
+            ribbonObj = $("#defaultRibbon").data("ejRibbon");
+        });
+
+        function onDisable(args) {
+            if (ribbonObj.model) {
+                ribbonObj.option({ disabledItemIndex: [parseInt(args.value)] });
+                $("#Enable").ejDropDownList("clearText");
+            }
+        }
+
+        function onEnable(args) {
+            if (ribbonObj.model) {
+                ribbonObj.option({ enabledItemIndex: [parseInt(args.value)] });
+                $("#Disable").ejDropDownList("clearText");
+            }
+        }
+        function setActiveItem(args) {
+            if (ribbonObj.model) {
+                ribbonObj.option({ selectedItemIndex: parseInt(args.value) });
+            }
+        }
+        function onhide(e) {
+            if (ribbonObj.model) {
+                var tabs = $("#" + ribbonObj._id).find(".e-header .e-item");
+                if ((ribbonObj.model.tabs.length - tabs.not(":visible").length) > 1)
+                    ribbonObj.hideTab(e.value);
+                else
+                    alert("Atleast one tab must be displayed in ribbon");
+			    $("#showtab").ejDropDownList("clearText");
+            }
+        }
+        function onshow(e) {
+            if (ribbonObj.model) {
+                ribbonObj.showTab(e.value);
+				$("#hidetab").ejDropDownList("clearText");
+            }
+        }
+        $("#headings div").click(function (e) {
+            var parent = $("#headings"), target = e.target.tagName != "DIV" && $(e.target).parent();
+            parent.find(".e-activestyle").length && parent.children().removeClass("e-activestyle");
+            $(target).addClass("e-activestyle");
+        });
+        $("#tables div").click(function (e) {
+            var parent = $("#tables"), target = e.target.tagName != "DIV" && $(e.target).parents("div").first();
+            parent.find(".e-activestyle").length && parent.children().removeClass("e-activestyle");
+            $(target).addClass("e-activestyle");
+        });
+    </script>
+    <style>
+        .e-gallerycontent1 {
+            background-position: 0 -105px;
+        }
+
+        .e-gallerycontent2 {
+            background-position: -69px -105px;
+        }
+
+        .e-gallerycontent3 {
+            background-position: -136px -105px;
+        }
+
+        .e-gallerycontent4 {
+            background-position: 0 -53px;
+        }
+
+        .e-gallerycontent5 {
+            background-position: -69px -53px;
+        }
+
+        .e-gallerycontent6 {
+            background-position: -136px -53px;
+        }
+
+        .e-gallerycontent7 {
+            background-position: 0 0px;
+        }
+
+        .e-gallerycontent8 {
+            background-position: -69px 0px;
+        }
+
+        .e-gallerycontent9 {
+            background-position: -136px 0px;
+        }
+
+        .e-gbtnposition {
+            margin-top: 5px;
+        }
+
+        .e-gbtnimg {
+            background-image: url("../content/images/ribbon/homegallery.png");
+            background-repeat: no-repeat;
+            height: 64px;
+            width: 64px;
+        }
+
+        .e-ribbon.e-js .e-extracontent .e-btn.e-extrabtnstyle {
+            padding-left: 28px;
+            text-align: left;
+        }
+
+        .row .cols-sample-area {
+            min-height: 490px !important;
+        }
+    </style>
+
+
+</body>
+</html>

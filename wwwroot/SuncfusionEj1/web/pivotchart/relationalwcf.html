@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" type="text/css" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+       <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+      <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="control">
+                    <div id="PivotChart1" style="min-height: 275px; min-width: 525px; height: 460px; width: 950px">
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    $("#PivotChart1").ejPivotChart({
+                        url: window.baseurl + "wcf/PivotChart/Relational.svc", serviceMethodSettings: { initialize: "Initialize", drillDown: "Drill" },
+                        isResponsive: true,zooming : { enableScrollbar : true},
+                        type: ej.PivotChart.ChartTypes.Column,
+                        commonSeriesOptions: {
+                            enableAnimation: true,
+                            type: ej.PivotChart.ChartTypes.Column, tooltip: { visible: true }
+                        },
+                        size: { height: "460px", width: "950px" },
+                        primaryYAxis: { title: { text: "Amount" } },
+                        legend: { visible: true },
+                        load: "loadTheme"
+                    });
+                });
+            </script>
+        </div>
+    </div>
+    <style>
+        #PivotChart1 {
+            min-height: 275px;
+            min-width: 525px;
+            height: 460px;
+            width: 100%;
+            float: left;
+        }
+
+        .row .cols-sample-area {
+            width: 100%;
+        }
+    </style>
+
+</body>
+</html>

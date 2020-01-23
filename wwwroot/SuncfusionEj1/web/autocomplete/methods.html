@@ -1,0 +1,112 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>Essential JS 1 : Autocomplete Methods</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div class="control">
+                        <input type="text" id="selectCountry" />
+                    </div>
+                </div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-12 methods">
+                            <input type="checkbox" id="check21" class="e-togglebtn" />
+                            <label for="check21">Toggle</label>
+                        </div>
+                        <div class="col-md-12 methods">
+                            <input type="button" id="GetValue" value="Get value" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" class="jsScript">
+        var autocomplete;
+        $(function () {
+            // declaration
+            var countries = [
+                 { text: "Algeria", key: "flag-dz" }, { text: "Argentina", key: "flag-ar" },
+                { text: "Armenia", key: "flag-am" }, { text: "Brazil", key: "flag-br" },
+                { text: "Bangladesh", key: "flag-bd" }, { text: "Canada", key: "flag-ca" },
+                { text: "Cuba", key: "flag-cu" }, { text: "China", key: "flag-cn" },
+                { text: "Denmark", key: "flag-dk" }, { text: "Estonia", key: "flag-ee" },
+                { text: "Egypt", key: "flag-eg" }, { text: "France", key: "flag-fr" },
+                { text: "Finland", key: "flag-fi" }, { text: "Greenland", key: "flag-gl" },
+                { text: "India", key: "flag-in" }, { text: "Indonesia", key: "flag-id" },
+                { text: "Malaysia", key: "flag-my" }, { text: "Mexico", key: "flag-mx" },
+                { text: "New Zealand", key: "flag-nz" }, { text: "Netherlands", key: "flag-nl" },
+                { text: "Norway", key: "flag-no" }, { text: "Portugal", key: "flag-pt" },
+                { text: "Poland", key: "flag-pl" }, { text: "Qatar", key: "flag-qa" },
+                { text: "Romania", key: "flag-ro" }, { text: "Spain", key: "flag-es" },
+                { text: "Singapore", key: "flag-sg" }, { text: "Saudi Arabia", key: "flag-sa" },
+                { text: "Thailand", key: "flag-th" }, { text: "Turkey", key: "flag-tr" },
+                { text: "Ukraine", key: "flag-ua" }, { text: "United States", key: "flag-us" },
+                { text: "Uruguay", key: "flag-uy" }, { text: "Viet Nam", key: "flag-vn" }
+            ];
+            $('#selectCountry').ejAutocomplete({
+                dataSource: countries,
+                width: "100%",
+                watermarkText: "Select a country",
+                fields: { key: "key" }
+            });
+            autocomplete = $('#selectCountry').data("ejAutocomplete");
+            $("#check21").ejToggleButton({
+                defaultText: "Disable",
+                activeText: "Enable",
+                click: "changeState",
+                width: "107px",
+            });
+            $("#GetValue").ejButton({
+                width: "107px",
+                click: "currentValue"
+            });
+            $("#sampleProperties").ejPropertiesPanel();
+        });
+        function changeState(args) {
+            if (args.isChecked) autocomplete.disable();
+            else autocomplete.enable();
+        }
+        function currentValue(args) {
+            alert("Current value is : " + autocomplete.getValue());
+        }
+    </script>
+    <style type="text/css">
+        .frame span {
+            display: block;
+        }
+
+        .inputbtn {
+            width: 107px;
+        }
+        
+        .prop-grid .methods {
+            height: 60px;
+        }
+		#check21-wrapper{
+		display: inline-block;
+		}
+    </style>
+</body>
+</html>

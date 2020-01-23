@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Column Formatting</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsondata.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <style>
+        table {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div>
+                    <table>
+                        <tr>
+                            <td style="width: 33.3%">
+                                <select id="Number" class="e-ddl">
+                                    <option value="{0:n2}">Rounding - n2</option>
+                                    <option value="{0:n3}">Rounding - n3</option>
+                                    <option value="{0:n5}">Rounding - n5</option>
+                                </select>
+                            </td>
+                            <td style="width: 33.3%">
+                                <select id="Currency" class="e-ddl">
+                                    <option value="{0:c2}">Rounding - c2</option>
+                                    <option value="{0:c3}">Rounding - c3</option>
+                                    <option value="{0:c5}">Rounding - c5</option>
+                                </select>
+                            </td>
+                            <td style="width: 33.3%">
+                                <select id="Date" class="e-ddl">
+                                    <option value="{0:MM/dd/yyyy}">MM/dd/yyyy</option>
+                                    <option value="{0:dd/MM/yyyy}">dd/MM/yyyy</option>
+                                    <option value="{0:dd/MM/yy}">dd/MM/yy</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div id="Grid"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            window.details = [];
+            for (var i = 1 ; i < 10; i++) {
+                var date = new Date("March 20, 2015");
+                date.setDate(date.getDate() + i);
+                window.details.push({ Number: 3233333.233876 / i, Currency: 3500044 / i, Date: date });
+            }
+            $("#Grid").ejGrid({
+                dataSource: window.details,
+                columns: [
+                            { field: "Number", format: "{0:n2}", textAlign: ej.TextAlign.Right, width: 110 },
+                            { field: "Currency", format: "{0:c2}", textAlign: ej.TextAlign.Right, width: 110 },
+                                                { field: "Date", format: "{0:MM/dd/yyyy}", textAlign: ej.TextAlign.Right, width: 110 }
+                ]
+            });
+            $("#Number").ejDropDownList({ "change": "onChange", width: ($("#Number").parents("td").width() + "px") });
+            $("#Currency").ejDropDownList({ "change": "onChange", width: ($("#Currency").parents("td").width() + "px") });
+            $("#Date").ejDropDownList({ "change": "onChange", width: ($("#Date").parents("td").width() + "px") });
+            $("#Number").ejDropDownList("option",{"selectedItemIndex": 0});
+            $("#Currency").ejDropDownList("option", { "selectedItemIndex": 0 });
+            $("#Date").ejDropDownList("option", { "selectedItemIndex": 0 });
+        });
+        function onChange(args) {
+            var grid = $("#Grid").data("ejGrid");
+            var column = grid.getColumnByField(this.element.attr("id").replace("_input", ""));
+            column.format = args.selectedValue;
+            grid.refreshContent(true);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Schedule JS KO-ObservableArray</title>
+    <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script type="text/javascript" src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+    <script src="../scripts/ej.unobtrusive.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/knockout.min.js"></script>
+    <script src="../scripts/ej.widget.ko.min.js"></script>
+    <script src="../scripts/jsonscheduledata.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div style="float: left" id="Schedule1" data-bind="ejSchedule: { width: '100%', appointmentSettings: { dataSource: appointments, id: 'Id', subject: 'Subject', location: 'Location', description: 'Description', startTime: 'StartTime', endTime: 'EndTime', allDay: 'AllDay', recurrence: 'Recurrence', recurrenceRule: 'RecurrenceRule' }, currentView: view, currentDate: date }"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">Current View</div>
+                        <div class="col-md-3">
+                            <input type="text" name="view" value="" style="width: 100px" data-bind="value: view" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">Current Date</div>
+                        <div class="col-md-3">
+                            <input id="datepick" data-bind="ejDatePicker:{value:date, width:'107px'}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            window.viewModel = {
+                appointments: ko.observable(window.API),
+                view: ko.observable("week"),
+                date: ko.observable(new Date(2017, 5, 5))
+            };
+            $(function () {
+                ko.applyBindings(viewModel);
+            });
+            $("#sampleProperties").ejPropertiesPanel();
+        });
+    </script>
+</body>
+</html>

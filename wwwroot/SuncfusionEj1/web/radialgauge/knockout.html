@@ -1,0 +1,143 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>Essential JS 1 : Circular Gauge-Knockout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <link href="../content/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <script src="../scripts/excanvas.min.js" type="text/javascript"></script>
+    <script src="../scripts/knockout.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/ej.unobtrusive.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/ej.widget.ko.min.js"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" align="center">
+                <div id="circularframe">
+                    <div id="circularCore" style="width:100%" data-bind="ejCircularGauge:({value:samplevalue,minimum:minimumValue,maximum:maximumValue,backgroundColor: 'transparent', width: 500,isResponsive: true, readOnly:false,load:'loadGaugeTheme',enableAnimation:false,
+                    scales: [{
+                    showRanges: true, 
+                    startAngle: 122, sweepAngle: 296, radius: 130, showScaleBar: true, size: 1, border: { width: 0.5 }, majorIntervalValue: 20, minorIntervalValue: 10,
+                    pointers: [{
+                        
+                        showBackNeedle: true,
+                        backNeedleLength: 20,
+                        length: 95,
+                        width: 7,
+                        pointerCap: { radius: 12 }
+                    }],
+                    labels: [{
+                        color: '#8c8c8c'
+                    }],
+                    ticks: [{
+                        type: 'major',
+                        distanceFromScale: 2,
+                        height: 16,
+                        width: 1, color: '#8c8c8c'
+                    }, { type: 'minor', height: 8, width: 1, distanceFromScale: 2, color: '#8c8c8c' }],
+                    ranges: [{
+                        distanceFromScale: -28,
+                        startValue: 0,
+                        endValue: 50
+                    }, {
+                        distanceFromScale: -28,
+                        startValue: 50,
+                        endValue: 100,
+                        backgroundColor: '#fc0606',
+                        border: { color: '#fc0606' }
+                    },
+                    {
+                        distanceFromScale: -28,
+                        startValue: 100,
+                        endValue: 120,
+                        backgroundColor: '#f5b43f',
+                        border: { color: '#f5b43f' }
+                    }]
+                }]})"></div>
+                </div>
+                </div>
+             <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Value
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input id="txtValue" type="text" value="" data-bind="ejNumericTextbox: {value:samplevalue, minValue: minimumValue ,maxValue:maximumValue ,width: '100px' }"  />
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="col-md-3">
+                            Minimum Value
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="text" id="minValue" data-bind="ejNumericTextbox: { value:minimumValue, maxValue:maximumValue,  width:100 }" />
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="col-md-3">
+                            Maximum Value
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="text" id="maxValue" data-bind="ejNumericTextbox: { value:maximumValue, maxValue:250, width:100 }" />
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            </div>
+
+           
+        </div>
+    <script type="text/javascript">
+        window.viewModel = {
+            samplevalue: ko.observable(70),
+            minimumValue: ko.observable(0),
+            maximumValue: ko.observable(120)
+        };
+        $('#maxValue').on("keypress", function (e) {
+            if (parseInt($("#maxValue").val()) == parseInt($("#minValue").val())) {
+                $("#maxValue").data("ejNumericTextbox").option("value", parseInt($("#maxValue").val()) + 1);
+            }            
+        });
+        $('#minValue').on("keypress", function (e) {
+			
+            if (parseInt($("#maxValue").val()) == parseInt($("#minValue").val())) {
+                $("#maxValue").data("ejNumericTextbox").option("value", parseInt($("#maxValue").val()) + 1);
+            }
+        });
+        $('#maxValue').on("blur", function (e) {
+            if (parseInt($("#maxValue").val()) == parseInt($("#minValue").val())) {
+                $("#maxValue").data("ejNumericTextbox").option("value", parseInt($("#maxValue").val()) + 1);
+            }
+        });
+        $('#minValue').on("blur", function (e) {
+            if (parseInt($("#maxValue").val()) == parseInt($("#minValue").val())) {
+                $("#maxValue").data("ejNumericTextbox").option("value", parseInt($("#maxValue").val()) + 1);
+            }
+        });
+        $(function () {
+            ko.applyBindings(viewModel);
+        });
+        $("#sampleProperties").ejPropertiesPanel();
+    </script>
+     <style>
+        .col-md-3 .e-ddl .e-input {
+            line-height:20px;
+        }
+    </style>
+</body>
+</html>
+

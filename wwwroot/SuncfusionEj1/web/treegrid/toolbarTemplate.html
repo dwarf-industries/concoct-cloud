@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Essential JS 1 : TreeGrid</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+     <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsontreegriddata.js"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="TreeGridContainer" style="height:400px;width:100%"></div>
+            </div>
+        </div>
+    </div>
+    <script id="ColumnVisibility" type="text/x-jsrender">
+        <input id="dropdownContainer" />
+    </script>
+    <script type="text/javascript">
+	var toolbarLocale = {
+            "en-US": { Reset: "Reset", columnVisibility: "Column Visibility" },
+            "de-DE": { Reset: "Sich ausruhen", columnVisibility: "Säule Sichtweite" },
+            "es-ES": { Reset: "Reiniciar", columnVisibility: "Columna Visibilidad" },
+            "fr-FR": { Reset: "réinitialiser", columnVisibility: "Colonne Visibilité" },
+            "zh-CN": { Reset: "重啟", columnVisibility: "柱 能見度" }
+        };
+        var dropData = [
+           { text: "Task Id", value: "taskID", selected: true },
+           { text: "Start Date", value: "startDate", selected: true },
+           { text: "End Date", value: "endDate", selected: true },
+           { text: "Duration", value: "duration", selected: true },
+           { text: "Progress", value: "progress", selected: true }
+        ],
+        dateFormat = "{0:" + ej.preferredCulture()["calendars"]["standard"]["patterns"]["d"] + "}",
+        treeGridColumns = [
+                    { field: "taskID", headerText: "Task Id", editType: "numericedit", width: window.theme == "material" ? 90 : 60 },
+                    { field: "taskName", headerText: "Task Name", editType: "stringedit" },
+                    { field: "startDate", headerText: "Start Date", editType: "datepicker", format: dateFormat },
+                    { field: "endDate", headerText: "End Date", editType: "datepicker", format: dateFormat },
+                    { field: "duration", headerText: "Duration", editType: "numericedit" },
+                    { field: "progress", headerText: "Progress", editType: "numericedit" }
+        ],
+        columns = $.extend(true, [], treeGridColumns),
+        projectData = $.extend(true, [], sampleData);
+        $(function () {
+
+            $("#TreeGridContainer").ejTreeGrid({
+                dataSource: projectData,
+                childMapping: "subtasks",
+                treeColumnIndex: 1,
+                editSettings: {
+                    allowEditing: true,
+                    editMode: "cellEditing",
+                },
+                isResponsive: true,
+                toolbarClick: function (args) {
+					var locale = args.model.locale;
+                    if (args.itemName == toolbarLocale[locale].Reset) {
+                        var refreshData = $.extend(true, [], sampleData),
+                            refreshColumns = $.extend(true, [], treeGridColumns),
+                        dropObj = $("#dropdownContainer").data("ejDropDownList");
+                        this.setModel({ "dataSource": refreshData, "columns": refreshColumns });
+                        dropObj.clearText();
+                        dropObj.checkAll();
+                    }
+                },
+                rowHeight: window.theme == "material" ? 48 : window.theme == "office-365" ? 36 : 30,
+                toolbarSettings: {
+                    showToolbar: true,
+                    customToolbarItems: [{ templateID: "#ColumnVisibility",tooltipText:"Column Visibility" },{text:"Reset",tooltipText:"Reset"}],
+                },
+                load: function () {
+                    if (window.theme == "material")
+                        this.treeIndentLevelWidth = 16;
+                    var model = this.model,
+                    toolbar = model.toolbarSettings.customToolbarItems;
+                    toolbar[0].tooltipText = toolbarLocale[model.locale].columnVisibility;
+                    toolbar[1].tooltipText = toolbarLocale[model.locale].Reset;
+                },
+                columns: columns,
+                create: function (args) {
+                    $("#dropdownContainer").ejDropDownList({
+                        height: 30,
+                        dataSource: dropData,
+                        showCheckbox: true,
+                        field: { text: "text", value: "value", selected: "selected" },
+                        checkChange: function (args) {
+                            var treeObj = $("#TreeGridContainer").data("ejTreeGrid");
+
+                            if (args.isChecked == false) {
+                                treeObj.hideColumn(args.selectedText);
+                            }
+                            else {
+                                treeObj.showColumn(args.selectedText);
+                            }
+                        }
+                    });
+                }
+            })
+        });
+        
+    </script>
+    <style type="text/css" class="cssStyles">
+        #TreeGridContainer_ColumnVisibility:hover {
+            background: none;
+            border-color: transparent;
+        }
+
+        #TreeGridContainer_ColumnVisibility {
+            padding-top: 2px;
+            padding-bottom: 0px;
+        }
+
+        .Reset:before {
+            content: "\e677";
+        }
+    </style>
+
+</body>
+</html>

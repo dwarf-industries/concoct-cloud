@@ -1,0 +1,411 @@
+﻿<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Media Player Methods</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <script src="../scripts/jsrender.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="api_mediaPlayer"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-6 methods">
+                            Play/Pause
+                        </div>
+                        <div class="col-md-6 methods">
+                            <input type="checkbox" id="togglePlay" value="Pause" />
+                            <label for="togglePlay">Toggle</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 methods">
+                            Stop Media
+                        </div>
+                        <div class="col-md-6 methods">
+                            <input type="button" id="stop" value="Stop" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 methods">
+                            Shuffle Playlist
+                        </div>
+                        <div class="col-md-6 methods">
+                            <input type="checkbox" id="shuffle" value="Pause" />
+                            <label for="shuffle">Toggle</label>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 methods">
+                            Repeat Playlist
+                        </div>
+                        <div class="col-md-6 methods">
+                            <input type="checkbox" id="repeat" value="Pause" />
+                            <label for="repeat">Toggle</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 methods">
+                            Mute/ Unmute
+                        </div>
+                        <div class="col-md-6 methods">
+                            <input type="checkbox" id="toggleMute" value="Pause" />
+                            <label for="toggleMute">Toggle</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 methods">
+                            Enable Full screen
+                        </div>
+                        <div class="col-md-6 methods">
+                            <input type="button" id="fullscreen" value="Full screen" />
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 methods">
+                            Show / Hide
+                        </div>
+                        <div class="col-md-6 methods">
+                            <input type="checkbox" id="togglePlayList" value="Pause" />
+                            <label for="togglePlayList">Toggle</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 methods">
+                            <input type="button" id="previous" value="Previous" />
+                        </div>
+                        <div class="col-md-6 methods">
+                            <input type="button" id="next" value="Next" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 methods">
+                            <input type="button" id="rewind" value="Rewind 10 sec" />
+                        </div>
+                        <div class="col-md-6 methods">
+                            <input type="button" id="forward" value="Forward 10 sec" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 methods">
+                            <input id="seekTime" type="text" style="float" />
+                        </div>
+                        <div class="col-md-6 methods">
+                            <input type="button" id="seekTo" value="Seek To (sec)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 methods">
+                            <input id="numeric" type="text" style="float" />
+                        </div>
+                        <div class="col-md-6 methods">
+                            <input type="button" id="volume" value="Set Volume" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script type="text/javascript">
+        var mediaPlayer;
+        var isNoAPICall = true;
+        jQuery(function ($) {
+            if (!(ej.browserInfo().name === "msie" && Number(ej.browserInfo().version) < 9)) {
+                $("#togglePlay").ejToggleButton({
+                    defaultText: "Play",
+                    toggleState: false,
+                    activeText: "Pause",
+                    click: "playPauseMedia",
+                    width: "107px",
+                });
+
+                $("#stop").ejButton({
+                    width: "107px",
+                    click: "stopMedia"
+                });
+
+                $("#shuffle").ejToggleButton({
+                    defaultText: "Off",
+                    toggleState: true,
+                    activeText: "On",
+                    click: "toggleShuffleEvent",
+                    width: "107px",
+                });
+
+                $("#repeat").ejToggleButton({
+                    defaultText: "Off",
+                    toggleState: true,
+                    activeText: "On",
+                    click: "toggleRepeatEvent",
+                    width: "107px",
+                });
+
+                $("#toggleMute").ejToggleButton({
+                    defaultText: "Mute",
+                    toggleState: false,
+                    activeText: "Unmute",
+                    click: "toggleMuteEvent",
+                    width: "107px",
+                });
+
+                $("#fullscreen").ejButton({
+                    width: "107px",
+                    click: "enableFullScreen"
+                });
+
+                $("#togglePlayList").ejToggleButton({
+                    defaultText: "Show Playlist",
+                    toggleState: false,
+                    activeText: "Hide Playlist",
+                    click: "togglePlayListEvent",
+                    width: "107px",
+                });
+
+                $("#previous").ejButton({
+                    width: "107px",
+                    click: "previousMedia"
+                });
+
+                $("#next").ejButton({
+                    width: "107px",
+                    click: "nextMedia"
+                });
+
+                $("#rewind").ejButton({
+                    width: "107px",
+                    click: "rewindMedia"
+                });
+
+                $("#forward").ejButton({
+                    width: "107px",
+                    click: "forwardMedia"
+                });
+
+                $("#numeric").ejNumericTextbox({
+                    name: "numeric",
+                    value: 35,
+                    minValue: 0,
+                    maxValue: 100,
+                    width: "107px",
+                    height: "34px"
+                });
+
+                $("#seekTime").ejNumericTextbox({
+                    name: "numeric",
+                    value: 1,
+                    minValue: 0,
+                    width: "107px",
+                    height: "34px"
+                });
+
+                $("#volume").ejButton({
+                    width: "107px",
+                    click: "setVolume"
+                });
+
+                $("#seekTo").ejButton({
+                    width: "107px",
+                    click: "seekTo"
+                });
+
+                $("#sampleProperties").ejPropertiesPanel();
+                var isMobile = screen.width < 640 ? true : false;
+                var width = "700px";
+                var height = "400px";
+                if (isMobile) {
+                    width = "100%";
+                    height = "250px";
+                }
+                $("#api_mediaPlayer").ejMediaPlayer({
+                    width: width,
+                    height: height,
+                    toolbarHeight: "70px",
+                    playlistTitle: "Syncfusion Dashboard Platform",
+                    source: [
+                       {
+                           "url": "http://files2.syncfusion.com/Videos/samples/Syncfusion+Dashboard+Designer.mp4",
+                           "title": "Syncfusion Dashboard Designer",
+                           "posterUrl": "images/mediaplayer/dbdesigner.png",
+                           "author": "syncfusion"
+                       },
+                        {
+                            "url": "http://files2.syncfusion.com/Videos/samples/Syncfusion+Dashboard+SDK+and+Mobile+Application.mp4",
+                            "title": "Syncfusion Dashboard SDK and Mobile Apllication",
+                            "posterUrl": "images/mediaplayer/dashboard.png",
+                            "author": "syncfusion"
+                        },
+                        {
+                            "url": "http://files2.syncfusion.com/Videos/samples/Syncfusion+Dashboard+Server.mp4",
+                            "title": "Dashboard and Report Server",
+                            "posterUrl": "images/mediaplayer/reportserver.png",
+                            "author": "syncfusion"
+                        },
+
+                    ],
+                    renderMode: "advanced",
+                    onBeforePlay: "beforeEventCall",
+                    onBeforePause: "beforeEventCall",
+                    onBeforeMute: "beforeEventCall",
+                    onBeforeUnmute: "beforeEventCall",
+                    onShuffle: "beforeEventCall",
+                    onRepeat: "beforeEventCall",
+                    onTogglePlaylist: "beforeEventCall"
+
+                });
+
+                mediaPlayer = $(document.getElementById("api_mediaPlayer")).data("ejMediaPlayer");
+            }
+            else {
+                alert("Media Player (HTML5) will not be supported in IE Version < 9");
+            }
+        });
+
+        function playPauseMedia(args) {
+            if (args.isChecked)
+                mediaPlayer.play();
+            else
+                mediaPlayer.pause();
+            isNoAPICall = true;
+        }
+
+        function stopMedia(args) {
+            mediaPlayer.stop();
+            toggleObj = $("#togglePlay").ejToggleButton("instance");
+            toggleObj.option("toggleState", false);
+        }
+
+        function toggleShuffleEvent(args) {
+            if (args.isChecked)
+                mediaPlayer.setShuffle(false);
+            else
+                mediaPlayer.setShuffle();
+            isNoAPICall = true;
+        }
+
+        function toggleRepeatEvent(args) {
+            if (args.isChecked)
+                mediaPlayer.setRepeat(false);
+            else
+                mediaPlayer.setRepeat();
+            isNoAPICall = true;
+        }
+
+        function toggleMuteEvent(args) {
+            if (args.isChecked)
+                mediaPlayer.mute();
+            else
+                mediaPlayer.unmute();
+            isNoAPICall = true;
+        }
+
+        function enableFullScreen(args) {
+            mediaPlayer.makeFullScreen();
+        }
+
+        function togglePlayListEvent(args) {
+            if (args.isChecked)
+                mediaPlayer.showPlaylist();
+            else
+                mediaPlayer.hidePlaylist();
+            isNoAPICall = true;
+        }
+
+        function previousMedia(args) {
+            mediaPlayer.previous();
+        }
+
+        function nextMedia(args) {
+            mediaPlayer.next();
+        }
+
+        function rewindMedia(args) {
+            mediaPlayer.rewind();
+        }
+
+        function forwardMedia(args) {
+            mediaPlayer.forward();
+        }
+
+        function setVolume() {
+            var value = $("#numeric").val();
+            mediaPlayer.setVolume(value);
+        }
+
+        function seekTo() {
+            var value = $("#seekTime").val();
+            mediaPlayer.seekTo(value);
+        }
+
+        function beforeEventCall(args) {
+            if (isNoAPICall) {
+                var toggleObj;
+                switch (args.type) {
+                    case "onActionBegin":
+                        if (args.actionType == "play") {
+                            toggleObj = $("#togglePlay").ejToggleButton("instance");
+                            toggleObj.option("toggleState", true);
+                        }
+                        else if (args.actionType == "pause") {
+                            toggleObj = $("#togglePlay").ejToggleButton("instance");
+                            toggleObj.option("toggleState", false);
+                        }
+                        else if (args.actionType == "mute") {
+                            toggleObj = $("#toggleMute").ejToggleButton("instance");
+                            toggleObj.option("toggleState", true);
+                        }
+                        else if (args.actionType == "unmute") {
+                            toggleObj = $("#toggleMute").ejToggleButton("instance");
+                            toggleObj.option("toggleState", false);
+                        }
+                        break;
+                    case "onShuffle":
+                        toggleObj = $("#shuffle").ejToggleButton("instance");
+                        if (args.isShuffle)
+                            toggleObj.option("toggleState", true);
+                        else
+                            toggleObj.option("toggleState", false);
+                        break;
+                    case "onRepeat":
+                        toggleObj = $("#repeat").ejToggleButton("instance");
+                        if (args.isRepeat)
+                            toggleObj.option("toggleState", true);
+                        else
+                            toggleObj.option("toggleState", false);
+                        break;
+                    case "onTogglePlaylist":
+                        toggleObj = $("#togglePlayList").ejToggleButton("instance");
+                        if (args.visible)
+                            toggleObj.option("toggleState", false);
+                        else
+                            toggleObj.option("toggleState", true);
+                        break;
+                }
+            }
+            else
+                isNoAPICall = false;
+        }
+
+    </script>
+</body>
+</html>

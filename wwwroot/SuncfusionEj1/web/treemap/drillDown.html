@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+        <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/treemapdata.js"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="treemap_dd" style="height:405px;"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $("#treemap_dd").ejTreeMap({
+                dataSource: drillDownSampleData,
+                enableDrillDown: true,
+                drillDownSelectionColor: "#199DAF",
+                uniColorMapping: { color: "#CCDFE3" },
+                weightValuePath: "Population",
+                levels: [
+                    { groupPath: "Continent", showLabels: true, groupGap: 5, headerHeight: 25, showHeader: false, labelPosition: "topleft", headerTemplate: 'headertemplate' },
+                    { groupPath: "Country", showLabels: true, groupGap: 0, headerHeight: 25, showHeader: false, labelPosition: "topleft", headerTemplate: 'headertemplate' },
+                    { groupPath: "Name", showLabels: true, groupGap: 0, headerHeight: 25, showHeader: false, labelPosition: "topleft", headerTemplate: 'headertemplate' }
+                ],
+				headerTemplateRendering:'loadTemplate'
+            });
+        });
+    </script>
+
+    <script id="headertemplate" type="application/jsrender">
+        <div style="margin-top:3px;">
+            <label style="color:gray;font-size:16px;font-weight:normal;margin-left:5px;" id="Label1">{{:header}}</label><br />
+        </div>
+    </script>
+    <script type="text/javascript">
+	function loadTemplate(sender) {
+            if (sender.headerItem.drilldownHeaders) {
+                var length = sender.childItems.length;
+                population = 0;
+                for (var i = 0; i < length; i++) {
+                    population = population + sender.childItems[i].Population;
+                }
+                for (var j = 0; j < sender.headerItem.drilldownHeaders.length; j++) {
+                    if (j == sender.headerItem.drilldownHeaders.length - 1)
+                       sender.headerItem.drilldownHeaders[j] = sender.headerItem.originalHeaders[j] + " - Population : " + population.toLocaleString();
+                    else  
+					   sender.headerItem.drilldownHeaders[j] = sender.headerItem.originalHeaders[j];
+                }
+            }
+        }
+        
+    </script>
+</body>
+</html>

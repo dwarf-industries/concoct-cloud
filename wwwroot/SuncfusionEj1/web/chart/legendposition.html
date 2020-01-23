@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" >
+	<link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+	<link href="../content/default-responsive.css" rel="stylesheet" />
+	<!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+	 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+ </head>
+ <body>
+	<div class="content-container-fluid">      
+        <div class="row">               
+            <div class="cols-sample-area">                                  				
+				<div id="container"></div> 					                   
+            </div>
+			<div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Position
+                        </div>
+                        <div class="col-md-3">
+                            <select name="selectIndex"  id="optPositionChange">
+								<option value="0">Bottom</option>
+                                <option value="1">Left</option>
+                                <option value="2">Top</option>
+                                <option value="3">Right</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                           Alignment
+                        </div>
+                        <div class="col-md-3">
+                            <select name="disableItem"  id="optAlignmentChange">
+								<option value="0">Near</option>
+                                <option value="1">Center</option>
+                                <option value="2">Far</option>
+                            </select>
+                        </div>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
+                           Height
+                        </div>
+                        <div class="col-md-3">
+                            <input type="textbox" id="legendHeight" style="width:104px" />
+                        </div>
+						<div class="col-md-3">
+                           
+                        </div>
+                        <div class="col-md-3">
+                            (eg. 10% or 100)
+                        </div>
+						<div class="col-md-3">
+                           Width
+                        </div>
+                        <div class="col-md-3">
+                            <input type="textbox" id="legendWidth" style="width:104px" />
+                        </div>
+						<div class="col-md-3">
+                           
+                        </div>
+                        <div class="col-md-3">
+                            (eg. 10% or 100)
+                        </div>
+						<div class="col-md-3">
+                           Row Count
+                        </div>
+                        <div class="col-md-3">
+                            <select name="disableItem"  id="optRowcount">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="6">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+                            </select>
+                        </div>
+						<div class="col-md-3">
+                           Column Count
+                        </div>
+                        <div class="col-md-3">
+                            <select name="disableItem"  id="optColumncount">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="6">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+                            </select>
+                        </div>
+						<div class="col-md-3">
+                            Text Overflow
+                        </div>
+                        <div class="col-md-3">
+                            <select name="selectIndex"  id="optTextoverflow">
+								<option value="0">None</option>
+                                <option value="1">Trim</option>
+                                <option value="2">Wrap</option>
+								<option value="3">WrapAndTrim</option>
+                            </select>
+                        </div>
+						<div class="col-md-3">
+                           Text Width
+                        </div>
+                        <div class="col-md-3">
+                            <input type="textbox" id="textWidth" style="width:104px" />
+                        </div>
+                    </div>                    
+                </div>
+			</div>
+        </div>
+    </div>	
+ <script type="text/javascript" language="javascript">
+	$("#legendWidth").val("")
+	$("#legendHeight").val("")
+	var chartObj;
+    $(function () 
+	{
+        $("#container").ejChart(
+        {
+			//Initializing Series	
+            series: 
+			[
+				{
+                     points: 
+					[
+						{ x: 'United States', y: 84, fill: "#FF0066" },{ x: 'United Kingdom', y: 89, fill: "#CC3399" }, 
+						{ x: 'United Arab Emirates', y: 88, fill: "#6699FF" }, { x: 'New Caledonia', y: 66, fill: "#005277" },
+                        { x: 'French Polynesia', y: 56, fill: "#CC99FF" },{ x: 'Switzerland', y: 86, fill: "#C4C24A" }, 
+                        { x: 'Singapore', y: 73, fill: "#E27F2D" },{x: 'New Zealand', y: 82, fill: "#F6B53F" },
+                        { x: 'Saudi Arabia', y: 60, fill: "#6A4B82" }, { x: 'Sweden', y: 94, fill: "#69D2E7" }, 
+                        { x: 'Indonesia', y: 60, fill: "#E94649" },  { x: 'Philippines', y: 37, fill: "#FB954F" },
+                        { x: 'South Africa', y: 48, fill: "#FF9900" },  { x: 'South Korea', y: 84, fill: "#009933" },
+                        { x: 'Hong Kong', y: 74, fill:"#6FAAB0" },{ x: 'Netherlands', y: 93, fill: "#8BC652" }
+					],
+					
+                    marker: 
+					{
+                        dataLabel: 
+						{
+                            visible: true,
+                            shape: 'none', 
+							connectorLine: { type: 'bezier', color: 'blue' },
+                            font: { size: '14px'},
+							enableContrastColor:true
+                        }
+                    },
+                    border: { width: 1, color: 'white' },
+                    name: 'Expenses',
+					type: 'pie', 
+					enableAnimation: true, 
+					labelPosition: "inside", 
+					enableSmartLabels: true, 
+					startAngle: 270
+                }
+            ],
+            title: { text: 'Internet users (per 100 people) in 2013' },
+            isResponsive: true,
+			load:"loadTheme",
+            preRender:"legendBorder",
+            size: { height: "550"},
+            legend: 
+			{ 
+				visible: true,
+				border:{color:'black', width:1},
+				position: "bottom", 
+				alignment: "near", 
+				textOverflow:"none",
+				title:
+				{
+					text:"Countries",
+					textAlignment:"center", 
+					font:
+					{size:"15px",
+					fontFamily: "Segoe UI",
+                    fontStyle: "normal"
+					} 
+				}
+			}
+        });
+		
+		chartObj = $("#container").data("ejChart");
+		
+		$("#optPositionChange").ejDropDownList({ "change": "positionChanged",  width: "110px",selectedItemIndex:0 });
+		
+        $("#optAlignmentChange").ejDropDownList({ "change": "alignmentChanged", width: "110px",selectedItemIndex:0 });
+		
+		$("#optRowcount").ejDropDownList({ "change": "rowcountChanged", width: "110px",selectedItemIndex:0 });
+		
+		$("#optColumncount").ejDropDownList({ "change": "columncountChanged", width: "110px",selectedItemIndex:0 });
+		
+		$("#optTextoverflow").ejDropDownList({"change":"textoverflowChanged",width:"110px",selectedItemIndex:0});
+		
+		
+	});
+       
+    function alignmentChanged(sender) 
+	{
+        $("#container").ejChart("option", { "legend": legend(sender, sender.selectedText) });
+		changeHeightWidth();    
+	}
+	
+    function positionChanged(sender) 
+	{
+        $("#container").ejChart("option", { "legend": legend(sender, sender.selectedText) });
+		changeHeightWidth();
+    }
+	function textoverflowChanged(sender) 
+	{
+        $("#container").ejChart("option", { "legend": legend(sender, sender.selectedText) });
+		changeHeightWidth();
+    }
+	
+	function rowcountChanged(sender)
+	{
+        $("#container").ejChart("option", { "legend": legend(sender, sender.selectedText) });
+		changeHeightWidth();
+    }
+	
+	function columncountChanged(sender) 
+	{
+        $("#container").ejChart("option", { "legend": legend(sender, sender.selectedText) });
+		changeHeightWidth();
+    }
+	function legendBorder(sender)
+	{
+	    if (sender.model.theme == "flatdark" || sender.model.theme == "gradientdark")
+	        sender.model.legend.border.color = "white";
+	}
+	
+    function legend(sender, data) 
+	{
+		switch(sender.model.change)
+		{
+			case "positionChanged":
+                var legendPosition = data.toLowerCase();
+                return {
+                    position: legendPosition
+                }; 
+			break;
+			case "textoverflowChanged":
+                var textoverflow = data.toLowerCase();
+                return {
+                    textOverflow: textoverflow
+                }; 
+			break;
+			case "alignmentChanged":
+                var legendAlignment = data.toLowerCase();
+                return {
+                    alignment: legendAlignment
+                };
+			break;
+			case "rowcountChanged":
+				var count=data;
+				return {rowCount:count};
+			break;
+			case "columncountChanged":
+				var count=data;
+				return {columnCount:count};
+			break;
+		}
+    }
+	
+	$('#legendWidth').change(changeHeightWidth);
+	
+    $('#legendHeight').change(changeHeightWidth);
+	
+	$('#textWidth').change(changeTextWidth);
+	
+	function changeTextWidth()
+	{
+		var textwidth=parseInt($("#textWidth").val());
+		var chart = $("#container").ejChart("instance");
+		chart.model.legend.textWidth=textwidth;
+		chart.redraw();
+	}
+	
+    function changeHeightWidth()
+    {
+         var width = $("#legendWidth").val();
+        var height = $("#legendHeight").val();
+        var chart = $("#container").ejChart("instance");
+		if(parseInt(width))
+          chart.model.legend.size.width = (parseInt(width)>0) ? width :"";
+		if(parseInt(height))
+          chart.model.legend.size.height = (parseInt(height)>0) ? height :"";
+        chart.redraw();
+    }
+	
+	$("#container").ejWaitingPopup({ showOnInit: false })
+	
+	$("#sampleProperties").ejPropertiesPanel();
+ </script>
+ </body>
+</html>

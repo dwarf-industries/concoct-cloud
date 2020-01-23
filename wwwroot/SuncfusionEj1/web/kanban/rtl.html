@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Kanban RTL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->    
+    <script src="../scripts/jsonkanbandata.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/jquery.validate.min.js"></script>
+    <script src="../scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+	<script src="../scripts/cultures/ej.culture.ar-AE.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+ <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="Kanban"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        ej.Kanban.Locale["ar-AE"] = {
+            EmptyCard: "لا بطاقات لعرض",
+            SaveButton: "حفظ",
+            CancelButton: "إلغاء",
+            EditFormTitle: "تفاصيل ",
+            AddFormTitle: "إضافة بطاقة جديدة",
+            SwimlaneCaptionFormat: "- {{:count}}{{if count == 1 }} بند {{else}} العناصر {{/if}}",
+            FilterSettings: "مرشحات:",
+            FilterOfText: "من",
+            Max: "ماكس",
+            Min: "دقيقة"
+        };
+        $(function() {
+            var data = ej.DataManager(window.kanbanLocaleData).executeLocal(ej.Query().take(30));
+            $("#Kanban").ejKanban(
+            {
+                dataSource: data,
+                enableRTL: true,
+                locale: "ar-AE",
+                columns: [
+                    { headerText: "تراكم الأعمال غير المنجزة", key: "Open" },
+                    { headerText: "في تَقَدم", key: "InProgress", constraints: { max: 2 } },
+                    { headerText: "فعله", key: "Close" }
+                ],                                                       			
+                keyField: "Status",
+                allowTitle: true,
+                fields: {
+                    primaryKey: "Id",
+                    content: "Summary",
+                    imageUrl: "ImgUrl",
+                    swimlaneKey: "Assignee"
+                }
+            });
+        });
+    </script>
+</body>
+</html>

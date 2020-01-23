@@ -1,0 +1,257 @@
+/**  =====================
+      Main-header css start
+==========================  **/
+.main-header {
+    margin-bottom: 20px;
+    padding: 20px 0 20px 20px;
+    & span{
+        color:#9f9f9f;
+        display: block;
+        font-size: 13px;
+        margin-top: 5px;
+    }
+}
+.header-navbar {
+    min-height: 4em;
+    padding: 0;
+    z-index: 9999;
+    .navbar-wrapper {
+        background-color: #2C3E50;
+        .navbar-logo {
+            align-items: center;
+            display: flex;
+            float: left;
+            height: 3.5rem;
+            justify-content: center;
+            text-align: center;
+            text-transform: uppercase;
+            width: 240px;
+            h5 {
+                margin-bottom: 0;
+            }
+            a {
+                color: #fff;
+            }
+            .mobile-menu,
+            .mobile-search,
+            .mobile-options {
+                display: none;
+            }
+        }
+        .navbar-container {
+            .nav-left {
+                float: left;
+                margin-bottom: 0;
+                li {
+                    float: left;
+                    line-height: 4;
+                    padding: 0 10px;
+                    position: relative;
+                }
+                a {
+                    color: #fff;
+                    padding: 1.5rem .6rem;
+                }
+                .mega-menu-top {
+                    i {
+                        font-size: 10px;
+                        margin-left: 10px;
+                    }
+                }
+            }
+            .nav-right {
+                float: right;
+                @extend .nav-left;
+                .user-profile {
+                    img {
+                        margin-right: 10px;
+                        width: 40px;
+                    }
+                    i {
+                        font-size: 10px;
+                        margin-left: 10px;
+                    }
+                }
+            }
+            .header-notification {
+                perspective: 1000px;
+                z-index:99;
+                .badge {
+                    background: red;
+                    border-radius: 100px;
+                    left: 27px;
+                    position: absolute;
+                    top: 10px;
+                }
+                .show-notification {
+                    -webkit-transform: translateY(30px);
+                    background: #fff;
+                    box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.03), 0 -2px 1px -2px rgba(0, 0, 0, 0.02), 0 0 0 -1px rgba(0, 0, 0, 0.03);
+                    opacity: 0;
+                    position: absolute;
+                    right: 0;
+                    transform: translateY(30px);
+                    transition: all linear 0.3s;
+                    visibility: hidden;
+                    width: 24rem;
+                    a {
+                        color: $theme-font-color;
+                        transition: all 0.3s ease-in-out;
+                    }
+                    li {
+                        border-top: 1px solid $border-color;
+                        line-height: initial;
+                        padding: 1em 20px;
+                        width: 100%;
+                        transition: all 0.3s ease-in-out;
+                        &:first-child {
+                            padding: 10px 20px;
+                            h6 {
+                                display: inline-block;
+                                font-size: 14px;
+                                font-weight: 600;
+                                margin-bottom: 0;
+                                text-transform: uppercase;
+                            }
+                            label {
+                                float: right;
+                            }
+                        }
+                        &:hover{
+                            background-color: #f1f1f1;
+                            a{
+                                color: $primary-color;
+                                margin-left: 5px;
+                            }
+                        }
+                        img {
+                            @include width(40px);
+                            margin-right: 10px;
+                        }
+                    }
+                    .notification-user {
+                        font-size: 15px;
+                        font-weight: bold;
+                    }
+                    .notification-msg {
+                        margin-bottom: 5px;
+                    }
+                    .notification-time {
+                        font-size: 12px;
+                    }
+                }
+                .profile-notification {
+                    @extend .show-notification;
+                    width: 17em;
+                    a {
+                        font-size: 15px;
+                        padding-left: 0;
+                    }
+                    i {
+                        font-size: 15px;
+                        margin-left: 0;
+                        margin-right: 5px;
+                    }
+                    li {
+                        border-top: none;
+                        padding: .7em 20px;
+                        &:first-child {
+                            padding: .7em 20px;
+                        }
+                    }
+                }
+                &:hover .show-notification {
+                    -webkit-transform: translateY(0px);
+                    opacity: 1;
+                    transform: translateY(0px);
+                    visibility: visible;
+                }
+            }
+            .lng-dropdown .show-notification {
+                width: 14em;
+            }
+            .mega-menu-top {
+                @extend .header-notification;
+                perspective: inherit;
+                position: static !important;
+                .show-notification {
+                    left: 0;
+                    margin: 0 25px;
+                    width: calc(100% - 50px);
+                    z-index: 9999;
+                    li {
+                        padding: 20px;
+                        &:first-child {
+                            padding: 20px;
+                            h6 {
+                                border-bottom: 1px solid $border-color;
+                                display: block;
+                                margin-bottom: 20px;
+                                padding-bottom: 10px;
+                            }
+                        }
+                        h6 {
+                            border-bottom: 1px solid #ddd;
+                            display: block;
+                            font-size: 14px;
+                            font-weight: 600;
+                            margin-bottom: 20px;
+                            padding-bottom: 10px;
+                            text-transform: uppercase;
+                        }
+                        img {
+                            border-radius: 0;
+                            transition: all ease-in-out .3s;
+                            width: auto;
+                            &:hover {
+                                box-shadow: 0px 0px 10px 2px rgba(128, 128, 128, 0.37);
+                            }
+                        }
+                    }
+                    .mega-mailbox {
+                        li {
+                            border-top: none;
+                            padding-left: 0;
+                            padding-top: 0;
+                            a {
+                                padding: 0;
+                                i {
+                                    font-size: 20px;
+                                    margin-left: 0;
+                                    margin-right: 15px;
+                                }
+                            }
+                            h5 {
+                                font-size: 15px;
+                                font-weight: 600;
+                            }
+                        }
+                    }
+                }
+                .mega-menu-links {
+                    li {
+                        border-top: none;
+                        padding: 10px 0;
+                        &:first-child {
+                            padding-top: 0;
+                            padding: 10px 0;
+                        }
+                    }
+                    a {
+                        display: block;
+                        font-size: 14px;
+                        padding: 0;
+                        text-transform: capitalize;
+                    }
+                }
+                .mega-menu-contact {
+                    label,
+                    .form-control {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+}
+/*======= Main-header css end ======*/

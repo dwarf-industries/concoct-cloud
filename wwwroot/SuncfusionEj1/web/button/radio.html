@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Radio Button</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div class="control">
+                        <div class="radioalign">
+                            <br />
+                            Category<br />
+                            <br />
+
+                            <div class="chkrad">
+
+                                <input type="radio" name="small" id="Radio1" /><label for="Radio1" class="clslab">Fresher</label>
+                            </div>
+                            <div class="chkrad">
+
+                                <input type="radio" name="small" id="Radio3" /><label for="Radio3" class="clslab">Experienced</label>
+                            </div>
+
+                            <br />
+                            <br />
+                            Experienced<br />
+                            <br />
+
+                            <div class="chkrad">
+
+                                <input type="radio" name="medium" id="Radio2" /><label for="Radio2" class="clslab">1+years</label>
+                            </div>
+                            <div class="chkrad">
+                                <input type="radio" name="medium" id="Radio4" /><label for="Radio4" class="clslab">2.5+years</label>
+                            </div>
+                            <div class="chkrad">
+                                <input type="radio" name="medium" id="Radio5" /><label for="Radio5" class="clslab">5+years</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            // declaration
+            $("#Radio1").ejRadioButton({ checked: true });
+            $("#Radio3").ejRadioButton();
+            $("#Radio2").ejRadioButton({ size: "medium", checked: true });
+            $("#Radio4").ejRadioButton({ size: "medium" });
+            $("#Radio5").ejRadioButton({ size: "medium" });
+        });
+    </script>
+    <style>
+        .frame {
+            width: 80%;
+        }
+
+        .chkrad {
+            white-space: nowrap;
+            display: inline-block;
+        }
+    </style>
+</body>
+</html>

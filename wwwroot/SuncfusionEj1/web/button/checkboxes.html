@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : CheckBoxes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div class="control">
+                        <div class="chkalign">
+                            <br />
+                            Hobbies
+                            <br />
+                            <br />
+                            <table class="checksmall">
+                                <tr>
+                                    <td class="chkrad">
+                                        <input type="checkbox" class="nodetext" id="check1" />
+                                        <label for="check1" class="clslab">Music</label></td>
+                                    <td class="chkrad">
+                                        <input type="checkbox" class="nodetext" id="Checkbox3" />
+                                        <label for="Checkbox3" class="clslab">Sports</label></td>
+                                    <td class="chkrad">
+                                        <input type="checkbox" class="nodetext" id="Checkbox4" />
+                                        <label for="Checkbox4" class="clslab">Bike Riding</label></td>
+                                </tr>
+                            </table>
+                            <br />
+                            <br />
+                            Favorite Search Engines<br />
+                            <br />
+                            <table>
+                                <tr>
+                                    <td class="chkrad">
+                                        <input type="checkbox" class="nodetext" id="Checkbox1" /><label for="Checkbox1" class="clslab">Google</label>
+                                    </td>
+                                    <td class="chkrad">
+                                        <input type="checkbox" class="nodetext" id="Checkbox5" /><label for="Checkbox5" class="clslab">Yahoo</label>
+                                    </td>
+                                    <td class="chkrad">
+                                        <input type="checkbox" class="nodetext" id="Checkbox6" /><label for="Checkbox6" class="clslab">Bing</label></td>
+                                </tr>
+                            </table>
+                            <br />
+                            <br />
+                            Favorite Social networks<br />
+                            <br />
+                            <table>
+                                <tr>
+                                    <td class="chkrad">
+                                        <input type="checkbox" class="nodetext" id="Checkbox2" /><label for="Checkbox2" class="clslab">Facebook</label>
+                                    </td>
+                                    <td class="chkrad">
+                                        <input type="checkbox" class="nodetext" id="Checkbox7" /><label for="Checkbox7" class="clslab">GPlus</label>
+                                    </td>
+                                    <td class="chkrad">
+                                        <input type="checkbox" class="nodetext" id="Checkbox8" /><label for="Checkbox8" class="clslab">Twitter</label></td>
+                                </tr>
+                            </table>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            // declaration
+            $("#check1").ejCheckBox();
+            $("#Checkbox3").ejCheckBox();
+            $("#Checkbox4").ejCheckBox();
+            $("#Checkbox3").ejCheckBox();
+            $("#Checkbox1").ejCheckBox({ size: "medium" });
+            $("#Checkbox5").ejCheckBox({ size: "medium" });
+            $("#Checkbox6").ejCheckBox({ size: "medium" });
+            $("#Checkbox2").ejCheckBox({ size: "medium", enableTriState: true });
+            $("#Checkbox7").ejCheckBox({ size: "medium", enableTriState: true });
+            $("#Checkbox8").ejCheckBox({ size: "medium", enableTriState: true });
+        });
+    </script>
+    <style>	
+    .fixedlayout.material .clslab {
+        margin-top:-10px;
+        vertical-align:middle;
+    }
+    .fixedlayout.material .checksmall .clslab{
+        margin-top:-5px
+    }
+    </style>
+</body>
+</html>

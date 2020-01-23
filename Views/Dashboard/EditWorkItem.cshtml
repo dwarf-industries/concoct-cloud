@@ -1,0 +1,1094 @@
+@{
+    ViewData["Title"] = "New Work Item";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var result = ViewData["Projects"] as List<Projects>;
+    var userName =  ViewData["Name"] as string;
+    var priorities = ViewData["Priorities"]  as List<WorkItemPriorities>; 
+    var areas = ViewData["Areas"] as List<WorkItemAreas>;
+    var iterations = ViewData["Iterations"] as List<WorkItemIterations>;
+    var severities = ViewData["Severities"] as List<WorkItemSeverities>;
+    var activities = ViewData["Activities"] as List<WorkItemActivity>;
+    var reasons = ViewData["Reasons"] as List<WorkItemReasons>;
+    var builds =   ViewData["Builds"] as List<Builds>;
+    var ValueAreas =  ViewData["ValueAreas"] as List<ValueAreas>;
+    var repositoryMembers = ViewData["RepositoryMembers"] as List<UserAccounts>;
+    var Risks = ViewData["Risks"] as List<Risks>;
+    var projectId = ViewData["ProjectId"] as int?;
+    var WorkItemType = ViewData["WorkItemType"] as int?;
+    var WorkItemData = ViewData["WorkItemData"] as WorkItem;
+}
+<link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="main-card mb-1 card">
+            <div class="card-body">
+                <div class="col-md-2">
+                    <h2>Work Items:</h2>
+                </div>
+                <div class="col-md-9">
+                    <a class="mb-2 mr-2 btn-transition btn btn-outline-info"><i class="fas fa-reply"></i>Info</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="main-card mb-1 card">
+            <div class="card-body">
+               
+                <p>New {NameHere} <i class="fas fa-exclamation-circle"></i> Field 'Title' cannot be empty.</p>
+                <div class="row">
+                    <div class=" form-group" style="width:100%"><label for="Title" class="">Title</label><input name="Title" id="Title" placeholder="Title" value="@WorkItemData.Title" style="width:100%" class="form-control-sm"></div>
+                </div>
+                <div  class="row">
+                     <input type="text" id='ProjectUsers' />
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="main-card mb-1 card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p>State:</p>
+                            </div>
+                            <div class="col-md-8">
+                            
+
+                                   <select class="form-control-sm form-control" id="ItemState" value="@WorkItemData.StateId">
+                                    @foreach(var state in activities)
+                                    {
+                                        if(@state.Id == @WorkItemData.StateId )
+                                        {
+                                             <option value="@state.Id" selected="Selected">@state.ActivityName</option>
+
+                                        }
+                                        else
+                                        {
+                                            <option value="@state.Id">@state.ActivityName</option>
+
+                                        }
+                                                             
+                                    }
+                                    </select>
+                                   
+                                
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p>Reason:</p>
+                            </div>
+                            <div class="col-md-8">
+                                <select class="form-control-sm form-control" id="ItemReason" value="@WorkItemData.Reason">
+                                    @foreach(var reason in reasons)
+                                    {
+                                        if(@reason.Id == @WorkItemData.Reason )
+                                        {
+                                             <option value="@reason.Id" selected="Selected">@reason.ReasonName</option>
+
+                                        }
+                                        else
+                                        {
+                                            <option value="@reason.Id">@reason.ReasonName</option>
+
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        
+                    </div>        
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p>Area:</p>
+                            </div>
+                            <div class="col-md-8">
+                                <select class="form-control-sm form-control" id="ItemArea" value="@WorkItemData.AreaId">
+                                    @foreach(var area in areas)
+                                    {
+                                        <option value="@area.Id">@area.AreaName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p>Iteration:</p>
+                            </div>
+                            <div class="col-md-8">
+                                </select><select class="form-control-sm form-control" id="ItemIteration" value="@WorkItemData.Iteration">
+                                    @foreach(var iteration in iterations)
+                                    {
+                                        if(@iteration.Id == @WorkItemData.Iteration )
+                                        {
+                                             <option value="@iteration.Id" selected="Selected">@iteration.IterationName</option>
+
+                                        }
+                                        else
+                                        {
+                                            <option value="@iteration.Id">@iteration.IterationName</option>
+
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="main-card mb-1 card">
+            <div class="card-body">
+                <div class="card-header-tab card-header">
+                    <div class="card-header-title">
+                        <i class="header-icon lnr-bicycle icon-gradient bg-love-kiss" > </i>
+                        Header Alternate Tabs
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-0" class="active nav-link">Details</a></li>
+                        <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-1" class="nav-link">Tab 2</a></li>
+                        <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-2" class="nav-link">Tab 3</a></li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-eg5-0" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-6" style="padding-right:50px;">
+                                    @if(WorkItemType == 1)
+                                    {
+                                        <div class="row">
+                                            <div class="position-relative form-group" style="width:100%;" ><label for="RepoSteps"  class="">Repo Steps</label><textarea name="RepoSteps" id="RepoSteps" text="@WorkItemData.RepoSteps" class="form-control"></textarea></div>
+                                        </div>
+                                  
+                                        <div class="row">
+                                            <div class="position-relative form-group" style="width:100%;"><label for="SystemInfo" class="">System Info</label><textarea name="SystemInfo" id="SystemInfo" text="@WorkItemData.SystemInfo" class="form-control"></textarea></div>
+                                        </div>
+                                    }
+                                    @if(WorkItemType == 2)
+                                    {
+                                        <div class="row">
+                                            <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" text="@WorkItemData.Description" id="Description" class="form-control"></textarea></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="position-relative form-group" style="width:100%;"><label for="AcceptanceCriteria" class="">Acceptance Criteria</label><textarea name="AcceptanceCriteria" id="AcceptanceCriteria" class="form-control"></textarea></div>
+                                        </div>
+                                      
+                                    }
+                                    @if(WorkItemType == 3)
+                                    {
+                                        <div class="row">
+                                            <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" id="Description" class="form-control"></textarea></div>
+                                        </div>
+                                      
+                                      
+                                    }
+                                    @if(WorkItemType == 7)
+                                    {
+                                        <div class="row">
+                                            <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" text="@WorkItemData.Description" id="Description" class="form-control"></textarea></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="position-relative form-group" style="width:100%;"><label for="AcceptanceCriteria" class="">Acceptance Criteria</label><textarea name="AcceptanceCriteria" id="AcceptanceCriteria" class="form-control"></textarea></div>
+                                        </div>
+                                      
+                                    }
+                                    @if(WorkItemType == 5)
+                                    {
+                                        <div class="row">
+                                            <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" id="Description" text="@WorkItemData.Description" class="form-control"></textarea></div>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="col-md-6" style="padding-left:3px;">
+                                    <div class="row">
+                                        <div class="col-md-6" style="padding:20px;">
+                                            <div class="row">
+                                                <h4>Planning</h4>
+                                                <hr/>
+                                            </div>
+                                         
+                                            @if(WorkItemType == 1)
+                                            {
+                                                <div class="row">
+                                                    <p>Resolved Reason</p>
+                                                    <p><i class="fas fa-loc k"></i> @WorkItemData.ResolvedReason </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>Priority</p>
+                                                    <select class="form-control-sm form-control" id="ItemPriority" value="@WorkItemData.PriorityId">
+                                                        @foreach(var priority in priorities)
+                                                        {
+                                                           
+                                                                if(@priority.Id == @WorkItemData.PriorityId )
+                                                                {
+                                                                    <option value="@priority.Id" selected="Selected">@priority.PriorityName</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@priority.Id"  >@priority.PriorityName</option>
+
+                                                                }
+                                                             
+                                                            
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="row">
+                                                    <p>Severity</p>
+                                                    <select class="form-control-sm form-control" id="ItemSeverity" value="@WorkItemData.Severity">
+                                                        @foreach(var severity in severities)
+                                                        {
+                                                            if(@severity.Id == @WorkItemData.Severity )
+                                                            {
+                                                                <option value="@severity.Id"  selected="Selected">@severity.SeverityName</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                    <option value="@severity.Id">@severity.SeverityName</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="row">
+                                                    <p>Activity</p>
+                                                    <select class="form-control-sm form-control" id="ItemActivity" Value="@WorkItemData.Activity">
+                                                        @foreach(var activity in activities)
+                                                        {
+                                                            if(@activity.Id == @WorkItemData.Activity )
+                                                            {
+                                                                <option value="@activity.Id"  selected="Selected">@activity.ActivityName</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@activity.Id" >@activity.ActivityName</option>
+                                                            }
+                                                       
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="row">
+                                                    <h4>Efford Hours</h4>
+                                                    <hr/>
+                                                </div>
+                                                <div class="row">
+                                                    <div class=" form-group" style="width:100%">
+                                                        <label for="OriginalEstimate">Original Estimate</label>
+                                                        <input name="OriginalEstimate" id="OriginalEstimate" value="@WorkItemData.OriginEstitame" placeholder="OriginalEstimate"  style="width:100%" class="form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class=" form-group" style="width:100%">
+                                                        <label for="Remaining" >Remaining</label>
+                                                        <input name="Remaining" id="ItemRemaining" placeholder="Remaining" value="@WorkItemData.Remaining"  style="width:100%" class="form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class=" form-group" style="width:100%">
+                                                        <label for="Compleated">Compleated</label>
+                                                        <input name="Compleated" id="ItemCompleated" placeholder="Compleated" value="@WorkItemData.Compleated" style="width:100%" class="form-control-sm">
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if(WorkItemType == 2)
+                                            {
+                                                <div class="row">
+                                                    <h4>Status</h4>
+                                                    <hr/>
+                                                </div>
+                                                <div class="row">
+                                                    <p>Start Date</p>
+                                                    <div id="container">
+                                                        <input id="StartDate" type="text" type="text">
+                                                    </div>
+                                                </div>
+                                                 <div class="row">
+                                                    <p>End Date</p>
+                                                    <div id="container">
+                                                        <input id="EndDate" type="text" type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                     <h4>Details</h4>
+                                                    <hr/>
+                                                </div>
+                                                <div class="row">
+                                                    <p>Priority</p>
+                                                    <select class="form-control-sm form-control" id="ItemPriority" value="@WorkItemData.PriorityId">
+                                                        @foreach(var priority in priorities)
+                                                        {
+                                                           
+                                                                if(@priority.Id == @WorkItemData.PriorityId )
+                                                                {
+                                                                    <option value="@priority.Id" selected="Selected">@priority.PriorityName</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@priority.Id"  >@priority.PriorityName</option>
+
+                                                                }
+                                                             
+                                                            
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="row">
+                                                    <div class=" form-group" style="width:100%">
+                                                        <label for="Effort" >Effort</label>
+                                                        <input name="Effort" id="Effort" placeholder="Effort"  style="width:100%" class="form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class=" form-group" style="width:100%">
+                                                        <label for="BValue" >Business Value</label>
+                                                        <input name="BValue" id="BValue" placeholder="Business Value"  style="width:100%" class="form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class=" form-group" style="width:100%">
+                                                        <label for="TimeCriticality" >Time Criticality</label>
+                                                        <input name="TimeCriticality" id="TimeCriticality" placeholder="Time Criticality"  style="width:100%" class="form-control-sm">
+                                                    </div>
+                                                </div>
+                                               <div class="row">
+                                                    <p>Value Area</p>
+                                                    <select class="form-control-sm form-control" id="ValueArea" value="@WorkItemData.ValueAreaId">
+                                                        @foreach(var va in ValueAreas)
+                                                        {
+                                                            if(@va.Id == @WorkItemData.ValueAreaId )
+                                                            {
+                                                                <option value="@va.Id" selected="Selected">@va.ValueAreaName</option>
+ 
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@va.Id">@va.ValueAreaName</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                            }
+                                            else if(WorkItemType == 5)
+                                            {
+                                                  <div class="row">
+                                                    <p>Priority</p>
+                                                    <select class="form-control-sm form-control" id="ItemPriority" value="@WorkItemData.PriorityId">
+                                                        @foreach(var priority in priorities)
+                                                        {
+                                                            if(@priority.Id == @WorkItemData.PriorityId )
+                                                            {
+                                                                <option value="@priority.Id"  selected="Selected">@priority.PriorityName</option>
+                                                             }
+                                                            else
+                                                            {
+                                                                <option value="@priority.Id">@priority.PriorityName</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="row">
+                                                    <p>Risk</p>
+                                                    <select class="form-control-sm form-control" id="Risk" value="@WorkItemData.RiskId">
+                                                        @foreach(var risk in Risks)
+                                                        {
+                                                            if(@risk.Id == @WorkItemData.RiskId )
+                                                            {
+                                                                <option value="@risk.Id" selected="Selected">@risk.RiskName</option>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@risk.Id" >@risk.RiskName</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="row">
+                                                    <div class=" form-group" style="width:100%">
+                                                        <label for="Effort" >Effort</label>
+                                                        <input name="Effort" id="Effort" placeholder="Effort" value="@WorkItemData.Effort" style="width:100%" class="form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class=" form-group" style="width:100%">
+                                                        <label for="BValue" >Business Value</label>
+                                                        <input name="BValue" id="BValue" placeholder="Business Value" value="@WorkItemData.BusinessValue" style="width:100%" class="form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class=" form-group" style="width:100%">
+                                                        <label for="TimeCriticality" >Time Criticality</label>
+                                                        <input name="TimeCriticality" id="TimeCriticality" placeholder="Time Criticality" value="@WorkItemData.TimeCapacity"  style="width:100%" class="form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <p>Start Date</p>
+                                                    <div id="container">
+                                                        <input id="StartDate" type="text" value="@WorkItemData.StartDate" type="text">
+                                                    </div>
+                                                </div>
+                                                 <div class="row">
+                                                    <p>End Date</p>
+                                                    <div id="container">
+                                                        <input id="EndDate" type="text" value="@WorkItemData.EndDate" type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <h4>Classification</h4>
+                                                    <hr/>
+                                                </div>
+                                                 <div class="row">
+                                                    <p>Value Area</p>
+                                                    <select class="form-control-sm form-control" id="ValueArea" value="@WorkItemData.ValueAreaId">
+                                                        @foreach(var va in ValueAreas)
+                                                        {
+                                                            if(@va.Id == @WorkItemData.ValueAreaId )
+                                                            {
+                                                                <option value="@va.Id" selected="Selected">@va.ValueAreaName</option>
+ 
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@va.Id">@va.ValueAreaName</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                            }
+                                            else if(WorkItemType == 6)
+                                            {
+                                                <div class="row">
+                                                    <div class=" form-group" style="width:100%">
+                                                        <label for="Rank" >Stack Rank</label>
+                                                        <input name="Rank" id="Rank" placeholder="Stack Rank" value="@WorkItemData.StackRank"  style="width:100%" class="form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <p>Priority</p>
+                                                    <select class="form-control-sm form-control" id="ItemPriority" value="@WorkItemData.PriorityId"  >
+                                                        @foreach(var priority in priorities)
+                                                        { 
+                                                            if(@priority.Id == @WorkItemData.PriorityId )
+                                                            {
+                                                                <option value="@priority.Id" selected="Selected">@priority.PriorityName</option>
+ 
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@priority.Id">@priority.PriorityName</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="row">
+                                                    <p>Due Date</p>
+                                                    <div id="container" style="width:100%">
+                                                        <input id="DueDate" value="@WorkItemData.DueDate" type="text">
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if(WorkItemType == 3)
+                                            {
+                                                <div class="row">
+                                                    <p>Priority</p>
+                                                    <select class="form-control-sm form-control" id="ItemPriority" value="@WorkItemData.PriorityId">
+                                                        @foreach(var priority in priorities)
+                                                        {
+                                                            if(@priority.Id == @WorkItemData.PriorityId )
+                                                            {
+                                                                <option value="@priority.Id" selected="Selected">@priority.PriorityName</option>
+ 
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@priority.Id">@priority.PriorityName</option>
+                                                            }
+                                                         }
+                                                    </select>
+                                                </div>
+                                                <div class="row">
+                                                    <p>Activity</p>
+                                                    <select class="form-control-sm form-control" id="ItemActivity" value="@WorkItemData.Activity">
+                                                        @foreach(var activity in activities)
+                                                        {
+                                                            if(@activity.Id == @WorkItemData.Activity )
+                                                            {
+                                                                <option value="@activity.Id" selected="Selected">@activity.ActivityName</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@activity.Id">@activity.ActivityName</option>
+                                                            }
+                                                         }
+                                                    </select>
+                                                </div>
+                                                  <div class="row">
+                                                    <h4>Efford Hours</h4>
+                                                    <hr/>
+                                                </div>
+                                                <div class="row">
+                                                    <div class=" form-group" style="width:100%">
+                                                        <label for="OriginalEstimate">Original Estimate</label>
+                                                        <input name="OriginalEstimate" id="OriginalEstimate" value="@WorkItemData.OriginEstitame" placeholder="OriginalEstimate"  style="width:100%" class="form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class=" form-group" style="width:100%">
+                                                        <label for="Remaining" >Remaining</label>
+                                                        <input name="Remaining" id="ItemRemaining" placeholder="Remaining" value="@WorkItemData.Remaining" style="width:100%" class="form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class=" form-group" style="width:100%">
+                                                        <label for="Compleated">Compleated</label>
+                                                        <input name="Compleated" id="ItemCompleated" placeholder="Compleated" value="@WorkItemData.Compleated" style="width:100%" class="form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <h4>Implementation</h4>
+                                                    <hr/>
+                                                </div>
+                                                <div class="row">
+                                                    <p>Integrated in Build</p>
+                                                    <select class="form-control-sm form-control" id="ItemResolvedBuild" value="@WorkItemData.IntegratedInBuild" >
+                                                        @foreach(var build in builds)
+                                                        {
+                                                            if(@build.Id == @WorkItemData.IntegratedInBuild )
+                                                            {
+                                                                <option value="@build.Id" selected="Selected">@build.ReasonName</option>
+
+                                                             }
+                                                            else
+                                                            {
+                                                                <option value="@build.Id">@build.ReasonName</option>
+                                                            }
+                                                         }
+                                                    </select>
+                                                </div>
+                                            }
+                                            else if(WorkItemType == 7)
+                                            {
+                                                <div class="row">
+                                                    <div class=" form-group" style="width:100%">
+                                                        <label for="StoryPoints">Story Points</label>
+                                                        <input name="StoryPoints" id="StoryPoints" value="@WorkItemData.StoryPoints" placeholder="Story points"  style="width:100%" class="form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <p>Priority</p>
+                                                    <select class="form-control-sm form-control" id="ItemPriority" value="@WorkItemData.PriorityId">
+                                                        @foreach(var priority in priorities)
+                                                        {
+                                                            if(@priority.Id == @WorkItemData.PriorityId )
+                                                            {
+                                                                <option value="@priority.Id" selected="Selected">@priority.PriorityName</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@priority.Id">@priority.PriorityName</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="row">
+                                                    <p>Risk</p>
+                                                    <select class="form-control-sm form-control" id="Risk" value="@WorkItemData.RiskId">
+                                                        @foreach(var risk in Risks)
+                                                        {
+                                                            if(@risk.Id == @WorkItemData.RiskId )
+                                                            {
+                                                                <option value="@risk.Id" selected="Selected">@risk.RiskName</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@risk.Id">@risk.RiskName</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="row">
+                                                    <h4>Classification</h4>
+                                                    <hr/>
+                                                </div>
+                                                <div class="row">
+                                                    <p>Value Area</p>
+                                                    <select class="form-control-sm form-control" id="ValueArea" value="@WorkItemData.ValueAreaId">
+                                                        @foreach(var va in ValueAreas)
+                                                        {
+                                                            if(@va.Id == @WorkItemData.ValueAreaId )
+                                                            {
+                                                                <option value="@va.Id" selected="Selected">@va.ValueAreaName</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@va.Id">@va.ValueAreaName</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                            }
+                                        </div>
+                                         <div class="col-md-6" style="padding:20px;">
+                                             <div class="row">
+                                                 <h4>Development</h4>
+                                                 <h4/>
+                                             </div>
+                                             <div class="row">
+                                                <a class="mb-2 mr-2 btn-transition btn btn-outline-info" ><i class="fas fa-plus"></i> Associate</a>
+                                            </div>
+                                            <div class="row">
+                                                 <h4>Related Work</h4>
+                                                 <h4/>
+                                                 
+                                             </div>
+                                             <div class="row">
+                                                <a onclick="OpenModal()" class="mb-2 mr-2 btn-transition btn btn-outline-info" ><i class="fas fa-plus"></i> Associate</a>
+                                                <a onclick="OpenDiagram()" class="mb-2 mr-2 btn-transition btn btn-outline-info" ><i class="fas fa-plus"></i> Open relation diagram</a>
+
+                                            </div>
+                                            <div class="row" style="max-height:600px; height: 300px;overflow-y: scroll;">
+                                                <ul id="RelatedWork" style="list-style-type:none; padding:0px;">
+                                                    
+                                                </ul>
+                                            </div>
+                                             <div class="row">
+                                                 <h4>System Info</h4>
+                                                 <h4/>
+                                             </div>
+                                             <div class="row">
+                                                <p>Found in Build</p>
+                                                <select class="form-control-sm form-control" id="ItemFoundBuild" value="@WorkItemData.FoundInBuild">
+                                                    @foreach(var build in builds)
+                                                    {
+                                                        if(@build.Id == @WorkItemData.FoundInBuild )
+                                                        {
+                                                            <option value="@build.Id" selected="Selected">@build.ReasonName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@build.Id">@build.ReasonName</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                             <div class="row">
+                                                <p>Integrated in Build</p>
+                                                <select class="form-control-sm form-control" id="ItemResolvedBuild" value="@WorkItemData.IntegratedInBuild">
+                                                    @foreach(var build in builds)
+                                                    {
+                                                        if(@build.Id == @WorkItemData.FoundInBuild )
+                                                        {
+                                                            <option value="@build.Id" selected="Selected">@build.ReasonName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@build.Id">@build.ReasonName</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-eg5-1" role="tabpanel"><p>Like Aldus PageMaker including versions of Lorem. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+                            essentially unchanged. </p></div>
+                        <div class="tab-pane" id="tab-eg5-2" role="tabpanel"><p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+                            type specimen book. It has
+                            survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-center" style="margin-left:40%; margin-right:40%;">
+                <a class="mb-2 mr-2 btn-transition btn btn-outline-info" onclick="AddNewWorkItem()" > <i class="fas fa-save"></i> Save Changes</a>
+                <a class="mb-2 mr-2 btn-transition btn btn-outline-info" > <i class="fas fa-cancel"></i> Cancel Changes</a>
+
+            </div>
+        </div>
+       
+    </div>
+ 
+
+</div>
+
+
+
+
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+ <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
+<script>
+    function OpenModal()
+    {
+        console.log("Open modal");
+        $('#WorItemsGridPanel').modal('show'); 
+    }
+</script>
+<script>
+    var assignedUser = @WorkItemData.AssignedAccountNavigation.Id;
+    var selectedChildren = [];
+    var startDate;
+    var endDate;
+    var dueDateVal;
+    $( document ).ready(function() 
+    {
+        LoadWorkItemRelations();
+        LoadWorkItemsGrid();
+        var month = new Date().getMonth();
+        var fullYear = new Date().getFullYear();
+        
+        var startDate = new ej.calendars.DatePicker({
+            placeholder: 'Choose a date',
+            change: StatChange,
+            min: new Date(fullYear, month , 9),
+            //Sets the max.
+            max: new Date(fullYear, month, 15),
+            // Sets the value.
+            value: new Date(fullYear, month , 11)
+            });
+        var dueDate = new ej.calendars.DatePicker({
+            placeholder: 'Choose a date',
+            change: DueDateChange,
+            min: new Date(fullYear, month , 9),
+            //Sets the max.
+            max: new Date(fullYear, month, 15),
+            // Sets the value.
+            value: new Date(fullYear, month , 11)
+            });
+        var endDate = new ej.calendars.DatePicker({
+            placeholder: 'Choose a date',
+            change : EndChanged,
+
+
+                    // Sets the min.
+            min: new Date(fullYear, month , 9),
+            //Sets the max.
+            max: new Date(fullYear, month, 15),
+            // Sets the value.
+            value: new Date(fullYear, month , 11)
+            });
+        startDate.appendTo('#StartDate');
+        endDate.appendTo('#EndDate');
+        dueDate.appendTo('#DueDate');
+
+        var inputobj = new ej.inputs.TextBox({
+            placeholder: 'Enter work Id',
+            floatLabelType: 'Auto',
+    
+        });
+        inputobj.appendTo('#IdFilter');
+        var id = @projectId;
+        console.log(id);
+          var dto = {
+            "id": id,
+            
+        }
+        console.log(dto);
+        $.ajax({
+            type: 'POST',
+            url: '/Dashboard/GetUserAccounts',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            
+            success: function (response) {
+                InitiliazeComboBox(response);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+
+         $.ajax({
+            type: 'POST',
+            url: '/Backlogs/GetWorkItems',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                InitiliazeGrid(response);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+        
+    });
+    function StatChange(args){
+        console.log(args);
+        startDate = args.value;
+    }
+
+    function EndChanged(args){
+        console.log(args);
+        endDate = args.value;
+    }
+    function DueDateChange(args){
+        console.log(args);
+        dueDateVal = args.value;
+    }
+
+    function LoadWorkItemRelations()
+    {
+         $.ajax({
+            type: 'GET',
+            url: '/Dashboard/GetAllWorkItemRelations?workItemId=@WorkItemData.Id&&projectId=@projectId',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                GenerateUmlData(response.umlData);
+                response.workItems.forEach(function(element) {
+                    console.log(element.workItem.id);
+                    AddAssocuatedItem(element.workItem.id);
+
+                });
+
+            //    grid.appendTo('#WorkItemsGrid');
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr);
+            }
+        });
+    }
+
+    function InitiliazeGrid(data )
+    {
+        console.log(data);
+        ej.grids.Grid.Inject(ej.grids.Filter);
+        ej.grids.Grid.Inject(ej.grids.Edit, ej.grids.Toolbar);
+
+       //console.log(id);
+        var grid = new ej.grids.Grid({
+            dataSource: data.noParents,
+            allowSorting: true,
+            filterSettings: { type:'Menu' },
+            allowFiltering: true,
+            recordDoubleClick : WorkItemSelected,
+            columns: [
+                { field: 'id', headerText: 'Id', width: 125 },
+                { field: 'title', headerText: 'Title', width: 125 },
+                { field: 'description', headerText: 'Description', width: 180 },
+                { field: 'assignedAccountNavigation.Email', headerText: 'AssignedTo', width: 110 },
+
+            ]
+        
+        });
+        
+        grid.appendTo('#Grid');
+    }
+    function WorkItemSelected(args){
+        console.log(args);
+       AddAssocuatedItem(args.rowData.id);
+    }
+
+    function AddAssocuatedItem(id){
+        var project = @projectId;
+
+        
+        var dto = {
+            "WorkItemId": id,
+            "ProjectId" : project,
+            "RelationType" :  $("#RelationshipType :selected").val(),
+            "LinkedItems" : selectedChildren
+        }
+         $.ajax({
+            type: 'POST',
+            url: '/Dashboard/ValidateSelectedItem',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if(response !== undefined)
+                {
+                    var cItem = {
+                        "WorkItemId" : id,
+                        "RelationShipId": $("#RelationshipType :selected").val()
+                    }
+                    console.log(response);
+                    selectedChildren.push(cItem);
+                    if(response.workItemTypeId === 1)
+                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-bug\" style=\"padding:3px;\" ></i>"+response.title+"</a></li>");
+                    else if(response.workItemTypeId === 5)
+                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-crown\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
+                    else if(response.workItemTypeId === 6)
+                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-exclamation-triangle\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
+                    else if(response.workItemTypeId === 4)
+                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-vial\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
+                    else if(response.workItemTypeId === 7)
+                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-user-circle\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
+                    else if(response.workItemTypeId === 3)
+                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-tasks\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
+                    else if(response.workItemTypeId === 2)
+                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-cog\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
+
+                    $("[data-dismiss=modal]").trigger({ type: "click" });
+                }
+                else
+                {
+                    alert("Item with ID" + id+ " Is already linked with the current work item please chose another item!");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+        console.log(selectedChildren);
+    }
+    function ItemSelected(args){
+        console.log(args);
+        assignedUser = args.itemData.id;
+    }
+    function InitiliazeComboBox(data){
+        console.log(data);
+         var listObj = new ej.dropdowns.ComboBox({
+        //set the data to dataSource property
+            dataSource: data,
+            // By default, its enabled. For your better understanding, showcase this property.
+            allowCustom: true,
+            select : ItemSelected,
+            value: "@WorkItemData.AssignedAccountNavigation.Email",
+
+            // maps the appropriate column to fields property
+            fields: { value: 'email' },
+            // set placeholder to ComboBox input element
+            placeholder: "Assign to user"});
+            listObj.appendTo('#ProjectUsers');
+    }
+
+    function OpenDiagram()
+    {
+        $("#WorkItemChildren").show();
+    }
+
+    function AddNewWorkItem(){
+         var id = @projectId;
+         var workItemTypeId = @WorkItemType;
+         console.log($("#ItemReason :selected").val()); // The value of the selected option
+
+          var dto = {
+            "WorkItemId" : @WorkItemData.Id,
+            "WorktItemType" : workItemTypeId,
+            "Title": $("#Title").val(),
+            "ProjectId" : id,
+            "AssignedUser" :assignedUser,
+            "Description" : $("#Description").val(),
+            "AcceptanceCriteria": $("#AcceptanceCriteria").val(),
+            "State" :  $("#ItemState :selected").val(),
+            "ItemReason" :  $("#ItemReason :selected").val(),
+            "ItemArea" : $("#ItemArea :selected").val(),
+            "ItemIteration" : $("#ItemIteration :selected").val(),
+            "ItemPriority" : $("#ItemPriority :selected").val(),
+            "ItemSeverity" : $("#ItemSeverity :selected").val(),
+            "ItemActivity" : $("#ItemActivity :selected").val(),
+            "FoundInBuild" :$("#ItemFoundBuild :selected").val(),
+            "ResolvedInBuild" : $("#ItemResolvedBuild").val(),
+            "RepoSteps" : $("#RepoSteps").val(),
+            "SystemInfo" : $("#SystemInfo").val(),
+            "OriginalEstimate" : $("#OriginalEstimate").val(),
+            "ItemRemaining" : $("#ItemRemaining").val(),
+            "ItemCompleated" : $("#ItemCompleated").val(),
+            "Effort" :  $("#Effort").val(),
+            "RiskId" : $("#Risk :selected").val(),
+            "BusinessValue":  $("#BValue").val(),
+            "TimeCriticality" : $("#TimeCriticality").val(),
+            "StartDate" : startDate,
+            "EndDate" : endDate,
+            "ValueAreId" :  $("#ValueArea :selected").val(),
+            "DueDate" : dueDateVal,
+            "Rank" :$("#Rank").val() ,
+            "StoryPoints" : $("#StoryPoints").val(),
+            "SelectedChildren" : selectedChildren
+        }
+        console.log(dto);
+        if($("#Title").val()) {
+            $.ajax({
+                type: 'POST',
+                url: '/Dashboard/UpdateWorkItem',
+                data: JSON.stringify(dto),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    window.location.href = "/Dashboard/WorkItems?projectId=@projectId"
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        }
+        else
+        {
+            alert("Please fill in the title of the current work item!");
+        }   
+    }
+
+    function  LoadWorkItemsGrid()
+    {
+          $.ajax({
+            type: 'GET',
+            url: '/Dashboard/GetAllWorkItems?projectId=@projectId',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                 var grid = new ej.grids.Grid({
+                    dataSource: response,
+                    recordDoubleClick: WorkItemGridDoubleClicked,
+                    columns: [
+                        { field: 'id', headerText: 'ID', width: 60, textAlign: 'Right' },
+                        { field: 'title', headerText: 'Title', width: 150 },
+                        { field: 'itemState', headerText: 'State', width: 130, format: 'yMd', textAlign: 'Right' },
+                        { field: 'itemType', width: 120, format: 'Type', textAlign: 'Right' }
+                    ]
+                });
+                grid.appendTo('#WorkItemsGrid');
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr);
+            }
+        });
+    }
+
+    function WorkItemGridDoubleClicked(args)
+    {
+        console.log(args);
+        var dto = {
+            "WorkItemId": @WorkItemData.Id,
+            "CurrWorkItemId" : args.rowData.id,
+            "RelationType": args.rowData.workItemTypeId,
+            "ProjectId" : @projectId
+        }
+          $.ajax({
+                type: 'POST',
+                url: '/Dashboard/AssociatedWorkItemRelation',
+                data: JSON.stringify(dto),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    InitiliazeComboBox(response);
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        AddAssocuatedItem(args.rowData.id);
+        
+    }
+</script>

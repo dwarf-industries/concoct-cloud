@@ -1,0 +1,292 @@
+﻿
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Schedule JS Localization Sample</title>
+    <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script type="text/javascript" src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/cultures/ej.culture.en-US.min.js"></script>
+    <script src="../scripts/cultures/ej.culture.fr-FR.min.js"></script>
+    <script src="../scripts/cultures/ej.culture.vi-VN.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsonscheduledata.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div style="float: left" id="ScheduleLocal"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Select Culture</label>
+                        </div>
+                        <div class="col-md-3">
+                            <select id="culture" class="e-ddl"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            ej.Schedule.Locale["fr-FR"] = {
+                ReminderWindowTitle: "fenêtre Rappel",
+                CreateAppointmentTitle: "Créer un rendez",
+                RecurrenceEditTitle: "Modifier Répéter rendez-vous",
+                RecurrenceEditMessage: "Comment voulez-vous changer le rendez-vous dans la série?",
+                RecurrenceEditOnly: "Seulement cette nomination",
+                RecurrenceEditSeries: "La série entière",
+                PreviousAppointment: "Nomination précédente",
+                NextAppointment: "Prochain rendez-vous",
+                AppointmentSubject: "Assujettir",
+                StartTime: "Heure de départ",
+                EndTime: "Heure de fin",
+                AllDay: "Toute la journée",
+                StartTimeZone: "Démarrez TimeZone",
+                EndTimeZone: "End Time Zone",
+                Today: "Aujourd'hui",
+                Recurrence: "Répéter",
+                Done: "Terminé",
+                Cancel: "Annuler",
+                Ok: "D'accord",
+                Repeat: "Répéter",
+                RepeatBy: "Répéter par",
+                RepeatEvery: "Répéter chaque",
+                RepeatOn: "Répéter l'opération sur",
+                StartsOn: "Démarre sur",
+                Ends: "Prend fin",
+                Summary: "Résumé",
+                Daily: "Tous les jours",
+                Weekly: "Hebdomadaire",
+                Monthly: "Mensuel",
+                Yearly: "Annuel",
+                Every: "Chaque",
+                EveryWeekDay: "Tous les jours de la semaine",
+                Never: "Jamais",
+                After: "Après",
+                Occurrence: "Occurrences",
+                On: "Sur",
+                Edit: "modifier",
+                RecurrenceDay: "Journées",
+                RecurrenceWeek: "Semaines",
+                RecurrenceMonth: "Mois",
+                RecurrenceYear: "Années",
+                The: "le",
+                OfEvery: "de toute",
+                First: "Premier",
+                Second: "Seconde",
+                Third: "Troisième",
+                Fourth: "Quatrième",
+                Last: "Dernier",
+                WeekDay: "Jour de la semaine",
+                WeekEndDay: "Jour de weekend",
+                Subject: "Assujettir",
+                Categorize: "Catégories",
+                DueIn: "Dû en",
+                DismissAll: "Rejeter la totalité",
+                Dismiss: "Rejeter",
+                OpenItem: "Élément ouvert",
+                Snooze: "Roupillon",
+                Day: "journées",
+                Week: "Semaine",
+                WorkWeek: "Semaine de travail",
+                Month: "Mois",
+                AddEvent: "Ajouter un évènement",
+                CustomView: "Vue personnalisée",
+                Agenda: "Ordre du jour",
+                Detailed: "Modifier Rendez-vous",
+                EventBeginsin: "Nomination commence dans",
+                Editevent: "Modifier Rendez-vous",
+                Editseries: "Modifier la série",
+                Times: "fois",
+                Until: "jusqu'à",
+                Eventwas: "Rendez-vous était",
+                Hours: "hrs",
+                Minutes: "mins",
+                Overdue: "Nomination Overdue",
+                Days: "journées)",
+                Event: "un événement",
+                Select: "sélectionner",
+                Previous: "précédent",
+                Next: "Prochain",
+                Close: "Fermer",
+                Delete: "Effacer",
+                Date: "date",
+                Showin: "Montre",
+                Gotodate: "Aller à la date",
+                Resources: "RESSOURCES",
+                RecurrenceDeleteTitle: "Supprimer Répéter rendez-vous",
+                Location: "Emplacement",
+                Priority: "Priorité",
+                RecurrenceAlert: "Alerte",
+                NoTitle: "Pas de titre",
+                OverFlowAppCount: "plus de nominations",
+                AppointmentIndicator: "Cliquez pour plus de rendez-vous",
+                WrongPattern: "Le modèle de récurrence est pas valide",
+                CreateError: "La durée de la nomination doit être plus courte que la fréquence elle se produit. Raccourcir la durée, ou modifier le modèle de récurrence dans la boîte de dialogue Récurrence de rendez.",
+                DragResizeError: "Vous ne pouvez pas reporter une occurrence du rendez-vous périodique si elle saute sur une occurrence ultérieure du même rendez-vous.",
+                StartEndError: "L'heure de fin doit être supérieure à l'heure de début",
+                MouseOverDeleteTitle: "Supprimer Nomination",
+                DeleteConfirmation: "Êtes-vous sûr de vouloir supprimer ce rendez-vous?",
+                Time: "Temps",
+                EmptyResultText: "Pas de suggestions",
+                BlockIntervalAlertTitle: "Alerte",
+                BlockIntervalError: "L'intervalle de temps choisi a été bloqué et est indisponible pour la sélection.",
+                RecurrenceDateValidation: "Certains mois ont moins de dates sélectionnées. Pour ces mois, l'occurrence tombera à la dernière date du mois",
+                SeriesChangeAlert: "Les modifications apportées aux instances spécifiques de cette série seront annulées et ces rendez-vous seront identiques à la série"
+            };
+
+            ej.Schedule.Locale["vi-VN"] = {
+                ReminderWindowTitle: "cửa sổ nhắc nhở",
+                CreateAppointmentTitle: "tạo Bổ nhiệm",
+                RecurrenceEditTitle: "Sửa Lặp lại hẹn",
+                RecurrenceEditMessage: "Làm thế nào bạn muốn thay đổi cuộc hẹn trong chuỗi?",
+                RecurrenceEditOnly: "Chỉ có cuộc hẹn này",
+                RecurrenceEditSeries: "toàn bộ loạt",
+                PreviousAppointment: "Bổ nhiệm trước",
+                NextAppointment: "Bổ nhiệm kế tiếp",
+                AppointmentSubject: "Môn học",
+                StartTime: "Thời gian bắt đầu",
+                EndTime: "Thời gian kết thúc",
+                AllDay: "Cả ngày",
+                StartTimeZone: "Khu Thời gian bắt đầu",
+                EndTimeZone: "Time Zone End",
+                Today: "Hôm nay",
+                Recurrence: "lặp lại",
+                Done: "Làm xong",
+                Cancel: "hủy bỏ",
+                Ok: "Được",
+				Repeat: "lặp lại",
+                RepeatBy: "lặp lại bởi",
+                RepeatEvery: "lặp lại mỗi",
+                RepeatOn: "lặp lại",
+                StartsOn: "bắt đầu vào",
+                Ends: "Kết thúc",
+                Summary: "Tóm lược",
+                Daily: "hằng ngày",
+                Weekly: "hàng tuần",
+                Monthly: "hằng tháng",
+                Yearly: "hàng năm",
+                Every: "tất cả",
+                EveryWeekDay: "mỗi ngày trong tuần",
+                Never: "Không bao giờ",
+                After: "Sau",
+                Occurrence: "Sự xuất hiện (s)",
+                On: "Trên",
+                Edit: "Chỉnh sửa",
+                RecurrenceDay: "Day (s)",
+                RecurrenceWeek: "Tuần (s)",
+                RecurrenceMonth: "Tháng (s)",
+                RecurrenceYear: "Năm (s)",
+                The: "Các",
+                OfEvery: "của mỗi",
+                First: "Đầu tiên",
+                Second: "Thứ hai",
+                Third: "thứ ba",
+                Fourth: "thứ tư",
+                Last: "Cuối cùng",
+                WeekDay: "Weekday",
+                WeekEndDay: "Cuối tuần ngày",
+                Subject: "Môn học",
+                Categorize: "Thể loại",
+                DueIn: "do Trong",
+                DismissAll: "Giải tán hết đi",
+                Dismiss: "Bỏ qua",
+                OpenItem: "mở hàng",
+                Snooze: "giấc ngũ ngắn",
+                Day: "ngày",
+                Week: "Tuần",
+                WorkWeek: "Tuần làm việc",
+                Month: "tháng",
+                AddEvent: "Thêm sự kiện",
+                CustomView: "custom View",
+                Agenda: "chương trình nghị sự",
+                Detailed: "chỉnh sửa bổ nhiệm",
+                EventBeginsin: "Bổ nhiệm Begins trong",
+                Editevent: "chỉnh sửa bổ nhiệm",
+                Editseries: "chỉnh sửa Chuỗi",
+                Times: "thời gian",
+                Until: "cho đến khi",
+                Eventwas: "được bổ nhiệm",
+                Hours: "giờ",
+                Minutes: "phút",
+                Overdue: "Bổ nhiệm quá hạn",
+                Days: "day (s)",
+                Event: "Biến cố",
+                Select: "lựa chọn",
+                Previous: "trước",
+                Next: "kế tiếp",
+                Close: "gần",
+                Delete: "Xóa bỏ",
+                Date: "Ngày",
+                Showin: "Hiện tại",
+                Gotodate: "Tới Đến ngày",
+                Resources: "TÀI NGUYÊN",
+                RecurrenceDeleteTitle: "Xóa Lặp lại hẹn",
+                Location: "Vị trí",
+                Priority: "quyền ưu tiên",
+                RecurrenceAlert: "Báo động",
+                NoTitle: "Không tiêu đề",
+                OverFlowAppCount: "nhiều cuộc hẹn)",
+                WrongPattern: "Các mô hình tái phát là không hợp lệ",
+                CreateError: "Thời hạn bổ nhiệm phải được ngắn hơn thường xuyên như thế nào nó xảy ra. Rút ngắn thời gian, hoặc thay đổi mô hình tái phát trong Appointment Recurrence hộp thoại.",
+                DragResizeError: "Không thể sắp xếp lại một sự xuất hiện của các cuộc hẹn định kỳ nếu nó bỏ qua một sự xuất hiện sau này của việc bổ nhiệm cùng.",
+                StartEndError: "thời gian kết thúc phải lớn hơn thời gian bắt đầu",
+                MouseOverDeleteTitle: "xóa hẹn",
+                DeleteConfirmation: "Bạn có chắc chắn muốn xóa cuộc hẹn này?",
+                Time: "Thời gian",
+                EmptyResultText: "Chưa có đề xuất",
+                BlockIntervalAlertTitle: "Cảnh báo",
+                BlockIntervalError: "Khoảng thời gian đã chọn đã bị chặn và không khả dụng cho lựa chọn",
+                RecurrenceDateValidation: "Một số tháng có ít hơn ngày được chọn. Trong những tháng này, sự xuất hiện sẽ rơi vào ngày cuối cùng của tháng",
+                SeriesChangeAlert: "Những thay đổi được thực hiện cho các phiên bản cụ thể của loạt bài này sẽ bị hủy bỏ và các cuộc hẹn đó sẽ kết hợp lại loạt bài"
+            };
+
+            var dManager = ej.DataManager($.extend(true, [], window.Localization)).executeLocal(ej.Query().take(10));
+            $("#ScheduleLocal").ejSchedule({
+                width: "100%",
+                height: "525px",
+                currentDate: new Date(2017, 5, 5),
+                appointmentSettings: {
+                    dataSource: dManager,
+                    id: "Id",
+                    subject: "Subject",
+                    startTime: "StartTime",
+                    endTime: "EndTime",
+                    description: "Description",
+                    allDay: "AllDay",
+                    recurrence: "Recurrence",
+                    recurrenceRule: "RecurrenceRule"
+                },
+                locale: "en-US"
+            });
+            $("#sampleProperties").ejPropertiesPanel();
+            $('#culture').ejDropDownList({
+                dataSource: ["en-US", "vi-VN", "fr-FR"],
+                select: "onChange", width: "110px", selectedItemIndex: 0
+            });
+        });
+
+        function onChange(args) {
+            $("#ScheduleLocal").ejSchedule({ locale: args.value });
+        }
+    </script>
+</body>
+</html>

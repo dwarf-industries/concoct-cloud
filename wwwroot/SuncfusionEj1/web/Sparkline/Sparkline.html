@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+     <title>Sparkline</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+	<link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+	<script src="../scripts/properties.js" type="text/javascript"></script>  
+ </head>
+<body>
+    <div class="content-container-fluid">
+        <div id="sparkline" class="row">
+            <div class="cols-sample-area">
+                <table style="width:100%;">
+                    <tr>
+                        <td align ="center"><i>Mean Working Hours for year</i></td>
+                        <td>
+                            <div id="line" style="width:170px;"></div>
+                        </td>
+                    <tr>
+                        <td align="center"><i>Revenue Status</i></td>
+                        <td>
+                            <div id="column" style="height:100px;width:150px"></div>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td align="center"><i>Project Status Tracing</i></td>
+                        <td>
+                            <div id="area" style="height:100px;width:150px"></div>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td align="center"><i>Profit Comparison for each months</i></td>
+                        <td>
+                            <div id="winloss" style="height:100px;width:150px"></div>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td align="center"><i>Expenditure for a year</i></td>
+                        
+                        <td>
+                        <table>
+                            <tr>
+                            <td>
+                                <div id="pie1" style="height:40px;width:40px"></div>
+                                </td>
+                            <td>
+                                <div id="pie2" style="height:40px;width:40px"></div>
+                                </td>
+                            <td>
+                                <div id="pie3" style="height:40px;width:40px"></div>
+                                </td>
+                            <td>
+                                <div id="pie4" style="height:40px;width:40px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                            <td align="center">Q1</td>
+                            <td align="center"> Q2</td>
+                            <td align="center"> Q3</td>
+                            <td align="center"> Q4</td>
+                            </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                </div>
+            </div>
+            </div>
+            <script>
+                if (!!window.SVGSVGElement) {
+                    $("#sparkline").css('visibility', 'visible');
+                    $("#line").ejSparkline({
+                        dataSource: [12, 14, 11, 12, 11, 15, 12, 10, 11, 12, 15, 13, 12, 11, 10, 13, 15, 12, 14, 16, 14, 12, 11],
+                        tooltip: {
+                            visible: true,
+                            font: {
+                                size: "12px",
+                            }
+                        },
+                        type: "line",
+                        size: { height: 40, width: 170 },
+                    });
+                    $("#column").ejSparkline({
+                        dataSource: [2, 6, -1, 1, 12, 5, -2, 7, -3, 5, 8, 10, ],
+                        negativePointColor: "red",
+                        highPointColor: "blue",
+                        tooltip: {
+                            visible: true,
+                            font: {
+                                size: "12px",
+                            }
+                        },
+                        type: "column",
+                        size: { height: 100, width: 150 },
+                    });
+                    $("#area").ejSparkline({
+                        dataSource: [12, -10, 11, 8, 17, 6, 2, -17, 13, -6, 8, 10, ],
+                        markerSettings: { visible: true },
+                        highPointColor: "blue",
+                        lowPointColor: "orange",
+                        type: "area",
+                        opacity: 0.5,
+                        tooltip: {
+                            visible: true,
+                            font: {
+                                size: "12px",
+                            }
+                        },
+                        size: { height: 100, width: 150 },
+                    });
+                    $("#winloss").ejSparkline({
+                        dataSource: [12, 15, -11, 13, 17, 0, -12, 17, 13, -15, 8, 10, ],
+                        type: "winloss",
+                        size: { height: 100, width: 150 },
+                    });
+                    $("#pie1").ejSparkline({
+                        dataSource: [4, 6, 7],
+                        type: "pie",
+                        tooltip: {
+                            visible: true,
+                            font: {
+                                size: "12px",
+                            }
+                        },
+                        size: { height: 40, width: 40 },
+                    });
+                    $("#pie2").ejSparkline({
+                        dataSource: [8, 9, 1, ],
+                        type: "pie",
+                        tooltip: {
+                            visible: true,
+                            font: {
+                                size: "12px",
+                            }
+                        },
+                        size: { height: 40, width: 40 },
+                    });
+                    $("#pie3").ejSparkline({
+                        dataSource: [2, 3, 5],
+                        type: "pie",
+                        tooltip: {
+                            visible: true,
+                            font: {
+                                size: "12px",
+                            }
+                        },
+                        size: { height: 40, width: 40 },
+                    });
+                    $("#pie4").ejSparkline({
+                        dataSource: [10, 12, 11],
+                        type: "pie",
+                        tooltip: {
+                            visible: true,
+                            font: {
+                                size: "12px",
+                            }
+                        },
+                        size: { height: 40, width: 40 },
+                    });
+                } else {
+                    $("#sparkline").css('visibility', 'hidden');
+                    alert("Sparkline will not be supported in IE Version < 9");
+                }
+            </script>
+</body>
+
+</html>
+

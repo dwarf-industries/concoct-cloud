@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Essential JS 1 : TreeGrid</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+     <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsontreegriddata.js"></script>
+</head>
+
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="TreeGridContainer" style="height:450px;width:100%"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Enable Dialog Template
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" id="dialogtemplate" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/x-jsrender" id="template">
+        <div>
+            <b>Task Details</b>
+            <table>
+                <tr>
+                    <td style="text-align: right;padding:10px;">
+                        Task ID
+                    </td>
+                    <td style="text-align: left;padding:10px;">
+                        <input id="TreeGridContainertaskID" name="taskID" value="{{: taskID}}" />
+                    </td>
+                    <td style="text-align: right;padding:10px;">
+                        Task Name
+                    </td>
+                    <td style="text-align: left;padding:10px;">
+                        <input id="TreeGridContainertaskName" name="taskName" value="{{: taskName}}" class="e-field e-ejinputtext" style="width: 100%; height: 100x;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;padding:10px;">
+                        Start Date
+                    </td>
+                    <td style="text-align: left;padding:10px;">
+                        <input type="text" id="TreeGridContainerstartDate" name="startDate" value="{{: startDate}}" />
+                    </td>
+                    <td style="text-align: right;padding:10px;">
+                        End Date
+                    </td>
+                    <td style="text-align: left;padding:10px;">
+                        <input id="TreeGridContainerendDate" name="endDate" value="{{: endDate}}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;;padding:10px;">
+                        Duration
+                    </td>
+                    <td style="text-align: left;padding:10px;">
+                        <input id="TreeGridContainerduration" name="duration" value="{{: duration}}"/>
+                    </td>
+                    <td style="text-align: right;padding:10px;">
+                        Progress
+                    </td>
+                    <td style="text-align: left;padding:10px;">
+                        <input id="TreeGridContainerprogress" name="progress" value="{{: progress}}" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </script>
+
+        <script type="text/javascript">
+
+            $(function () {
+                var dateFormat = "{0:" + ej.preferredCulture()["calendars"]["standard"]["patterns"]["d"] + "}";
+                $("#TreeGridContainer").ejTreeGrid({
+                    dataSource: sampleData,
+                    childMapping: "subtasks",
+                    treeColumnIndex: 1,
+                    rowHeight: window.theme == "material" ? 48 : window.theme == "office-365" ? 36 : 30,
+                    isResponsive: true,
+                    contextMenuSettings: {
+                        showContextMenu: true,
+                        contextMenuItems: ["add", "edit", "delete"]
+                    },
+                    editSettings: {
+                        allowAdding: true,
+                        allowEditing: true,
+                        allowDeleting: true,
+                        editMode: "dialogEditing",
+                        rowPosition: "belowSelectedRow"
+
+                    },
+                    columns: [
+                        { field: "taskID", headerText: "Task Id", editType: "numericedit", width: window.theme == "material" ? 90 : 45 },
+                        { field: "taskName", headerText: "Task Name", editType: "stringedit" },
+                        { field: "startDate", headerText: "Start Date", editType: "datepicker", format: dateFormat },
+                        { field: "endDate", headerText: "End Date", editType: "datepicker", format: dateFormat },
+                        { field: "duration", headerText: "Duration", editType: "numericedit" },
+                        { field: "progress", headerText: "Progress", editType: "numericedit" }
+                    ],
+                    load: function () {
+                        if (window.theme == "material")
+                            this.treeIndentLevelWidth = 16;
+                    },
+                    toolbarSettings: {
+                        showToolbar: true,
+                        toolbarItems: [ej.TreeGrid.ToolbarItems.Add,
+                        ej.TreeGrid.ToolbarItems.Edit,
+                        ej.TreeGrid.ToolbarItems.Delete,
+                        ej.TreeGrid.ToolbarItems.Update,
+                        ej.TreeGrid.ToolbarItems.Cancel,
+                        ej.TreeGrid.ToolbarItems.ExpandAll,
+                        ej.TreeGrid.ToolbarItems.CollapseAll
+                        ]
+                    },
+                })
+
+                $('#mode').ejDropDownList({
+                    targetID: "editMode",
+                    change: "onModeChange",
+                    value: "Dialog Editing",
+                    text: "Dialog Editing",
+                    width: "118px"
+                });
+
+                $("#sampleProperties").ejPropertiesPanel();
+                $('#dialogtemplate').ejCheckBox({
+                    change: "onModeChange",
+                });
+            });
+            function onModeChange(args) {
+                var treeObject = $("#TreeGridContainer").data("ejTreeGrid"), value;
+                if (!args.isChecked)
+                    value = null;
+                else
+                    value ="#template";
+                var setting = {
+                    dialogEditorTemplateID: value
+                }
+                treeObject.option("editSettings", setting);
+            }
+        </script>
+
+</body>
+
+</html>

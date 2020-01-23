@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Inline Form on Local data</title>
+
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.widgets.all.min.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+        <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jquery.easing.1.3.min.js"></script>
+        <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+			
+                    <div id="dataBox"></div>
+            
+             </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="calcBox">
+                            CalcEngine calculate the Array data. In this example last cell of row and column returns the sum of values of row or column.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="tempcalcBox">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="button" id="btnGen" onclick="genValue()" value="Generate New Data" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="tempcalcBox">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Row Index
+                        </div>
+                        <div class="col-md-3">
+                            <input id="rowIndex" class="e-ejinputtext" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Column Index
+                        </div>
+                        <div class="col-md-3">
+                            <input id="colIndex" class="e-ejinputtext" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Value
+                        </div>
+                        <div class="col-md-3">
+                            <input id="valueBox" class="e-ejinputtext" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="tempcalcBox">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="button" id="btnsetVal" onclick="setValue()" value="Set Value" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+
+            var rows = 0;
+            var cols = 0;
+            var arrayData;
+            var calcEng = null;
+           
+        });
+		function genValue() {
+			row = Math.floor(Math.random() * 10) + 5;
+                        col = Math.floor(Math.random() * 6) + 3;
+                        var data = create2DArray(row);
+
+                        for (var r = 0; r < row; ++r)
+                            for (var c = 0; c < col; ++c) {
+                                var num = (Math.floor(Math.random() * 79) + 20) / 10;
+                                data[r][c] = num.toFixed(1);
+                            }
+
+                        arrayData = new ArrayCalcData(data);
+                        calcEng = arrayData.wireObject();
+                        calcEng.setUseDependencies(true);
+                        calcEng.recalculateRange(RangeInfo.cells(1, 1, row + 1, col + 1), arrayData);
+
+                        arrayData.showObject();
+		};
+        function setValue() {
+			if (row == 0) {
+                            alert("Generate data first.");
+                            return;
+                        }
+                        try {
+                            var r = parseInt($("#rowIndex").val());
+                            var c = parseInt($("#colIndex").val());
+                            if (r > row || c > col)
+                                alert("Please enter a valid row and column index.");
+                            var val = $("#valueBox").val()
+
+                            arrayData.setData(val, r, c);
+                            var cellArgs = new ValueChangedArgs(r, c, val);
+                            calcEng.valueChanged(arrayData, cellArgs);
+                            arrayData.showObject();
+                        }
+                        catch (ex1) {
+
+                        }
+		};
+        var ArrayCalcData = (function () {
+            function ArrayCalcData(dataValues) {
+                this.dValues = dataValues;
+                this.rowCount = dataValues.length;
+                this.colCount = dataValues[0].length;
+                this.rowSums = [];
+                this.colSums = [];
+                this.calcEngine = null;
+                //initialize the formulas for the row sums
+                // eg. "=Sum(A5:D5)"  to sum row 5
+                for (var row = 0; row <= this.rowCount; ++row) {
+                    this.rowSums[row] = "=Sum(A" + (Number(row) + 1) + ":" + RangeInfo.getAlphaLabel(this.colCount) + (Number(row) + 1) + ")";
+
+                }
+
+                //initialize the formulas for the columns sums
+                // eg. "=Sum(B1:B5)"  to sum column 2
+                for (var col = 0; col <= this.colCount; ++col) {
+                    this.colSums[col] = "=Sum(" + RangeInfo.getAlphaLabel(Number(col) + 1) + "1" + ":" + RangeInfo.getAlphaLabel(Number(col) + 1) + this.rowCount + ")";
+                }
+                this.getValueRowCol = function (sheetId, row, col) {
+                    if (row - 1 == this.rowCount) {
+                        return this.colSums[col - 1];
+                    }
+                    else if (col - 1 == this.colCount) {
+                        return this.rowSums[row - 1];
+
+                    }
+                    else
+                        return this.dValues[row - 1][col - 1];
+                }
+                this.setValueRowCol = function (sheetId, value, row, col) {
+
+                    if (row - 1 == this.rowCount) {
+                        this.colSums[col - 1] = Number(value).toFixed(1);
+                    }
+                    else if (col - 1 == this.colCount) {
+                        this.rowSums[row - 1] = Number(value).toFixed(1);
+                    }
+                    else
+                        this.dValues[row - 1][col - 1] = Number(value).toFixed(1);
+
+                    var cellArgs = new ValueChangedArgs(row, col, value);
+                    this.calcEngine.valueChanged(this, cellArgs);
+                }
+
+                this.getData = function (row, col) {
+                    return this.getValueRowCol(this, row + 1, col + 1);
+                };
+                this.setData = function (value, row, col) {
+                    this.setValueRowCol(this, value, row + 1, col + 1);
+                };
+
+                this.showObject1 = function () {
+                    var textData = "";
+                    for (var i = 0; i <= this.rowCount; ++i) {
+                        for (var j = 0; j <= this.colCount; ++j) {
+                            textData += this.getData(i, j) + '&nbsp;&nbsp;&nbsp;&nbsp;';
+
+                        }
+                        textData += '<br>';
+                    }
+                    document.getElementById("dataBox").innerHTML = textData;
+
+                }
+
+                this.showObject = function () {
+                    var textData = "<table>";
+                    for (var i = 0; i <= this.rowCount; ++i) {
+                        textData += "<tr>";
+                        for (var j = 0; j <= this.colCount; ++j) {
+                            textData += "<td>" + this.getData(i, j) + '&nbsp;&nbsp;&nbsp;&nbsp;' + "</td>";
+
+                        }
+                        textData += "</tr>";
+                    }
+                    textData += "</table>";
+                    document.getElementById("dataBox").innerHTML = textData;
+
+                }
+
+                this.wireObject = function () {
+                    this.calcEngine = new CalcEngine(this);
+                    return this.calcEngine;
+                }
+            }
+            return ArrayCalcData;
+        })();
+
+        function create2DArray(rows) {
+            var arr = [];
+
+            for (var i = 0; i < rows; i++) {
+                arr[i] = [];
+            }
+
+            return arr;
+        }
+
+       
+        $(".e-ejinputtext").val("");
+        $(".e-ejinputtext").outerWidth(100);
+        $("#sampleProperties").ejPropertiesPanel();
+        $('#btnGen').trigger('click');
+
+    </script>
+	<style type="text/css" class="cssStyles">
+
+		.control {
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-left:auto;
+            margin-right:auto;
+        }
+        .calcBox {
+            margin-left: 0px;
+            margin-top: 5px;
+        }
+        .tdcls {
+            width: 200px;
+        }
+        .tempcalcBox {
+            margin-left: 5px;
+            margin-top: 5px;
+            height: 10px;
+        }
+         </style>
+</body>
+</html>

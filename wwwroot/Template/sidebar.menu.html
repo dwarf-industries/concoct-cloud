@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
+	<link rel="stylesheet" href="node_modules/open-sans-fontface/open-sans.css">
+	<link rel="stylesheet" href="node_modules/perfect-scrollbar/css/perfect-scrollbar.css">
+	<link rel="stylesheet" href="css/sidebar.css">
+	<title>Sidebar menu on bootstrap 4</title>
+</head>
+
+<body class="body body-lighten">
+	<div class="d-flex" id="wrapper">
+
+		<!-- sidebar -->
+		<div class="sidebar sidebar-lighten">
+
+			<!-- sidebar menu -->
+			<div class="sidebar-menu">
+
+				<!-- menu -->
+				<ul class="list list-unstyled list-scrollbar">
+
+					<!-- simple menu -->
+					<li class="list-item">
+						<p class="list-title text-uppercase">Translate</p>
+						<ul class="list-unstyled">
+							<li><a href="#" class="list-link">Czech</a></li>
+							<li><a href="#" class="list-link current">English</a></li>
+						</ul>
+					</li>
+
+					<!-- multi-level dropdown menu -->
+					<li class="list-item">
+						<p class="list-title text-uppercase">Dashboard</p>
+						<ul class="list-unstyled">
+							<li><a href="#" class="list-link"><span class="list-icon"><i class="fa fa-home" aria-hidden="true"></i></span>Home</a></li>
+							<li><a href="#" class="list-link link-arrow link-current"><span class="list-icon"><i class="fa fa-cog" aria-hidden="true"></i></span>Settings</a>
+								<ul class="list-unstyled list-hidden">
+									<li><a href="#" class="list-link">Timezone</a></li>
+									<li><a href="#" class="list-link">Permissions</a></li>
+									<li><a href="#" class="list-link link-arrow link-current">Maintenance</a>
+										<ul class="list-unstyled list-hidden">
+											<li><a href="#" class="list-link">On</a></li>
+											<li><a href="#" class="list-link link-current">Off</a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+
+							<!-- notice info -->
+							<li><a href="#" class="list-link">Notice</a></li>
+						</ul>
+					</li>
+
+					<!-- multi-level dropdown menu -->
+					<li class="list-item">
+						<p class="list-title text-uppercase">Coments</p>
+						<ul class="list-unstyled">
+							<li><a href="#" class="list-link"><span class="list-icon"><i class="fa fa-plus" aria-hidden="true"></i></span>New</a></li>
+							<li><a href="#" class="list-link link-arrow"><span class="list-icon"><i class="fa fa-comments-o" aria-hidden="true"></i></span>Settings comments</a>
+								<ul class="list-unstyled list-hidden">
+									<li><a href="#" class="list-link">Disable</a></li>
+									<li><a href="#" class="list-link">Enable</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+
+					<!-- simple menu -->
+					<li class="list-item">
+						<p class="list-title text-uppercase">Blog</p>
+						<ul class="list-unstyled">
+							<li><a href="#" class="list-link"><span class="list-icon"><i class="fa fa-plus" aria-hidden="true"></i></span>Add</a></li>
+							<li><a href="#" class="list-link"><span class="list-icon"><i class="fa fa-table" aria-hidden="true"></i></span>List</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- website content -->
+		<div class="content">
+
+			<!-- navbar top fixed -->
+			<nav class="navbar navbar-expand-lg fixed-top navbar-lighten">
+
+				<!-- navbar title -->
+				<a class="navbar-brand navbar-link" href="#">Sidebar menu</a>
+
+				<!-- navbar sidebar menu toggle -->
+				<span class="navbar-text">
+					<a href="#" id="sidebar-toggle" class="navbar-bars">
+						<i class="fa fa-bars" aria-hidden="true"></i>
+					</a>
+				</span>
+
+				<!-- navbar dropdown menu-->
+				<div class="collapse navbar-collapse">
+					<div class="dropdown dropdown-logged dropdown-logged-lighten">
+						<a href="#" data-toggle="dropdown" class="dropdown-logged-toggle dropdown-link">
+							<span class="dropdown-user float-left">Accgit</span>
+							<img src="img/avatar.png" alt="avatar" class="dropdown-avatar">
+						</a>
+						<div class="dropdown-menu dropdown-logged-menu dropdown-menu-right border-0 dropdown-menu-lighten">
+							<div class="dropdown-menu-arrow"></div>
+							<a class="dropdown-item dropdown-logged-item" href="#"><i class="fa fa-user-o" aria-hidden="true"></i>Your profile</a>
+							<a class="dropdown-item dropdown-logged-item" href="#"><i class="fa fa-comments-o" aria-hidden="true"></i>Your comments</a>
+							<a class="dropdown-item dropdown-logged-item" href="#"><i class="fa fa-key" aria-hidden="true"></i>Change password</a>
+							<div class="dropdown-divider border-light"></div>
+							<a class="dropdown-item dropdown-logged-item" href="#"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
+						</div>
+					</div>
+				</div>
+			</nav>
+
+			<!-- content container -->
+			<div class="container-fluid">
+
+				<!-- one box -->
+				<div class="content-box mb-3 content-lighten">
+					<h3>Website content</h3>
+					<p>Here is content this website page.</p>
+				</div>
+
+				<!-- two box -->
+				<div class="row">
+					<div class="col-sm-6 mb-3 col-md-6">
+						<div class="content-box content-lighten">
+							<h3>Website content</h3>
+							<p>Here is content this website page.</p>
+						</div>
+					</div>
+					<div class="col-sm-6 mb-3 col-md-6">
+						<div class="content-box content-lighten">
+							<h3>Website content</h3>
+							<p>Here is content this website page.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- javascript library -->
+	<script src="node_modules/jquery/dist/jquery.js"></script>
+	<script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+	<script src="node_modules/perfect-scrollbar/dist/perfect-scrollbar.js"></script>
+	<script src="node_modules/nanobar/nanobar.js"></script>
+	<script src="js/sidebar.menu.js"></script>
+	<script>
+		$(function() {
+			new PerfectScrollbar('.list-scrollbar');
+			var nanobar = new Nanobar();
+			nanobar.go(100);
+		});
+	</script>
+</body>
+
+</html>

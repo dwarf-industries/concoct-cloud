@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : TreeView - Events</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div style="width: 250px; max-width:100%">
+                    <ul id="treeView">
+                        <li class="expanded">
+                            Cricket
+                            <ul>
+                                <li>Princeton Club</li>
+                                <li>Harverd Club</li>
+                                <li>st.Columbia Club</li>
+                                <li>Dartmouth Club</li>
+                                <li>Middlebury Club</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Football
+                            <ul>
+                                <li>A.F.C Blackpool </li>
+                                <li>A.F.C Emley </li>
+                                <li>Bedford </li>
+                                <li>Farsley </li>
+                            </ul>
+                        </li>
+                        <li>
+                            Basketball
+                            <ul>
+                                <li>AGE Halkida</li>
+                                <li>Iraklio</li>
+                                <li>Sporting Athens</li>
+                                <li>Pagrati Athens</li>
+                                <li>London Towers</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cols-prop-area event-tracer">
+                <div>
+                    <div class="heading">
+                        <span>Event Trace</span>
+                        <div class="pull-right">
+                            <select name="selectevtprops" id="selectControls">
+                                <option value="nodeExpand">Expand</option>
+                                <option value="nodeCollapse">Collapse</option>
+                                <option value="beforeExpand">BeforeExpand</option>
+                                <option value="beforeCollapse">BeforeCollapse</option>
+                                <option value="nodeSelect">Select</option>
+                                <option value="beforeEdit">BeforeEdit</option>
+                                <option value="nodeEdit">NodeEdit</option>
+                                <option value="nodeCheck">Check</option>
+                                <option value="nodeUncheck">Uncheck</option>
+                                <option value="nodeDragStart">DragStart</option>
+                                <option value="nodeDrag">Drag</option>
+                                <option value="nodeDragStop">Drag Stop</option>
+                                <option value="nodeDropped">Dropped</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="prop-grid content">
+                        <div class="eventarea">
+                            <div class="EventLog" id="EventLog">
+                            </div>
+                        </div>
+                        <div class="evtbtn">
+                            <input type="button" class="eventclear e-btn" value="Clear" onclick="onClear()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var treeviewObj, tabIndex = 1;
+        $(function () {
+            // declaration
+            $("#treeView").ejTreeView({
+                allowDragAndDrop: true,
+                allowDropChild: true,
+                allowDropSibling: true,
+                showCheckbox: true,
+                allowEditing: true,
+                create: "onCreate",
+                nodeExpand: "onExpand",
+                nodeCollapse: "onCollapse",
+                beforeExpand: "onBeforeExpand",
+                beforeCollapse: "onBeforeCollapse",
+                nodeSelect: "onSelect",
+                nodeCheck: "onChecked",
+                nodeUncheck: "onUnChecked",
+                nodeDragStart: "onDragStart",
+                nodeDrag: "onDrag",
+                nodeDragStop: "onDragStop",
+                nodeDropped: "onDropped",
+                beforeEdit: "onBeforeEdit",
+                nodeEdit: "onEdit",
+                ready: "onReady"
+            });
+            treeviewObj = $("#treeView").data("ejTreeView");
+            $("#selectControls").ejDropDownList({
+                popupShown: "adjustpopupposition",
+                showCheckbox: true,
+                checkAll: true,
+                change: "evtpropscheckedevent",
+                popupWidth: "180px"
+            });
+        });
+
+        // Event wire and unwire
+        function evtpropscheckedevent(args) {
+            if (args.isChecked) {
+                switch (args.selectedValue) {
+                    case "create": treeviewObj.option(args.selectedValue, "onCreate"); break;
+                    case "nodeExpand": treeviewObj.option(args.selectedValue, "onExpand"); break;
+                    case "nodeCollapse": treeviewObj.option(args.selectedValue, "onCollapse"); break;
+                    case "beforeExpand": treeviewObj.option(args.selectedValue, "onBeforeExpand"); break;
+                    case "beforeCollapse": treeviewObj.option(args.selectedValue, "onBeforeCollapse"); break;
+                    case "nodeSelect": treeviewObj.option(args.selectedValue, "onSelect"); break;
+                    case "nodeCheck": treeviewObj.option(args.selectedValue, "onChecked"); break;
+                    case "nodeUncheck": treeviewObj.option(args.selectedValue, "onUnChecked"); break;
+                    case "nodeDragStart": treeviewObj.option(args.selectedValue, "onDragStart"); break;
+                    case "nodeDrag": treeviewObj.option(args.selectedValue, "onDrag"); break;
+                    case "nodeDragStop": treeviewObj.option(args.selectedValue, "onDragStop"); break;
+                    case "nodeDropped": treeviewObj.option(args.selectedValue, "onDropped"); break;
+                    case "beforeEdit": treeviewObj.option(args.selectedValue, "onBeforeEdit"); break;
+                    case "nodeEdit": treeviewObj.option(args.selectedValue, "onEdit"); break;
+                }
+            }
+            else treeviewObj.option(args.selectedValue, null);
+        }
+
+        function onCreate(args) {
+            jQuery.addEventLog("Treeview has been <span class='eventTitle'>created</span>.");
+        }
+        function onExpand(args) {
+            jQuery.addEventLog($.trim(args.value) + " node is <span class='eventTitle'>Expanded</span>.");
+        }
+        function onCollapse(args) {
+            jQuery.addEventLog($.trim(args.value) + " node is <span class='eventTitle'>Collapsed</span>.");
+        }
+        function onBeforeExpand(args) {
+            jQuery.addEventLog("<span class='eventTitle'>BeforeExpand</span> event is fired for " + $.trim(args.value) + " node.");
+        }
+        function onBeforeCollapse(args) {
+            jQuery.addEventLog("<span class='eventTitle'>BeforeCollapse</span> event is fired for " + $.trim(args.value) + " node.")
+        }
+        function onSelect(args) {
+            jQuery.addEventLog($.trim(args.value) + " node is <span class='eventTitle'>selected</span>.");
+        }
+        function onChecked(args) {
+            jQuery.addEventLog($.trim(args.value) + " node is <span class='eventTitle'>checked</span>.");
+        }
+        function onUnChecked(args) {
+            jQuery.addEventLog($.trim(args.value) + " node is <span class='eventTitle'>unchecked</span>.");
+        }
+        function onDragStart(args) {
+            jQuery.addEventLog($.trim(args.targetElementData.text) + " node <span class='eventTitle'>dragging has been started</span>.");
+        }
+        function onDrag(args) {
+            jQuery.addEventLog($.trim(args.draggedElementData.text) + " node is being <span class='eventTitle'>dragged</span>.");
+        }
+        function onDragStop(args) {
+            jQuery.addEventLog($.trim(args.draggedElementData.text) + " node dragging has been <span class='eventTitle'>stopped</span>.");
+        }
+        function onDropped(args) {
+            var targetText = (args.targetElementData.text != "") ? $.trim(args.targetElementData.text) : "Treeview";
+            jQuery.addEventLog($.trim(args.droppedElementData.text) + " node has been <span class='eventTitle'>dropped </span> to " + targetText + ".");
+        }
+        function onBeforeEdit(args) {
+            jQuery.addEventLog("<span class='eventTitle'>BeforeEdit</span> event is fired for " + $.trim(args.currentElement.text()) + " node.");
+        }
+        function onEdit(args) {
+            jQuery.addEventLog($.trim(args.oldText) + " node has been <span class='eventTitle'>edited</span> to " + $.trim(args.newText) + ".");
+        }
+        function onReady(args) {
+            jQuery.addEventLog("TreeView nodes are <span class='eventTitle'>loaded</span> successfully.");
+        }
+        function onClear() {
+            jQuery.clearEventLog();
+        }
+    </script>
+</body>
+</html>

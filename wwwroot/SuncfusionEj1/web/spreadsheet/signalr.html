@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : signalR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/spreadsheet-css/ej.spreadsheet.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+        <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/jquery.validate.min.js"></script>
+    <script src="../scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/xljsondata.js" type="text/javascript"></script>
+    <script src="../scripts/jquery.signalR-1.1.4.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="e-container-spreadsheet">
+                    <div id="Spreadsheet"></div>
+                </div>
+            </div>
+            <div id="sampleProperties">
+                <div>
+                    <div class="row">
+                        <div class="col-md-6 lineheight">Font Size:</div>
+                        <div class="col-md-6">
+                            <input type="text" id="fontsize" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 lineheight">Font Family:</div>
+                        <div class="col-md-6">
+                            <input type="text" id="fontfamily" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 lineheight">Text Align:</div>
+                        <div class="col-md-6">
+                            <input type="text" id="textalign" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 lineheight labelWidth">Font Color:</div>
+                        <div class="col-md-6 colorWidth">
+                            <input type="text" id="fontcolor" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 lineheight labelWidth">BackGround Color:</div>
+                        <div class="col-md-6 colorWidth">
+                            <input type="text" id="bgcolor" />
+                        </div>
+                    </div>
+                    <div class="heading actlog">
+                        <span>Active Logs</span>
+                    </div>
+                    <div>
+                        <strong>Recent Change Logs (Your User Name : <span id="userName"></span>)</strong><br />
+                        <br />
+                        <ul id="log" style="padding-left: 17px;"></ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        $("#sampleProperties").ejPropertiesPanel();
+        $(function () {
+            var data = ej.DataManager(window.filterData).executeLocal(ej.Query().select("CustomerID", "ShipName", "ShipAddress", "ShipCity", "ShipCountry")), generator = (9 - 1) * Math.random() * (1000), fontSize, fontFamily, tAlign, xlObj;
+            $("#userName").html("user" + Math.round(generator));
+            $("#Spreadsheet").ejSpreadsheet({
+                scrollSettings:
+               {
+                   allowVirtualScrolling: false,
+                   scrollMode: "normal"
+               },
+                sheets: [{ dataSource: data }],
+                columnCount: 7,
+                columnWidth: 160,
+                loadComplete: "loadComplete",
+                actionComplete: "actionComplete",
+                allowFormulaBar: false,
+                showRibbon: false,
+                enableContextMenu: false,
+                allowInsert: false,
+            });
+            fontSize = [{ value: "8pt", text: "8" }, { value: "11pt", text: "11" }, { value: "14pt", text: "14" }, { value: "18pt", text: "18" }, { value: "36pt", text: "36" }, { value: "72pt", text: "72" }];
+            fontFamily = [{ value: "Arial", text: "Arial" }, { value: "Calibri", text: "Calibri" }, { value: "Cambria", text: "Cambria" }, { value: "Courier", text: "Courier" }, { value: "Tahoma", text: "Tahoma" }];
+            tAlign = [{ value: "left", text: "Left" }, { value: "center", text: "Center" }, { value: "right", text: "Right" }];
+            $("#fontsize").ejDropDownList({ width: "120px", change: "onChange", dataSource: fontSize, selectedItemIndex: 1 });
+            $("#fontfamily").ejDropDownList({ width: "120px", change: "onChange", dataSource: fontFamily, selectedItemIndex: 1 });
+            $("#textalign").ejDropDownList({ width: "120px", change: "onChange", dataSource: tAlign, selectedItemIndex: 0 });
+            $("#fontcolor").ejColorPicker({ value: "#278787", change: "onChange", select: "onChange", showApplyCancel: false, showSwitcher: false });
+            $("#bgcolor").ejColorPicker({ value: "#278787", change: "onChange", select: "onChange", showApplyCancel: false, showSwitcher: false });
+
+          
+            $.getScript(window.baseurl + "signalr/hubs", function () {
+                $.signalR.hub.url = window.baseurl + "signalr";
+                window.signal = $.signalR.spreadsheetHub;
+                window.signal.client.modify = function (userId, range, action, data, sheetIndex) {
+                    xlObj = $("#Spreadsheet").data("ejSpreadsheet");
+                    window.isSuccess = true;
+                    if (action === "edit") {
+                        var index = xlObj.getRangeIndices(range);
+                        xlObj.XLEdit.updateCell({ rowIndex: index[0], colIndex: index[1] }, data);
+                        $("#log").append("<li>" + ej.format(new Date(), "hh:mm:ss") + " : " + userId + " has " + action + " in " + range + "</li>");
+                    }
+                    else if (action === "cell-format") {
+                        xlObj.XLFormat.format({ style: xlObj.XLFormat.getFormatFromHashCode(data) }, range);
+                        $("#log").append("<li>" + ej.format(new Date(), "hh:mm:ss") + " : " + userId + " has applied " + action + " in " + range + "</li>");
+                    }
+                    xlObj.performSelection(range);
+
+                };
+
+                $.signalR.hub.start({ jsonp: true }).done(function () {
+                    window.actionComplete = function (args) {
+                        if (window.isSuccess) {
+                            window.isSuccess = false;
+                            return;
+                        }
+                        xlObj = $("#Spreadsheet").data("ejSpreadsheet");
+                        if (args.reqType == "edit")
+                            window.signal.server.modify($("#userName").text(), xlObj.getAlphaRange(args.rowIndex, args.colIndex, args.rowIndex, args.colIndex), args.reqType, args.cValue, args.sheetIndex);
+                        else if (args.reqType == "cell-format")
+                            window.signal.server.modify($("#userName").text(), xlObj.getAlphaRange(args.range[0], args.range[1], args.range[2], args.range[3]), args.reqType, args.selectedCell[0].className, args.sheetIndex);
+                    }
+
+                });
+            });
+        });
+
+        function loadComplete(args) {
+            this.setWidthToColumns([110, 190, 260, 160]);
+            this.XLFormat.format({ "style": { "font-weight": "bold" } }, "A1:E1");
+            $("#log").height(this.element.height() - $(".cols-prop-area").height() + 70);
+        }
+
+        function onChange(args) {
+            var xlObj = $("#Spreadsheet").data("ejSpreadsheet"), id = this.element[0].id, range = xlObj.getSheet(xlObj.getActiveSheetIndex()).selectedRange;
+            switch (id) {
+                case "fontsize":
+                    xlObj.XLFormat.format({ style: { "font-size": args.selectedValue } }, range);
+                    break;
+                case "fontfamily":
+                    xlObj.XLFormat.format({ style: { "font-family": args.selectedValue } }, range);
+                    break;
+                case "textalign":
+                    xlObj.XLFormat.format({ style: { "text-align": args.selectedValue } }, range);
+                    break;
+				case "fontcolor":
+                    xlObj.XLFormat.format({ style: { "color": args.value } }, range);
+                    break;
+                case "bgcolor":
+                    xlObj.XLFormat.format({ style: { "background-color": args.value } }, range);
+                    break;
+            }
+        }
+    </script>
+    <style>
+        .lineheight {
+            line-height: 30px;
+        }
+
+        .propheight {
+            max-height: 188px;
+        }
+
+        .labelWidth {
+            min-width: 65%;
+        }
+
+        .colorWidth {
+            max-width: 10%;
+        }
+
+        .actlog {
+            border-top: 1px solid #D9DEDD;
+        }
+    </style>
+</body>
+</html>

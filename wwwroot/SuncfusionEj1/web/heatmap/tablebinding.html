@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Heatmap-Table Binding</title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div style="border-width: 2px; opacity: 0.7; width: 290px; text-align: center;">
+                    <label style="color: Black; font-size: 22px; height: 25px; font-weight: Normal;">Product Sales by Year</label><br />
+                    <label style="color: Black; font-size: 22px; margin-top: -2px; height: 25px; font-weight: Normal;">(In Percentage)</label>
+                </div>
+                <br />
+                <div style="width: 100%; margin: 0 auto; text-align: center;">
+                    <div id="heatmap"></div>
+                    <div style="height: 15px; width: 100%;"></div>
+                    <div id="heatmap_legend" style=""></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        function getValue() {
+            return Math.floor((Math.random() * 100) + 1);
+        }
+        $(function () {
+            var colorMappingCollection = [
+                { value: 0, color: "#8ec8f8", label: { text: "0" } },
+                { value: 100, color: "#0d47a1", label: { text: "100" } }
+            ];
+
+            var itemsSource = [];
+            var rows = ["Vegie-spread", "Tofuaa", "Alice Mutton", "Konbu", "Fløtemysost", "Perth Pasties", "Boston Crab Meat", "Raclette Courdavault"];
+            for (var i = 0; i < 8; i++) {
+                itemsSource.push({
+                    ProductName: rows[i], Y2010: getValue(), Y2011: getValue(), Y2012: getValue(), Y2013: getValue(),
+                    Y2014: getValue(), Y2015: getValue(), Y2016: getValue(), Y2017: getValue(), Y2018: getValue()
+                });
+            }
+
+            var heatmap = $("#heatmap").ejHeatMap({
+                colorMappingCollection: colorMappingCollection,
+                isResponsive: true,
+                itemsSource: itemsSource,
+                width: "100%",
+                itemsMapping: {
+                    headerMapping: { "propertyName": "ProductName", "displayName": "Product Name", columnStyle: { width: 140, textAlign: "right" } },
+                    columnMapping: [
+                        { "propertyName": "Y2010", "displayName": "Y2010" },
+                        { "propertyName": "Y2011", "displayName": "Y2011" },
+                        { "propertyName": "Y2012", "displayName": "Y2012" },
+                        { "propertyName": "Y2013", "displayName": "Y2013" },
+                        { "propertyName": "Y2014", "displayName": "Y2014" },
+                        { "propertyName": "Y2015", "displayName": "Y2015" },
+                        { "propertyName": "Y2016", "displayName": "Y2016" },
+                        { "propertyName": "Y2017", "displayName": "Y2017" },
+                        { "propertyName": "Y2018", "displayName": "Y2018" }
+                    ],
+                },
+                legendCollection: ["heatmap_legend"]
+            });
+            var heatmaplegend = $("#heatmap_legend").ejHeatMapLegend({
+                colorMappingCollection: colorMappingCollection,
+                height: "50px",
+                width: "75%",
+                isResponsive: true
+            });
+        });
+
+    </script>
+    <style>
+        #heatmap_legend {
+            margin-left: 100px;
+        }
+
+        @media (min-width: 1024px) and (max-width: 1920px) {
+
+            .row .cols-sample-area {
+                width: 98.956%;
+                *width: 72.956%;
+            }
+        }
+    </style>
+</body>
+</html>

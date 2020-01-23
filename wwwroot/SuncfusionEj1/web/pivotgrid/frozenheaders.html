@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" type="text/css" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+       <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+      <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/pivotgrid.datasource.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" style=" width:70%; float:left">
+                <div class="control">
+                    <div id="PivotGrid" style="height: 350px; width: 70%;float :left">
+                    </div>
+                <div id="sampleProperties">
+                    <div class="prop-grid content">
+                        <div class="row">
+                            <div>
+                                Data Source
+                            </div>
+                            <br />
+                            <div>
+                                <table>
+                                    <tr>
+                                        <td style="float:left; padding-right:15px">
+                                            <input type="radio" name="datasource" id="rdbOlap" checked="checked" /><label for="rdbOlap" class="radioBtnLabel">OLAP</label>
+                                        </td>
+                                        <td>
+                                            <input type="radio" name="datasource" id="rdbRelational" /><label for="rdbRelational" class="radioBtnLabel">Relational</label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="row">
+                            <div>
+                                Frozen Header Settings
+                            </div>
+                            <br />
+                            <div>
+                                <table>
+                                    <tr>
+                                        <td style="float:left; padding-right:15px">
+                                            <input type="checkbox" name="frozenheader" id="chkFrozenCol" checked="checked" /><label for="chkFrozenCol" class="chkBoxLabel">Freeze Column Header</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style ="float:left; padding-right:15px">
+                                            <input type="checkbox" name="frozenheader" id="chkFrozenRow" checked="checked" /><label for="chkFrozenRow" class="chkBoxLabel">Freeze Row Header</label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var pivotGrid, rdbRelational, rdbOlap, chkFrozenCol, chkFrozenRow;
+        $(function () {
+            $("#PivotGrid").ejPivotGrid({
+                dataSource: {
+                    data: window.biurl + "olap/msmdpump.dll", catalog: "Adventure Works DW 2008 SE", cube: "Adventure Works",
+                    rows: [{ fieldName: "[Customer].[Customer Geography]" }, { fieldName: "[Product].[Product Categories]" }],
+                    columns: [{ fieldName: "[Date].[Fiscal]" }],
+                    values: [{ measures: [{ fieldName: "[Measures].[Internet Sales Amount]" }], axis: "columns" }]
+                },
+                frozenHeaderSettings: { enableFrozenHeaders: true }, enableToolTip: false, enableGroupingBar: false, renderSuccess: "onRenderSuccess"
+            });
+            $("#rdbRelational, #rdbOlap").ejRadioButton({ change: "renderGrid" });
+            $("#chkFrozenCol, #chkFrozenRow").ejCheckBox({ change: "renderGrid" });
+			rdbRelational = $('#rdbRelational').data("ejRadioButton"); rdbOlap = $('#rdbOlap').data("ejRadioButton");
+			chkFrozenCol = $("#chkFrozenCol").data("ejCheckBox"); chkFrozenRow = $("#chkFrozenRow").data("ejCheckBox");
+            pivotGrid = $("#PivotGrid").data("ejPivotGrid");
+            $("#sampleProperties").ejPropertiesPanel();
+        });
+        function renderGrid(args) {
+           $(pivotGrid.element).html("");
+            if (rdbRelational.model.checked) {
+                pivotGrid.model.dataSource = {
+                    data: pivot_dataset, cube: "",
+                    rows: [{ fieldName: "State", fieldCaption: "State" }],
+                    columns: [{ fieldName: "Country", fieldCaption: "Country" }],
+                    values: [{ fieldName: "Amount", fieldCaption: "Amount" }, { fieldName: "Quantity", fieldCaption: "Quantity" }],
+                    filters: []
+                };
+                pivotGrid.element.removeAttr("style");
+				pivotGrid.element.css({"height": "350px", "width": "70%", "float" :"left"});
+				pivotGrid.model.frozenHeaderSettings = { scrollerSize: 18,enableFrozenHeaders: (chkFrozenCol.checked() || chkFrozenRow.checked()), enableFrozenColumnHeaders: chkFrozenCol.checked(), enableFrozenRowHeaders: chkFrozenRow.checked()};
+            }
+            else {
+                pivotGrid.model.dataSource = {
+                    data: window.biurl + "olap/msmdpump.dll", catalog: "Adventure Works DW 2008 SE", cube: "Adventure Works",
+                    rows: [{ fieldName: "[Customer].[Customer Geography]" }, { fieldName: "[Product].[Product Categories]" }],
+                    columns: [{ fieldName: "[Date].[Fiscal]" }],
+                    values: [{ measures: [{ fieldName: "[Measures].[Internet Sales Amount]" }], axis: "columns" }], filters: []
+                };
+                pivotGrid.element.removeAttr("style");
+				pivotGrid.element.css({"height": "350px", "width": "70%", "float" :"left"});
+				pivotGrid.model.frozenHeaderSettings = { scrollerSize:18, enableFrozenHeaders: (chkFrozenCol.checked() || chkFrozenRow.checked()), enableFrozenColumnHeaders: chkFrozenCol.checked(), enableFrozenRowHeaders: chkFrozenRow.checked() };
+            }
+			if(!chkFrozenCol.checked() && !chkFrozenRow.checked()){
+				pivotGrid.element.css("overflow", "auto");
+			}
+			pivotGrid._currentReportItems = [];
+            pivotGrid._load();
+        }
+        function onRenderSuccess() {
+            if (window.themecolor == "material" || window.themecolor == "office-365")
+                window.loadPivotGridFrameTheme();
+        }
+        window.loadPivotGridFrameTheme = function () {
+            window.setTimeout(function () {
+                var pivotGridElement = $("#PivotGrid").data("ejPivotGrid");
+                if (pivotGridElement && pivotGridElement.getJSONRecords() != null)
+                    pivotGridElement.renderControlFromJSON();
+            }, 800);
+        }
+    </script>
+    <style>
+        .samplecontent {
+            padding: 4px;
+        }
+
+        .radioBtnLabel, .chkBoxLabel {
+            margin-left: 5px !important;
+        }
+
+        .row .cols-prop-area {
+            min-height: 140px;
+            float: right;
+        }
+
+        @media (min-width: 1920px) { .row .cols-prop-area { width: 14% !important; } }
+    </style>
+
+</body>
+</html>

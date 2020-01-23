@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>   
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+	<link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+	<script src="../scripts/properties.js" type="text/javascript"></script>
+ </head>
+ <body>
+	<div class="content-container-fluid">      
+        <div class="row">                
+            <div class="cols-sample-area">                                  				
+				<div id="container"></div> 					                   
+            </div>				
+        </div>
+	</div>
+ <script type="text/javascript" language="javascript">
+	$(function ()
+	{
+        $("#container").ejChart(
+        {
+            //Initializing Primary X Axis	 
+			primaryXAxis:
+            {
+                title: {text: "Business Days"},
+                range: {interval: 1},
+                intervalType: 'days',
+				labelPlacement:"betweenTicks",
+                labelFormat: 'ddd, dd',
+                valueType: 'datetimeCategory'
+			},
+			
+			//Initializing Primary Y Axis	
+            primaryYAxis:
+            {
+                title: {text: "Sales Count in %"},
+                labelFormat: "{value}%"
+            },	
+			
+			//Initializing Series
+            series: 
+			[
+				{
+                   points:[{ x: new Date(2015, 02, 02), y: 30 }, { x: new Date(2015, 02, 03), y: 50 }, 
+						   { x: new Date(2015, 02, 04), y: 45 }, { x: new Date(2015, 02, 05), y: 65 }, 
+						   { x: new Date(2015, 02, 06), y: 90 }, { x: new Date(2015, 02, 09), y: 85 },
+						   { x: new Date(2015, 02, 10), y: 30 }, { x: new Date(2015, 02, 11), y: 55 }, 
+						   { x: new Date(2015, 02, 12), y: 25 }, { x: new Date(2015, 02, 13), y: 40 }, 
+						   { x: new Date(2015, 02, 16), y: 75 }, { x: new Date(2015, 02, 17), y: 70 },
+					       { x: new Date(2015, 02, 18), y: 60 }, { x: new Date(2015, 02, 19), y: 30 }, 
+						   { x: new Date(2015, 02, 20), y: 15 }
+						   ],
+					name: 'Sales', 
+					type: 'column',
+                    fill:"#ff9900",					
+					enableAnimation : true,
+					tooltip :{ visible: true, format: " Date : #point.x#  <br/> Sales : #point.y# "}
+				}
+			],
+            isResponsive: true,
+			load:"loadTheme",
+			title: { text: 'Sales Comparison of a Product'},
+            size: { height: "600"},
+            legend: { visible: false}
+        });
+    });
+ </script>
+ </body>
+</html>

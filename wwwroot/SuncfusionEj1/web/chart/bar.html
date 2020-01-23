@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+	<link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+	<script src="../scripts/properties.js" type="text/javascript"></script>
+ </head>
+ <body> 
+    <div class="content-container-fluid">      
+        <div class="row">                
+            <div class="cols-sample-area">                                  				
+				<div id="container"></div> 					                   
+            </div>				
+        </div>
+    </div>
+ <script type="text/javascript" language="javascript">
+	$(function () 
+	{
+        $("#container").ejChart(
+        {
+			//Initializing Primary X Axis	 
+            primaryXAxis:
+            {
+                title: { text: 'Year' },
+				range: { min: 2005, max: 2012, interval: 1 },
+			},
+			
+			//Initializing Primary Y Axis	
+            primaryYAxis:
+            {
+                range: { min: 3, max: 12, interval: 1 },
+				labelFormat:"{value}%",
+                title: { text: 'Percentage' }                          
+			},
+            
+			//Initializing Common Properties for all the series
+			commonSeriesOptions: 
+			{
+                type: 'bar', 
+				enableAnimation: true,
+                tooltip:{visible:true, format: "#series.name# <br/> #point.x# : #point.y#"},
+				marker:
+                {
+                    dataLabel:
+					{
+                        font: { size:'13px',fontFamily:'Segoe UI',fontStyle:'Normal',fontWeight:'regular'},
+						textPosition: 'top',
+						horizontalTextAlignment:"near",
+						visible:true,
+						enableContrastColor:true						
+					},
+                }
+            },
+			
+			//Initializing Series
+			series:
+			[
+			    {
+                    points: [{ x: 2006, y: 7.8 }, { x: 2007, y: 7.2}, { x: 2008, y: 6.8 }, { x: 2009, y: 10.7 },
+                             { x: 2010, y: 10.8}, { x: 2011, y: 9.8 }],
+					name: 'India'
+                },                
+				{
+                    points: [{ x: 2006, y: 4.8 }, { x: 2007, y: 4.6 }, { x: 2008, y: 7.2 }, { x: 2009, y: 9.3 },
+                             { x: 2010, y: 9.7}, { x: 2011, y: 9 }],
+					name: 'US'
+                }   
+            ],
+			load:"loadTheme",
+			displayTextRendering:"OndataLabel",
+			isResponsive: true,
+            showTooltip: true,
+            title:{text: 'Unemployment rate (%)'},
+            size: { height: "600" },
+            legend: { visible: true, position: 'right', alignment:"near" }
+        });
+    });
+	
+	function OndataLabel(sender) 
+	{
+		sender.data.location.x=sender.data.location.x+20;
+	} 
+ </script>
+ </body>
+</html>
+

@@ -1,0 +1,4 @@
+"commit 770fb0268b3ade34f201673ae1162a19461460d8"
+"Author: Kristifor <krisko_g1@live.com>"
+"Date:   Sat Jul 13 19:09:07 2019 +0300"
+"Commit Message"

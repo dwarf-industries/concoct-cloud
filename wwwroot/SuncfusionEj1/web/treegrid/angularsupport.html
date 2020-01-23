@@ -1,0 +1,91 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Essential JS 1 : AngularJS support</title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/angular-1.2.16.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/angular.min.js"></script>
+    <!--<![endif]-->
+    <!--[if lt IE 9]>
+     <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+    <script src="../scripts/jsondata.min.js"></script>
+    <script src="../scripts/ej.widget.angular.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsontreegriddata.js"></script>
+</head>
+<body>
+    <div class="content-container-fluid" ng-controller="TreeGridCtrl">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="angulartreegrid" ej-treegrid e-datasource="data" e-selectedrowindex="selectedRow" e-treecolumnindex="1" e-columns="columns" e-childmapping="subtasks" e-enablevirtualization="true" e-isresponsive="true" e-rowselected="rowSelected" e-rowheight="rowHeight" e-load="load" style="width:100%;height:450px;">
+                </div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Selected Row Index
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="target" name="name" class="e-ejinputtext" value="" ej-numerictextbox e-value="selectedRow" e-maxvalue="35" e-minvalue="-1" e-width="80px" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var columns = [
+                { field: "taskID", headerText: "Task Id", width: window.theme == "material" ? "80" : "60" },
+                { field: "taskName", headerText: "Task Name" },
+                { field: "startDate", headerText: "Start Date" },
+                { field: "endDate", headerText: "End Date" },
+                { field: "progress", headerText: "Progress" }
+        ];
+		function rowSelected(){
+			this.updateScrollBar();
+		};
+		function load(){
+		    if (window.theme == "material")
+		        this.treeIndentLevelWidth = 16;
+		}
+        $("#sampleProperties").ejPropertiesPanel();
+        angular.module('syncApp', ['ejangular'])
+        .controller('TreeGridCtrl', function ($scope) {
+            $scope.selectedRow = 1;
+            $scope.data = sampleData;	
+            $scope.columns = columns;
+            $scope.rowSelected = rowSelected;
+            $scope.rowHeight = window.theme == "material" ? 48 : window.theme == "office-365" ? 36 : 30,
+            $scope.load = load;
+        });
+        $("#target").on('input', function () {
+            var value = $(this).val();
+            if (value < -1)
+                document.getElementById("target").value = -1;
+            if (value > 34)
+                document.getElementById("target").value = 35;
+        })
+        $(function () {
+            if (!$("#ang_container").length)
+                angular.bootstrap(document, ['syncApp']);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Essential JS 1 : DocIO</title>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="Common">
+        <div class="tablediv">
+            <div class="rowdiv">
+                <label>
+                    This sample illustrates how to convert Word document to PDF using Essential DocIO.
+                </label>
+                <label>
+                    Click the button to view the resultant PDF document being converted from Word document using Essential DocIO and Essential PDF.
+                    Please note that PDF viewer is required to view the resultant PDF.
+                </label>
+            </div>
+            <br />
+        <div class="rowdiv">
+                <div class="celldiv">
+                    Choose Word document: <input id="inputfile" name="file" type="file"/>
+                </div>
+                <br />
+                <div class="celldiv">
+                    <input id="converttopdf" class="buttonStyle" type="submit" value="Convert to PDF" style="width: 200px;" />
+                </div>
+            </div>
+            <br />
+			<label>
+                    Note: The document creation/manipulation functionalities are defined within Web API.​​​​​​</label>
+        </div>
+    </div>
+    <script>
+    $('#converttopdf').click(function () {
+        var formdata = new FormData();
+        var files = $("#inputfile").get(0).files;
+        // Add the uploaded image content to the form data collection
+        if (files.length > 0) {
+            formdata.append("UploadedFile", files[0]);
+        }
+        var req = new XMLHttpRequest();
+        req.open("POST", window.baseurl + "api/DocIO/ConvertToPDF", true);
+        req.send(formdata);
+        req.responseType = "blob";
+        req.onload = function (event) {
+        if (req.response != null && navigator.msSaveBlob)
+            return navigator.msSaveBlob(new Blob([req.response], { type: "data:attachment/pdf" }), "Sample.pdf");
+        var a = document.createElement('a');
+        var url = window.URL.createObjectURL(new Blob([req.response], {type: "data:attachment/pdf"}));
+        a.href = url;
+        a.download = "Sample.pdf";
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+        };
+    });
+    </script>
+</body>
+</html>

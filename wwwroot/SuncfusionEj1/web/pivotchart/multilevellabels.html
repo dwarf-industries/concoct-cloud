@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" type="text/css" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+       <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+      <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>   
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="control">
+                    <div id="PivotChart1" style="min-height: 275px; min-width: 525px; height: 460px; width: 100%">
+                    </div>
+                </div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <td class="chkrad">
+                                    Data Source :
+                                </td>
+                                <td class="chkrad">
+                                    <input type="radio" name="dataSource" id="rdbRelational" checked /><label for="rdbRelational" class="clslab">Relational</label>
+                                </td>
+                                <td class="chkrad" colspan="2">
+                                    <input type="radio" name="dataSource" id="rdbOlap" /><label for="rdbOlap" class="clslab">OLAP</label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <table>
+                            <tr>
+                                <td class=" chkrad">
+                                    Mode :
+                                </td>
+                                <td class="chkrad">
+                                    <input type="radio" name="dataMode" id="rdbClient" checked /><label for="rdbClient" class="clslab">Client</label>
+                                </td>
+                                <td class="chkrad" colspan="2">
+                                    <input type="radio" name="dataMode" id="rdbServer" /><label for="rdbServer" class="clslab">Server</label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                var pivot_dataset = [
+                    { Amount: 100, Country: "Canada", Date: "FY 2005", Product: "Bike", Quantity: 2, State: "Alberta" },
+                    { Amount: 200, Country: "Canada", Date: "FY 2006", Product: "Van", Quantity: 3, State: "British Columbia" },
+                    { Amount: 300, Country: "Canada", Date: "FY 2007", Product: "Car", Quantity: 4, State: "Brunswick" },
+                    { Amount: 150, Country: "Canada", Date: "FY 2008", Product: "Bike", Quantity: 3, State: "Manitoba" },
+                    { Amount: 200, Country: "Canada", Date: "FY 2006", Product: "Car", Quantity: 4, State: "Ontario" },
+                    { Amount: 100, Country: "Canada", Date: "FY 2007", Product: "Van", Quantity: 1, State: "Quebec" },
+                    { Amount: 200, Country: "France", Date: "FY 2005", Product: "Bike", Quantity: 2, State: "Charente-Maritime" },
+                    { Amount: 250, Country: "France", Date: "FY 2006", Product: "Van", Quantity: 4, State: "Essonne" },
+                    { Amount: 300, Country: "France", Date: "FY 2007", Product: "Car", Quantity: 3, State: "Garonne (Haute)" },
+                    { Amount: 150, Country: "France", Date: "FY 2008", Product: "Van", Quantity: 2, State: "Gers" },
+                    { Amount: 200, Country: "Germany", Date: "FY 2006", Product: "Van", Quantity: 3, State: "Bayern" },
+                    { Amount: 250, Country: "Germany", Date: "FY 2007", Product: "Car", Quantity: 3, State: "Brandenburg" },
+                    { Amount: 150, Country: "Germany", Date: "FY 2008", Product: "Car", Quantity: 4, State: "Hamburg" },
+                    { Amount: 200, Country: "Germany", Date: "FY 2008", Product: "Bike", Quantity: 4, State: "Hessen" },
+                    { Amount: 150, Country: "Germany", Date: "FY 2007", Product: "Van", Quantity: 3, State: "Nordrhein-Westfalen" },
+                    { Amount: 100, Country: "Germany", Date: "FY 2005", Product: "Bike", Quantity: 2, State: "Saarland" },
+                    { Amount: 150, Country: "United Kingdom", Date: "FY 2008", Product: "Bike", Quantity: 5, State: "England" },
+                    { Amount: 250, Country: "United States", Date: "FY 2007", Product: "Car", Quantity: 4, State: "Alabama" },
+                    { Amount: 200, Country: "United States", Date: "FY 2005", Product: "Van", Quantity: 4, State: "California" },
+                    { Amount: 100, Country: "United States", Date: "FY 2006", Product: "Bike", Quantity: 2, State: "Colorado" },
+                    { Amount: 150, Country: "United States", Date: "FY 2008", Product: "Car", Quantity: 3, State: "New Mexico" },
+                    { Amount: 200, Country: "United States", Date: "FY 2005", Product: "Bike", Quantity: 4, State: "New York" },
+                    { Amount: 250, Country: "United States", Date: "FY 2008", Product: "Car", Quantity: 3, State: "North Carolina" },
+                    { Amount: 300, Country: "United States", Date: "FY 2007", Product: "Van", Quantity: 4, State: "South Carolina" }
+                ], ddlTarget, chartTarget, rdbRelational, rdbOlap, rdbClient, rdbServer, chartObj;
+                $(function () {
+                    $("#sampleProperties").ejPropertiesPanel();
+                    $("#PivotChart1").ejPivotChart({
+                        dataSource: {
+                            data: pivot_dataset,
+                            rows: [
+                                { fieldName: "Country", fieldCaption: "Country" },
+                                { fieldName: "State", fieldCaption: "State" },
+                                { fieldName: "Date", fieldCaption: "Date" }
+                            ],
+                            columns: [
+                                { fieldName: "Product", fieldCaption: "Product" }
+                            ],
+                            values: [
+                                { fieldName: "Amount", fieldCaption: "Amount" }
+                            ],
+                            filters: []
+                        },
+                        enableMultiLevelLabels: true,
+                        zooming: { enableScrollbar: true },
+                        isResponsive: true,
+                        type: ej.PivotChart.ChartTypes.Column,
+                        commonSeriesOptions: {
+                            enableAnimation: true,
+                            type: ej.PivotChart.ChartTypes.Column, tooltip: { visible: true }
+                        },
+                        size: { height: "460px", width: "100%" },
+                        primaryYAxis: { title: { text: "Amount" } },
+                        legend: { visible: true },
+                        load: "loadTheme"
+                    });
+                    $("#rdbRelational,#rdbOlap,#rdbClient,#rdbServer").ejRadioButton({ change: "renderPivotChart" });                  
+                    rdbRelational = $('#rdbRelational').data("ejRadioButton"); rdbOlap = $('#rdbOlap').data("ejRadioButton"); rdbClient = $('#rdbClient').data("ejRadioButton"); rdbServer = $('#rdbServer').data("ejRadioButton");
+                    chartObj = $('#PivotChart1').data("ejPivotChart");
+                });
+                function onLoad(args) {
+                    if (args.model.dataSource.data == null)
+                        args.model.dataSource.data = pivot_dataset;
+                    loadTheme(args);
+                }
+                function renderPivotChart(args) {
+                    $(".e-pivotchart").remove();
+                    var chartPanel = ej.buildTag("div#PivotChart1", "", { "float": "left" })[0].outerHTML;
+                    $(chartPanel).appendTo(".control");
+                    if (rdbClient.model.checked) {
+                        var pivotdataSource = { data: pivot_dataset, cube: "", rows: [{ fieldName: "Country", fieldCaption: "Country" }, { fieldName: "State", fieldCaption: "State" }, { fieldName: "Date", fieldCaption: "Date" }], columns: [{ fieldName: "Product", fieldCaption: "Product" }], values: [{ fieldName: "Amount", fieldCaption: "Amount" }], filters: [] };
+                        var olapDataSource = { data: window.biurl + "olap/msmdpump.dll", catalog: "Adventure Works DW 2008 SE", cube: "Adventure Works", rows: [{ fieldName: "[Date].[Fiscal]" }], columns: [{ fieldName: "[Customer].[Customer Geography]" }], values: [{ measures: [{ fieldName: "[Measures].[Internet Sales Amount]" }], axis: "columns" }], filters: [] };
+                        $("#PivotChart1").ejPivotChart({
+                            dataSource: rdbRelational.model.checked ? pivotdataSource : olapDataSource, enableMultiLevelLabels: true,
+                            isResponsive: true,zooming : { enableScrollbar : true},
+                            type: ej.PivotChart.ChartTypes.Column,
+                            commonSeriesOptions: {
+                                enableAnimation: true,
+                                type: ej.PivotChart.ChartTypes.Column, tooltip: { visible: true }
+                            },
+                            size: { height: "460px", width: "100%" }, legend: { visible: true },
+                            load: "loadTheme"
+                        });
+                    }
+                    else {
+                        $("#PivotChart1").ejPivotChart({
+                            url: window.baseurl + (rdbRelational.model.checked ? "api/PivotChart/Relational" : "api/PivotChart/Olap"),serviceMethodSettings: { initialize: "Initialize", drillDown: "Drill" },
+                            isResponsive: true, zooming: { enableScrollbar: true }, enableMultiLevelLabels: true,
+                            type: ej.PivotChart.ChartTypes.Column,
+                            commonSeriesOptions: {
+                                enableAnimation: true,
+                                type: ej.PivotChart.ChartTypes.Column, tooltip: { visible: true }
+                            },
+                            size: { height: "460px", width: "100%" }, legend: { visible: true },
+                            load: "loadTheme"
+                        });
+                    }
+                    chartObj = $('#PivotChart1').data("ejPivotChart");
+                }
+            </script>
+        </div>
+    </div>
+
+    <style>
+        #PivotChart1 {
+            min-height: 275px;
+            min-width: 525px;
+            height: 460px;
+            width: 100%;
+            float: left;
+        }
+
+        .row .cols-sample-area {
+            width: 100%;
+        }
+
+        .cols-prop-area .content {
+            width: auto;
+        }
+
+        .row .cols-prop-area {
+            min-height: 130px;
+            width: auto;
+        }
+
+        #btnExport {
+            margin-left: 170px;
+        }
+    </style>
+</body>
+</html>

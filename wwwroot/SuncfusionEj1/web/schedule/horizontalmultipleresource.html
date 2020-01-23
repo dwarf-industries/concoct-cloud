@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Schedule JS - Horizontal Mulitple Resource</title>
+    <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script type="text/javascript" src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsonscheduledata.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div style="float: left" id="Schedule1"></div>
+        </div>
+    </div>
+    </br>
+    <div id="sampleProperties">
+        <div class="prop-grid">
+            <div class="row">
+                <div class="col-md-3">
+                    <label style="font-weight:700">Add/Remove resources</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="checkbox" id="nancy" class="nodetext" />
+                    <span> Nancy</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="checkbox" id="steven" class="nodetext" />
+                    <span>Steven</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="checkbox" id="michael" class="nodetext" />
+                    <span>Michael</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="checkbox" id="milan" class="nodetext" />
+                    <span>Milan</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="checkbox" id="paul" class="nodetext" />
+                    <span>Paul</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#sampleProperties").ejPropertiesPanel();
+            var dManager = ej.DataManager($.extend(true, [], window.HorizontalResourcesData)).executeLocal(ej.Query().take(10));
+            $("#Schedule1").ejSchedule({
+                width: "100%",
+                height: "525px", cellWidth: "40px",
+                showCurrentTimeIndicator: false,
+                orientation: "horizontal",
+                currentDate: new Date(2017, 5, 5),
+                currentView: ej.Schedule.CurrentView.Workweek,
+                group: {
+                    resources: ["Owners"]
+                },
+                resources: [{
+                    field: "ownerId",
+                    title: "Owner",
+                    name: "Owners", allowMultiple: true,
+                    resourceSettings: {
+                        dataSource: [
+                            { text: "Nancy", id: 1, groupId: 1, color: "#f8a398" },
+                            { text: "Steven", id: 3, groupId: 2, color: "#56ca85" },
+                            { text: "Michael", id: 5, groupId: 1, color: "#51a0ed" },
+                            { text: "Milan", id: 13, groupId: 3, color: "#99ff99" },
+                            { text: "Paul", id: 15, groupId: 3, color: "#cc99ff" }
+                        ],
+                        text: "text", id: "id", groupId: "groupId", color: "color"
+                    }
+                }],
+                appointmentSettings: {
+                    dataSource: dManager,
+                    id: "Id",
+                    subject: "Subject",
+                    startTime: "StartTime",
+                    endTime: "EndTime",
+                    description: "Description",
+                    allDay: "AllDay",
+                    recurrence: "Recurrence",
+                    recurrenceRule: "RecurrenceRule",
+                    resourceFields: "ownerId"
+                }
+            });
+            $("#nancy").ejCheckBox({ "change": "onChange", checked: true });
+            $("#steven").ejCheckBox({ "change": "onChange", checked: true });
+            $("#michael").ejCheckBox({ "change": "onChange", checked: true });
+            $("#milan").ejCheckBox({ "change": "onChange", checked: true });
+            $("#paul").ejCheckBox({ "change": "onChange", checked: true });
+        });
+        function onChange(args) {
+            var obj, resId, index;
+            var schObj = $("#Schedule1").data("ejSchedule");
+            switch (args.model.id) {
+                case "nancy":
+                    obj = { text: "Nancy", id: 1, groupId: 1, color: "#f8a398" };
+                    resId = 1;
+                    index = 0;
+                    break;
+                case "steven":
+                    obj = { text: "Steven", id: 3, groupId: 2, color: "#56ca85" };
+                    resId = 3;
+                    index = 1;
+                    break;
+                case "michael":
+                    obj = { text: "Michael", id: 5, groupId: 1, color: "#51a0ed" };
+                    resId = 5;
+                    index = 2;
+                    break;
+                case "milan":
+                    obj = { text: "Milan", id: 13, groupId: 3, color: "#99ff99" };
+                    resId = 13;
+                    index = 3;
+                    break;
+                case "paul":
+                    obj = { text: "Paul", id: 15, groupId: 3, color: "#cc99ff" };
+                    resId = 15;
+                    index = 4;
+                    break;
+            }
+            if (args.isChecked) {
+                schObj.addResource(obj, "Owners", index);
+            } else {
+                schObj.removeResource(resId, "Owners");
+            }
+        }
+
+    </script>
+    <style>
+        #ejnancy div>span.e-chk-act>span.e-icon.e-checkmark {
+            background: #f8a398;
+            color: white;
+        }
+
+        #ejsteven div>span.e-chk-act>span.e-icon.e-checkmark {
+            background: #56ca85;
+            color: white;
+        }
+
+        #ejmichael div>span.e-chk-act>span.e-icon.e-checkmark {
+            background: #51a0ed;
+            color: white;
+        }
+
+        #ejmilan div>span.e-chk-act>span.e-icon.e-checkmark {
+            background: #99ff99;
+            color: white;
+        }
+
+        #ejpaul div>span.e-chk-act>span.e-icon.e-checkmark {
+            background: #cc99ff;
+            color: white;
+        }
+
+        .row .cols-prop-area {
+            margin-left: 0px;
+            width: 100%;
+        }
+    </style>
+</body>
+
+</html>

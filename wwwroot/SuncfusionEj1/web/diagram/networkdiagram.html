@@ -1,0 +1,389 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Network Diagram</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/samplecontent/diagram/network/network.css" rel="stylesheet" />
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="../scripts/jsrender.min.js" type="text/javascript"></script>
+    <script src="../scripts/diagramscripts/networkshapetemplates.js"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" align="center">
+                <div class="control_section">
+                    <div class="symPalette_section">
+                        <div id="symbolpalette">
+                        </div>
+                    </div>
+                    <div class="middle_section"></div>
+                    <div class="diagram_section" style="border: 1px solid #D9DEDD">
+                        <div id="diagram" style="float: left;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var margin = { "left": 20, "top": 0, "right": 20, "bottom": 0 };
+        var portVisibility = ej.datavisualization.Diagram.PortVisibility;
+        var port = [
+            { name: "port1", offset: { x: 0, y: 0.5 }, visibility: portVisibility.Hidden },
+            { name: "port2", offset: { x: 1, y: 0.5 }, visibility: portVisibility.Hidden },
+            { name: "port3", offset: { x: 0.5, y: 0.1 }, visibility: portVisibility.Hidden },
+            { name: "port4", offset: { x: 0.5, y: 0.92 }, visibility: portVisibility.Hidden },
+        ];
+        var portrc = [
+            { name: "port1", offset: { x: 0.05, y: 0.5 }, visibility: portVisibility.Hidden },
+            { name: "port2", offset: { x: 1, y: 0.5 }, visibility: portVisibility.Hidden },
+            { name: "port3", offset: { x: 0.85, y: 0.1 }, visibility: portVisibility.Hidden },
+            { name: "port4", offset: { x: 0.6, y: 0.97 }, visibility: portVisibility.Hidden }
+        ];
+        var porthmi = [
+            { name: "port1", offset: { x: 0.34, y: 0.5 } },
+            { name: "port2", offset: { x: 0.75, y: 0.5 } },
+            { name: "port3", offset: { x: 0.5, y: 0.05 } },
+            { name: "port4", offset: { x: 0.6, y: 0.9 } }
+        ];
+        var port1 = [
+            { name: "port1", offset: { x: 0, y: 0 }, visibility: portVisibility.Hidden },
+            { name: "port2", offset: { x: 0, y: 0.6 }, visibility: portVisibility.Hidden },
+        ];
+        var portws = [
+            { name: "port1", offset: { x: 0.45, y: 0.15 }, visibility: portVisibility.Hidden },
+            { name: "port2", offset: { x: 0.4, y: 0.9 }, visibility: portVisibility.Hidden },
+        ];
+        var port2 = [
+            { name: "port1", offset: { x: 0.45, y: 0.5 }, visibility: portVisibility.Hidden },
+            { name: "port2", offset: { x: 0.97, y: 0.5 }, visibility: portVisibility.Hidden },
+            { name: "port3", offset: { x: 0.5, y: 0.97 }, visibility: portVisibility.Hidden },
+        ];
+        var portmo = [
+    { name: "port1", offset: { x: 0.02, y: 0.6 }, visibility: portVisibility.Hidden },
+    { name: "port2", offset: { x: 0.98, y: 0.625 }, visibility: portVisibility.Hidden },
+    { name: "port3", offset: { x: 0.5, y: 0.3 }, visibility: portVisibility.Hidden },
+    { name: "port4", offset: { x: 0.5, y: 0.97 }, visibility: portVisibility.Hidden }
+        ];
+        var nodes1 = [
+    {
+        name: "Server1", width: 50, height: 65, offsetX: 130, offsetY: 75, templateId: "svgTemplate7",
+        labels: [{ "text": "Server", offset: { x: 0, y: 0 }, margin: { bottom: 10 } }], scale: "stretch", ports: port
+    },
+    {
+        name: "Server2", width: 50, height: 65, offsetX: 80, offsetY: 75,
+        templateId: "svgTemplate7", scale: "stretch", ports: port
+    },
+    {
+        name: "WorkStation1", width: 60, height: 70, offsetX: 250, offsetY: 75, templateId: "svgTemplate8",
+        labels: [{ "text": "WorkStation", margin: { bottom: 10 }, offset: { x: 1.4, y: 0.2 } }], ports: port2, scale: "stretch"
+    },
+    {
+        name: "WorkStation2", width: 60, height: 70, offsetX: 350, offsetY: 75, templateId: "svgTemplate8",
+        ports: port2, scale: "stretch"
+    },
+    {
+        name: "modem1", width: 40, height: 40, offsetX: 450, offsetY: 125, templateId: "svgTemplate6",
+        labels: [{ "text": "Modem", margin: { right: 20 }, offset: { x: 0, y: 0.5 } }], ports: portmo, scale: "stretch"
+    },
+    {
+        name: "modem2", width: 40, height: 40, offsetX: 525, offsetY: 175, templateId: "svgTemplate6",
+        labels: [{ "text": "Modem1", margin: { bottom: 10 }, offset: { x: 0.5, y: 0 } }], ports: portmo, scale: "stretch"
+    },
+    {
+        name: "RemoteController1", offsetX: 600, offsetY: 125, width: 25, height: 50, templateId: "svgTemplate4",
+        labels: [{ "text": "RemoteController", margin: { bottom: 10 }, offset: { x: 0.5, y: 0 } }], ports: portrc, scale: "stretch"
+    },
+    {
+        name: "modem3", width: 40, height: 40, offsetX: 350, offsetY: 205, templateId: "svgTemplate6",
+        labels: [{ "text": "Modem4", margin: { left: 25 }, offset: { x: 1, y: 0.5 } }], ports: portmo, scale: "stretch"
+    },
+    {
+        name: "modem4", width: 40, height: 40, offsetX: 450, offsetY: 245, templateId: "svgTemplate6",
+        labels: [{ "text": "Modem2", offset: { x: 0.5, y: 1.2 } }], ports: portmo, scale: "stretch"
+    },
+    {
+        name: "modem5", width: 40, height: 40, offsetX: 350, offsetY: 330, templateId: "svgTemplate6",
+        labels: [{ "text": "Modem3", margin: { right: 25 }, offset: { x: 0, y: 0.5 } }], ports: portmo, scale: "stretch"
+    },
+    {
+        name: "WorkStation3", width: 60, height: 70, offsetX: 600, offsetY: 250, templateId: "svgTemplate8",
+        ports: port2, labels: [{ "text": "RemoteWorkStaions", margin: { bottom: 7 }, offset: { x: 0.5, y: 0 } }], scale: "stretch"
+    },
+    {
+        name: "WorkStation4", width: 60, height: 70, offsetX: 600, offsetY: 335, templateId: "svgTemplate8",
+        ports: port2, labels: [{ "text": "PortableWorkStaions", margin: { top: 7 }, offset: { x: 0.5, y: 1 } }], scale: "stretch"
+    },
+    {
+        name: "RemoteController2", offsetX: 70, offsetY: 400, width: 25, height: 50, templateId: "svgTemplate4",
+        labels: [{ "text": "ControlLogic", margin: { top: 8 }, offset: { x: 0.5, y: 1 } }], ports: portrc, scale: "stretch"
+    },
+    {
+        name: "RemoteController3", offsetX: 500, offsetY: 400, width: 25, height: 50, templateId: "svgTemplate4",
+        labels: [{ "text": "ControlLogic1", margin: { top: 8 }, offset: { x: 0.5, y: 1 } }], ports: portrc, scale: "stretch"
+    },
+    {
+        name: "AnalogIO", width: 40, height: 50, offsetX: 160, offsetY: 500, templateId: "svgTemplate5",
+        labels: [{ "text": "Analog IO", margin: { top: 13 }, offset: { x: 0.5, y: 1 } }], ports: porthmi, scale: "stretch"
+    },
+    {
+        name: "senser", width: 50, height: 55, offsetX: 260, offsetY: 510, templateId: "svgTemplate1",
+        labels: [{ "text": "Sensor", margin: { right: 15 }, offset: { x: 0.7, y: 1 } }], ports: port, scale: "stretch"
+    },
+    {
+        name: "DeviceDriver1", width: 40, height: 50, offsetX: 360, offsetY: 500, templateId: "svgTemplate2",
+        labels: [{ "text": "DriverA", offset: { x: 0.5, y: 1.2 } }], ports: porthmi, scale: "stretch"
+    },
+    {
+        name: "DeviceDriver2", width: 40, height: 50, offsetX: 460, offsetY: 500, templateId: "svgTemplate2",
+        labels: [{ "text": "DriverB", offset: { x: 0.5, y: 1.2 } }], ports: porthmi, scale: "stretch"
+    },
+    {
+        name: "DeviceDriver3", width: 40, height: 50, offsetX: 550, offsetY: 500, templateId: "svgTemplate2",
+        labels: [{ "text": "DriverC", offset: { x: 0.5, y: 1.2 } }], ports: porthmi, scale: "stretch"
+    },
+    {
+        name: "HMI", width: 40, height: 50, offsetX: 625, offsetY: 450, templateId: "svgTemplate3",
+        labels: [{ "text": "HMI", offset: { x: 0.5, y: 1.2 } }], ports: port, scale: "stretch"
+    },
+     {
+         name: "controlNet", width: 127, height: 40, offsetX: 218.5, offsetY: 380, type: "text",
+         textBlock: { text: "Control Net", bold: true, fontSize: 16 }, ports: porthmi, scale: "stretch"
+     },
+     {
+         name: "etherNet", width: 127, height: 40, offsetX: 218.5, offsetY: 190, type: "text",
+         textBlock: { text: "Ethernet", bold: true, fontSize: 16 }, ports: porthmi, scale: "stretch"
+     },
+     {
+         name: "deviceNet", width: 127, height: 40, offsetX: 345.5, offsetY: 575, type: "text",
+         textBlock: { text: "Device Net", bold: true, fontSize: 16 }, ports: porthmi, scale: "stretch"
+     }
+        ];
+
+        var connectors = [
+            {
+                name: "connectora", sourceNode: "Server1", targetNode: "WorkStation1",
+                targetPort: "port1"
+            },
+            {
+                name: "connectorawork", sourceNode: "WorkStation1", targetNode: "WorkStation2",
+                sourcePort: "port2", targetPort: "port1"
+            },
+            {
+                name: "connectoraworkm", sourceNode: "WorkStation2", targetNode: "modem1", segments: [{ type: "orthogonal", length: 25, direction: "center" }],
+                targetPort: "port3", sourcePort: "port2"
+            },
+            {
+                name: "connectorm1m2", sourceNode: "modem2", targetNode: "modem1", segments: [{ type: "orthogonal", length: 25, direction: "center" }],
+                sourcePort: "port1", targetPort: "port4"
+            },
+            {
+                name: "connectorm2m3", sourceNode: "modem2", targetNode: "RemoteController1", segments: [{ type: "orthogonal", length: 25, direction: "center" }],
+                sourcePort: "port2", targetPort: "port4"
+            },
+
+            {
+                name: "connectorws2m3", sourceNode: "WorkStation2", targetNode: "modem3",
+                sourcePort: "port3", targetPort: "port3"
+            },
+            {
+                name: "connectorws2m4", sourceNode: "modem4", targetNode: "modem3", segments: [{ type: "orthogonal", length: 25, direction: "center" }],
+                sourcePort: "port1", targetPort: "port4"
+            },
+            {
+                name: "connectorm3m4", sourceNode: "modem5", targetNode: "modem3",
+                sourcePort: "port3", targetPort: "port4"
+            },
+            {
+                name: "connectorm4ws3", sourceNode: "modem5", targetNode: "WorkStation4",
+                sourcePort: "port2", targetPort: "port1"
+            },
+            {
+                name: "connectorm4m5", sourceNode: "modem4", targetNode: "WorkStation3",
+                sourcePort: "port2", targetPort: "port1"
+            },
+            {
+                name: "connectorr2r3", sourceNode: "RemoteController2", targetNode: "RemoteController3",
+                targetPort: "port1"
+            },
+            {
+                name: "connectorr2r3qq", sourceNode: "Server2", targetNode: "RemoteController2",
+                targetPort: "port3", sourcePort: "port4"
+            },
+            {
+                name: "connectorm3se1", sourceNode: "modem3", targetNode: "Server2",
+                segments: [{ type: "orthogonal", length: 25, direction: "center" }],
+                sourcePort: "port1", targetPort: "port4"
+            },
+            {
+                name: "connectorws2aio1", sourceNode: "RemoteController2", targetNode: "AnalogIO",
+                segments: [{ type: "orthogonal" }], sourcePort: "port2", targetPort: "port3"
+            },
+            {
+                name: "connectorb", sourceNode: "RemoteController2", targetNode: "senser",
+                segments: [{ type: "orthogonal", length: 25, direction: "center" }], sourcePort: "port2", targetPort: "port3"
+            },
+            {
+                name: "connectord1", sourceNode: "RemoteController2", targetNode: "DeviceDriver1",
+                segments: [{ type: "orthogonal", length: 25, direction: "center" }],
+                sourcePort: "port2", targetPort: "port3"
+            },
+            {
+                name: "connectord2", sourceNode: "RemoteController2", targetNode: "DeviceDriver2",
+                segments: [{ type: "orthogonal", length: 25, direction: "center" }],
+                sourcePort: "port2", targetPort: "port3"
+            },
+            {
+                name: "connectordh1d3", sourceNode: "HMI", targetNode: "DeviceDriver3",
+                segments: [{ type: "orthogonal" }],
+                sourcePort: "port1", targetPort: "port3"
+            },
+            {
+                name: "connectordh1d2", sourceNode: "HMI", targetNode: "DeviceDriver2",
+                segments: [{ type: "orthogonal" }], sourcePort: "port1", targetPort: "port3"
+            }
+        ];
+
+        var palettes = [{
+            name: "Network Symbols",
+            expanded: true,
+            items: [
+                //add the flow shapes to the symbol palette
+                { name: "server", width: 40, height: 40, offsetX: 20, offsetY: 20, borderColor: "", templateId: "svgTemplate7", scale: "stretch" },
+                { name: "workStation", width: 40, height: 40, offsetX: 20, offsetY: 20, borderColor: "", templateId: "svgTemplate8", scale: "stretch" },
+                { name: "modem", width: 40, height: 40, offsetX: 20, offsetY: 20, borderColor: "", templateId: "svgTemplate6", scale: "stretch" },
+                { name: "remoteController", width: 25, height: 40, offsetX: 20, offsetY: 20, borderColor: "", templateId: "svgTemplate4", scale: "stretch" },
+                { name: "hmi", width: 40, height: 40, offsetX: 20, offsetY: 20, borderColor: "", templateId: "svgTemplate3", scale: "stretch" },
+                { name: "analogIO", width: 40, height: 40, offsetX: 20, offsetY: 20, borderColor: "", templateId: "svgTemplate5", scale: "stretch" },
+                { name: "senser", width: 40, height: 40, offsetX: 20, offsetY: 20, borderColor: "", templateId: "svgTemplate1", scale: "stretch" },
+                { name: "deviceDriver", width: 40, height: 40, offsetX: 20, offsetY: 20, borderColor: "", templateId: "svgTemplate2", scale: "stretch" },
+                {
+                    name: "arrow1", width: 75, height: 60, offsetX: 160, offsetY: 135, borderColor: "black", fillColor: "white", shape: ej.datavisualization.Diagram.BasicShapes.Path, type: "basic",
+                    pathData: "M 0 26.4576 L 26.4576 0 L 26.4576 0 L 26.4576 17.46239 L 26.4576 17.46239 L 113.3856 17.46239 L 113.3856 17.46239 L 113.3856 35.45279 L 113.3856 35.45279 L 26.4576 35.45279 L 26.4576 35.45279 L 26.4576 52.91519 L 26.4576 52.91519 L 0 26.4576 Z"
+                }
+            ]
+        },
+            {
+                name: "Connectors",
+                expanded: true,
+                items: [
+                    { name: "Link1", segments: [{ type: "orthogonal" }], sourcePoint: { x: 0, y: 0 }, targetPoint: { x: 40, y: 40 }, targetDecorator: { shape: "arrow" }, lineWidth: 2 },
+                    { name: "Link21", segments: [{ type: "straight" }], sourcePoint: { x: 0, y: 0 }, targetPoint: { x: 40, y: 40 }, targetDecorator: { shape: "arrow" }, lineWidth: 2 },
+                ]
+            }
+        ];
+
+        $(function () {
+            $("#symbolpalette").ejSymbolPalette({
+                diagramId: "diagram",
+                palettes: palettes, height: "100%", width: "100%",
+                paletteItemWidth: 50, paletteItemHeight: 50,
+                previewWidth: 100, previewHeight: 100,
+                showPaletteItemText: false,
+                defaultSettings: {
+                    node: {
+                        type: ej.datavisualization.Diagram.Shapes.Native,
+                    }
+                }
+            });
+       
+            $("#diagram").ejDiagram({
+                width: "100%",
+                height: "600px",
+                nodes: nodes1,
+                connectors: connectors,
+                pageSettings: { scrollLimit: "diagram" },
+                snapSettings: {
+                    snapConstraints: ej.datavisualization.Diagram.SnapConstraints.None
+                },
+                enableContextMenu: false,
+                defaultSettings: {
+                    node: {
+                        borderColor: "transparent", fillColor: "transparent",
+                        type: ej.datavisualization.Diagram.Shapes.Native,
+                        labels: [{ "fontColor": "black", "fontSize": 11 }]
+                    },
+                    connector: {
+                        targetDecorator: { shape: "arrow", borderColor: "#606060", width: "8", height: "8" },
+                        lineColor: "#606060", labels: [{ "fillColor": "white" }]
+                    },
+                },
+                create: function () {
+                    var diagram = diagram = $("#diagram").ejDiagram("instance");
+                    diagram.add([
+                        {
+                            name: "connector1", width: 60, height: 30, offsetX: 99, offsetY: 175, borderColor: "black",
+                            fillColor: "white", rotateAngle: 270,
+                            shape: ej.datavisualization.Diagram.BasicShapes.Path, type: "basic",
+                            pathData: "M 0 26.4576 L 26.4576 0 L 26.4576 0 L 26.4576 17.46239 L 26.4576 17.46239 L 113.3856 17.46239 L 113.3856 17.46239 L 113.3856 35.45279 L 113.3856 35.45279 L 26.4576 35.45279 L 26.4576 35.45279 L 26.4576 52.91519 L 26.4576 52.91519 L 0 26.4576 Z", transform: "rotate(90)"
+                        },
+                        {
+                            name: "connector2", width: 60, height: 30, offsetX: 250, offsetY: 125, borderColor: "black",
+                            fillColor: "white", shape: ej.datavisualization.Diagram.BasicShapes.Path, type: "basic",
+                            pathData: "M 0 26.4576 L 26.4576 0 L 26.4576 0 L 26.4576 17.46239 L 26.4576 17.46239 L 113.3856 17.46239 L 113.3856 17.46239 L 113.3856 35.45279 L 113.3856 35.45279 L 26.4576 35.45279 L 26.4576 35.45279 L 26.4576 52.91519 L 26.4576 52.91519 L 0 26.4576 Z"
+                        },
+                        {
+                            name: "connector3", width: 60, height: 30, offsetX: 99, offsetY: 300, borderColor: "black",
+                            fillColor: "white", shape: ej.datavisualization.Diagram.BasicShapes.Path, type: "basic", rotateAngle: 270,
+                            pathData: "M 0 26.4576 L 26.4576 0 L 26.4576 0 L 26.4576 17.46239 L 26.4576 17.46239 L 113.3856 17.46239 L 113.3856 17.46239 L 113.3856 35.45279 L 113.3856 35.45279 L 26.4576 35.45279 L 26.4576 35.45279 L 26.4576 52.91519 L 26.4576 52.91519 L 0 26.4576 Z"
+                        },
+                        {
+                            name: "connector4", width: 60, height: 30, offsetX: 178, offsetY: 435, borderColor: "black",
+                            fillColor: "white", shape: ej.datavisualization.Diagram.BasicShapes.Path, type: "basic", rotateAngle: 270,
+                            pathData: "M 0 26.4576 L 26.4576 0 L 26.4576 0 L 26.4576 17.46239 L 26.4576 17.46239 L 113.3856 17.46239 L 113.3856 17.46239 L 113.3856 35.45279 L 113.3856 35.45279 L 26.4576 35.45279 L 26.4576 35.45279 L 26.4576 52.91519 L 26.4576 52.91519 L 0 26.4576 Z"
+                        },
+                        {
+                            name: "connector5", width: 60, height: 30, offsetX: 378, offsetY: 435, borderColor: "black",
+                            fillColor: "white", shape: ej.datavisualization.Diagram.BasicShapes.Path, type: "basic", rotateAngle: 270,
+                            pathData: "M 0 26.4576 L 26.4576 0 L 26.4576 0 L 26.4576 17.46239 L 26.4576 17.46239 L 113.3856 17.46239 L 113.3856 17.46239 L 113.3856 35.45279 L 113.3856 35.45279 L 26.4576 35.45279 L 26.4576 35.45279 L 26.4576 52.91519 L 26.4576 52.91519 L 0 26.4576 Z"
+                        },
+                        {
+                            name: "connector6", width: 60, height: 30, offsetX: 370, offsetY: 380, borderColor: "black",
+                            fillColor: "white", shape: ej.datavisualization.Diagram.BasicShapes.Path, type: "basic",
+                            pathData: "M 0 26.4576 L 26.4576 0 L 26.4576 0 L 26.4576 17.46239 L 26.4576 17.46239 L 113.3856 17.46239 L 113.3856 17.46239 L 113.3856 35.45279 L 113.3856 35.45279 L 26.4576 35.45279 L 26.4576 35.45279 L 26.4576 52.91519 L 26.4576 52.91519 L 0 26.4576 Z"
+                        }
+                    ])
+                    diagram.clearSelection();
+                },
+                enableContextMenu: false
+            });
+        });
+
+    </script>
+    <style>
+        .cols-sample-area {
+            width: 600px;
+        }
+
+        .control_section {
+            height: 600px;
+            width: 100%;
+            background-color: transparent;
+        }
+
+        .diagram_section {
+            width: calc(98% - 255px);
+            height: 100%;
+            float: left;
+        }
+
+        .middle_section {
+            float: left;
+            width: 5px;
+            height: 100%;
+        }
+
+        .symPalette_section {
+            width: 250px;
+            height: 100%;
+            float: left;
+        }
+    </style>
+</body>
+</html>

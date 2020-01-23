@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+	<link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+	<script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/onlinedata.js" type="text/javascript"></script>	
+ </head>
+ <body>
+    <div class="content-container-fluid">      
+		<div class="row">                
+            <div class="cols-sample-area">                                  				
+				<div id="container"></div> 					                   
+            </div>			           
+			<div id="sampleProperties">
+				<div class="prop-grid">
+					<div class="row">
+						<div class="col-md-3">
+							Period:
+						</div>
+						<div class="col-md-3 aligntop">
+							 <input type="text" id="period" value="5" />
+						</div>
+					</div>
+					<div class="row">
+                        <div class="col-md-3">
+                            Signal Line Stroke:
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <select name="signalLine" autocomplete="off" id="signalLine">
+                                <option value="0">Blue</option>
+                                <option value="1">Yellow</option>
+                                <option value="2">Green</option>
+								<option value="3">Red</option>
+                            </select>
+                        </div>						 
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+ <script type="text/javascript" language="javascript">
+	$(function () 
+	{
+        var chartData = window.chartData;
+        $("#container").ejChart(
+        {
+			//Initializing Primary X Axis
+            primaryXAxis:
+			{
+                title: { text: "Date" },
+                valueType: "datetime",
+				labelFormat: "dd,MMM"
+            },
+            
+			//Initializing Primary Y Axis
+			primaryYAxis: 
+			{
+				labelFormat: '${value}',
+				range:{min:55,max:75,interval:5}
+            },
+            axes: 
+			[
+                {
+                    name: 'yaxis',
+                    opposedPosition: true,
+                    majorGridLines: { visible: false }
+                }
+			], 
+			
+			//Initializing Series
+			series:
+			[
+				{
+                    dataSource:chartData,
+					xName: "xDate", 
+					high: "High",
+					low: "Low",
+					open: "Open", 
+					close: "Close",
+                    name: 'Hilo', 
+					type: 'hiloopenclose', 
+					drawMode: 'both', 
+					tooltip:
+					{ 
+						visible: false, 
+						format: "#point.x#<br/>Open : $#point.open#<br/>High : $#point.high#<br/>Low : $#point.low#<br/>Close : $#point.close#<br/>" 
+					}, 
+					enableAnimation: true                              
+                }
+			],
+            
+			//Initializing Indicators
+			indicators:
+			[
+				{
+                    type: "atr", 
+					seriesName: "Hilo", 
+					yAxisName: "yaxis", 
+					enableAnimation: true, 
+                    fill: "blue", 
+					width: 2, 
+					tooltip:
+					{
+						visible: false, 
+						format: "", 
+						fill: "transparent",
+						border: {color: "transparent"} 
+					},
+                    enableAnimation: true
+                }
+            ],
+			
+			//Initializing Zooming
+			zooming: 
+			{	
+				enable: true
+			},
+			
+			//Initializing Crosshair
+			crosshair: 
+			{ 
+				visible: true, 
+				type: 'trackball'
+			},
+			trackToolTip: 'track',			
+			isResponsive: true,
+            load: 'loadTheme',                           
+            title: { text: 'ATR Indicator' },
+            size: { height: "600" },
+            legend: { visible: false }						  
+        });
+		 $("#period").ejNumericTextbox({
+                value: 14, width: "80px", minValue :1, maxValue: 50, change: "period", 
+            });
+	});
+	
+    function period(sender)
+	{
+		var chartObj = $("#container").ejChart("instance");
+		chartObj.model.indicators[0].period=parseInt(sender.value);
+		$("#container").ejChart("redraw");
+    }      
+    
+	function getColorValue(name)
+	{
+		var val;
+		switch(name)
+		{
+			case "Red":
+				val="#FF0000";
+			break;
+			case "Green":
+				val="#009900";
+			break;
+			case "Yellow":
+				val="#D8B213";
+			break;
+			case "Blue":
+				val="#0000FF";
+			break;	   
+		}
+		return val;
+	}	
+	
+	$('#signalLine').change(function ()
+	{		  
+        var option = $("#signalLine option:selected").text();
+        var chart = $("#container").ejChart("instance");
+		var value =getColorValue(option);
+		chart.model.indicators[0].fill=value;
+        $("#container").ejChart("redraw");
+	});	
+	
+	$("#sampleProperties").ejPropertiesPanel();
+	
+	function track(sender) 
+	{
+		sender.data.Location.X = sender.data.Location.X + 1;
+		if (sender.data.Series.name == "Hilo")
+		{
+			if (this.model.indicators[0].segment.length > 0)
+			{
+				if (this.model.indicators[0].segment[0].points[sender.data.pointIndex].y != null)
+					sender.data.currentText = sender.data.currentText + "Signal Line " + " :" + "  $" 
+					+ this.model.indicators[0].segment[0].points[sender.data.pointIndex].y.toFixed(2) + "<br/>";
+				else
+					sender.data.currentText = sender.data.currentText + "Signal Line " + " :" + "  $" 
+					+ this.model.indicators[0].segment[0].points[sender.data.pointIndex].y + "<br/>";
+            }
+        }
+    }
+ </script>          
+ </body>
+</html>
+

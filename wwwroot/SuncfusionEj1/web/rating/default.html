@@ -1,0 +1,124 @@
+<!doctype html>
+
+<html>
+<head>
+    <title>Essential JS 1: Rating - Default Functionalities</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+
+    <div class="content-container-fluid">
+        <div class="row">
+		  <div class="rating">
+            <div class="cols-sample-area">
+				<div id="moviesTab" style="width: 500px">
+					<ul>
+						<li><a href="#steelman">Man of Steel</a></li>
+						<li><a href="#woldwar">World War Z</a></li>
+						<li><a href="#unive">Monsters University</a></li>
+					</ul>
+					<div id="steelman">
+							<table>
+								<tr>
+									<td class="movies-img" valign="top">
+										<img src="../content/images/rating/mos.png" alt="mos" />
+									</td>
+									<td valign="top">
+										<div>
+											<span class="movie-header">Man of Steel</span><br />
+											Rating :
+													<br />
+											<input id="mosRating" type="text" class="rating" /><br />
+											<span>Movie Info:</span><br />
+											<p>
+												A young boy learns that he has extraordinary powers and is not of this Earth.
+											</p>
+										</div>
+									</td>
+								</tr>
+							</table>
+					</div>
+					<div id="woldwar">
+						<table>
+							<tr>
+								<td class="movies-img" valign="top">
+									<img src="../content/images/rating/wwz.png" alt="mos" />
+								</td>
+								<td valign="top">
+									<div>
+										<span class="movie-header">World War Z</span><br />
+										Rating :
+												<br />
+										<input id="wwzRating" type="text" class="rating" /><br />
+										<span>Movie Info:</span><br />
+										<p>
+											The story revolves around United Nations employee Gerry Lane (Pitt).
+										</p>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div id="unive">
+						<table>
+							<tr>
+								<td class="movies-img" valign="top">
+									<img src="../content/images/rating/mu.png" alt="mos" />
+								</td>
+								<td valign="top">
+									<div>
+										<span class="movie-header">Monsters University</span><br />
+										Rating :
+												<br />
+										<input id="univRating" type="text" class="rating" /><br />
+										<span>Movie Info:</span><br />
+										<p>
+											Mike Wazowski and James P. Sullivan are an inseparable pair, but that wasn't always the case. 
+										</p>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+                </div>
+            </div>
+		  </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#moviesTab").ejTab();
+            $("#mosRating").ejRating({ value: 3 });
+            $("#wwzRating").ejRating({ value: 4 });
+            $("#univRating").ejRating({ value: 4 });
+        });
+    </script>
+    <style type="text/css" class="cssStyles">
+        .movies-img {
+            width: 125px;
+        }
+
+        .movie-header {
+            font-size: 20px;
+            font-weight: 600;
+        }
+		@media (min-width: 1920px) {
+	.row [class*="col-md-3"] {
+		width: 25%;
+		}
+	}
+    </style>
+</body>
+</html>

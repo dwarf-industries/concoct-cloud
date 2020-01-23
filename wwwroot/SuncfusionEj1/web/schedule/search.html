@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Schedule JS Default Functionalities</title>
+    <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script type="text/javascript" src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsonscheduledata.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <!-- Search textbox-->
+                <div id="searchDiv">
+                    <input id="txtSearch" type="text" onkeyup="searchKeyUp()" />
+                </div>
+                <!--Schedule control div-->
+                <div style="float: left" id="Schedule1"></div>
+                <!--Search Grid-->
+                <div class="searchgroup">
+                    <div id="grid1"></div>
+                </div>
+                <!--Filter Dialog-->
+                <div id="searchDialog">
+                    <div class="fields">
+                        <input type="text" id="txtSubject" />
+                    </div>
+                    <div class="fields">
+                        <input type="text" id="txtDes" />
+                    </div>
+                    <div class="fields">
+                        <input type="text" id="txtStartDate" />
+                    </div>
+                    <div class="fields">
+                        <input type="text" id="txtEndDate" />
+                    </div>
+                    <div class="fields">
+                        <input type="button" id="btnSearch" value="Search" />
+                        <input type="button" id="btnCancel" value="Cancel" style="margin-left: 10px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            var dManager = ej.DataManager($.extend(true, [], window.Default)).executeLocal(ej.Query().take(8));
+            $("#searchDialog").ejDialog({ showHeader: false, showOnInit: false, enableResize: false, width: "300px", position: { X: 760, Y: 50 } });
+            $("#Schedule1").ejSchedule({
+                width: "100%",
+                height: "525px",
+                currentDate: new Date(2017, 5, 5),
+                appointmentSettings: {
+                    dataSource: dManager,
+                    id: "Id",
+                    subject: "Subject",
+                    description: "Description",
+                    startTime: "StartTime",
+                    endTime: "EndTime",
+                    allDay: "AllDay",
+                    recurrence: "Recurrence",
+                    recurrenceRule: "RecurrenceRule"
+                }
+            });
+            //Append the reminder list to the Schedule header
+            $("#Schedule1").find("tr.e-scheduleheader td").first().append($("#searchDiv"));
+            $("#txtSearch").ejAutocomplete({ width: "298", watermarkText: "Search Appointments", showEmptyResultText: false, showPopupButton: true });
+            $(".searchgroup").css("display", "inline-block");
+            $("#txtSearch_dropdown").bind("mousedown", $.proxy(searchOpen, this));
+            $(window).bind("click", function (e) {
+                var _targ = $(e.target);
+                if (!_targ.hasClass("e-icon") && !_targ.hasClass("e-datepicker-headertext") && !_targ.hasClass("e-current-month e-state-default") && !_targ.hasClass("e-text") && !_targ.hasClass("e-autocomplete") && !_targ.hasClass("e-button") && !_targ.hasClass("e-datepicker") && !_targ.hasClass("e-state-default") && !_targ.hasClass("e-dialog") && (!_targ.hasClass("") || _targ.parent(".e-scheduleheader").length > 0) && !_targ.hasClass("fields") && !_targ.hasClass("e-dialog-scroller") && $("#searchDialog").ejDialog("isOpened") === true) {
+                    $("#searchDialog").ejDialog("close");
+                }
+            });
+            //Search dialog
+            $("#txtSubject").ejAutocomplete({ width: "200", watermarkText: "Subject", showEmptyResultText: false });
+            $("#txtDes").ejAutocomplete({ width: "200", watermarkText: "Description", showEmptyResultText: false });
+            $("#txtStartDate").ejDatePicker({ width: "200" });
+            $("#txtEndDate").ejDatePicker({ width: "200" });
+            $("#btnSearch").ejButton({ click: "filterClick" });
+            $("#btnCancel").ejButton({ click: "filterClick" });
+            ///Add grid
+            var tr = $("<tr></tr>").append($("#grid1"));
+            $("#Schedule1").find(".e-scheduleheader").parent().append(tr);
+            $("#txtSearch").keydown(function (e) {
+                if (e.keyCode == 46) {
+                    $("#txtSearch").val("");
+                    showResult(null, "");
+                }
+            });
+        });
+
+        function searchOpen() {
+            $("#searchDialog").ejDialog({ position: { X: $("#txtSearch").offset().left, Y: ($("#txtSearch").offset().top) + 29 } });
+            $("#searchDialog").ejDialog("isOpened") === true ? $("#searchDialog").ejDialog("close") : $("#searchDialog").ejDialog("open");
+        }
+
+        function searchKeyUp() {
+            var searchString = $("#txtSearch").val();
+            var schObj = $("#Schedule1").data("ejSchedule");
+            var result = schObj.searchAppointments(searchString);
+            showResult(result, searchString);
+        }
+
+        function showResult(list, searchString) {
+            if (!ej.isNullOrUndefined(list) && list.length != 0 && searchString != "") {
+                $("#Schedule1").find(".e-datecommondiv").hide() && $("#Schedule1").find(".e-scheduleheader").next().hide() && $("#Schedule1").find(".e-scheduleheader").next().next().hide() && $("#Schedule1").find(".e-viewsdiv").css("visibility", "hidden");
+                $("#grid1").show();
+                $("#grid1").data("ejGrid") && $("#grid1").ejGrid("destroy");
+                $("#grid1").ejGrid({
+                    dataSource: list,
+                    allowPaging: true,
+                    pageSettings: { pageSize: 10 },
+                    //recordDoubleClick: "detailsClick"
+                });
+                $("#grid1").find("div.e-prev").removeClass("e-prev");
+            }
+            else
+                $("#Schedule1").find(".e-datecommondiv").show() && $("#Schedule1").find(".e-scheduleheader").next().show() && $("#Schedule1").find(".e-scheduleheader").next().next().show() && $("#grid1").hide() && $("#Schedule1").find(".e-viewsdiv").css("visibility", "");
+        }
+
+        function filterClick(args) {
+            if (args.model.text == "Search") {
+                var search, subject = $("#txtSubject").val();
+                var des = $("#txtDes").val();
+                var strDate = $("#txtStartDate").ejDatePicker("option", "value");
+                var endDate = $("#txtEndDate").ejDatePicker("option", "value");
+                search = (subject == "" ? "" : subject) + ", " + (des == "" ? "" : (des + ", ")) + (strDate == null || strDate == "" ? "" : (strDate + ", ")) + (endDate == null || endDate == "" ? "" : endDate);
+
+                var list, serch = [], schObj = $("#Schedule1").data("ejSchedule");
+                if (subject !== "" && subject !== null)
+                    serch.push({ field: "Subject", operator: "contains", value: subject, predicate: "or" });
+
+                if (des !== "" && des !== null)
+                    serch.push({ field: "Description", operator: "contains", value: des, predicate: "or" });
+
+                if (strDate !== null && strDate !== "")
+                    serch.push({ field: "StartTime", operator: "greaterthanorequal", value: strDate, predicate: "and", matchcase: false });
+
+                if (endDate !== null && endDate !== "")
+                    serch.push({ field: "EndTime", operator: "lessthanorequal", value: endDate, predicate: "and", matchcase: false });
+
+                if (serch.length > 0) {
+                    list = schObj.filterAppointments(serch);
+                    showResult(list, search);
+                }
+                $("#txtSearch").val(search);
+            }
+            $("#searchDialog").ejDialog("close");
+            clearFields();
+        }
+
+        function clearFields() {
+            $("#txtSubject").val("");
+            $("#txtDes").val("");
+            $("#txtStartDate").ejDatePicker({ value: "" });
+            $("#txtEndDate").ejDatePicker({ value: "" });
+        }
+
+        function detailsClick(args) {
+            var schObj = $("#Schedule1").data("ejSchedule");
+            schObj._currentAction = args.data[schObj._appointmentSettings["recurrence"]] ? ej.Schedule.Actions.EditSeries : ej.Schedule.Actions.Save;
+            if (args.data[schObj._appointmentSettings["recurrence"]]) {
+                var temp = new ej.DataManager(schObj._processed).executeLocal(new ej.Query().where("RecurrenceId", ej.FilterOperators.equal, args.data.RecurrenceId))[0];
+                schObj._appUid = temp["Guid"];
+                schObj._showAppointmentDetails(args.data.AppTaskId, false);
+            }
+            else
+                schObj._showAppointmentDetails(args.data.Guid, true);
+        }
+    </script>
+
+    <style>
+        #txtSearch_wrapper.e-atc {
+            margin-left: 37px;
+            margin-top: 14px;
+        }
+
+        #searchDiv {
+            margin-right: 20px;
+            margin-top: -4px;
+            float: right;
+        }
+
+        .fields {
+            padding: 7px;
+            margin-left: 29px;
+        }
+
+        .e-grid .e-rowcell {
+            padding: 0.7em !important;
+        }
+    </style>
+</body>
+</html>

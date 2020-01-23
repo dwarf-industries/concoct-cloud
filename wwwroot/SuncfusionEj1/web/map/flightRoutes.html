@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+        <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/MapsData/WorldMap.js"></script>
+    <script src="../scripts/MapsData/FlightRoutes.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div style="background-color: #FAFAF9;border-color: lightgray;margin-left:0px;border-width: 2px;opacity: 0.7;height: 45px;width:350px">
+                    <label style="color:Black;font-size:22px;margin-top:7px;margin-left:20px;margin-right:20px;height:25px;font-weight:Normal;">Chennai - Raleigh Flight Routes</label>
+                </div>
+                <div style="min-height:435px">
+					<div style="height: inherit;min-height:435px;" id="map"></div> 
+                </div>
+            </div>
+        </div>
+    </div>
+                                   				
+					
+	
+  
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $("#map").ejMap({			        
+                enableAnimation: true,
+
+                navigationControl: {
+                    enableNavigation: true,
+                    orientation: 'vertical',
+                    absolutePosition: { x: 5, y: 15 },
+                    dockPosition: 'none'
+                },
+                layers: [
+                      {
+                          layerType: 'geometry',
+                          enableMouseHover: false,
+                          enableSelection: false,
+                          shapeSettings: {
+                              fill: "#C6C35C",
+                              autoFill: false,
+                              highlightStroke: "white",
+                              stroke: "white",
+                              strokeThickness: 0.5,
+                              highlightStrokeWidth: 1,
+                              highlightColor: "#BFBFBF"
+                          },
+                          shapeData: world_map,
+                          subLayers: [{
+                              layerType: 'geometry',
+                              shapeData: flightRoutes,
+                              shapePropertyPath: "name",
+                              enableMouseHover: true,
+                              enableSelection: false,
+                              showTooltip: true,
+                              tooltipTemplate: 'flightroute_template',
+                              dataSource: flightRoutes_data,
+                              shapeDataPath: "name",
+                              shapeSettings: {
+                                  strokeThickness: 1,
+                                  fill: "#BC0C0C",
+                                  stroke: '#BC0C0C',
+                                  valuePath: "departure",
+                                  selectionColor: "transparent",
+                                  highlightColor: "transparent",
+                                  highlightStroke: "#4E1493",
+                                  highlightBorderWidth: 2
+                              },
+                          },
+                          {
+                              layerType: 'geometry',
+                              shapePropertyPath: "name",
+                              enableMouseHover: true,
+                              enableSelection: false,
+                              showTooltip: true,
+                              tooltipTemplate: 'airport_template',
+                              dataSource: airports_data,
+                              shapeDataPath: "name",
+                              shapeSettings: {
+                                  strokeThickness: 0.1,
+                                  fill: "#BC0C0C",
+                                  stroke: 'white',
+                                  valuePath: "departure",
+                                  selectionColor: "transparent",
+                                  highlightColor: "transparent",
+                                  highlightStroke: "white"
+                              },
+                              shapeData: airports
+                          },
+                          {
+                              layerType: 'geometry',
+                              shapeData: intermediatestops1,
+                              shapePropertyPath: "name",
+                              enableMouseHover: true,
+                              enableSelection: false,
+                              showTooltip: true,
+                              tooltipTemplate: 'intermediatestop1_template',
+                              dataSource: intermediatestops1_data,
+                              shapeDataPath: "name",
+                              shapeSettings: {
+                                  strokeThickness: 0.1,
+                                  fill: "#4E1493",
+                                  stroke: 'white',
+                                  valuePath: "departure",
+                                  selectionColor: "transparent",
+                                  highlightColor: "transparent",
+                                  highlightStroke: "white"
+                              },
+                          },
+                          {
+                              layerType: 'geometry',
+                              shapeData: intermediatestops2,
+                              shapePropertyPath: "name",
+                              enableMouseHover: true,
+                              enableSelection: false,
+                              showTooltip: true,
+                              tooltipTemplate: 'intermediatestop2_template',
+                              dataSource: intermediatestops2_data,
+                              shapeDataPath: "name",
+                              shapeSettings: {
+                                  strokeThickness: 0.1,
+                                  fill: "#4E1493",
+                                  stroke: 'white',
+                                  valuePath: "departure",
+                                  selectionColor: "transparent",
+                                  highlightColor: "transparent",
+                                  highlightStroke: "white"
+                              },
+                          }]
+                      }
+                ]
+            });
+        });
+
+
+
+    </script>
+
+    <script id="airport_template" type="application/jsrender">
+        <div class="popup" id="closepopup">
+            <table align="Left">
+                <tr>
+                    <td align="left">
+                        <label id="title" style="color:#333333;font-size:14px;font-weight:bold;">{{:name}}</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">
+                        <label id="subtitle" style="color:green;font-size:14px;font-weight:bold;">Flight Routes  </label>
+                    </td>
+                </tr>
+            </table>
+            <table align="Left" style="margin-top:0px;width:auto">
+                <tr id="info1">
+                    <td align="left" style="padding-right:5px;padding-top:7px">
+                        <p class="small" id="departure1" style="color:#333333;font-size:14px;font-weight:normal;">{{:departure}} - </p>
+                    </td>
+                    <td align="left" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="route1_stop1" style="color:#333333;font-size:14px;font-weight:normal;">{{:Route1_Stop1}} - </p>
+                    </td>
+                    <td align="left" id="route1" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="route1_stop2" style="color:#333333;font-size:14px;font-weight:normal;">{{:Route1_Stop2}} - </p>
+                    </td>
+                    <td align="left" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="arrival1" style="color:#333333;font-size:14px;font-weight:normal;">{{:arrival}}</p>
+                    </td>
+                </tr>
+                <tr id="info2" class="divider1">
+                    <td align="left" style="padding-right:5px;padding-top:7px">
+                        <p class="small" id="departure2" style="color:#333333;font-size:14px;font-weight:normal;">{{:departure}} - </p>
+                    </td>
+                    <td align="left" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="route2_stop1" style="color:#333333;font-size:14px;font-weight:normal;">{{:Route2_Stop1}} - </p>
+                    </td>
+                    <td align="left" id="route2" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="route2_stop2" style="color:#333333;font-size:14px;font-weight:normal;">{{:Route2_Stop2}} - </p>
+                    </td>
+                    <td align="left" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="arrival2" style="color:#333333;font-size:14px;font-weight:normal;">{{:arrival}}</p>
+                    </td>
+                </tr>
+                <tr id="info3" class="divider1">
+                    <td align="left" style="padding-right:5px;padding-top:7px">
+                        <p class="small" id="departure3" style="color:#333333;font-size:14px;font-weight:normal;">{{:departure}} - </p>
+                    </td>
+                    <td align="left" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="route3_stop1" style="color:#333333;font-size:14px;font-weight:normal;">{{:Route3_Stop1}} - </p>
+                    </td>
+                    <td align="left" id="route3" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="route3_stop2" style="color:#333333;font-size:14px;font-weight:normal;">{{:Route3_Stop2}} - </p>
+                    </td>
+                    <td align="left" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="arrival3" style="color:#333333;font-size:14px;font-weight:normal;">{{:arrival}}</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </script>
+
+    <script id="intermediatestop1_template" type="application/jsrender">
+
+        <div class="popup" style="height:75px">
+            <table align="Left">
+                <tr>
+                    <td align="left">
+                        <label id="Label1" style="color:#333333;font-size:14px;font-weight:bold;">{{:name}}</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">
+                        <label id="Label2" style="color:green;font-size:14px;font-weight:bold;">Flight Route  </label>
+                    </td>
+                </tr>
+            </table>
+            <table align="Left" style="margin-top:0px;width:auto">
+                <tr id="Tr1">
+                    <td align="left" style="padding-right:5px;padding-top:7px">
+                        <p class="small" id="P1" style="color:#333333;font-size:14px;font-weight:normal;">{{:departure}} - </p>
+                    </td>
+                    <td align="left" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="P2" style="color:#4E1493;font-size:14px;font-weight:Bold;">{{:Route1_Stop1}} - </p>
+                    </td>
+                    <td align="left" id="Td1" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="P3" style="color:#333333;font-size:14px;font-weight:normal;">{{:Route1_Stop2}} - </p>
+                    </td>
+                    <td align="left" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="P4" style="color:#333333;font-size:14px;font-weight:normal;">{{:arrival}}</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </script>
+    <script id="intermediatestop2_template" type="application/jsrender">
+
+        <div class="popup" style="height:100px">
+            <table align="Left">
+                <tr>
+                    <td align="left">
+                        <label id="Label3" style="color:#333333;font-size:14px;font-weight:bold;">{{:name}}</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">
+                        <label id="Label5" style="color:green;font-size:14px;font-weight:bold;">Flight Route  </label>
+                    </td>
+                </tr>
+            </table>
+            <table align="Left" style="margin-top:0px;width:auto">
+                <tr id="Tr3">
+                    <td align="left" style="padding-right:5px;padding-top:7px">
+                        <p class="small" id="P9" style="color:#333333;font-size:14px;font-weight:normal;">{{:departure}} - </p>
+                    </td>
+                    <td align="left" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="P10" style="color:#4E1493;font-size:14px;font-weight:Bold;">{{:Route1_Stop1}} - </p>
+                    </td>
+                    <td align="left" id="Td3" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="P11" style="color:#333333;font-size:14px;font-weight:normal;">{{:Route1_Stop2}} - </p>
+                    </td>
+                    <td align="left" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="P12" style="color:#333333;font-size:14px;font-weight:normal;">{{:arrival}}</p>
+                    </td>
+                </tr>
+                <tr id="Tr4">
+                    <td align="left" style="padding-right:5px;padding-top:7px">
+                        <p class="small" id="P13" style="color:#333333;font-size:14px;font-weight:normal;">{{:departure}} - </p>
+                    </td>
+                    <td align="left" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="P14" style="color:#4E1493;font-size:14px;font-weight:Bold;">{{:Route2_Stop1}} - </p>
+                    </td>
+                    <td align="left" id="Td4" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="P15" style="color:#333333;font-size:14px;font-weight:normal;">{{:Route2_Stop2}} - </p>
+                    </td>
+                    <td align="left" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="P16" style="color:#333333;font-size:14px;font-weight:normal;">{{:arrival}}</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </script>
+    <script id="flightroute_template" type="application/jsrender">
+
+        <div class="popup" style="height:50px">
+            <table align="Left">
+                <tr>
+                    <td align="left">
+                        <label id="Label4" style="color:green;font-size:14px;font-weight:bold;">Flight Route  </label>
+                    </td>
+                </tr>
+            </table>
+            <table align="Left" style="margin-top:0px;width:auto">
+                <tr id="Tr2">
+                    <td align="left" style="padding-right:5px;padding-top:7px">
+                        <p class="small" id="P5" style="color:#333333;font-size:14px;font-weight:normal;">{{:departure}} - </p>
+                    </td>
+                    <td align="left" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="P6" style="color:#333333;font-size:14px;font-weight:normal;">{{:Route1_Stop1}} - </p>
+                    </td>
+                    <td align="left" id="Td2" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="P7" style="color:#333333;font-size:14px;font-weight:normal;">{{:Route1_Stop2}} - </p>
+                    </td>
+                    <td align="left" style="padding-left:8px;padding-top:7px">
+                        <p class="small" id="P8" style="color:#333333;font-size:14px;font-weight:normal;">{{:arrival}}</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </script>
+    <style type="text/css">
+        .e-map {
+            background-color: white;
+        }
+
+        p.small {
+            line-height: 50%;
+        }
+
+        p.big {
+            line-height: 110%;
+        }
+
+        .divider1 {
+            border-top: 0.1px solid #DDDDDD;
+        }
+
+        .popup {
+            border: 1px solid #5B5B5B;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 7px;
+            opacity: 0.8;
+            width: 190px;
+            padding: 8px;
+            height: 125px;
+            background: white;
+        }
+    </style>
+</body>
+
+</html>
+

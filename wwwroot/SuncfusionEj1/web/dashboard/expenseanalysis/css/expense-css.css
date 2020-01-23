@@ -1,0 +1,238 @@
+﻿html, body {
+    width: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: Segoe UI;
+    font-size: 14px;
+    background-image: url("../../../content/images/right side BG texture.png");
+}
+
+.sample-title {
+    background-color: #000000;
+    height: 100px;
+}
+
+.e-values p, .spend-div p {
+    margin: 0px;
+}
+
+.text-title {
+    background: url("../images/title-text.png") no-repeat scroll 0 0 transparent;
+    float: left;
+    height: 50px;
+    margin-top: -90px;
+    width: 350px;
+}
+
+.chart-back-button {
+    margin: 10px 0px 0 10px;
+}
+
+.sample-container {
+    height: 800px;
+}
+
+#control-container {
+    height: 700px;
+    margin: 0 auto;
+    width: 90%;
+    min-width: 325px;
+}
+
+.container {
+    margin: 0 auto;
+}
+
+.chart-inner {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #E1E1E1;
+}
+
+.grid-container {
+    border-style: none;
+    border-width: 0;
+    border-color: #E1E1E1;
+}
+
+.chart-container {
+    display: block;
+    margin: 10px;
+}
+
+#control-panel {
+    background-color: white;
+    padding: 20px;
+}
+
+.chartgridtable {
+    background-color: white;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #E1E1E1;
+}
+
+.e-values, .left-image, .e-exptitle {
+    height: 136px;
+}
+
+.sideborder {
+    border-right: solid 1px lightgray;
+}
+
+.initborder {
+    border-radius: 12px;
+    border: solid 1px lightgray;
+}
+
+.e-values {
+    border-radius: 12px;
+    background-image: -ms-linear-gradient(top, #FAFAFA 0%, #EBEBEB 100%);
+    /* Mozilla Firefox */
+    background-image: -moz-linear-gradient(top, #FAFAFA 0%, #EBEBEB 100%);
+    /* Opera */
+    background-image: -o-linear-gradient(top, #FAFAFA 0%, #EBEBEB 100%);
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FAFAFA), color-stop(1, #EBEBEB));
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-linear-gradient(top, #FAFAFA 0%, #EBEBEB 100%);
+    /* W3C Markup, IE10 Release Preview */
+    background-image: linear-gradient(to bottom, #FAFAFA 0%, #EBEBEB 100%);
+    background-repeat: no-repeat;
+}
+
+.left-image {
+    width: 150px;
+    background: url("../images/left-image.png") no-repeat scroll 0 0 transparent;
+}
+
+.e-exptitle {
+    padding-top: 15px;
+}
+
+.pos-amt-td, .neg-amt-td, .bal-amt-td {
+    height: 120px;
+    text-align: center;
+    width: 230px;
+}
+
+.spend-div {
+    margin-top: 5%;
+    margin-left: 1%;
+}
+
+.spend-div > table td {
+    height: 100px;
+    border: 1px solid #cccccc;
+    padding: 15px;
+    width: 80%;
+}
+
+.add-image {
+    background: url("../images/add_normal.png") no-repeat scroll 0 0 transparent;
+}
+
+.add-image:hover {
+    background: url("../images/add_hover.png") no-repeat scroll 0 0 transparent;
+}
+
+	.add-image {
+	width: 42px;
+	height: 42px;
+    float: right;
+    margin-left: 10px;
+}
+
+.pos-amt {
+    color: #669900;
+}
+
+.neg-amt {
+    color: #ED1515;
+}
+
+.bal-amt {
+    color: #EF7C14;
+}
+
+.pos-amt, .neg-amt, .bal-amt {
+    font-size: 22px;
+}
+
+.pos-text, .neg-text, .bal-text {
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.e-name {
+    font-size: 24px;
+    color: #424242;
+    font-weight: normal;
+}
+
+.e-phone {
+    font-size: 15px;
+    color: #929499;
+    font-weight: normal;
+}
+
+.e-mail {
+    font-size: 12px;
+    color: #929499;
+    font-weight: normal;
+}
+
+.most-spent-text, .least-spent-text, .avg-spent-text {
+    font-size: 19px;
+    color: #333333;
+}
+
+.most-spent-amt, .least-spent-amt, .avg-spent-amt {
+    font-size: 24px;
+    font-weight: lighter;
+}
+
+.sample-t {
+    color: #424242;
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.samplesec {
+    width: inherit;
+}
+
+.imagetile {
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+.samplename {
+    color: #727272;
+    font-size: 18px;
+    background-color: #EDEDED;
+    display: inline-block;
+    line-height: 40px;
+    padding-left: 1%;
+    text-shadow: 0 1px #FFFFFF;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.expensegridborder {
+    margin: 10px;
+}
+
+.samplesec {
+    width: inherit;
+}
+
+.samplename {
+    color: #727272;
+    font-size: 18px;
+}
+.gridform .e-rowcell .e-datewidget.e-widget.e-ntouch, .gridform .e-rowcell .e-widget.e-numeric{
+	width:132.44px !important;
+}

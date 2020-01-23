@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Group Buttons</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div class="control">
+                        <div class="element">
+                            <div id="groupButton"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            //  declaration 
+            $("#groupButton").ejGroupButton({
+                groupButtonMode: "radiobutton",
+                dataSource: [
+                   { text: "Day", contentType: "textonly" },
+                   { text: "Work Week", contentType: "textonly" },
+                   { text: "Week", contentType: "textonly" },
+                   { text: "Month", contentType: "textonly", selected: "selected" },
+                   { text: "Year", contentType: "textonly" }],
+                width: "100%",height: "40px",
+                showRoundedCorner: true
+            });
+        });
+    </script>
+    <style>
+        .control {
+            padding: 30px 0px;
+        }
+
+        .frame {
+            padding: 0 20px;
+			width:450px;
+        }
+
+        .control .element, label {
+            display: table;
+            margin: 0 auto;
+        }
+
+        .element{
+            width: 100%;
+        }
+    </style>
+</body>
+</html>

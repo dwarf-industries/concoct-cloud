@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential Studio for JavaScript: Gantt</title>
+    <meta charset="utf-8" />
+	<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+     <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsonganttdata.js"></script>
+</head>
+<body>
+    
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="GanttContainer" style="height:450px;width:100%;" />
+            </div>
+        </div>
+    </div>	
+    <script type="text/javascript">
+        
+        $(function () {
+
+            $("#GanttContainer").ejGantt({
+                dataSource: unscheduledData,
+                allowColumnResize: true,
+                allowSorting: true,
+                allowSelection: true,
+				allowUnscheduledTask: true,
+                isResponsive:true,				
+                taskIdMapping: "taskID",
+                taskNameMapping: "taskName",
+                startDateMapping: "startDate",
+                progressMapping: "progress",
+                durationMapping: "duration",
+                endDateMapping: "endDate",
+                childMapping: "subtasks",
+                enableVirtualization: false,
+                highlightWeekEnds: true,
+                includeWeekend: false,
+                rowHeight: window.theme == "material" ? 48 : window.theme == "office-365" ? 36 : 30,
+                scheduleStartDate: new Date("02/01/2017"),
+                scheduleEndDate: new Date("03/16/2017"),
+                predecessorMapping: "predecessor",
+                showResourceNames:true,
+                showGridCellTooltip: false,
+				toolbarSettings: {
+                    showToolbar: true,
+                    toolbarItems: [
+                    ej.Gantt.ToolbarItems.Add,
+                    ej.Gantt.ToolbarItems.Edit,
+                    ej.Gantt.ToolbarItems.Delete,
+                    ej.Gantt.ToolbarItems.Update,
+                    ej.Gantt.ToolbarItems.Cancel,
+                    ej.Gantt.ToolbarItems.Indent,
+                    ej.Gantt.ToolbarItems.Outdent,
+                    ej.Gantt.ToolbarItems.ExpandAll,
+                    ej.Gantt.ToolbarItems.CollapseAll
+                    ]
+                },
+				editSettings: {
+                    allowEditing: true,
+                    allowAdding: true,
+                    allowDeleting: true,
+                    allowIndent: true,
+                    editMode: "cellEditing"
+                },
+                treeColumnIndex: 0,
+				load: function(args){
+					var columns = this.getColumns();
+					var taskName = columns.splice(1,1);
+					columns.splice(4,0,taskName[0]);
+					columns[0].width = window.theme == "material" ? "120px" : window.theme == "office-365" ? "85px" : "65px";
+				}
+            });
+        });     
+    </script>
+
+</body>
+</html>

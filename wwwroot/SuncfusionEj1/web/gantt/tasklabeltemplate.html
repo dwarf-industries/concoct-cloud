@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential Studio for JavaScript: Gantt - Task Label Template</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+      <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+     <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsonganttdata.js"></script>
+</head>
+<body>
+    <script>
+        function _getSeparator(length, idx) {
+            if (idx < length - 1) {
+                return ","
+            }
+        }
+        var helpers = {};
+        helpers["_getSeparator"] = _getSeparator;
+        $.views.helpers(helpers);
+    </script>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="GanttContainer" style="width:100%;height:450px;" />
+            </div>
+        </div>
+    </div>
+    <script id="rightlableTemplate" type="text/x-jsrender">
+        {{if #data['resourceNames']}}
+        <div>
+            {{for resourceInfo}}
+            <img src="../content/images/gantt/{{:resourceName}}.png" height="30px" />
+            <span style="margin-left:5px;">{{:resourceName}}</span>
+            {{:~_getSeparator(#get("array").data.length,#index)}}
+            {{/for}}
+        </div>
+        {{/if}}
+    </script>
+
+    <script id="leftlableTemplate" type="text/x-jsrender">
+        <div style="padding-top:5px;">
+            <span>{{:#data['taskName']}}  [{{:status}}%]</span>
+        </div>
+
+    </script>
+    <script>
+        $(function () {
+            $("#GanttContainer").ejGantt({
+                dataSource: taskMappingTemplateData,
+                allowSelection: true,
+                allowColumnResize: true,
+                taskIdMapping: "taskID",
+                taskNameMapping: "taskName",
+                startDateMapping: "startDate",
+                progressMapping: "progress",
+                durationMapping: "duration",
+                endDateMapping: "endDate",
+                childMapping: "subtasks",
+                scheduleStartDate:new Date( "02/01/2017"),
+                    scheduleEndDate:new Date( "03/16/2017"),
+                resourceInfoMapping: "resourceId",
+                resourceNameMapping: "resourceName",
+                resourceIdMapping: "resourceId",
+                resources: columnTemplateResource,
+                predecessorMapping: "predecessor",
+                rightTaskLabelTemplate: "#rightlableTemplate",
+                leftTaskLabelTemplate: "#leftlableTemplate",
+                allowGanttChartEditing: false,
+                treeColumnIndex: 1,
+                showProgressStatus: false,
+                isResponsive: true,
+                rowHeight: 40,
+                taskbarHeight:30,
+                load: function () {
+                    this.getColumns()[0].width = window.theme == "material" ? 60 : 30;
+                },
+            });
+        });
+    </script>
+</body>
+</html>

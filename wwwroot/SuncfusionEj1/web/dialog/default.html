@@ -1,0 +1,105 @@
+<!doctype html>
+
+<html>
+<head>
+    <title>Essential JS 1 : Dialog - Default Functionalities</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <input class="e-btn" id="btnOpen" value="Click to open dialog" />
+                <div class="control">
+                    <div id="basicDialog" title="Audi Q3 Drive">
+                        <h1>Audi Q3</h1>
+                        <div class="audi-q3">
+                            <img src="../content/images/dialog/audiq3-1.png" alt="audiq3-1" class="img" />
+                            <br />
+                            <img src="../content/images/dialog/audiq3-2.png" alt="audiq3-2" />
+                        </div>
+                        <div class="cnt">
+                            It is a concept vehicle with Liquid Silver body colour, 20-inch wheels, fabric folding roof, electrically-controlled hood, 4-cylinder 2.0 TDI engine rated 204 PS (150 kW; 201 hp)
+                            and 400 N·m (295.02 lbf·ft), diesel particulate filter and Bluetec emission control system, quattro permanent four-wheel drive system with Haldex clutch,
+                            Audi S tronic dual-clutch gearbox, McPherson-strut front axle and a four-link rear axle, Audi drive select system with 3 modes (dynamic, sport, efficiency),
+                            MMI control panel with touch pad and dual-view technology, sound system with the prominent extending tweeters.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        $(function () {
+            // declaration
+            $("#basicDialog").ejDialog({
+                width: 550,
+                minWidth: 310,
+                minHeight: 215,
+                close: "onDialogClose",
+                target: ".control"
+            });
+            $("#btnOpen").ejButton({ size: "medium", click: "onOpen", type: "button", height: 30, width: 172 });
+
+        });
+
+        function onDialogClose(args) {
+            $("#btnOpen").show();
+        }
+        function onOpen() {
+            $("#btnOpen").hide();
+            $("#basicDialog").ejDialog("open");
+        }
+    </script>
+    <style class="cssStyles">
+        .audi-q3 {
+            float: right;
+            height: 356px;
+            width: 267px;
+            margin-left: 10px;
+        }
+
+        .control {
+            height: 600px;
+        }
+
+        .row .cols-sample-area {
+            padding: 0px;
+            margin-bottom: 50px;
+			position: relative;
+        }
+
+        .cnt {
+            min-height: 356px;
+            text-align: justify;
+        }
+
+        h1 {
+            margin: 0 0 10px 0;
+        }
+
+        .img {
+            margin-bottom: 10px;
+        }
+		
+		.fixedlayout:not(.material):not(.office-365) #basicDialog {
+             padding: 15px;
+        }
+    </style>
+</body>
+</html>

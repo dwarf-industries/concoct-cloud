@@ -1,0 +1,254 @@
+/**  =====================
+      Theme-dashboard css start
+==========================  **/
+
+.d-timeline-btn .f-right {
+    height: 40px;
+    width: 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    padding: 0;
+    i {
+        margin-right: 0;
+    }
+}
+
+#datebasechart {
+    height: 310px;
+    width: 100%;
+}
+
+.bullet {
+    font: 10px sans-serif;
+}
+
+.bullet .marker {
+    stroke: #000;
+    stroke-width: 2px;
+}
+
+.bullet .tick line {
+    stroke: #666;
+    stroke-width: .5px;
+}
+
+.bullet .range.s0 {
+    fill: #eee;
+}
+
+.bullet .range.s1 {
+    fill: #ddd;
+}
+
+.bullet .range.s2 {
+    fill: #ccc;
+}
+
+.bullet .measure.s0 {
+    fill: lightsteelblue;
+}
+
+.bullet .measure.s1 {
+    fill: steelblue;
+}
+
+.bullet .title {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.bullet .subtitle {
+    fill: #999;
+}
+
+.section-graph {
+    position: relative;
+    height: 151px;
+    color: #fff;
+    background: #55bc75;
+    background-image: linear-gradient(#55bc75, #55bc75 50%, #4daf7c 50%);
+}
+
+.section-graph .graph-info {
+    z-index: 99;
+    position: absolute;
+    font-weight: bold;
+    margin-top: 18px;
+    margin-left: 21px;
+    width: 100px;
+}
+
+.section-graph .graph-info .graph-arrow {
+    width: 0;
+    height: 0;
+    margin-top: 18px;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 4px solid white;
+    float: left;
+}
+
+.section-graph .graph-info .graph-info-big {
+    font-size: 24px;
+    float: left;
+    margin-left: 3px;
+}
+
+.section-graph .graph-info .graph-info-small {
+    margin-left: 3px;
+    font-size: 12px;
+    font-weight: normal;
+    color: rgba(255, 255, 255, 0.5);
+    clear: left;
+    margin-left: 8px;
+}
+
+
+/*
+ * Info Section
+ */
+
+.section-info {
+    padding: 21px 21px 21px;
+    color: #8a786a;
+    overflow: hidden;
+}
+
+.info-time {
+    font-size: 12px;
+}
+
+.info-block {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    text-align: center;
+    width: 120px;
+    border-radius: 3px;
+    float: left;
+    padding: 4px 0;
+    margin: 10px;
+}
+
+.info-block dt,
+.info-block dd {
+    margin: 0;
+    padding: 0;
+}
+
+.info-block dt {
+    font-weight: bold;
+}
+
+.info-block dd {
+    font-size: 12px;
+}
+
+.info-aapl {
+    float: left;
+    margin-top: 20px;
+    h4 {
+        font-size: 13px;
+        font-weight: normal;
+        margin-bottom: 10px;
+    }
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+    li {
+        margin: 0;
+        display: block;
+        width: 9px;
+        height: 40px;
+        margin-right: 6px;
+        background-color: #f5f0ec;
+        float: left;
+        position: relative;
+        span {
+            display: block;
+            width: 9px;
+            height: 40px;
+            position: absolute;
+            bottom: 0;
+        }
+    }
+}
+
+.info-aapl li span.orange {
+    background-color: $warning-color;
+}
+
+.info-aapl li span.green {
+    background-color: $success-color;
+}
+
+.yearly-change {
+    width: 94px;
+    float: right;
+    margin-top: 20px;
+    h4 {
+        font-size: 13px;
+        font-weight: normal;
+        margin-bottom: 10px;
+    }
+    span {
+        display: block;
+        height: 40px;
+        line-height: 40px;
+        color: white;
+        background-color: $primary-color;
+        text-align: center;
+        border-radius: 3px;
+        font-weight: bold;
+        em {
+            color: rgba(255, 255, 255, 0.7);
+        }
+    }
+}
+
+.analytic-table {
+    tr td:first-child {
+        padding-left: 20px;
+    }
+    tr td:last-child {
+        padding-right: 30px;
+        text-align: right;
+        font-size: 16px;
+    }
+    span {
+        display: block;
+    }
+    .count {
+        font-size: 18px;
+        font-weight: 600;
+    }
+    .table-msg {
+        font-size: 12px;
+        margin-top: 5px;
+    }
+}
+
+.analytic-user {
+    i {
+        font-size: 52px;
+        color: $primary-color;
+    }
+    .card-footer {
+        padding-top: 25px;
+        padding-bottom: 25px;
+        font-size: 16px;
+        background-color: #e6e9ea;
+    }
+    h1{
+        margin:25px 0;
+        font-weight: 300;
+    }
+    h4{
+        font-size: 20px;
+        color: $info-color;
+        font-weight: 600;
+    }
+}
+
+
+/**====== Theme-dashboard css end ======**/

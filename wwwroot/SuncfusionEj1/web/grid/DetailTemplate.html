@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Detail Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsondata.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <style type="text/css">
+        .e-grid .detailcell
+        {
+            padding: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="Grid"></div>
+            </div>
+        </div>
+    </div>
+    <script id="tabGridContents" type="text/x-jsrender">
+        <div class="tabcontrol" id="Test">
+            <ul>
+                <li><a href="#detailChart{{:EmployeeID}}">Stock Chart</a></li>
+                <li><a href="#gridTab{{:EmployeeID}}">Stock Grid</a></li>
+            </ul>
+            <div id="detailChart{{:EmployeeID}}">
+            </div>
+            <div id="gridTab{{:EmployeeID}}">
+                <div id="detailGrid">
+                </div>
+            </div>
+            
+        </div>
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("#Grid").ejGrid({
+                // the datasource "window.employeeView" is referred from jsondata.min.js
+                dataSource: ej.DataManager(window.employeeView).executeLocal(ej.Query().take(9)),
+                detailsTemplate: "#tabGridContents",
+                detailsDataBound: "detailGridData",
+                columns: [
+                          { field: "EmployeeID", headerText: 'Employee ID', textAlign: ej.TextAlign.Right, width: 75 },
+                          { field: "FirstName", headerText: 'First Name', textAlign: ej.TextAlign.Left, width: 100 },
+                          { field: "Title", headerText: 'Title', textAlign: ej.TextAlign.Left, width: 120 },
+                          { field: "City", headerText: 'City', textAlign: ej.TextAlign.Left, width: 100 },
+                          { field: "Country", headerText: 'Country', textAlign: ej.TextAlign.Left, width: 100 }
+                ]
+            });
+        });
+        function detailGridData(e) {
+            var filteredData = e.data["EmployeeID"];
+            // the datasource "window.ordersView" is referred from jsondata.min.js
+            var data = ej.DataManager(window.ordersView).executeLocal(ej.Query().where("EmployeeID", "equal", parseInt(filteredData), true));
+            e.detailsElement.find("#detailGrid").ejGrid({
+                dataSource: data,
+                allowSelection: false,
+                columns: [
+                        { field: "OrderID", isPrimaryKey: true, headerText: "Order ID", width: 80, textAlign: ej.TextAlign.Right },
+                        { field: "CustomerID", headerText: 'Customer ID', width: 80, textAlign: ej.TextAlign.Left },
+                        { field: "CompanyName", headerText: 'Company Name', width: 120, textAlign: ej.TextAlign.Left },
+                        { field: "ShipCity", headerText: 'City', width: 120, textAlign: ej.TextAlign.Left },
+						{ field: "Freight", headerText: 'Freight', width: 90, textAlign: ej.TextAlign.Right }
+
+                ]
+            });
+
+            e.detailsElement.css("display", "");
+            e.detailsElement.find("#detailChart" + filteredData).ejChart(
+    {
+
+        chartArea:
+                     {
+                         border: { width: 1 }
+                     },
+        primaryXAxis:
+        {
+            rangePadding: 'none',
+            labelRotation: 45,
+            title: { text: "City" }
+        },
+
+        primaryYAxis:
+         {
+             title: { text: "Sales in Millions" }
+         },
+
+        series: [{
+            name: 'Country', type: 'column',
+            enableAnimation: true,
+            dataSource: data,
+            xName: "ShipCity",
+            yName: "Freight",
+            fill: "#69D2E7",
+            tooltip: { visible: true, format: "#point.x# : #point.y# millions <br/>" }
+
+        }
+        ],
+        load: "loadTheme",
+        title: { text: 'Sales Report Analysis ' },
+        canResize: true,
+        size: { height: "435" , width:"860"},
+        legend: { visible: false }
+    });
+            e.detailsElement.find(".tabcontrol").ejTab({ selectedItemIndex: 1 });
+        }
+    </script>
+</body>
+</html>

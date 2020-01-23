@@ -1,0 +1,155 @@
+﻿<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Media Player Events</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <script src="../scripts/jsrender.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="event_mediaPlayer"></div>
+            </div>
+            <div class="cols-prop-area event-tracer">
+                <div>
+                    <div class="heading">
+                        <span>Event Trace</span>
+                        <div class="pull-right">
+                            <select name="selectevtprops" id="selectControls">
+                                <option value="create">Create</option>
+                                <option value="beforePlay">Before Play</option>
+                                <option value="afterPlay">After Play</option>
+                                <option value="beforePause">Before Pause</option>
+                                <option value="afterPause">After Pause</option>
+                                <option value="beforeForward">Before Forward</option>
+                                <option value="afterForward">After Forward</option>
+                                <option value="beforeRewind">Before Rewind</option>
+                                <option value="afterRewind">After Rewind</option>
+                                <option value="beforePlayNext">Before Play Next</option>
+                                <option value="afterPlayNext">After Play Next</option>
+                                <option value="beforePlayPrevious">Before Play Previous</option>
+                                <option value="afterplayPrevious">After Play Previous</option>
+                                <option value="beforeStop">Before Stop</option>
+                                <option value="afterStop">After Stop</option>
+                                <option value="beforeMute">Before Mute</option>
+                                <option value="afterMute">After Mute</option>
+                                <option value="beforeVolumeChange">Before Volume Change</option>
+                                <option value="afterVolumeChange">After Volume Change</option>
+                                <option value="beforeMediaChange">Before Media Change</option>
+                                <option value="afterMediaChange">After Media Change</option>
+                                <option value="beforeScreenChange">Before Screen Change</option>
+                                <option value="afterScreenChange">After Screen Change</option>
+                                <option value="mediaComplete">Media Complete</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="prop-grid content">
+                        <div class="eventarea">
+                            <div class="EventLog" id="EventLog">
+                            </div>
+                        </div>
+                        <div class="evtbtn">
+                            <input type="button" class="eventclear e-btn" value="Clear" onclick="onClear()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var mediaPlayer;
+        jQuery(function ($) {
+            if (!(ej.browserInfo().name === "msie" && Number(ej.browserInfo().version) < 9)) {
+                var isMobile = screen.width < 640 ? true : false;
+                var width = "700px";
+                var height = "400px";
+                if (isMobile) {
+                    width = "100%";
+                    height = "250px";
+                }
+                $("#event_mediaPlayer").ejMediaPlayer({
+                    width: width,
+                    height: height,
+                    toolbarHeight: "70px",
+                    playlistTitle: "Syncfusion Xamarin",
+                    source: [
+                        {
+                            "url": "http://files2.syncfusion.com/Videos/samples/Fall+Madly+in+Love+with+10+Xamarin+Charts!+(February+2017+we.mp4",
+                            "title": "Xamarin Charts",
+                            "posterUrl": "images/mediaplayer/xamarinChart.png",
+                            "author": "syncfusion"
+                        },
+                        {
+                            "url": " http://files2.syncfusion.com/Videos/samples/File-Format+manipulation+in+Xamarin.Forms.mp4",
+                            "title": "Xamarin Forms",
+                            "posterUrl": "images/mediaplayer/xamarinForms.png",
+                            "author": "syncfusion"
+                        },
+                    ],
+                    renderMode: "advanced",
+                    create: "eventLog",
+                    onRepeat: "eventLog",
+                    onShuffle: "eventLog",
+                    onMediaComplete: "eventLog",
+                    onTogglePlaylist: "eventLog",
+                    onActionBegin: "eventLog",
+                    onActionComplete: "eventLog",
+                });
+
+                mediaPlayer = $(document.getElementById("event_mediaPlayer")).data("ejMediaPlayer");
+
+                $("#selectControls").ejDropDownList({
+                    customCssClass: "metroblue",
+                    showCheckbox: true,
+                    checkAll: true,
+                    minPopupWidth: "230px",
+                    change: "evtpropscheckedevent",
+                    minPopupHeight: "300px"
+                });
+
+                $("#sampleProperties").ejPropertiesPanel();
+            }
+            else {
+                alert("Media Player (HTML5) will not be supported in IE Version < 9");
+            }
+        });
+
+        function evtpropscheckedevent(args) {
+            if (args.isChecked)
+                mediaPlayer.option(args.selectedValue, "eventLog")
+            else
+                mediaPlayer.option(args.selectedValue, null);
+        }
+
+        function eventLog(args) {
+            var actionType = args && args.actionType ? args.actionType : "";
+            if (actionType) {
+                jQuery.addEventLog(args.type + "-" + actionType + ":" + "<span class='eventTitle'> Event is raised </span>");
+            }
+            else
+                jQuery.addEventLog(args.type + ":" + "<span class='eventTitle'> Event is raised </span>");
+
+        }
+
+        function onClear(args) {
+            jQuery.clearEventLog(args);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+	<meta name="description" content="" />
+	<h1 class='e-h1'></h1>
+    <link href="../content/ejthemes/ej.widgets.core.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+       <!--Dependency files references-->
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js" type="text/javascript"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/CodeMirror/codemirror.js" type="text/javascript"></script>
+    <script src="../scripts/CodeMirror/javascript.js" type="text/javascript"></script>
+    <script src="../scripts/CodeMirror/css.js" type="text/javascript"></script>
+    <script src="../scripts/CodeMirror/xml.js" type="text/javascript"></script>
+    <script src="../scripts/CodeMirror/htmlmixed.js" type="text/javascript"></script>
+    <script src="../scripts/CodeMirror/clike.js" type="text/javascript"></script>
+    <link href="../scripts/CodeMirror/codemirror.min.css" rel="stylesheet" />
+    <!--ZeroClipboard Reference-->
+    <script src="../scripts/ZeroClipboard.js"></script>
+    <script src="sourcefiles.js"></script>
+    <style type="text/css">
+        .copyedit.zeroclipboard-is-hover:before,.copyedit.zeroclipboard-is-hover,.copyedit:hover {
+			background-color:#004e7a !important;
+		}
+		.copyedit:active,.copyedit.zeroclipboard-is-active:before,.copyedit.zeroclipboard-is-active{
+			background-color:#054866 !important;
+		}
+		.copyedit {
+			height: 25pt;
+			width: 65pt;
+			display: inline-block;
+			float: right;
+			background-color: #015991;
+			color: white;
+			cursor: pointer;
+			text-align: center;
+			margin:0px 0px 5px 10px;
+			border-radius: 3px;
+			font-size: 12pt; 
+			font-family: segoe ui;  
+		}
+		
+		.copyeditText{			
+			vertical-align: sub;
+		}		
+        .copycodeicon:before {
+			content: "\e77f";
+			margin: 2px 0px 0 5px;
+		}
+
+		.copycodeicon {
+			font-size: 21px !important;
+			margin: 7px 9px 0 0 !important;
+			float:left !important;
+			margin:0 !important;
+		}
+
+		.copycodedown {
+			border: 1px solid #bbbcbb;
+			border-radius: 2px;
+			display: block;
+			height: 30px;
+			line-height: 2;
+			margin: 40px 0 10px 9px;
+			text-align: center;
+			width: 160px;
+			font-size: 13px;
+			font-weight: 600;
+		}
+
+		.copycodedown.zeroclipboard-is-hover {
+			background-color: #f5f5f5;
+			cursor: pointer;
+		}
+		.darktheme .copycodedown.zeroclipboard-is-hover{
+			background-color:#111111;
+		}
+		.e-h1 {
+			font-size: 0em;
+		}
+    </style>
+    <script type="text/javascript">
+        window.htmlEditor = [];
+        $(function() {
+            $("#sourceTabCode").ejWaitingPopup();
+            $("#sourceTabCode").ejWaitingPopup("show");
+            var qString = this.location.search.split("=")[1];
+            var dm = ej.DataManager(window.sourceCodePath).executeLocal(ej.Query().select([qString]));
+
+            $.each(dm[0], function(idx, val) {
+                var name = val.name, cmMode = "", url = qString + "/" + val.url;
+                var liTag = ej.buildTag('li');
+                var aTag = ej.buildTag('a').attr({ "href": "#" + name }).text(name);
+                liTag.append(aTag);
+                $("#sourceTabCode ul").append(liTag);
+                var divTag = ej.buildTag("div#" + name);
+                $("#sourceTabCode").append(divTag);
+ 
+                //ajax to request data
+                $.ajax({
+                    url: url,
+                    dataType: "html",					
+                    success: function(data) {
+                        var activetext = "#" + name, h1content, content, metacontent, titlecontent;
+                        content = data;
+						titlecontent = content.match(/<title[^>]*>([^<]+)<\/title>/);
+						titlecontent && (document.title = titlecontent[1]);
+						metacontent = content.match(/<meta name="description" content="*([^">]+)/);
+						metacontent && $('meta[name=description]').attr('content', metacontent[1]);
+						h1content = content.match(/<h1[^>]*>(.*)<\/h1>/);
+						h1content && $('h1').append(h1content[1]);
+                        window.htmlEditor.push(CodeMirror.fromTextArea($(activetext).val(content)[0], {
+                            lineNumbers: false,
+							//set mode type based on file 
+                            mode: codeMirrorModes(url)
+                        }));
+                        $(activetext).next($(".CodeMirror")).appendTo(activetext);
+                        $(activetext).next($(".CodeMirror")).each(function(i, obj) {
+                            if (i > 0)
+                                $(obj).remove();
+                        });
+                        $("#sourceTabCode .CodeMirror").find('textarea').attr('readonly', 'readonly');
+                    }
+                });
+            });
+
+            // to render Tab after ajax post completed 
+            setTimeout(function() {
+                $("#sourceTabCode").ejTab({ cssClass: "metroblue", enableTabScroll: false }).show();
+                $("#sourceTabCode").ejWaitingPopup("hide");
+                $("<span>").attr("id", "copyclipboard").addClass("copyedit copycode").attr('title', 'Copy To Clipboard').appendTo($("#sourceTabCode .e-header"));
+                $("<span>").attr("id", "copyicon").addClass("e-icon e-select copycodeicon").appendTo("#copyclipboard");
+                $("<span>").attr("id", "copytext").text("COPY").addClass("copyeditText").appendTo("#copyclipboard");
+                $("<div>").insertAfter($("#sourceTabCode")).attr("id", "clipboard");
+                $("<span>").appendTo($("#sourceTabCode >div.e-box")).addClass("copycode copycodedown").text("COPY TO CLIPBOARD");
+                $("<textarea>").attr("style", "display:none").attr("id", "copytextarea").appendTo($("#clipboard"));
+                initiateCopyHandler();
+            }, 600);
+        });
+
+        function initiateCopyHandler() {
+            try {
+                var client = new ZeroClipboard($('.copycode'));
+
+                client.on('ready', function (event) {
+                    client.on('copy', function (event) {
+                        event.clipboardData.setData('text/plain', copycontent());
+                    });
+                });
+
+                client.on('error', function (event) {
+                    console.log('ZeroClipboard error of type "' + event.name + '": ' + event.message);
+                    ZeroClipboard.destroy();
+                });
+
+                function copycontent(e) {
+                    $("#copytextarea").val("");
+                    $("#sourceTabCode >div:visible").each(function() {
+                        $("#copytextarea").val($("#copytextarea").val() + $(this).text().replace("COPY TO CLIPBOARD", ""));
+                    });
+                    return $("#copytextarea").val();
+                }
+            }
+            catch (e) { }
+        }
+		
+function codeMirrorModes(url) {
+    var extn = url.substr(url.lastIndexOf(".") + 1, url.length).toLowerCase();
+    switch (extn) {
+        case "html":
+        case "xml": return "text/html"; break;        
+        case "css":     
+        case "less": return "text/css"; break;
+        case "js":
+        case "ts": return "javascript"; break;
+        case "ashx": 
+        case "cs": return "text/x-csharp"; break;           
+        default: return "text/html";
+
+    }
+}
+
+
+    </script>
+</head>
+<body>
+    <div id="sourceTabCode">
+        <ul></ul>
+    </div>
+</body>
+</html>

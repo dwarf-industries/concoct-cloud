@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+       <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+      <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="control" style="margin-left: -16px;">
+                    <div id="PivotClient" style="min-height: 275px; min-width: 525px;" />
+                    <script type="text/javascript">
+                        var deferUpdate, pivotClient;
+                        $(function () {
+                            $("#PivotClient").ejPivotClient({
+                                dataSource: {
+                                    data: "//bi.syncfusion.com/olap/msmdpump.dll", //data
+                                    catalog: "Adventure Works DW 2008 SE",
+                                    cube: "Adventure Works",
+                                    columns: [{ fieldName: "[Customer].[Customer Geography]" },
+                                      {
+                                          fieldName: "BikeAndComponents",
+                                          expression: "([Product].[Product Categories].[Category].[Bikes] + [Product].[Product Categories].[Category].[Components] )",
+                                          hierarchyUniqueName: "[Product].[Product Categories]"
+                                      }],
+                                    rows: [{ fieldName: "[Date].[Fiscal]" }],
+                                    values: [{ measures: [{ fieldName: "[Measures].[Order Quantity]" }, { fieldName: "Order on Discount", expression: "[Measures].[Order Quantity] + ([Measures].[Order Quantity] * 0.10)" }], axis: "columns" }]
+                                },
+                                title: "OLAP Browser", renderSuccess: "setChartProperties", enableSplitter: false, customObject: { Language: "en-US" },
+                                beforeExport: "Export", saveReport: "saveReportSettings", fetchReport: "saveReportSettings", loadReport: "saveReportSettings", toolbarIconSettings: { enableCalculatedMember: true }
+                            });
+                            $("#sampleProperties").ejPropertiesPanel();
+                            $("#rdbServer, #rdbClient").ejRadioButton({ change: "renderClient" });
+                            pivotClient = $("#PivotClient").data("ejPivotClient");
+                        });
+                        function setChartProperties(args) {
+                            this._pivotChart.model.load = "loadTheme";
+                            if (args._successAction == undefined || args._successAction == "Filter") {
+                                this._pivotChart.model.legend.rowCount = 2;
+                                this._pivotChart.model.primaryXAxis = { title: { text: "Fiscal Year" }, labelRotation: 270 };
+                                this._pivotChart.model.primaryYAxis = { title: { text: "Customer Count" } };
+                            }
+                        }
+                        function Export(args) {
+                            args.url = window.baseurl + "api/PivotClient/Olap/Export";
+                        }
+                        function saveReportSettings(args) {
+                            if (args.fetchReportSetting)
+                                args.fetchReportSetting.url = window.baseurl + "api/PivotClient/Olap";
+                            else if (args.loadReportSetting)
+                                args.loadReportSetting.url = window.baseurl + "api/PivotClient/Olap";
+                            else
+                                args.saveReportSetting.url = window.baseurl + "api/PivotClient/Olap";
+                            return args;
+                        }
+                        function onLoad(args) { args.model.customObject = { "Report": "CalculatedMember" }; }
+                        function renderClient(args) {
+                            $("#PivotClient").remove();
+                            var clientData = "";
+                            var targetPanel = ej.buildTag("div#PivotClient", "", { "min-height": "275px", "min-width": "525px" })[0].outerHTML;
+                            $(targetPanel).appendTo(".control");
+                            if (args.model.id == "rdbClient") {
+                                clientData = {
+                                   data: "//bi.syncfusion.com/olap/msmdpump.dll",
+                                    catalog: "Adventure Works DW 2008 SE",
+                                    cube: "Adventure Works",
+                                    columns: [{ fieldName: "[Customer].[Customer Geography]" },
+                                      {
+                                          fieldName: "BikeAndComponenets",
+                                          expression: "([Product].[Product Categories].[Category].[Bikes] + [Product].[Product Categories].[Category].[Components] )",
+                                          hierarchyUniqueName: "[Product].[Product Categories]"
+                                      }],
+                                    rows: [{ fieldName: "[Date].[Fiscal]" }],
+                                    values: [{ measures: [{ fieldName: "[Measures].[Order Quantity]" }, { fieldName: "Order on Discount", expression: "[Measures].[Order Quantity] + ([Measures].[Order Quantity] * 0.10)" }], axis: "columns" }]
+                                };
+                            }
+                            if (clientData == "")
+                                $("#PivotClient").ejPivotClient({ url: window.baseurl + 'api/PivotClient/Olap', serviceMethodSettings: { initialize: "Initialize", nodeDropped: "DropNode", memberExpand: "ExpandMember", cubeChanged: "CubeChange", measureGroupChanged: "MeasureGroup" }, toolbarIconSettings: { enableCalculatedMember: true }, title: "OLAP Browser", customObject: { "Report": "CalculatedMember" }, renderSuccess: "setChartProperties", beforeExport: "Export", saveReport: "reportSettings", fetchReport: "reportSettings", loadReport: "reportSettings" });
+                            else
+                                $("#PivotClient").ejPivotClient({ dataSource: clientData, toolbarIconSettings: { enableCalculatedMember: true }, title: "OLAP Browser", renderSuccess: "setChartProperties", beforeExport: "Export", saveReport: "reportSettings", fetchReport: "reportSettings", loadReport: "reportSettings" });
+
+                        }
+                    </script>
+                </div>
+            </div>
+            <div id="sampleProperties">
+
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3" style="width:20%">
+                            Mode :
+                        </div>
+                        <div class="col-md-3" style="width:30%">
+                            <input type="radio" name="dftView" id="rdbClient" checked="checked" /><label for="rdbClient" class="clslab">Client</label>
+                        </div>
+                        <div class="col-md-3" style="width:30%">
+                            <input type="radio" name="dftView" id="rdbServer" /><label for="rdbServer" class="clslab">Server</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        .samplecontent {
+            padding: 4px;
+        }
+
+        .row .cols-prop-area {
+            min-height: 117px;
+            width: 27%;
+        }
+
+        #Btn1 {
+            margin-left: 195px;
+        }
+
+        .row .cols-sample-area {
+            width: 100%;
+        }
+    </style>
+
+</body>
+</html>

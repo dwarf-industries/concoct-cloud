@@ -1,0 +1,131 @@
+
+@{
+    ViewData["Title"] = "Backlog";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var result = ViewData["ProjectId"] as int?;
+    var BoardId = ViewData["BoardId"] as int?;
+ }
+
+<link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
+<style>
+.image {
+    height: 55px;
+    width: 55px;
+    border-radius: 50px;
+    box-shadow: inset 0 0 1px #000000, inset 0 0 14px rgba(0, 0, 0, 0.2);
+    margin-left: 30%;
+    margin-right: 30%;
+}
+</style>
+
+
+<div class="row" style="margin:0px;">
+<div class="col-md-12">
+  <div class="main-card mb-3 card">
+        <div class="card-body">
+           <div class="row" style="margin-left:10px;">
+                <div class="dropdown d-inline-block">
+                    <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="mb-2 mr-2 dropdown-toggle btn btn-outline-info">New Work Item</button>
+                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu">
+                        <button type="button" tabindex="0" class="dropdown-item" onclick="CreateNewWorkItem(5)">Epic</button>
+                        <button type="button" tabindex="0" class="dropdown-item" onclick="CreateNewWorkItem(2)">Feature</button>
+                        <button type="button" tabindex="0" class="dropdown-item" onclick="CreateNewWorkItem(7)">User Story</button>
+                        <button type="button" tabindex="0" class="dropdown-item" onclick="CreateNewWorkItem(3)">Task</button>
+                        <button type="button" tabindex="0" class="dropdown-item" onclick="CreateNewWorkItem(1)">Bug</button>
+                        <button type="button" tabindex="0" class="dropdown-item" onclick="CreateNewWorkItem(6)">Issue</button>
+                        <button type="button" tabindex="0" class="dropdown-item" onclick="CreateNewWorkItem(7)">Test</button>
+                    </div>
+                </div>
+            </div>
+           <div class="control-section">
+                <div class="content-wrapper">
+                    <div id="TreeGrid" style="height:80vh;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+ <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
+<script id="template" type="text/x-template">
+    <div class="image">
+        <i class="${workItemIcon}" style="padding: 10px;font-size: xx-large;color: cadetblue;"></i>
+ 
+    </div>
+</script>
+ <script>
+     var ProjectId = @result;
+    function OpenWorkItem(id)
+    {
+        console.log(id);
+    }
+    $( document ).ready(function() 
+    {
+        var id = @result;
+        
+          var dto = {
+            "id": id,
+            
+        }
+        console.log(dto);
+        $.ajax({
+            type: 'POST',
+            url: '/Backlogs/GetWorkItems',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                InitiliazeGrid(response);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+        
+    });
+    function InitiliazeGrid(data )
+    {
+        console.log(data);
+        var grid = new ej.grids.Grid({
+        dataSource: data,
+        recordDoubleClick: recordDoubleClick,
+
+        columns: [
+                {
+                    headerText: 'Icon', textAlign: 'Center',
+                    template: '#template', width: 150
+                },
+                { field: 'WorkItemType.TypeName', headerText: 'Type Name', width: 125 },
+                { field: 'title', headerText: 'Title', width: 125 },
+                { field: 'description', headerText: 'Description', width: 180 },
+                { field: 'assignedAccountNavigation.Email', headerText: 'AssignedTo', width: 110 },
+            ]
+        });
+        grid.appendTo('#TreeGrid');
+ 
+    }
+    function CreateNewWorkItem(id){
+        ProjectId = @result;
+        boardId = @BoardId;
+        window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+id;
+    }
+    function WorkItemSelected(args){
+        console.log(args);
+    }
+    function load(args) {
+        this.parentDetails.parentKeyFieldValue = this.parentDetails.parentRowData['id'];
+    }
+
+    function recordDoubleClick(args)
+    {
+        console.log(args);
+ //       args.rowData.id
+        window.location.href = "/Dashboard/EditWorkItem?projectId=@result&&workItem="+args.rowData.id;
+    }
+ </script>
+
+

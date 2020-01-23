@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : ListBox - Grouping</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="listbox frame">
+                    <div class="ctrllabel">Select a country</div>
+                    <ul id="selectgroup" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+            var skillset = [
+            { skill: "Bahrain", category: "B" }, { skill: "Brazil", category: "B" }, { skill: "Argentina", category: "A" },
+            { skill: "Bangladesh", category: "B" }, { skill: "Burma", category: "B" }, { skill: "Afghanistan", category: "A" }, { skill: "Antigua and Barbuda", category: "A" },
+            { skill: "Barbados", category: "B" }, { skill: "Botswana", category: "B" }, { skill: "Albania", category: "A" }, { skill: "Andorra", category: "A" },
+            { skill: "Belarus", category: "B" }, { skill: "Bolivia", category: "B" }, { skill: "Algeria", category: "A" }, { skill: "Angola", category: "A" }
+            ];
+            // To maintaing list ordering in all browsers
+            ej.support.stableSort = false;
+            $("#selectgroup").ejListBox({
+                dataSource: skillset,
+                fields: { text: "skill", groupBy: "category" }, create: "LoadComplete"
+            });
+
+
+        });
+        function LoadComplete() {
+            if (document.body.className == "fixedlayout material") {
+                setTimeout(function () {
+                    var obj = $("#selectgroup").ejListBox("instance");
+                    obj._refreshScroller();
+                }, 500);
+            }
+        }
+    </script>
+    <style type="text/css" class="cssStyles">
+        .e-ddl-popup {
+            margin: 0 auto;
+        }
+
+        .ctrllabel {
+            font-weight: 600;
+            padding-bottom: 12px;
+        }
+    </style>
+</body>
+
+</html>

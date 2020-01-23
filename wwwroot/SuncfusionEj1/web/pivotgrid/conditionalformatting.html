@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" type="text/css" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+      <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/pivotgrid.datasource.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" style="width: 100%">
+                <div class="control">
+                    <div id="PivotGrid" style="height: 350px; width: 72%; overflow: auto; float: left;
+                        display: block">
+                    </div>
+                </div>
+                <div id="sampleProperties">
+                    <div>
+                        <div style="margin-top:10px">
+                            Conditional Formatting:
+                        </div>
+                        <div style="margin-top:15px">
+                            <button class="cusBtn" id="Btn1">
+                                Apply
+                            </button>
+                            <button class="cusBtn" id="Btn2">
+                                Reset
+                            </button>
+                        </div>
+                            </div>     
+						<div class="row" style="margin-top: 5px;">
+                        <table>
+                            <tr>
+                                <td class="chkrad">
+                                    Export To :
+                                </td>
+                                <td class="chkrad" colspan="2">
+                                    <select id="drpdwn">
+                                        <option id="excel" value="excel">Excel</option>
+                                        <option id="word" value="word">Word</option>
+                                        <option id="pdf" value="pdf">PDF</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                </div>
+                </div>
+                <script type="text/javascript">
+                    var ddlTarget; var gridTarget; var pivotGridObj;
+                    $(function () {
+					$("#sampleProperties").ejPropertiesPanel();
+                        var rbTarget1, rbTarget2;
+                        $("#PivotGrid").ejPivotGrid({
+                            dataSource: {
+                                data: pivot_dataset,
+                                rows: [
+                        {
+                            fieldName: "Country",
+                            fieldCaption: "Country"
+                        },
+                        {
+                            fieldName: "State",
+                            fieldCaption: "State"
+                        }
+                                ],
+                                columns: [
+                                    {
+                                        fieldName: "Product",
+                                        fieldCaption: "Product"
+                                    }
+                                ],
+                                values: [
+                                    {
+                                        fieldName: "Amount",
+                                        fieldCaption: "Amount"
+                                    },
+                                    {
+                                        fieldName: "Quantity",
+                                        fieldCaption: "Quantity"
+                                    }
+                                ]
+                            },
+							conditionalFormatSettings: [{
+                                    name: "Format2",
+                                    style: { "color": "#000000", "backgroundcolor": "#0000FF", "bordercolor": "#000000", "borderstyle": "Dashed", "borderwidth": "5", "fontsize": "12", "fontstyle": "Algerian" },
+                                    condition: ej.PivotGrid.ConditionalOptions.LessThan,
+                                    value: "200",
+                                    measures: "Amount,Quantity"
+                                },
+                                {
+                                    name: "Format1",
+                                    style: { "color": "#000000", "backgroundcolor": "#FFFF00", "bordercolor": "#000000", "borderstyle": "Dashed", "borderwidth": "5", "fontsize": "12", "fontstyle": "Algerian" },
+                                    condition: ej.PivotGrid.ConditionalOptions.LessThan,
+                                    value: "5",
+                                    measures: "Amount,Quantity"
+                                }],
+                            isResponsive: true,
+                            enableConditionalFormatting: true
+                        });
+                        $("#Btn1").ejButton({
+                            roundedCorner: true,
+                            size: "small",
+                            type: ej.ButtonType.Button,
+                            click: "ApplyChanges"
+                        });
+                        $("#Btn2").ejButton({
+                            roundedCorner: true,
+                            size: "small",
+                            type: ej.ButtonType.Button,
+                            click: "Reset"
+                        });
+                        $('#drpdwn').ejDropDownList({ selectedIndex: null, change: "exportPivotGrid" });
+                        pivotGridObj = $('#PivotGrid').data("ejPivotGrid");
+                    });
+                    function ApplyChanges() {
+                        if (pivotGridObj.model.enableConditionalFormatting) {
+                            pivotGridObj.openConditionalFormattingDialog();
+                        }
+                    }
+                    function Reset() {
+                        pivotGridObj._removeCellFormatting(true, false);
+                        pivotGridObj._list = ["Add New"];
+                    }
+					function exportPivotGrid(args) {
+                            var dropDownObj = $('#drpdwn').data("ejDropDownList");
+                            var exportOption = dropDownObj.model.value;
+                                if (exportOption == "excel")
+                                    pivotGridObj.exportPivotGrid(window.baseurl + "api/PivotGrid/Olap/ExcelExport", "fileName");
+                                else if (exportOption == "word")
+                                    pivotGridObj.exportPivotGrid(window.baseurl + "api/PivotGrid/Olap/WordExport", "fileName");
+                                else if (exportOption == "pdf")
+                                    pivotGridObj.exportPivotGrid(window.baseurl + "api/PivotGrid/Olap/PDFExport", "fileName");
+					}
+                </script>
+            </div>
+        </div>
+    </div>
+      <style>
+        .row .cols-prop-area
+        {
+            min-height: 140px;
+            width: 25%;
+            float: right;
+        }
+        .cols-prop-area .content{
+            width:auto
+        }
+		.radioBtnLabel {
+            margin-left: 5px;
+        }
+        @media (min-width: 1920px) { .chkrad { width: 85px !important; } .row .cols-prop-area { width: 16% !important; } }
+    </style>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1: Tooltip - Position</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+	<script>
+    window.sample = { name: "" };
+  </script>
+</head>
+<body>
+        <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="tooltiptreeview">
+                    <ul id="treeView">
+                        <li class="expanded">Fiction Book Lists
+							<ul>
+                                <li>To Kill a Mockingbird</li>
+                                <li>Pride and Prejudice</li>
+                                <li> Harry Potter</li>
+                                <li> The Hobbit</li>
+                            </ul>
+                        </li>
+						<li class="expanded"> Mystery Book Lists
+                            <ul>
+                                <li>And Then There Where None</li>
+                                <li>Angles & Demons</li>
+                                <li>In Cold Blood</li>
+                                <li>The Name of the Rose</li>
+                            </ul>
+						</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-6"> Associate </div>
+                        <div class="col-md-6">
+                            <select id="associate">
+                                <option value="target">Target</option>
+                                <option value="window">Window</option>
+                                <option value="mousefollow">Mouse Follow</option>
+								<option value="mouseenter">Mouse Enter</option>
+                                <option value="axis">Axis</option>
+                            </select>
+                        </div>
+                    </div>
+					
+                    <div class="row targetValue">
+                        <div class="col-md-6"> Target Position</div>
+                        <div class="col-md-6">
+                            <select id="targetHorizontal">
+                                <option value="right-center">Right Center</option>
+								<option value="right-top">Right Top</option>
+								<option value="right-bottom">Right Bottom</option>
+                                <option value="left-center">Left Center</option>
+								<option value="left-top">Left Top</option>
+								<option value="left-bottom">Left Bottom</option>
+                                <option value="center-center">Center Center</option>
+								<option value="center-top">Center Top</option>
+								<option value="center-bottom">Center Bottom</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row stemValue">
+                        <div class="col-md-6"> Tooltip Position</div>
+                        <div class="col-md-6">
+                            <select id="stemHorizontal">
+                                <option value="left-center">Left Center</option>
+								<option value="left-top">Left Top</option>
+								<option value="left-bottom">Left Bottom</option>
+                                <option value="right-center">Right Center</option>
+								<option value="right-top">Right Top</option>
+								<option value="right-bottom">Right Bottom</option>
+                                <option value="center-center">Center Center</option>
+								<option value="center-top">Center Top</option>
+								<option value="center-bottom">Center Bottom</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row" id="axisValue">
+                        <div class="col-md-6"> x-Axis </div>
+                        <div class="col-md-6">
+                            <input type="text" id="xAxis" />
+                        </div>
+                        <div class="col-md-6"> y-Axis </div>
+                        <div class="col-md-6">
+                            <input type="text" id="yAxis" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var target, associate, tHorizontal, tVertical, sHorizontal, sVertical;
+		var tipProperty = {
+				width : "230px",
+				height : "65px",
+				target: ".CanSelect",
+				position :{  stem: { horizontal: "left", vertical: "center" },
+							 target: { horizontal : "right", vertical : "center" },
+				},
+                beforeOpen: "onOpen"  
+		};
+        $("#sampleProperties").ejPropertiesPanel();
+        $(function () {
+            contentUrl = window.location.hash.indexOf(window.sample.name) ? "images/tooltip/book.png" : "../images/tooltip/book.png"; 
+            $("#treeView").ejTreeView({ create : "onCreate", height: "370px" });
+			tipProperty.containment = ".cols-sample-area";
+            target = $("#treeView").ejTooltip(tipProperty).data("ejTooltip");
+             $("#associate").ejDropDownList({
+                selectedIndex: 0,
+				width : "110px",
+                change: "associateChange"
+             });
+              $("#targetHorizontal").ejDropDownList({
+                selectedIndex: 0,
+				width : "110px",
+                change: "targetHorizontalChange"
+             }).data("ejDropDownList");
+            $("#stemHorizontal").ejDropDownList({
+                selectedIndex: 0,
+				width : "110px",
+                change: "stemHorizontalChange"
+            });
+             $("#xAxis").ejNumericTextbox({
+                 value: 400,
+                 width: "100%",
+                 maxValue: 800,
+                 minValue: 300,
+                 decimalPlaces: 0,
+                 change: "change",
+             });
+             $("#yAxis").ejNumericTextbox({
+                 value: 110,
+                 width: "100%",
+                 maxValue: 500,
+                 minValue: 150,
+                 decimalPlaces: 0,
+                 change: "change",
+             });
+             associate = $('#associate').ejDropDownList("getSelectedValue");
+           
+        });
+       
+        function onOpen(args) {
+            contentFormation(args);
+        }
+		function contentFormation(args){
+			var currentElement = $(args.event.currentTarget), content = $.trim($(currentElement).text());
+			
+			var emp = [
+                { book: "To Kill a Mockingbird", category: "Fiction" },
+                { book: "Pride and Prejudice", category: "Fiction" },
+                { book: "Harry Potter", category: "Fiction" },
+                { book: "The Hobbit", category: "Fiction" },
+                { book: "And Then There Where None", category: "Mystery" },
+                { book: "Angles & Demons", category: "Mystery" },
+                { book: "In Cold Blood", category: "Mystery" },
+                { book: "The Name of the Rose", category: "Mystery" },
+            ];
+            for (i = 0; i < 8; i++) {
+                if (content == emp[i].book)
+                    var template = '<div class="main"> <img class="logo" src='+contentUrl+' /> <div class="des"> <div class="artists"> Category:' + emp[i].category + '</div><div class="song">' + emp[i].book + '</div></div> </div>';
+                else if(content == "Fiction Book Lists")
+                    var template = '<div class="main"> <img class="logo" src='+contentUrl+' /> <div class="des"> <div class="artists"> Category&nbsp;:&nbsp; Fiction </div><div class="song"> Please choose your books</div></div> </div>';
+				else if(content == "Mystery Book Lists")
+					var template = '<div class="main"> <img class="logo" src='+contentUrl+' /> <div class="des"> <div class="artists"> Category&nbsp;:&nbsp; Mystery </div><div class="song"> Please choose your books</div></div> </div>';
+            }
+            target.setModel({ content: template });
+		}
+        function associateChange(args) {
+            associate = args.value;
+            if (associate == "window") {
+				target.destroy();
+				tipProperty.containment = "body";
+				target = $("#treeView").ejTooltip(tipProperty).data("ejTooltip");
+                $('#targetHorizontal').ejDropDownList({ value: "right-bottom" });
+            }
+			else{
+				tipProperty.containment = ".cols-sample-area";
+				target = $("#treeView").ejTooltip(tipProperty).data("ejTooltip");
+			}
+            change();
+        }
+        function targetHorizontalChange(args) {
+            change();
+        }
+        function targetVerticalChange(args) {
+            change();
+        }
+        function stemHorizontalChange(args) {
+            change();
+        }
+        function stemVerticalChange(args) {
+            change();
+        }
+        function change() {
+            tHorizontal = $('#targetHorizontal').ejDropDownList("getSelectedValue");
+			tVertical = tHorizontal.substr(tHorizontal.indexOf("-")+1);
+			tHorizontal = tHorizontal.substr(0, tHorizontal.indexOf("-"));
+            sHorizontal = $('#stemHorizontal').ejDropDownList("getSelectedValue");
+			sVertical = sHorizontal.substr(sHorizontal.indexOf("-")+1);
+			sHorizontal = sHorizontal.substr(0, sHorizontal.indexOf("-"));
+            xNum = $('#xAxis').data("ejNumericTextbox");
+            yNum = $('#yAxis').data("ejNumericTextbox");
+            var xAxis = parseInt($("#xAxis").ejNumericTextbox("getValue"));
+            var yAxis = parseInt($("#yAxis").ejNumericTextbox("getValue"));
+            if (associate == "axis") {
+                $("#axisValue").show();
+                $(".targetValue").hide();
+                $(".stemValue").hide();
+                xAxis = xAxis > 0 ? xAxis : 100;
+                yAxis = yAxis > 0 ? yAxis : 100;
+            }
+            else if (associate == "window") {
+                
+                $(".stemValue").hide();
+                $("#axisValue").hide();
+                $(".targetValue").show();
+            }
+			else if(associate =="mouseenter" || associate =="mousefollow"){
+				$(".targetValue").hide();
+				$("#axisValue").hide();
+				$(".stemValue").show();
+			}
+            else {
+                $("#axisValue").hide();
+                $(".targetValue").show();
+                $(".stemValue").show();
+            }
+            tHorizontal = associate == "axis" ? xAxis : tHorizontal;
+            tVertical = associate == "axis" ? yAxis : tVertical;
+            var position = {
+                stem: {
+                    horizontal: sHorizontal,
+                    vertical: sVertical
+                },
+                target: {
+                    horizontal: tHorizontal,
+                    vertical: tVertical
+                },
+            };
+           
+         
+            target.option("position", position);
+            target.option("associate", associate);
+        }
+        
+    </script>
+    <style>
+		
+       
+        .e-tooltip-wrap {
+            background-color: #ffcccc;
+        }
+		.e-tooltip-wrap .e-arrowTipInner{
+			border-color: #ffcccc transparent;
+		}
+        
+        #axisValue{
+            display : none;
+        }
+        .logo{
+            float: left;
+            width: 45px;
+			height: 50px;
+            border: 2px dotted green;
+            border-radius: 12px;
+            margin-right: 10px;
+            margin-bottom: 5px;
+        }
+		.des{
+			color : grey;
+		}
+		.artists{
+			margin-bottom: 5px;
+		}
+		#tooltiptreeview{
+		width: 250px;
+		}
+		.material #tooltiptreeview{
+		width: 265px;
+		}
+		.material .des{
+			margin-top: 4px;
+		}
+    </style>
+
+
+</body>
+</html>

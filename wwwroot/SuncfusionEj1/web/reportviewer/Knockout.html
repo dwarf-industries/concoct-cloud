@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <link href="../content/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+        <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/knockout.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/ej.unobtrusive.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/ej.widget.ko.min.js"></script>
+
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="control">
+                    <div id="container" data-bind="ejReportViewer: ({ reportServiceUrl: samplevalue, reportPath: path, processingMode: reportmode, dataSources: sampleds })" style="width:100%; height:100%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var rdlcds = [{
+            value: [
+                       {
+                           ProdCat: "Accessories", SubCat: "Helmets", OrderYear: "2002", OrderQtr: "Q1", Sales: 4945.6925
+                       },
+                       {
+                           ProdCat: "Components", SubCat: "Road Frames", OrderYear: "2002", OrderQtr: "Q3", Sales: 957715.1942
+                       },
+                       {
+                           ProdCat: "Components", SubCat: "Forks", OrderYear: "2002", OrderQtr: "Q4", Sales: 23543.1060
+                       },
+                       {
+                           ProdCat: "Bikes", SubCat: "Road Bikes", OrderYear: "2002", OrderQtr: "Q1", Sales: 3171787.6112
+                       },
+                       {
+                           ProdCat: "Accessories", SubCat: "Helmets", OrderYear: "2002", OrderQtr: "Q3", Sales: 33853.1033
+                       },
+                       {
+                           ProdCat: "Components", SubCat: "Wheels", OrderYear: "2002", OrderQtr: "Q4", Sales: 163921.8870
+                       },
+                        {
+                            ProdCat: "Bikes", SubCat: "Road Bikes", OrderYear: "2003", OrderQtr: "Q2", Sales: 4119658.6506
+                        },
+                        {
+                            ProdCat: "Clothing", SubCat: "Socks", OrderYear: "2003", OrderQtr: "Q3", Sales: 6968.6884
+                        },
+                        {
+                            ProdCat: "Bikes", SubCat: "Road Bikes", OrderYear: "2003", OrderQtr: "Q4", Sales: 3734891.6389
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Mountain Frames", OrderYear: "2002", OrderQtr: "Q3", Sales: 608352.8754
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Handlebars", OrderYear: "2002", OrderQtr: "Q4", Sales: 18309.4452
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Road Frames", OrderYear: "2003", OrderQtr: "Q4", Sales: 286591.8208
+                        },
+                        {
+                            ProdCat: "Accessories", SubCat: "Tires and Tubes", OrderYear: "2003", OrderQtr: "Q3", Sales: 41940.3364
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Mountain Frames", OrderYear: "2003", OrderQtr: "Q2", Sales: 440260.9831
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Road Frames", OrderYear: "2003", OrderQtr: "Q2", Sales: 457688.8401
+                        },
+                        {
+                            ProdCat: "Clothing", SubCat: "Vests", OrderYear: "2003", OrderQtr: "Q4", Sales: 66882.6450
+                        },
+                        {
+                            ProdCat: "Accessories", SubCat: "Pumps", OrderYear: "2002", OrderQtr: "Q4", Sales: 3226.3860
+                        },
+                        {
+                            ProdCat: "Clothing", SubCat: "Tights", OrderYear: "2003", OrderQtr: "Q2", Sales: 51600.6190
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Chains", OrderYear: "2003", OrderQtr: "Q3", Sales: 3476.0176
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Handlebars", OrderYear: "2003", OrderQtr: "Q2", Sales: 17194.2146
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Mountain Frames", OrderYear: "2003", OrderQtr: "Q4", Sales: 565229.8810
+                        },
+                        {
+                            ProdCat: "Clothing", SubCat: "Tights", OrderYear: "2003", OrderQtr: "Q4", Sales: 243.7175
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Road Frames", OrderYear: "2002", OrderQtr: "Q2", Sales: 155311.4063
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Mountain Frames", OrderYear: "2002", OrderQtr: "Q2", Sales: 220935.1648
+                        },
+                        {
+                            ProdCat: "Accessories", SubCat: "Locks", OrderYear: "2003", OrderQtr: "Q4", Sales: 15.0000
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Mountain Frames", OrderYear: "2003", OrderQtr: "Q3", Sales: 827287.5234
+                        },
+                        {
+                            ProdCat: "Accessories", SubCat: "Bike Racks", OrderYear: "2003", OrderQtr: "Q3", Sales: 75920.4000
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Bottom Brackets", OrderYear: "2003", OrderQtr: "Q3", Sales: 17453.6400
+                        },
+                        {
+                            ProdCat: "Bikes", SubCat: "Touring Bikes", OrderYear: "2003", OrderQtr: "Q3", Sales: 3298006.2858
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Brakes", OrderYear: "2003", OrderQtr: "Q4", Sales: 18571.4700
+                        },
+                        {
+                            ProdCat: "Clothing", SubCat: "Tights", OrderYear: "2002", OrderQtr: "Q4", Sales: 56782.4280
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Pedals", OrderYear: "2003", OrderQtr: "Q3", Sales: 54185.2014
+                        },
+                        {
+                            ProdCat: "Clothing", SubCat: "Jerseys", OrderYear: "2003", OrderQtr: "Q3", Sales: 173041.0492
+                        },
+                        {
+                            ProdCat: "Clothing", SubCat: "Jerseys", OrderYear: "2002", OrderQtr: "Q2", Sales: 16931.2362
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Headsets", OrderYear: "2002", OrderQtr: "Q3", Sales: 19701.9001
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Road Frames", OrderYear: "2002", OrderQtr: "Q4", Sales: 458089.4246
+                        },
+                        {
+                            ProdCat: "Clothing", SubCat: "Shorts", OrderYear: "2003", OrderQtr: "Q1", Sales: 11230.1280
+                        },
+                        {
+                            ProdCat: "Bikes", SubCat: "Road Bikes", OrderYear: "2002", OrderQtr: "Q4", Sales: 4189621.8590
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Brakes", OrderYear: "2003", OrderQtr: "Q3", Sales: 26659.0800
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Wheels", OrderYear: "2003", OrderQtr: "Q4", Sales: 83.2981
+                        },
+                        {
+                            ProdCat: "Clothing", SubCat: "Vests", OrderYear: "2003", OrderQtr: "Q3", Sales: 81085.6900
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Cranksets", OrderYear: "2003", OrderQtr: "Q3", Sales: 80244.1372
+                        },
+                        {
+                            ProdCat: "Clothing", SubCat: "Socks", OrderYear: "2003", OrderQtr: "Q4", Sales: 6183.1422
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Wheels", OrderYear: "2003", OrderQtr: "Q2", Sales: 163929.9435
+                        },
+                        {
+                            ProdCat: "Clothing", SubCat: "Tights", OrderYear: "2002", OrderQtr: "Q3", Sales: 67088.3037
+                        },
+                        {
+                            ProdCat: "Clothing", SubCat: "Tights", OrderYear: "2003", OrderQtr: "Q3", Sales: 779.8960
+                        },
+                        {
+                            ProdCat: "Clothing", SubCat: "Socks", OrderYear: "2002", OrderQtr: "Q1", Sales: 1273.8550
+                        },
+                        {
+                            ProdCat: "Bikes", SubCat: "Road Bikes", OrderYear: "2002", OrderQtr: "Q3", Sales: 4930692.7825
+                        },
+                        {
+                            ProdCat: "Clothing", SubCat: "Shorts", OrderYear: "2003", OrderQtr: "Q4", Sales: 84192.3708
+                        },
+                        {
+                            ProdCat: "Clothing", SubCat: "Jerseys", OrderYear: "2002", OrderQtr: "Q3", Sales: 48901.7598
+                        },
+                        {
+                            ProdCat: "Clothing", SubCat: "Shorts", OrderYear: "2002", OrderQtr: "Q3", Sales: 26207.2314
+                        },
+                        {
+                            ProdCat: "Bikes", SubCat: "Road Bikes", OrderYear: "2002", OrderQtr: "Q2", Sales: 3478963.5378
+                        },
+                        {
+                            ProdCat: "Clothing", SubCat: "Shorts", OrderYear: "2003", OrderQtr: "Q2", Sales: 21423.6288
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Derailleurs", OrderYear: "2003", OrderQtr: "Q3", Sales: 25385.2550
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Handlebars", OrderYear: "2003", OrderQtr: "Q4", Sales: 21675.6840
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Bottom Brackets", OrderYear: "2003", OrderQtr: "Q4", Sales: 13339.1820
+                        },
+                        {
+                            ProdCat: "Clothing", SubCat: "Jerseys", OrderYear: "2003", OrderQtr: "Q2", Sales: 31334.6088
+                        },
+                        {
+                            ProdCat: "Accessories", SubCat: "Helmets", OrderYear: "2002", OrderQtr: "Q2", Sales: 11638.8628
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Headsets", OrderYear: "2003", OrderQtr: "Q2", Sales: 14102.2548
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Handlebars", OrderYear: "2002", OrderQtr: "Q3", Sales: 35341.0863
+                        },
+                        {
+                            ProdCat: "Bikes", SubCat: "Touring Bikes", OrderYear: "2003", OrderQtr: "Q4", Sales: 3766585.3623
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Chains", OrderYear: "2003", OrderQtr: "Q4", Sales: 2217.8992
+                        },
+                        {
+                            ProdCat: "Accessories", SubCat: "Locks", OrderYear: "2003", OrderQtr: "Q2", Sales: 3939.0000
+                        },
+                        {
+                            ProdCat: "Bikes", SubCat: "Road Bikes", OrderYear: "2003", OrderQtr: "Q3", Sales: 3844123.5588
+                        },
+                        {
+                            ProdCat: "Components", SubCat: "Handlebars", OrderYear: "2003", OrderQtr: "Q3", Sales: 43624.0992
+                        }],
+            name: "Sales"
+        }];
+
+        $(function () {
+            window.rptView = {
+                samplevalue: ko.observable(window.baseurl + 'api/ReportViewer'),
+                path: ko.observable('KnockOut.rdlc'),
+                reportmode: ko.observable(ej.ReportViewer.ProcessingMode.Local),
+                sampleds: ko.observable(rdlcds)
+            };
+            ko.applyBindings(rptView);
+        });
+    </script>	
+	
+    <style type="text/css">
+        .control {
+            min-height: 680px !important;
+        }
+    </style>
+</body>
+</html>

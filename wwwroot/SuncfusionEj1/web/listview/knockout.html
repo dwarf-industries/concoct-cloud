@@ -1,0 +1,51 @@
+﻿<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : ListView - Default Functionalities</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js" type="text/javascript"></script>
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/knockout.min.js" type="text/javascript"></script>
+    <script src="../scripts/ej.widget.ko.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid listview-sample">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="listview" class="listviewsample">
+                    <div id="knockoutlistview" data-bind="ejListView: {allowScrolling: false, persistSelection: true, selectedItemIndex: selectedItemIndexval , showHeader: false }">
+                        <ul>
+                            <li data-ej-text="Artwork"></li>
+                            <li data-ej-text="Abstract"></li>
+                            <li data-ej-text="2 Acrylic Mediums"></li>
+                            <li data-ej-text="Creative Acrylic"></li>
+                            <li data-ej-text="Artwork"></li>
+                            <li data-ej-text="Abstract"></li>
+                            <li data-ej-text="2 Acrylic Mediums"></li>
+                            <li data-ej-text="Creative Acrylic"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var viewModel = {
+            selectedItemIndexval: ko.observable(1)
+        };
+        ko.applyBindings(viewModel);
+    </script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+﻿<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : ListView - TemplateBinding</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js" type="text/javascript"></script>
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid listview-sample">
+        <div class="row">
+            <div class="templatesample">
+                <div class="cols-sample-area">
+                    <div class="listboxsample">
+                        <div id="templatelist" style="margin: 0 auto;" data-ej-allowscrolling="false" data-ej-datasource="window.dbitem"
+                             data-ej-databinding="true" data-ej-showheader="false" data-ej-rendertemplate="true">
+                            <div class="cont-bg">
+                                <div class="{{>Class}}">
+                                </div>
+                                <div class="listrightdiv">
+                                    <span class="templatetext">{{>Name}}</span> <span class="designationstyle">{{>Designation}}</span>
+                                    <div class="aboutstyle">
+                                        {{>About}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        window.dbitem =
+        [{ "Name": "Brooke", "Class": "brooke", "Designation": "HR Assistant", "About": "Brooke provides administrative support to the HR office." },
+        { "Name": "Claire", "Class": "claire", "Designation": "HR Manager", "About": "Claire is responsible for strategic HR planning and budget." },
+        { "Name": "Erik", "Class": "erik", "Designation": "Training Specialist", "About": "Erik notifies attendees and manages follow up." },
+        { "Name": "Grace", "Class": "grace", "Designation": "Development Manager", "About": "Grace maintains training plans to achive workforce skill." },
+        { "Name": "Jacob", "Class": "jacob", "Designation": "Recruitment Manager", "About": "Jacob manages recruitment and prepares key staffing metrics." }];
+        $(function () {
+            $("#templatelist").ejListView({ dataSource: window.dbitem, renderTemplate: true, width: 450 });
+        });
+    </script>
+    <style>
+        #templatelist .aboutstyle {
+            display: block;
+            font-size: 12px;
+            line-height: 20px;
+            overflow: hidden;
+            padding-right: 23px;
+            position: relative;
+            text-align: justify;
+            word-wrap: break-word;
+        }
+
+        #templatelist .designationstyle {
+            float: right;
+            font-size: 12px;
+            padding-right: 13px;
+            padding-top: 4px;
+            position: relative;
+            right: 10px;
+        }
+
+        #templatelist .templatetext {
+            font-size: 15px;
+            font-weight: bolder;
+            position: relative;
+        }
+
+        .listrightdiv {
+            left: 10px;
+            position: relative;
+        }
+
+        .jacob, .grace, .erik, .claire, .brooke {
+            background-repeat: no-repeat;
+            border: 0px solid #e5e5e5;
+            float: left;
+            height: 60px;
+            padding-left: 8px;
+            width: 51px;
+            background-size: 100% 100%;
+        }
+
+        .cont-bg {
+            font-size: 17px;
+            height: 71px;
+            padding-left: 5px;
+            padding-top: 10px;
+            width: 100%;
+        }
+
+        .brooke {
+            background-image: url("../content/images/Employees/6.png");
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader( src=../content/images/Employees/6.png, sizingMethod='scale');
+        }
+
+        .claire {
+            background-image: url("../content/images/Employees/9.png");
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader( src=../content/images/Employees/9.png, sizingMethod='scale');
+        }
+
+        .erik {
+            background-image: url("../content/images/Employees/7.png");
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader( src=../content/images/Employees/7.png, sizingMethod='scale');
+        }
+
+        .grace {
+            background-image: url("../content/images/Employees/8.png");
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader( src=../content/images/Employees/8.png, sizingMethod='scale');
+        }
+
+        .jacob {
+            background-image: url("../content/images/Employees/5.png");
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader( src=../content/images/Employees/5.png, sizingMethod='scale');
+        }
+        .e-lv .e-list {
+            height:auto;
+        }
+
+        .fixedlayout.office-365 .jacob, .fixedlayout.office-365 .grace, .fixedlayout.office-365 .erik, .fixedlayout.office-365 .claire, .fixedlayout.office-365 .brooke {
+            height: 50px;
+            width: 50px;
+            margin: 10px;
+        }
+
+        .fixedlayout.office-365 .cont-bg{
+            height: 98px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .fixedlayout.office-365 .aboutstyle{
+            color: #333333;
+            font-size: 13px !important;
+            padding: 12px 0 0 !important;
+        }
+
+        .fixedlayout.office-365 .templatetext {
+            height: 25px;
+            display: block;
+            font-size: 21px !important;
+            color: #333333;
+            font-weight: lighter !important;
+        }
+
+        .fixedlayout.office-365 .templatetext, .fixedlayout.office-365 .aboutstyle {
+            padding-top: 12px;
+        }
+
+        .fixedlayout.office-365 .designationstyle {
+            color: #666666;
+            padding: 6px 0px 0px !important;
+            float: none !important;
+            font-size: 13px !important;
+            display: block;
+            right: 0 !important;
+        }
+
+        .fixedlayout.office-365 #templatelist {
+            min-width: 440px;
+        }
+
+        .fixedlayout.office-365 .listrightdiv{
+            left: 0;
+        }
+
+        .fixedlayout.office-365 .e-lv .e-list, .fixedlayout.office-365 .cont-bg{
+            padding: 0;
+        }
+    </style>
+</body>
+</html>

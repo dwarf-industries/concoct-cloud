@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Essential JS 1 : BPMN Editor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+     <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+	<script src="../scripts/jsrender.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="control_section">
+                    <div class="symPalette_section">
+                        <div id="symbolpalette">
+                        </div>
+                    </div>
+                    <div class="middle_section"></div>
+                    <div class="diagram_section">
+                        <div id="diagram"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row" id="basic_shape_prop" style="display:none">
+                        <div class="col-md-3 aligntop">
+                            Shapes
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="basic_shape" />
+                        </div>
+                    </div>
+                    <div class="row" id="BPMNEvents_prop" style="display:none">
+                        <div class="col-md-3 aligntop">
+                            BPMNEvents
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="BPMNEvents" />
+                        </div>
+                    </div>
+                    <div class="row" id="BPMNTriggers_prop" style="display:none">
+                        <div class="col-md-3 aligntop">
+                            BPMNTriggers
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="BPMNTriggers" />
+                        </div>
+                    </div>
+                    <div class="row" id="BPMNGateways_prop" style="display:none">
+                        <div class="col-md-3 aligntop">
+                            BPMNGateway
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="BPMNGateways" />
+                        </div>
+                    </div>
+                    <div class="row" id="BPMNDataObjects_prop" style="display:none">
+                        <div class="col-md-3 aligntop">
+                            DataObjects
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="BPMNDataObjects" />
+                        </div>
+                    </div>
+                    <div class="row" id="CompensationShape_prop" style="display:none">
+                        <div class="col-md-3 aligntop">
+                            Compensation
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="CompensationShape" />
+                        </div>
+                    </div>
+                    <div class="row" id="TaskCall_prop" style="display:none">
+                        <div class="col-md-3 aligntop">
+                            Call
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="TaskCall" />
+                        </div>
+                    </div>
+                    <div class="row" id="AddHoc_prop" style="display:none">
+                        <div class="col-md-3 aligntop">
+                            AddHoc
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="AddHoc" />
+                        </div>
+                    </div>
+                    <div class="row" id="BPMNCollection_prop" style="display:none">
+                        <div class="col-md-3 aligntop">
+                            BPMNCollection
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="BPMNCollection" />
+                        </div>
+                    </div>
+                    <div class="row" id="BPMNActivity_prop" style="display:none">
+                        <div class="col-md-3 aligntop">
+                            BPMNActivity
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="BPMNActivity" />
+                        </div>
+                    </div>
+                    <div class="row" id="BPMNLoops_prop" style="display:none">
+                        <div class="col-md-3 aligntop">
+                            BPMNLoops
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="BPMNLoops" />
+                        </div>
+                    </div>
+                    <div class="row" id="BPMNTasks_prop" style="display:none">
+                        <div class="col-md-3 aligntop">
+                            BPMNTasks
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="BPMNTasks" />
+                        </div>
+                    </div>
+                    <div class="row" id="BPMNSubProcess_prop" style="display:none">
+                        <div class="col-md-3 aligntop">
+                            SubProcess
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="BPMNSubProcess" />
+                        </div>
+                    </div>
+                    <div class="row" id="BPMNBoundary_prop" style="display:none">
+                        <div class="col-md-3 aligntop">
+                            Boundary
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="BPMNBoundary" />
+                        </div>
+                    </div>
+
+                    <div class="row" id="BPMNFlows_prop" style="display:none">
+                        <div class="col-md-3 aligntop">
+                            BPMNFlows
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="BPMNFlows" />
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        updateNode = false;
+        var diagram;
+        var NodeConstraints = ej.datavisualization.Diagram.NodeConstraints;
+        var Diagram = ej.datavisualization.Diagram;
+        var BPMNShapes = Diagram.BPMNShapes;
+        var BPMNEvents = Diagram.BPMNEvents;
+        var BPMNTriggers = Diagram.BPMNTriggers;
+        var BPMNGateways = Diagram.BPMNGateways;
+        var nodes = [
+            { name: "node1", width: 60, height: 60, offsetX: 250, offsetY: 40, labels: [{ "text": "Select Support Ticket", offset: { x: 0.50, y: 0.50 } }], type: "bpmn", shape: BPMNShapes.Start },
+            { name: "node2", width: 110, height: 70, offsetX: 250, offsetY: 140, labels: [{ "text": "Handle Support Ticket", offset: { x: 0.50, y: 0.50 } }], type: "bpmn", shape: BPMNShapes.Activity, activity: ej.datavisualization.Diagram.BPMNActivity.Task },
+            {
+                name: "node3", width: 90, height: 70, offsetX: 250, offsetY: 245, type: "bpmn", shape: BPMNShapes.Gateway,
+                gateway: BPMNGateways.Exclusive
+            },
+            {
+                name: "node4", width: 110, height: 70, offsetX: 100, offsetY: 350, labels: [{ "text": "Respond to customer", offset: { x: 0.50, y: 0.50 } }], type: "bpmn", shape: BPMNShapes.Activity, activity: ej.datavisualization.Diagram.BPMNActivity.Task, task: { type: ej.datavisualization.Diagram.BPMNTasks.Service }
+            },
+            {
+                name: "node5", width: 110, height: 70, offsetX: 250, offsetY: 350, labels: [{ "text": "Close ticket", offset: { x: 0.50, y: 0.50 } }], type: "bpmn", shape: BPMNShapes.Activity, activity: ej.datavisualization.Diagram.BPMNActivity.Task, task: { type: ej.datavisualization.Diagram.BPMNTasks.Service }
+            },
+            {
+                name: "node6", width: 110, height: 70, offsetX: 390, offsetY: 350, labels: [{ "text": "Escalate ticket", offset: { x: 0.50, y: 0.50 } }], type: "bpmn", shape: BPMNShapes.Activity, activity: ej.datavisualization.Diagram.BPMNActivity.Task, task: { type: ej.datavisualization.Diagram.BPMNTasks.Service }
+            },
+            { name: "node7", width: 60, height: 60, offsetX: 100, offsetY: 460, type: "bpmn", shape: BPMNShapes.Start, event: BPMNEvents.End },
+            { name: "node8", width: 60, height: 60, offsetX: 250, offsetY: 460, type: "bpmn", shape: BPMNShapes.Start, event: BPMNEvents.End },
+            { name: "node9", width: 60, height: 60, offsetX: 390, offsetY: 460, type: "bpmn", shape: BPMNShapes.Start, event: BPMNEvents.End },
+        ];
+        var connectors = [
+            { name: "connector1", sourceNode: "node1", targetNode: "node2" },
+            { name: "connector2", sourceNode: "node2", targetNode: "node3" },
+            { name: "connector3", sourceNode: "node3", targetNode: "node4", labels: [{ "text": "Respond", fillColor: "white", wrapping: ej.datavisualization.Diagram.TextWrapping.Wrap }] },
+            { name: "connector4", sourceNode: "node3", targetNode: "node5", labels: [{ "text": "Close", offset: { x: 0.5, y: 0.9 }, fillColor: "white", wrapping: ej.datavisualization.Diagram.TextWrapping.Wrap }] },
+            {
+                name: "connector5", sourceNode: "node3", targetNode: "node6",
+                labels: [{ "text": "Escalate", fillColor: "white" }]
+            },
+            { name: "connector6", sourceNode: "node4", targetNode: "node7" },
+            { name: "connector7", sourceNode: "node5", targetNode: "node8" },
+            { name: "connector8", sourceNode: "node6", targetNode: "node9" },
+        ];
+
+        $(function () {
+
+            var list = ["Event", "Gateway", "Message", "DataSource", "DataObject", "Group"];
+            var items = [];
+            for (var i = 0; i < list.length; i++) {
+                items.push({
+                    name: list[i], height: 100, width: 100,
+                    type: ej.datavisualization.Diagram.Shapes.BPMN, shape: ej.datavisualization.Diagram.BPMNShapes[list[i]]
+                });
+            }
+            items.push({
+                name: "Task", height: 100, width: 100,
+                type: ej.datavisualization.Diagram.Shapes.BPMN,
+                shape: ej.datavisualization.Diagram.BPMNShapes.Activity,
+                activity: ej.datavisualization.Diagram.BPMNActivity.Task
+            });
+            items.push({
+                name: "SubprocessEventBased", height: 100, width: 100,
+                type: ej.datavisualization.Diagram.Shapes.BPMN,
+                shape: ej.datavisualization.Diagram.BPMNShapes.Activity,
+                activity: ej.datavisualization.Diagram.BPMNActivity.SubProcess,
+                subProcess: { type: "event", event: "start" }
+            });
+            items.push({
+                name: "SubprocessTransaction", height: 100, width: 100,
+                type: ej.datavisualization.Diagram.Shapes.BPMN,
+                shape: ej.datavisualization.Diagram.BPMNShapes.Activity,
+                activity: ej.datavisualization.Diagram.BPMNActivity.SubProcess,
+                subProcess: { type: "transaction", collapsed: true }
+            });
+
+            var list = ["None", "Message", "Timer"];
+
+            for (var i = 0; i < list.length; i++) {
+                items.push({
+                    name: list[i], width: 100, height: 100, offsetX: 100, offsetY: 100,
+                    type: ej.datavisualization.Diagram.Shapes.BPMN, shape: ej.datavisualization.Diagram.BPMNShapes.Event,
+                    event: ej.datavisualization.Diagram.BPMNEvents.Start,
+                    trigger: ej.datavisualization.Diagram.BPMNTriggers[list[i]]
+                });
+            }
+
+
+            var list = ["Exclusive", "Inclusive"];
+            for (var i = 0; i < list.length; i++) {
+                items.push({
+                    name: list[i] + "GateWays" + [i], width: 100, height: 100, offsetX: 100, offsetY: 100,
+                    borderWidth: 2, borderColor: "black",
+                    type: ej.datavisualization.Diagram.Shapes.BPMN, shape: ej.datavisualization.Diagram.BPMNShapes.Gateway,
+                    gateway: ej.datavisualization.Diagram.BPMNGateways[list[i]],
+                });
+            }
+
+            var list = ["Service", "Receive"];
+            for (var i = 0; i < list.length; i++) {
+                items.push({
+                    name: list[i] + "Tasks" + i, width: 100, height: 100, offsetX: 100, offsetY: 100,
+                    type: ej.datavisualization.Diagram.Shapes.BPMN, shape: ej.datavisualization.Diagram.BPMNShapes.Activity,
+                    activity: ej.datavisualization.Diagram.BPMNActivity.Task,
+                    task: {
+                        type: ej.datavisualization.Diagram.BPMNTasks[list[i]]
+                    }
+                });
+            }
+
+            for (var i = 0; i < BPMNLoops.length; i++) {
+                items.push({
+                    name: BPMNLoops[i] + "SubProcess", width: 100, height: 100, offsetX: 100, offsetY: 100,
+                    type: ej.datavisualization.Diagram.Shapes.BPMN,
+                    shape: ej.datavisualization.Diagram.BPMNShapes.Activity,
+                    activity: ej.datavisualization.Diagram.BPMNActivity.SubProcess,
+                    subProcess: {
+                        loop: ej.datavisualization.Diagram.BPMNLoops.Standard
+                    }
+                });
+            }
+            items.push({
+                name: "compensation_compensation1", width: 100, height: 100, offsetX: 100, offsetY: 100,
+                type: ej.datavisualization.Diagram.Shapes.BPMN,
+                shape: ej.datavisualization.Diagram.BPMNShapes.Activity,
+                activity: ej.datavisualization.Diagram.BPMNActivity.Task,
+                task: {
+                    compensation: true
+                }
+            });
+
+            items.push({
+                name: "callList" + i, width: 100, height: 100, offsetX: 100, offsetY: 100,
+                type: ej.datavisualization.Diagram.Shapes.BPMN,
+                shape: ej.datavisualization.Diagram.BPMNShapes.Activity,
+                activity: ej.datavisualization.Diagram.BPMNActivity.SubProcess,
+                subProcess: {
+                    boundary: ej.datavisualization.Diagram.BPMNBoundary.Default
+                }
+            });
+
+            $("#symbolpalette").ejSymbolPalette({
+                diagramId: "diagram",
+                palettes: [{ name: "BPMN Shapes", expanded: true, items: items }],
+                height: "600px", width: "100%",
+                paletteItemWidth: 50, paletteItemHeight: 50,
+                previewWidth: 100, previewHeight: 100,
+                showPaletteItemText: false
+            });
+
+            $("#diagram").ejDiagram({
+                width: "100%",
+                height: "600px",
+                nodes: nodes,
+                connectors: connectors,
+                pageSettings: { scrollLimit: "diagram" },
+                defaultSettings: {
+                    connector: {
+                        segments: [{ "type": "orthogonal" }]
+                    }
+                },
+                selectionChange: "diagramSelectionChange",
+            });
+
+            data = [{ text: "Event" }, { text: "Gateway" }, { text: "Message" }, { text: "DataObject" }, { text: "DataSource" }, { text: "Activity" }, { text: "Group" }];
+            $('#basic_shape').ejDropDownList({
+                dataSource: data, text: "Event",
+                width: "100%", change: "dropDownChanged",
+                visible: false,
+                cssClass: "basic_shape"
+            });
+
+            var data = [{ text: "Start" }, { text: "Intermediate" }, { text: "End" }, { text: "NonInterruptingStart" }, { text: "NonInterruptingIntermediate" }, { text: "ThrowingIntermediate" }];
+            $('#BPMNEvents').ejDropDownList({
+                dataSource: data, text: "Start",
+                width: "100%", change: "dropDownChanged",
+                cssClass: "BPMNEvents"
+            });
+
+            var data = [{ text: "None" }, { text: "Message" }, { text: "Timer" }, { text: "Escalation" }, { text: "Link" }, { text: "Error" }, { text: "Compensation" }, { text: "Signal" }, { text: "Multiple" }, { text: "Parallel" }, { text: "Cancel" }, { text: "Conditional" }, { text: "Terminate" }];
+            $('#BPMNTriggers').ejDropDownList({
+                dataSource: data,
+                text: "None",
+                width: "100%", change: "dropDownChanged",
+                cssClass: "BPMNTriggers"
+            });
+
+            data = [{ text: "None" }, { text: "Exclusive" }, { text: "Inclusive" }, { text: "Parallel" }, { text: "Complex" }, { text: "EventBased" }, { text: "ExclusiveEventBased" }, { text: "ParallelEventBased" }];
+            $('#BPMNGateways').ejDropDownList({
+                dataSource: data,
+                text: "None",
+                width: "100%", change: "dropDownChanged", cssClass: "BPMNGateways"
+            });
+
+            data = [{ text: "None" }, { text: "Input" }, { text: "Output" }];
+            $('#BPMNDataObjects').ejDropDownList({
+                dataSource: data,
+                text: "None",
+                width: "100%", change: "dropDownChanged", cssClass: "BPMNDataObjects"
+            });
+
+            data = [{ text: "None" }, { text: "Task" }, { text: "SubProcess" }];
+            $('#BPMNActivity').ejDropDownList({
+                dataSource: data,
+                text: "None",
+                width: "100%", change: "dropDownChanged", cssClass: "BPMNActivity"
+            });
+
+            data = [{ text: "None" }, { text: "Standard" }, { text: "ParallelMultiInstance" }, { text: "SequenceMultiInstance" }];
+            $('#BPMNLoops').ejDropDownList({
+                dataSource: data,
+                text: "None",
+                width: "100%", change: "dropDownChanged", cssClass: "BPMNLoops"
+            });
+
+            data = [{ text: "None" }, { text: "Service" }, { text: "Receive" }, { text: "Send" }, { text: "InstantiatingReceive" }, { text: "Manual" }, { text: "BusinessRule" }, { text: "User" }, { text: "Script" }, { text: "Parallel" }]
+            $('#BPMNTasks').ejDropDownList({
+                dataSource: data,
+                text: "None",
+                width: "100%", change: "dropDownChanged", cssClass: "BPMNTasks"
+            });
+
+            data = [{ text: "None" }, { text: "Transaction" }, { text: "Event" }];
+            $('#BPMNSubProcess').ejDropDownList({
+                dataSource: data,
+                text: "None",
+                width: "100%", change: "dropDownChanged", cssClass: "BPMNSubProcess"
+            });
+
+            data = [{ text: "Default" }, { text: "Call" }, { text: "Event" }];
+            $('#BPMNBoundary').ejDropDownList({
+                dataSource: data,
+                text: "Default",
+                width: "100%", change: "dropDownChanged", cssClass: "BPMNBoundary"
+            });
+
+            data = [{ text: "Top" }, { text: "Left" }, { text: "Right" }, { text: "Bottom" }];
+            $('#BPMNFlows').ejDropDownList({
+                dataSource: data,
+                text: "Top",
+                width: "100%", change: "dropDownChanged", cssClass: "BPMNFlows"
+            });
+
+            data = [{ text: "None" }, { text: "Compensation" }];
+            $('#CompensationShape').ejDropDownList({
+                dataSource: data,
+                text: "None",
+                width: "100%", change: "dropDownChanged", cssClass: "CompensationShape"
+            });
+
+            data = [{ text: "None" }, { text: "Call" }];
+            $('#TaskCall').ejDropDownList({
+                dataSource: data,
+                text: "None",
+                width: "100%", change: "dropDownChanged", cssClass: "TaskCall"
+            });
+
+            data = [{ text: "None" }, { text: "Ad-Hoc" }];
+            $('#AddHoc').ejDropDownList({
+                dataSource: data,
+                text: "None",
+                width: "100%", change: "dropDownChanged", cssClass: "AddHoc"
+            });
+
+            data = [{ text: "None" }, { text: "Collection" }];
+            $('#BPMNCollection').ejDropDownList({
+                dataSource: data,
+                text: "None",
+                width: "100%", change: "dropDownChanged", cssClass: "BPMNCollection"
+            });
+
+            $("#sampleProperties").ejPropertiesPanel();
+            diagram = $("#diagram").ejDiagram("instance");
+
+        });
+
+        
+    </script>
+    <style>
+        .control_section {
+            height: 600px;
+            width: 100%;
+            background-color: transparent;
+        }
+
+        .diagram_section {
+            width: calc(100% - 235px);
+            height: 100%;
+            float: left;
+        }
+
+        .middle_section {
+            float: left;
+            width: 5px;
+            height: 100%;
+        }
+
+        .symPalette_section {
+            width: 230px;
+            height: 100%;
+            float: left;
+        }
+
+        .row .cols-prop-area {
+            display: none;
+        }
+    </style>
+
+</body>
+</html>

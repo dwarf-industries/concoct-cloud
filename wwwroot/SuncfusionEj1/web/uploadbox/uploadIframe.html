@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1: UploadBox Synchronous mode</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link id="theme" href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <form id="form1" action="saveFiles.ashx" method="post" style="overflow:hidden">
+        <!---Form is created with post method and action is mapped to ashx handler. Uploading files will be done only on clicking submit button after selecting the files.!--->
+
+        <div class="posupload">Select a files to upload</div>
+        <div id="UploadDefault"></div>
+        <input type="submit" id="post" value="Submit" />
+     
+    </form>
+    <script type="text/javascript">
+        $(function () {
+            // declaration
+            $("#UploadDefault").ejUploadbox({
+                asyncUpload: false,
+                showFileDetails: false
+            });
+            $("#post").ejButton({
+                size: "normal",
+                showRoundedCorner: true,
+                type: "submit"              
+            });         
+            $("#successmsg").appendTo("#form1");
+        });
+         window.onload = function() { 
+            var themes = {
+                            "flat": "content/ejthemes/default-theme/ej.web.all.min.css",
+                            "flatdark": "content/ejthemes/flat-azure-dark/ej.web.all.min.css",
+                            "azure": "content/ejthemes/default-theme/ej.web.all.min.css",
+                            "azuredark": "content/ejthemes/flat-azure-dark/ej.web.all.min.css",
+                            "lime": "content/ejthemes/flat-lime/ej.web.all.min.css",
+                            "limedark": "content/ejthemes/flat-lime-dark/ej.web.all.min.css",
+                            "saffron": "content/ejthemes/flat-saffron/ej.web.all.min.css",
+                            "saffrondark": "content/ejthemes/flat-saffron-dark/ej.web.all.min.css",
+                            "gradient": "content/ejthemes/gradient-azure/ej.web.all.min.css",
+                            "gradientdark": "content/ejthemes/gradient-azure-dark/ej.web.all.min.css",
+                            "gradientazure": "content/ejthemes/gradient-azure/ej.web.all.min.css",
+                            "gradientazuredark": "content/ejthemes/gradient-azure-dark/ej.web.all.min.css",
+                            "gradientlime": "content/ejthemes/gradient-lime/ej.web.all.min.css",
+                            "gradientlimedark": "content/ejthemes/gradient-lime-dark/ej.web.all.min.css",
+                            "gradientsaffron": "content/ejthemes/gradient-saffron/ej.web.all.min.css",
+                            "gradientsaffrondark": "content/ejthemes/gradient-saffron-dark/ej.web.all.min.css",
+                            "bootstrap": "content/ejthemes/bootstrap-theme/ej.web.all.min.css",
+                            "high-contrast-01": "content/ejthemes/high-contrast-01/ej.web.all.min.css",
+                            "high-contrast-02": "content/ejthemes/high-contrast-02/ej.web.all.min.css",
+                            "material": "content/ejthemes/material/ej.web.all.min.css",
+                            "office-365": "content/ejthemes/office-365/ej.web.all.min.css"
+                    };
+            $("#theme").attr('href', "../"+themes[window.parent.window.theme]+"");
+        };
+    </script>
+    <style class="cssStyles">
+        .posupload {
+            text-align: center;
+            padding: 10px;
+        }
+
+        #UploadDefault, #post {
+            margin: 18px auto;
+            display: block;
+        }
+
+        #successmsg {
+            display: block;
+            text-align: center;
+        }
+    </style>
+</body>
+</html>

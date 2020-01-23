@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Splitbutton</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div class="control">
+                        <table> 
+							<tr>
+								<th colspan="2" style="padding-left:30px"> Split Buttons </th> 
+							</tr>
+                            <tr>
+                                <td> Normal</td>
+                                <td class="btnsht">
+                                    <div class="spltspan">
+                                        <button id="spltbutton11">login</button>
+                                        <ul id="Ul11">
+                                            <li><span>User</span></li>
+                                            <li><span>Guest</span></li>
+                                            <li><span>Admin</span></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> Mini</td>
+                                <td>
+                                    <button id="spltbutton21">login</button>
+                                    <ul id="Ul21">
+                                        <li><span>User</span></li>
+                                        <li><span>Guest</span></li>
+                                        <li><span>Admin</span></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> Small</td>
+                                <td class="btnsht">
+                                    <button id="spltbutton31">login</button>
+                                    <ul id="Ul31">
+                                        <li><span>User</span></li>
+                                        <li><span>Guest</span></li>
+                                        <li><span>Admin</span></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> Medium</td>
+                                <td class="btnsht">
+                                    <button id="spltbutton41">login</button>
+                                    <ul id="Ul41">
+                                        <li><span>User</span></li>
+                                        <li><span>Guest</span></li>
+                                        <li><span>Admin</span></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> Large</td>
+                                <td class="btnsht">
+                                    <button id="spltbutton51">login</button>
+                                    <ul id="Ul51">
+                                        <li><span>User</span></li>
+                                        <li><span>Guest</span></li>
+                                        <li><span>Admin</span></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-6">ButtonMode</div>
+                        <div class="col-md-6">
+                            <select id="btnmode">
+                                <option value="split">Split</option>
+                                <option value="dropdown">Dropdown</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+
+            //  declaration 
+
+            $("#spltbutton11").ejSplitButton({
+                size: "normal",
+                showRoundedCorner: true,
+                contentType: "imageonly",
+                targetID: "Ul11",
+                prefixIcon: "e-icon e-uiLight e-login"
+            });
+
+            $("#spltbutton21").ejSplitButton({
+                size: "mini",
+                showRoundedCorner: true,
+                targetID: "Ul21",
+            });
+
+            $("#spltbutton31").ejSplitButton({
+                size: "small",
+                showRoundedCorner: true,
+                targetID: "Ul31",
+            });
+
+            $("#spltbutton41").ejSplitButton({
+                size: "medium",
+                showRoundedCorner: true,
+                targetID: "Ul41",
+            });
+
+            $("#spltbutton51").ejSplitButton({
+                size: "large",
+                showRoundedCorner: true,
+                targetID: "Ul51",
+                contentType: "textandimage",
+                prefixIcon: "e-icon e-login e-uiLight",
+            });
+
+            $("#btnmode").ejDropDownList({ width: "120px", "change": "onChange", "selectedItemIndex": 0 });
+        });
+
+        $("#sampleProperties").ejPropertiesPanel();
+
+        function onChange(args) {
+            $(".e-splitbutton").ejSplitButton({ "buttonMode": args.value });
+        }
+    </script>
+    <style>
+        .e-bgdefault:hover .e-splitbuttondiv .e-icon.e-uiLight, .e-bgdefault:active .e-splitbuttondiv .e-icon.e-uiLight {
+            background-image: url('../content/ejthemes/common-images/icons-white.png');
+        }
+		.control{
+			padding: 30px;
+		}
+		td{
+			padding:5px;
+		}
+		.frame{
+			padding: 0 20px;
+		}
+        .spltspan {
+            width: 50px;
+        }
+    </style>
+</body>
+</html>

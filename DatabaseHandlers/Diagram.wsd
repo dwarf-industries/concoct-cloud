@@ -1,0 +1,307 @@
+class AssociatedWorkItemDuplicates
+{
+    Id int |  | NO
+    WorkItemId int |  | YES
+    WorkItemChildId int |  | YES
+}
+class AssociatedWorkItemPredecessors
+{
+    Id int |  | NO
+    WorkItemId int |  | YES
+    WorkItemChildId int |  | YES
+}
+class AssociatedWorkItemRelated
+{
+    Id int |  | NO
+    WorkItemId int |  | YES
+    WorkItemChildId int |  | YES
+}
+class AssociatedWorkItemSuccessors
+{
+    Id int |  | NO
+    WorkItemId int |  | YES
+    WorkItemChildId int |  | YES
+}
+class AssociatedWorkItemTests
+{
+    Id int |  | NO
+    WorkItemId int |  | YES
+    WorkItemChildId int |  | YES
+}
+class AssociatedProjectBoards
+{
+    Id int |  | NO
+    BoardId int |  | YES
+    ProjectId int |  | YES
+    Position int |  | YES
+}
+class Risks
+{
+    Id int |  | NO
+    RiskName nvarchar |  | YES
+}
+class Efforts
+{
+    Id int |  | NO
+    EffortName nvarchar |  | YES
+}
+class AssociatedWrorkItemParents
+{
+    Id int |  | NO
+    WorkItemId int |  | YES
+    WorkItemChildId int |  | YES
+}
+class ValueAreas
+{
+    Id int |  | NO
+    ValueAreaName nvarchar |  | YES
+}
+class AssociatedWrorkItemChildren
+{
+    Id int |  | NO
+    WorkItemId int |  | YES
+    WorkItemChildId int |  | YES
+}
+class Commits
+{
+    Id int |  | NO
+    CommitData nvarchar |  | NO
+    DateOfCommit datetime |  | YES
+    CommitedBy nvarchar |  | YES
+    CommitKey nvarchar |  | YES
+}
+class Branches
+{
+    Id int |  | NO
+    ProjectId int |  | NO
+    DateOfCreation datetime |  | YES
+    BranchName nvarchar |  | YES
+}
+class AssociatedBranchCommits
+{
+    Id int |  | NO
+    CommitId int |  | NO
+    BranchId int |  | NO
+}
+class UserAccounts
+{
+    Id int |  | NO
+    Password nvarchar |  | NO
+    CreationDate datetime |  | NO
+    Email nvarchar |  | YES
+    FirstName nvarchar |  | YES
+    LastName nvarchar |  | YES
+    ProjectRights int |  | YES
+    GitUsername nvarchar |  | YES
+}
+class AssociatedRepositoryBranches
+{
+    Id int |  | NO
+    RepositoryId int |  | NO
+    BranchId int |  | NO
+}
+class WorkItemTypes
+{
+    Id int |  | NO
+    TypeName nvarchar |  | YES
+    Icon nvarchar |  | YES
+}
+class WorkItem
+{
+    Id int |  | NO
+    WorkItemTypeId int |  | YES
+    Title nvarchar |  | YES
+    AssignedAccount int |  | YES
+    StateId int |  | YES
+    AreaId int |  | YES
+    Description nvarchar |  | YES
+    StartDate datetime |  | YES
+    EndDate datetime |  | YES
+    PriorityId int |  | YES
+    ClassificationId int |  | YES
+    DevelopmentId int |  | YES
+    ParentId int |  | YES
+    Reason int |  | YES
+    Iteration int |  | YES
+    RepoSteps nvarchar |  | YES
+    SystemInfo nvarchar |  | YES
+    ResolvedReason nvarchar |  | YES
+    itemPriority int |  | YES
+    Severity int |  | YES
+    Activity int |  | YES
+    OriginEstitame nvarchar |  | YES
+    Remaining nvarchar |  | YES
+    Compleated nvarchar |  | YES
+    BranchId int |  | YES
+    FoundInBuild int |  | YES
+    IntegratedInBuild int |  | YES
+    ReasonId int |  | YES
+    RelationId int |  | YES
+    RiskId int |  | YES
+    BusinessValue nvarchar |  | YES
+    TimeCapacity nvarchar |  | YES
+    ValueAreaId int |  | YES
+    Effort nvarchar |  | YES
+    StackRank nvarchar |  | YES
+    DueDate datetime |  | YES
+    StoryPoints nvarchar |  | YES
+}
+class Projects
+{
+    Id int |  | NO
+    RepositoryId int |  | NO
+    ProjectName nvarchar |  | YES
+    ProjectDescription nvarchar |  | YES
+    ProjectTitle nvarchar |  | YES
+    CreationDate datetime |  | YES
+    BoardId int |  | YES
+}
+class Repository
+{
+    Id int |  | NO
+    FolderPath nvarchar |  | NO
+}
+class Files
+{
+    Id int |  | NO
+    FilePath nvarchar |  | YES
+    CurrentName nvarchar |  | YES
+    FileData nvarchar |  | YES
+    DateOfFile datetime |  | YES
+}
+class AssociatedCommitFiles
+{
+    Id int |  | NO
+    FileId int |  | YES
+    CommitId int |  | YES
+    DateOfCommit datetime |  | YES
+}
+class Boards
+{
+    Id int |  | NO
+    RepositoryId int |  | NO
+    BoardType int |  | NO
+    BoardName nvarchar |  | YES
+}
+class AssociatedBoardWorkItems
+{
+    Id int |  | NO
+    BoardId int |  | NO
+    WorkItemId int |  | NO
+    ProjectId int |  | YES
+}
+class AssociatedProjectMembers
+{
+    Id int |  | NO
+    UserAccountId int |  | NO
+    ProjectId int |  | NO
+    RepositoryId int |  | NO
+    CanCommit int |  | NO
+    CanClone int |  | NO
+    CanViewWork int |  | NO
+    CanCreateWork int |  | NO
+    CanDeleteWork int |  | NO
+}
+class WorkItemStates
+{
+    Id int |  | NO
+    StateName nvarchar |  | YES
+}
+class WorkItemAreas
+{
+    ID int |  | NO
+    AreaName nvarchar |  | NO
+}
+class WorkItemPriorities
+{
+    Id int |  | NO
+    PriorityName nvarchar |  | NO
+}
+class WorkItemSeverities
+{
+    Id int |  | NO
+    SeverityName nvarchar |  | NO
+}
+class WorkItemActivity
+{
+    Id int |  | NO
+    ActivityName nvarchar |  | NO
+}
+class WorkItemIterations
+{
+    Id int |  | NO
+    IterationName nvarchar |  | NO
+}
+class WorkItemReasons
+{
+    Id int |  | NO
+    ReasonName nvarchar |  | NO
+}
+class Builds
+{
+    Id int |  | NO
+    ReasonName nvarchar |  | NO
+    FrameworkVersion int |  | YES
+    DateOfBuild datetime |  | YES
+    CompleationStatus int |  | YES
+    AccountId int |  | YES
+    PlatformId int |  | YES
+}
+class AssociatedProjectBuilds
+{
+    Id int |  | NO
+    RepositoryId int |  | YES
+    BuildId int |  | YES
+    ProjectId int |  | YES
+}
+class WorkItemRelations
+{
+    Id int |  | NO
+    RelationName nvarchar |  | YES
+}
+AssociatedBoardWorkItems "1" *-- "many" Boards
+AssociatedBoardWorkItems "1" *-- "many" WorkItem
+AssociatedBoardWorkItems "1" *-- "many" Projects
+AssociatedBranchCommits "1" *-- "many" Commits
+AssociatedBranchCommits "1" *-- "many" Branches
+AssociatedCommitFiles "1" *-- "many" Files
+AssociatedCommitFiles "1" *-- "many" Commits
+AssociatedProjectBoards "1" *-- "many" Boards
+AssociatedProjectBoards "1" *-- "many" Projects
+AssociatedProjectBuilds "1" *-- "many" Repository
+AssociatedProjectBuilds "1" *-- "many" Builds
+AssociatedProjectBuilds "1" *-- "many" Projects
+AssociatedProjectMembers "1" *-- "many" UserAccounts
+AssociatedProjectMembers "1" *-- "many" Projects
+AssociatedProjectMembers "1" *-- "many" Repository
+AssociatedRepositoryBranches "1" *-- "many" Repository
+AssociatedRepositoryBranches "1" *-- "many" Branches
+AssociatedWorkItemDuplicates "1" *-- "many" WorkItem
+AssociatedWorkItemDuplicates "1" *-- "many" WorkItem
+AssociatedWorkItemPredecessors "1" *-- "many" WorkItem
+AssociatedWorkItemPredecessors "1" *-- "many" WorkItem
+AssociatedWorkItemRelated "1" *-- "many" WorkItem
+AssociatedWorkItemRelated "1" *-- "many" WorkItem
+AssociatedWorkItemSuccessors "1" *-- "many" WorkItem
+AssociatedWorkItemSuccessors "1" *-- "many" WorkItem
+AssociatedWorkItemTests "1" *-- "many" WorkItem
+AssociatedWorkItemTests "1" *-- "many" WorkItem
+AssociatedWrorkItemChildren "1" *-- "many" WorkItem
+AssociatedWrorkItemChildren "1" *-- "many" WorkItem
+AssociatedWrorkItemParents "1" *-- "many" WorkItem
+AssociatedWrorkItemParents "1" *-- "many" WorkItem
+Branches "1" *-- "many" Projects
+Projects "1" *-- "many" Repository
+WorkItem "1" *-- "many" WorkItemTypes
+WorkItem "1" *-- "many" UserAccounts
+WorkItem "1" *-- "many" WorkItemStates
+WorkItem "1" *-- "many" WorkItemStates
+WorkItem "1" *-- "many" WorkItemAreas
+WorkItem "1" *-- "many" WorkItemPriorities
+WorkItem "1" *-- "many" WorkItemIterations
+WorkItem "1" *-- "many" WorkItemSeverities
+WorkItem "1" *-- "many" WorkItemActivity
+WorkItem "1" *-- "many" WorkItemReasons
+WorkItem "1" *-- "many" WorkItemRelations
+WorkItem "1" *-- "many" Risks
+WorkItem "1" *-- "many" ValueAreas

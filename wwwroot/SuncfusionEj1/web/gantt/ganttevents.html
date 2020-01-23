@@ -1,0 +1,268 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Essential JS 1 : Events</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />    
+    <!--[if lt IE 9]>
+     <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsonganttdata.js"></script>
+</head>
+
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="GanttContainer" style="height:450px;width:100%;"></div>
+            </div>
+            <div class="cols-prop-area event-tracer">
+                <div>
+                    <div class="heading">
+                        <span>Event Trace</span>
+                        <div class="pull-right">
+                            <select name="selectevtprops" id="selectControls">
+                                <option value="create">create</option>
+								<option value="load">load</option>
+                                <option value="contextMenuOpen">contextMenuOpen</option>
+                                <option value="rowDrag">rowDrag</option>
+                                <option value="rowDragStart">rowDragStart</option>
+                                <option value="rowDragStop">rowDragStop</option>
+                                <option value="taskbarClick">taskbarClick</option>
+                                <option value="actionBegin">actionBegin</option>
+                                <option value="actionComplete">actionComplete</option>
+                                <option value="beginEdit">beginEdit</option>
+								<option value="endEdit">endEdit</option>    
+                                <option value="queryCellInfo">queryCellInfo</option>
+                                <option value="rowDataBound">rowDataBound</option>
+                                <option value="rowSelecting">rowSelecting</option>
+                                <option value="rowSelected">rowSelected</option>                                
+								<option value="taskbarEditing">taskbarEditing</option>      
+								<option value="taskbarEdited">taskbarEdited</option>      
+                                <option value="splitterResized">splitterResized</option> 								
+								<option value="queryTaskbarInfo">queryTaskbarInfo</option>      
+								<option value="expanding">expanding</option>      
+								<option value="expanded">expanded</option>   
+								<option value="collapsing">collapsing</option>
+								<option value="collapsed">collapsed	</option>			
+                                <option value="toolbarClick">toolbarClick	</option>				
+                            </select>
+                        </div>
+                    </div>
+                    <div class="prop-grid content">
+                        <div class="eventarea">
+                            <div class="EventLog" id="EventLog">
+                            </div>
+                        </div>
+                        <div class="evtbtn">
+                            <input type="button" class="eventclear e-btn" value="Clear" onclick="onClear()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+	
+        $(function () {
+            $("#GanttContainer").ejGantt({
+                dataSource: defaultGanttData,
+                allowColumnResize: true,
+                taskIdMapping: "TaskID",
+                taskNameMapping: "TaskName",
+                scheduleStartDate: new Date("02/23/2017"),
+                    scheduleEndDate: new Date("03/30/2017"),
+                startDateMapping: "StartDate",
+                progressMapping: "Progress",
+                endDateMapping: "EndDate",
+                childMapping: "Children",
+                treeColumnIndex: 1,
+                rowHeight: window.theme == "material" ? 48 : window.theme == "office-365" ? 36 : 30,
+                highlightWeekEnds: true,
+                includeWeekend: false,
+                allowSorting:true,
+				isResponsive:true,
+                editSettings:
+                    {
+                        allowEditing: true,
+                        allowAdding: true,
+                        allowDeleting: true,
+                        allowIndent: true,
+                        editMode: "cellEditing"
+                    },
+                enableContextMenu: true,
+                allowDragAndDrop: true,
+                toolbarSettings: {
+                    showToolbar: true,
+                    toolbarItems: [ej.Gantt.ToolbarItems.Add,
+                    ej.Gantt.ToolbarItems.Edit,
+                    ej.Gantt.ToolbarItems.Delete,
+                    ej.Gantt.ToolbarItems.Update,
+                    ej.Gantt.ToolbarItems.Cancel,
+                    ej.Gantt.ToolbarItems.Indent,
+                    ej.Gantt.ToolbarItems.Outdent,
+					ej.Gantt.ToolbarItems.ExpandAll,
+					ej.Gantt.ToolbarItems.CollapseAll]
+                },
+                load: "load",
+                contextMenuOpen: "contextMenuOpen",
+                rowDrag: "rowDrag",
+                rowDragStart: "rowDragStart",
+                rowDragStop: "rowDragStop",
+                taskbarClick: "taskbarClick",
+                create: "create",
+                actionBegin: "actionBegin",
+                actionComplete: "actionComplete",
+                queryCellInfo: "queryCellInfo",
+                beginEdit: "beginEdit",
+                endEdit: "endEdit",
+                rowDataBound: "rowDataBound",
+                rowSelecting: "rowSelecting",
+                rowSelected: "rowSelected",
+                taskbarEditing: "taskbarEditing",
+                taskbarEdited: "taskbarEdited",
+                splitterResized: "splitterResized",
+                queryTaskbarInfo: "queryTaskbarInfo",
+                expanding: "expanding",
+                expanded: "expanded",
+                collapsing: "collapsing",
+                collapsed: "collapsed",
+                toolbarClick: "toolbarclick"
+            });
+
+            $("#selectControls").ejDropDownList(
+                {
+                    cssClass: "metroblue",
+                    popupShown: "adjustpopupposition",
+                    showCheckbox: true,
+                    checkAll: true,
+                    change: "evtpropscheckedevent"
+                });
+        });
+
+        function evtpropscheckedevent(args) {
+            var ganttObj = $("#GanttContainer").data("ejGantt");
+            if (args.isChecked && ganttObj != undefined) {
+                switch (args.value) {
+                            case "load": ganttObj.option(args.value, "load"); break;
+                            case "contextMenuOpen": ganttObj.option(args.value, "contextMenuOpen"); break;
+                            case "rowDrag": ganttObj.option(args.value, "rowDrag"); break;
+                            case "rowDragStart": ganttObj.option(args.value, "rowDragStart"); break;
+                            case "rowDragStop": ganttObj.option(args.value, "rowDragStop"); break;
+                            case "taskbarClick": ganttObj.option(args.value, "taskbarClick"); break;
+                            case "create": ganttObj.option(args.value, "create"); break;
+                            case "actionBegin": ganttObj.option(args.value, "actionBegin"); break;
+                            case "actionComplete": ganttObj.option(args.value, "actionComplete"); break;
+                            case "queryCellInfo": ganttObj.option(args.value, "queryCellInfo"); break;
+                            case "beginEdit": ganttObj.option(args.value, "beginEdit"); break;
+                            case "endEdit": ganttObj.option(args.value, "endEdit"); break;
+                            case "rowDataBound": ganttObj.option(args.value, "rowDataBound"); break;                        
+                            case "rowSelecting": ganttObj.option(args.value, "rowSelecting"); break;
+                            case "rowSelected": ganttObj.option(args.value, "rowSelected"); break;
+                            case "taskbarEditing": ganttObj.option(args.value, "taskbarEditing"); break;
+                            case "taskbarEdited": ganttObj.option(args.value, "taskbarEdited"); break; 
+							case "splitterResized": ganttObj.option(args.value, "splitterResized"); break;
+                            case "queryTaskbarInfo": ganttObj.option(args.value, "queryTaskbarInfo"); break;
+							case "expanding": ganttObj.option(args.value, "expanding"); break;
+							case "expanded": ganttObj.option(args.value, "expanded"); break;
+							case "collapsing": ganttObj.option(args.value, "collapsing"); break;
+                            case "collapsed": ganttObj.option(args.value, "collapsed"); break;
+                            case "toolbarClick": ganttObj.option(args.value, "toolbarclick"); break;
+							    
+                }
+            }
+            else ganttObj.option(args.value, "");
+        }
+		
+        function load(args) {
+            this.getColumns()[0].width = window.theme == "material" ? 60 : 30;
+		  jQuery.addEventLog("Gantt <span class='eventTitle'>load</span> event called");
+        }
+        function contextMenuOpen(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>contextMenuOpen</span> event called");
+        }
+        function rowDrag(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>rowDrag</span> event called");
+        }
+        function rowDragStart(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>rowDragStart</span> event called");
+        }
+        function rowDragStop(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>rowDragStop</span> event called");
+        }
+        function taskbarClick(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>taskbarClick</span> event called");
+        }
+        function create(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>create</span> event called");
+        }
+        function actionBegin(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>actionBegin</span> event called");
+        }
+        function actionComplete(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>actionComplete</span> event called");
+        }
+        function beginEdit(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>beginEdit</span> event called");
+        }		
+		function endEdit(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>endEdit</span> event called");
+        }
+        function queryCellInfo(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>queryCellInfo</span> event called");
+        }
+        function rowDataBound(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>rowDataBound</span> event called");
+        }
+        function rowSelecting(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>rowSelecting</span> event called");
+        }
+        function rowSelected(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>rowSelected</span> event called");
+        }
+        function expanding(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>expanding</span> event called");
+        }  		
+		function expanded(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>expanded</span> event called");
+        }  		
+		function collapsing(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>collapsing</span> event called");
+        } 		
+		function collapsed(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>collapsed</span> event called");
+        }  		
+		function taskbarEditing(args) {
+            jQuery.addEventLog("Gantt <span class='eventTitle'>taskbarEditing</span> event called");
+        }  		
+		function queryTaskbarInfo(args) {
+		   jQuery.addEventLog("Gantt <span class='eventTitle'>queryTaskBarInfo</span> event called");
+        } 		
+		function taskbarEdited (args) {
+		    jQuery.addEventLog("Gantt <span class='eventTitle'>taskbarEdited </span> event called");
+		}
+		function splitterResized(args) {
+		    jQuery.addEventLog("Gantt <span class='eventTitle'>splitterResized </span> event called");
+		}
+		function toolbarclick(args) {
+		    jQuery.addEventLog("Gantt <span class='eventTitle'>toolbarClick </span> event called");
+		}
+		function onClear() {
+            $("#EventLog").html("");
+        }
+    </script>
+</body>
+</html>
+

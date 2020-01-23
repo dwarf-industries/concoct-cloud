@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Button Methods</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div class="control">
+                        <table>
+                            <tr>
+                                <td class="btnsht">Button</td>
+                                <td class="btnsht">
+                                    <button id="buttonnormal">Button</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="btnsht">Toggle Button</td>
+                                <td class="btnsht">
+                                    <input type="checkbox" id="TextOnly" />
+                                    <label for="TextOnly">Toggle</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="btnsht">Split Button</td>
+                                <td class="splttd btnsht">
+                                    <button id="splitbuttonnormal">Save</button>
+                                    <ul id="menu1">
+                                        <li><span>Open...</span></li>
+                                        <li><span>Save</span></li>
+                                        <li><span>Delete</span></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="btnsht">Dropdown Button</td>
+                                <td class="splttd btnsht">
+                                    <button id="dropbtnlarge">Save</button>
+                                    <ul id="menu2">
+                                        <li><span>Open...</span></li>
+                                        <li><span>Save</span></li>
+                                        <li><span>Delete</span></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-6">Disable\Enable</div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="btnchkunchk" class="e-togglebtn" value="checkuncheck" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">ArrowPosition</div>
+                        <div class="col-md-6">
+                            <select id="arrowpos">
+                                <option value="right">Right</option>
+                                <option value="left">Left</option>
+                                <option value="top">Top</option>
+                                <option value="bottom">Bottom</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var btnobject1, btnobject2, btnobject3, btnobject4;
+        $(function () {
+            //declaration 
+            $("#buttonnormal").ejButton({ showRoundedCorner: true, size: "large" });
+            $("#TextOnly").ejToggleButton({
+                size: "large",
+                showRoundedCorner: true,
+                defaultText: "Play",
+                activeText: "Stop",
+            });
+            $("#splitbuttonnormal").ejSplitButton({
+                size: "large",
+                showRoundedCorner: true,
+                targetID: "menu1"
+            });
+            $("#dropbtnlarge").ejSplitButton({
+                size: "large",
+                showRoundedCorner: true,
+                buttonMode: ej.ButtonMode.Dropdown,
+                targetID: "menu2"
+            });
+            btnobject1 = $("#buttonnormal").data("ejButton");
+            btnobject2 = $("#TextOnly").data("ejToggleButton");
+            btnobject3 = $("#splitbuttonnormal").data("ejSplitButton");
+            btnobject4 = $("#dropbtnlarge").data("ejSplitButton");
+            $("#btnchkunchk").ejToggleButton({ "change": "onCheckUncheckAll", "width": "120px", "defaultText": "Disable", "activeText": "Enable" });
+            $("#arrowpos").ejDropDownList({ width: "120px", "change": "onArrowChange", "selectedItemIndex": 0 });
+        });
+        function onCheckUncheckAll(args) {
+            if (args.isChecked) {
+                btnobject1.disable();
+                btnobject2.disable();
+                btnobject3.disable();
+                btnobject4.disable();
+            }
+            else {
+                btnobject1.enable();
+                btnobject2.enable();
+                btnobject3.enable();
+                btnobject4.enable();
+            }
+        }
+        function onArrowChange(args) {
+            if (args.value == "top" || args.value == "bottom")
+                $(".splttd").css("padding", "6px 0 6px 1px");
+            else
+                $(".splttd").css("padding", "0 0 0 1px");
+            $(".e-splitbutton").ejSplitButton({ "arrowPosition": args.value });
+        }
+        $("#sampleProperties").ejPropertiesPanel();
+    </script>
+</body>
+</html>

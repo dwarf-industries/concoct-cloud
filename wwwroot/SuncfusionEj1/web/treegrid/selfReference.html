@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Essential JS 1 :TreeGrid SelfReference</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+      <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+     <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="TreeGridContainer" style="width:100%;height:450px;" />
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        //DATA SOURCE DECLARATION OF TREEGRID CONTROL
+        var projectData = [
+             { "TaskID": 1, "TaskName": "Parent Task 1", "StartDate": new Date("02/23/2017"), "EndDate": new Date("02/27/2017"), "Progress": "40" },
+             { "TaskID": 2, "TaskName": "Child Task 1", "StartDate": new Date("02/23/2017"), "EndDate": new Date("02/27/2017"), "Progress": "40", "parentID": 1 },
+             { "TaskID": 3, "TaskName": "Child Task 2", "StartDate": new Date("02/23/2017"), "EndDate": new Date("02/27/2017"), "Progress": "40", "parentID": 1 },
+             { "TaskID": 4, "TaskName": "Child Task 3", "StartDate": new Date("02/23/2017"), "EndDate": new Date("02/27/2017"), "Duration": 5, "Progress": "40", "parentID": 1 },
+             { "TaskID": 5, "TaskName": "Parent Task 2", "StartDate": new Date("03/14/2017"), "EndDate": new Date("03/18/2017"), "Progress": "40" },
+             { "TaskID": 6, "TaskName": "Child Task 1", "StartDate": new Date("03/02/2017"), "EndDate": new Date("03/06/2017"), "Progress": "40", "parentID": 5 },
+             { "TaskID": 7, "TaskName": "Child Task 2", "StartDate": new Date("03/02/2017"), "EndDate": new Date("03/06/2017"), "Progress": "40", "parentID": 5 },
+             { "TaskID": 8, "TaskName": "Child Task 3", "StartDate": new Date("03/02/2017"), "EndDate": new Date("03/06/2017"), "Progress": "40", "parentID": 5 },
+             { "TaskID": 9, "TaskName": "Child Task 4", "StartDate": new Date("03/02/2017"), "EndDate": new Date("03/06/2017"), "Progress": "40", "parentID": 5 },
+             { "TaskID": 10, "TaskName": "Parent Task 3", "StartDate": new Date("03/09/2017"), "EndDate": new Date("03/13/2017"), "Progress": "40" },
+             { "TaskID": 11, "TaskName": "Child Task 1", "StartDate": new Date("03/9/2017"), "EndDate": new Date("03/13/2017"), "Progress": "40", "parentID": 10 },
+             { "TaskID": 12, "TaskName": "Child Task 2", "StartDate": new Date("03/9/2017"), "EndDate": new Date("03/13/2017"), "Progress": "40", "parentID": 10 },
+             { "TaskID": 13, "TaskName": "Child Task 3", "StartDate": new Date("03/9/2017"), "EndDate": new Date("03/13/2017"), "Progress": "40", "parentID": 10 },
+             { "TaskID": 14, "TaskName": "Child Task 4", "StartDate": new Date("03/9/2017"), "EndDate": new Date("03/13/2017"), "Progress": "40", "parentID": 10 },
+             { "TaskID": 15, "TaskName": "Child Task 5", "StartDate": new Date("03/9/2017"), "EndDate": new Date("03/13/2017"), "Progress": "40", "parentID": 10 }
+
+        ];
+
+        $(function () {
+            var dateFormat = "{0:" + ej.preferredCulture()["calendars"]["standard"]["patterns"]["d"] + "}";
+            $("#TreeGridContainer").ejTreeGrid({
+                dataSource: projectData,
+                allowSelection: true,
+                allowColumnResize: true,
+                idMapping: "TaskID",
+                parentIdMapping: "parentID",                
+                treeColumnIndex: 1,
+                isResponsive: true,
+                rowHeight: window.theme == "material" ? 48 : window.theme == "office-365" ? 36 : 30,
+                load: function () {
+                    if (window.theme == "material")
+                        this.treeIndentLevelWidth = 16;
+                },
+                columns: [
+                       { field: "TaskID", headerText: "Task Id", width: window.theme == "material" ? 90 : 55, editType: "stringedit" },
+                       { field: "TaskName", headerText: "Task Name", editType: "stringedit"},
+                       { field: "StartDate", headerText: "Start Date", editType: "datepicker", format: dateFormat },
+                       { field: "EndDate", headerText: "End Date", editType: "datepicker", format: dateFormat },
+                       { field: "Progress", headerText: "Progress", editType: "numericedit"}
+                ]
+                
+            });
+        });
+    </script>
+
+</body>
+
+</html>

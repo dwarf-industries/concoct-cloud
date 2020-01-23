@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Knockout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/knockout.min.js"></script>
+    <script src="../scripts/jsondata.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="Grid"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Row Index
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="rowIndex" style="height: 22px; width: 120px;" class="ejinputtext" value="0" data-bind="value: rowIndex" />
+                        </div>
+                        <div class="col-md-3">
+                            Column Name
+                        </div>
+                        <div class="col-md-3">
+                            <select id="selectColumn" data-bind="value: field" class="e-ddl">
+                                <option value="OrderID">Order ID</option>
+                                <option value="CustomerID">Customer ID</option>
+                                <option value="EmployeeID">Employee ID</option>
+                                <option value="Freight">Freight</option>
+                                <option value="ShipName">Ship Name</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Value
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="change" style="height: 22px; width: 120px;" class="ejinputtext" value="Test" data-bind="value: currentText" />
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3">
+                            <input id="butChange" type="button" value="Change" class="e-btn" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            // the datasource "window.gridData" is referred from jsondata.min.js
+            var data = ej.DataManager(window.gridData).executeLocal(ej.Query().take(12));
+            // jQuery ready event has been used to define page view model
+            page = new PageViewModel();
+
+            ko.extenders.AutoUpdate = function (target, options) {
+                target(options.model.data[options.name]);
+                target.subscribe(function (newValue) {
+                    // Notifying model that it has been changed
+                    if (!options.model.isDirty())
+                        options.model.isDirty(true);
+                    // Updating changed values to original JSON data
+                    options.model.data[options.name] = newValue;
+                });
+                return target;
+            }
+
+            ko.syncJsMap = function (obj, viewModel) {
+                if (obj.length) {
+                    var mapArray = [];
+                    for (var i = 0; i < obj.length; i++) {
+                        mapArray.push(new viewModel(obj[i]));
+                    }
+                    return mapArray;
+                }
+            }
+
+            function OrderViewModel(data) {
+                // Actual JSON from grid
+                this.data = data;
+                // This is to detect changes in Model
+                this.isDirty = ko.observable(false);
+                // Model Properties
+                this.OrderID = ko.observable().extend({ AutoUpdate: { "model": this, "name": "OrderID" } });
+                this.CustomerID = ko.observable().extend({ AutoUpdate: { "model": this, "name": "CustomerID" } });
+                this.EmployeeID = ko.observable().extend({ AutoUpdate: { "model": this, "name": "EmployeeID" } });
+                this.Freight = ko.observable().extend({ AutoUpdate: { "model": this, "name": "Freight" } });
+                this.ShipName = ko.observable().extend({ AutoUpdate: { "model": this, "name": "ShipName" } });
+            }
+
+            function PageViewModel() {
+                this.dataSource = ko.observableArray([]);
+                this.rowIndex = ko.observable(0);
+                this.field = ko.observable("OrderID");
+                this.currentText = ko.observable("10248");
+            }
+
+            $("#Grid").ejGrid({
+                dataSource: data,
+                columns: [
+                            { field: "OrderID", headerText: "Order ID", isPrimaryKey: true, textAlign: ej.TextAlign.Right, width: 75, customAttributes: { "data-bind": "text: dataSource()[{{:#index}}].OrderID, click: function(){rowIndex({{:#index}}); field('OrderID'); currentText(dataSource()[{{:#index}}].OrderID());}" } },
+                            { field: "CustomerID", headerText: "Customer ID", width: 80, customAttributes: { "data-bind": "text: dataSource()[{{:#index}}].CustomerID, click: function(){rowIndex({{:#index}}); field('CustomerID'); currentText(dataSource()[{{:#index}}].CustomerID());}" } },
+                            { field: "EmployeeID", headerText: "Employee ID", textAlign: ej.TextAlign.Right, width: 80, customAttributes: { "data-bind": "text: dataSource()[{{:#index}}].EmployeeID, click: function(){rowIndex({{:#index}}); field('EmployeeID'); currentText(dataSource()[{{:#index}}].EmployeeID());}" } },
+                            { field: "Freight", headerText: "Freight", textAlign: ej.TextAlign.Right, width: 75, format: "{0:C}", customAttributes: { "data-bind": "text: dataSource()[{{:#index}}].Freight, click: function(){rowIndex({{:#index}}); field('Freight'); currentText(dataSource()[{{:#index}}].Freight());}" } },
+                            { field: "ShipName", headerText: "Ship Name", width: 150, customAttributes: { "data-bind": "text: dataSource()[{{:#index}}].ShipName, click: function(){rowIndex({{:#index}}); field('ShipName'); currentText(dataSource()[{{:#index}}].ShipName());}" } }
+                ]
+            });
+
+            // Here we are setting page dataSource
+            page.dataSource(ko.syncJsMap($("#Grid").ejGrid("option", "dataSource"), OrderViewModel));
+            // clearing previous binding if any
+            ko.cleanNode($("#Grid").find(".e-gridcontent").children().get(0));
+            // apply bindings to newly created content
+            ko.applyBindings(page, $("#Grid").find(".e-gridcontent").children().get(0));
+            ko.applyBindings(page, $("#sampleProperties").get(0));
+            $("#selectColumn").ejDropDownList({
+                width: "120px",
+                "selectedItemIndex": 0,
+                "change": "ValueChange"
+            });
+        });
+
+        $(document).on("click", "#butChange", function () {
+            var rowIndex = parseInt($("#rowIndex").val(), 10);
+            var columnName = $("#selectColumn").ejDropDownList("instance")._selectedValue;
+            var value = $("#change").val();
+            // Json Collection can be changed like this. This will update the Grid's UI as well as DataSource
+            page.dataSource()[rowIndex][columnName](value);
+        });
+        $("#sampleProperties").ejPropertiesPanel();
+
+        function ValueChange() {
+            $("#change").val("");
+        }
+    </script>
+
+</body>
+</html>

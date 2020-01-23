@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+	<link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+	<script src="../scripts/properties.js" type="text/javascript"></script>
+ </head>
+ <body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="container"></div>
+            </div>
+        </div>
+    </div>
+ <script type="text/javascript" language="javascript">
+	$(function () 
+	{
+        $("#container").ejChart(
+        {
+			//Initializing Primary X Axis
+			primaryXAxis:
+			{
+                title: { text: 'Year' },
+				range: { min: 2005, max: 2013, interval: 1 },	
+                majorGridLines: { visible: false }
+            },
+			
+			//Initializing Primary Y Axis
+            primaryYAxis:
+            {
+				title: { text: 'GDP(%) Per Annum' }                             
+            },
+			
+			//Initializing Common Properties for all the series
+			commonSeriesOptions: 
+			{
+                type: 'stackingcolumn100', 
+				enableAnimation: true,
+                tooltip :
+				{
+					visible :true , 
+					format: " #series.name#  <br/>X : #point.x# <br/> Y : #point.y# <br/>Growth Percentage : #point.percentage# % "
+				}
+            },
+			
+			//Initializing Series
+            series: 
+			[                       
+                {
+                    points: [{ x: 2006, y:900 }, { x: 2007, y: 544}, { x: 2008, y: 880}, { x: 2009, y: 675 }, 
+							 { x: 2010, y: 765}, { x: 2011, y:679}, { x: 2012, y: 770}], 
+					name: "USA",
+				},
+                {
+                    points: [{ x: 2006, y:190 }, { x: 2007, y:226}, { x: 2008, y:194}, { x: 2009, y:250},
+							 { x: 2010, y: 222}, { x: 2011, y:181}, { x: 2012, y:128}], 
+					name: "India",
+                },
+				{
+                    points: [{ x: 2006, y:250}, { x: 2007, y:145}, { x: 2008, y:190}, { x: 2009, y:220},
+						     { x: 2010, y:225}, { x: 2011, y:135}, { x: 2012, y:152}], 
+					name: "China",
+                },
+				{
+					 points: [{ x: 2006, y:150}, { x: 2007, y:120}, { x: 2008, y:115}, { x: 2009, y:125}, 
+							  { x: 2010, y:132}, { x: 2011, y:137}, { x: 2012, y:110}],
+					name: "Canada",
+                }  							   
+            ],
+            isResponsive: true,
+			load:"loadTheme",
+            title :{text: 'Gross Domestic Product Growth '},						 
+            size: { height: "600"},                        
+            legend: { visible: true }
+        });
+    });
+ </script>
+ </body>
+</html>
+

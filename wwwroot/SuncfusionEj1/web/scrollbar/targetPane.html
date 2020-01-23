@@ -1,0 +1,256 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Scrollbar Target Pane</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+	<script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="control">
+                    <div id="scrollcontent">
+                        <div>
+                            <div class="sampleContent" id="sampleContent1">
+                                <div>
+                                    <div>
+                                        <table class="tableborder" style="width: 100%;border:0px">
+                                            <tr>
+                                                <td colspan="3" style="font-weight: bold;border-width:0px 1px 1px 0px;">ID</td>
+                                            </tr>
+                                            <tr>
+
+                                                <td>101</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>102 </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>103  </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>104</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>105</td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td>106</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>107</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>108</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>109</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>110</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>111</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>112</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>123 </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>123</td>
+
+                                            </tr>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sampleContent" id="sampleContent3">
+                                <div style='width: 700px;'>
+                                    <table class="tableborder" style="width: 100%; border-width:0px">
+                                        <tr>
+                                            <td style="font-weight: bold; text-align: center;border-width:0px 1px 1px 0px;">Order Date</td>
+                                            <td style="font-weight: bold; text-align: center;border-width:0px 1px 1px 0px;">Country</td>
+                                            <td style="font-weight: bold; text-align: center;border-width:0px 0px 1px 0px;">Code</td>
+                                        </tr>
+                                        <tr>
+                                            <td>07/02/2016</td>
+                                            <td>France</td>
+                                            <td>51100</td>
+                                        </tr>
+                                        <tr>
+                                            <td>07/02/2016</td>
+                                            <td>Germany</td>
+                                            <td>44087</td>
+                                        </tr>
+                                        <tr>
+                                            <td>19/02/2016</td>
+                                            <td>Brazil</td>
+                                            <td>60094</td>
+                                        </tr>
+                                        <tr>
+                                            <td>21/02/2016</td>
+                                            <td>France</td>
+                                            <td>76321</td>
+                                        </tr>
+                                        <tr>
+                                            <td>21/02/2016</td>
+                                            <td>Belgium </td>
+                                            <td>12098</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>22/02/2016</td>
+                                            <td>Brazil</td>
+                                            <td>45608</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>23/02/2016</td>
+                                            <td>Russia</td>
+                                            <td>23487</td>
+                                        </tr>
+                                        <tr>
+                                            <td>26/02/2016</td>
+                                            <td>England</td>
+                                            <td>98342</td>
+                                        </tr>
+                                        <tr>
+                                            <td>10/03/2016 </td>
+                                            <td>China</td>
+                                            <td>62910</td>
+                                        </tr>
+                                        <tr>
+                                            <td>15/03/2016 </td>
+                                            <td>India</td>
+                                            <td>45672</td>
+                                        </tr>
+                                        <tr>
+                                            <td>17/03/2016 </td>
+                                            <td>America</td>
+                                            <td>81231</td>
+                                        </tr>
+                                        <tr>
+                                            <td>25/03/2016 </td>
+                                            <td>Germany</td>
+                                            <td>89734</td>
+                                        </tr>
+                                        <tr>
+                                            <td>29/03/2016</td>
+                                            <td>England</td>
+                                            <td>54982</td>
+                                        </tr>
+                                        <tr>
+                                            <td>07/04/2016</td>
+                                            <td>Japan</td>
+                                            <td>85479</td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                 </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#scrollcontent").ejScroller({ height: "300px", width: "100%", targetPane: "#sampleContent3", destroy: "destroy" });
+             scrollobj = $("#scrollcontent").data("ejScroller");
+            $(window).bind('resize', onResizeEvent);
+        });
+        function destroy(args) {
+            $(window).unbind('resize', onResizeEvent);
+        }
+        function onResizeEvent() {
+            if ($("#scrollcontent").data("ejScroller"))
+                scrollobj.refresh();
+        }
+    </script>
+     <style type="text/css" class="cssStyles">
+        .control {
+            border: 1px solid #bbbcbb;
+            color: gray;
+            width: 55%;
+            height: 100%;
+        }
+
+        .sampleContent {
+            overflow: hidden;
+            float: left;
+        }
+
+        #sampleContent1 {
+            width: 25%;
+        }
+
+        #sampleContent3 {
+            width: 75%;
+        }
+
+        p {
+            color: green;
+        }
+
+        table, th, td {
+            border: 1px solid #bbbcbb;
+        }
+
+        td {
+            box-sizing:border-box;
+            width:250px;
+            text-align:center;
+        }
+        table.tableborder tr td {
+			border-left: none;			
+        }
+        table.tableborder tr td:nth-child(0) {
+			border-left: none;			
+        }
+		table.tableborder tr td:nth-child(3){
+			border-right: none;
+		}
+        table.tableborder{
+            margin-left:0px;
+        }
+        @media (max-width: 700px) {
+            .control{
+               width:85%;
+            }
+        }
+    </style>
+</body>
+</html>

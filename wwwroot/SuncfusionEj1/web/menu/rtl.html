@@ -1,0 +1,81 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1: Menu - RTL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <ul id="menuRTL">
+                    <li><a>كتب</a>
+                        <ul>
+                            <li><a>الإصدارات الجديدة</a></li>
+                            <li><a>جديد إصدارات الكتب السمعية</a></li>
+                            <li><a>أكثر الكتب مبيعا</a></li>
+                            <li><a>قادمة</a></li>
+                            <li><a>مجموعات مربع</a></li>
+                        </ul>
+                    </li>
+                    <li><a>الألعاب</a>
+                        <ul>
+                            <li><a>قادمة</a></li>
+                            <li><a>PC</a></li>
+                            <li><a>PS فيتا</a></li>
+                            <li class="separator"></li>
+                            <li><a>PS3</a></li>
+                            <li><a>اكس بوكس</a></li>
+                            <li><a>لوحات المفاتيح</a></li>
+                        </ul>
+                    </li>
+                    <li><a>متنقل</a>
+                        <ul>
+                            <li><a>القادمون الجدد</a></li>
+                            <li><a>أكثر الكتب مبيعا</a></li>
+                            <li><a>منخفض السعر</a></li>
+                            <li><a>أقراص</a></li>
+                        </ul>
+                    </li>
+                    <li><a>الكاميرات</a>
+                        <ul>
+                            <li><a>حدد و صور</a></li>
+                            <li><a>SLR الرقمية</a></li>
+                            <li><a>كاميرات الفيديو الرقمية</a></li>
+                            <li><a>أكثر الكتب مبيعا</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a>موسيقى</a>
+                        <ul>
+                            <li><a>الإصدارات الجديدة</a></li>
+                            <li><a>أكثر الكتب مبيعا</a></li>
+                            <li><a>موسيقى الروك</a></li>
+                            <li><a>التعبدية والروحية</a></li>
+                            <li><a>الصوفية وغزال</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $("#menuRTL").ejMenu({ enableRTL: true });
+        });
+    </script>
+</body>
+</html>

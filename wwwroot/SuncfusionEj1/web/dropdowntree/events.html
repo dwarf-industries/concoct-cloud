@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1: DropDownTree - Events</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div class="control">
+                        <div class="ctrllabel">Select a Club</div>
+                        <input type="text" id="itemList" />
+                    </div>
+                </div>
+            </div>
+            <div class="cols-prop-area event-tracer">
+                <div>
+                    <div class="heading">
+                        <span>Event Trace</span>
+                        <div class="pull-right">
+                            <select name="selectevtprops" id="selectControls">
+                                <option value="change">Change</option>
+                                <option value="select">Select</option>
+                                <option value="open">Popup Open</option>
+                                <option value="close">Popup Close</option>
+                                <option value="focus">Focus</option>
+                                <option value="blur">Blur</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="prop-grid content">
+                        <div class="eventarea">
+                            <div class="EventLog" id="EventLog">
+                            </div>
+                        </div>
+                        <div class="evtbtn">
+                            <input type="button" class="eventclear e-btn" value="Clear" onclick="onClear()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var target;
+        var localData = [
+                   { id: 1, name: "Cricket", hasChild: true, expanded: true },
+                   { id: 2, pid: 1, name: "Princeton Club" },
+                   { id: 3, pid: 1, name: "Harverd Club" },
+                   { id: 4, pid: 1, name: "Middlebury Club" },
+                   { id: 6, pid: 1, name: "Dartmouth Club" },
+                   { id: 7, name: "Football", hasChild: true, expanded: true },
+                   { id: 8, pid: 7, name: "A.F.C Blackpool" },
+                   { id: 9, pid: 7, name: "A.F.C Emley" },
+                   { id: 10, pid: 7, name: "Bedford" },
+                   { id: 11, name: "Basketball", hasChild: true },
+                   { id: 12, pid: 11, name: "AGE Halkida" },
+                   { id: 13, pid: 11, name: "Iraklio" },
+                   { id: 14, pid: 11, name: "Sporting Athens" },
+                   { id: 15, pid: 11, name: "Pagrati Athens" }];
+        $(function () {
+            $('#itemList').ejDropDownTree({
+                treeViewSettings: {
+                    fields: { id: "id", parentId: "pid", value: "id", text: "name", hasChild: "hasChild", dataSource: localData, expanded: "expanded" }
+                },
+                watermarkText: "Please select",
+                width: "100%",
+                create: 'onCreate',
+                destroy: 'onDestroy',
+                open: 'onOpen',
+                close: 'onClose',
+                focus: 'onFocus',
+                blur: 'onBlur',
+                select: 'onSelect',
+                change: 'onChange'
+            });
+
+            target = $("#itemList").data("ejDropDownTree");
+        
+            $('#selectControls').ejDropDownList({
+                showCheckbox: true,
+                checkAll: true,
+                change: "evtpropscheckedevent"
+            });
+
+        });
+
+        function onCreate(sender) {
+            jQuery.addEventLog("DropDownTree control has been <span class='eventTitle'>created</span>.<br/>");
+        }
+        function onClose(sender) {
+            jQuery.addEventLog("DropDownTree popup is <span class='eventTitle'>closed</span>.<br/>");
+        }
+        function onFocus(sender) {
+            jQuery.addEventLog("DropDownTree control has been <span class='eventTitle'>focused</span>.<br/>");
+        }
+        function onBlur(sender) {
+            jQuery.addEventLog("DropDownTree is <span class='eventTitle'>focus out</span>.<br/>");
+        }
+        function onOpen(sender) {
+            jQuery.addEventLog("DropDownTree popup is <span class='eventTitle'>opened</span>.<br/>");
+        }
+        function onChange(sender) {
+			if(sender.value == "") 
+				jQuery.addEventLog("<span class='eventTitle'>Value has changed</span> to null<br/>");
+			else
+				jQuery.addEventLog("<span class='eventTitle'>Value has changed</span> to " + sender.value + ".<br/>");
+        }
+        function onSelect(sender) {
+            jQuery.addEventLog(sender.value + " is <span class='eventTitle'>selected</span>.<br/>");
+        }
+        function onClear() {
+            jQuery.clearEventLog();
+        }
+
+        function evtpropscheckedevent(args) {
+            if (args.isChecked) {
+                switch (args.selectedValue) {
+                    case "create":
+                        target.option(args.selectedValue, "onCreate");
+                        break;
+                    case "close":
+                        target.option(args.selectedValue, "onClose");
+                        break;
+                    case "change": target.option(args.selectedValue, "onChange"); break;
+                    case "select": target.option(args.selectedValue, "onSelect"); break;
+                    case "open": target.option(args.selectedValue, "onOpen"); break;
+                    case "focus": target.option(args.selectedValue, "onFocus"); break;
+                    case "blur": target.option(args.selectedValue, "onBlur"); break;					
+                }
+            }
+            else {
+                target.option(args.selectedValue, null);
+            }
+        }
+    </script>
+</body>
+</html>

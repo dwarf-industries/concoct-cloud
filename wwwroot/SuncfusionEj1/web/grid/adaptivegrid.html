@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ejgrid.responsive.css" type="text/css" rel="stylesheet" />
+   <!--[if lt IE 9]>
+        <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jquery.validate.min.js"></script>
+    <script src="../scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../scripts/jsondata.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <style type="text/css">
+        ::-ms-clear {
+            display: none;
+        }
+		.e-grid.e-responsive {
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+    </style>
+    <style>
+        .e-gridAdaptive {
+            border-width: 0px !important;
+        }
+    </style>
+
+</head>
+<body style="overflow:hidden">
+    <div id="Grid"></div>
+
+    <script type="text/javascript">
+        $(function () {
+            window.mode = "";
+            // the datasource "window.gridData" is referred from jsondata.min.js
+            var gridObj = $("#Grid").ejGrid({
+                dataSource: window.gridData,
+                allowPaging: true,
+                editSettings: { allowAdding: true, allowDeleting: true, allowEditing: true },
+                toolbarSettings: { showToolbar: true, toolbarItems: [ej.Grid.ToolBarItems.Add, ej.Grid.ToolBarItems.Edit, ej.Grid.ToolBarItems.Delete, ej.Grid.ToolBarItems.Update, ej.Grid.ToolBarItems.Cancel, ej.Grid.ToolBarItems.Search] },
+                pageSettings: { pageCount: 3, pageSize: 7 },
+                allowFiltering: true,
+                allowSorting: true,
+                allowMultiSorting: true,
+                minWidth: 600,
+                create: function () {
+                    var loc = window.location.toString();
+                    var mode = loc.split('?')[1];
+                    if (mode && mode == "desktop") {
+                        $("#Grid_numberDlg").ejDialog({
+                            beforeOpen: function () {
+                                if (this.model.position.X > 710)
+                                    $("#Grid_numberDlg").ejDialog({
+                                        position: { X: 710 }
+                                    })
+                            }
+                        })
+                        $("#Grid_stringDlg").ejDialog({
+                            beforeOpen: function () {
+                                if (this.model.position.X > 710)
+                                    $("#Grid_stringDlg").ejDialog({
+                                        position: { X: 550 }
+                                    })
+                            }
+                        })
+                    }
+                },
+               actionComplete: "actionComplete",
+
+                isResponsive: true,
+                filterSettings: { filterType: "menu" },
+                enableResponsiveRow: false,
+                columns: [
+                    { field: "OrderID", isPrimaryKey: true, headerText: "Order ID", width: 90, textAlign: ej.TextAlign.Right },
+					 { field: "CustomerID", headerText: "CustomerID", width: 100 },
+					 { field: "EmployeeID", headerText: "Employee ID",  validationRules: { required: true }, editType: ej.Grid.EditingType.Dropdown, width: 90, textAlign: ej.TextAlign.Right },
+                     { field: "ShipCity", headerText: "Ship City", validationRules: { required: true }, width: 120, editType: ej.Grid.EditingType.Dropdown },
+                     { field: "Freight", headerText: 'Freight', validationRules: { required: true }, width: 110, editParams: { decimalPlaces: 2 }, editType: ej.Grid.EditingType.Numeric, width: 80, format: "{0:C}" }
+                ]
+            }).ejGrid("instance");
+            var browserDetails = gridObj.getBrowserDetails();
+            if (browserDetails.browser == "msie" && parseInt(browserDetails.version, 10) <= 9)
+                $("#Grid").ejGrid("model.enableResponsiveRow", false);
+            if (window.addEventListener) {
+                window.addEventListener('message', function (e) {
+                    var gridObj = $("#Grid").ejGrid("instance");
+                    mode = e.data;
+                    if (e.data == "mobile") {
+                        $('body').css('margin', '0px');
+                        $('body').css('width', '100%');
+                        gridObj.phoneMode = true;
+                        $("#Grid").ejGrid("model.scrollSettings.height", "100%");
+                        $("#Grid").ejGrid("model.pageSettings.pageSize", 10);
+                        if (gridObj.model.isEdit)
+                            gridObj.cancelEdit();
+                        if (e.data != "Tablet Mode")
+                            $("#Grid").removeAttr("style");
+                        gridObj.windowonresize();
+                        gridObj.refreshContent();
+                    }
+                    else if (e.data == "desktop") {
+                        $('body').css('margin-right', '1%');
+                        $('body').css('width', '99%');
+                        $("#Grid").ejGrid("model.pageSettings.pageSize", 7)
+                        gridObj.windowonresize();
+                    }
+                    if (typeof e.data == "boolean") {
+                        var gridObj = $("#Grid").ejGrid("instance");
+                        if (gridObj.model.isEdit)
+                            gridObj.cancelEdit();
+                        $("#Grid").ejGrid("model.enableResponsiveRow", e.data);
+                        if (e.data) {
+                            $('body').css('overflow', 'visible');
+                            $('body').css('overflow-x', 'hidden');
+                        }
+                        else {
+                            $("#Grid").ejGrid("model.pageSettings.pageSize", 10)
+                            $('body').css('overflow', 'hidden');
+                        }
+                        gridObj.windowonresize();
+                        gridObj.refreshContent();
+
+                    }
+                    else {
+                        var links = $(document.head || document.getElementsByTagName('head')[0]).find("link");
+                        for (var i = 0; i < links.length; i++) {
+                            if (links[i].href.indexOf("ej.theme.min.css") != -1) {
+                                var cssref = links[i].href,
+                                serverconfig = cssref.substr(0, cssref.indexOf("Content") - 1);
+                                //fileref = $('<link rel="stylesheet" type="text/css" href="' + serverconfig + window.parent.themes[e.data.split('_')[1]] + '" />');
+                                //$(fileref).insertAfter(links[i]);
+                                //$(links[i]).remove();
+                                break;
+                            }
+                        }
+
+                    }
+                });
+            }
+        });
+        function actionComplete(args) {
+            if (args.requestType == "paging" && mode == "desktop") {
+                if (args.currentPage == 29) {
+                    $("#Grid").css("height", "262px");
+                }
+				else {
+				    $("#Grid").css("height","362px");
+				}
+            }
+            else if (args.requestType == "filtering" || args.requestType == "searching") {
+                var proxy = this;
+                setTimeout(function () { proxy.windowonresize(); }, 30);
+            }
+            this.getContent().addClass("e-widget");
+        }
+    </script>
+</body>
+</html>

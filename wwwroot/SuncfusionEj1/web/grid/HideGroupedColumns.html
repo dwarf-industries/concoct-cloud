@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Hide Grouped Columns</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsondata.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="Grid"></div>
+            </div>
+        </div>
+    </div>
+    <div id="alertDialog" title="Alert" style="display:none">
+         Grouping is disabled for this column
+        <br />
+        <input id="ok" type="button" class="e-btn" value="OK"/>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+
+            $("#ok").ejButton({ click: "close" });
+            $("#alertDialog").ejDialog({ showOnInit: false });
+            $("#Grid").ejGrid({
+                // the datasource "window.gridData" is referred from jsondata.min.js
+                dataSource: window.gridData,
+                allowPaging: true,
+                allowGrouping: true,
+                groupSettings: {
+                    showGroupedColumn: false,
+                    groupedColumns: ["EmployeeID"]
+                },
+                columns: [
+                        { field: "OrderID", headerText: "Order ID", textAlign: ej.TextAlign.Right, width: 65, allowGrouping: false },
+                        { field: "CustomerID", headerText: "Customer ID", width: 90 },
+                        { field: "ShipCity", headerText: "Ship City", width: 90 },
+                        { field: "ShipCountry", headerText: "Ship Country", width: 90 },
+                        { field: "EmployeeID", headerText: "Employee ID", width: 90 },
+                        { field: "Verified", width: 70 }
+                ],
+                columnDragStart: "dragHeader"
+
+            });
+        });
+        function dragHeader(args) {
+            if (args.draggableType == "headercell" && $(args.target).text() == "Order ID") {
+                $("#alertDialog").ejDialog("open");
+            }
+        }
+        function close() {
+            $("#alertDialog").ejDialog("close");
+        }
+
+    </script>
+    <style>
+        #alertDialog .e-btn {
+        position:relative;
+        left:168px;
+        }
+    </style>
+
+</body>
+</html>

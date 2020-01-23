@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1: Accordion - API's</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="APIAccordion" class="control_frame">
+                    <h3>
+                        <a href="#">London</a>
+                    </h3>
+                    <div>
+                        London is one of the most popular tourist destinations in the world for a reason. A cultural and historical hub, London has an excellent public transportation system that allows visitors to see all the fantastic sights without spending a ton of money on a rental car.
+                    </div>
+                    <h3>
+                        <a href="#">Paris</a>
+                    </h3>
+                    <div>
+                        Paris, the city of lights and love - this short guide is full of ideas for how to make the most of the romanticism that oozes from every one of its beautiful corners.
+                    </div>
+                    <h3>
+                        <a href="#">Rome</a>
+                    </h3>
+                    <div>
+                        Rome is one of the world's most fascinating cities. The old adage that Rome was not built in a day — and that you won't see it in one or even in three — is true. For the intrepid traveler who can keep pace, here is a list of must-sees. But remember what the Romans say: "Even a lifetime isn't enough to see Rome."
+                    </div>
+                </div>
+            </div>
+
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            Active Index
+                        </div>
+                        <div class="col-md-6">
+                            <select name="selectIndex" class="e-ddl" id="optActiveChange">
+                                <option value="0">Item 0</option>
+                                <option value="1">Item 1</option>
+                                <option value="2">Item 2</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            Disable Item
+                        </div>
+                        <div class="col-md-6">
+                            <select name="disableItem" class="e-ddl" id="optDisableChange">
+                                <option value="0">Item 0</option>
+                                <option value="1">Item 1</option>
+                                <option value="2">Item 2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            Enable Item
+                        </div>
+                        <div class="col-md-6">
+                            <select name="enableItem" class="e-ddl" id="optEnableChange">
+                                <option value="0">Item 0</option>
+                                <option value="1">Item 1</option>
+                                <option value="2">Item 2</option>
+                            </select>
+                        </div>
+                    </div>
+					 <div class="row">
+                        <div class="col-md-6">
+                            Remove items
+                        </div>
+                        <div class="col-md-6">
+                            <select name="enableItem" class="e-ddl" id="optRemove">
+                                <option value="0">Item 0</option>
+                                <option value="1">Item 1</option>
+                                <option value="2">Item 2</option>
+                            </select>
+                        </div>
+					</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            Enable / Disable All
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="btnEnableDisable" class="e-togglebtn" value="ShowHide" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            Show / Hide
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="chkShowHide" class="e-chkbox" value="ShowHide" checked="checked" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            Destroy
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="chkDestroy" class="e-togglebtn" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            Height Adjust Mode
+                        </div>
+                        <div class="col-md-6">
+                            <select name="heightAdjust" class="e-ddl" id="optHeightAdjust">
+                                <option value="fill">Fill</option>
+                                <option value="content">Content</option>
+                                <option value="auto">Auto</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            Close button
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="chkCloseBtn" class="e-togglebtn" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" class="jsScript">
+        var acrdnObj, optDisable, optEnable, activeObj;
+        $(function () {
+            // declaration
+            $("#APIAccordion").ejAccordion();
+            acrdnObj = $("#APIAccordion").data("ejAccordion");
+            $("#chkShowHide").ejCheckBox({ "change": "onShowHide" });
+            $("#btnEnableDisable").ejToggleButton({ "change": "onEnaleDisableAll", "defaultText": "Disable All", "activeText": "Enable All", "width": "120px" });
+            $("#chkDestroy").ejToggleButton({ "change": "onDestoryRestore", "defaultText": "Destory", "width": "120px", "activeText": "Restore" });
+            $("#optActiveChange").ejDropDownList({ "change": "onActiveChange", watermarkText: "Select", width: "120px" });
+            activeObj=$("#optActiveChange").data("ejDropDownList");
+			$("#optDisableChange").ejDropDownList({ "change": "onDisableChange", showCheckbox: true, watermarkText: "Select", width: "120px" });
+			optDisable = $("#optDisableChange").data("ejDropDownList");
+            $("#optEnableChange").ejDropDownList({ "change": "onEnableChange", watermarkText: "Select", showCheckbox: true, width: "120px" });
+            optEnable = $("#optEnableChange").data("ejDropDownList");
+            $("#optHeightAdjust").ejDropDownList({ "change": "onHeightAdjust", value: "content", width: "120px" });
+            $("#chkCloseBtn").ejToggleButton({ "change": "onShowHideCloseBtn", "defaultText": "Show", "width": "120px", "activeText": "Hide" });
+			$("#optRemove").ejDropDownList({ "select": "onRemoveChange", watermarkText: "Select", width: "120px" });
+		removeObj = $("#optRemove").data('ejDropDownList');
+		});
+        function onEnaleDisableAll(args) {
+            if (acrdnObj) {
+                if (args.isChecked){
+                    acrdnObj.disable();
+					activeObj.disable();
+					optDisable.disable();
+					optEnable.disable();
+					}
+                else{
+                    acrdnObj.enable(); 
+					activeObj.enable(); 
+					optDisable.enable();    
+					optEnable.enable();					
+					}
+            }
+        }
+        function onDestoryRestore(args) {
+            if (args.isChecked) {
+                acrdnObj.destroy();
+                acrdnObj = null;
+            }
+            else {
+                $("#APIAccordion").ejAccordion();
+                acrdnObj = $("#APIAccordion").data("ejAccordion");
+            }
+        }
+        function onActiveChange(args) {
+            if (acrdnObj) {
+                acrdnObj.option({ selectedItemIndex: args.value });
+                $("#optDisableChange").ejDropDownList("clearText");
+                $("#optEnableChange").ejDropDownList("clearText"); 
+				$("#optRemove").ejDropDownList("clearText");
+            }
+        }
+        function onDisableChange(args) {
+            var arrIndex = [], uncheck = [];
+            if (args.isChecked) arrIndex.push(parseInt(args.value));
+            else uncheck.push(parseInt(args.value));
+            if (acrdnObj) {
+                acrdnObj.disableItems(arrIndex); acrdnObj.enableItems(uncheck);
+                $("#optActiveChange").ejDropDownList("clearText");
+                $("#optEnableChange").ejDropDownList("clearText");
+				$("#optRemove").ejDropDownList("clearText");
+
+            }
+        }
+		function onRemoveChange(args) {
+            if (acrdnObj.model) {
+                acrdnObj.removeItem(parseInt(args.value));
+                removObj = $("#optRemove").ejDropDownList("instance");
+                $(removObj.items[removObj.popupListItems.length -= 1]).remove();
+                disObj = $("#optDisableChange").ejDropDownList("instance");
+                $(disObj.items[disObj.popupListItems.length -= 1]).remove();
+                enObj = $("#optEnableChange").ejDropDownList("instance");
+                $(enObj.items[enObj.popupListItems.length -= 1]).remove();
+				activeObj=$("#optActiveChange").ejDropDownList("instance"); 
+				$(activeObj.items[activeObj.popupListItems.length -= 1]).remove();
+                $("#optDisableChange").ejDropDownList("clearText");
+                $("#optEnableChange").ejDropDownList("clearText");
+				$("#optActiveChange").ejDropDownList("clearText"); 
+            }
+        }
+        function onEnableChange(args) {
+            var arrayIndex = [], uncheck = [];
+            if (args.isChecked) arrayIndex.push(parseInt(args.value));
+            else uncheck.push(parseInt(args.value));
+            if (acrdnObj) {
+                acrdnObj.enableItems(arrayIndex); acrdnObj.disableItems(uncheck);
+                $("#optActiveChange").ejDropDownList("clearText");
+                $("#optDisableChange").ejDropDownList("clearText");
+				$("#optRemove").ejDropDownList("clearText");
+            }
+        }
+        function onShowHide(args) {
+            if (acrdnObj) {
+                if (args.isChecked)
+                    acrdnObj.show();
+                else
+                    acrdnObj.hide();
+            }
+        }
+        function onHeightAdjust(args) {
+            if (acrdnObj) {
+                acrdnObj.element.find(">.e-content").css("height", "");
+                acrdnObj.option("heightAdjustMode", args.value);
+            }
+        }
+        function onShowHideCloseBtn(args) {
+            acrdnObj && acrdnObj.option("showCloseButton", args.isChecked);
+        }
+        $("#sampleProperties").ejPropertiesPanel();
+    </script>
+</body>
+
+</html>

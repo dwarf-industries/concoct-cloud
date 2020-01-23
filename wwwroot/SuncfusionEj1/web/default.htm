@@ -1,0 +1,620 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential Studio for JavaScript 1 | Syncfusion UI Demos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no" />
+    <meta name="description" content="Essential JavaScript 1 widgets are based on HTML5 and jQuery. It includes all UI controls like charts, grids, diagram, and more. | Syncfusion UI Demos" />
+    <meta name="author" content="Syncfusion" />
+    <link rel="shortcut icon" href="content/images/favicon.ico" />
+    <!-- Sample Browser related references-->
+    <link href="content/bootstrap.min.css" rel="stylesheet" />
+    <link href="content/ejthemes/ej.widgets.core.min.css" rel="stylesheet" />
+    <link href="content/ejthemes/bootstrap-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="content/ejthemes/bootstrap-theme/ej.reportdesigner.min.css" rel="stylesheet" />
+    <link href="content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--Dependency files references-->
+    <!--[if lt IE 9]>
+    <script src="scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <!--Localization references-->
+    <script src="scripts/path.js"></script>
+    <script src="scripts/jsrender.min.js" type="text/javascript"></script>
+    <script src="scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <!--[if gte IE 9]><!-->
+    <script src="scripts/ej.reportdesigner.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="scripts/properties.js" type="text/javascript"></script>
+    <!-- Sample Browser related references-->
+    <script src="scripts/otherProducts.js"></script>
+    <script src="scripts/default.js" type="text/javascript"></script>
+    <script src="scripts/sampleslist.js" type="text/javascript"></script>
+
+    <!--highlighter references-->
+    <script src="scripts/CodeMirror/codemirror.js" type="text/javascript"></script>
+    <script src="scripts/CodeMirror/javascript.js" type="text/javascript"></script>
+    <script src="scripts/CodeMirror/css.js" type="text/javascript"></script>
+    <script src="scripts/CodeMirror/xml.js" type="text/javascript"></script>
+    <script src="scripts/CodeMirror/htmlmixed.js" type="text/javascript"></script>
+    <script src="scripts/CodeMirror/clike.js" type="text/javascript"></script>
+    <script src="scripts/CodeMirror/show-hint.js" type="text/javascript"></script>
+    <script src="scripts/CodeMirror/sql.js" type="text/javascript"></script>
+    <script src="scripts/CodeMirror/sql-hint.js" type="text/javascript"></script>
+    <link href="scripts/CodeMirror/codemirror.min.css" rel="stylesheet" />
+    <link href="scripts/CodeMirror/show-hint.min.css" rel="stylesheet" />
+    <link href="content/default.css" rel="stylesheet" />
+    <script src="scripts/knockout.min.js"></script>
+    <script src="scripts/ej.widget.ko.min.js"></script>
+
+    <!--ZeroClipboard Reference-->
+    <script src="scripts/ZeroClipboard.js"></script>
+    <link href="content/default-responsive.css" rel="stylesheet" />
+</head>
+<body class="fixedlayout" style="visibility:hidden">
+    <div class="htmljssamplebrowser" id="htmljssamplebrowser" style="display: block !important">
+		<div id="ej2popup" class= "e-ej2popup">
+			<div class="e-popup-close">
+				<button id="popupclose" class="float-right ejbutton" type="button"></button>
+			</div>
+			<table class="e-popup-table">
+				<tr>
+					<td class="e-popup-td">
+						<div class="e-popup-content">
+							<table class="e-content-table">
+								<tr>
+									<td class="e-content-td1">
+										<div class="e-popup-first">Take a look at our next generation</div>
+									</td>
+									<td class="e-content-td2">
+										<div class="e-popup-second">JavaScript Library</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</td>
+					<td class="e-popup-td">
+						<div class="e-popup-more">
+							<a href="https://ej2.syncfusion.com/home/javascript.html?utm_source=ej1&utm_medium=banner&utm_campaign=migrate" class="anchorclass" target="_blank">
+								<button id="learnmore" class="float-right ejbutton" title="Essential JS 2" type="button">LEARN MORE</button>
+							</a>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+        <div class="header activebg-color">
+            <div class="sbheader">
+                <div class="title">
+                    <a title="Essential JS 1" href="default.htm" class="anchorclass site-title">
+                        <h1 title="Essential JS 1" class="jslogo e-h1-tag">Essential JS 1</h1>
+                    </a>
+                </div>
+                <div class="product-naviation hideIt">
+                    <div class="selectedproduct activefont-color"><span class="desktop_pro"></span>Desktop</div>
+                    <div class="not-selected"><span class="mobile_pro"></span>Mobile</div>
+                </div>
+                <div id="Res-prodnav" class="productlogo desktoplogo"></div>
+                <div style="float: right;">
+					<div class="ej2option">
+                        <a href="https://ej2.syncfusion.com/home/javascript.html?utm_source=ej1&utm_medium=referral&utm_campaign=migrate" class="anchorclass" target="_blank">
+                            <button id="ej2button" class="float-right ejbutton" title="Essential JS 2" type="button">ESSENTIAL JS 2</button>
+                        </a>
+                    </div>
+                    <div class="ejthemestudio">
+                        <a href="https://js.syncfusion.com/themestudio/" class="anchorclass" target="_blank">
+                            <button id="themestudio" class="float-right ejbutton" title="Essential JS Theme Studio" type="button">JS THEME STUDIO</button>
+                        </a>
+                    </div>
+                    <div class="wrapper-demo">
+                        <a href="https://www.syncfusion.com/downloads/javascript" class="anchorclass" target="_blank">
+                            <button id="buybutton" class="float-right ejbutton downbutton" title="Download" type="button"></button>
+                        </a>
+                    </div>
+                    <div class="themegallery">
+                        <ul id="themebutton" title="Theme Switcher"></ul>
+                        <div id="sbtooltipbox">
+                            <div class="sbtooltip"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-container-fluid">
+            <div class="row">
+                <div class="accordion-panel cols-fixed-sidebar slidinganimation">
+                    <div class="search">
+                        <input type="text" id="auto" class="autotext" /><span class='search-icon'></span>
+                    </div>
+                    <div id="dashboardheader">
+                        <div id="sbdashboard" class="dashboardhead">
+                            <span class="anchor">SHOWCASE SAMPLES</span>
+                        </div>
+                    </div>
+                    <div id="scrollcontainer">
+                        <div>
+                            <div class="accordion" id="accordion2">
+                            </div>
+                            <script id="accordionGroupTmpl" type="text/x-jsrender">
+                                <div class="SB-groupIt downArrow"><span>{{:#view.data}}</span><span class="SB-Arrow"></span></div>
+                                <div class="SB-group {{RemoveWhiteSpace:#view.data}}"></div>
+                            </script>
+                            <script id="accordionTmpl" type="text/x-jsrender">
+                                {{if (publish=="online" && online==true) || publish !="online"}}
+                                <div id="{{>id}}" class="anchorclass mainlevel {{if isResponsive == 'false'}} irresponsive {{/if}}" hashbang="#!/flat/{{>hashbang}}/{{ensureURL:url}}">
+                                    <div class="dashboard">
+                                        <span class="anchor">{{>name}}</span>
+                                        {{if type}} <span class="samplestatus {{>type}}"></span>{{/if}}
+                                    </div>
+                                </div>
+                                {{/if}}
+                            </script>
+                            <div class="accordion samplesCollection" id="samplesDiv"></div>
+                            <script type="text/x-jsrender" id="accordionTmplchild">
+
+                                {{if (publish=="online" && online==true) || publish !="online"}}
+                                <div id="{{>id}}" class="samples">
+                                    <div id="{{>id}}_back" class="firstlevelback dashboardhead">
+                                        <span class="arrowback"></span><span class="anchor sbheading">ALL CONTROLS</span>
+                                    </div>
+                                    <div id="{{>id}}_header" class="dashboardhead">
+                                        <span class="anchor sbheading">{{:name}}</span>
+                                    </div>
+                                    {{for samples ~pId=hashbang}}
+                                    {{if (childcount>0)}}
+                                    <div class="subsample-1 {{if isResponsive == 'false'}} irresponsive {{/if}}">
+                                        <div class="SB-groupIt downArrow"><span>{{Upperstring:name}}</span><span class="SB-Arrow"></span></div>
+                                        <div id="{{>id}}" width="200px">
+                                            {{for samples ~rId=~pId ~sId=url}}
+                                            {{if (publish=="online" && online==true) || publish !="online"}}
+                                            <div hashbang="#!/flat/{{ensureURL:~rId}}/{{ensureURL:~sId}}/{{ensureURL:url}}" class="subsamples SB-group SB-hashcollection {{if isResponsive == 'false'}} irresponsive {{/if}} secondlevelload anchorclass">
+                                                <div id="{{>id}}" class="dashboard" childcount="{{>childcount}}" querystring="{{>querystring}}">
+                                                    <span class="anchor">{{>name}}</span>
+                                                    {{if type}} <span class="samplestatus {{>type}}"></span>{{/if}}
+                                                </div>
+                                            </div>
+                                            {{/if}}
+                                            {{/for}}
+                                        </div>
+                                    </div>
+
+                                    {{else}}
+                                    <div class="anchorclass SB-hashcollection subsamples samples {{if isResponsive == 'false'}} irresponsive {{/if}}" hashbang="#!/flat/{{ensureURL:~pId}}/{{ensureURL:url}}">
+                                        <div id="{{>id}}" class="firstlevelload dashboard" childcount="{{>childcount}}" querystring="{{>querystring}}">
+                                            <span class="anchor">{{>name}}</span>
+                                            {{if type}} <span class="samplestatus {{>type}}"></span>{{/if}}
+                                        </div>
+                                    </div>
+                                    {{/if}}
+                                    {{/for}}
+                                </div>
+                                {{/if}}
+                            </script>
+                            <div id="subsamplesDiv" style="display: none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-panel scrollit">
+                    <div class="row">
+                        <div class="res_header">
+                            <button id="slideMenu" class="slidemenuicon"></button>
+                            <span class="producttitle">Showcase samples</span>
+                            <div id="sampleheadingtext" style="display:none">
+                                <div class="samplename sbsamplename">
+                                    <span id="controlname"></span>
+                                    <span id="sbtxt"></span>
+                                    <span id="navigation-btn">
+									    <span id="cul_switch"><input type="text" id="culture_switcher"/></span>
+                                        <a id="newsamplewindow" class="nav_btn e-flat" title="New window" target="_blank"></a>
+                                        <button id="prev_btn" title = "Previous" class="nav_btn e-flat"></button>
+                                        <button id="next_btn" title = "Next" class="nav_btn e-flat"></button>
+                                    </span>
+                                </div>
+                            </div>
+                            <ul id="res_themebutton" title="Theme switcher"></ul>
+
+                        </div>
+                        <div class="productpage showpage">
+                            <div class="controlText-section">
+                                    <div id="javaScriptTab" class="controlSamples-section">
+                                        <ul class="featuredsamples">
+                                            <li class="listsampleimage">
+                                                <div class="lisampleimage">
+                                                    <a href="dashboard/healthtracker/default.html" target="_blank">
+                                                        <div class="imgstyle img1"></div>
+                                                    </a>
+                                                </div>
+                                                <div class="litext">
+                                                    <a class="anchorclass aclass">Health Tracker</a>
+                                                    <p>
+                                                        Visualize food intake and calories burnt using gauges, charts and grids.
+                                                    </p>
+                                                </div>
+                                                <div class="samplebutton">
+                                                    <a class="anchorclass e-tbtn e-active" href="dashboard/healthtracker/default.html" target="_blank">
+                                                        <div><span class="e-view-sample">VIEW SAMPLE</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="codebutton">
+                                                    <a class="anchorclass e-tbtn e-active" target="_blank" href="dashboard/sourcecode.html?id=healthtracker">
+                                                    </a>
+                                                </div>
+                                                <span class="qrcode"><span class="qrimage qrhealth"></span></span>
+                                            </li>
+                                            <li class="listsampleimage">
+                                                <div class="lisampleimage">
+                                                    <a href="dashboard/projecttracker/projecttracker.html" target="_blank">
+                                                        <div class="imgstyle img8"></div>
+                                                    </a>
+                                                </div>
+                                                <div class="litext">
+                                                    <a class="anchorclass aclass">Project Tracker</a>
+                                                    <p>Visualize and edit project schedule, and track project progress.</p>
+                                                </div>
+                                                <div class="samplebutton">
+                                                    <a class="anchorclass e-tbtn e-active" href="dashboard/projecttracker/projecttracker.html" target="_blank">
+                                                        <div><span class="e-view-sample">VIEW SAMPLE</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="codebutton">
+                                                    <a class="anchorclass e-tbtn e-active" target="_blank" href="dashboard/sourcecode.html?id=projecttracker">
+                                                    </a>
+                                                </div>
+                                                <span class="qrcode"><span class="qrimage qrprojecttracker"></span></span>
+                                            </li>
+                                            <li class="listsampleimage">
+                                                <div class="lisampleimage">
+                                                    <a href="dashboard/diagrambuilder/default.html" target="_blank">
+                                                        <div class="imgstyle img6"></div>
+                                                    </a>
+                                                </div>
+                                                <div class="litext">
+                                                    <a class="anchorclass aclass">Diagram Builder</a>
+                                                    <p>Create flowcharts, workflows, and diagrams by using Diagram Builder.</p>
+                                                </div>
+                                                <div class="samplebutton">
+                                                    <a class="anchorclass e-tbtn e-active" href="dashboard/diagrambuilder/default.html" target="_blank">
+                                                        <div><span class="e-view-sample">VIEW SAMPLE</span></div>
+                                                    </a>
+                                                </div>
+                                                <span class="qrcode"><span class="qrimage qrdiagramBuilder"></span></span>
+                                            </li>
+                                            <li class="listsampleimage">
+                                                <div class="lisampleimage">
+                                                    <a href="dashboard/expenseanalysis/default.html" target="_blank">
+                                                        <div class="imgstyle img4"></div>
+                                                    </a>
+                                                </div>
+                                                <div class="litext">
+                                                    <a class="anchorclass aclass">Expense Analysis</a>
+                                                    <p>Categorize and analyze expenses to understand how money was spent.</p>
+                                                </div>
+                                                <div class="samplebutton">
+                                                    <a class="anchorclass e-tbtn e-active" href="dashboard/expenseanalysis/default.html" target="_blank">
+                                                        <div><span class="e-view-sample">VIEW SAMPLE</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="codebutton">
+                                                    <a class="anchorclass e-tbtn e-active" target="_blank" href="dashboard/sourcecode.html?id=expenseanalysis">
+                                                    </a>
+                                                </div>
+                                                <span class="qrcode"><span class="qrimage qrexpense"></span></span>
+                                            </li>
+                                            <li class="listsampleimage">
+                                                <div class="lisampleimage">
+                                                    <a href="dashboard/salesAnalysis/salesAnalysis.html" target="_blank">
+                                                        <div class="imgstyle img5"></div>
+                                                    </a>
+                                                </div>
+                                                <div class="litext">
+                                                    <a class="anchorclass aclass">Sales Analysis</a>
+                                                    <p>Sales analysis app which uses Maps and Range Navigator controls .</p>
+                                                </div>
+                                                <div class="samplebutton">
+                                                    <a class="anchorclass e-tbtn e-active" href="dashboard/salesAnalysis/salesAnalysis.html" target="_blank">
+                                                        <div><span class="e-view-sample">VIEW SAMPLE</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="codebutton">
+                                                    <a class="anchorclass e-tbtn e-active" target="_blank" href="dashboard/sourcecode.html?id=salesanalysis">
+                                                        <div><span class="e-icon codeimg"></span></div>
+                                                    </a>
+                                                </div>
+                                                <span class="qrcode"><span class="qrimage qrsales"></span></span>
+                                            </li>
+                                            <li class="listsampleimage">
+                                                <div class="lisampleimage">
+                                                    <a href="dashboard/stockAnalysis/default.html" target="_blank">
+                                                        <div class="imgstyle img2"></div>
+                                                    </a>
+                                                </div>
+                                                <div class="litext">
+                                                    <a class="anchorclass aclass">Stock Analysis</a>
+                                                    <p>Analyze historical stock price and volume data using charts.</p>
+                                                </div>
+                                                <div class="samplebutton">
+                                                    <a class="anchorclass e-tbtn e-active" href="dashboard/stockAnalysis/default.html" target="_blank">
+                                                        <div><span class="e-view-sample">VIEW SAMPLE</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="codebutton">
+                                                    <a class="anchorclass e-tbtn e-active" target="_blank" href="dashboard/sourcecode.html?id=stockanalysis">
+                                                    </a>
+                                                </div>
+                                                <span class="qrcode"><span class="qrimage qrstock"></span></span>
+                                            </li>
+                                            <li class="listsampleimage">
+                                                <div class="lisampleimage">
+                                                    <a href="dashboard/weather/default.html" target="_blank">
+                                                        <div class="imgstyle img3"></div>
+                                                    </a>
+                                                </div>
+                                                <div class="litext">
+                                                    <a class="anchorclass aclass">Weather Analysis</a>
+                                                    <p>Analyze historical weather data using charts and grids.</p>
+                                                </div>
+                                                <div class="samplebutton">
+                                                    <a class="anchorclass e-tbtn e-active" href="dashboard/weather/default.html" target="_blank">
+                                                        <div><span class="e-view-sample">VIEW SAMPLE</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="codebutton">
+                                                    <a class="anchorclass e-tbtn e-active" target="_blank" href="dashboard/sourcecode.html?id=weather">
+                                                    </a>
+                                                </div>
+                                                <span class="qrcode"><span class="qrimage qrweather"></span></span>
+                                            </li>
+                                            <li class="listsampleimage">
+                                                <div class="lisampleimage">
+                                                    <a href="dashboard/airlinereservation/default.html" target="_blank">
+                                                        <div class="imgstyle img7"></div>
+                                                    </a>
+                                                </div>
+                                                <div class="litext">
+                                                    <a class="anchorclass aclass">Airline Reservation</a>
+                                                    <p>Search and book flight tickets along with selecting your seat.</p>
+                                                </div>
+                                                <div class="samplebutton">
+                                                    <a class="anchorclass e-tbtn e-active" href="dashboard/airlinereservation/default.html" target="_blank">
+                                                        <div><span class="e-view-sample">VIEW SAMPLE</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="codebutton">
+                                                    <a class="anchorclass e-tbtn e-active" target="_blank" href="dashboard/sourcecode.html?id=airlinereservation">
+                                                    </a>
+                                                </div>
+                                                <span class="qrcode"><span class="qrimage qrairlineReservation"></span></span>
+                                            </li>
+                                            <li class="listsampleimage">
+                                                <div class="lisampleimage">
+                                                    <a class="anchorclass aclass" href="dashboard/reportviewer/invoicedemo.html" target="_blank">
+                                                        <div class="imgstyle img11"> </div>
+                                                    </a>
+                                                </div>
+                                                <div class="litext">
+                                                    <a class="anchorclass aclass">Invoice Report</a>
+                                                    <p>Generate the invoice report using ReportViewer.</p>
+                                                </div>
+                                                <div class="samplebutton">
+                                                    <a class="anchorclass e-tbtn e-active" href="dashboard/reportviewer/invoicedemo.html" target="_blank">
+                                                        <div><span class="e-view-sample">VIEW SAMPLE</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="codebutton">
+                                                    <a class="anchorclass e-tbtn e-active" target="_blank" href="dashboard/sourcecode.html?id=invoicedemo">
+                                                    </a>
+                                                </div>
+                                                <span class="qrcode"><span class="qrimage qrinvoicedemo"></span></span>
+                                            </li>
+                                            <li class="listsampleimage">
+                                                <div class="lisampleimage">
+                                                    <a class="anchorclass aclass" href="dashboard/reportbuilder/reportbuilder.html" target="_blank">
+                                                        <div class="imgstyle img16"> </div>
+                                                    </a>
+                                                </div>
+                                                <div class="litext">
+                                                    <a class="anchorclass aclass">Report Builder</a>
+                                                    <p>Design the personal expense analysis report using the ReportBuilder.</p>
+                                                </div>
+                                                <div class="samplebutton">
+                                                    <a class="anchorclass e-tbtn e-active" href="dashboard/reportbuilder/reportbuilder.html" target="_blank">
+                                                        <div><span class="e-view-sample">VIEW SAMPLE</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="codebutton">
+                                                    <a class="anchorclass e-tbtn e-active" target="_blank" href="dashboard/sourcecode.html?id=reportbuilder">
+                                                    </a>
+                                                </div>
+                                                <span class="qrcode"><span class="qrimage qrreportbuilder"></span></span>
+                                            </li>
+                                            <li class="listsampleimage">
+                                                <div class="lisampleimage">
+                                                    <a href="dashboard/spreadsheettemplate/spreadsheettemplate.html" target="_blank">
+                                                        <div class="imgstyle img9"></div>
+                                                    </a>
+                                                </div>
+                                                <div class="litext">
+                                                    <a class="anchorclass aclass">Spreadsheet</a>
+                                                    <p>Excel like Spreadsheet.</p>
+                                                </div>
+                                                <div class="samplebutton">
+                                                    <a class="anchorclass e-tbtn e-active" href="dashboard/spreadsheettemplate/spreadsheettemplate.html" target="_blank">
+                                                        <div><span class="e-view-sample">VIEW SAMPLE</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="codebutton">
+                                                    <a class="anchorclass e-tbtn e-active" target="_blank" href="dashboard/sourcecode.html?id=spreadsheettemplate">
+                                                    </a>
+                                                </div>
+                                                <span class="qrcode"><span class="qrimage qrspreadsheet"></span></span>
+                                            </li>
+                                            <li class="listsampleimage">
+                                                <div class="lisampleimage">
+                                                    <a href="dashboard/auditdemo_analytics/auditdemo.html" target="_blank">
+                                                        <div class="imgstyle img10"> </div>
+                                                    </a>
+                                                </div>
+                                                <div class="litext">
+                                                    <a class="anchorclass aclass">Audit Showcase</a>
+                                                    <p>This sample shows Audit risk is High or Low.</p>
+                                                </div>
+                                                <div class="samplebutton">
+                                                    <a class="anchorclass e-tbtn e-active" href="dashboard/auditdemo_analytics/auditdemo.html" target="_blank">
+                                                        <div><span class="e-view-sample">VIEW SAMPLE</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="codebutton">
+                                                    <a class="anchorclass e-tbtn e-active" target="_blank" href="dashboard/sourcecode.html?id=auditdemo_analytics">
+                                                    </a>
+                                                </div>
+                                                <span class="qrcode"><span class="qrimage qraudit"></span></span>
+                                            </li>
+                                            <li class="listsampleimage">
+                                                <div class="lisampleimage">
+                                                    <a href="dashboard/hospitalmanagement/default.html" target="_blank">
+                                                        <div class="imgstyle img12"></div>
+                                                    </a>
+                                                </div>
+                                                <div class="litext">
+                                                    <a class="anchorclass aclass">Appointment Planner</a>
+                                                    <p>
+                                                        Find the doctor availability and books appointment.
+                                                    </p>
+                                                </div>
+                                                <div class="samplebutton">
+                                                    <a class="anchorclass e-tbtn e-active" href="dashboard/hospitalmanagement/default.html" target="_blank">
+                                                        <div><span class="e-view-sample">VIEW SAMPLE</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="codebutton">
+                                                    <a class="anchorclass e-tbtn e-active" target="_blank" href="dashboard/sourcecode.html?id=hospitalmanagement">
+                                                    </a>
+                                                </div>
+                                                <span class="qrcode"><span class="qrimage qrhospital"></span></span>
+                                            </li>
+											<li class="listsampleimage">
+                                                <div class="lisampleimage">
+                                                    <a href="dashboard/webmail/default.html" target="_blank">
+                                                        <div class="imgstyle img14"></div>
+                                                    </a>
+                                                </div>
+                                                <div class="litext">
+                                                    <a class="anchorclass aclass">Webmail</a>
+                                                    <p>
+                                                        Outlook-like user interface with Office 365 theme.
+                                                    </p>
+                                                </div>
+                                                <div class="samplebutton">
+                                                    <a class="anchorclass e-tbtn e-active" href="dashboard/webmail/default.html" target="_blank">
+                                                        <div><span class="e-view-sample">VIEW SAMPLE</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="codebutton">
+                                                    <a class="anchorclass e-tbtn e-active" target="_blank" href="dashboard/sourcecode.html?id=webmail">
+                                                    </a>
+                                                </div>
+                                                <span class="qrcode"><span class="qrimage qrwebmail"></span></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                                </div>
+                                                </div>
+                        <div class="sample_wrapper" style="display: none;">
+                            <div class="cols-iframe" style="display: none;">
+                                <div>
+                                    <div id="samplefile" class="sample-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="sourceTab" class="cols-source" style="display: none">
+                            <ul></ul>
+                        </div>
+                        <div class="control_ref hidepage">
+                            <span class="ref_header">OTHER RESOURCES</span>
+                            <div class="ref_options">
+                                <a class="ref_buttons" target="_blank" id="ref_document">
+                                    Documentation
+                                </a>
+                                <a class="ref_buttons" target="_blank" id="ref_forums">
+                                    Forums
+                                </a>
+                                <a class="ref_buttons" target="_blank" id="ref_kb">
+                                    Knowledge base
+                                </a>
+                                <a class="ref_buttons" target="_blank" id="ref_support" href="https://www.syncfusion.com/Account/Login?ReturnUrl=%2fsupport%2fdirecttrac">
+                                    Support
+                                </a>
+                            </div>
+                        </div>
+                        <div id="sbloadingcontent" class="waiting"></div>
+                        <div id="sbwaitingTemplate" class="sbloadingtemplate" style="display: none">
+                            <span class="sbloadingtext">
+                                Loading...
+                            </span>
+                            <span class="sbloadingimg"></span>
+                        </div>
+                    </div>
+                    <div id="footer">
+                        <div class="bottom-links">
+                            <div class="left">
+                                <div class="sync-text">
+                                    Copyright © 2001-2018 Syncfusion Inc.
+                                </div>
+                            </div>
+                            <div class="right">
+                               <a href="https://www.syncfusion.com" target="_blank">
+                                    <div class="syncfusion-image">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        window.heightval = window.innerHeight - ($(".header").outerHeight() + $("#footer").outerHeight() + $(".search").outerHeight());
+        $(function () {
+            //CodeView Tab in new Window
+            $("#showCaseTab").ejTab();
+            $("#sourceTab").on("click", '#EditWindow', function () {
+                if (!ej.isNullOrUndefined(window.sample))
+                    window.open('//jsplayground.syncfusion.com/' + window.sample.liveediturl);
+            });
+
+            //Copy to clipboard behavior
+
+            $('#sourceTab').on("mouseover", '.copycode', function () {
+                var tabObj = $("#sourceTab").data("ejTab");
+                var selectedtab = tabObj.option("selectedItemIndex");
+                $("#copytextarea").val(window.htmlEditor[selectedtab].doc.getSelection());
+            });
+
+        });
+        (function ($) {
+            /*----------------------IE based userAgent code-------------------------*/
+            if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+                var msViewportStyle = document.createElement("style");
+                msViewportStyle.appendChild(document.createTextNode("@-ms-viewport{width:auto!important}"));
+                document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+            }
+        })(jQuery);
+    </script>
+
+    <style>
+        #showCaseTab > ul {
+            list-style-type: none;
+        }
+    </style>
+	<div id="waiting_temp" style="display:none">
+        <div class="block">
+            <div class="txt">
+                <p>Switching Culture..</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

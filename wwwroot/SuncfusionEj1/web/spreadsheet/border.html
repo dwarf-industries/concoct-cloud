@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Border and Wrap Text</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <link href="../content/spreadsheet-css/ej.spreadsheet.css" rel="stylesheet" />
+	<!--[if lt IE 9]>
+    	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    	<script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/jquery.validate.min.js"></script>
+    <script src="../scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+	<script src="../scripts/xljsondata.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="e-container-spreadsheet">
+                    <div id="Spreadsheet"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    $(function () {
+        $("#Spreadsheet").ejSpreadsheet({
+            allowFormulaBar: false,
+            enableContextMenu: false,
+            showRibbon: false,
+            sheets: [{ rangeSettings: [{ dataSource: window.borderDetails, startCell: "B1", showHeader: false }] }],
+            loadComplete: "loadComplete"
+        });
+    });
+    function loadComplete(args) {
+        var xlFormat = this.XLFormat, xlEdit = this.XLEdit;
+        this.setWidthToColumns([40, 200, 40, 80, 80, 40, 200, 40, 120, 117]);
+        xlFormat.format({ "style": { "font-weight": "bold" } }, "B1:B17");
+        xlFormat.format({ "style": { "font-weight": "bold" } }, "G1:G17");
+        xlFormat.format({ "style": { "font-style": "italic", "font-weight": "bold" } }, "B16");
+        this.setBorder({ "type": "left", "color": "#FF5668", "style": "solid" }, "I1");
+        this.setBorder({ "type": "bottom", "color": "#FF5668", "style": "solid" }, "D3");
+        this.setBorder({ "type": "right", "color": "#FF5668", "style": "solid" }, "D1");
+        this.setBorder({ "type": "top", "color": "#FF5668", "style": "solid" }, "I3");
+        this.setBorder({ "type": "allborder", "color": "#FF5668", "style": "solid" }, "D5");
+        this.setBorder({ "type": "outside", "color": "#FF5668", "style": "dashed" }, "D7");
+        this.setBorder({ "type": "thickbox", "color": "#FF5668", "style": "dashed" }, "I7");
+        this.setBorder({ "type": "thickbottom", "color": "#FF5668", "style": "dashed" }, "D9");
+        this.setBorder({ "type": "topandbottom", "color": "#FF5668", "style": "dashed" }, "I9");
+        this.setBorder({ "type": "topandthickbottom", "color": "#FF5668", "style": "dashed" }, "D11");
+        this.setBorder({ "type": "allborder", "color": "#2c74d1", "style": "solid" }, "D13:E15");
+        this.setBorder({ "type": "outside", "color": "#e851bb", "style": "dashed" }, "I11:J13");
+        this.setBorder({ "type": "doublebottom", "color": "#FF5668", "style": "double" }, "D17");
+        this.setBorder({ "type": "topanddoublebottom", "color": "#FF5668", "style": "double" }, "I17");
+        xlFormat.format({ "style": { "font-weight": "bold" } }, "A19:F19");
+        xlEdit.updateValue('G19', "Wrap Text");
+        xlFormat.format({ "style": { "font-weight": "bold", "vertical-align": "middle" } }, "G19:G19");
+        xlEdit.updateValue('I19', "Wrap extra-long text into multiple lines so you can see all of it.");
+        this.wrapText("I19:I19");
+        this.performSelection("B1");
+    }
+    </script>
+</body>
+</html>

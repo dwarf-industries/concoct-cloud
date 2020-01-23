@@ -1,0 +1,161 @@
+@{
+    ViewData["Title"] = "Files";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var ProjectId = ViewData["ProjectId"];
+    var BranchId = ViewData["BranchId"];
+    var Branches = ViewData["Branches"] as List<Branches>; 
+}
+<style>
+
+.TreeHolder {
+    display: block;
+    max-width: 100%;
+    max-height: 80vh;
+    margin: auto;
+    overflow: auto;
+    border: 1px solid #dddddd;
+    background-color: white;
+    border-radius: 3px;
+}
+
+</style>
+<link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
+ 
+<div class="container-fluid">
+    <div class="row card">
+        <div class="control-wrapper">
+            <div id="default" style='padding:20px;'>
+                <select id="games"> 
+                    @{
+                        foreach(var branch in Branches)
+                        {
+                            <option value="@branch.Id">@branch.BranchName</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="TreeHolder">
+                    <div id="tree"></div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div id="CodeHolder" style="height:80vh;width:100%;border:1px solid grey"></div>
+            </div>
+        </div>
+    </div>
+ </div>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+ <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
+
+<script src="/Syncfusion/node_modules/monaco-editor/min/vs/loader.js"></script>
+
+<script>
+var editor;
+var SelectedId;
+var treeObj;
+require.config({ paths: { 'vs': '/Syncfusion/node_modules/monaco-editor/min/vs' }});
+	require(['vs/editor/editor.main'], function() {
+	    editor = monaco.editor.create(document.getElementById('CodeHolder'), {
+			value: [
+				 "Console.WriteLine(\"Works\")"
+			].join('\n'),
+			language: 'csharp'
+		});
+	});
+
+    
+    var BindingData ;
+    $( document ).ready(function() 
+    {
+        SelectedId = @BranchId;
+        InitBranches();
+        $.ajax({
+            type: 'GET',
+            url: '/Commit/GetBranchFiles?projectId=@ProjectId&&branchId='+SelectedId,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                LoadCommitHirarchy(response);
+            },
+            error: function (xhr, status, error) {
+    
+            }
+        });
+     
+    });
+    function InitBranches()
+    {
+                  // Initialize DropDownList component
+        var listObj = new ej.dropdowns.DropDownList({
+            // set the index value to select an item based on index at initial rendering
+            index: 2,
+            // set the placeholder to DropDownList input element
+            placeholder: 'Select a branch',
+            // set the height of the popup element
+            popupHeight: '200px',
+            // bind the change event
+            change: BranchChanged
+        });
+        listObj.appendTo('#games');
+        // call the change event's function after initialized the component.
+        
+    }
+
+
+    function BranchChanged(args)
+    {
+        console.log(args);
+    }
+    function LoadCommitHirarchy(data)
+    {
+        BindingData = data;
+        treeObj = new ej.navigations.TreeView({
+            fields: { dataSource: data, id: 'id', text: 'name', child: 'subChild', value: 1, IId: "internalId" },
+            nodeClicked: ItemSelected
+
+        });
+        treeObj.appendTo('#tree');
+            
+    }
+    
+    function ItemSelected(args)
+    {
+        var data = treeObj.getTreeData(args.node);
+      //  console.log(data);
+        ShowSelectedFile(data);
+    }
+
+    function ShowSelectedFile(file)
+    {
+     //   console.log(file[0]);
+        $("#CodeHolder").html("");
+           $.ajax({
+            type: 'GET',
+            url: '/Commit/GetSelectedFile?fileName='+file[0].fullPathName+"&projectId=@ProjectId&branch="+SelectedId,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+              //  console.log(response);
+                editor = monaco.editor.create(document.getElementById('CodeHolder'), {
+                    value:  response.data,
+                    language:  response.languageType
+                });
+             
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr);
+            }
+        });
+    }
+        
+    
+</script>

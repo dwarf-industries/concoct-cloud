@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1: DropDownTree - KnockOut</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/knockout.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/ej.widget.ko.min.js"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+					<div class="knockbind"> 
+                        <div id="control" >
+							 <div class="ctrllabel">Select an Item</div>
+                            <input id="itemList" data-bind="ejDropDownTree: {treeViewSettings: {fields :{ dataSource: dataList,id:'id',text:'name',hasChild:'hasChild',expanded:'expanded',parentId:'pid'}}, value:value, width:'100%', watermarkText:'Please select'}">
+                        </div> 
+						<div id="binding">
+						 	<input type="text" class="input" data-bind="value: value" />
+						</div>
+                 	</div>
+               </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var target;
+        $(function () {
+           var localData = [
+                   { id: 1, name: "United state", hasChild: true, expanded: true },
+                   { id: 2, pid: 1, name: "California" },
+                   { id: 3, pid: 1, name: "Colorado" },
+                   { id: 4, pid: 1, name: "Georgia" },
+                   { id: 6, pid: 1, name: "New York" },
+                   { id: 7, name: "United kingdom", hasChild: true, expanded: true },
+                   { id: 8, pid: 7, name: "England" },
+                   { id: 9, pid: 7, name: "Scotland" },
+                   { id: 10, pid: 7, name: "Northern Ireland" },
+                   { id: 11, name: "Asia", hasChild: true },
+                   { id: 12, pid: 11, name: "Afghanistan" },
+                   { id: 13, pid: 11, name: "Kuwait" },
+                   { id: 14, pid: 11, name: "Russia" },
+                   { id: 15, pid: 11, name: "China" }];
+            window.viewModel = {
+                dataList: ko.observableArray(localData),
+                value: ko.observable("Georgia"),
+            }
+            ko.applyBindings(viewModel);
+            target = $('#itemList').data("ejDropDownTree");
+        });
+    </script>
+    <style type="text/css" class="cssStyles">
+        .knockbind > div {
+			padding:5px;
+		}
+  
+		
+    	.input {
+            height: 25px;
+            text-indent: 10px;
+            width: 99%;
+        }
+		.material .input {
+            height: 25px;
+            text-indent: 10px;
+            width: 100%;
+			border-width: 0px 0px 1px 0;
+			border-color: rgba(0,0,0,.12);
+        }
+    </style>
+</body>
+</html>

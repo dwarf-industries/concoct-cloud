@@ -1,0 +1,113 @@
+@{
+    ViewData["Title"] = "Commits";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var result = ViewData["Projects"] as List<Projects>;
+    var userName =  ViewData["Name"] as string;
+    var ProjectId = ViewData["ProjectId"];
+    var Branches = ViewData["Branches"] as List<Branches>;
+}
+<link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
+<Div class="container">
+<div class="row">
+    <div class="control-wrapper" style="width:100%">
+
+        <select id="branches"> 
+        @{
+            foreach(var branch in Branches){
+                    <option value="@branch.Id">@branch.BranchName</option>
+            }
+        }
+        </select>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="main-card mb-3 card">
+            <div class="control-section">
+                <div class="content-wrapper" id="GridHolder">
+                    <div id="Grid"></div>        
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+ <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
+
+
+<script>
+
+    $( document ).ready(function() 
+    {
+
+    
+        var listObj = new ej.dropdowns.DropDownList({
+            // set the index value to select an item based on index at initial rendering
+            index: 1,
+            // set the placeholder to DropDownList input element
+            placeholder: 'Select a branch',
+            // set the height of the popup element
+            popupHeight: '200px',
+            // bind the change event
+            change:  BranchChanged
+        });
+        listObj.appendTo('#branches');
+      
+        $.ajax({
+            type: 'GET',
+            url: '/Commit/GetCommits?projectId=@ProjectId&branchId=0',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                LoadCommitGrid(response);
+            },
+            error: function (xhr, status, error) {
+    
+            }
+        });
+        
+    });
+
+    function LoadCommitGrid(data)
+    {
+        $("#GridHolder").html("");
+        $("#GridHolder").html("<div id=\"Grid\"></div>");
+        var grid = new ej.grids.Grid({
+            dataSource: data,
+            editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true, allowEditOnDblClick: false },
+             columns: [
+                { field: 'commitKey', headerText: 'Commit Key', width: 120, textAlign: 'Right' },
+                { field: 'message', headerText: 'Message', width: 150 },
+                { field: 'author', headerText: 'Author', width: 130,  textAlign: 'Right' },
+                { field: 'date', headerText: 'Date', width: 130, format: 'yMd', textAlign: 'Right' },
+                { field: 'pullRequest', headerText: 'PullRequest', width: 130, textAlign: 'Right' },
+
+            ]
+        });
+        grid.appendTo('#Grid');
+    }
+
+    // call the change event's function after initialized the component.
+    function BranchChanged(args) {
+       console.log();
+        $.ajax({
+            type: 'GET',
+            url: '/Commit/GetCommits?projectId=@ProjectId&branchId='+args.value,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                LoadCommitGrid(response);
+            },
+            error: function (xhr, status, error) {
+    
+            }
+        });
+        
+    }
+</script>

@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Essential JS 1: DragAndDrop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="frame">
+                    <div class="samplearea">
+                        <div id="leftContainer">
+                            <!-- draggable element-->
+                            <div id="dragElement" class="drag">
+                                <button id="drag">Drag</button>
+                            </div>
+                        </div>
+                        <div id="rightContainer" class="clone">
+                            <!-- droppable target element-->
+                            <div id="dropContainer" class="drop">
+                                <span class="text">Drop Here</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#drag").ejButton({
+                height: "60px",              
+                create: "onCreate"
+            });
+
+        });
+        var clonedElement;
+        $("#dropContainer").ejDroppable({
+            over: function (event, ui) {
+                if (event.target.id = "dropContainer") {
+                    $(event.target).css('border', '3px dashed #c8c8c8')
+                }
+            },
+            out: function (args) {
+                $(args.target).text("Drop Here");
+                $(args.target).css({ "border": "1px solid #c8c8c8", "background-color": "#ececec" });
+            },
+            drop: function (args) {
+                $("#dropContainer").text("Dropped successfully");
+            }
+        });
+        function onCreate(args) {
+            $('#drag').ejDraggable({
+                clone: true,
+                dragArea: ".frame",
+                dragStop: "ondragStop",
+                dragStart: "ondragstart",
+                helper: function (event, ui) {
+                    proxy = $(event.element).data("ejButton");
+                    $(".e-draggable.e-clone").remove();
+                    clonedElement = $(event.sender.target).clone().addClass("e-draggable e-clone");
+                    clonedElement.addClass(proxy.model.cssClass);
+                    return $(clonedElement.appendTo($("#rightContainer")));
+                }
+            });
+        }
+        function ondragStop(args) {
+            if($(args.target).hasClass("samplearea")){
+            $("#dropContainer").text("Drop Here");
+            clonedElement && clonedElement.remove();
+            }
+            $("#dropContainer").css({ "background-color": "#ececec" });
+        }
+    </script>
+    <style type="text/css">
+        #drag {
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 4px;
+        }
+        
+        .drop {
+            width: 175px;
+            line-height: 178px;
+            border: 1px solid #c8c8c8;
+            text-align: center;
+            margin: 10px;
+            background-color: #ececec;
+            line-height: 178px;
+        }
+        
+        #leftContainer {
+            float: left;
+            margin-top: 10px;
+        }
+        
+        .samplearea {
+            width: 400px;
+            height: 200px;
+            border: 1px solid #D9DEDD;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        #rightContainer {
+            float: right;
+        }
+        
+        .frame {
+            width: 425px;
+        }
+        
+        #dropContainer span {
+            text-align: center;
+            vertical-align: middle;
+            line-height: 178px;
+        }
+        #dragelement{
+            position: relative;
+        }
+    </style>
+
+</body>
+
+</html>

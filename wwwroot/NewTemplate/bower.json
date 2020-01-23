@@ -1,0 +1,416 @@
+{
+  "name": "Bower.json",
+  "description": "This is bower file",
+  "main": "index.html",
+  "authors": [
+    "Phoenixcoded"
+  ],
+  "license": "MIT",
+  "homepage": "index.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+	"bower.json",
+    "eve-raphael",
+    "numbro",
+    "pikaday",
+    "zeroclipboard",
+    "qunit",
+    "scripts"
+  ],
+  "dependencies": {
+        "bootstrap": "4.0.0-beta",
+        "jquery": "3.2.1",
+        "jquery-ui": "1.12.1",
+        "tether":"latest",
+        "jquery-slimscroll":"latest",
+        "modernizr":"2.8.3",
+        "classie":"latest",
+        "i18next":"7.1.3",
+        "i18next-xhr-backend":"1.4.1",
+        "i18next-browser-languagedetector":"1.0.1",
+        "jquery-i18next":"1.2.0",
+        "datedropper":"latest",
+        "jquery-bar-rating":"1.2.2",
+        "animate.css":"latest",
+        "c3":"latest",
+        "d3":"latest",
+        "chart.js":"latest",
+        "raphael":"latest",
+        "nvd3":"latest",
+        "peity":"latest",
+        "rickshaw":"latest",
+        "jquery-sparkline":"latest",
+        "morris.js":"latest",
+        "moment":"latest",
+        "underscore":"1.8.3",
+        "clndr":"latest",
+        "fullcalendar":"latest",
+        "font-awesome":"latest",
+        "lightgallery":"1.3.9",
+        "bootstrap-maxlength":"1.7.0",
+        "bootstrap-tagsinput":"latest",
+        "switchery":"latest",
+        "summernote":"latest",
+        "spectrum":"latest",
+        "jscolor":"latest",
+        "jquery.steps":"1.1.0",
+        "bootstrap-daterangepicker":"latest",
+        "bootstrap-datepicker":"latest",
+        "select2":"4.0.3",
+        "lightbox2":"2.9.0",
+        "bootstrap-multiselect":"latest",
+        "multiselect":"latest",
+        "jquery.cookie":"1.4.1",
+        "jquery-validation":"1.16.0",
+        "handsontable":"latest",
+        "cropper":"latest",
+        "chartist":"latest",
+        "stroll":"latest",
+        "long-press":"latest",
+        "sweetalert":"latest",
+        "pnotify":"3.0.0",
+        "offline":"0.7.18",
+        "seiyria-bootstrap-slider":"9.7.2",
+        "owl.carousel":"latest",
+        "swiper":"latest",
+        "intro.js":"2.4.0",
+        "jstree":"latest",
+		"Sortable":"1.5.1",
+		"autosize":"latest",
+		"slick-carousel":"latest",
+		"ekko-lightbox":"latest",
+		"countdown":"2.2.0",
+		"handlebars":"4.0.5",
+		"typeahead.js":"0.11.1",
+		"jquery.uniform":"4.1.0",
+		"popper.js":"1.12.2"
+		
+		
+	 },
+    "resolutions": {
+        "jquery": "3.2.1"
+    },
+    "install": {
+        "base":  "build",
+		"ignore": ["mocha","eve-raphael"] ,
+        "path": {
+            "js": "{name}/js",
+            "css": "{name}/css",
+            "eot": "{name}/fonts",
+            "svg": "{name}/fonts",
+            "ttf": "{name}/fonts",
+            "woff": "{name}/fonts",
+			"less": "{name}/less",
+			"png": "{name}/images",
+			"png": "{name}/img",
+			"jpeg": "{name}/images",
+			"jpg": "{name}/images"
+        },       
+		 "sources": {
+			"bootstrap": [
+               "bower_components/bootstrap/less/pager.less",
+               "bower_components/bootstrap/dist/js/bootstrap.js",
+               "bower_components/bootstrap/dist/js/bootstrap.min.js",
+               "bower_components/bootstrap/dist/css/bootstrap.css",
+               "bower_components/bootstrap/dist/css/bootstrap.min.css"
+               ],
+           "jquery":[
+             "bower_components/jquery/dist/jquery.min.js"
+           ],
+           "jquery-ui": [
+             "bower_components/jquery-ui/jquery-ui.min.js"
+           ],
+           "tether":[
+             "bower_components/tether/dist/js/tether.min.js"
+           ],
+           "jquery-slimscroll":[
+             "bower_components/jquery-slimscroll/jquery.slimscroll.js"
+
+           ],
+           "modernizr":[
+             "bower_components/modernizr/modernizr.js",
+             "bower_components/modernizr/feature-detects/css-scrollbars.js"
+           ],
+           "classie":[
+             "bower_components/classie/classie.js"
+           ],
+           "i18next":[
+             "bower_components/i18next/i18next.min.js"
+           ],
+           "i18next-xhr-backend":[
+             "bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"
+
+           ],
+           "i18next-browser-languagedetector":[
+             "bower_components/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"
+           ],
+           "jquery-i18next":[
+              "bower_components/jquery-i18next/jquery-i18next.min.js"
+           ],
+           "datedropper":[
+             "bower_components/datedropper/datedropper.min.css",
+             "bower_components/datedropper/datedropper.min.js"
+           ],
+           "jquery-bar-rating":[
+             "bower_components/jquery-bar-rating/dist/themes/bars-1to10.css",
+             "bower_components/jquery-bar-rating/dist/themes/bars-horizontal.css",
+             "bower_components/jquery-bar-rating/dist/themes/bars-movie.css",
+             "bower_components/jquery-bar-rating/dist/themes/bars-pill.css",
+             "bower_components/jquery-bar-rating/dist/themes/bars-reversed.css",
+             "bower_components/jquery-bar-rating/dist/themes/bars-square.css",
+             "bower_components/jquery-bar-rating/dist/themes/css-stars.css",
+             "bower_components/jquery-bar-rating/dist/themes/fontawesome-stars-o.css",
+             "bower_components/jquery-bar-rating/dist/themes/fontawesome-stars.css",
+             "bower_components/jquery-bar-rating/jquery.barrating.js",
+             "bower_components/jquery-bar-rating/dist/jquery.barrating.min.js"
+           ],
+           "animate.css":[
+            "bower_components/animate.css/animate.css"
+           ],
+           "c3":[
+             "bower_components/c3/c3.css",
+             "bower_components/c3/c3.js"
+           ],
+           "d3":[
+             "bower_components/d3/d3.js",
+             "bower_components/d3/d3.min.js"
+           ],
+           "chart.js":[
+             "bower_components/chart.js/dist/Chart.js"
+           ],
+           "raphael":[
+            "bower_components/raphael/raphael.min.js"
+           ],
+           "nvd3":[
+            "bower_components/nvd3/build/nv.d3.js",
+             "bower_components/nvd3/build/nv.d3.css"
+           ],
+           "peity":[
+             "bower_components/peity/jquery.peity.js"
+           ],
+           "rickshaw":[
+            "bower_components/rickshaw/rickshaw.js"
+           ],
+           "jquery-sparkline":[
+             "bower_components/jquery-sparkline/dist/jquery.sparkline.js"
+           ],
+           "morris.js":[
+            "bower_components/morris.js/morris.js"
+           ],
+           "moment":[
+            "bower_components/moment/min/moment.min.js"
+           ],
+           "underscore":[
+            "bower_components/underscore/underscore-min.js"
+           ],
+           "clndr":[
+             "bower_components/clndr/src/clndr.js"
+           ],
+           "fullcalendar":[
+            "bower_components/fullcalendar/dist/fullcalendar.css",
+            "bower_components/fullcalendar/dist/fullcalendar.print.css",
+             "bower_components/fullcalendar/dist/fullcalendar.min.js"
+           ],
+           "font-awesome":[
+             "bower_components/font-awesome/css/font-awesome.min.css"
+		   ],
+           "lightgallery":[
+            "bower_components/lightgallery/dist/css/lightgallery.min.css",
+             "bower_components/lightgallery/dist/js/lightgallery.min.js",
+             "bower_components/lightgallery/demo/js/lg-fullscreen.min.js",
+             "bower_components/lightgallery/demo/js/lg-thumbnail.min.js",
+             "bower_components/lightgallery/demo/js/lg-video.min.js",
+             "bower_components/lightgallery/demo/js/lg-autoplay.min.js",
+             "bower_components/lightgallery/demo/js/lg-hash.min.js",
+             "bower_components/lightgallery/demo/js/lg-pager.min.js",
+             "bower_components/lightgallery/demo/js/lg-zoom.min.js",
+             "bower_components/lightgallery/dist/fonts/lg.eot",
+             "bower_components/lightgallery/dist/fonts/lg.ttf",
+             "bower_components/lightgallery/dist/fonts/lg.woff"
+           ],
+           "bootstrap-maxlength":[
+            "bower_components/bootstrap-maxlength/src/bootstrap-maxlength.js"
+           ],
+           "bootstrap-tagsinput":[
+             "bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css",
+             "bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.js"
+           ],
+           "switchery":[
+             "bower_components/switchery/dist/switchery.min.css",
+             "bower_components/switchery/dist/switchery.min.js"
+           ],
+           "summernote":[
+             "bower_components/summernote/dist/summernote.css",
+             "bower_components/summernote/dist/summernote.js",
+             "bower_components/summernote/lang/summernote-ko-KR.js"
+           ],
+           "spectrum":[
+             "bower_components/spectrum/spectrum.js",
+             "bower_components/spectrum/spectrum.css"
+           ],
+           "jscolor":[
+             "bower_components/jscolor/jscolor.js"
+           ],
+           "jquery.steps":[
+            "bower_components/jquery.steps/demo/css/jquery.steps.css",
+             "bower_components/jquery.steps/build/jquery.steps.js"
+           ],
+           "bootstrap-daterangepicker":[
+              "bower_components/bootstrap-daterangepicker/daterangepicker.css",
+              "bower_components/bootstrap-daterangepicker/daterangepicker.js"
+           ],
+           "bootstrap-datepicker":[
+             "bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"
+
+           ],
+           "select2":[
+             "bower_components/select2/dist/css/select2.min.css",
+             "bower_components/select2/dist/js/select2.full.min.js"
+           ],
+           "lightbox2":[
+             "bower_components/lightbox2/dist/css/lightbox.min.css",
+             "bower_components/lightbox2/dist/css/lightbox.css",
+             "bower_components/lightbox2/dist/js/lightbox.min.js",
+             "bower_components/lightbox2/dist/js/lightbox.js"
+
+           ],
+           "bootstrap-multiselect":[
+             "bower_components/bootstrap-multiselect/dist/css/bootstrap-multiselect.css",
+             "bower_components/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"
+           ],
+           "multiselect":[
+             "bower_components/multiselect/css/multi-select.css",
+             "bower_components/multiselect/js/jquery.multi-select.js",
+             "bower_components/multiselect/img/switch.png"
+           ],
+           "jquery.cookie":[
+            "bower_components/jquery.cookie/jquery.cookie.js"
+           ],
+           "jquery-validation":[
+            "bower_components/jquery-validation/dist/jquery.validate.js"
+           ],
+           "handsontable":[
+             "bower_components/handsontable/dist/handsontable.full.min.css",
+             "bower_components/handsontable/dist/handsontable.full.js"
+           ],
+           "cropper":[
+             "bower_components/cropper/dist/cropper.css",
+             "bower_components/cropper/dist/cropper.min.js"
+           ],
+           "chartist":[
+             "bower_components/chartist/dist/chartist.css",
+             "bower_components/chartist/dist/chartist.js"
+           ],
+           "stroll":[
+              "bower_components/stroll/css/stroll.css",
+              "bower_components/stroll/js/stroll.js"
+           ],
+           "long-press":[
+              "bower_components/long-press/css/main.css",
+             "bower_components/long-press/css/app.css",
+             "bower_components/long-press/js/jquery.mousewheel.js",
+             "bower_components/long-press/js/plugins.js",
+             "bower_components/long-press/js/jquery.longpress.js",
+             "bower_components/long-press/js/app.js"
+           ],
+           "sweetalert":[
+            "bower_components/sweetalert/dist/sweetalert.css",
+             "bower_components/sweetalert/dist/sweetalert.min.js"
+           ],
+           "pnotify":[
+            "bower_components/pnotify/dist/pnotify.css",
+             "bower_components/pnotify/dist/pnotify.brighttheme.css",
+             "bower_components/pnotify/dist/pnotify.buttons.css",
+             "bower_components/pnotify/dist/pnotify.history.css",
+             "bower_components/pnotify/dist/pnotify.mobile.css",
+             "bower_components/pnotify/dist/pnotify.js",
+             "bower_components/pnotify/dist/pnotify.desktop.js",
+             "bower_components/pnotify/dist/pnotify.buttons.js",
+             "bower_components/pnotify/dist/pnotify.confirm.js",
+             "bower_components/pnotify/dist/pnotify.callbacks.js",
+              "bower_components/pnotify/dist/pnotify.animate.js",
+             "bower_components/pnotify/dist/pnotify.history.js",
+             "bower_components/pnotify/dist/pnotify.mobile.js",
+             "bower_components/pnotify/dist/pnotify.nonblock.js"
+           ],
+           "offline":[
+            "bower_components/offline/themes/offline-theme-slide.css",
+             "bower_components/offline/themes/offline-language-english.css",
+             "bower_components/offline/themes/offline-theme-default.css",
+			 "bower_components/offline/themes/offline-language-english.css",
+			 "bower_components/offline/themes/offline-theme-dark.css",
+			 "bower_components/offline/themes/offline-theme-slide.css",
+			 "bower_components/offline/themes/offline-language-english.css",
+			 "bower_components/offline/themes/offline-language-english-indicator.css",
+			 "bower_components/offline/themes/offline-language-english.css",
+			 "bower_components/offline/themes/offline-theme-default-indicator.css",
+			 "bower_components/offline/themes/offline-theme-chrome.css",
+			 "bower_components/offline/themes/offline-theme-slide-indicator.css",
+			 "bower_components/offline/themes/offline-language-english-indicator.css",
+			 "bower_components/offline/themes/offline-theme-dark-indicator.css",
+			 "bower_components/offline/themes/offline-language-english-indicator.css",
+			 "bower_components/offline/themes/offline-theme-chrome-indicator.css",
+			 "bower_components/offline/themes/offline-language-english-indicator.css ",
+             "bower_components/offline/offline.min.js"
+           ],
+           "seiyria-bootstrap-slider":[
+            "bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.css",
+            "bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.js"
+           ],
+           "owl.carousel":[
+             "bower_components/owl.carousel/dist/assets/owl.carousel.css",
+             "bower_components/owl.carousel/dist/assets/owl.theme.default.css",
+             "bower_components/owl.carousel/dist/owl.carousel.min.js"
+           ],
+           "swiper":[
+            "bower_components/swiper/dist/css/swiper.min.css",
+             "bower_components/swiper/dist/js/swiper.min.js"
+           ],
+           "intro.js":[
+             "bower_components/intro.js/minified/introjs.min.css",
+             "bower_components/intro.js/minified/intro.min.js"
+           ],
+           "jstree":[
+            "bower_components/jstree/dist/themes/default/style.min.css",
+             "bower_components/jstree/dist/jstree.min.js"
+           ],
+		   "Sortable":[
+		   "bower_components/sortable/Sortable.js"
+		   ],
+		   "autosize":[
+		   "bower_components/autosize/dist/autosize.min.js"
+		   ],
+		   "slick-carousel":[
+		   "bower_components/slick-carousel/slick/slick.css",
+		   "bower_components/slick-carousel/slick/slick-theme.css",
+		   "bower_components/slick-carousel/slick/slick.min.js"
+		   ],
+		  "ekko-lightbox":[                                                                       
+		   "bower_components/ekko-lightbox/dist/ekko-lightbox.css",
+		   "bower_components/ekko-lightbox/dist/ekko-lightbox.js"
+		   
+		   ],
+		  "countdown":[
+		   "bower_components/countdown/dest/jquery.countdown.js"   
+		   ],
+		   "handlebars":[
+		   "bower_components/handlebars/handlebars.min.js"
+		   ],
+		   "typeahead.js":[
+		   "bower_components/typeahead.js/dist/typeahead.bundle.min.js"
+		   ],
+		   "jquery.uniform":[
+		   "bower_components/jquery.uniform/dist/js/jquery.uniform.bundled.js"
+		   ],
+		   "popper.js":[
+		   "bower_components/popper.js/dist/umd/popper.js",
+		   "bower_components/popper.js/dist/umd/popper.min.js"
+		   ]
+		   	  
+		}
+    }
+}

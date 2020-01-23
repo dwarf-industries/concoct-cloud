@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : ColorPicker Keyboard Navigation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" style="min-height: 450px">
+                <div class="frame">
+                    <div class="color_control">
+                        <label>ColorPicker With Navigation</label>
+                        <div class="element"><input type="text" id="colorPicker" /></div>
+                    </div>
+                </div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <span>
+                        <center>KeyBoard Support</center>
+                    </span>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            Alt+J
+                        </div>
+                        <div class="col-md-3">
+                            Focus the Control
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row" style="height:65px">
+                        <div class="col-md-3">
+                            Enter
+                        </div>
+                        <div class="col-md-3">
+                            Open or Close the Popup / Choose the current color
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            Esc
+                        </div>
+                        <div class="col-md-3">
+                            close the popup
+                        </div>
+                    </div>
+                    <div class="row">
+                        <span>
+                            <center>Color Picker</center>
+                        </span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            Tab
+                        </div>
+                        <div class="col-md-3">
+                            choose the next element
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            Down
+                        </div>
+                        <div class="col-md-3">
+                            Decrease the brightness
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            Up
+                        </div>
+                        <div class="col-md-3">
+                            Increase the brightness 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Left
+                        </div>
+                        <div class="col-md-3">
+                            Decrease the staturation 
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            Right
+                        </div>
+                        <div class="col-md-3">
+                            Increase the staturation
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <span>
+                            <center>Color Palette</center>
+                        </span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            Down
+                        </div>
+                        <div class="col-md-3">
+                            Move to downwards cell
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            Up
+                        </div>
+                        <div class="col-md-3">
+                            Move to upwards cell
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Left
+                        </div>
+                        <div class="col-md-3">
+                            Move to previous cell
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Right
+                        </div>
+                        <div class="col-md-3">
+                            Move to next cell
+                        </div>
+                    </div>
+                    <div class="row">
+                        <span>
+                            <center>Slider Only</center>
+                        </span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            Home
+                        </div>
+                        <div class="col-md-3">
+                            Downwards to value 0
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            End
+                        </div>
+                        <div class="col-md-3">
+                            Upwards to value  100
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        jQuery(function ($) {
+            $("#colorPicker").ejColorPicker({ toolIcon: "e-icon e-font", value: "#278787"});
+            $(document).on("keydown", function (e) {
+                if (e.altKey && e.keyCode === 74) { // j- key code.
+                    $("#colorPickerWrapper").focus();
+                }
+            });
+            $("#sampleProperties").ejPropertiesPanel();
+        });
+    </script>
+    <style>
+        .color_control {
+            margin-left: 40%;
+        }
+
+        .e-colorwidget .e-tool .e-fontcolor-icon:before {
+            content: "\e632";
+            font-size: 15px;
+        }
+    </style>
+</body>
+</html>

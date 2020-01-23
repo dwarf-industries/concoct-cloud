@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : KO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/knockout.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+    <script src="../scripts/ej.widget.ko.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="Grid" data-bind="ejGrid: {dataSource: dataSource,allowGrouping:true,allowSorting:true,allowPaging:true,selectedRowIndex:selectedRow ,pageSettings:{currentPage:currentPage,pageSize:8},actionBegin:actionBegin }"></div>
+
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Selected Row
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="selectedRow" value="" data-bind="ejNumericTextbox: {value:selectedRow, minValue: -1, decimalPlaces: 0, maxValue:7, width: '100px' }" data-bind="value:selectedRow" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Current Page
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" value="" data-bind="ejNumericTextbox: {value:currentPage , minValue: 1, decimalPlaces: 0, maxValue:4, width: '100px' }" data-bind="value:currentPage" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            var obj = [
+                { "EmployeeID": 1, "LastName": "Davolio", "FirstName": "Nancy", "Title": "Sales Representative", "City": "Seattle", "Country": "USA" },
+                 { "EmployeeID": 2, "LastName": "Fuller", "FirstName": "Andrew", "Title": "Vice President, Sales", "City": "Tacoma", "Country": "USA" },
+                 { "EmployeeID": 3, "LastName": "Leverling", "FirstName": "Janet", "Title": "Sales Representative", "City": "Kirkland", "Country": "USA" },
+                 { "EmployeeID": 4, "LastName": "Peacock", "FirstName": "Margaret", "Title": "Sales Representative", "City": "Redmond", "Country": "USA" },
+                 { "EmployeeID": 5, "LastName": "Buchanan", "FirstName": "Steven", "Title": "Sales Manager", "City": "London", "Country": "UK" },
+                 { "EmployeeID": 6, "LastName": "Suyama", "FirstName": "Michael", "Title": "Sales Representative", "City": "London", "Country": "UK" },
+                 { "EmployeeID": 7, "LastName": "King", "FirstName": "Robert", "Title": "Sales Representative", "City": "London", "Country": "UK" },
+                 { "EmployeeID": 8, "LastName": "Callahan", "FirstName": "Laura", "Title": "Inside Sales Coordinator", "City": "Seattle", "Country": "USA" },
+                 { "EmployeeID": 9, "LastName": "Dodsworth", "FirstName": "Anne", "Title": "Sales Representative", "City": "London", "Country": "UK" },
+                 { "EmployeeID": 10, "LastName": "Callahan", "FirstName": "Laura", "Title": "Inside Sales Coordinator", "City": "Seattle", "Country": "USA" },
+                 { "EmployeeID": 11, "LastName": "Leverling", "FirstName": "Janet", "Title": "Sales Representative", "City": "Kirkland", "Country": "USA" },
+                 { "EmployeeID": 12, "LastName": "Suyama", "FirstName": "Michael", "Title": "Sales Representative", "City": "London", "Country": "UK" },
+                 { "EmployeeID": 13, "LastName": "Buchanan", "FirstName": "Steven", "Title": "Sales Manager", "City": "London", "Country": "UK" },
+                 { "EmployeeID": 14, "LastName": "Fuller", "FirstName": "Andrew", "Title": "Vice President, Sales", "City": "Tacoma", "Country": "USA" },
+                 { "EmployeeID": 15, "LastName": "King", "FirstName": "Robert", "Title": "Sales Representative", "City": "London", "Country": "UK" },
+                 { "EmployeeID": 16, "LastName": "Peacock", "FirstName": "Margaret", "Title": "Sales Representative", "City": "Redmond", "Country": "USA" },
+                 { "EmployeeID": 17, "LastName": "Buchanan", "FirstName": "Steven", "Title": "Sales Manager", "City": "London", "Country": "UK" },
+                 { "EmployeeID": 18, "LastName": "Suyama", "FirstName": "Michael", "Title": "Sales Representative", "City": "London", "Country": "UK" },
+                 { "EmployeeID": 19, "LastName": "King", "FirstName": "Robert", "Title": "Sales Representative", "City": "London", "Country": "UK" },
+                 { "EmployeeID": 20, "LastName": "Callahan", "FirstName": "Laura", "Title": "Inside Sales Coordinator", "City": "Seattle", "Country": "USA" },
+                 { "EmployeeID": 21, "LastName": "Dodsworth", "FirstName": "Anne", "Title": "Sales Representative", "City": "London", "Country": "UK" },
+                 { "EmployeeID": 22, "LastName": "Suyama", "FirstName": "Margaret", "Title": "Sales Representative", "City": "London", "Country": "UK" },
+                 { "EmployeeID": 23, "LastName": "Fuller", "FirstName": "Andrew", "Title": "Vice President, Sales", "City": "Tacoma", "Country": "USA" },
+                 { "EmployeeID": 24, "LastName": "Leverling", "FirstName": "Janet", "Title": "Sales Representative", "City": "Kirkland", "Country": "USA" },
+                 { "EmployeeID": 25, "LastName": "Peacock", "FirstName": "Margaret", "Title": "Sales Representative", "City": "Redmond", "Country": "USA" },
+                 { "EmployeeID": 26, "LastName": "Buchanan", "FirstName": "Steven", "Title": "Sales Manager", "City": "London", "Country": "UK" },
+                 { "EmployeeID": 27, "LastName": "Suyama", "FirstName": "Michael", "Title": "Sales Representative", "City": "London", "Country": "UK" },
+                 { "EmployeeID": 28, "LastName": "King", "FirstName": "Robert", "Title": "Sales Representative", "City": "London", "Country": "UK" },
+                 { "EmployeeID": 29, "LastName": "Callahan", "FirstName": "Laura", "Title": "Inside Sales Coordinator", "City": "Seattle", "Country": "USA" },
+                 { "EmployeeID": 30, "LastName": "Dodsworth", "FirstName": "Anne", "Title": "Sales Representative", "City": "London", "Country": "UK" },
+                 { "EmployeeID": 31, "LastName": "Peacock", "FirstName": "Margaret", "Title": "Sales Representative", "City": "Redmond", "Country": "USA" },
+                 { "EmployeeID": 32, "LastName": "Buchanan", "FirstName": "Steven", "Title": "Sales Manager", "City": "London", "Country": "UK" },
+            ];
+            $("#sampleProperties").ejPropertiesPanel();
+            window.employeeView = { 
+                dataSource: ko.observableArray(obj),
+                selectedRow: ko.observable(1),
+                currentPage: ko.observable(2),
+                actionBegin: ko.observable(function (args) {
+                    if (args.requestType == "grouping")
+                        $("#selectedRow").ejNumericTextbox("option", { value: -1 });
+                })
+            };
+            ko.applyBindings(employeeView);
+        });
+    </script>
+</body>
+</html>

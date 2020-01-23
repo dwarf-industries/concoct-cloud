@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : TreeGrid</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+   <!--[if lt IE 9]>
+     <script type="text/javascript" src="../scripts/jquery-1.11.3.min.js" ></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsontreegriddata.js"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="TreeGridContainer" style="width: 100%; height: 450px;"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Filter Type
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="mode" />
+                            <div id="editMode">
+                                <ul>
+                                    <li>Filter Bar</li>
+                                    <li>Menu</li>
+                                    <li>Excel</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Filter Hierarchy Mode
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="filter" />
+                            <div id="hierarchyMode">
+                                <ul>
+                                    <li>Parent</li>
+                                    <li>Child</li>
+                                    <li>Both</li>
+                                    <li>None</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/x-jsrender" id="customCheckBoxColumn">
+        <div style="margin-left:20px;">{{if approved}} <input class="customCheckbox" type="checkbox" checked="checked" value="" />{{else}} <input class="customCheckbox" type="checkbox" value="" />{{/if}}</div>
+    </script>
+    <script type="text/javascript">
+        var stateData = [
+            { text: "Yes", value: "true" },
+            { text: "No", value: "false" }
+        ];
+        var stageData=[
+            {id:1, text: "Low", value: "Low" },
+            {id:2, text: "Normal", value: "Normal" },
+            {id:3, text: "High", value: "High" },
+            {id:4, text: "Critical", value: "Critical" }
+        ];
+        $(function () {
+            var dateFormat = "{0:" + ej.preferredCulture()["calendars"]["standard"]["patterns"]["d"] + "}";
+            $("#TreeGridContainer").ejTreeGrid({
+                allowSorting: true,
+                allowMultiSorting: true,
+                allowFiltering: true,
+                allowSorting: true,
+                editSettings: {
+                    allowEditing: true,
+                    editMode: "cellEditing"
+                },
+                isResponsive: true,
+                filterSettings: { filterType: ej.TreeGrid.FilterType.FilterBar, filterHierarchyMode: ej.TreeGrid.FilterHierarchyMode.Parent},
+                allowColumnResize: true,
+                dataSource: sampleData,
+                childMapping: "subtasks",
+                treeColumnIndex: 1,
+                dateFormat: "MM/dd/yyyy",
+                idMapping: "taskID",
+                columns: [
+                    { field: "taskID", headerText: "Task Id", width: "55", allowFiltering: false, editType: "numericedit", filterEditType: "numericedit" },
+                    { field: "taskName", headerText: "Task Name", editType: "stringedit", filterEditType: "stringedit" },
+                    { field: "startDate", headerText: "Start Date", editType: "datepicker", filterEditType: "datepicker", format: dateFormat },
+                    { field: "endDate", headerText: "End Date", editType: "datepicker", filterEditType: "datepicker", format: dateFormat },
+					{ field: "approved", headerText: "Approved", allowEditing: false, isTemplateColumn: true, templateID: "customCheckBoxColumn", filterEditType: "dropdownedit", width:140,dropdownData: stateData, allowFilteringBlankContent: false },
+                    { field: "priority", headerText: "Priority", editType: "dropdownedit", filterEditType: "dropdownedit", dropdownData: stageData, editParams: { fields: { text: "text", value: "value" }, showCheckbox: false } },
+                    { field: "progress", headerText: "Progress", editType: "numericedit", filterEditType: "numericedit" }
+                ],
+                rowHeight: window.theme == "material" ? 48 : window.theme == "office-365" ? 36 : 30,
+                load: function () {
+                    if (window.theme == "material")
+                        this.treeIndentLevelWidth = 16;
+                },
+            })
+            $('#mode').ejDropDownList({
+                targetID: "editMode",
+                change: "onModeChange",
+                text: "Filter Bar",
+                width: "118px"
+            });
+            $('#filter').ejDropDownList({
+                targetID: "hierarchyMode",
+                change: "onHierarchyModeChange",
+                text: "Parent",
+                width: "118px"
+            });
+            $("#sampleProperties").ejPropertiesPanel();
+        });
+
+        $("#TreeGridContainer").on("change", ".customCheckbox", function (e) {
+            e = e || window.event;
+            var targetEle = e.target || e.srcElement,
+                $tr = $(targetEle).closest('tr'),
+                treeObj = $("#TreeGridContainer").data("ejTreeGrid"),
+                checkStatus = $(targetEle).is(':checked'),
+                rowIndex = ($tr).index(),
+                record = treeObj.model.currentViewData && treeObj.model.currentViewData[rowIndex];
+            record["approved"] = checkStatus;
+        });
+        function onModeChange(args) {
+            var treeObject = $("#TreeGridContainer").data("ejTreeGrid"), value, isResponsive = false;
+            switch(args.text)
+            {
+                case "Filter Bar":
+                    value = ej.TreeGrid.FilterType.FilterBar;
+                    isResponsive = true;
+                    break;
+                case "Menu":
+                    value = ej.TreeGrid.FilterType.Menu;
+                    isResponsive = true;
+                    break;
+                case "Excel":
+                    value = ej.TreeGrid.FilterType.Excel;
+                    isResponsive = false;
+                    break;
+            }
+            var setting = {
+                filterType: value
+            }
+            treeObject.option("filterSettings", setting);
+            treeObject.option("isResponsive", isResponsive);
+        }
+        function onHierarchyModeChange(args) {
+            var treeObject = $("#TreeGridContainer").data("ejTreeGrid"), value;
+            switch (args.text) {
+                case "Parent":
+                    value = ej.TreeGrid.FilterHierarchyMode.Parent;
+                    break;
+                case "Child":
+                    value = ej.TreeGrid.FilterHierarchyMode.Child;
+                    break;
+                case "Both":
+                    value = ej.TreeGrid.FilterHierarchyMode.Both;
+                    break;
+                case "None":
+                    value = ej.TreeGrid.FilterHierarchyMode.None;
+                    break;
+            }
+            var setting = {
+                filterHierarchyMode: value
+            }
+            treeObject.option("filterSettings", setting);
+        }
+    </script>
+</body>
+
+</html>

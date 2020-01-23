@@ -1,0 +1,572 @@
+html, body {
+    margin: 0;
+    font-family: 'Segoe UI';
+    background-color: #ffffff;
+}
+body {
+	height: 100%;
+}
+.page{
+	height:100%;
+}
+.row{
+	height:100%;
+	width:100%;
+	margin: 0px;
+}
+html .page {
+width: 100%;
+height: 50px;
+display: table;
+border-spacing: 0;
+font-size: 0;
+white-space: nowrap;
+line-height: normal;
+}
+.content-container-fluid{
+	overflow: hidden;
+position: absolute;
+top: 44px;
+right: 0px;
+bottom: 0px;
+left: 0px;
+height: auto;
+width: auto;
+}
+html .page > div {
+box-sizing: border-box;
+}
+
+html .main-header {
+background-color: #000;
+color: #fff;
+}
+
+.main-header .home-btn:before {
+font-size: 1.08333em;
+}
+
+.clear:after {
+content: "";
+display: block;
+clear: both;
+}
+
+.control {
+	height: 43px;
+width: 100%;
+background-color: #F4F9FD;
+}
+
+.scrollContainer {
+	width: 100%;height: 100%;position:absolute;top: 100px;
+}
+
+.treewrap {
+	position: absolute;
+top: 0px;
+right: 0px;
+bottom: 0px;
+left: 0px;
+height: auto;
+width: auto;
+}
+
+.treeControl {
+	position: absolute;
+top: -40px;
+right: auto;
+bottom: 0px;
+left: 0px;
+height: auto;
+width: 214px;
+}
+
+.menuwrap {
+	position: absolute;top:
+	0px;right: 0px;bottom:
+	auto;
+	left: 214px;
+	height: 40px;
+	width: 1152px;
+	background-color: #F4F9FD;
+}
+
+.contentScroll {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+	height: auto;
+	width: auto;
+	border-left: 1px solid #e5e3e3;
+	z-index: 3;
+}
+
+.tool {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+	height: auto;
+	width: auto;
+}
+
+.innerTool {
+	margin: -5px 0px 6px 6px;
+	height: 100%;
+	width: 100%;
+}
+
+.restItem {
+	position: absolute;
+	top: 46px;
+	right: 0px;
+	bottom: 0px;
+	left: 214px;
+	height: auto;
+	width: 360px;
+}
+
+.newItem {
+	position: absolute;
+	top: 7px;
+	right: 0px;
+	bottom: auto;
+	left: 0px;
+	height: 58px;
+	width: auto;
+	margin-left: 0;
+	padding-top: 8px;
+}
+
+.listwrap {
+	position: absolute;
+	top: 76px;
+	right: auto;
+	bottom: 0px;
+	left: 0px;
+	height: auto;
+	width: 360px;
+}
+
+.listscroller {
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.paneltxt {
+	position: relative;
+	top: 30%;
+	text-align: center;
+	left: 50%;
+	white-space: normal;
+	padding: 10px;
+	margin: 219px 0 0 -120px;
+	width: 240px;
+	background-color: #f5f5f5;
+}
+
+body {
+margin: 0;
+padding: 0;
+}
+
+.main-header .home-btn {
+float: left;
+padding: 11px 12px;
+cursor: pointer;
+background-color: #0078d7;
+}
+
+.sidebar {
+position: absolute;top: 0;bottom: 0;left: 0;right: 0;
+height: auto;
+width: 214px;
+background-color: #f5f5f5;
+}
+
+html .section {
+-moz-box-sizing: border-box;
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+height: 100%;
+overflow:hidden;
+}
+
+.sidebar .search {
+	height: 40px;
+margin: 0;
+max-width: 100%;
+background-color: #f4f4f4;
+}
+
+.select {
+	position: absolute;
+top: 10px;
+right: 14px;
+width: 23px;
+height: 15px;
+}
+
+.e-menu.e-horizontal>.e-list>a>span {
+	font-size:14px;
+}
+
+.e-menu {
+	border:0px;
+}
+
+.e-menu.e-horizontal .e-list>a {
+	margin-right:20px;
+}
+.e-menu .e-list>a span.e-icon.e-arrows {
+	top:40%;
+}
+.e-lv .e-header  * {
+	display: table;
+}
+.e-lv .e-htitle {
+	
+	margin-left:31px;
+	font-size: 11px;
+}
+
+.e-htitle {
+	padding: 3px 10px 10px 0;
+}
+.e-lv .e-header {
+	border: 0px solid #c8c8c8;
+	border-bottom: 1px solid #179bd7;
+	height: 29px;
+}
+
+.control .e-atc {
+	height: 100%;
+}
+
+.e-lv.e-parentlv>.e-lv .e-list-container {
+	border: 0px;
+}
+.e-lv .e-list {
+	border-bottom:0px;
+	height:auto;
+}
+.e-menu .e-list>.e-menulink{
+	min-height:17px;
+}
+.e-lv .e-list.e-state-active{
+	background:#0078d7;
+}
+
+.e-atc-popup {
+	display:none;
+	top:85px;
+}
+
+.select .e-icon {
+	font-size:20px;
+}
+
+.e-acrdn {
+	display:none;
+}
+.e-acrdn-content-active {
+	height:100%;
+}
+
+#iconAccordion {
+	width: 100%;
+height: 100%;
+top: 25px;
+right: 0;
+bottom: 0;
+position: absolute;
+}
+
+.e-validation-error {
+	font-size: 13px;
+font-family: "wf_segoe-ui_semibold", "Segoe UI Semibold", "Segoe WP Semibold", "Segoe UI", "Segoe WP", Tahoma, Arial, sans-serif;
+}
+
+.e-acrdn>.e-select {
+	padding: 2.5em;
+padding-left: 46em;
+border-style:none;
+}
+
+.e-acrdn .e-select.e-active, .e-acrdn .e-disable.e-active.e-select:hover a, .e-acrdn .e-disable.e-active.e-select:hover ,.e-acrdn .e-select:hover,.e-acrdn>.e-select, .e-acrdn>.e-disable.e-select:hover, .e-acrdn>.e-disable.e-select:hover a {
+	background:#fff;
+}
+.e-acrdn .e-select.e-active:hover {
+	background:#fff;
+}
+.e-acrdn>.e-select>.e-icon {
+	margin-top:-12px;
+	font-size:15px;
+}
+
+.e-acrdn .e-select.e-active>span {
+	color: #686969;
+}
+
+.messageHeader {
+	height: 80px;
+width: 196px;
+position: absolute;
+left: 140px;
+top: 1px;
+}
+
+.e-acrdn>.e-content {
+	border:0px;
+}
+
+.e-acrdn .e-select:first-child {
+	border-top:0px;
+}
+
+.logos {
+	background-image: url(../../content/images/NewOutlook-Icon/dp.png);
+	height: 91px;
+	width: 92px;
+	position: absolute;
+	left: 27px;
+	top: 1px;
+}
+.ej-icon-attachment-02-wf {
+	text-align: right;
+	position: absolute;
+	right: 8px;
+	height: 15px;
+	width: 80px;
+	top: 7px;
+}
+
+.descriptionstyle {
+	font-family: "wf_segoe-ui_normal", "Segoe UI", "Segoe WP", Tahoma, Arial, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	white-space: nowrap;
+	margin-left: 29px;
+	margin: 3px 45px 0 0;
+	width: auto;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: #333;
+}
+
+.designationstyle {           
+	text-align: right;
+	overflow: hidden;
+	position: absolute;
+	right: 8px;
+	font-size: 11px;
+	height: 15px;
+	width: 80px;
+	top: 27px;
+}
+div#templatelist .markread .designationstyle, div#templatelist .markread .subjectstyle{
+	font-weight: normal;
+    font-family: "Segoe UI";
+    color: rgb(51, 51, 51);
+}
+.subjectstyle {
+	color: #333;
+	font-family: "wf_segoe-ui_normal", "Segoe UI", "Segoe WP", Tahoma, Arial, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+.templatetext {
+	color: #333;
+	font-family: "wf_segoe-ui_semilight", "Segoe UI Semilight", "Segoe WP Semilight", "Segoe UI", "Segoe WP", Tahoma, Arial, sans-serif;
+	font-size: 17px;
+	font-weight: normal;
+}
+		
+.receiver {
+	color: #333;
+	font-family: "wf_segoe-ui_semilight", "Segoe UI Semilight", "Segoe WP Semilight", "Segoe UI", "Segoe WP", Tahoma, Arial, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+.listrightdiv {
+	left: 10px;
+    position: relative;
+	padding: 9px;
+}
+.ItemTitle {
+	color: #333;
+	font-family: "wf_segoe-ui_light", "Segoe UI Light", "Segoe WP Light", "Segoe UI", "Segoe WP", Tahoma, Arial, sans-serif;
+	font-size: 28px;
+	font-weight: normal;
+}
+ #sub {
+	color: #333;
+	font-family: "wf_segoe-ui_semilight", "Segoe UI Semilight", "Segoe WP Semilight", "Segoe UI", "Segoe WP", Tahoma, Arial, sans-serif;
+	font-size: 17px;
+	font-weight: normal;
+	margin-top: 7px;height: 3px;width: 2px;font-size: 17px;
+ }
+ 
+ #headDate {
+	margin-top: 2px;
+	color: #333;
+	font-size: 11px;
+	float: left;
+ }
+ 
+ #date {
+	margin: 2px 8px;
+	color: #333;
+	font-size: 11px;
+	float: left;
+ }
+#to {
+	font-family: "wf_segoe-ui_semilight", "Segoe UI Semilight", "Segoe WP Semilight", "Segoe UI", "Segoe WP", Tahoma, Arial, sans-serif;margin-top: 4px;color: #333;font-size: 14px;
+ }
+ 
+ .controlScroll {
+	 position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; height: auto; width: auto;border-left: 1px solid #e5e3e3;z-index: 3;
+ }
+ 
+ .e-acrdn .e-select.e-active>span{
+	 font-size: 15px;
+ }
+ 
+ .e-treeview .e-item {
+	 padding: 12px 0 2px 16px;
+	 font-family: "wf_segoe-ui_semilight", "Segoe UI Semilight", "Segoe WP Semilight", "Segoe UI", "Segoe WP", Tahoma, Arial, sans-serif;
+ }
+ 
+  .e-treeview .e-plus, .e-treeview .e-minus {
+	 margin-top: 7px;
+ }
+ 
+ .e-list {
+	 font-family: "Segoe UI";
+ }
+ 
+ hr {
+	 margin-top: 5px;
+margin-bottom: 8px;
+ }
+ 
+ div#templatelist .subjectstyle,div#templatelist .designationstyle {
+	 color:#0078D7;
+	 font-family: "wf_segoe-ui_semibold", "Segoe UI Semibold", "Segoe WP Semibold", "Segoe UI", "Segoe WP", Tahoma, Arial, sans-serif;
+     font-weight: bold;
+ }
+ 
+ html .mailDetails{
+	overflow: auto;
+}
+.mailDetails .header {
+padding: 0 30px;
+color: #000;
+background: #e8e8e8;
+}
+.mailDetails #subject {
+padding: 15px 0;
+font-size: 22px;
+border-bottom: 1px solid #fff;
+}
+.mailDetails #from {
+float: left;
+padding: 10px 0;
+}
+.mailDetails #recieved {
+float: right;
+padding: 10px 0;
+}
+.mailDetails #body {
+padding: 30px;
+}
+
+.control .e-atc.e-widget .e-in-wrap {
+	-webkit-box-shadow:none;
+}
+.control .e-atc .e-in-wrap {
+	box-shadow:0px;
+	border-color: #F4F9FD;
+}
+
+#menujson {
+	background-color: #F4F9FD;
+}
+
+.control .e-autocomplete {
+	background-color: #F4F9FD;
+}
+
+.e-rte {
+	 margin: 3px 0px; 
+}
+
+.e-atc-popup .e-content ul li {
+	min-height: 2.3em;
+}
+
+#autoTo_wrapper , #autoCc_wrapper {
+	margin-left: 85px;
+}
+
+.e-treeview .e-text {
+	padding: 0 15px 2px 4px;
+}
+
+.e-in-wrap {
+	border: 1px solid; 
+}
+.e-atc .e-input,.e-atc .e-in-wrap,.e-mask .e-in-wrap{
+	border-color: #fff;
+}
+
+.e-atc.e-focus .e-in-wrap,.e-mask.e-focus .e-in-wrap {
+	box-shadow:0 0 2px #fff;
+}
+
+.compose {
+	border-bottom: 1px solid #c8c8c8;
+	width: 711px;
+    margin: 7px 0px;
+}
+#toButton,#ccButton,#sendButton {
+	border-color: #f4f4f4;
+background-color: #f4f4f4;
+float:left;
+}
+.e-rte .e-toolbarspan {
+	border-bottom: 1px solid #179bd7;
+}
+
+.ej-icon-add,.ej-icon-trash-can1-wf,.ej-icon-archive02-wf {
+padding: 4px;
+}
+
+.e-atc.e-widget .e-in-wrap {
+	-webkit-box-shadow: 0 0 3px #fff;
+    box-shadow: 0 0 3px #fff; 
+}
+
+.e-dialog>.e-header {
+	border-bottom: 2px solid #0078d7;
+}
+
+#menujson li:nth-child(n+2) {
+	display:none;
+}
+.count {
+	color: #0078D7;
+}
+.e-active .count {
+	color:#fff;
+}

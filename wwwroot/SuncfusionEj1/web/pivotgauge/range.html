@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" type="text/css" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+       <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+      <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/pivotgrid.datasource.js"></script>
+    <script src="../scripts/excanvas.min.js" type="text/javascript"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" style="width: 70%">
+                <div id="circularframe">
+                    <div id="PivotGauge" style="height: 340px; width: 100%; overflow: auto; float: left; position:relative" />
+                </div>
+            </div>
+        </div>
+        <div id="sampleProperties">
+            <div class="prop-grid">
+                <div class="row">
+                    <div class="col-md-3">
+                        Range Size
+                    </div>
+                    <div class="col-md-3 aligntop">
+                        <div id="rangesize">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        Range Distance
+                    </div>
+                    <div class="col-md-3 aligntop">
+                        <div id="distancefromscale">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#PivotGauge").ejPivotGauge({
+                dataSource: {
+					data: window.biurl + "olap/msmdpump.dll",
+                    catalog: "Adventure Works DW 2008 SE",
+					cube: "Adventure Works",
+                    rows: [
+						{
+							fieldName: "[Date].[Fiscal]",
+                            filterItems: { filterType: "include", values: ["[Date].[Fiscal].[Fiscal Year].&amp;[2004]"] }
+                        },
+                    ],
+                    columns: [
+                        {
+                            fieldName: "[Customer].[Customer Geography]"
+                        }
+					],
+                    values: [
+                        {
+                            measures: [
+                                {
+									fieldName: "[Measures].[Internet Sales Amount]"
+                                },
+								{
+									fieldName: "[Measures].[Internet Revenue Status]"
+								},
+                                {
+                                    fieldName: "[Measures].[Internet Revenue Trend]"
+								},
+								{
+									fieldName: "[Measures].[Internet Revenue Goal]"
+								},
+                            ],
+                            axis: ej.PivotGauge.AxisName.Columns
+						}
+                    ]
+                },
+                enableTooltip: true, load: "loadGaugeTheme", isResponsive: true,
+                backgroundColor: "transparent",
+                scales: [{
+                    showRanges: true,
+                    radius: 150, showScaleBar: true, size: 1,
+                    border: {
+                        width: 0.5
+                    },
+                    showIndicators: true, showLabels: true,
+                    pointers: [{
+                        showBackNeedle: true,
+                        backNeedleLength: 20,
+                        length: 125,
+                        width: 7
+						},
+                        {
+                            type: "marker",
+                            markerType: ej.datavisualization.CircularGauge.MarkerType.Diamond,
+                            distanceFromScale: 5,
+                            placement: "center",
+                            backgroundColor: "#29A4D9",
+                            length: 25,
+                            width: 15
+                        }],
+                    ticks: [{
+                        type: "major",
+                        distanceFromScale: 2,
+                        height: 16,
+                        width: 1, color: "#8c8c8c"
+                    }, {
+                        type: "minor",
+                        height: 6,
+                        width: 1,
+                        distanceFromScale: 2,
+                        color: "#8c8c8c"
+                    }],
+                    labels: [{
+                        color: "#8c8c8c"
+                    }],
+                    ranges: [{
+                        distanceFromScale: -5,
+                        backgroundColor: "#fc0606",
+                        border: {
+                            color: "#fc0606"
+                        }
+                    }, {
+                        distanceFromScale: -5
+                    }],
+                    customLabels: [{
+                        position: { x: 180, y: 290 },
+                        font: { size: "10px", fontFamily: "Segoe UI", fontStyle: "Normal" }, color: "#666666"
+                    }, {
+                        position: { x: 180, y: 320 },
+                        font: { size: "10px", fontFamily: "Segoe UI", fontStyle: "Normal" }, color: "#666666"
+                    }, {
+                        position: { x: 180, y: 150 },
+                        font: { size: "12px", fontFamily: "Segoe UI", fontStyle: "Normal" }, color: "#666666"
+                    }]
+                }],
+                labelFormatSettings: { decimalPlaces: 2 }
+            });
+
+            $("#rangesize").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                value: 5,
+                height: 10,
+                minValue: 2,
+                maxValue: 12,
+                width: 110,
+                animate: true,
+                slide: "onchange",
+                change: "onchange"
+            });
+
+            $("#distancefromscale").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                value: -5,
+                height: 10,
+                minValue: -20,
+                maxValue: 0,
+                width: 110,
+                animate: true,
+                slide: "onchange",
+                change: "onchange"
+            });
+
+            $("#sampleProperties").ejPropertiesPanel();
+        });
+
+
+        function onchange(args) {
+            pivotGauges = $("#PivotGauge").find(".e-circulargauge");
+            if (args.id == "rangesize") {
+                $.each(pivotGauges, function (index, value) {
+                    gaugeval = $("#" + value.id).data("ejCircularGauge");
+                    for (var i = 0; i <= 2; i++)
+                        gaugeval.setRangeSize(0, i, args.value);
+                });
+            }
+            else if (args.id == "distancefromscale") {
+                $.each(pivotGauges, function (index, value) {
+                    gaugeval = $("#" + value.id).data("ejCircularGauge");
+                    for (var i = 0; i <= 2; i++)
+                        gaugeval.setRangeDistanceFromScale(0, i, args.value);
+                });
+            }
+        }
+
+    </script>
+    <style>
+        .row .cols-prop-area {
+            min-height: 150px;
+            width: 27%;
+        }
+
+        .circulardarkgradient, .circularlightgradient {
+            width: 360px;
+            position: relative;
+        }
+    </style>
+
+</body>
+</html>

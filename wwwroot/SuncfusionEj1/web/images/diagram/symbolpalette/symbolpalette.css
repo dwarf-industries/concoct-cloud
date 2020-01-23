@@ -1,0 +1,21 @@
+.e-datavisualization-symbolpalette .selected,
+.e-datavisualization-symbolpalette .hover {
+    fill: white;
+}
+
+.e-chkbox-wrap .e-chk-image.e-chk-indetericon, .e-chkbox-wrap .e-chk-image.e-chk-activeicon {
+    color: #807F7F;
+}
+
+
+.row .cols-sample-area {
+    width: 66.956%;
+}
+
+.row .cols-prop-area {
+    width: 29.9146%;
+}
+
+.e-datavisualization-symbolpalette .e-header-wrapper {
+    padding-left: 1em;
+}

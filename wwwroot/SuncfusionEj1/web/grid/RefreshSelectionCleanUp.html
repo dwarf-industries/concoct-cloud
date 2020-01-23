@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Selection API</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsondata.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+
+
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="Grid"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <b>Select Row</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Start
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="rowIndex" />
+                        </div>
+                        <div class="col-md-3">
+                            To
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="toIndex" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <button id="selectRow">Select Row</button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3" style="margin-top: 10px;">
+                            <b>Clear Selection </b>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            Row Index
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="clearRowIndex" />
+                        </div>
+                        <div class="col-md-3">
+                            <button id="clearSectionByIndex">Clear Selection</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $("#Grid").ejGrid({
+                // the datasource "window.gridData" is referred from jsondata.min.js
+                dataSource: window.gridData,
+                allowPaging: true,
+                allowSelection: true,
+                selectionType: ej.Grid.SelectionType.Multiple,
+                columns: [
+                         { field: "OrderID", isPrimaryKey: true, headerText: "Order ID", textAlign: ej.TextAlign.Right, width: 80 },
+                                         { field: "CustomerID", headerText: 'Customer ID', width: 85 },
+                                         { field: "EmployeeID", headerText: 'Employee ID', textAlign: ej.TextAlign.Right, width: 75 },
+                                         { field: "Freight", headerText: 'Freight', textAlign: ej.TextAlign.Right, width: 75, format: "{0:C}" },
+                                         { field: "OrderDate", headerText: 'Order Date', width: 80, format: "{0:MM/dd/yyyy}", textAlign: ej.TextAlign.Right }
+                ]
+            });
+        });
+
+        $("#sampleProperties").ejPropertiesPanel();
+        $("#rowIndex").ejNumericTextbox({ value: 0, width: 70, minValue: 0, maxValue: 11 });
+        $("#toIndex").ejNumericTextbox({ value: 0, width: 70, minValue: 0, maxValue: 11 });
+        $("#clearRowIndex").ejNumericTextbox({ value: 0, width: 70, minValue: 0, maxValue: 11 });
+        $("#selectRow").ejButton({ size: "medium", click: "selectRow" ,width: "100px" });
+        $("#clearSectionByIndex").ejButton({ size: "medium" , click: "clearSelectionByIndex" });
+        
+	    function selectRow(args) { 
+            var rowIndex = $('#rowIndex').ejNumericTextbox('option', 'value');
+            var toIndex = $('#toIndex').ejNumericTextbox('option', 'value');
+            var gridObj = $("#Grid").ejGrid("instance");
+            gridObj.selectRows(parseInt(rowIndex), parseInt(toIndex));
+        }
+
+        function clearSelectionByIndex(args) { 
+            var rowIndex = $('#clearRowIndex').ejNumericTextbox('option', 'value');
+            var gridObj = $("#Grid").ejGrid("instance");
+            gridObj.clearSelection(parseInt(rowIndex));
+        }
+    </script>
+</body>
+</html>

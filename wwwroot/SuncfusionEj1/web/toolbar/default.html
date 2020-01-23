@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <title>Essential JS 1: Toolbar Default Functionalities</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+
+<body>
+   <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area"> 
+				<div class="frame">
+                    <div class="control"> 
+                        <div id="editingToolbar">
+                            <ul>
+                                <li id="cut" class="e-icon e-cut_01" title="Cut"></li>
+                                <li id="copy" class="e-icon e-copy_02" title="Copy"></li>
+                                <li id="paste" class="e-icon e-paste_01" title="Paste"></li> 
+                            </ul>
+                            <ul>
+                                <li id="Bold" class="e-icon e-bold_01" title="Bold"> 
+                                </li> 
+                                <li id="UndeLine" class="e-icon e-underline_01" title="UnderLine"> 
+                                </li>
+                                <li id="StrikeThrough" class="e-icon e-strikethrough_01" title="Strike Through"> 
+                                </li>
+                            </ul>
+							<ul>
+                                <li id="Left" class="e-icon e-align-left_01" title="Left"> 
+                                </li>
+                                <li id="Center" class="e-icon e-align-center_01" title="Center"> 
+                                </li>
+                                <li id="Right" class="e-icon e-align-right_01" title="Right"> 
+                                </li>
+                                <li id="Justify" class="e-icon e-align-justify_01" title="Justify"> 
+                                </li>
+                            </ul> 
+                        </div>
+                    </div>
+                </div>
+			</div>
+            </div>
+        </div>
+    </div>
+    <style type="text/css" class="cssStyles">
+	.material .frame{
+		width: 497px;
+	}
+	.office-365 .frame{
+		width:470px;
+	}
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            // declaration
+            $("#editingToolbar").ejToolbar({width: "100%",enableSeparator: true});
+        });
+    </script>
+</body>
+</html>

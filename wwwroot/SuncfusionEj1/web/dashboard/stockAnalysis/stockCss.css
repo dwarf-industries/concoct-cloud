@@ -1,0 +1,340 @@
+﻿html, body
+{
+    margin: 0;
+    width: 100%;
+    font-family: 'Segoe UI';
+    background-color: #F9FAFC;
+}
+
+.stockanalysis
+{
+    background-color: #f9fafc;
+    height: 100%;
+    margin: 0;
+    width: 100%;
+}
+
+.chartdetail
+{
+    margin: 0 auto;
+    max-width: 846px;
+}
+
+.samplecontent
+{
+    background-color: #B33D4D;
+    height: 80px;
+    width: 100%;
+}
+
+.changeyear
+{
+    background-color: #D1D1D1;
+    color: #797979;
+    font-size: 14px;
+    padding-left: 7px;
+    padding-right: 7px;
+    border: 1px solid #A0A0A0;
+}
+
+.changeyear:hover
+{
+    background-color: #C0C0C0;
+}
+
+.ptext
+{
+    color: #69A6D5;
+    font-size: 23px;
+    margin-left: 11%;
+}
+
+.stocktable > tbody
+{
+    background: none repeat scroll 0 0 white;
+}
+
+.stocktable
+{
+    width:100%;
+}
+.stockstatus td
+{
+    border: 2px solid #EEEFEF;
+}
+
+.stockdetails
+{
+    background-color: white;
+    border: 2px solid #EEEFEF;
+	margin-left:2px;
+    margin-right:12px;
+}
+    
+.high
+{
+    background-color: #738345 !important;   
+    width:100%;	
+}
+
+.low
+{
+    background-color: #B85657 !important;    
+}
+
+.high,.low
+{
+    font-size: 14px;
+    color: white;
+}
+.sampletitle
+{
+    background-color: #b33d4d;
+    color: white;
+    font-size: x-large;
+    height: 80px;
+	 
+}
+
+table, table td, table th
+{
+    border: 0px none;
+    color: black;
+}
+
+.tooltipDivhiloOpenClose
+{
+    background-color: #303030;
+    border: 1px solid #727272;
+    border-radius: 5px;
+    font-family: segoe ui;
+    font-size: 12px;
+    font-weight: 600;    
+}
+
+#Tooltip
+{
+    height: 110px;
+	line-height:18px;
+    width: 135px;
+}
+
+.tooltipDivhiloOpenClose td
+{
+    color: white !important;
+}
+
+.ownerdetails
+{
+    float: right !important;
+    margin-top: 4px;
+}
+
+.ownerdetails img
+{
+    height: 70px;
+}
+
+.ptiles  :hover, #MSFT td:hover
+{
+    background-color: #F6F6F6;
+}
+
+.high :hover, .low :hover
+{
+    background-color:transparent;
+}
+
+.stockanalysis
+{
+    height: 100%;
+    margin: 0;
+    width: 100%;
+}
+
+.sampletitle
+{
+    background-color: #B33D4D;
+    color: white;
+    font-size: x-large;
+    height: 80px;
+    margin: 0 auto;
+   
+	max-width: 846px;
+}
+
+.sampletitle label
+{
+    font-size: 27px;
+    top: 27px;
+	left:-7px;
+    position: relative;
+	font-weight:normal;
+}
+
+ .chartbody
+{
+    margin: auto;
+    max-width: 846px;
+}
+
+.stockImg {
+    margin-top: 5px;
+}
+
+
+#Tooltip > table
+{
+    border-spacing: 0;
+    margin-left: 15px;
+    margin-top: 8px;
+}
+
+.ownname > span
+{
+    font-size: 14px;
+}
+
+.stockimg
+{
+    margin-top: 5px;
+}
+
+.titletab
+{
+    display: block;
+    margin-bottom: -1px;
+}
+.ownname
+{
+    color: white;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.sampleimg > div
+{
+    float: left;
+}
+
+.vponits
+{
+    padding-left: 18px;
+}
+
+#goog-wait_WaitingPopup, #aapl-wait_WaitingPopup, #msft-wait_WaitingPopup, #nok-wait_WaitingPopup
+{
+    background: none;
+	background-color:transparent;
+}
+
+#goog-wait_WaitingPopup.e-waitpopup-pane .e-image, #aapl-wait_WaitingPopup.e-waitpopup-pane .e-image, #nok-wait_WaitingPopup.e-waitpopup-pane .e-image, #msft-wait_WaitingPopup.e-waitpopup-pane .e-image
+{
+    background-size: 40px;
+    border: none;
+    width: 44px;
+    height: 37px;
+    top: 21px !important;    
+}
+#hiloOpenClose 
+{
+   height: 300px !important; 
+}
+.e-waitpopup-pane .e-image
+{
+    background-color:transparent;
+}
+.e-waitpopup-pane  
+{
+    background-color:transparent;
+}
+
+.titletab td {
+    border: medium none !important;
+    height: 30px;
+    margin-top: 0;
+}
+
+.decrement, .increment
+{
+    color: #6A6A6A;
+    font-size: 35px;
+    font-weight: lighter;
+    display: block; 
+    padding: 10px;
+	width:93px;
+}
+.down ,.up {
+    display: inline-block;
+    height: 35px;
+    width: 100px;
+}
+
+.downarrow, .uparrow , .higharrow ,.lowarrow{
+    background-attachment: scroll;
+    background-image: url("arrows_sprite.png");    
+    background-repeat: no-repeat;
+}
+
+.yearlabel {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.downarrow, .uparrow 
+{
+   height: 35px;    
+}
+.downarrow
+{
+    background-position: -2px 7px;  
+}
+.uparrow
+{
+    margin-left: -5px;
+    background-position:3px -20px;
+}
+
+.higharrow > span ,.lowarrow > span {
+    margin-left: 22px;
+}
+
+.higharrow {    
+    background-position: 2px -80px;    
+}
+.lowarrow {    
+    background-position: 2px -52px; 
+}
+
+.stockstatus {
+    margin-bottom: 13px;
+    max-width:846px;
+}
+
+.sampletitle {
+    margin-bottom: 30px;
+}
+.ptiles
+{
+   width: 209px !important;
+   padding-right:0px !important;
+   padding-left:0px !important;
+    background-color: white;
+	  border: 2px solid #EEEFEF;
+	  display:block;
+	 margin-left:2Spx;
+	 margin-bottom:10px;
+}
+ 
+.row
+{
+margin-left:0px !important;
+}
+.tile
+{
+display:inline-block;
+}
+.leftHeader
+{
+min-width:300px;
+}

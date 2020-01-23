@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : ListBox - API's</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="listbox frame">
+                    <div class="ctrllabel">Select a skill</div>
+                    <ul id="selectsection"></ul>
+                </div>
+            </div>
+
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+
+                                <div class="col-md-3">Enable/Disable All</div>
+                                <div class="col-md-3">
+                                    <input type="checkbox" id="btnendis" class="e-togglebtn" value="checkuncheck" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+
+                                <div class="col-md-3">Remove Item</div>
+                                <div class="col-md-3">
+                                    <button class="button" id="Remove">Remove Item</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    <input id="additem" class="ejinputtext" type="text" value="Java" />
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="button" id="Add">Add Item</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="col-md-3">
+                                <input id="selects" class="ejinputtext" type="text" value="3,4" />
+                            </div>
+                            <div class="col-md-3">
+                                <button class="button" id="Selects">Select Items by index</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="col-md-3">
+                                <input id="unselects" class="ejinputtext" type="text" value="3,4" />
+                            </div>
+                            <div class="col-md-3">
+                                <button class="button" id="Unselects">UnSelect Items by index</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="col-md-3">CheckBox Visibility</div>
+                            <div class="col-md-3">
+                                <input type="checkbox" id="btnshwhid" class="e-togglebtn" value="checkuncheck" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="col-md-3">
+                                <input id="checks" class="ejinputtext" type="text" value="3,4" disabled />
+                            </div>
+                            <div class="col-md-3">
+                                <button class="button" id="Checks">Check items by index</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="col-md-3">
+                                <input id="unchecks" class="ejinputtext" type="text" value="3,4" disabled />
+                            </div>
+                            <div class="col-md-3">
+                                <button class="button" id="Unchecks">Uncheck Items by index</button>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="col-md-3">
+                                <input id="disable" class="ejinputtext" type="text" value="2,4,6" />
+                            </div>
+                            <div class="col-md-3">
+                                <button class="button" id="Disable">Disable items by index</button>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="col-md-3">
+                                <input id="enable" class="ejinputtext" type="text" value="2,4" />
+                            </div>
+                            <div class="col-md-3">
+                                <button class="button" id="Enable">Enable Items by index</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var ListboxObj, CheckedObj, UnCheckObj;
+        jQuery(function ($) {
+            var skillset = [{ skill: "ASP.NET" }, { skill: "ActionScript" }, { skill: "Basic" },
+            { skill: "C++" }, { skill: "C#" }, { skill: "dBase" }, { skill: "Delphi" },
+            { skill: "ESPOL" }, { skill: "F#" }
+            ];
+            $("#selectsection").ejListBox({
+                width: "240", dataSource: skillset,
+                fields: { text: "skill" },
+                allowMultiSelection: true,
+                create: "LoadComplete"
+            });
+            ListboxObj = $('#selectsection').data("ejListBox");
+            $("#Add").ejButton({
+                size: "normal", width: "113px", click: "add"
+            });
+            $("#Remove").ejButton({
+                size: "normal", width: "113px", click: "remove"
+            });
+            $("#Checks").ejButton({
+                size: "normal", width: "113px", click: "checks"
+            });
+            CheckedObj = $("#Checks").data("ejButton");
+            $("#Unchecks").ejButton({
+                size: "normal", width: "113px", click: "unchecks"
+            });
+            UnCheckObj = $('#Unchecks').data("ejButton");
+
+            $("#Selects").ejButton({
+                size: "normal", width: "113px", click: "selects"
+            });
+            SelectObj = $("#Selects").data("ejButton");
+            $("#Unselects").ejButton({
+                size: "normal", width: "113px", click: "unselects"
+            });
+            UnSelectObj = $("#Unselects").data("ejButton");
+
+            $("#Disable").ejButton({
+                size: "normal", width: "113px", click: "disable"
+            });
+            $("#Enable").ejButton({
+                size: "normal", width: "113px", click: "enable"
+            });
+            $("#btnendis").ejToggleButton({ "change": "onEnableDiasableAll", "defaultText": "Disable All", "activeText": "Enable All", "width": "113px", "cssClass": "button" });
+            $("#btnshwhid").ejToggleButton({ "change": "onShowHide", "defaultText": "Show", "width": "113px", "activeText": "Hide" });
+            if (!ListboxObj.option('showCheckbox')) {
+                CheckedObj.disable();
+                UnCheckObj.disable();
+            }
+        });
+        function add(e) {
+            ListboxObj.addItem($("#additem").val());
+        }
+        function remove(e) {
+            ListboxObj.removeItem();
+        }
+        function onEnableDiasableAll(args) {
+            if (args.isChecked) {
+                ListboxObj.disable();
+                $(".ctrllabel").css("opacity", 0.5);
+            }
+            else {
+                ListboxObj.enable();
+                $(".ctrllabel").css("opacity", 1);
+            }
+        }
+        function onShowHide(args) {
+            if (args.isChecked) {
+                ListboxObj.option("showCheckbox", true);
+                CheckedObj.enable();
+                UnCheckObj.enable();
+                SelectObj.disable();
+                UnSelectObj.disable();
+                $("#unselects").attr("disabled", "true");
+                $("#selects").attr("disabled", "true");
+                $("#checks").removeAttr("disabled");
+                $("#unchecks").removeAttr("disabled");
+            }
+            else {
+                ListboxObj.option("showCheckbox", false);
+                CheckedObj.disable();
+                UnCheckObj.disable();
+                SelectObj.enable();
+                UnSelectObj.enable();
+                $("#unselects").removeAttr("disabled");
+                $("#selects").removeAttr("disabled");
+                $("#checks").attr("disabled", "true");
+                $("#unchecks").attr("disabled", "true");
+            }
+        }
+        function checks(args) {
+            value = $("#checks").val();
+            if (value != "") {
+                ListboxObj.checkItemsByIndices(value);
+            }
+            else alert("Please enter the item index");
+        }
+        function unchecks(e) {
+            value = $("#unchecks").val();
+            if (value != "") {
+                ListboxObj.uncheckItemsByIndices(value);
+            }
+            else alert("Please enter the item index");
+        }
+
+        function selects(e) {
+            value = $("#selects").val();
+            if (value != "")
+                ListboxObj.selectItemsByIndex(value);
+            else alert("Please enter the item index");
+        }
+        function unselects(e) {
+            value = $("#unselects").val();
+            ListboxObj.unselectItemsByIndex(value);
+        }
+
+        function disable(e) {
+            value = $("#disable").val();
+            if (value != "")
+                ListboxObj.disableItemsByIndices(value);
+            else alert("Please enter the item index");
+        }
+        function enable(e) {
+            value = $("#enable").val();
+            if (value != "")
+                ListboxObj.enableItemsByIndices(value);
+            else alert("Please enter the item index");
+        }
+        function LoadComplete() {
+            if (document.body.className == "fixedlayout material") {
+                setTimeout(function () {
+                    var obj = $("#selectsection").ejListBox("instance");
+                    obj._refreshScroller();
+                }, 500);
+            }
+        }
+        $("#sampleProperties").ejPropertiesPanel();
+    </script>
+    <style>
+        .e-ddl-popup {
+            margin: 0 auto;
+        }
+
+        .ctrllabel {
+            padding-bottom: 12px;
+        }
+
+        .button {
+            font-size: 12px;
+        }
+
+        .ejinputtext {
+            width: 95px;
+        }
+        .fixedlayout:not(.office-365) .prop-grid .row [class^="col-md-"] {
+            height: 40px;
+        }
+        .fixedlayout.office-365 .prop-grid .row [class^="col-md-"] {
+            height: 50px;
+        }
+        .fixedlayout.office-365 .e-btn.e-btn-normal {
+            height:54px;
+        }
+    </style>
+</body>
+</html>

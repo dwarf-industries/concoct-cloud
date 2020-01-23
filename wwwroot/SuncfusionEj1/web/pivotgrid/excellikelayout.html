@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" type="text/css" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+       <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+      <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/pivotgrid.datasource.js"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" style="width: 100%">
+                <div class="control">
+                    <div id="PivotGrid" style="height: 350px; width: 100%; overflow: auto; float: left;
+                        display: block">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cols-sample-area" style="min-height:100px;">
+                <div id="sampleProperties">
+                    <div class="prop-grid">
+                        <div class="row">
+                                <table>
+                                    <tr>
+                                        <td class="chkrad">
+                                            DataSource : 
+                                        </td>
+                                        <td class="chkrad">
+                                            <input type="radio" name="dataSource" id="rdbRelational" checked="checked" /><label for="rdbRelational" class="radioBtnLabel">Relational</label>
+                                        </td>
+                                        <td class="chkrad" colspan="2">
+                                            <input type="radio" name="dataSource" id="rdbOlap" /><label for="rdbOlap" class="radioBtnLabel">OLAP</label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        <div class="row" style="margin-top: 5px;">
+                            <table>
+                                <tr>
+                                    <td class=" chkrad">
+                            Mode :
+                            </td>
+                            <td class="chkrad">
+                                <input type="radio" name="dataMode" id="rdbClient" checked /><label for="rdbClient" class="radioBtnLabel">Client</label>
+                            </td>
+                            <td class="chkrad" colspan="2">
+                                <input type="radio" name="dataMode" id="rdbServer" /><label for="rdbServer" class="radioBtnLabel">Server</label>
+                            </td>
+                            </tr>
+                            </table>
+                       </div>
+                   </div>
+              </div>
+          </div>
+            <script type="text/javascript">
+                var btnTarget, rdbRelational, rdbOlap, rdbClient, rdbServer, pGridObj;
+                $(function () {
+                    $("#PivotGrid").ejPivotGrid({ dataSource: { data: pivot_dataset, cube: "", rows: [{ fieldName: "Country", fieldCaption: "Country" }, { fieldName: "State", fieldCaption: "State" }], columns: [{ fieldName: "Product", fieldCaption: "Product" }], values: [{ fieldName: "Amount", fieldCaption: "Amount" }, { fieldName: "Quantity", fieldCaption: "Quantity" }], filters: [] },enableGroupingBar:true, layout: "excellikelayout", renderSuccess: "onRenderSuccess" });
+                    $("#sampleProperties").ejPropertiesPanel();
+                    $("#rdbRelational,#rdbOlap,#rdbClient,#rdbServer").ejRadioButton({ change: "renderPivotGrid" });
+                    rdbRelational = $('#rdbRelational').data("ejRadioButton"); rdbOlap = $('#rdbOlap').data("ejRadioButton"); rdbClient = $('#rdbClient').data("ejRadioButton"); rdbServer = $('#rdbServer').data("ejRadioButton");
+                    pGridObj = $('#PivotGrid').data("ejPivotGrid");
+                });
+                function renderPivotGrid(args) {
+                    $(pGridObj.element).html("");
+                    if (rdbClient.model.checked) {
+                        pGridObj.model.operationalMode = "clientmode";
+                        var pivotdataSource = { data: pivot_dataset, cube: "", rows: [{ fieldName: "Country", fieldCaption: "Country" }, { fieldName: "State", fieldCaption: "State" }], columns: [{ fieldName: "Product", fieldCaption: "Product" }], values: [{ fieldName: "Amount", fieldCaption: "Amount" }, { fieldName: "Quantity", fieldCaption: "Quantity" }], filters: [] };
+                        var olapDataSource = { data: window.biurl + "olap/msmdpump.dll", catalog: "Adventure Works DW 2008 SE", cube: "Adventure Works", rows: [{ fieldName: "[Date].[Fiscal]" }], columns: [{ fieldName: "[Customer].[Customer Geography]" }], values: [{ measures: [{ fieldName: "[Measures].[Internet Sales Amount]" }], axis: "columns" }], filters: [] };
+                        pGridObj.model.dataSource = rdbRelational.model.checked ? pivotdataSource : rdbOlap.model.checked ? olapDataSource : pivotdataSource;
+                        pGridObj.model.url = "";
+                    }
+                    else {
+                        pGridObj.model.dataSource = { data: null, cube: "" };
+                        pGridObj.model.operationalMode = "servermode";
+                        pGridObj.model.url = window.baseurl + (rdbRelational.model.checked ? "api/PivotGrid/Relational" : "api/PivotGrid/Olap");
+                        pGridObj.model.serviceMethodSettings.initialize = "Initialize";
+                        pGridObj.model.serviceMethodSettings.drillDown = "Drill";
+                        pGridObj.model.serviceMethodSettings.nodeStateModified = "ModifyNodeState";
+                        pGridObj.model.serviceMethodSettings.nodeDropped = "DropNode";
+                        pGridObj.model.serviceMethodSettings.removeButton = "RemoveButton";
+                        pGridObj.model.serviceMethodSettings.memberExpand = "ExpandMember";
+                    }
+                    pGridObj._excelLikeJSONRecords = null;
+                    pGridObj._currentReportItems = [];
+                    pGridObj._tempFilterData = [];
+                    pGridObj._load();
+                }
+                function onRenderSuccess() {
+                    if (window.themecolor == "material" || window.themecolor == "office-365")
+                        window.loadPivotGridFrameTheme();
+                }
+                window.loadPivotGridFrameTheme = function () {
+                    window.setTimeout(function () {
+                        var pivotGridElement = $("#PivotGrid").data("ejPivotGrid");
+                        if (pivotGridElement && pivotGridElement.model.enableGroupingBar && pivotGridElement.getJSONRecords() != null)
+                            pivotGridElement.renderControlFromJSON();
+                    }, 800);
+                }
+            </script>
+          </div>
+     </div>
+    <style>
+        .radioBtnLabel {
+            margin-left: 5px;
+        }
+
+        .cols-prop-area .content {
+            width: auto;
+        }
+
+        .row .cols-prop-area {
+            min-height: 120px;
+            width: auto;
+        }
+    </style>
+
+</body>
+</html>

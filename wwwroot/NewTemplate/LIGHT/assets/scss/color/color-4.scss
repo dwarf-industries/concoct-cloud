@@ -1,0 +1,257 @@
+
+$color1-bg-dark: #04a7a7;
+$color-bg-light: #36c7c7;
+$color-text-w: #079595;
+$color-text-d: #08a2a2;
+$color-white: #ffffff;
+
+.pcoded .pcoded-navbar[active-item-theme*="theme"]{
+    .pcoded-navigatio-lavel[menu-title-theme*="theme"],
+    .pcoded-item li a{
+        color: #404E67 !important;
+        background-color: $color-white;
+    }
+    .pcoded-item li.pcoded-trigger.active > a{
+        color: $color-white !important;
+        background-color: $color-bg-light !important;
+        &:before{
+            border-left-color: $color-bg-light !important;
+        }
+    }
+    .pcoded-item li .pcoded-submenu li.active > a{
+        font-weight: 700 !important;
+        color: $color1-bg-dark !important;
+        background-color: $color-white !important;
+    }
+    .pcoded-item li.pcoded-hasmenu:hover > a,
+    .pcoded-item li:hover > a{
+        background-color: #fff !important;
+        color: $color1-bg-dark !important;
+        &:before{
+            border-left-color: #fff !important;
+        }
+    }
+    .pcoded-item > li.pcoded-hasmenu{
+        .pcoded-submenu li.pcoded-hasmenu > a:after,
+        > a:after{
+            color: #404E67 !important;
+        }
+        .pcoded-submenu{
+            background-color: $color-white;
+        }
+    }
+    .main-menu .main-menu-header .user-details span{
+      color: #404E67 !important;
+    }
+}
+.pcoded .pcoded-navbar[navbar-theme*="theme"]{
+    background: #fff !important;
+}
+.main-menu .main-menu-header{
+  background-color: #f5f5f5 !important;
+}
+// light color
+.nav-tabs .slidetabs, .color-picker a.handle:hover,
+.jFiler-theme-default .jFiler-input-button, .nav-tabs .slide,
+.input-group-addon, .radio.radiofill .helper::after,
+#dd-w-0 .dd-c .dd-s, #dd-w-0 .dd-s-b-s, #dd-w-0 .dd-s-b-sub-y, #dd-w-0 .dd-sub-y,
+.btn-outline-primary.active, .btn-outline-primary:active, .show > .btn-outline-primary.dropdown-toggle,
+.toolbar-primary .tool-item, .dropdown-item.active, .dropdown-item:active,
+.owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span, .owl-theme .owl-nav [class*='owl-']:hover,
+.tresd, .j-forms .widget .addon, .j-forms .widget .addon-btn,
+.j-pro .j-primary-btn, .j-pro .j-file-button, .j-pro .j-secondary-btn, .j-pro .j-widget .j-addon-btn, .j-pro .j-tooltip, .j-pro .j-tooltip-image,
+.br-theme-bars-1to10 .br-widget a.br-active, .br-theme-bars-1to10 .br-widget a.br-selected, .br-theme-bars-movie .br-widget a.br-active, .br-theme-bars-movie .br-widget a.br-selected, .br-theme-bars-reversed .br-widget a.br-active, .br-theme-bars-reversed .br-widget a.br-selected, .br-theme-bars-horizontal .br-widget a.br-active, .br-theme-bars-horizontal .br-widget a.br-selected,
+.br-theme-bars-pill .br-widget a.br-active, .br-theme-bars-pill .br-widget a.br-selected, .wizard > .steps .current a,
+.preloader3 > div, .double-bounce1, .double-bounce2, .preloader5 .circle-5, .loader .circle:after, .md-content h3,
+body.horizontal-fixed .main-menu, body.horizontal-static .main-menu, body.horizontal-icon .main-menu, body.horizontal-icon-fixed .main-menu,
+.select2-container--default .select2-selection--single .select2-selection__rendered,
+.job-lable .label,.job-lable .label:before,.select2-container--default .select2-results__option--highlighted[aria-selected],
+#dd-w-1 .dd-c .dd-s, #dd-w-1 .dd-s-b-s, #dd-w-1 .dd-s-b-sub-y, #dd-w-1 .dd-sub-y,#dd-w-2 .dd-c .dd-s, #dd-w-2 .dd-s-b-s, #dd-w-2 .dd-s-b-sub-y, #dd-w-2 .dd-sub-y,
+#dd-w-3 .dd-c .dd-s, #dd-w-3 .dd-s-b-s, #dd-w-3 .dd-s-b-sub-y, #dd-w-3 .dd-sub-y,#dd-w-4 .dd-c .dd-s, #dd-w-4 .dd-s-b-s, #dd-w-4 .dd-s-b-sub-y, #dd-w-4 .dd-sub-y,
+#dd-w-5 .dd-c .dd-s, #dd-w-5 .dd-s-b-s, #dd-w-5 .dd-s-b-sub-y, #dd-w-5 .dd-sub-y,#dd-w-8 .dd-c .dd-s, #dd-w-8 .dd-s-b-s, #dd-w-8 .dd-s-b-sub-y, #dd-w-8 .dd-sub-y,
+.daterangepicker td.active, .daterangepicker td.active:hover,
+.datepicker table tr td.active.active.focus, .datepicker table tr td.active.active:focus, .datepicker table tr td.active.active:hover, .datepicker table tr td.active.highlighted.active.focus,
+.datepicker table tr td.active.highlighted.active:focus, .datepicker table tr td.active.highlighted.active:hover,
+.datepicker table tr td.active.highlighted:active.focus, .datepicker table tr td.active.highlighted:active:focus,
+.datepicker table tr td.active.highlighted:active:hover, .datepicker table tr td.active:active.focus,
+.datepicker table tr td.active:active:focus, .datepicker table tr td.active:active:hover,#dd-w-14 .dd-c .dd-s, #dd-w-14 .dd-s-b-s, #dd-w-14 .dd-s-b-sub-y, #dd-w-14 .dd-sub-y,
+#dd-w-13 .dd-c .dd-s, #dd-w-13 .dd-s-b-s, #dd-w-13 .dd-s-b-sub-y, #dd-w-13 .dd-sub-y,
+#dd-w-12 .dd-c .dd-s, #dd-w-12 .dd-s-b-s, #dd-w-12 .dd-s-b-sub-y, #dd-w-12 .dd-sub-y,#dd-w-10 .dd-c .dd-s, #dd-w-10 .dd-s-b-s, #dd-w-10 .dd-s-b-sub-y, #dd-w-10 .dd-sub-y,
+#dd-w-7 .dd-c .dd-s, #dd-w-7 .dd-s-b-s, #dd-w-7 .dd-s-b-sub-y, #dd-w-7 .dd-sub-y,#dd-w-6 .dd-c .dd-s, #dd-w-6 .dd-s-b-s, #dd-w-6 .dd-s-b-sub-y, #dd-w-6 .dd-sub-y,
+.chat-menu-reply,.fc-state-active,.clndr .clndr-controls,.clndr .clndr-grid .days .today,
+.dropdown-primary .dropdown-menu a:hover, .dropdown-split-primary .dropdown-menu a:hover,.email-card .user-head,
+table.dataTable tbody>tr.selected, table.dataTable tbody>tr>.selecte,.btn-primary:active, .sweet-alert button.confirm:active, .wizard>.actions a:active,
+.label-primary,.j-forms .stepper .stepper-arrow,.jp-card .jp-card-front, .jp-card .jp-card-back,body.horizontal-static .main-navigation .nav-sub-item .tree-2,
+.bg-primary,.fb-timeliner h2,#main-chat .chat-single-box.active .chat-header,.ms-selectable .custom-header, .ms-selection .custom-header,.ms-container .ms-selectable li.ms-hover, .ms-container .ms-selection li.ms-hover,
+.dynamic-list-one .new-item,.dynamic-list-two .new-item,.dynamic-list-three .new-item,#dynamic-list-five-button.open,#dynamic-list-six-button.open,
+body.horizontal-static .main-navigation .nav-sub-item-3 .tree-3,body.horizontal-static .main-navigation .nav-item:hover .tree-1,.horizontal-static .main-menu-content .tree-1.open .nav-sub-item > a,.main-menu .main-menu-content .tree-1.open .nav-sub-item>a, body.horizontal-static .main-navigation .nav-sub-item-4 .tree-4,
+body.horizontal-fixed .main-navigation .nav-item .tree-1,body.horizontal-fixed .main-navigation .nav-sub-item .tree-2,
+body.horizontal-fixed .main-navigation .nav-sub-item-3 .tree-3,body.horizontal-fixed .main-navigation .nav-sub-item-4 .tree-4,body.horizontal-icon .main-navigation .nav-item .tree-1,
+body.horizontal-icon-fixed .main-navigation .nav-item .tree-1,body.horizontal-icon-fixed .main-navigation .nav-sub-item .tree-2,
+body.horizontal-icon-fixed .main-navigation .nav-sub-item-3 .tree-3,body.horizontal-icon-fixed .main-navigation .nav-sub-item-4 .tree-4,
+body.horizontal-icon .main-navigation .nav-sub-item .tree-2,body.horizontal-icon .main-navigation .nav-sub-item-3 .tree-3,body.horizontal-icon .main-navigation .nav-sub-item-4 .tree-4,
+.ball-scale>div,.morphsearch.open .morphsearch-form,.popup-menu .popup-list,#msform #progressbar li.active:before, #progressbar li.active:after{
+  // background-color:darken($color1-bg-dark, 5%);
+  background-color: $color-bg-light !important;
+}
+
+.bg-dark-primary{
+  background-color: darken($color-bg-light,5%);
+}
+.bg-darkest-primary,.popup-menu .popup-list>ul>li:hover{
+  background-color: darken($color-bg-light,10%);
+}
+// dark color
+.header-navbar, a.bg-primary:focus, a.bg-primary:hover, .color-picker .settings-header,
+.toolbar-primary .tool-item.selected, .toolbar-primary .tool-item:hover, .show > .btn-primary.dropdown-toggle,
+.sweet-alert .show > button.dropdown-toggle.confirm, .wizard > .actions .show > a.dropdown-toggle,.bg-inverse,.vossen-portfolio-filters li.active {
+  background-color: $color1-bg-dark !important;
+}
+
+.main-menu{
+  background-color: $color-white;
+}
+
+.main-menu .main-menu-content .nav-item .tree-1 a,.fix-menu .main-menu .main-menu-content .nav-item a,
+.main-menu .main-menu-content .nav-item a:hover, .color-picker a.handle i,
+.checkbox-fade.fade-in-primary .cr .cr-icon, .btn-outline-primary, .jFiler-items-default .jFiler-item .jFiler-item-icon,
+.review-star i, .contact-details table .fa-star,
+.contact-details table .fa-star-o, a.mytooltip, .nav-tabs.md-tabs.tab-timeline li a, .main-menu .main-menu-content .more-details a,
+.j-pro input[type="text"]:hover, .j-pro input[type="password"]:hover, .j-pro input[type="email"]:hover,
+.j-pro input[type="search"]:hover, .j-pro input[type="url"]:hover,
+.j-pro textarea:hover, .j-pro select:hover, .j-pro input[type="text"]:focus,
+.j-pro input[type="password"]:focus, .j-pro input[type="email"]:focus,
+.j-pro input[type="search"]:focus, .j-pro input[type="url"]:focus, .j-pro textarea:focus,
+.j-pro select:focus, .j-pro .j-file-button:hover + input, .j-forms input[type="text"]:hover,
+.j-forms input[type="password"]:hover, .j-forms input[type="email"]:hover, .j-forms input[type="search"]:hover,
+.j-forms input[type="url"]:hover, .j-forms textarea:hover, .j-forms select:hover, .j-forms input[type="text"]:focus,
+.j-forms input[type="password"]:focus, .j-forms input[type="email"]:focus,
+.j-forms input[type="search"]:focus, .j-forms input[type="url"]:focus, .j-forms textarea:focus, .j-forms select:focus, .text-primary,
+.tooltip-link a,.border-primary,.j-pro .j-ratings input+label:hover, .j-pro .j-ratings input+label:hover ~ label, .j-pro .j-ratings input:checked+label, .j-pro .j-ratings input:checked+label ~ label,
+.br-theme-bars-pill .br-widget a,.br-theme-bars-square .br-widget a,.main-menu .main-menu-content .tree-2.open .has-class>a,.main-menu .main-menu-content .tree-3.open .has-class>a,.main-menu .main-menu-content .tree-1.open .has-class>a, .main-menu .main-menu-content .nav-item .open.tree-2 .has-class>a,.card .table-card-header span,
+.feature-left .color,.lead .color,.vertical-align .color,.owl-stage-outer .color,.fix-menu .main-menu .main-menu-content .nav-item a:hover,
+.menu-bottom .main-menu .main-menu-content .nav-item a,.header-fixed .main-menu .main-menu-content .nav-item a,.menu-compact .main-menu .main-menu-content .nav-item a,
+.menu-static .main-menu .main-menu-content .nav-item a,.menu-rtl .main-menu .main-menu-content .nav-item a,.menu-sidebar .main-menu .main-menu-content .nav-item a,
+.j-forms .link,.dummy-media-object:hover h3,#msform #progressbar li.active
+{
+  color: $color-text-w;
+}
+body.horizontal-static .main-menu .main-menu-content .nav-item>a,#horizontal-static .main-menu-content .nav-item .tree-1 a, #horizontal-static .main-menu-content .nav-item a,
+.horizontal-fixed .main-menu-content .nav-item a,.horizontal-fixed .main-menu-content .nav-item a,
+.horizontal-fixed .main-menu-content .nav-item .tree-1 a,.horizontal-fixed .main-menu-content .nav-item a, .horizontal-fixed .main-menu-content .nav-item a,
+.horizontal-fixed .main-menu-content .nav-title, .main-menu .main-menu-content .tree-1.open .has-class>a, .md-tabs .nav-link.active,
+.fix-menu .main-menu .main-menu-content .nav-item.has-class > a:hover,.horizontal-fixed .main-menu .main-menu-content .nav-item a:hover,.horizontal-fixed .main-menu .main-menu-content .nav-item .open.tree-2 .has-class>a,
+.horizontal-icon-fixed .main-menu .main-menu-content .nav-item a:hover,.horizontal-icon-fixed .main-menu .main-menu-content .nav-item .tree-1 a,
+.horizontal-icon-fixed .main-menu .main-menu-content .nav-item .open.tree-2 .has-class>a,.horizontal-icon .main-menu .main-menu-content .nav-item a:hover,
+.horizontal-icon .main-menu .main-menu-content .nav-item .tree-1 a,.horizontal-icon .main-menu .main-menu-content .nav-item .open.tree-2 .has-class>a,
+.messages-send #basic-addon2.text-primary{
+  color: $color-white;
+}
+.main-menu .main-menu-content .nav-item.has-class>a,.main-menu .main-menu-content .tree-1 .nav-sub-item>a{
+  color:$color-white;
+}
+.main-menu .main-menu-content .nav-title, .main-menu .main-menu-content .tree-1.open .has-class > a,
+.md-tabs .nav-link.active {
+  font-weight: 700;
+  color: $color-text-d;
+}
+
+.btn-primary, .sweet-alert button.confirm, .wizard > .actions a,
+.btn-outline-primary:hover, .list-group-item.active, .page-item.active .page-link,.select2-container--default .select2-selection--multiple .select2-selection__choice,
+.ranges li.active,.ranges li:hover,.footable .pagination>.active>a, .footable .pagination>.active>a:focus, .footable .pagination>.active>a:hover, .footable .pagination>.active>span, .footable .pagination>.active>span:focus, .footable .pagination>.active>span:hover,
+.fc th,.table-styling .table-primary, .table-styling.table-primary,.table-styling .table-primary thead, .table-styling.table-primary thead{
+  background-color: $color-bg-light !important;
+  border-color: $color-bg-light !important;
+}
+
+.main-menu .main-menu-content .nav-item.has-class > a, .wizard > .steps .done a, .wizard > .steps .done a:hover, .wizard > .steps .done a:active,
+.radio .helper::after,button.dt-button:hover:not(.disabled), div.dt-button:hover:not(.disabled), a.dt-button:hover:not(.disabled),
+button.dt-button, div.dt-button, a.dt-button, button.dt-button:focus:not(.disabled), div.dt-button:focus:not(.disabled), a.dt-button:focus:not(.disabled), button.dt-button:active:not(.disabled), button.dt-button.active:not(.disabled), div.dt-button:active:not(.disabled), div.dt-button.active:not(.disabled), a.dt-button:active:not(.disabled), a.dt-button.active:not(.disabled){
+  background-color: $color-bg-light;
+  color: $color-white;
+}
+
+.form-control:focus, .color-picker a.handle, .color-picker .section:last-child, .checkbox-fade.fade-in-primary .cr,
+.btn-outline-primary, .radio .helper::after, .radio .helper::before, .input-group-primary .form-control,
+.media .b-2-primary,.fc-event,#dd-w-0 .dd-w-c,.br-theme-bars-square .br-widget a,#dd-w-13 .dd-w-c,.form-control-primary,.bootstrap-tagsinput {
+  border-color: $color-bg-light !important;
+}
+
+.toolbar-primary.tool-top .arrow, .tooltip-content5::after, .j-pro .j-tooltip:before, .j-pro .j-tooltip-image:before,
+button.dt-button:hover:not(.disabled), div.dt-button:hover:not(.disabled), a.dt-button:hover:not(.disabled){
+  border-color: $color-bg-light transparent transparent;
+}
+
+.card, #task-container li, .j-tabs-container .j-tabs-label, .j-tabs-container input[type="radio"]:checked + .j-tabs-label, .preloader6::before, .preloader6::after,
+.preloader6 hr::before, .preloader6 hr::after {
+  border-top-color: $color-bg-light;
+}
+
+.br-theme-bars-1to10 .br-widget a,
+.br-theme-bars-movie .br-widget a, .br-theme-bars-reversed .br-widget a, .br-theme-bars-horizontal .br-widget a,
+.br-theme-bars-pill .br-widget a,body.menu-compact .main-navigation .nav-item .tree-1,body.menu-compact .main-navigation .nav-sub-item .tree-2, body.menu-compact .main-navigation .nav-sub-item-3 .tree-3 ,
+body.menu-compact .main-navigation .nav-sub-item-4 .tree-4{
+  background-color: lighten($color-bg-light, 42%);
+}
+.btn-outline-primary{
+  background-color: transparent !important;
+}
+.btn-outline-primary.focus, .btn-outline-primary:focus {
+  box-shadow: 0 0 0 1px $color-bg-light;
+}
+
+.tooltip-content5 .tooltip-text3, .preloader6::before, .preloader6::after, .preloader6 hr::before, .preloader6 hr::after {
+  border-bottom-color: $color-bg-light;
+}
+
+.j-pro input[type="text"]:hover, .j-pro input[type="password"]:hover, .j-pro input[type="email"]:hover, .j-pro input[type="search"]:hover, .j-pro input[type="url"]:hover, .j-pro textarea:hover, .j-pro select:hover, .j-pro input[type="text"]:focus, .j-pro input[type="password"]:focus, .j-pro input[type="email"]:focus, .j-pro input[type="search"]:focus, .j-pro input[type="url"]:focus, .j-pro textarea:focus, .j-pro select:focus, .j-pro .j-file-button:hover + input, .j-forms input[type="text"]:hover, .j-forms input[type="password"]:hover, .j-forms input[type="email"]:hover, .j-forms input[type="search"]:hover, .j-forms input[type="url"]:hover, .j-forms textarea:hover, .j-forms select:hover, .j-forms input[type="text"]:focus, .j-forms input[type="password"]:focus, .j-forms input[type="email"]:focus, .j-forms input[type="search"]:focus, .j-forms input[type="url"]:focus, .j-forms textarea:focus, .j-forms select:focus,
+.br-theme-bars-square .br-widget a,.select2-container--default.select2-container--focus .select2-selection--multipl{
+  border-color: $color-bg-light;
+}
+
+.br-theme-fontawesome-stars .br-widget a.br-active:after, .br-theme-fontawesome-stars .br-widget a.br-selected:after,
+.br-theme-css-stars .br-widget a.br-active:after, .br-theme-css-stars .br-widget a.br-selected:after,
+.br-theme-fontawesome-stars-o .br-widget a.br-selected:after, .br-theme-fontawesome-stars-o .br-widget a:after, .br-theme-fontawesome-stars-o .br-widget a.br-active:after, .br-theme-fontawesome-stars-o .br-widget a.br-fractional:after,
+.slider-handle.custom::before, .md-tabs .nav-item a, .md-tabs .main-menu .main-menu-content .nav-item .tree-1 a a, .main-menu .main-menu-content .nav-item .tree-1 .md-tabs a a, .md-tabs .main-menu .main-menu-content .nav-item .tree-2 a a, .main-menu .main-menu-content .nav-item .tree-2 .md-tabs a a, .md-tabs .main-menu .main-menu-content .nav-item .tree-3 a a, .main-menu .main-menu-content .nav-item .tree-3 .md-tabs a a, .md-tabs .main-menu .main-menu-content .nav-item .tree-4 a a, .main-menu .main-menu-content .nav-item .tree-4 .md-tabs a a,
+.md-tabs .nav-item.open .nav-link, .md-tabs .main-menu .main-menu-content .nav-item .tree-1 a.open .nav-link, .main-menu .main-menu-content .nav-item .tree-1 .md-tabs a.open .nav-link, .md-tabs .main-menu .main-menu-content .nav-item .tree-2 a.open .nav-link, .main-menu .main-menu-content .nav-item .tree-2 .md-tabs a.open .nav-link, .md-tabs .main-menu .main-menu-content .nav-item .tree-3 a.open .nav-link, .main-menu .main-menu-content .nav-item .tree-3 .md-tabs a.open .nav-link, .md-tabs .main-menu .main-menu-content .nav-item .tree-4 a.open .nav-link, .main-menu .main-menu-content .nav-item .tree-4 .md-tabs a.open .nav-link, .md-tabs .nav-item.open .nav-link:focus, .md-tabs .main-menu .main-menu-content .nav-item .tree-1 a.open .nav-link:focus, .main-menu .main-menu-content .nav-item .tree-1 .md-tabs a.open .nav-link:focus, .md-tabs .main-menu .main-menu-content .nav-item .tree-2 a.open .nav-link:focus, .main-menu .main-menu-content .nav-item .tree-2 .md-tabs a.open .nav-link:focus, .md-tabs .main-menu .main-menu-content .nav-item .tree-3 a.open .nav-link:focus, .main-menu .main-menu-content .nav-item .tree-3 .md-tabs a.open .nav-link:focus, .md-tabs .main-menu .main-menu-content .nav-item .tree-4 a.open .nav-link:focus, .main-menu .main-menu-content .nav-item .tree-4 .md-tabs a.open .nav-link:focus, .md-tabs .nav-item.open .nav-link:hover, .md-tabs .main-menu .main-menu-content .nav-item .tree-1 a.open .nav-link:hover, .main-menu .main-menu-content .nav-item .tree-1 .md-tabs a.open .nav-link:hover, .md-tabs .main-menu .main-menu-content .nav-item .tree-2 a.open .nav-link:hover, .main-menu .main-menu-content .nav-item .tree-2 .md-tabs a.open .nav-link:hover, .md-tabs .main-menu .main-menu-content .nav-item .tree-3 a.open .nav-link:hover, .main-menu .main-menu-content .nav-item .tree-3 .md-tabs a.open .nav-link:hover, .md-tabs .main-menu .main-menu-content .nav-item .tree-4 a.open .nav-link:hover,
+.main-menu .main-menu-content .nav-item .tree-4 .md-tabs a.open .nav-link:hover,
+.md-tabs .nav-link.active,
+.md-tabs .nav-link.active:focus, .md-tabs .nav-link.active:hover,.company-name p,.job-right-header a,.job-meta-data i,#dd-w-8 .dd-sun, #dd-w-8 .dd-s-b-ul li.dd-on,
+.blog-single h4,.blog-single .qutoe-text,.blog-s-reply h6,.blog-article .articles a,.blog-page .blog-box h5,.system_font_color,
+.system_font_color a, .card .table-card-header b {
+  color: $color-bg-light;
+}
+.slider-handle, .slider-tick.in-selection,.slider-selection.tick-slider-selection {
+  background-image: linear-gradient(to bottom, $color-bg-light 0%, $color-bg-light 100%);
+}
+.text-primary,#dd-w-0 .dd-n, #dd-w-0 .dd-sun, #dd-w-0 .dd-sun, #dd-w-0 .dd-s-b-ul li.dd-on,#dd-w-1 .dd-n, #dd-w-1 .dd-sun,#dd-w-1 .dd-sun, #dd-w-1 .dd-s-b-ul li.dd-on,#dd-w-2 .dd-n, #dd-w-2 .dd-sun,#dd-w-2 .dd-sun, #dd-w-2 .dd-s-b-ul li.dd-on,
+#dd-w-3 .dd-n, #dd-w-3 .dd-sun,#dd-w-4 .dd-n, #dd-w-4 .dd-sun,#dd-w-8 .dd-n, #dd-w-8 .dd-sun,
+#dd-w-14 .dd-n, #dd-w-14 .dd-sun,#dd-w-14 .dd-sun, #dd-w-14 .dd-s-b-ul li.dd-on,#dd-w-13 .dd-n, #dd-w-13 .dd-sun,
+#dd-w-13 .dd-sun, #dd-w-13 .dd-s-b-ul li.dd-on,#dd-w-12 .dd-n, #dd-w-12 .dd-sun,#dd-w-12 .dd-sun, #dd-w-12 .dd-s-b-ul li.dd-on,#dd-w-10 .dd-n, #dd-w-10 .dd-sun,#dd-w-10 .dd-sun, #dd-w-10 .dd-s-b-ul li.dd-on,
+#dd-w-8 .dd-sun, #dd-w-8 .dd-s-b-ul li.dd-on,#dd-w-7 .dd-n, #dd-w-7 .dd-sun,#dd-w-7 .dd-sun, #dd-w-7 .dd-s-b-ul li.dd-on,
+#dd-w-6 .dd-w-c, #dd-w-6 .dd-ul li, #dd-w-6 .dd-s-b-ul ul,#dd-w-6 .dd-sun, #dd-w-6 .dd-s-b-ul li.dd-on,#dd-w-3 .dd-sun, #dd-w-3 .dd-s-b-ul li.dd-on,#dd-w-4 .dd-sun, #dd-w-4 .dd-s-b-ul li.dd-on,
+#dd-w-5 .dd-n, #dd-w-5 .dd-sun,#dd-w-5 .dd-sun, #dd-w-5 .dd-s-b-ul li.dd-on,.auth-box .confirm h3,.blog-date i{
+  color: $color-bg-light !important;
+}
+
+#circle-loader2,#areachart .path{
+  stroke: $color1-bg-dark;
+}
+.climacon_component-fill,.climacon_component-stroke,#areachart .path{
+  fill: $color-bg-light;
+}
+#dd-w-13 .dd-c:after{
+  border-left-color:$color-bg-light !important;
+  border-top-color: $color-bg-light !important;
+}
+#dd-w-14 .dd-w-c{
+  border-color: $color-bg-light;
+  box-shadow: 0 0 20px 0 rgba(63, 195, 128, 0.6);
+}
+.switchery-default, .switchery-large, .switchery-small {
+  background-color: rgb(63, 195, 128) !important;
+  border-color: rgb(63, 195, 128) !important;
+  box-shadow: rgb(63, 195, 128) 0px 0px 0px 16px inset !important;
+  transition: border 0.4s, box-shadow 0.4s, background-color 1.2s !important;
+
+}

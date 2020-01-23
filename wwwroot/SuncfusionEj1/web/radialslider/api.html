@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Tile - Default Functionalities</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div class="control">
+                    <div id="apiradialSlider">
+                    </div>
+                </div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row-fluid">
+                        <div class="row">
+                            <div class="col-md-12" style="text-align:left">
+                                Start Angle (0-360)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div id="startAngleSlider">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="row">
+                            <div class="col-md-12" style="text-align:left">
+                                End Angle (360-0)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div id="endAngleSlider">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Stroke width
+                        </div>
+                        <div class="col-md-3">
+                            <input id="numeric" type="text" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Show
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" id="radialshow" class="e-togglebtn" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $("#apiradialSlider").ejRadialSlider({ innerCircleImageUrl: "../content/images/radialslider/chevron-right.png" });
+            $("#numeric").ejNumericTextbox({
+                name: "numeric",
+                value: 2,
+                width: 108,
+                change: "valueChange",
+                minValue: 1,
+                maxValue: 10,
+            });
+            var interestvalue = 4, tenurevalue = 3;
+            $("#startAngleSlider").ejSlider({
+                height: 16,
+                width: 225,
+                value: 0,
+                minValue: 0,
+                maxValue: 360,
+                incrementStep: 10,
+                change: "onStartchange",
+                slide: "onchange"
+            });
+
+            $("#endAngleSlider").ejSlider({
+                height: 16,
+                width: 225,
+                value: 360,
+                minValue: 360,
+                maxValue: 0,
+                incrementStep: 10,
+                change: "onEndchange",
+                slide: "onchange"
+            });
+            $("#radialshow").ejToggleButton({ "width": "107px", "change": "radialshowChange", "defaultText": "Hide", "activeText": "Show" });
+        });
+        function onStartchange(args) {
+            var instance = $("#apiradialSlider").data("ejRadialSlider");
+            var value1 = instance.model.endAngle;
+            if (args.value > value1)
+                alert("Value must be less than end angle");
+            else
+                $("#apiradialSlider").ejRadialSlider({ startAngle: args.value })
+        }
+        function onEndchange(args) {
+            var instance = $("#apiradialSlider").data("ejRadialSlider");
+            var value2 = instance.model.startAngle;
+            if (args.value < value2)
+                alert("Value must be greater than start angle");
+            else
+                $("#apiradialSlider").ejRadialSlider({ endAngle: args.value })
+        }
+        function onShowHideReset(args) {
+            var roundUpp = args.isChecked ? false : true;
+            $("#apiradialSlider").ejRadialSlider({ enableRoundOff: roundUpp })
+        }
+        function valueChange(args) {
+            if (!ej.isNullOrUndefined(args.value))
+                $("#apiradialSlider").ejRadialSlider({ strokeWidth: (args.value != null) ? args.value : 1 })
+        }
+        function radialshowChange(args) {
+            $("#apiradialSlider").ejRadialSlider(args.isChecked ? "hide" : "show");
+
+        }
+        $("#sampleProperties").ejPropertiesPanel();
+
+    </script>
+    <style>
+        p {
+            text-indent: 1em;
+            text-align: justify;
+        }
+
+        #radialSlider.e-radialslider {
+            margin: 0 auto;
+        }
+
+        .control {
+			overflow-x:auto;
+			overflow-y: hidden;
+        }
+		@media (max-width: 740px){
+			.cols-sample-area{
+				width: auto !important;
+			}
+		}
+    </style>
+</body>
+</html>

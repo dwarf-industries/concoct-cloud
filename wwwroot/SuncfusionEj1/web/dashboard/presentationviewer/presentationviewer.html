@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Essential JS 1 : Presentation Viewer</title>
+    <meta charset="utf-8" />
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<link href="../../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <script src="../../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+	<script src="../../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../../scripts/properties.js" type="text/javascript"></script>
+    <style>
+        .thumnail:hover {
+            box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+        }
+
+        .thumnail {
+            border-style: solid;
+            border-width: 1px;
+            border-color: gray;
+            margin: 5px 5px 1px 5px;
+        }
+
+        .thumnail-active {
+            border-style: solid;
+            border-width: 2px;
+            border-color: gray;
+            margin: 5px 5px 1px 5px;
+            border-color: #fc5200;
+        }
+
+        #waiting_popup_WaitingPopup .e-image {
+            display: block;
+            height: 70px;
+        }
+    </style>
+</head>
+<body>
+    <div id="presentation" style="margin: 6px; border-style: solid; border-color: black; border-width: 1px">
+        <div style="width:auto;height:auto;margin:10px;border-style:solid;border-color:black; border-width: 1px">
+            <div id="thumnail_collection" style="position:relative;overflow-x:auto;white-space:nowrap;border-width: 1px"></div>
+        </div>
+        <div id="presentation_container" style="margin:20px;border-style:solid;border-color:black;overflow:auto; border-width: 1px">
+            <img id="presentation_viewer" />
+        </div>
+        <div id="waiting_popup"></div>
+    </div>
+    <script>
+        var slideCollections;
+        Initload();
+        function Initload() {
+            var div = document.createElement("div");
+            div.setAttribute("style", "width:150px;height:100px;margin-bottom:4px");
+            div.setAttribute("class", "thumnail");
+            document.getElementById("thumnail_collection").appendChild(div);
+            var container = document.getElementById("presentation_container");
+            container.style.width = "auto";
+            container.style.height = "720px";
+            initPopUp();
+			
+			showWaitingPopUp(true);
+            var formData = null;
+            formData = new FormData();
+            $.ajax({
+                type: "POST",
+                async: true,
+                processData: false,
+                contentType: false,
+                crossDomain: true,
+                url: window.baseurl + "api/PresentationViewer/Import",
+                dataType: "JSON",
+                success: function (data) {
+                    imageCollection(data)
+                },
+            });
+        }
+        function load(event) {
+            showWaitingPopUp(true);
+            var path = event.target.files[0];
+            var formData = null;
+            formData = new FormData();
+            formData.append("files", path);
+            $.ajax({
+                type: "POST",
+                async: true,
+                processData: false,
+                contentType: false,
+                crossDomain: true,
+                data: formData,
+                url: window.baseurl + "api/PresentationViewer/Import",
+                dataType: "JSON",
+                success: function (data) {
+                    imageCollection(data)
+                },
+            });
+        }
+        function imageCollection(data) {
+            showWaitingPopUp(false);
+            if (data.length == 0) {
+                Initload();
+            }
+            else {
+                var container = document.getElementById("presentation_container");
+                container.style.width = "auto";
+                container.style.height = "auto";
+                clearCollection();
+                slideCollections = data;
+                createImageThumnail();
+                renderImage(data[0])
+                updateClass(0);
+            }
+        }
+        function createImageThumnail() {
+            var container = document.getElementById("thumnail_collection");
+            for (var i = 0; i < slideCollections.length; i++) {
+                var image = document.createElement("img");
+                image.src = slideCollections[i];
+                image.width = 150;
+                image.height = 100;
+                image.setAttribute("class", "thumnail");
+                image.setAttribute("style", "")
+                image.setAttribute("onclick", "changeImage(this)")
+                image.addEventListener("onclick", function () {
+                    console.log(this);
+                })
+                container.appendChild(image);
+            }
+        }
+        function renderImage(base64String) {
+            var images = document.getElementById("presentation_viewer");
+            images.src = base64String;
+        }
+        function changeImage(image) {
+            renderImage(image.src);
+            var currentIndex = $(image).index();
+            updateClass(currentIndex);
+        }
+        function updateClass(index) {
+            let collection = document.getElementById("thumnail_collection")
+            for (var i = 0; i < collection.childNodes.length; i++) {
+                collection.childNodes[i].className = "thumnail";
+            }
+            collection.childNodes[index].className = "thumnail-active";
+
+        }
+        function clearCollection() {
+            var collection = document.getElementById("thumnail_collection");
+            for (var i = 0; i < collection.childNodes.length; i++) {
+                collection.removeChild(collection.childNodes[i]);
+                i--;
+            }
+        }
+        function initPopUp() {
+            var loading = document.getElementById("waiting_popup");
+            $(loading).ejWaitingPopup({ showOnInit: false, target: "#presentation" });
+        }
+        function showWaitingPopUp(isShow) {
+            if (isShow) {
+                $("#waiting_popup").ejWaitingPopup();
+                var popUpObj = $("#waiting_popup").data("ejWaitingPopup");
+                popUpObj.show();
+            }
+            else {
+                $("#waiting_popup").ejWaitingPopup();
+                var popUpObj = $("#waiting_popup").data("ejWaitingPopup");
+                popUpObj.hide();
+            }
+        }
+    </script>
+</body>
+</html>

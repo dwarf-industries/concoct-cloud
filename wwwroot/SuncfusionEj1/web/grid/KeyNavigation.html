@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Keyboard Interaction</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsondata.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="Grid"></div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div class="col-md-3 colwidth">
+                            <b>Keys</b>
+                        </div>
+                        <div class="col-md-3 colwidth">
+                            <b>Description</b>
+                        </div>
+                        <div class="col-md-3 colwidth">
+                            <b>Alt + j </b>
+                        </div>
+                        <div class="col-md-3 colwidth">
+                            Focus
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 colwidth">
+                            <b>Ctrl + Home</b>
+                        </div>
+                        <div class="col-md-3 colwidth">
+                            <p>First Row Selection</p>
+                        </div>
+                        <div class="col-md-3 colwidth">
+                            <b>Ctrl+End</b>
+                        </div>
+                        <div class="col-md-3 colwidth">
+                            Last Row Selection
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 colwidth">
+                            <b>PgDn</b>
+                        </div>
+                        <div class="col-md-3 colwidth">
+                            Next page
+                        </div>
+                        <div class="col-md-3 colwidth">
+                            <b>PgUp</b>
+                        </div>
+                        <div class="col-md-3 colwidth">
+                            Previous page
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 colwidth">
+                            <b>F2</b>
+                        </div>
+                        <div class="col-md-3 colwidth">
+                            Edit
+                        </div>
+                        <div class="col-md-3 colwidth">
+                            <b>Enter</b>
+                        </div>
+                        <div class="col-md-3 colwidth">
+                            Save request
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 colwidth">
+                            <b>Ctrl + Down Arrow</b>
+                        </div>
+                        <div class="col-md-3 colwidth">
+                            Expand All
+                        </div>
+                        <div class="col-md-3 colwidth">
+                            <b>Ctrl + Up Arrow</b>
+                        </div>
+                        <div class="col-md-3 colwidth">
+                            Collapse All
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#Grid").ejGrid({
+                // the datasource "window.gridData" is referred from jsondata.min.js
+                dataSource: ej.DataManager(window.gridData).executeLocal(ej.Query().take(300)),
+                allowGrouping: true,
+                allowPaging: true,
+                editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true },
+                groupSettings: { groupedColumns: ["EmployeeID"] },
+                allowKeyboardNavigation: true,
+                columns: [
+                            { field: "OrderID", headerText: "Order ID", isPrimaryKey: true, textAlign: ej.TextAlign.Right, width: 100 },
+                            { field: "CustomerID", headerText: "Customer ID", width: 120 },
+                            { field: "EmployeeID", headerText: "Employee ID", textAlign: ej.TextAlign.Right, width: 80 },
+                            { field: "ShipCity", headerText: "Ship City", width: 110 }
+                ]
+            });
+            //Control focus key
+            $(document).on("keydown", function (e) {
+                if (e.altKey && e.keyCode === 74) { // j- key code.
+                    $("#Grid").focus();
+                }
+            });
+        });
+        $("#sampleProperties").ejPropertiesPanel();
+    </script>
+    <style>
+        .cols-prop-area [class^="span"] {
+            margin-bottom: 5px;
+            margin-top: 5px;
+        }
+
+        .propertiesdiv {
+            height: 626px;
+        }
+
+        .propertypanelcontent {
+            height: 585px;
+        }
+        *.colwidth {
+            width: 32.9%;
+        }
+    </style>
+</body>
+</html>

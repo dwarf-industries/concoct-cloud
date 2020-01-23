@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : TreeView Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div style="width: 300px; max-width:100%">
+                    <div id="treeview"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script id="treeTemplate" type="text/x-jsrender">
+
+        {{if hasChild}}
+        <div class={{>cls}}>{{>name}}</div>
+        {{else}}
+        <div class="cont-list">
+            <img class="con-img" src="../content/images/treeview/template-image-{{>imgId}}.png" />
+            <div class="cont-del"></div>
+            <div class="cont-details">
+                <b>{{>name}}</b><br />
+                <span>{{>city}}</span>
+                <br />
+                <span>{{>phone}}</span>
+            </div>
+            <div class="treeFooter"></div>
+        </div>
+        {{/if}}
+
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+
+            var treeData = [
+                { id: 1, name: "UK", cls: "uk-style", hasChild: true, expanded: true },
+                { id: 2, pid: 1, imgId: "1", name: "Steven John", city: "London", phone: "555-5665-2323" },
+                { id: 3, name: "USA", cls: "usa-style", hasChild: true, expanded: true },
+                { id: 5, pid: 3, imgId: "2", name: "Andrew", city: "Capital way", phone: "934-8374-2455" },
+                { id: 4, pid: 3, imgId: "3", name: "Angelica", city: "Dayton", phone: "988-4243-0806" }
+            ];
+
+            $("#treeview").ejTreeView({
+                fields: {
+                    dataSource: treeData,
+                    id: "id", parentId: "pid", text: "name", hasChild: "hasChild"
+                },
+                template: "#treeTemplate"
+            });
+
+            var treeObj = $("#treeview").data("ejTreeView");
+            $("#treeview").find(".cont-del").bind("click", function (e) {
+                e.preventDefault();
+                treeObj.removeNode($(e.target).parents("li").first());
+            });
+        });
+    </script>
+    <style class="cssStyles">
+        .e-treeview .e-node-hover, .e-treeview .e-active {
+            background: transparent;
+            border-color: transparent;
+        }
+
+        .e-treeview .e-node-hover {
+            opacity: 0.8;
+        }
+
+        .con-img {
+            float: left;
+        }
+
+        .cont-list {
+            background: none repeat scroll 0 0 white;
+            border: 1px solid #BBBCBB;
+            height: 85px;
+            width: 200px;
+            color: #5c5c5c;
+            line-height: 17px;
+        }
+
+        .cont-details {
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
+        .uk-style, .material .e-treeview > ul > li > div > .e-text {
+            background-color: #74A247 !important;
+            color: #FFFFFF !important;
+        }
+
+        .usa-style, .material .e-treeview > ul > li + li > div > .e-text {
+            background-color: #12A99A !important;
+            color: #FFFFFF !important;
+        }
+
+        .cont-del {
+            background-image: url("../content/images/treeview/remove-icon.png");
+            background-position: -6px -10px;
+            background-repeat: no-repeat;
+            float: right;
+            height: 16px;
+            width: 16px;
+            cursor: pointer;
+        }
+
+        .cont-list .treeFooter {
+            height: 5px;
+            width: 100%;
+            background-color: gray;
+            margin-top: 17px;
+        }
+
+        .material .e-treeview{
+            width:350px !important;
+        }
+    </style>
+</body>
+</html>

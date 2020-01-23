@@ -1,0 +1,173 @@
+@{
+   
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    ViewData["Title"] = $"Add New User";
+    var Project = ViewData["Project"] as Projects;
+    var ProjectMembers = ViewData["ProjectMembers"] as List<BindingUserAccount>;
+    var ProjectId = ViewData["ProjectId"];
+}
+<style>
+    object[type="image/svg+xml"] {
+  vertical-align:middle;
+  display:inline-block;
+}
+
+
+</style>
+<link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
+ 
+
+<div class="row" style="margin:0px;">
+    <div class="col-md-3">
+        <div class="main-card mb-3 card">
+            <div class="card-body text-center">
+                <div class="row">
+                    <h3 class="center">About the Project</h3>
+                </div>
+                 <hr/>
+                <div class="row">
+                    <p style="word-break: break-word; word-wrap: break-word;"> @Project.ProjectDescription </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="main-card mb-3 card">
+            <div class="card-body text-center">
+                <div class="row text-center">
+                    <h3 class="center">Project Stats</h3>
+                </div>
+                <hr/>
+                <div class="row">
+                  <div class="control-section">
+                      <div id="line-container" align="center"></div>
+                  </div>
+                </div>
+                <div class="row">
+                    <p> @Project.Branches.Sum(x=>x.AssociatedBranchCommits.Count())</p>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="col-md-3">
+        <div class="main-card mb-3 card">
+            <div class="card-body text-center">
+                <div class="row">
+                    <h3 class="center">Project Members</h3>
+                </div>
+                <hr/>
+                <div class="row">
+                    @{
+                        foreach(var member in ProjectMembers)
+                        {
+                            <div class="circle">
+                                <a href="#">@member.AliasName</a>
+                            </div>
+                        }
+                    }
+                </div>
+                <hr/>
+                <div class="row">
+                    <p>Project members count: @ProjectMembers.Count</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+ <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
+
+ <script>
+
+$(document).ready(function() {
+
+
+      var id = @ProjectId;
+        
+          var dto = {
+            "id": id,
+            
+        }
+        console.log(dto);
+        $.ajax({
+            type: 'POST',
+            url: '/Dashboard/GetCommitChartBindingData',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                InitChart(response);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+});
+
+function InitChart(data)
+{
+    console.log(data);
+    var bindingSeries = [];
+    data.forEach(function(element) {
+        console.log(element);
+        var bindingItem =  
+        { 
+            "x": element.DateOfCommit, 
+            "y": element.dayCount 
+        }
+        bindingSeries.push(bindingItem);
+    });
+   
+     var chart = new ej.charts.Chart({
+        //Initializing Primary X Axis
+        primaryXAxis: {
+            valueType: 'DateTime',
+            labelFormat: 'y',
+            edgeLabelPlacement: 'Shift',
+            majorGridLines: { width: 0 }
+        },
+        //Initializing Primary X Axis
+        primaryYAxis: {
+            labelFormat: '{value}%',
+            rangePadding: 'None',
+            minimum: 0,
+            maximum: 100,
+            interval: 20,
+            lineStyle: { width: 0 },
+            majorTickLines: { width: 0 },
+            minorTickLines: { width: 0 }
+        },
+        chartArea: {
+            border: {
+                width: 0
+            }
+        },
+        //Initializing Chart Series
+        series: [
+            {
+                type: 'Line',
+                dataSource:  bindingSeries,
+                xName: 'x', width: 2, marker: {
+                    visible: true,
+                    width: 10,
+                    height: 10
+                },
+                yName: 'y', name: 'Commits Per day',
+            }
+        ],
+        //Initializing Chart Title
+        title: 'Commit tracker',
+        //Initializing Tooltip
+        tooltip: {
+            enable: true
+        },
+        width: ej.base.Browser.isDevice ? '100%' : '60%',
+
+    });
+  //  chart.appendTo('#line-container');
+}
+ </script>

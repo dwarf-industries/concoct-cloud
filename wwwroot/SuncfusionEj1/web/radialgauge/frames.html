@@ -1,0 +1,239 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>Essential JS 1 : Radial Gauge - Frames and Angles</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <script src="../scripts/excanvas.min.js" type="text/javascript"></script>
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area" align="center">
+                <div id="circularframe">
+                    <div id="FrameCircularGauge">
+                    </div>
+                </div>
+            </div>
+            <div id="sampleProperties">
+                <div class="prop-grid">
+
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            Frame Type
+                        </div>
+                        <div class="col-md-3" style="margin-top: 8px;">
+                            <input type="text" id="frameType" />
+                        </div>
+                        <div class="col-md-3">
+                            Range Placement
+                        </div>
+                        <div class="col-md-3" style="margin-top: 8px;">
+                            <input type="text" id="rangePlacement" />
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            Start Angle
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <div id="startAngle"></div>
+                        </div>
+                        <div class="col-md-3">
+                            Sweep Angle
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <div id="sweepAngle"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            Frame Start Angle
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="text" id="frameStartAngle" />
+                        </div>
+                        <div class="col-md-3">
+                            clockwise direction
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <input type="checkbox" id="chkclockwise" class="e-chkbox" value="LabelAutoAngle" />
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Range Distance
+                        </div>
+                        <div class="col-md-3 aligntop">
+                            <div id="rangeDistance"></div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        #circularframe{
+            background: none;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $("#FrameCircularGauge").ejCircularGauge({enableAnimation:false,
+                backgroundColor: "transparent", width: 500, load: "loadGaugeTheme",
+                scales: [{
+                    showRanges: true,
+                    startAngle: 122, sweepAngle: 296, radius: 130, showScaleBar: true, size: 1, maximum: 120, majorIntervalValue: 20, minorIntervalValue: 10,
+                    border: {
+                        width: 0.5,
+                    },
+                    pointers: [{
+                        value: 60,
+                        showBackNeedle: true,
+                        backNeedleLength: 5,
+                        length: 95,
+                        width: 7,
+                        pointerCap: { radius: 12 }
+                    }],
+                    ticks: [{
+                        type: "major",
+                        distanceFromScale: 2,
+                        height: 16,
+                        width: 1, color: "#8c8c8c"
+                    }, { type: "minor", height: 8, width: 1, distanceFromScale: 2, color: "#8c8c8c" }],
+                    labels: [{
+                        color: "#8c8c8c"
+                    }],
+                    ranges: [{
+                        startValue: 0, placement: "far", distanceFromScale: 10,
+                        endValue: 40, startWidth: 10,
+                        endWidth: 20, backgroundColor: "Green", border: { color: "Green", width: 0 }
+                    }, {
+                        startValue: 40, placement: "far", distanceFromScale: 10,
+                        endValue: 80, startWidth:20,
+                        endWidth: 30, backgroundColor: "yellow", border: { color: "yellow", width: 0 }
+                    }, {
+                        startValue: 80, placement: "far", distanceFromScale: 10,
+                        endValue: 120, startWidth: 30,
+                        endWidth: 35, backgroundColor: "REd", border: { color: "Red", width: 0 }
+                    }]
+                }]
+            });
+            $("#chkclockwise").ejCheckBox({ checked: true, "change": "onchange" });
+            $("#startAngle").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                value: 122,
+                height: 10,
+                minValue: 0,
+                maxValue: 360,
+                width: 110,
+                enableAnimation: true,
+                slide: "onchange",
+                change: "onchange"
+            });
+            $("#sweepAngle").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                value: 296,
+                height: 10,
+                minValue: 90,
+                maxValue: 360,
+                width: 110,
+                enableAnimation: true,
+                slide: "onchange",
+                change: "onchange"
+            });
+            $('#frameStartAngle').ejDropDownList({
+                dataSource: ["0", "90", "180", "270"],
+                select: "onchange", width: "110px", selectedItemIndex: 2, enabled:false
+            });
+            $("#rangeDistance").ejSlider({
+                sliderType: ej.SliderType.MinRange,
+                value: 10,
+                height: 10,
+                minValue: 0,
+                maxValue: 15,
+                width: 110,
+                enableAnimation: true,
+                change: "onchange",
+            });
+            $('#frameType').ejDropDownList({
+                dataSource: ["Full - Circular", "Semi - Circular"],
+                select: "onchange", width: "110px", selectedItemIndex: 0
+            });
+            $('#rangePlacement').ejDropDownList({
+                dataSource: ["Far", "Near"],
+                select: "onchange", width: "110px", selectedItemIndex: 0
+            });
+
+           
+        });
+        $("#sampleProperties").ejPropertiesPanel();
+        function onchange(args) {
+            if (args.type == "select" && args.text == "Semi - Circular") {
+                $("#frameStartAngle").ejDropDownList("option", "enabled", true);
+                $("#frameStartAngle").ejDropDownList("option", "selectedItemIndex", 2);
+                $("#FrameCircularGauge").ejCircularGauge("option", "frame", { frameType: "halfcircle", halfCircleFrameStartAngle: 180 });
+                $("#FrameCircularGauge").ejCircularGauge("option", "scales", [{ startAngle: 180, sweepAngle: 180 }]);
+                $("#startAngle").ejSlider("option", "value", 180);
+                $("#startAngle").ejSlider("option", "enabled", false);
+                $("#sweepAngle").ejSlider("option", "maxValue", 180);
+                $("#sweepAngle").ejSlider("option", "value", 180);
+            }
+            else if (args.type == "select" && args.text == "Full - Circular") {
+                $("#frameStartAngle").ejDropDownList("option", "enabled", false);
+                $("#FrameCircularGauge").ejCircularGauge("option", "frame", { frameType: "fullcircle" });
+                $("#FrameCircularGauge").ejCircularGauge("option", "scales", [{ startAngle: 122, sweepAngle: 296 }]);
+                $("#startAngle").ejSlider("option", "enabled", true);
+                $("#startAngle").ejSlider("option", "value", 122);
+                $("#sweepAngle").ejSlider("option", "value", 296);
+                $("#sweepAngle").ejSlider("option", "maxValue", 360);
+            }
+            else if (args.type == "select" && args.text == "Far") {
+                $("#FrameCircularGauge").ejCircularGauge("option", "scales", [{ ranges: [{ placement: "far" }, { placement: "far" }, { placement: "far" }] }]);
+            }
+            else if (args.type == "select" && args.text == "Near") {
+                $("#FrameCircularGauge").ejCircularGauge("option", "scales", [{ ranges: [{ placement: "near" }, { placement: "near" }, { placement: "near" }] }]);
+            }
+            else if (args.type == "select") {
+                $("#FrameCircularGauge").ejCircularGauge("option", "frame", { halfCircleFrameStartAngle: parseInt(args.text), halfCircleFrameEndAngle: parseInt(args.text) + 180 });
+                $("#FrameCircularGauge").ejCircularGauge("option", "scales", [{ startAngle: parseInt(args.text), sweepAngle: 180 }]);
+                $("#startAngle").ejSlider("option", "value", parseInt(args.text));
+                $("#sweepAngle").ejSlider("option", "value", 180);
+            }
+            else if (!ej.isNullOrUndefined(args.isChecked)) {
+                $("#FrameCircularGauge").ejCircularGauge("option", "scales", [{direction:args.isChecked?"clockwise":"counterclockwise"}]);
+            }
+            else if (args.id == "rangeDistance") {
+                $("#FrameCircularGauge").ejCircularGauge("option", "scales", [{ ranges: [{ distanceFromScale: args.value }, { distanceFromScale: args.value }, { distanceFromScale: args.value }] }]);
+            }
+            else if (args.id == "startAngle") {
+                $("#FrameCircularGauge").ejCircularGauge("option", "scales", [{ startAngle: args.value }]);
+            }
+            else if (args.id == "sweepAngle") {
+                $("#FrameCircularGauge").ejCircularGauge("option", "scales", [{ sweepAngle: args.value }]);
+            }
+        }
+    </script>
+
+</body>
+</html>

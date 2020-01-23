@@ -1,0 +1,445 @@
+/**  =====================
+      Dark-Layout css start
+==========================  **/
+
+body.dark-layout {
+    .pcoded-main-container{
+        background-color: #333;
+    }
+    .pcoded[theme-layout="vertical"] .pcoded-navbar .pcoded-item > li.active > a > .pcoded-mcaret{
+        border-right: 8px solid #333;
+    }
+    background-color: #333;
+    transition: all linear .3s;
+    .header-navbar .navbar-wrapper,
+    .jstree-default .jstree-clicked,
+    .prod-item .prod-info,
+    .filter-bar > .navbar,
+    #task-container li {
+        background-color: #1b1b1b;
+    }
+    .main-menu {
+        background: #242424;
+    }
+    .main-menu .main-menu-header,
+    .nav-tabs .nav-link.active,
+    .page-link:hover,
+    .location-selector .bit:hover,
+    .ms-container .ms-selectable li.disabled,
+    .ms-container .ms-selection li.disabled,
+    .j-forms .divider-text span,
+    .j-pro .j-divider-text span,
+    .handsontable th,
+    .cd-timeline-content,
+    .email-card .user-body .page-list li.active,
+    .email-card .user-body .page-list li:hover,
+    .email-card .mail-body-content tr:hover,
+    #external-events .fc-event {
+        background: #000;
+    }
+    .card {
+        background: #292929;
+        border-top-color: #555;
+        color: #fff;
+        h5 {
+            color: #a3a3a3;
+        }
+    }
+    .well,
+    .page-link,
+    .table-bordered td,
+    .table-bordered th,
+    .grid-layout span,
+    .vertical-alignment .row,
+    .location-selector,
+    pre[class*="language-"],
+    .icon-list-demo i,
+    .ms-container .ms-list,
+    .ms-container .ms-selectable li.ms-elem-selectable,
+    .ms-container .ms-selection li.ms-elem-selection,
+    .wizard > .content,
+    .j-forms,
+    .j-pro,
+    .table-bordered,
+    table.dataTable td.select-checkbox:before,
+    table.dataTable th.select-checkbox:before,
+    .email-summernote ~ .note-frame,
+    .thumb-block,
+    #task-container li {
+        border-color: #555;
+    }
+    .cd-timeline::before,
+    .cd-timeline-content::before,
+    .main-timeline:before,
+    .main-timeline:after {
+        background: #555;
+    }
+    .card-footer,
+    .header-navbar .navbar-wrapper .navbar-container .header-notification .show-notification,
+    .header-navbar .navbar-wrapper .navbar-container .mega-menu-top .show-notification,
+    .header-navbar .navbar-wrapper .navbar-container .header-notification .profile-notification,
+    .header-navbar .navbar-wrapper .navbar-container .mega-menu-top .profile-notification {
+        background: #292929;
+        color: #fff;
+    }
+    .table-card .row-table .br,
+    .social-card-1 .card-footer [class*="col-"],
+    .email-card .user-body,
+    .messages-content,
+    .note-card .note-box-aside {
+        border-right-color: #555;
+    }
+    .table-card .row-table:first-child,
+    .to-do-list,
+    .modal-header,
+    .email-card .user-body .page-list li,
+    .search-content {
+        border-bottom-color: #555;
+    }
+    .table td,
+    .table th,
+    .card-footer,
+    .tab-below,
+    .chat-reply-box,
+    .panel-footer,
+    .modal-footer,
+    .j-forms .footer,
+    .j-forms .divider,
+    .j-forms .divider-text,
+    .j-pro .j-footer,
+    .footable-details.table>tbody>tr>td,
+    .footable-details.table>tbody>tr>th,
+    .footable-details.table>tfoot>tr>td,
+    .footable-details.table>tfoot>tr>th,
+    .footable-details.table>thead>tr>td,
+    .footable-details.table>thead>tr>th,
+    .footable.table>tbody>tr>td,
+    .footable.table>tbody>tr>th,
+    .footable.table>tfoot>tr>td,
+    .footable.table>tfoot>tr>th,
+    .footable.table>thead>tr>td,
+    .footable.table>thead>tr>th,
+    .write-msg,
+    .version .nav li:first-child {
+        border-top-color: #555;
+    }
+    .p-chat-user,
+    .showChat_inner,
+    .invoice-table {
+        border-left-color: #555;
+    }
+    .table > thead > tr > th,
+    .userlist-box,
+    .card-header,
+    .nav-tabs,
+    .chat-inner-header {
+        border-bottom-color: #555;
+    }
+    .widget-chat-box .send-chat,
+    .widget-chat-box .receive-chat {
+        background: #333;
+    }
+    .widget-chat-box .send-chat:before,
+    .widget-chat-box .receive-chat:before {
+        border-top-color: #333;
+        border-right-color: #333;
+    }
+    .nav-tabs .nav-item.show .nav-link,
+    .nav-tabs .nav-link.active {
+        border-color: #555 #555 #555;
+        color: #fff;
+    }
+    .tab-below .active {
+        border-top: none;
+    }
+    text {
+        fill: #fff;
+    }
+    .main-menu .main-menu-content .nav-item.has-class > a,
+    .main-menu .main-menu-content .nav-item .tree-1 a.has-class > a,
+    .main-menu .main-menu-content .nav-item .tree-2 a.has-class > a,
+    .main-menu .main-menu-content .nav-item .tree-3 a.has-class > a,
+    .main-menu .main-menu-content .nav-item .tree-4 a.has-class > a,
+    .card .card-header .card-header-right,
+    code,
+    .card .card-block code,
+    .fb-timeliner,
+    .version .nav li:hover {
+        background: #1b1b1b;
+    }
+    .main-menu .main-menu-content .nav-item a,
+    .main-menu .main-menu-content .nav-item .tree-1 a a,
+    .main-menu .main-menu-content .nav-item .tree-2 a a,
+    .main-menu .main-menu-content .nav-item .tree-3 a a,
+    .main-menu .main-menu-content .nav-item .tree-4 a a,
+    .sub-title,
+    .breadcrumb-title a,
+    h4.m-b-30,
+    code,
+    .card .card-block code,
+    .clock-widget .bg-alarm,
+    .clock-widget .basic-alarm,
+    .nav-tabs .nav-item a,
+    .dark-nav-border a,
+    .page-link,
+    .main-body .page-wrapper .page-header-title h4,
+    .modal-title,
+    .close,
+    .icon-list-demo i,
+    .form-radio label,
+    .ms-container .ms-selectable li.ms-elem-selectable,
+    .ms-container .ms-selection li.ms-elem-selection,
+    .j-forms .divider-text span,
+    .j-pro .j-label,
+    .j-pro .j-divider-text span,
+    .j-pro .j-icon-left,
+    .j-pro .j-icon-right,
+    .j-pro .j-radio,
+    .j-pro .j-checkbox,
+    .j-pro .j-radio-toggle,
+    .j-pro .j-checkbox-toggle,
+    .handsontable th,
+    .left-icon-control .form-icon,
+    .offline-404 h1,
+    .cd-timeline-content .cd-date,
+    ul.list-contacts .list-group-item a,
+    .port_detail_next_search a,
+    .email-card .mail-body-content .unread a,
+    .email-card .user-mail h6,
+    .navbar-light .navbar-nav .nav-link,
+    h4.m-b-30,
+    .thead-default th,
+    .fc-state-default,
+    .light-nav-border a,
+    .primary-nav a,
+    .warning-nav a,
+    .success-nav a,
+    .info-nav a,
+    .danger-nav a {
+        color: #a3a3a3;
+    }
+    .nav-tabs .nav-link:focus,
+    .nav-tabs .nav-link:hover {
+        border-color: #555 #555 #555;
+    }
+    .widget-chat-box .card-header i,
+    .card .card-header span,
+    .main-menu .main-menu-content .tree-1.open .has-class > a,
+    .main-menu .main-menu-content .nav-item .open.tree-2 .has-class > a,
+    .main-menu .main-menu-content .nav-item .open.tree-3 .has-class > a,
+    .main-menu .main-menu-content .nav-item .open.tree-4 .has-class > a,
+    .main-menu .main-menu-content .tree-2.open .has-class > a,
+    .main-menu .main-menu-content .tree-3.open .has-class > a,
+    .main-menu .main-menu-content .tree-4.open .has-class > a,
+    .main-menu .main-menu-content .nav-title,
+    .header-navbar .navbar-wrapper .navbar-container .header-notification .show-notification a,
+    .header-navbar .navbar-wrapper .navbar-container .mega-menu-top .show-notification a,
+    .header-navbar .navbar-wrapper .navbar-container .header-notification .profile-notification a,
+    .header-navbar .navbar-wrapper .navbar-container .mega-menu-top .profile-notification a,
+    .mega-menu-title,
+    .form-group label,
+    .chat-header,
+    .cd-horizontal-timeline .events a,
+    .borderless-card [class*="breadcrumb-"] h5,
+    .borderless-card [class*="breadcrumb-"] a,
+    .form-control,
+    .dropdown-item,
+    .pignose-calendar .pignose-calendar-top .pignose-calendar-top-year,
+    .nav-tabs .nav-item.show .nav-link,
+    .primary-nav-dark a,
+    .warning-nav-dark a,
+    .success-nav-dark a,
+    .info-nav-dark a,
+    .danger-nav-dark a,
+    .primary-nav a,
+    .warning-nav a,
+    .success-nav a,
+    .info-nav a,
+    .danger-nav a,
+    .accordion-msg,
+    .card .card-block p,
+    .chat-inner-header,
+    .right-icon-control .form-icon,
+    .jstree-default .jstree-clicked,
+    .close:hover,
+    .modal-body,
+    .j-forms input[type="text"],
+    .j-forms input[type="password"],
+    .j-forms input[type="email"],
+    .j-forms input[type="search"],
+    .j-forms input[type="url"],
+    .j-forms textarea,
+    .j-forms select,
+    .j-pro input[type="text"],
+    .j-pro input[type="password"],
+    .j-pro input[type="email"],
+    .j-pro input[type="search"],
+    .j-pro input[type="url"],
+    .j-pro textarea,
+    .j-pro select,
+    .note-editor.note-frame .note-editing-area .note-editable,
+    .email-card .mail-body-content .read a,
+    #external-events .fc-event,
+    #ta {
+        color: #fff;
+    }
+    .main-menu .main-menu-content .tree-1.open .nav-sub-item > a,
+    .main-menu .main-menu-content .nav-item .open.tree-2 .nav-sub-item > a,
+    .main-menu .main-menu-content .nav-item .open.tree-3 .nav-sub-item > a,
+    .main-menu .main-menu-content .nav-item .open.tree-4 .nav-sub-item > a {
+        background: #2d2d2d;
+    }
+    .morphsearch.open .morphsearch-form,
+    .dummy-media-object,
+    .card .card-block .dropdown-menu,
+    .clock-widget,
+    .pignose-calendar,
+    .pignose-calendar .pignose-calendar-top,
+    .nav-tabs .nav-item.show .nav-link,
+    .alert-danger,
+    .alert-warning,
+    .alert-info,
+    .alert-success,
+    .alert-primary,
+    .alert-default,
+    .showChat_inner,
+    .chat-reply-box,
+    .modal-content,
+    .location-selector .bit,
+    .j-forms,
+    .j-forms .footer,
+    .j-pro,
+    .j-pro .j-footer,
+    .handsontable th,
+    .handsontable td,
+    .offline-404,
+    .dropdown-menu,
+    .email-card .user-body {
+        background: #292929;
+    }
+    .morphsearch-close::before,
+    .morphsearch-close::after {
+        background: #999;
+    }
+    .morphsearch.open,
+    .morphsearch-content,
+    .theme-loader,
+    .form-control,
+    .md-tabs .nav-item a,
+    .md-tabs .main-menu .main-menu-content .nav-item .tree-1 a a,
+    .main-menu .main-menu-content .nav-item .tree-1 .md-tabs a a,
+    .md-tabs .main-menu .main-menu-content .nav-item .tree-2 a a,
+    .main-menu .main-menu-content .nav-item .tree-2 .md-tabs a a,
+    .md-tabs .main-menu .main-menu-content .nav-item .tree-3 a a,
+    .main-menu .main-menu-content .nav-item .tree-3 .md-tabs a a,
+    .md-tabs .main-menu .main-menu-content .nav-item .tree-4 a a,
+    .main-menu .main-menu-content .nav-item .tree-4 .md-tabs a a,
+    .well,
+    .panel-footer,
+    .panel,
+    .page-link,
+    .location-selector,
+    pre[class*="language-"],
+    .bootstrap-tagsinput,
+    .select2-container--default .select2-selection--multiple,
+    .ms-container .ms-selectable,
+    .ms-container .ms-selection,
+    .wizard > .steps .disabled a,
+    .wizard > .steps .disabled a:hover,
+    .wizard > .steps .disabled a:active,
+    .wizard > .content,
+    .j-forms input[type="text"],
+    .j-forms input[type="password"],
+    .j-forms input[type="email"],
+    .j-forms input[type="search"],
+    .j-forms input[type="url"],
+    .j-forms textarea,
+    .j-forms select,
+    .j-pro input[type="text"],
+    .j-pro input[type="password"],
+    .j-pro input[type="email"],
+    .j-pro input[type="search"],
+    .j-pro input[type="url"],
+    .j-pro textarea,
+    .j-pro select,
+    .footable-details.table-striped>tbody>tr:nth-child(odd),
+    .footable.table-striped>tbody>tr:nth-child(odd),
+    .main-timeline,
+    .dropdown-item:focus,
+    .dropdown-item:hover,
+    .list-group-item,
+    .note-editor.note-frame .note-editing-area .note-editable,
+    #main-chat .chat-single-box.active .chat-header,
+    .post-input,
+    .msg-send,
+    .note-editor.note-frame .note-statusbar,
+    #ta,
+    .thead-default th,
+    .invoice-total,
+    .fc-state-default,
+    .jFiler-input-dragDrop,
+    .jFiler-theme-default .jFiler-input,
+    .light-nav-border,
+    .primary-nav,
+    .warning-nav,
+    .success-nav,
+    .info-nav,
+    .danger-nav {
+        background: #333;
+    }
+    .md-tabs .nav-item a,
+    .md-tabs .main-menu .main-menu-content .nav-item .tree-1 a a,
+    .main-menu .main-menu-content .nav-item .tree-1 .md-tabs a a,
+    .md-tabs .main-menu .main-menu-content .nav-item .tree-2 a a,
+    .main-menu .main-menu-content .nav-item .tree-2 .md-tabs a a,
+    .md-tabs .main-menu .main-menu-content .nav-item .tree-3 a a,
+    .main-menu .main-menu-content .nav-item .tree-3 .md-tabs a a,
+    .md-tabs .main-menu .main-menu-content .nav-item .tree-4 a a,
+    .main-menu .main-menu-content .nav-item .tree-4 .md-tabs a a {
+        border-radius: 0;
+    }
+    .ball-scale > div {
+        background: #fff;
+    }
+    .tree-1,
+    .tree-2,
+    .tree-3,
+    .tree-4 {
+        background-color: #2d2d2d !important;
+    }
+    .page-item.disabled .page-link {
+        color: #a3a3a3;
+        background-color: #333;
+        border-color: #555;
+    }
+    .ct-grid {
+        stroke: rgba(255, 255, 255, 0.2);
+    }
+    .ct-label.ct-vertical.ct-start,
+    .ct-label.ct-horizontal.ct-end {
+        color: rgba(255, 255, 255, 0.38);
+    }
+    .img-tabs a {
+        opacity: 1;
+    }
+    pre[class*="language-"] {
+        code {
+            background-color: #000 !important;
+        }
+    }
+    .bg-white {
+        background-color: #000 !important;
+    }
+    code[class*="language-"] {
+        text-shadow: none;
+    }
+    #reportrange {
+        background: #333 !important;
+    }
+    .chat-bg {
+        background: rgba(1, 1, 1, 0.69);
+    }
+}
+
+
+/**====== Dark-Layout css end ======**/

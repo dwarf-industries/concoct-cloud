@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Events</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link href="../content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js"></script>
+    <!--<![endif]-->
+    <script src="../scripts/jsondata.min.js"></script>
+    <script src="../scripts/jsrender.min.js"></script>
+    <script src="../scripts/jquery.validate.min.js"></script>
+    <script src="../scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="../scripts/ej.web.all.min.js"></script>
+ 
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="Grid"></div>
+            </div>
+            <div class="cols-prop-area event-tracer">
+                <div>
+                    <div class="heading">
+                        <span>Event Trace</span>
+                        <div class="pull-right">
+                            <select name="selectevtprops" id="selectControls">
+                                <option value="create">create</option>
+                                <option value="actionBegin">actionBegin</option>
+                                <option value="actionComplete">actionComplete</option>
+                                <option value="beginEdit">beginEdit</option>
+                                <option value="endEdit">endEdit</option>
+								<option value="endAdd">endAdd</option>
+								<option value="endDelete">endDelete</option>
+                                <option value="queryCellInfo">queryCellInfo</option>
+                                <option value="rowDataBound">rowDataBound</option>
+                                <option value="rowSelecting">rowSelecting</option>
+                                <option value="rowSelected">rowSelected</option>
+                                <option value="columnDragStart">columnDragStart</option>
+                                <option value="columnDrag">columnDrag</option>
+                                <option value="columnDrop">columnDrop</option>
+                                <option value="recordClick">recordClick</option>
+                                <option value="recordDoubleClick">recordDoubleClick</option>
+                                <option value="rightClick">rightClick</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="prop-grid content">
+                        <div class="eventarea">
+                            <div class="EventLog" id="EventLog">
+                            </div>
+                        </div>
+                        <div class="evtbtn">
+                            <input type="button" class="eventclear e-btn" value="Clear" onclick="onClear()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#Grid").ejGrid({
+                // the datasource "window.gridData" is referred from jsondata.min.js
+                dataSource: window.gridData,
+                allowPaging: true,
+                editSettings: { allowEditing: true },
+                allowGrouping: true,
+                pageSettings: { pageSize: 10 },
+				toolbarSettings: { showToolbar: true, toolbarItems:["add","edit","delete","update","cancel"] },
+				editSettings: {allowEditing: true, allowAdding: true,allowDeleting: true},
+                columns: [
+                               { field: "OrderID", headerText: "Order ID", isPrimaryKey: true, textAlign: ej.TextAlign.Right, width: 90, validationRules: { required: true, number: true } },
+                               { field: "ShipCity", headerText: "Ship City", width: 90, editType: ej.Grid.EditingType.Dropdown },
+                               { field: "ShipCountry", headerText: "Ship Country", width: 90, editType: ej.Grid.EditingType.Dropdown },
+                               { field: "EmployeeID", headerText: "Employee ID", editType: ej.Grid.EditingType.NumericEdit, textAlign: ej.TextAlign.Right, width: 80, validationRules: { number: true } },
+                               { field: "Freight", headerText: "Freight", textAlign: ej.TextAlign.Right, width: 80, format: "{0:C}", editType: ej.Grid.EditingType.Numeric, editParams: { decimalPlaces: 2 } }
+                ],
+                create: "create",
+                actionBegin: "actionBegin",
+                actionComplete: "actionComplete",
+                beginEdit: "beginEdit",
+				endEdit: "endEdit",
+				endAdd: "endAdd",
+				endDelete: "endDelete",
+                queryCellInfo: "queryCellInfo",
+                rowDataBound: "rowDataBound",
+                rowSelecting: "rowSelecting",
+                rowSelected: "rowSelected",
+                columnDragStart: "columnDragStart",
+                columnDrag: "columnDrag",
+                columnDrop: "columnDrop",
+                recordClick: "recordClick",
+                recordDoubleClick: "recordDoubleClick",
+                rightClick: "rightClick",
+            });
+
+            $("#selectControls").ejDropDownList(
+                    {
+                        customCssClass: "metroblue",
+                        popupShown: "adjustpopupposition",
+                        showCheckbox: true,
+                        checkAll: true,
+                        change: "evtpropscheckedevent"
+                    });
+        });
+
+        function evtpropscheckedevent(args) {
+            var gridObj = $("#Grid").data("ejGrid");
+            if (args.isChecked && gridObj != undefined) {
+                switch (args.value) {
+                    case "create": gridObj.option(args.value, "create"); break;
+                    case "actionBegin": gridObj.option(args.value, "actionBegin"); break;
+                    case "actionComplete": gridObj.option(args.value, "actionComplete"); break;
+                    case "beginEdit": gridObj.option(args.value, "beginEdit"); break;
+					case "endEdit": gridObj.option(args.value, "endEdit"); break;
+					case "endAdd": gridObj.option(args.value, "endAdd"); break;
+					case "endDelete": gridObj.option(args.value, "endDelete"); break;
+                    case "queryCellInfo": gridObj.option(args.value, "queryCellInfo"); break;
+                    case "rowDataBound": gridObj.option(args.value, "rowDataBound"); break;
+                    case "rowSelecting": gridObj.option(args.value, "rowSelecting"); break;
+                    case "rowSelected": gridObj.option(args.value, "rowSelected"); break;
+                    case "columnDragStart": gridObj.option(args.value, "columnDragStart"); break;
+                    case "columnDrag": gridObj.option(args.value, "columnDrag"); break;
+                    case "columnDrop": gridObj.option(args.value, "columnDrop"); break;
+                    case "recordClick": gridObj.option(args.value, "recordClick"); break;
+                    case "recordDoubleClick": gridObj.option(args.value, "recordDoubleClick"); break;
+                    case "rightClick": gridObj.option(args.value, "rightClick"); break;
+                }
+            }
+            else gridObj.option(args.value, '');
+        }
+        function create(args) {
+            jQuery.addEventLog("Grid <span class='eventTitle'>create</span> event called");
+        }
+        function actionBegin(args) {
+            jQuery.addEventLog("Grid <span class='eventTitle'>actionBegin</span> event called");
+        }
+        function actionComplete(args) {
+            jQuery.addEventLog("Grid <span class='eventTitle'>actionComplete</span> event called");
+        }
+		function beginEdit(args) {
+            jQuery.addEventLog("Grid <span class='eventTitle'>beginEdit</span> event called");
+        }
+        function endEdit(args) {
+            jQuery.addEventLog("Grid <span class='eventTitle'>endEdit</span> event called");
+        }
+		function endAdd(args) {
+            jQuery.addEventLog("Grid <span class='eventTitle'>endAdd</span> event called");
+        }
+		function endDelete(args) {
+            jQuery.addEventLog("Grid <span class='eventTitle'>endDelete</span> event called");
+        }
+        function queryCellInfo(args) {
+            jQuery.addEventLog("Grid <span class='eventTitle'>queryCellInfo</span> event called");
+        }
+        function rowDataBound(args) {
+            jQuery.addEventLog("Grid <span class='eventTitle'>rowDataBound</span> event called");
+        }
+        function rowSelecting(args) {
+            jQuery.addEventLog("Grid <span class='eventTitle'>rowSelecting</span> event called");
+        }
+        function rowSelected(args) {
+            jQuery.addEventLog("Grid <span class='eventTitle'>rowSelected</span> event called");
+        }
+        function columnDragStart(args) {
+            jQuery.addEventLog("Grid <span class='eventTitle'>columnDragStart</span> event called");
+        }
+        function columnDrag(args) {
+            jQuery.addEventLog("Grid <span class='eventTitle'>columnDrag</span> event called");
+        }
+        function columnDrop(args) {
+            jQuery.addEventLog("Grid <span class='eventTitle'>columnDrop</span> event called");
+        }
+        function recordClick(args) {
+            jQuery.addEventLog("Grid <span class='eventTitle'>recordClick</span> event called");
+        }
+        function recordDoubleClick(args) {
+            jQuery.addEventLog("Grid <span class='eventTitle'>recordDoubleClick</span> event called");
+        }
+        function rightClick(args) {
+            jQuery.addEventLog("Grid <span class='eventTitle'>rightClick</span> event called");
+        }
+        function onClear() {
+            $("#EventLog").html("");
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,132 @@
+@{
+   
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var result = ViewData["UserAccount"] as OutgoingAccountManagment;
+    var User = ViewData["UserId"] as int?;
+    ViewData["Title"] = $"Add New User";
+}
+
+<link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
+
+
+<div class="row" style="margin:0px;">
+    <div class="col-md-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body text-center">
+               <div class="row" style="padding:50px;">
+                    <div class="col-md-4">
+                        <input id="Email" />
+                    </div>
+                    <div class="col-md-4">
+                        <input id="Password" />
+
+                    </div>
+                    <div class="col-md-4">
+                        <div>
+                            <label for="PRights" style="padding: 10px 70px 10px 0"> Project Rights </label>
+                            <input id="PRights" type="checkbox" />
+                        </div>
+
+                    </div>
+               </div>
+                <div class="row" style="padding:50px;">
+                    <div class="col-md-4">
+                        <input id="FirstName" />
+                    </div>
+                    <div class="col-md-4">
+                        <input id="MiddleName" />
+
+                    </div>
+                    <div class="col-md-4">
+                        <input id="LastName" />
+
+                    </div>
+               </div>
+              
+               <div class="row">
+                    <a href="#" class="btn btn-block btn-info" onclick="SaveChanges()"><span class="glyphicon glyphicon-file" ></span> Save Changes </a>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+ <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
+
+ <script>
+     var cProjectRights;
+$(document).ready(function() {
+    var ProjectRights = new ejs.buttons.Switch({ change: ProjectRightsChanged, checked: false });
+    ProjectRights.appendTo('#PRights');
+    var email = new ej.inputs.TextBox({
+        placeholder: 'Email',
+        floatLabelType: 'Auto'
+    });
+    email.appendTo('#Email');
+
+    var password = new ej.inputs.TextBox({
+        placeholder: 'Password',
+        floatLabelType: 'Auto'
+    });
+    password.appendTo('#Password');
+
+    var firstName = new ej.inputs.TextBox({
+        placeholder: 'First Name',
+        floatLabelType: 'Auto'
+    });
+    firstName.appendTo('#FirstName');
+
+    var middleName = new ej.inputs.TextBox({
+        placeholder: 'Middle Name',
+        floatLabelType: 'Auto'
+    });
+    middleName.appendTo('#MiddleName');
+
+    var lastName = new ej.inputs.TextBox({
+        placeholder: 'Last Name',
+        floatLabelType: 'Auto'
+    });
+    lastName.appendTo('#LastName');
+
+});
+
+
+function ProjectRightsChanged(args) {
+
+   cProjectRights = args.checked;
+
+}
+
+function SaveChanges()
+{
+    console.log("In Save Changes");
+    var dto = {
+        "Email": $("#Email").val(),
+        "Password": $("#Password").val(),
+        "FirstName": $("#FirstName").val(),
+        "LastName": $("#LastName").val(),
+        "ProjectRights" : cProjectRights 
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: '/Authenication/AddNewUserAccount',
+        data: JSON.stringify(dto),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(response) {
+            window.location.href = "/Dashboard/AssignAccountProjects?id="+response;
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+
+}
+</script>

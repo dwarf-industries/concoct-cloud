@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" style="height: 100%; width: 100%;">
+<head>
+    <title>Essential JS 1: Report Designer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <meta name="description" content="Report designer is a powerful component used to design SSRS RDL report using the parameter, drill through, subreport, nested data region with sort and filter, etc." />
+    <link rel="shortcut icon" href="../content/images/favicon.ico" />
+    <link href="../../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../../content/ejthemes/default-theme/ej.reportdesigner.min.css" rel="stylesheet" />
+    <link href="../../content/default.css" rel="stylesheet" />
+    <link href="../../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../../scripts/jquery-2.1.4.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <link href="../../scripts/CodeMirror/codemirror.min.css" rel="stylesheet" />
+    <link href="../../scripts/CodeMirror/show-hint.min.css" rel="stylesheet" />
+    <script src="../../scripts/jsrender.min.js" type="text/javascript"></script>
+    <script src="../../scripts/codemirror/codemirror.js"></script>
+    <script src="../../scripts/codemirror/show-hint.js"></script>
+    <script src="../../scripts/codemirror/sql-hint.js"></script>
+    <script src="../../scripts/codemirror/sql.js"></script>
+    <script src="../../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <!--[if gte IE 9]><!-->
+    <script src="../../scripts/ej.reportdesigner.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../../scripts/properties.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        var isSubmit = true;
+        var controlId = 'container';
+
+        $(document).ready(function () {
+            if (!(ej.browserInfo().name === "msie" && Number(ej.browserInfo().version) < 9)) {
+                $(window).bind("resize", windowResize);
+                $('#preview_btn').bind("click", previewClick);
+                $('#design_btn').bind("click", designClick);
+                refreshWindow();
+                renderDesigner();
+            } else {
+                alert("ReportDesigner will not be supported in IE Version < 9");
+            }
+        });
+
+        function windowResize(args) {
+            refreshWindow();
+        }
+
+        function previewClick(agrs) {
+            var designer = $('#' + controlId).data('ejReportDesigner');
+            $('#design_btn').show();
+            $('.rptdesigner-sample-designBtn').css('display', 'block');
+            $('#preview_btn').hide();
+            $('.rptdesigner-sample-previewBtn').css('display', "none");
+            designer.showPreview();
+        }
+
+        function designClick(agrs) {
+            var designer = $('#' + controlId).data('ejReportDesigner');
+            $("#preview_btn").show();
+            $(".rptdesigner-sample-previewBtn").css('display', 'block');
+            $("#design_btn").hide();
+            $(".rptdesigner-sample-designBtn").css('display', 'none');
+            designer.showDesign();
+        }
+
+        function formSubmit(args) {
+            isSubmit = false;
+        }
+
+        function windowUnload(args) {
+            var designer = $('#' + controlId).data('ejReportDesigner');
+            if (designer.hasReportChanges() && isSubmit) {
+                return 'Changes you made may not be saved';
+            }
+            isSubmit = true;
+        }
+
+        function refreshWindow() {
+            $('#' + controlId).width($(window).width());
+            var windowHeight = $(window).innerHeight();
+            var headerHeight = $("#sample_header_div").outerHeight();
+            var containerHeight = windowHeight - headerHeight;
+            $('#' + controlId).height(containerHeight);
+        }
+
+        function renderDesigner() {
+            $(document.body).bind('submit', $.proxy(this.formSubmit, this));
+            $(window).bind('beforeunload', $.proxy(this.windowUnload, this));
+
+            var designerModel = {
+                serviceUrl: window.baseurl + 'api/ReportDesigner',
+                create: $.proxy(controlInitialized, this),
+                toolbarSettings: {
+                    items: ej.ReportDesigner.ToolbarItems.All & ~ej.ReportDesigner.ToolbarItems.Preview & ~ej.ReportDesigner.ToolbarItems.EditDesign
+                },
+                toolbarClick: $.proxy(toolbarClick, this),
+                reportOpened: $.proxy(reportOpened, this),
+                reportSaved: $.proxy(reportSaved, this),
+                reportModified: $.proxy(reportModified, this)
+            };
+			
+			$('#' + controlId).ejReportDesigner(designerModel);
+        }
+
+        function controlInitialized(args) {
+            var designer = $('#' + controlId).data('ejReportDesigner');
+            designer.openReport('/Catagory2/Personal Expense Analysis');
+        }
+
+        function reportModified(args) {
+            if (args.isModified) {
+                $('.rptdesigner-sample-reportstatus').html('(Edited)');
+            }
+        }
+
+        function reportOpened(args) {
+            $('#report_name_header').html(args.reportName);
+            $('.rptdesigner-sample-reportstatus').html('(Edited)');
+        }
+
+        function reportSaved(args) {
+            $('.rptdesigner-sample-reportstatus').html('(Saved)');
+        }
+
+        function toolbarClick(args) {
+            var designer = $('#' + controlId).data('ejReportDesigner');
+            switch (args.click) {
+                case 'New':
+                    args.cancel = true;
+                    if (designer.hasReportChanges()) {
+                        if (confirm("Do you want to discard the modifed changes?") == true) {
+                            designer.newReport('Untitled');
+                            $('#report_name_header').html('Untitled');
+                        }
+                    }
+                    else {
+                        designer.newReport('Untitled');
+                        $('#report_name_header').html('Untitled');
+                    }
+                    break;
+            }
+        }
+    </script>
+
+    <style type="text/css">
+        .rptdesigner-sample-header {
+            width: 100%;
+            height: 40px;
+            background-color: #333842;
+            font-family: 'Segoe UI';
+        }
+
+            .rptdesigner-sample-header .rptdesigner-sample-previewBtn,
+            .rptdesigner-sample-header .rptdesigner-sample-designBtn {
+                width: 100px;
+                height: 40px;
+                float: right;
+            }
+
+                .rptdesigner-sample-header .rptdesigner-sample-previewBtn .preview-btn,
+                .rptdesigner-sample-header .rptdesigner-sample-designBtn .design-btn {
+                    background-color: #0079bc;
+                    color: #fff;
+                }
+
+                .rptdesigner-sample-header .rptdesigner-sample-previewBtn .preview-btn,
+                .rptdesigner-sample-header .rptdesigner-sample-designBtn .design-btn {
+                    width: 80px;
+                    margin-top: 7px;
+                    height: 25px;
+                    margin-left: 0px;
+                    border: 0;
+                    border-radius: 2px;
+                    font-weight: 600;
+                    font-size: 12px;
+                    font-family: Segoe UI !important;
+                }
+
+            .rptdesigner-sample-header .report-name,
+            .rptdesigner-sample-header .report-status {
+                display: inline-block;
+                padding-left: 6px;
+            }
+
+            .rptdesigner-sample-header .report-name {
+                color: #fff;
+                font-size: 16px !important;
+            }
+
+            .rptdesigner-sample-header .report-status {
+                color: #a9a9a9;
+                font-family: Segoe UI;
+                padding-left: 15px;
+                font-style: italic;
+            }
+
+            .rptdesigner-sample-header .main-screen-logo {
+                width: 40px;
+                height: 30px;
+                display: inline-block;
+                margin-top: 5px;
+            }
+
+            .rptdesigner-sample-header .rptdesigner-sample-designBtn .design-btn {
+                display: none;
+            }
+
+            .rptdesigner-sample-header .preview-btn:hover,
+            .rptdesigner-sample-header .design-btn:hover {
+                background-color: #009aef;
+            }
+
+            .rptdesigner-sample-header .main-screen-logo img {
+                height: 30px;
+                padding-left: 5px;
+                margin-top: -1px;
+            }
+
+        .rptdesigner-sample-reportname,
+        .rptdesigner-sample-reportstatus {
+            display: inline-block;
+            margin: 0;
+            vertical-align: middle;
+            font-family: 'Segoe UI';
+            font-size: 13px !important;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body style="overflow: hidden; position: static; margin: 0; padding: 0; height: 100%; width: 100%">
+    <div id="sample_header_div" class="rptdesigner-sample-header">
+        <div class="rptdesigner-sample-previewBtn">
+            <button id="preview_btn" type="button" class="preview-rep preview-btn">
+                <span>Preview</span>
+            </button>
+        </div>
+        <div class="rptdesigner-sample-designBtn">
+            <button id="design_btn" type="button" class="preview-rep design-btn">
+                <span>Design</span>
+            </button>
+        </div>
+        <div class="main-screen-logo">
+            <a class="home-link" data-toggle="tooltip" data-placement="bottom" title="Syncfusion Report Designer">
+                <img alt="Application Logo" id="application-logo" src="../../content/images/Icon.ico" onerror="if (this.src !== '../../content/images/Icon.ico') this.src = '../../content/images/Icon.ico';" />
+            </a>
+        </div>
+        <div class="report-name">
+            <h5 class="rptdesigner-sample-reportname" id="report_name_header">Untitled</h5>
+        </div>
+        <div class="report-status">
+            <h5 class="rptdesigner-sample-reportstatus" id="report_status_header">(Edited)</h5>
+        </div>
+    </div>
+    <div id="container"></div>
+</body>
+</html>

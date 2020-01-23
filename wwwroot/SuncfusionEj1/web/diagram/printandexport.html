@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 1 : Print And Export</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+    <style>
+        .e-toolbar{
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="ToolbarItem" class="e-toolbar e-js e-widget e-toolbarspan" style="background-color: #ebeced; border-bottom-color: #bbbbbb; border-top-style: none; border-left-style: none; border-right-style: none">
+        <ul id="toolblock3" class="toolblock3rightBorderVisible">
+            <li><div style="padding:5px;">Export As Image:</div></li>
+            <li id="button1">
+                <div style="padding-right:5px;padding-top:3px;">
+                    <button id="export_as_img">JPG</button>
+                    <ul id="imgformatDiv">
+                        <li id="jpg" text="jpg">JPG</li>
+                        <li id="png" text="png">PNG</li>
+                        <li id="bmp" text="bmp">BMP</li>
+                    </ul>
+                </div>
+            </li>
+            <li id="button2">
+                <div style="padding-right:2px;padding-top:1px; margin-left: 3px">
+                    <button id="export_svg" style="width: 100px; height: 30px; border: 0;  border-radius: 3px;">Export as SVG</button>
+                </div>
+            </li>
+            <li id="button3">
+                <div style="padding-right:2px;padding-top:1px; margin-left: 3px">
+                    <button id="print" style="margin-right:8px; width: 100px; height: 30px; border: 0;  border-radius: 3px; ">Print</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    <div id="diagram"></div>
+    
+
+    <script type="text/javascript">
+        var NodeConstraints = ej.datavisualization.Diagram.NodeConstraints;
+        var Diagram = ej.datavisualization.Diagram;
+        var BPMNShapes = Diagram.BPMNShapes;
+        var BPMNEvents = Diagram.BPMNEvents;
+        var BPMNTriggers = Diagram.BPMNTriggers;
+        var BPMNGateways = Diagram.BPMNGateways;
+        var nodes =
+        [
+        { name: "node1", width: 60, height: 60, offsetX: 55, offsetY: 200, labels: [{ "text": "Select Support Ticket", offset: { x: 0.50, y: 0.50 } }], type: "bpmn", shape: BPMNShapes.Start },
+        { name: "node2", width: 75, height: 70, offsetX: 190, offsetY: 200, labels: [{ "text": "Handle Support Ticket", offset: { x: 0.50, y: 0.50 } }], type: "bpmn", shape: BPMNShapes.Activity, activity: ej.datavisualization.Diagram.BPMNActivity.Task },
+        {
+            name: "node3", width: 75, height: 70, offsetX: 355, offsetY: 200, type: "bpmn", shape: BPMNShapes.Gateway,
+            gateway: BPMNGateways.Exclusive
+        },
+        {
+            name: "node4", width: 75, height: 70, offsetX: 530, offsetY: 90, labels: [{ "text": "Respond to customer", offset: { x: 0.50, y: 0.50 } }], type: "bpmn", shape: BPMNShapes.Activity, activity: ej.datavisualization.Diagram.BPMNActivity.Task, task: { type: ej.datavisualization.Diagram.BPMNTasks.Service }
+        },
+        {
+            name: "node5", width: 75, height: 70, offsetX: 530, offsetY: 200, labels: [{ "text": "Close ticket", offset: { x: 0.50, y: 0.50 } }], type: "bpmn", shape: BPMNShapes.Activity, activity: ej.datavisualization.Diagram.BPMNActivity.Task, task: { type: ej.datavisualization.Diagram.BPMNTasks.Service }
+        },
+        {
+            name: "node6", width: 75, height: 70, offsetX: 530, offsetY: 300, labels: [{ "text": "Escalate ticket", offset: { x: 0.50, y: 0.50 } }], type: "bpmn", shape: BPMNShapes.Activity, activity: ej.datavisualization.Diagram.BPMNActivity.Task, task: { type: ej.datavisualization.Diagram.BPMNTasks.Service }
+        },
+        { name: "node7", width: 60, height: 60, offsetX: 660, offsetY: 90, type: "bpmn", shape: BPMNShapes.Start, event: BPMNEvents.End },
+        { name: "node8", width: 60, height: 60, offsetX: 660, offsetY: 200, type: "bpmn", shape: BPMNShapes.Start, event: BPMNEvents.End },
+        { name: "node9", width: 60, height: 60, offsetX: 660, offsetY: 300, type: "bpmn", shape: BPMNShapes.Start, event: BPMNEvents.End },
+        ];
+        var connectors =
+        [
+        { name: "connector1", sourceNode: "node1", targetNode: "node2" },
+        { name: "connector2", sourceNode: "node2", targetNode: "node3" },
+        { name: "connector3", sourceNode: "node3", targetNode: "node4", segments: [{ type: "orthogonal", length: 75, direction: "top" }, { type: "orthogonal", length: 80, direction: "right" }], labels: [{ "text": "Respond", fillColor: "white", wrapping: ej.datavisualization.Diagram.TextWrapping.Wrap }] },
+        { name: "connector4", sourceNode: "node3", targetNode: "node5", segments: [{ type: "orthogonal", length: 75, direction: "right" }], labels: [{ "text": "Close", offset: { x: 0.5, y: 0.9 }, fillColor: "white", wrapping: ej.datavisualization.Diagram.TextWrapping.Wrap }] },
+        { name: "connector5", sourceNode: "node3", targetNode: "node6", segments: [{ type: "orthogonal", length: 65, direction: "bottom" }, { type: "orthogonal", length: 75, direction: "right" }], labels: [{ "text": "Escalate", fillColor: "white" }] },
+        { name: "connector6", sourceNode: "node4", targetNode: "node7" },
+        { name: "connector7", sourceNode: "node5", targetNode: "node8" },
+        { name: "connector8", sourceNode: "node6", targetNode: "node9" },
+        ];
+        $(function () {
+        $("#diagram").ejDiagram({
+                width: "700px",
+                height: "500px",
+            nodes: nodes,
+            connectors: connectors,
+                pageSettings: { scrollLimit: "diagram" }, 
+            defaultSettings: {
+                connector: {
+                    segments: [{ "type": "orthogonal" }]
+                }
+            },
+        });
+        $("#export_as_img").ejSplitButton({
+            size: "mini",
+            showRoundedCorner: true,
+            targetID: "imgformatDiv",
+            click: function spltbtnClick(args) {
+                var diagram = $("#diagram").ejDiagram("instance");
+                diagram.exportDiagram({ format: args.model.text });
+            },
+            itemSelected: function spltbtnitmSelected(args) {
+                $("#export_as_img").ejSplitButton({ text: args.ID });
+                var diagram = $("#diagram").ejDiagram("instance");
+                diagram.exportDiagram({ format: args.ID });
+            },
+            width: "120px"
+        });
+        $("#export_svg").ejButton({
+		    	height:"28px",
+            click: function (args) {
+                var diagram = $("#diagram").ejDiagram("instance");
+                diagram.exportDiagram({
+                    fileName: "diagram",
+                    mode: "download",
+                    format: "svg"
+                });
+            }
+        });
+        $("#print").ejButton({
+			    height:"28px",
+            click: function (args) {
+                var diagram = $("#diagram").ejDiagram("instance");
+                diagram.print({ pageOrientation: "landscape" });
+            }
+        });
+        $("#ToolbarItem").ejToolbar({
+            width: "700px",
+            height: "43px"
+        });
+        });
+    </script>
+
+    <style rel="stylesheet">
+        .e-toolbar > .e-horizontal .e-hover, .e-toolbar > .e-vertical > .e-hover,
+        .e-toolbar > .e-horizontal .e-active, .e-toolbar > .e-vertical > .e-active {
+            background: transparent;
+            border-color: transparent;
+        }
+
+        .e-toolbar > .e-horizontal > .e-active > div {
+            color: black;
+        }
+    </style>
+</body>
+</html>

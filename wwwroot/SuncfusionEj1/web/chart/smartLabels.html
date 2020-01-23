@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+	<link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+	<script src="../scripts/properties.js" type="text/javascript"></script>
+ </head>
+ <body>	
+<div class="content-container-fluid">      
+        <div class="row">                
+            <div class="cols-sample-area">                                  				
+				<div id="container"></div> 					                   
+            </div>
+			<div id="sampleProperties">
+                <div class="prop-grid">
+                    <div class="row">
+                        <div> 
+						   <br/>						
+						   <center>						
+							<input type="checkbox" id="enableSmartLabels" value="enableSmartLabels" checked> EnableSmartLabels
+							</center>	
+                        </div>
+                    </div>                   
+                </div>			
+            </div>
+		</div>
+	</div>                
+ <script type="text/javascript" language="javascript">
+     $(function () {
+         $("#container").ejChart(
+         {
+             //Initializing Primary X Axis	
+             primaryXAxis:
+             {
+                 title: { text: 'Years' },
+				 range: { min: 2004, max: 2013, interval: 1},
+				 edgeLabelPlacement: "hide"
+             },
+
+             //Initializing Primary Y Axis	
+             primaryYAxis:
+             {
+                 labelFormat: "{value}%",
+				 range: {min:20, max:40, interval:4},
+                 title: { text: 'Profit percentage' }
+             },
+
+             //Initializing Common Properties for all the series
+             commonSeriesOptions:
+             {
+                 type: 'line', enableSmartLabels : true, enableAnimation: true,
+                 tooltip: { visible: true}, border: { width: 2 },
+                 marker: { 
+				     visible: true, 
+					 size: { width: 8, height: 8 }, 
+					 dataLabel: { 
+					  enableContrastColor:true, 
+					   visible: true, 
+					   shape: "rectangle", 
+					   connectorLine: {width:1}
+					}
+				}
+             },
+             //Initializing Series				
+             series:
+             [
+                  {
+                points: [{ x: 2005, y: 28 }, { x: 2006, y: 24 }, { x: 2006, y: 24}, { x: 2006, y: 24 },
+				         { x: 2007, y: 26 }, { x: 2008, y: 27 }, { x: 2008, y: 27 }, 
+						 { x: 2009, y: 32 }, { x: 2010, y: 34 }, { x: 2010, y: 34 },
+						 { x: 2010, y: 34 }, { x: 2010, y: 34 },
+						 { x: 2011, y: 29 }, { x: 2012, y: 31 }],						 
+                name: 'Profit percentage', fill: "#1ab0b0"
+                }
+             ],
+             title: {text: "Sum of profit percentage from various share investments"},
+			 size: {height: "600"},
+			 isResponsive: true,
+			 load: "loadTheme",
+			 legend: {visible: false},
+         });
+     });
+
+    $("#sampleProperties").ejPropertiesPanel();
+	
+	  $("#enableSmartLabels").change(function () {
+            var chart = $("#container").ejChart("instance");
+            if ($("#enableSmartLabels").is(":checked"))
+                chart.model.series[0].enableSmartLabels = true;
+            else
+			   chart.model.series[0].enableSmartLabels = false;
+            chart.redraw();
+        });
+
+ </script>
+ 
+ </body>
+</html>
+

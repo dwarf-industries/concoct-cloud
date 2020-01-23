@@ -1,0 +1,91 @@
+<html>
+ <head>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+	<link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+         <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+     <!--<![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <!--<![endif]--> 
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+	<script src="../scripts/properties.js" type="text/javascript"></script>  
+ </head>
+<body>   
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id="container"></div>
+            </div>
+        </div>
+    </div>
+ <script type="text/javascript" language="javascript">
+    $(function () 
+	{
+        $("#container").ejChart(
+        {   
+			//Initializing Common Properties for all the series     		
+            commonSeriesOptions: 
+			{
+                labelPosition: 'outside',                          
+                tooltip: { visible: true, format: "#point.x# : #point.y#%" },
+                marker: 
+				{
+					dataLabel: 
+					{ 
+						shape: 'none', 
+						visible: true, 
+						textPosition: 'top', 
+						border: { width: 1}, 
+						connectorLine: { height: 70, stroke:"black" } 
+					}
+				}
+            },
+            
+			//Initializing Series
+			series: 
+			[
+                {
+                    points: [{ x: "Housing", text: "Housing", y: 31 }, 
+							 { x: "Food", text: "Food", y: 16 }, 
+							 { x: "Transportation", text: "Transportation", y: 14 }, 
+							 { x: "Clothing", text: "Clothing", y: 6 }, 
+							 { x: "Health care", text: "Health care", y: 8 }, 
+							 { x: "Education", text: "Education", y: 17 }, 
+							 { x: "Miscellaneous", text: "Miscellaneous", y: 8 }], 
+					
+					explodeIndex: 0,                              
+                    border: { width: 2, color: 'white' },
+                    type: 'pie', 
+					labelPosition: 'outside', 
+					startAngle: 145
+                }
+            ],
+			
+            //Enabling 3D Chart			
+            enable3D: true,
+			enableRotation:true,
+            depth: 30,
+            tilt: -30,
+            rotation: -30,
+            perspectiveAngle: 90,                       
+            isResponsive: true,
+			load: "onchartload",                      
+            title:{text:"Expenditure shares on a child from birth through age 17"},            
+            size: { height: "600", width:"970"},                     
+            legend: { visible: false }
+        });
+    });
+	
+    function onchartload(sender) 
+	{
+		loadTheme(sender); 
+        if (sender.model.theme == "flatdark" || sender.model.theme == "gradientdark")
+            sender.model.commonSeriesOptions.marker.dataLabel.connectorLine.stroke = "white";
+    }
+ </script>
+ </body>
+</html>

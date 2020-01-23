@@ -1,0 +1,207 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>Essential JS 1 : Splitter Keyboard Navigation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <link href="../content/bootstrap.min.css" rel="stylesheet">
+    <link href="../content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+	<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script> 
+	<![endif]-->
+    <!--[if IE 9]><!-->
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"> </script>
+    <!--<![endif]-->
+    <script src="../scripts/ej.web.all.min.js" type="text/javascript"></script>
+    <script src="../scripts/properties.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area splitter-width">
+                <!----------------Splitter Control---------------->
+                <div id="outterSpliter">
+                    <div id="innerSpliter">
+                        <div>
+                            <div class="cont">Pane 1 </div>
+                        </div>
+                        <div>
+                            <div class="cont">Pane 2 </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="cont">Pane 3 </div>
+                    </div>
+                </div>
+                <!------------------------------------------------->
+            </div>
+
+            <div id="sampleProperties">
+                <div class="prop-grid keyboard">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Alt + j
+                        </div>
+                        <div class="col-md-3">
+                            Focuses the first Splitbar
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                           Tab
+                        </div>
+                        <div class="col-md-3">
+                            Focuses the next Splitbar
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Shift + Tab
+                        </div>
+                        <div class="col-md-3">
+                            Focuses the previous Splitbar
+                        </div>
+                    </div>
+					<div class="row">
+                        <div class="col-md-3">
+                            Enter
+                        </div>
+                        <div class="col-md-3">
+                            Resize the Pane to the current Splitbar position.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <br />
+                            Esc
+                        </div>
+                        <div class="col-md-3">
+                            <br />
+                            Focuses out from the Splitbar
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"> </br>
+                            For Vertical:
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            Left
+                        </div>
+                        <div class="col-md-3">
+                            Moves the Splitbar to Left
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Right
+                        </div>
+                        <div class="col-md-3">
+                            Moves the Splitbar to Right
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            Ctrl + Left
+                        </div>
+                        <div class="col-md-3">
+                            Collapses the left Pane
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Ctrl + Right
+                        </div>
+                        <div class="col-md-3">
+                            Collapses the right Pane
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            For Horizontal:
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            Up
+                        </div>
+                        <div class="col-md-3">
+                            Moves the Splitbar to Up
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Down
+                        </div>
+                        <div class="col-md-3">
+                            Moves the Splitbar to Down
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            Ctrl + Up
+                        </div>
+                        <div class="col-md-3">
+                            Collapses the top Pane
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Ctrl + Down
+                        </div>
+                        <div class="col-md-3">
+                            Collapses the bottom Pane
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<style type="text/css" class="cssStyles">
+		.cont {
+        	text-align: center;
+            padding: 10px 0 0 10px;
+        }
+
+        .row .cols-sample-area {
+            padding: 28px;
+        }
+
+        .content-container-fluid .cols-prop-area .row .col-md-3 {
+            height: 54px;
+        }
+        @media \0screen { 
+        .fixedlayout .row .cols-sample-area { padding: 24.5px !important; } 
+        }	
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            // declaration
+            $("#outterSpliter").ejSplitter({
+                height: 250, width: "50%",
+                orientation: ej.Orientation.Vertical,
+				enableAutoResize:true,
+                properties: [{minSize:70}, { paneSize: 80, collapsible: true }],
+            });
+
+            $("#innerSpliter").ejSplitter({enableAutoResize:true});
+
+            //Control focus key
+            $(document).on("keydown", function (e) {
+                if (e.altKey && e.keyCode === 74) { // j- key code.
+                    $("#outterSpliter .e-splitbar")[0].focus();
+                }
+            });
+            $("#sampleProperties").ejPropertiesPanel();
+        });
+    </script>
+</body>
+</html>
