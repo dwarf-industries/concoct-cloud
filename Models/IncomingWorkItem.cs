@@ -10,10 +10,10 @@ namespace Rokono_Control.Models
         public int WorkItemId { get; set; }
         public int ProjectId { get; set; }
         public string Title { get; set; }
-        public string AssignedUser { get; set; }
+        public int AssignedUser { get; set; }
         public string State { get; set; }
         public string AcceptanceCriteria { get; set; }
-        public string WorktItemType { get; set; }
+        public int WorktItemType { get; set; }
         public string ItemReason { get; set; }
         public string ItemArea { get; set; }
         public string Description { get; set; }
@@ -23,6 +23,7 @@ namespace Rokono_Control.Models
         public string ItemActivity { get; set; }
         public string FoundInBuild { get; set; }
         public string ResolvedInBuild { get; set; }
+        public string BusinessValue { get; set; }
         public string RepoSteps { get; set; }
         public string SystemInfo { get; set; }
         public string OriginalEstimate { get; set; }

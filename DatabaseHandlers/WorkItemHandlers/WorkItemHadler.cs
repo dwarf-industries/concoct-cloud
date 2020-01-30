@@ -23,10 +23,10 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 currentItem.ResolvedInBuild = "0";
             
              dbVersion.Title = currentItem.Title;
-            if(!string.IsNullOrEmpty(currentItem.AssignedUser))
-                dbVersion.AssignedAccount =int.Parse(currentItem.AssignedUser);
-            if(!string.IsNullOrEmpty(currentItem.WorktItemType))
-                dbVersion.WorkItemTypeId = int.Parse(currentItem.WorktItemType);
+            if(currentItem.AssignedUser != 0)
+                dbVersion.AssignedAccount =currentItem.AssignedUser;
+            if(currentItem.WorktItemType != 0)
+                dbVersion.WorkItemTypeId = currentItem.WorktItemType;
             if(!string.IsNullOrEmpty(currentItem.State))
                 dbVersion.StateId = int.Parse(currentItem.State);
             if(!string.IsNullOrEmpty(currentItem.ItemReason))
@@ -37,7 +37,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
             dbVersion.AreaId = int.Parse(currentItem.ItemArea);
                
 
-            if(int.Parse(currentItem.WorktItemType) == 1)
+            if(currentItem.WorktItemType == 1)
             {
                 if(!string.IsNullOrEmpty(currentItem.ItemPriority))
                 dbVersion.PriorityId = int.Parse(currentItem.ItemPriority);
@@ -57,7 +57,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 dbVersion.ParentId = relationshipId;
                 
             }
-            else if(int.Parse(currentItem.WorktItemType) == 2)
+            else if(currentItem.WorktItemType == 2)
             {
                 dbVersion.AcceptanceCriteria = currentItem.AcceptanceCriteria;
                 dbVersion.Description = currentItem.Description;
@@ -71,7 +71,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 dbVersion.ValueAreaId = int.Parse(currentItem.ValueAreId);
 
             }
-            else if(int.Parse(currentItem.WorktItemType) == 5)
+            else if(currentItem.WorktItemType == 5)
             {
                 if(!string.IsNullOrEmpty(currentItem.ItemPriority))
                 dbVersion.PriorityId = int.Parse(currentItem.ItemPriority);
@@ -86,14 +86,14 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 dbVersion.EndDate = currentItem.EndDate;
                 
             }
-            else if(int.Parse(currentItem.WorktItemType) == 6)
+            else if(currentItem.WorktItemType == 6)
             {
                 dbVersion.StackRank = currentItem.Rank;
                 if(!string.IsNullOrEmpty(currentItem.ItemPriority))
                 dbVersion.PriorityId = int.Parse(currentItem.ItemPriority);
                 dbVersion.DueDate = currentItem.DueDate;
             }
-            else if(int.Parse(currentItem.WorktItemType) == 3)
+            else if(currentItem.WorktItemType == 3)
             {
                 if(!string.IsNullOrEmpty(currentItem.ItemPriority))
                 dbVersion.PriorityId = int.Parse(currentItem.ItemPriority);
@@ -107,7 +107,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 dbVersion.Description = currentItem.Description;
 
             }
-            else if(int.Parse(currentItem.WorktItemType) == 7)
+            else if(currentItem.WorktItemType == 7)
             {
                 dbVersion.StoryPoints = currentItem.StoryPoints;
                 if(!string.IsNullOrEmpty(currentItem.ItemPriority))
@@ -142,10 +142,10 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
             
             var databaseItem = new WorkItem();
             databaseItem.Title = currentItem.Title;
-            if(!string.IsNullOrEmpty(currentItem.AssignedUser))
-                databaseItem.AssignedAccount =int.Parse(currentItem.AssignedUser);
-            if(!string.IsNullOrEmpty(currentItem.WorktItemType))
-                databaseItem.WorkItemTypeId = int.Parse(currentItem.WorktItemType);
+            if(currentItem.AssignedUser != 0)
+                databaseItem.AssignedAccount = currentItem.AssignedUser;
+            if(currentItem.WorktItemType != 0)
+                databaseItem.WorkItemTypeId = currentItem.WorktItemType;
             if(!string.IsNullOrEmpty(currentItem.State))
                 databaseItem.StateId = int.Parse(currentItem.State);
             if(!string.IsNullOrEmpty(currentItem.ItemReason))
@@ -157,7 +157,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
 
                
 
-            if(int.Parse(currentItem.WorktItemType) == 1)
+            if(currentItem.WorktItemType == 1)
             {
                 if(!string.IsNullOrEmpty(currentItem.ItemPriority))
                 databaseItem.PriorityId = int.Parse(currentItem.ItemPriority);
@@ -177,7 +177,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 databaseItem.ParentId = relationshipId;
                 
             }
-            else if(int.Parse(currentItem.WorktItemType) == 2)
+            else if(currentItem.WorktItemType == 2)
             {
                 databaseItem.AcceptanceCriteria = currentItem.AcceptanceCriteria;
                 databaseItem.Description = currentItem.Description;
@@ -191,7 +191,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 databaseItem.ValueAreaId = int.Parse(currentItem.ValueAreId);
 
             }
-            else if(int.Parse(currentItem.WorktItemType) == 5)
+            else if(currentItem.WorktItemType == 5)
             {
                 if(!string.IsNullOrEmpty(currentItem.ItemPriority))
                 databaseItem.PriorityId = int.Parse(currentItem.ItemPriority);
@@ -205,14 +205,14 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 databaseItem.StartDate = currentItem.StartDate;
                 databaseItem.EndDate = currentItem.EndDate;
             }
-            else if(int.Parse(currentItem.WorktItemType) == 6)
+            else if(currentItem.WorktItemType == 6)
             {
                 databaseItem.StackRank = currentItem.Rank;
                 if(!string.IsNullOrEmpty(currentItem.ItemPriority))
                 databaseItem.PriorityId = int.Parse(currentItem.ItemPriority);
                 databaseItem.DueDate = currentItem.DueDate;
             }
-            else if(int.Parse(currentItem.WorktItemType) == 3)
+            else if(currentItem.WorktItemType == 3)
             {
                 if(!string.IsNullOrEmpty(currentItem.ItemPriority))
                 databaseItem.PriorityId = int.Parse(currentItem.ItemPriority);
@@ -226,7 +226,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 databaseItem.Description = currentItem.Description;
 
             }
-            else if(int.Parse(currentItem.WorktItemType) == 7)
+            else if(currentItem.WorktItemType == 7)
             {
                 databaseItem.StoryPoints = currentItem.StoryPoints;
                 if(!string.IsNullOrEmpty(currentItem.ItemPriority))
@@ -274,58 +274,19 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                             Context.SaveChanges();
                             Context.AssociatedWrorkItemChildren.Add(new AssociatedWrorkItemChildren{
                                 WorkItemChildId = x.WorkItemId,
-                                WorkItemId = item.Entity.Id
-                            });
-                            Context.SaveChanges();
-                            
-                        }
-                        if(getItem.RelationName == "Duplicate")
-                        {
-                            Context.AssociatedWorkItemDuplicates.Add(new AssociatedWorkItemDuplicates{
-                                WorkItemChildId = x.WorkItemId,
-                                WorkItemId = item.Entity.Id
+                                WorkItemId = item.Entity.Id,
+                                RelationType = x.RelationShipId
                             });
                             Context.SaveChanges();
                         }
-                        if(getItem.RelationName == "Predeccessor")
-                        {
-                            Context.AssociatedWorkItemPredecessors.Add(new AssociatedWorkItemPredecessors{
-                                WorkItemChildId = x.WorkItemId,
-                                WorkItemId = item.Entity.Id
-                            });
-                            Context.SaveChanges();
-                        }
-                        if(getItem.RelationName == "Successor")
-                        {
-                            Context.AssociatedWorkItemSuccessors.Add(new AssociatedWorkItemSuccessors{
-                                WorkItemChildId = x.WorkItemId,
-                                WorkItemId = item.Entity.Id
-                            });
-                            Context.SaveChanges();
-                        }
-                        if(getItem.RelationName == "Related")
-                        {
-                            Context.AssociatedWorkItemRelated.Add(new AssociatedWorkItemRelated{
-                                WorkItemChildId = x.WorkItemId,
-                                WorkItemId =item.Entity.Id
-                            });
-                            Context.SaveChanges();
-                        }
-                        if(getItem.RelationName == "Test")
-                        {
-                            Context.AssociatedWorkItemTests.Add(new AssociatedWorkItemTests{
-                                WorkItemChildId = x.WorkItemId,
-                                WorkItemId = item.Entity.Id
-                            });
-                            Context.SaveChanges();
-                        }
+                     
                     }
                     else
                     {
-                        Context.AssociatedWrorkItemParents.Add(new AssociatedWrorkItemParents{
-                            WorkItemChildId = item.Entity.Id,
-                            WorkItemId = x.WorkItemId
-                        });
+                        var dbItem = Context.WorkItem.FirstOrDefault(y=>y.Id == x.WorkItemId);
+                        dbItem.ParentId = item.Entity.Id;
+                        Context.Attach(dbItem);
+                        Context.Update(dbItem);
                         Context.SaveChanges();
                             
                     }

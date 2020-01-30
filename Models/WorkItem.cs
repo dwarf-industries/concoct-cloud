@@ -8,20 +8,8 @@ namespace Rokono_Control.Models
         public WorkItem()
         {
             AssociatedBoardWorkItems = new HashSet<AssociatedBoardWorkItems>();
-            AssociatedWorkItemDuplicatesWorkItem = new HashSet<AssociatedWorkItemDuplicates>();
-            AssociatedWorkItemDuplicatesWorkItemChild = new HashSet<AssociatedWorkItemDuplicates>();
-            AssociatedWorkItemPredecessorsWorkItem = new HashSet<AssociatedWorkItemPredecessors>();
-            AssociatedWorkItemPredecessorsWorkItemChild = new HashSet<AssociatedWorkItemPredecessors>();
-            AssociatedWorkItemRelatedWorkItem = new HashSet<AssociatedWorkItemRelated>();
-            AssociatedWorkItemRelatedWorkItemChild = new HashSet<AssociatedWorkItemRelated>();
-            AssociatedWorkItemSuccessorsWorkItem = new HashSet<AssociatedWorkItemSuccessors>();
-            AssociatedWorkItemSuccessorsWorkItemChild = new HashSet<AssociatedWorkItemSuccessors>();
-            AssociatedWorkItemTestsWorkItem = new HashSet<AssociatedWorkItemTests>();
-            AssociatedWorkItemTestsWorkItemChild = new HashSet<AssociatedWorkItemTests>();
             AssociatedWrorkItemChildrenWorkItem = new HashSet<AssociatedWrorkItemChildren>();
             AssociatedWrorkItemChildrenWorkItemChild = new HashSet<AssociatedWrorkItemChildren>();
-            AssociatedWrorkItemParentsWorkItem = new HashSet<AssociatedWrorkItemParents>();
-            AssociatedWrorkItemParentsWorkItemChild = new HashSet<AssociatedWrorkItemParents>();
         }
 
         public int Id { get; set; }
@@ -76,19 +64,7 @@ namespace Rokono_Control.Models
         public virtual ValueAreas ValueArea { get; set; }
         public virtual WorkItemTypes WorkItemType { get; set; }
         public virtual ICollection<AssociatedBoardWorkItems> AssociatedBoardWorkItems { get; set; }
-        public virtual ICollection<AssociatedWorkItemDuplicates> AssociatedWorkItemDuplicatesWorkItem { get; set; }
-        public virtual ICollection<AssociatedWorkItemDuplicates> AssociatedWorkItemDuplicatesWorkItemChild { get; set; }
-        public virtual ICollection<AssociatedWorkItemPredecessors> AssociatedWorkItemPredecessorsWorkItem { get; set; }
-        public virtual ICollection<AssociatedWorkItemPredecessors> AssociatedWorkItemPredecessorsWorkItemChild { get; set; }
-        public virtual ICollection<AssociatedWorkItemRelated> AssociatedWorkItemRelatedWorkItem { get; set; }
-        public virtual ICollection<AssociatedWorkItemRelated> AssociatedWorkItemRelatedWorkItemChild { get; set; }
-        public virtual ICollection<AssociatedWorkItemSuccessors> AssociatedWorkItemSuccessorsWorkItem { get; set; }
-        public virtual ICollection<AssociatedWorkItemSuccessors> AssociatedWorkItemSuccessorsWorkItemChild { get; set; }
-        public virtual ICollection<AssociatedWorkItemTests> AssociatedWorkItemTestsWorkItem { get; set; }
-        public virtual ICollection<AssociatedWorkItemTests> AssociatedWorkItemTestsWorkItemChild { get; set; }
         public virtual ICollection<AssociatedWrorkItemChildren> AssociatedWrorkItemChildrenWorkItem { get; set; }
         public virtual ICollection<AssociatedWrorkItemChildren> AssociatedWrorkItemChildrenWorkItemChild { get; set; }
-        public virtual ICollection<AssociatedWrorkItemParents> AssociatedWrorkItemParentsWorkItem { get; set; }
-        public virtual ICollection<AssociatedWrorkItemParents> AssociatedWrorkItemParentsWorkItemChild { get; set; }
     }
 }

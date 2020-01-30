@@ -1,0 +1,85 @@
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/appsettings.Development.json
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.deps.json
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.runtimeconfig.json
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.runtimeconfig.dev.json
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.pdb
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.Views.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.Views.pdb
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/MailKit.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.AspNet.SignalR.Client.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Http.Connections.Client.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.SignalR.Client.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.SignalR.Client.Core.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.Bcl.AsyncInterfaces.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.Bcl.HashCode.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.Data.SqlClient.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Abstractions.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Design.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Relational.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.SqlServer.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.Identity.Client.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/MimeKit.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/BouncyCastle.Crypto.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/System.Collections.Immutable.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/System.ComponentModel.Annotations.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/System.Configuration.ConfigurationManager.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/System.Diagnostics.DiagnosticSource.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/System.Runtime.Caching.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/System.Security.Cryptography.ProtectedData.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/System.Threading.Channels.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win-arm64/native/sni.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win-x64/native/sni.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win-x86/native/sni.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.csprojAssemblyReference.cache
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/staticwebassets/Rokono Control.StaticWebAssets.Manifest.cache
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/staticwebassets/Rokono Control.StaticWebAssets.xml
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.MvcApplicationPartsAssemblyInfo.cache
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorAssemblyInfo.cache
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorAssemblyInfo.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.AssemblyInfoInputs.cache
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.AssemblyInfo.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.TagHelpers.input.cache
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.TagHelpers.output.cache
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorCoreGenerate.cache
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Backlogs/Index.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Boards/Index.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Commit/CommitData.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Commit/Files.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Commit/Index.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AddNewAccount.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AddNewWorkItem.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AssignAccountProjects.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/Cmmits.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/EditAccount.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/EditWorkItem.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/index.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ManageAccounts.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/Project.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ProjectDashboard.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/WorkItems.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Home/Index.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Home/Privacy.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Error.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_CookieConsentPartial.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutDashboard.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutProjects.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/_ViewImports.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/_ViewStart.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorTargetAssemblyInfo.cache
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorTargetAssemblyInfo.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.Views.pdb
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.csproj.CopyComplete
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.dll
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.pdb

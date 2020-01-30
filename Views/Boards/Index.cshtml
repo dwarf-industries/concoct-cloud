@@ -3,6 +3,7 @@
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
     var ProjectId = ViewData["ProjectId"];
     var WorkItemTypes = ViewData["WorkItemTypes"] as List<WorkItemTypes>;
+    var ProjectName = ViewData["ProjectName"] as string;
 }
 
 
@@ -56,7 +57,7 @@
                         </i>
                     </div>
                     <div>Project Dashboard
-                        <div class="page-title-subheading"> {ProjectName} Planning Board 
+                        <div class="page-title-subheading"> @ProjectName
                         </div>
                     </div>
                 </div>  

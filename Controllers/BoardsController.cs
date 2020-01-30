@@ -20,6 +20,7 @@ namespace RokonoControl.Controllers
                 ViewData["Relationships"] = context.GetProjectRelationships();
                 ViewData["ProjectId"] = projectId;
                 ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
+                ViewData["ProjectName"] = context.GetProjectName(projectId);
 
              }
             return View();

@@ -35,37 +35,13 @@ namespace Rokono_Control.DatabaseHandlers
             boards.ForEach(x=>{
                 x.Board.AssociatedBoardWorkItems.Where(y=>y.WorkItem.WorkItemTypeId == workItemType).ToList().ForEach(y=>{
                     var related = new List<RelatedItems>();
-                    y.WorkItem.AssociatedWorkItemDuplicatesWorkItem.ToList().ForEach(z=>{
+                    y.WorkItem.AssociatedWrorkItemChildrenWorkItemChild.ToList().ForEach(z=>{
                         related.Add(new RelatedItems{
                             Id = z.WorkItem.Id,
                             Name = z.WorkItem.Title
                         });
                     });
-                    y.WorkItem.AssociatedWorkItemPredecessorsWorkItem.ToList().ForEach(z=>{
-                        related.Add(new RelatedItems{
-                            Id = z.WorkItem.Id,
-                            Name = z.WorkItem.Title
-                        });
-                    });
-                    y.WorkItem.AssociatedWorkItemRelatedWorkItem.ToList().ForEach(z=>{
-                        related.Add(new RelatedItems{
-                            Id = z.WorkItem.Id,
-                            Name = z.WorkItem.Title
-                        });
-                    });
-                    y.WorkItem.AssociatedWorkItemSuccessorsWorkItem.ToList().ForEach(z=>{
-                        related.Add(new RelatedItems{
-                            Id = z.WorkItem.Id,
-                            Name = z.WorkItem.Title
-                        });
-                    });
-                    y.WorkItem.AssociatedWorkItemTestsWorkItem.ToList().ForEach(z=>{
-                        related.Add(new RelatedItems{
-                            Id = z.WorkItem.Id,
-                            Name = z.WorkItem.Title
-
-                        });
-                    });
+                   
                     Cards.Add(new BindingCards{
                         Id = y.WorkItem.Id,
                         Summary = y.WorkItem.Title,
@@ -75,6 +51,11 @@ namespace Rokono_Control.DatabaseHandlers
                 });
             });
             return Cards;
+        }
+
+        internal object GetProjectName(int projectId)
+        {
+            return Context.Projects.FirstOrDefault(x=>x.Id == projectId).ProjectName;
         }
 
         internal object GetAllWorkItemTypes() => Context.WorkItemTypes.ToList();
@@ -90,20 +71,8 @@ namespace Rokono_Control.DatabaseHandlers
                         .Include(x=>x.WorkItem)
                         .ThenInclude(WorkItem => WorkItem.WorkItemType)
                         .Include(x=>x.WorkItem)
-                        .ThenInclude(WorkItem => WorkItem.AssociatedWorkItemDuplicatesWorkItem)
+                        .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItemChild)
                         .ThenInclude(AssociatedWorkItemDuplicatesWorkItem => AssociatedWorkItemDuplicatesWorkItem.WorkItemChild)
-                        .Include(x=>x.WorkItem)
-                        .ThenInclude(WorkItem => WorkItem.AssociatedWorkItemPredecessorsWorkItem)
-                        .ThenInclude(AssociatedWorkItemPredecessorsWorkItem => AssociatedWorkItemPredecessorsWorkItem.WorkItemChild)
-                        .Include(x=>x.WorkItem)
-                        .ThenInclude(WorkItem => WorkItem.AssociatedWorkItemRelatedWorkItem)
-                        .ThenInclude(AssociatedWorkItemRelatedWorkItem => AssociatedWorkItemRelatedWorkItem.WorkItemChild)
-                        .Include(x=>x.WorkItem)
-                        .ThenInclude(WorkItem => WorkItem.AssociatedWorkItemSuccessorsWorkItem)
-                        .ThenInclude(AssociatedWorkItemSuccessorsWorkItem => AssociatedWorkItemSuccessorsWorkItem.WorkItemChild)
-                        .Include(x=>x.WorkItem)
-                        .ThenInclude(WorkItem => WorkItem.AssociatedWorkItemTestsWorkItem)
-                        .ThenInclude(AssociatedWorkItemTestsWorkItem => AssociatedWorkItemTestsWorkItem.WorkItemChild)
                         .Include(x=>x.WorkItem)
                         .ThenInclude(WorkItem=> WorkItem.AssignedAccountNavigation)
                         .FirstOrDefault(x=>x.ProjectId == projectId && x.WorkItemId == workItem).WorkItem;
@@ -138,77 +107,32 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal OutgoingBoundRelations GetAllWorkItemRelations(int workItemId, int projectId)
         {
-            var workItem = Context.WorkItem.FirstOrDefault(x=>x.Id == workItemId);
+            var workItem = Context.WorkItem.Include(x=>x.AssociatedWrorkItemChildrenWorkItem)
+                                           .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.WorkItem)
+                                           .Include(x=> x.AssociatedWrorkItemChildrenWorkItem)
+                                           .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.RelationTypeNavigation)
+                                           .FirstOrDefault(x=>x.Id == workItemId);
             var relations = new List<BindingWorkItemRelation>();
             var bindingRelations = new List<BindingWorkItemRelation>();
-            var successorsDb = Context.WorkItem.Include(x=>x.AssociatedWorkItemSuccessorsWorkItem)
-                                            .ThenInclude(AssociatedWorkItemSuccessorsWorkItem => AssociatedWorkItemSuccessorsWorkItem.WorkItemChild)
-                                            .FirstOrDefault(x=>x.Id == workItemId);
-            if(successorsDb != null)
-                bindingRelations.AddRange(successorsDb.AssociatedWorkItemSuccessorsWorkItem 
-                                             .Select(y=> new BindingWorkItemRelation{
-                                                WorkItem = new BindingWorkItemDTO
-                                                {
-                                                   Title = y.WorkItemChild.Title,
-                                                   Id = y.WorkItemChild.Id
-                                                },
-                                                RelationType = "Successors"
-                                            }).ToList());
-             var testsDb = Context.WorkItem.Include(x=>x.AssociatedWorkItemTestsWorkItem)
-                                            .ThenInclude(AssociatedWorkItemTestsWorkItem => AssociatedWorkItemTestsWorkItem.WorkItemChild)
-                                            .FirstOrDefault(x=>x.Id == workItemId);
-                                           
-            if(testsDb != null)
-                bindingRelations.AddRange(testsDb.AssociatedWorkItemTestsWorkItem
-                                            .Select(y=> new BindingWorkItemRelation{
-                                                WorkItem = new BindingWorkItemDTO
-                                                {
-                                                   Title = y.WorkItemChild.Title,
-                                                   Id = y.WorkItemChild.Id
-                                                },
-                                                RelationType = "Tests"
-                                            }).ToList());
-            var predeccessor = Context.WorkItem.Include(x=>x.AssociatedWorkItemPredecessorsWorkItem)
-                                            .ThenInclude(AssociatedWorkItemPredecessorsWorkItem => AssociatedWorkItemPredecessorsWorkItem.WorkItemChild)
-                                            .FirstOrDefault(x=>x.Id == workItemId);
-            if(predeccessor != null)
-                bindingRelations.AddRange(predeccessor.AssociatedWorkItemPredecessorsWorkItem
-                                            .Select(y=> new BindingWorkItemRelation{
-                                                WorkItem = new BindingWorkItemDTO
-                                                {
-                                                   Title = y.WorkItemChild.Title,
-                                                   Id = y.WorkItemChild.Id
-                                                },
-                                                RelationType = "Predeccessor"
-                                            }).ToList());
-                                        
-            var duplicates = Context.WorkItem.Include(x=>x.AssociatedWorkItemDuplicatesWorkItem)
-                                            .ThenInclude(AssociatedWorkItemDuplicatesWorkItem => AssociatedWorkItemDuplicatesWorkItem.WorkItemChild)
-                                            .FirstOrDefault(x=>x.Id == workItemId);
-                                  
-            if(duplicates != null)
-                bindingRelations.AddRange(duplicates.AssociatedWorkItemDuplicatesWorkItem
-                                            .Select(y=> new BindingWorkItemRelation{
-                                                WorkItem = new BindingWorkItemDTO
-                                                {
-                                                   Title = y.WorkItemChild.Title,
-                                                   Id = y.WorkItemChild.Id
-                                                },
-                                                RelationType = "Duplicates"
-                                            }).ToList());
-             var related = Context.WorkItem.Include(x=>x.AssociatedWorkItemRelatedWorkItem)
-                                            .ThenInclude(AssociatedWorkItemRelatedWorkItem => AssociatedWorkItemRelatedWorkItem.WorkItemChild)
-                                            .FirstOrDefault(x=>x.Id == workItemId);
-            if(related != null)
-                bindingRelations.AddRange(related.AssociatedWorkItemRelatedWorkItem
-                                            .Select(y=> new BindingWorkItemRelation{
-                                                WorkItem = new BindingWorkItemDTO
-                                                {
-                                                   Title = y.WorkItemChild.Title,
-                                                   Id = y.WorkItemChild.Id
-                                                },
-                                                RelationType = "Related"
-                                            }).ToList());
+            bindingRelations.AddRange(workItem.AssociatedWrorkItemChildrenWorkItemChild.Select(x=> new BindingWorkItemRelation{
+                WorkItem = new BindingWorkItemDTO
+                {
+                    Title = x.WorkItemChild.Title,
+                    Id = x.WorkItemChild.Id
+                },
+                RelationType = x.RelationTypeNavigation.Name
+            }).ToList());
+            var parent = default(WorkItem);
+            if(workItem.ParentId.HasValue)
+                parent = Context.WorkItem.FirstOrDefault(x=>x.Id == workItem.ParentId);
+            bindingRelations.Add(new BindingWorkItemRelation{
+                 WorkItem = new BindingWorkItemDTO
+                {
+                    Title = parent.Title,
+                    Id = parent.Id
+                },
+                RelationType = "Parent"
+            });
             var res = new StringBuilder();
 
             relations.AddRange(bindingRelations);
@@ -236,52 +160,25 @@ namespace Rokono_Control.DatabaseHandlers
         internal void AssociatedRelation(IncomignWorkItemRelation incomingRelation)
         {
             var currentWorkItem = Context.WorkItem.FirstOrDefault(x=>x.Id == incomingRelation.CurrWorkItemId);
-             switch(currentWorkItem.WorkItemTypeId)
-            {
-                
-                case 1:
-                 Context.AssociatedWrorkItemChildren.Add(new AssociatedWrorkItemChildren{
-                    WorkItemChildId = currentWorkItem.Id,
-                    WorkItemId = incomingRelation.WorkItemId,
-                });
-                Context.SaveChanges();
-                break;
-                case 2:
-                Context.AssociatedWrorkItemParents.Add(new AssociatedWrorkItemParents{
-                    WorkItemChildId = currentWorkItem.Id,
-                    WorkItemId = incomingRelation.WorkItemId,
-                });
-                Context.SaveChanges();
-                break;
-                case 3:
-                Context.AssociatedWorkItemDuplicates.Add(new AssociatedWorkItemDuplicates{
-                    WorkItemChildId = currentWorkItem.Id,
-                    WorkItemId = incomingRelation.WorkItemId,
-                });
-                Context.SaveChanges();
-                break;
-                case 4:
-                Context.AssociatedWorkItemSuccessors.Add(new AssociatedWorkItemSuccessors{
-                    WorkItemChildId = currentWorkItem.Id,
-                    WorkItemId = incomingRelation.WorkItemId,
-                });
-                Context.SaveChanges();
-                break;
-                case 5:
-                 Context.AssociatedWorkItemTests.Add(new AssociatedWorkItemTests{
-                    WorkItemChildId = currentWorkItem.Id,
-                    WorkItemId = incomingRelation.WorkItemId,
-                });
-                Context.SaveChanges();
-                break;
-                case 6:
-                 Context.AssociatedWorkItemPredecessors.Add(new AssociatedWorkItemPredecessors{
-                    WorkItemChildId = currentWorkItem.Id,
-                    WorkItemId = incomingRelation.WorkItemId,
-                });
-                Context.SaveChanges();
-                break;
-            }
+            incomingRelation.LinkedItems.ForEach(x=>{
+                if(x.RelationShipId == 1)
+                {
+                    currentWorkItem.ParentId = x.WorkItemId;
+                    Context.Attach(currentWorkItem);
+                    Context.Update(currentWorkItem);
+                    Context.SaveChanges();
+                }
+                else
+                {
+                    Context.AssociatedWrorkItemChildren.Add(new AssociatedWrorkItemChildren{
+                        WorkItemId = currentWorkItem.Id,
+                        WorkItemChildId = x.WorkItemId,
+                        RelationType = x.RelationShipId
+                    });
+                    Context.SaveChanges();
+                }
+            });
+         
         }
 
         public string RemoveWhitespace(string input)
@@ -736,16 +633,17 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal List<OutgoingAccountManagment> GetOutgoingManagmentAccounts()
         {
-            return Context.UserAccounts.Include(x=>x.AssociatedProjectMembers)
+            var accounts = Context.UserAccounts.Include(x=>x.AssociatedProjectMembers)
                                         .ThenInclude(AssociatedProjectsMembers => AssociatedProjectsMembers.Project)
-                                        .Select(x=> new OutgoingAccountManagment{
+                                        .ToList();
+            return accounts.Select(x=> new OutgoingAccountManagment{
                                             AccountId = x.Id,
                                             Name = $"{x.FirstName} {x.LastName}",
                                             Type = x.ProjectRights == 1 ? "Regular" : "Administrator",
                                             Email = x.Email,
                                             CreationDate = x.CreationDate,
                                             Projects = GetJsonData(x.AssociatedProjectMembers.Select(y=>y.Project).ToList())
-                                        }).ToList();
+            }).ToList();
         }
  
 
@@ -758,19 +656,11 @@ namespace Rokono_Control.DatabaseHandlers
                                                    .Include(x=>x.WorkItem)
                                                    .ThenInclude(WorkItem => WorkItem.AssignedAccountNavigation)
                                                    .Include(x=>x.WorkItem)
-                                                   .ThenInclude(WorkItem => WorkItem.AssociatedWorkItemDuplicatesWorkItem)
-                                                   .Include(x=>x.WorkItem)
-                                                   .ThenInclude(WorkItem => WorkItem.AssociatedWorkItemPredecessorsWorkItem)
-                                                   .Include(x=>x.WorkItem)
-                                                   .ThenInclude(WorkItem => WorkItem.AssociatedWorkItemRelatedWorkItem)
-                                                   .Include(x=>x.WorkItem)
-                                                   .ThenInclude(WorkItem => WorkItem.AssociatedWorkItemSuccessorsWorkItem)
-                                                   .Include(x=>x.WorkItem)
-                                                   .ThenInclude(WorkItem => WorkItem.AssociatedWorkItemTestsWorkItem) 
-                                                   .Include(x=>x.WorkItem)
                                                    .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItem)
-                                                   .Include(x=>x.WorkItem)
-                                                   .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemParentsWorkItem)                                                 
+                                                   .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.WorkItemChild)
+                                                   .Include(x=> x.WorkItem)
+                                                   .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItem)
+                                                   .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.RelationTypeNavigation)
                                                    .Where(x=>x.ProjectId == id)
                                                    .ToList();
             return  items;
@@ -905,19 +795,23 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal OutgoingAccountManagment GetSpecificUserEdit(int id)
         {
-            return Context.UserAccounts.Include(x=>x.AssociatedProjectMembers)
+            var account = Context.UserAccounts.Include(x=>x.AssociatedProjectMembers)
                                         .ThenInclude(AssociatedProjectsMembers => AssociatedProjectsMembers.Project)
-                                        .Select(x=> new OutgoingAccountManagment{
-                                            AccountId = x.Id,
-                                            Name = $"{x.FirstName} {x.LastName}",
-                                            Type = x.ProjectRights == 1 ? "Regular" : "Administrator",
-                                            Email = x.Email,
-                                            FirstName = x.FirstName,
-                                            LastName = x.LastName,
-                                            CreationDate = x.CreationDate,
-                                            ProjectRights = x.ProjectRights == 1 ? true: false,
-                                            Projects = $@"{GetJsonData(x.AssociatedProjectMembers.Select(y=>y.Project).ToList())}"
-                                        }).FirstOrDefault(x=>x.AccountId == id);       
+                                       .FirstOrDefault(x=>x.Id == id);
+
+            return new OutgoingAccountManagment
+            {
+                                            AccountId = account.Id,
+                                            Name = $"{account.FirstName} {account.LastName}",
+                                            Type = account.ProjectRights == 1 ? "Regular" : "Administrator",
+                                            Email = account.Email,
+                                            FirstName = account.FirstName,
+                                            LastName = account.LastName,
+                                            CreationDate = account.CreationDate,
+                                            ProjectRights = account.ProjectRights == 1 ? true: false,
+                                            Projects = $@"{GetJsonData(account.AssociatedProjectMembers.Select(y=>y.Project).ToList())}"
+            };
+ 
         }
 
         internal void AddProjectToUser(IncomingProjectUser incomingRequest)
@@ -933,7 +827,10 @@ namespace Rokono_Control.DatabaseHandlers
 
         private string GetJsonData(Object currnet)
         {
-            return JsonConvert.SerializeObject(currnet);
+            return JsonConvert.SerializeObject(currnet, Formatting.Indented, 
+                new JsonSerializerSettings { 
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
         }
 
         internal List<BindingUserAccount> GetProjectMembers(int projectId)

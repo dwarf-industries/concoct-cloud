@@ -22,13 +22,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedProjectBuilds> AssociatedProjectBuilds { get; set; }
         public virtual DbSet<AssociatedProjectMembers> AssociatedProjectMembers { get; set; }
         public virtual DbSet<AssociatedRepositoryBranches> AssociatedRepositoryBranches { get; set; }
-        public virtual DbSet<AssociatedWorkItemDuplicates> AssociatedWorkItemDuplicates { get; set; }
-        public virtual DbSet<AssociatedWorkItemPredecessors> AssociatedWorkItemPredecessors { get; set; }
-        public virtual DbSet<AssociatedWorkItemRelated> AssociatedWorkItemRelated { get; set; }
-        public virtual DbSet<AssociatedWorkItemSuccessors> AssociatedWorkItemSuccessors { get; set; }
-        public virtual DbSet<AssociatedWorkItemTests> AssociatedWorkItemTests { get; set; }
         public virtual DbSet<AssociatedWrorkItemChildren> AssociatedWrorkItemChildren { get; set; }
-        public virtual DbSet<AssociatedWrorkItemParents> AssociatedWrorkItemParents { get; set; }
         public virtual DbSet<Boards> Boards { get; set; }
         public virtual DbSet<Branches> Branches { get; set; }
         public virtual DbSet<Builds> Builds { get; set; }
@@ -45,6 +39,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemAreas> WorkItemAreas { get; set; }
         public virtual DbSet<WorkItemIterations> WorkItemIterations { get; set; }
         public virtual DbSet<WorkItemPriorities> WorkItemPriorities { get; set; }
+        public virtual DbSet<WorkItemRealtionshipType> WorkItemRealtionshipType { get; set; }
         public virtual DbSet<WorkItemReasons> WorkItemReasons { get; set; }
         public virtual DbSet<WorkItemRelations> WorkItemRelations { get; set; }
         public virtual DbSet<WorkItemSeverities> WorkItemSeverities { get; set; }
@@ -56,14 +51,12 @@ namespace Rokono_Control.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=ip;Database=RokonoControl;User ID=User;Password='Password';");
+                optionsBuilder.UseSqlServer("Server=192.168.1.3;Database=RokonoControl;User ID=Kristifor;Password=';;@Hanjolite';");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
-
             modelBuilder.Entity<AssociatedBoardWorkItems>(entity =>
             {
                 entity.HasOne(d => d.Board)
@@ -181,73 +174,13 @@ namespace Rokono_Control.Models
                     .HasConstraintName("FK__Associate__Repos__47A6A41B");
             });
 
-            modelBuilder.Entity<AssociatedWorkItemDuplicates>(entity =>
-            {
-                entity.HasOne(d => d.WorkItemChild)
-                    .WithMany(p => p.AssociatedWorkItemDuplicatesWorkItemChild)
-                    .HasForeignKey(d => d.WorkItemChildId)
-                    .HasConstraintName("FK__Associate__WorkI__0D7A0286");
-
-                entity.HasOne(d => d.WorkItem)
-                    .WithMany(p => p.AssociatedWorkItemDuplicatesWorkItem)
-                    .HasForeignKey(d => d.WorkItemId)
-                    .HasConstraintName("FK__Associate__WorkI__0E6E26BF");
-            });
-
-            modelBuilder.Entity<AssociatedWorkItemPredecessors>(entity =>
-            {
-                entity.HasOne(d => d.WorkItemChild)
-                    .WithMany(p => p.AssociatedWorkItemPredecessorsWorkItemChild)
-                    .HasForeignKey(d => d.WorkItemChildId)
-                    .HasConstraintName("FK__Associate__WorkI__14270015");
-
-                entity.HasOne(d => d.WorkItem)
-                    .WithMany(p => p.AssociatedWorkItemPredecessorsWorkItem)
-                    .HasForeignKey(d => d.WorkItemId)
-                    .HasConstraintName("FK__Associate__WorkI__1332DBDC");
-            });
-
-            modelBuilder.Entity<AssociatedWorkItemRelated>(entity =>
-            {
-                entity.HasOne(d => d.WorkItemChild)
-                    .WithMany(p => p.AssociatedWorkItemRelatedWorkItemChild)
-                    .HasForeignKey(d => d.WorkItemChildId)
-                    .HasConstraintName("FK__Associate__WorkI__10566F31");
-
-                entity.HasOne(d => d.WorkItem)
-                    .WithMany(p => p.AssociatedWorkItemRelatedWorkItem)
-                    .HasForeignKey(d => d.WorkItemId)
-                    .HasConstraintName("FK__Associate__WorkI__0F624AF8");
-            });
-
-            modelBuilder.Entity<AssociatedWorkItemSuccessors>(entity =>
-            {
-                entity.HasOne(d => d.WorkItemChild)
-                    .WithMany(p => p.AssociatedWorkItemSuccessorsWorkItemChild)
-                    .HasForeignKey(d => d.WorkItemChildId)
-                    .HasConstraintName("FK__Associate__WorkI__114A936A");
-
-                entity.HasOne(d => d.WorkItem)
-                    .WithMany(p => p.AssociatedWorkItemSuccessorsWorkItem)
-                    .HasForeignKey(d => d.WorkItemId)
-                    .HasConstraintName("FK__Associate__WorkI__123EB7A3");
-            });
-
-            modelBuilder.Entity<AssociatedWorkItemTests>(entity =>
-            {
-                entity.HasOne(d => d.WorkItemChild)
-                    .WithMany(p => p.AssociatedWorkItemTestsWorkItemChild)
-                    .HasForeignKey(d => d.WorkItemChildId)
-                    .HasConstraintName("FK__Associate__WorkI__0C85DE4D");
-
-                entity.HasOne(d => d.WorkItem)
-                    .WithMany(p => p.AssociatedWorkItemTestsWorkItem)
-                    .HasForeignKey(d => d.WorkItemId)
-                    .HasConstraintName("FK__Associate__WorkI__0B91BA14");
-            });
-
             modelBuilder.Entity<AssociatedWrorkItemChildren>(entity =>
             {
+                entity.HasOne(d => d.RelationTypeNavigation)
+                    .WithMany(p => p.AssociatedWrorkItemChildren)
+                    .HasForeignKey(d => d.RelationType)
+                    .HasConstraintName("FK__Associate__Relat__2EA5EC27");
+
                 entity.HasOne(d => d.WorkItemChild)
                     .WithMany(p => p.AssociatedWrorkItemChildrenWorkItemChild)
                     .HasForeignKey(d => d.WorkItemChildId)
@@ -257,19 +190,6 @@ namespace Rokono_Control.Models
                     .WithMany(p => p.AssociatedWrorkItemChildrenWorkItem)
                     .HasForeignKey(d => d.WorkItemId)
                     .HasConstraintName("FK__Associate__WorkI__1D7B6025");
-            });
-
-            modelBuilder.Entity<AssociatedWrorkItemParents>(entity =>
-            {
-                entity.HasOne(d => d.WorkItemChild)
-                    .WithMany(p => p.AssociatedWrorkItemParentsWorkItemChild)
-                    .HasForeignKey(d => d.WorkItemChildId)
-                    .HasConstraintName("FK__Associate__WorkI__1F63A897");
-
-                entity.HasOne(d => d.WorkItem)
-                    .WithMany(p => p.AssociatedWrorkItemParentsWorkItem)
-                    .HasForeignKey(d => d.WorkItemId)
-                    .HasConstraintName("FK__Associate__WorkI__2057CCD0");
             });
 
             modelBuilder.Entity<Boards>(entity =>
@@ -470,6 +390,11 @@ namespace Rokono_Control.Models
                     .HasMaxLength(255);
             });
 
+            modelBuilder.Entity<WorkItemRealtionshipType>(entity =>
+            {
+                entity.Property(e => e.Name).IsRequired();
+            });
+
             modelBuilder.Entity<WorkItemReasons>(entity =>
             {
                 entity.Property(e => e.ReasonName)
@@ -500,6 +425,10 @@ namespace Rokono_Control.Models
 
                 entity.Property(e => e.TypeName).HasMaxLength(300);
             });
+
+            OnModelCreatingPartial(modelBuilder);
         }
+
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }
