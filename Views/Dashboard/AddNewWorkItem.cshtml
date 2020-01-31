@@ -608,31 +608,16 @@
         var startDate = new ej.calendars.DatePicker({
             placeholder: 'Choose a date',
             change: StatChange,
-            min: new Date(fullYear, month , 9),
-            //Sets the max.
-            max: new Date(fullYear, month, 15),
-            // Sets the value.
             value: new Date(fullYear, month , 11)
             });
         var dueDate = new ej.calendars.DatePicker({
             placeholder: 'Choose a date',
             change: DueDateChange,
-            min: new Date(fullYear, month , 9),
-            //Sets the max.
-            max: new Date(fullYear, month, 15),
-            // Sets the value.
             value: new Date(fullYear, month , 11)
             });
         var endDate = new ej.calendars.DatePicker({
             placeholder: 'Choose a date',
             change : EndChanged,
-
-
-                    // Sets the min.
-            min: new Date(fullYear, month , 9),
-            //Sets the max.
-            max: new Date(fullYear, month, 15),
-            // Sets the value.
             value: new Date(fullYear, month , 11)
             });
         startDate.appendTo('#StartDate');
@@ -680,7 +665,12 @@
                 console.log(error);
             }
         });
-        
+        startDate = new Date();
+        endDate = new Date();
+        dueDate = new Date();
+        console.log(startDate);
+        console.log(endDate);
+        console.log(dueDate);
     });
     function StatChange(args){
         console.log(args);

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Rokono_Control.Models;
@@ -61,12 +62,12 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
             {
                 dbVersion.AcceptanceCriteria = currentItem.AcceptanceCriteria;
                 dbVersion.Description = currentItem.Description;
-                dbVersion.StartDate = currentItem.StartDate;
-                dbVersion.EndDate = currentItem.EndDate;
+                dbVersion.StartDate = currentItem.StartDate == null ? DateTime.Now : currentItem.StartDate;
+                dbVersion.EndDate = currentItem.EndDate == null ? DateTime.Now : currentItem.EndDate;
                 if(!string.IsNullOrEmpty(currentItem.ItemPriority))
                   dbVersion.PriorityId = int.Parse(currentItem.ItemPriority);
                 dbVersion.Effort = currentItem.Effort;
-                dbVersion.BusinessValue = currentItem.BValue;
+                dbVersion.BusinessValue = currentItem.BusinessValue;
                 dbVersion.TimeCapacity = currentItem.TimeCriticality;
                 dbVersion.ValueAreaId = int.Parse(currentItem.ValueAreId);
 
@@ -78,12 +79,12 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 if(!string.IsNullOrEmpty(currentItem.RiskId))
                 dbVersion.RiskId = int.Parse(currentItem.RiskId);
                 dbVersion.Effort = currentItem.Effort;
-                dbVersion.BusinessValue = currentItem.BValue;
+                dbVersion.BusinessValue = currentItem.BusinessValue;
                 dbVersion.TimeCapacity = currentItem.TimeCriticality;
                 if(!string.IsNullOrEmpty(currentItem.ValueAreId))
                 dbVersion.ValueAreaId = int.Parse(currentItem.ValueAreId);
-                dbVersion.StartDate = currentItem.StartDate;
-                dbVersion.EndDate = currentItem.EndDate;
+                dbVersion.StartDate = currentItem.StartDate == null ? DateTime.Now : currentItem.StartDate;
+                dbVersion.EndDate = currentItem.EndDate == null ? DateTime.Now : currentItem.EndDate;
                 
             }
             else if(currentItem.WorktItemType == 6)
@@ -91,7 +92,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 dbVersion.StackRank = currentItem.Rank;
                 if(!string.IsNullOrEmpty(currentItem.ItemPriority))
                 dbVersion.PriorityId = int.Parse(currentItem.ItemPriority);
-                dbVersion.DueDate = currentItem.DueDate;
+                dbVersion.DueDate = currentItem.DueDate == null ? DateTime.Now : currentItem.DueDate;
             }
             else if(currentItem.WorktItemType == 3)
             {
@@ -120,7 +121,9 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 dbVersion.AcceptanceCriteria = currentItem.AcceptanceCriteria;
 
             }
-
+            dbVersion.StartDate = currentItem.StartDate.Ticks == 0 ? DateTime.Now : currentItem.StartDate;
+            dbVersion.EndDate = currentItem.EndDate.Ticks == 0 ? DateTime.Now : currentItem.EndDate;
+            dbVersion.DueDate = currentItem.DueDate.Ticks == 0 ? DateTime.Now : currentItem.DueDate;
             Context.Entry(dbVersion).State = EntityState.Modified;
             Context.SaveChanges();
             return true;
@@ -181,12 +184,12 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
             {
                 databaseItem.AcceptanceCriteria = currentItem.AcceptanceCriteria;
                 databaseItem.Description = currentItem.Description;
-                databaseItem.StartDate = currentItem.StartDate;
-                databaseItem.EndDate = currentItem.EndDate;
+                databaseItem.StartDate = currentItem.StartDate == null ? DateTime.Now : currentItem.StartDate;
+                databaseItem.EndDate = currentItem.EndDate == null ? DateTime.Now : currentItem.EndDate;
                 if(!string.IsNullOrEmpty(currentItem.ItemPriority))
                   databaseItem.PriorityId = int.Parse(currentItem.ItemPriority);
                 databaseItem.Effort = currentItem.Effort;
-                databaseItem.BusinessValue = currentItem.BValue;
+                databaseItem.BusinessValue = currentItem.BusinessValue;
                 databaseItem.TimeCapacity = currentItem.TimeCriticality;
                 databaseItem.ValueAreaId = int.Parse(currentItem.ValueAreId);
 
@@ -198,19 +201,19 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 if(!string.IsNullOrEmpty(currentItem.RiskId))
                 databaseItem.RiskId = int.Parse(currentItem.RiskId);
                 databaseItem.Effort = currentItem.Effort;
-                databaseItem.BusinessValue = currentItem.BValue;
+                databaseItem.BusinessValue = currentItem.BusinessValue;
                 databaseItem.TimeCapacity = currentItem.TimeCriticality;
                 if(!string.IsNullOrEmpty(currentItem.ValueAreId))
                 databaseItem.ValueAreaId = int.Parse(currentItem.ValueAreId);
-                databaseItem.StartDate = currentItem.StartDate;
-                databaseItem.EndDate = currentItem.EndDate;
+                databaseItem.StartDate = currentItem.StartDate == null ? DateTime.Now : currentItem.StartDate;
+                databaseItem.EndDate = currentItem.EndDate == null ? DateTime.Now : currentItem.EndDate;
             }
             else if(currentItem.WorktItemType == 6)
             {
                 databaseItem.StackRank = currentItem.Rank;
                 if(!string.IsNullOrEmpty(currentItem.ItemPriority))
                 databaseItem.PriorityId = int.Parse(currentItem.ItemPriority);
-                databaseItem.DueDate = currentItem.DueDate;
+                databaseItem.DueDate = currentItem.DueDate == null ? DateTime.Now : currentItem.DueDate;;
             }
             else if(currentItem.WorktItemType == 3)
             {
@@ -240,10 +243,13 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
 
 
             }
+            databaseItem.StartDate = currentItem.StartDate.Ticks == 0 ? DateTime.Now : currentItem.StartDate;
+            databaseItem.EndDate = currentItem.EndDate.Ticks == 0 ? DateTime.Now : currentItem.EndDate;
+            databaseItem.DueDate = currentItem.DueDate.Ticks == 0 ? DateTime.Now : currentItem.DueDate;
             var item = Context.WorkItem.Add(databaseItem);
             Context.SaveChanges();
         
-            var pBoard = Context.AssociatedProjectBoards.FirstOrDefault(x=> x.ProjectId == currentItem.ProjectId);
+            var pBoard = Context.AssociatedProjectBoards.Include(x=>x.Board).FirstOrDefault(x=> x.ProjectId == currentItem.ProjectId && x.Board.BoardName == "Open");
             if(pBoard != null)
             {
                 Context.AssociatedBoardWorkItems.Add(new AssociatedBoardWorkItems{

@@ -58,6 +58,11 @@ namespace Rokono_Control.DatabaseHandlers
             return Context.Projects.FirstOrDefault(x=>x.Id == projectId).ProjectName;
         }
 
+        internal UserAccounts GetDefaultAccount()
+        {
+            return Context.UserAccounts.FirstOrDefault(x=>x.Id == 1);
+        }
+
         internal object GetAllWorkItemTypes() => Context.WorkItemTypes.ToList();
 
         internal object GetNewNotifications(object value)
@@ -861,8 +866,12 @@ namespace Rokono_Control.DatabaseHandlers
         {
             if(Context.UserAccounts.FirstOrDefault(x=>x.Id == v).ProjectRights == 1)
             {
-                var userAccounts = Context.UserAccounts.Where(x=>currentProject.Users.Any(y=>y.AccountId == x.Id)).ToList();
-                var repoStatus = RepositoryManager.AddNewProject($"/home/GitRepositories/",currentProject.ProjectName, userAccounts);
+
+                var userAccounts = new List<UserAccounts>();
+                currentProject.Users.ForEach(x=>{
+                    userAccounts.Add(Context.UserAccounts.FirstOrDefault(y=>y.Id == x.AccountId));
+                });
+                var repoStatus = true; //RepositoryManager.AddNewProject($"/home/GitRepositories/",currentProject.ProjectName, userAccounts);
                 if(repoStatus)
                 {
                      var repository = Context.Repository.Add(new Repository{

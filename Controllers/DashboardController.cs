@@ -1,5 +1,6 @@
 namespace Rokono_Control.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.AspNetCore.Mvc;
@@ -54,9 +55,15 @@ namespace Rokono_Control.Controllers
             var currentUser = this.User;
             using(var context = new DatabaseController())
             {
+                var defaultUserAccount = context.GetDefaultAccount();
                 var rights = currentUser.Claims.LastOrDefault().Value;
                 ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
-                var currentWorkItem = context.GetWorkItem(workItem, projectId); 
+                var workItemData = context.GetWorkItem(workItem, projectId); 
+                workItemData.DueDate = workItemData.DueDate.HasValue ? workItemData.DueDate.Value : new System.DateTime(); 
+                workItemData.StartDate = workItemData.StartDate.HasValue ? workItemData.StartDate.Value : new System.DateTime(); 
+                workItemData.EndDate = workItemData.EndDate.HasValue ? workItemData.EndDate.Value : new System.DateTime(); 
+                workItemData.AssignedAccountNavigation  = workItemData.AssignedAccountNavigation == null ? defaultUserAccount  : workItemData.AssignedAccountNavigation;
+                var currentWorkItem = workItemData;
                 ViewData["Priorities"] = context.GetProjectPriorities(projectId); 
                 ViewData["Areas"] = context.GetProjectAreas(projectId);
                 ViewData["Iterations"] = context.GetProjectIterations(projectId);
@@ -280,6 +287,8 @@ namespace Rokono_Control.Controllers
         public bool StageWorkItem([FromBody] IncomingWorkItem currentItem)
         {
             var result = default(bool);
+         
+
             using(var context = new DatabaseController())
             {
                 result=context.AddNewWorkItem(currentItem);

@@ -172,27 +172,27 @@
                                     @if(WorkItemType == 1)
                                     {
                                         <div class="row">
-                                            <div class="position-relative form-group" style="width:100%;" ><label for="RepoSteps"  class="">Repo Steps</label><textarea name="RepoSteps" id="RepoSteps" text="@WorkItemData.RepoSteps" class="form-control"></textarea></div>
+                                            <div class="position-relative form-group" style="width:100%;" ><label for="RepoSteps"  class="">Repo Steps</label><textarea name="RepoSteps" id="RepoSteps"   class="form-control">@WorkItemData.RepoSteps</textarea></div>
                                         </div>
                                   
                                         <div class="row">
-                                            <div class="position-relative form-group" style="width:100%;"><label for="SystemInfo" class="">System Info</label><textarea name="SystemInfo" id="SystemInfo" text="@WorkItemData.SystemInfo" class="form-control"></textarea></div>
+                                            <div class="position-relative form-group" style="width:100%;"><label for="SystemInfo" class="">System Info</label><textarea name="SystemInfo" id="SystemInfo"  class="form-control">@WorkItemData.SystemInfo</textarea></div>
                                         </div>
                                     }
                                     @if(WorkItemType == 2)
                                     {
                                         <div class="row">
-                                            <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" text="@WorkItemData.Description" id="Description" class="form-control"></textarea></div>
+                                            <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description"  id="Description" class="form-control">@WorkItemData.Description</textarea></div>
                                         </div>
                                         <div class="row">
-                                            <div class="position-relative form-group" style="width:100%;"><label for="AcceptanceCriteria" class="">Acceptance Criteria</label><textarea name="AcceptanceCriteria" id="AcceptanceCriteria" class="form-control"></textarea></div>
+                                            <div class="position-relative form-group" style="width:100%;"><label for="AcceptanceCriteria" class="">Acceptance Criteria</label><textarea name="AcceptanceCriteria" id="AcceptanceCriteria" class="form-control">@WorkItemData.AcceptanceCriteria</textarea></div>
                                         </div>
                                       
                                     }
                                     @if(WorkItemType == 3)
                                     {
                                         <div class="row">
-                                            <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" id="Description" class="form-control"></textarea></div>
+                                            <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" id="Description" class="form-control">@WorkItemData.Description</textarea></div>
                                         </div>
                                       
                                       
@@ -200,17 +200,17 @@
                                     @if(WorkItemType == 7)
                                     {
                                         <div class="row">
-                                            <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" text="@WorkItemData.Description" id="Description" class="form-control"></textarea></div>
+                                            <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description"   id="Description" class="form-control">@WorkItemData.Description</div>
                                         </div>
                                         <div class="row">
-                                            <div class="position-relative form-group" style="width:100%;"><label for="AcceptanceCriteria" class="">Acceptance Criteria</label><textarea name="AcceptanceCriteria" id="AcceptanceCriteria" class="form-control"></textarea></div>
+                                            <div class="position-relative form-group" style="width:100%;"><label for="AcceptanceCriteria" class="">Acceptance Criteria</label><textarea name="AcceptanceCriteria" id="AcceptanceCriteria" class="form-control">@WorkItemData.AcceptanceCriteria</textarea></div>
                                         </div>
                                       
                                     }
                                     @if(WorkItemType == 5)
                                     {
                                         <div class="row">
-                                            <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" id="Description" text="@WorkItemData.Description" class="form-control"></textarea></div>
+                                            <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" id="Description"  class="form-control">@WorkItemData.Description</textarea></div>
                                         </div>
                                     }
                                 </div>
@@ -349,19 +349,19 @@
                                                 <div class="row">
                                                     <div class=" form-group" style="width:100%">
                                                         <label for="Effort" >Effort</label>
-                                                        <input name="Effort" id="Effort" placeholder="Effort"  style="width:100%" class="form-control-sm">
+                                                        <input name="Effort" id="Effort" value="@WorkItemData.Effort" placeholder="Effort"  style="width:100%" class="form-control-sm">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class=" form-group" style="width:100%">
                                                         <label for="BValue" >Business Value</label>
-                                                        <input name="BValue" id="BValue" placeholder="Business Value"  style="width:100%" class="form-control-sm">
+                                                        <input name="BValue" id="BValue" placeholder="Business Value" value="@WorkItemData.BusinessValue"  style="width:100%" class="form-control-sm">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class=" form-group" style="width:100%">
                                                         <label for="TimeCriticality" >Time Criticality</label>
-                                                        <input name="TimeCriticality" id="TimeCriticality" placeholder="Time Criticality"  style="width:100%" class="form-control-sm">
+                                                        <input name="TimeCriticality" id="TimeCriticality" placeholder="Time Criticality" value="@WorkItemData.TimeCapacity" style="width:100%" class="form-control-sm">
                                                     </div>
                                                 </div>
                                                <div class="row">
@@ -438,13 +438,13 @@
                                                 <div class="row">
                                                     <p>Start Date</p>
                                                     <div id="container">
-                                                        <input id="StartDate" type="text" value="@WorkItemData.StartDate" type="text">
+                                                        <input id="StartDate" type="text"  type="text">
                                                     </div>
                                                 </div>
                                                  <div class="row">
                                                     <p>End Date</p>
                                                     <div id="container">
-                                                        <input id="EndDate" type="text" value="@WorkItemData.EndDate" type="text">
+                                                        <input id="EndDate" type="text"   type="text">
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -741,6 +741,7 @@
         $('#WorItemsGridPanel').modal('show'); 
     }
 </script>
+
 <script>
     var assignedUser = @WorkItemData.AssignedAccountNavigation.Id;
     var selectedChildren = [];
@@ -757,32 +758,19 @@
         var startDate = new ej.calendars.DatePicker({
             placeholder: 'Choose a date',
             change: StatChange,
-            min: new Date(fullYear, month , 9),
-            //Sets the max.
-            max: new Date(fullYear, month, 15),
-            // Sets the value.
-            value: new Date(fullYear, month , 11)
+            value: new Date(@WorkItemData.StartDate.Value.Year,@WorkItemData.StartDate.Value.Month, @WorkItemData.StartDate.Value.Day)
             });
-        var dueDate = new ej.calendars.DatePicker({
-            placeholder: 'Choose a date',
-            change: DueDateChange,
-            min: new Date(fullYear, month , 9),
-            //Sets the max.
-            max: new Date(fullYear, month, 15),
-            // Sets the value.
-            value: new Date(fullYear, month , 11)
+       
+            var dueDate = new ej.calendars.DatePicker({
+                placeholder: 'Choose a date',
+                change: DueDateChange,
+                value: new Date(@WorkItemData.DueDate.Value.Year,@WorkItemData.DueDate.Value.Month, @WorkItemData.DueDate.Value.Day)
             });
+        
         var endDate = new ej.calendars.DatePicker({
             placeholder: 'Choose a date',
             change : EndChanged,
-
-
-                    // Sets the min.
-            min: new Date(fullYear, month , 9),
-            //Sets the max.
-            max: new Date(fullYear, month, 15),
-            // Sets the value.
-            value: new Date(fullYear, month , 11)
+            value: new Date(@WorkItemData.EndDate.Value.Year,@WorkItemData.EndDate.Value.Month, @WorkItemData.EndDate.Value.Day)
             });
         startDate.appendTo('#StartDate');
         endDate.appendTo('#EndDate');
@@ -791,7 +779,6 @@
         var inputobj = new ej.inputs.TextBox({
             placeholder: 'Enter work Id',
             floatLabelType: 'Auto',
-    
         });
         inputobj.appendTo('#IdFilter');
         var id = @projectId;
