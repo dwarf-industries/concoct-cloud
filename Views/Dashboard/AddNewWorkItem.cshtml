@@ -16,9 +16,21 @@
     var projectId = ViewData["ProjectId"] as int?;
     var WorkItemType = ViewData["WorkItemType"] as int?;
 }
-    <link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
 
-    <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
+
+<style>
+    .modal-backdrop
+    {
+        background-color: transparent;
+    }
+</style>
+
+  <!-- end of sidebar element -->
+        <!-- main-content declaration -->
+        <div class="main-content" id="main-text">
+            <div class="sidebar-content">
+               
+ <div class="container">
 <div class="row">
     <div class="col-md-12">
         <div class="main-card mb-1 card">
@@ -125,430 +137,495 @@
     <div class="col-md-12">
         <div class="main-card mb-1 card">
             <div class="card-body">
-                <div class="card-header-tab card-header">
-                
-                    <ul class="nav">
-                        <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-0" class="active nav-link">Details</a></li>
-                        <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-1" class="nav-link">Tab 2</a></li>
-                        <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-2" class="nav-link">Tab 3</a></li>
-                    </ul>
-                </div>
-                <div class="card-body">
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tab-eg5-0" role="tabpanel">
-                            <div class="row">
-                                <div class="col-md-6" style="padding-right:50px;">
-                                    @if(WorkItemType == 1)
-                                    {
-                                        <div class="row">
-                                            <div class="position-relative form-group" style="width:100%;" ><label for="RepoSteps" class="">Repo Steps</label><textarea name="RepoSteps" id="RepoSteps" class="form-control"></textarea></div>
-                                        </div>
-                                  
-                                        <div class="row">
-                                            <div class="position-relative form-group" style="width:100%;"><label for="SystemInfo" class="">System Info</label><textarea name="SystemInfo" id="SystemInfo" class="form-control"></textarea></div>
-                                        </div>
-                                    }
 
-                                    @if(WorkItemType == 2)
-                                    {
-                                        <div class="row">
-                                            <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" id="Description" class="form-control"></textarea></div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="position-relative form-group" style="width:100%;"><label for="AcceptanceCriteria" class="">Acceptance Criteria</label><textarea name="AcceptanceCriteria" id="AcceptanceCriteria" class="form-control"></textarea></div>
-                                        </div>
-                                      
-                                    }
-                                    @if(WorkItemType == 3)
-                                    {
-                                        <div class="row">
-                                            <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" id="Description" class="form-control"></textarea></div>
-                                        </div>
-                                      
-                                      
-                                    }
-                                    @if(WorkItemType == 7)
-                                    {
-                                        <div class="row">
-                                            <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" id="Description" class="form-control"></textarea></div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="position-relative form-group" style="width:100%;"><label for="AcceptanceCriteria" class="">Acceptance Criteria</label><textarea name="AcceptanceCriteria" id="AcceptanceCriteria" class="form-control"></textarea></div>
-                                        </div>
-                                      
-                                    }
-                                    @if(WorkItemType == 5)
-                                    {
-                                        <div class="row">
-                                            <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" id="Description" class="form-control"></textarea></div>
-                                        </div>
-                                    } 
-
-                                </div>
-                                <div class="col-md-6" style="padding-left:3px;">
+                          
+               <div class="sub-title">Default</div>                                        
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs md-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#home3" role="tab">Item Details</a>
+                                    <div class="slide"></div>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#profile3" role="tab">Discussions</a>
+                                    <div class="slide"></div>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#messages3" role="tab">Files</a>
+                                    <div class="slide"></div>
+                                </li>
+                               
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content card-block">
+                                <div class="tab-pane active" id="home3" role="tabpanel">
                                     <div class="row">
-                                        <div class="col-md-6" style="padding:20px;">
-                                            <div class="row">
-                                                <h4>Planning</h4>
-                                                <hr/>
-                                            </div>
-                                         
+                                        <div class="col-md-6" style="padding-right:50px;">
                                             @if(WorkItemType == 1)
                                             {
                                                 <div class="row">
-                                                    <p>Resolved Reason</p>
-                                                    <p><i class="fas fa-loc k"></i> {Reason} </p>
+                                                    <div class="position-relative form-group" style="width:100%;" ><label for="RepoSteps" class="">Repo Steps</label><textarea name="RepoSteps" id="RepoSteps" class="form-control"></textarea></div>
                                                 </div>
+                                        
                                                 <div class="row">
-                                                    <p>Priority</p>
-                                                    <select class="form-control-sm form-control" id="ItemPriority">
-                                                        @foreach(var priority in priorities)
-                                                        {
-                                                            <option value="@priority.Id">@priority.PriorityName</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                                <div class="row">
-                                                    <p>Severity</p>
-                                                    <select class="form-control-sm form-control" id="ItemSeverity">
-                                                        @foreach(var severity in severities)
-                                                        {
-                                                            <option value="@severity.Id">@severity.SeverityName</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                                <div class="row">
-                                                    <p>Activity</p>
-                                                    <select class="form-control-sm form-control" id="ItemActivity">
-                                                        @foreach(var activity in activities)
-                                                        {
-                                                            <option value="@activity.Id">@activity.ActivityName</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                                <div class="row">
-                                                    <h4>Efford Hours</h4>
-                                                    <hr/>
-                                                </div>
-                                                <div class="row">
-                                                    <div class=" form-group" style="width:100%">
-                                                        <label for="OriginalEstimate">Original Estimate</label>
-                                                        <input name="OriginalEstimate" id="OriginalEstimate" placeholder="OriginalEstimate"  style="width:100%" class="form-control-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class=" form-group" style="width:100%">
-                                                        <label for="Remaining" >Remaining</label>
-                                                        <input name="Remaining" id="ItemRemaining" placeholder="Remaining"  style="width:100%" class="form-control-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class=" form-group" style="width:100%">
-                                                        <label for="Compleated">Compleated</label>
-                                                        <input name="Compleated" id="ItemCompleated" placeholder="Compleated"  style="width:100%" class="form-control-sm">
-                                                    </div>
+                                                    <div class="position-relative form-group" style="width:100%;"><label for="SystemInfo" class="">System Info</label><textarea name="SystemInfo" id="SystemInfo" class="form-control"></textarea></div>
                                                 </div>
                                             }
-                                            else if(WorkItemType == 2)
-                                            {
-                                                <div class="row">
-                                                    <h4>Status</h4>
-                                                    <hr/>
-                                                </div>
-                                                <div class="row">
-                                                    <p>Start Date</p>
-                                                    <div id="container">
-                                                        <input id="StartDate" type="text" type="text">
-                                                    </div>
-                                                </div>
-                                                 <div class="row">
-                                                    <p>End Date</p>
-                                                    <div id="container">
-                                                        <input id="EndDate" type="text" type="text">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                     <h4>Details</h4>
-                                                    <hr/>
-                                                </div>
-                                                <div class="row">
-                                                    <p>Priority</p>
-                                                    <select class="form-control-sm form-control" id="ItemPriority">
-                                                        @foreach(var priority in priorities)
-                                                        {
-                                                            <option value="@priority.Id">@priority.PriorityName</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                                <div class="row">
-                                                    <div class=" form-group" style="width:100%">
-                                                        <label for="Effort" >Effort</label>
-                                                        <input name="Effort" id="Effort" placeholder="Effort"  style="width:100%" class="form-control-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class=" form-group" style="width:100%">
-                                                        <label for="BValue" >Business Value</label>
-                                                        <input name="BValue" id="BValue" placeholder="Business Value"  style="width:100%" class="form-control-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class=" form-group" style="width:100%">
-                                                        <label for="TimeCriticality" >Time Criticality</label>
-                                                        <input name="TimeCriticality" id="TimeCriticality" placeholder="Time Criticality"  style="width:100%" class="form-control-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <p>Value Area</p>
-                                                    <select class="form-control-sm form-control" id="ValueArea">
-                                                        @foreach(var va in ValueAreas)
-                                                        {
-                                                            <option value="@va.Id">@va.ValueAreaName</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                            }
-                                            else if(WorkItemType == 5)
-                                            {
-                                                <div class="row">
-                                                    <p>Priority</p>
-                                                    <select class="form-control-sm form-control" id="ItemPriority">
-                                                        @foreach(var priority in priorities)
-                                                        {
-                                                            <option value="@priority.Id">@priority.PriorityName</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                                <div class="row">
-                                                    <p>Risk</p>
-                                                    <select class="form-control-sm form-control" id="Risk">
-                                                        @foreach(var risk in Risks)
-                                                        {
-                                                            <option value="@risk.Id">@risk.RiskName</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                                <div class="row">
-                                                    <div class=" form-group" style="width:100%">
-                                                        <label for="Effort" >Effort</label>
-                                                        <input name="Effort" id="Effort" placeholder="Effort"  style="width:100%" class="form-control-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class=" form-group" style="width:100%">
-                                                        <label for="BValue" >Business Value</label>
-                                                        <input name="BValue" id="BValue" placeholder="Business Value"  style="width:100%" class="form-control-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class=" form-group" style="width:100%">
-                                                        <label for="TimeCriticality" >Time Criticality</label>
-                                                        <input name="TimeCriticality" id="TimeCriticality" placeholder="Time Criticality"  style="width:100%" class="form-control-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <p>Start Date</p>
-                                                    <div id="container">
-                                                        <input id="StartDate" type="text" type="text">
-                                                    </div>
-                                                </div>
-                                                 <div class="row">
-                                                    <p>End Date</p>
-                                                    <div id="container">
-                                                        <input id="EndDate" type="text" type="text">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <h4>Classification</h4>
-                                                    <hr/>
-                                                </div>
-                                                 <div class="row">
-                                                    <p>Value Area</p>
-                                                    <select class="form-control-sm form-control" id="ValueArea">
-                                                        @foreach(var va in ValueAreas)
-                                                        {
-                                                            <option value="@va.Id">@va.ValueAreaName</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                            }
-                                            else if(WorkItemType == 6)
-                                            {
-                                                <div class="row">
-                                                    <div class=" form-group" style="width:100%">
-                                                        <label for="Rank" >Stack Rank</label>
-                                                        <input name="Rank" id="Rank" placeholder="Stack Rank"  style="width:100%" class="form-control-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <p>Priority</p>
-                                                    <select class="form-control-sm form-control" id="ItemPriority">
-                                                        @foreach(var priority in priorities)
-                                                        {
-                                                            <option value="@priority.Id">@priority.PriorityName</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                                <div class="row">
-                                                    <p>Due Date</p>
-                                                    <div id="container" style="width:100%">
-                                                        <input id="DueDate" type="text">
-                                                    </div>
-                                                </div>
-                                            }
-                                            else if(WorkItemType == 3)
-                                            {
-                                                <div class="row">
-                                                    <p>Priority</p>
-                                                    <select class="form-control-sm form-control" id="ItemPriority">
-                                                        @foreach(var priority in priorities)
-                                                        {
-                                                            <option value="@priority.Id">@priority.PriorityName</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                                <div class="row">
-                                                    <p>Activity</p>
-                                                    <select class="form-control-sm form-control" id="ItemActivity">
-                                                        @foreach(var activity in activities)
-                                                        {
-                                                            <option value="@activity.Id">@activity.ActivityName</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                                  <div class="row">
-                                                    <h4>Efford Hours</h4>
-                                                    <hr/>
-                                                </div>
-                                                <div class="row">
-                                                    <div class=" form-group" style="width:100%">
-                                                        <label for="OriginalEstimate">Original Estimate</label>
-                                                        <input name="OriginalEstimate" id="OriginalEstimate" placeholder="OriginalEstimate"  style="width:100%" class="form-control-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class=" form-group" style="width:100%">
-                                                        <label for="Remaining" >Remaining</label>
-                                                        <input name="Remaining" id="ItemRemaining" placeholder="Remaining"  style="width:100%" class="form-control-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class=" form-group" style="width:100%">
-                                                        <label for="Compleated">Compleated</label>
-                                                        <input name="Compleated" id="ItemCompleated" placeholder="Compleated"  style="width:100%" class="form-control-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <h4>Implementation</h4>
-                                                    <hr/>
-                                                </div>
-                                                <div class="row">
-                                                    <p>Integrated in Build</p>
-                                                    <select class="form-control-sm form-control" id="ItemResolvedBuild">
-                                                        @foreach(var build in builds)
-                                                        {
-                                                            <option value="@build.Id">@build.ReasonName</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                            }
-                                            else if(WorkItemType == 7)
-                                            {
-                                                <div class="row">
-                                                    <div class=" form-group" style="width:100%">
-                                                        <label for="StoryPoints">Story Points</label>
-                                                        <input name="StoryPoints" id="StoryPoints" placeholder="Story points"  style="width:100%" class="form-control-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <p>Priority</p>
-                                                    <select class="form-control-sm form-control" id="ItemPriority">
-                                                        @foreach(var priority in priorities)
-                                                        {
-                                                            <option value="@priority.Id">@priority.PriorityName</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                                <div class="row">
-                                                    <p>Risk</p>
-                                                    <select class="form-control-sm form-control" id="Risk">
-                                                        @foreach(var risk in Risks)
-                                                        {
-                                                            <option value="@risk.Id">@risk.RiskName</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                                <div class="row">
-                                                    <h4>Classification</h4>
-                                                    <hr/>
-                                                </div>
-                                                <div class="row">
-                                                    <p>Value Area</p>
-                                                    <select class="form-control-sm form-control" id="ValueArea">
-                                                        @foreach(var va in ValueAreas)
-                                                        {
-                                                            <option value="@va.Id">@va.ValueAreaName</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                            }
-                                        </div>
-                                         <div class="col-md-6" style="padding:20px;">
-                                             <div class="row">
-                                                 <h4>Development</h4>
-                                                 <h4/>
-                                             </div>
-                                             <div class="row">
-                                                <a class="mb-2 mr-2 btn-transition btn btn-outline-info" ><i class="fas fa-plus"></i> Associate</a>
-                                            </div>
-                                            <div class="row">
-                                                 <h4>Related Work</h4>
-                                                 <h4/>
-                                                 
-                                             </div>
-                                             <div class="row">
-                                                <a onclick="OpenModal()" class="mb-2 mr-2 btn-transition btn btn-outline-info" ><i class="fas fa-plus"></i> Associate</a>
-                                            </div>
-                                            <div class="row" style="max-height:200px;overflow-y: scroll;">
-                                                <ul id="RelatedWork" style="list-style-type:none">
 
-                                                </ul>
-                                            </div>
-                                             <div class="row">
-                                                 <h4>System Info</h4>
-                                                 <h4/>
-                                             </div>
-                                             <div class="row">
-                                                <p>Found in Build</p>
-                                                <select class="form-control-sm form-control" id="ItemFoundBuild">
-                                                    @foreach(var build in builds)
+                                            @if(WorkItemType == 2)
+                                            {
+                                                <div class="row">
+                                                    <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" id="Description" class="form-control"></textarea></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="position-relative form-group" style="width:100%;"><label for="AcceptanceCriteria" class="">Acceptance Criteria</label><textarea name="AcceptanceCriteria" id="AcceptanceCriteria" class="form-control"></textarea></div>
+                                                </div>
+                                            
+                                            }
+                                            @if(WorkItemType == 3)
+                                            {
+                                                <div class="row">
+                                                    <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" id="Description" class="form-control"></textarea></div>
+                                                </div>
+                                            
+                                            
+                                            }
+                                            @if(WorkItemType == 7)
+                                            {
+                                                <div class="row">
+                                                    <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" id="Description" class="form-control"></textarea></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="position-relative form-group" style="width:100%;"><label for="AcceptanceCriteria" class="">Acceptance Criteria</label><textarea name="AcceptanceCriteria" id="AcceptanceCriteria" class="form-control"></textarea></div>
+                                                </div>
+                                            
+                                            }
+                                            @if(WorkItemType == 5)
+                                            {
+                                                <div class="row">
+                                                    <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" id="Description" class="form-control"></textarea></div>
+                                                </div>
+                                            } 
+
+                                        </div>
+                                        <div class="col-md-6" style="padding-left:3px;">
+                                            <div class="row">
+                                                <div class="col-md-6" style="padding:20px;">
+                                                    <div class="row">
+                                                        <h4>Planning</h4>
+                                                        <hr/>
+                                                    </div>
+                                                
+                                                    @if(WorkItemType == 1)
                                                     {
-                                                        <option value="@build.Id">@build.ReasonName</option>
+                                                        <div class="row">
+                                                            <p>Resolved Reason</p>
+                                                            <p><i class="fas fa-loc k"></i> {Reason} </p>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p>Priority</p>
+                                                            <select class="form-control-sm form-control" id="ItemPriority">
+                                                                @foreach(var priority in priorities)
+                                                                {
+                                                                    <option value="@priority.Id">@priority.PriorityName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p>Severity</p>
+                                                            <select class="form-control-sm form-control" id="ItemSeverity">
+                                                                @foreach(var severity in severities)
+                                                                {
+                                                                    <option value="@severity.Id">@severity.SeverityName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p>Activity</p>
+                                                            <select class="form-control-sm form-control" id="ItemActivity">
+                                                                @foreach(var activity in activities)
+                                                                {
+                                                                    <option value="@activity.Id">@activity.ActivityName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="row">
+                                                            <h4>Efford Hours</h4>
+                                                            <hr/>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class=" form-group" style="width:100%">
+                                                                <label for="OriginalEstimate">Original Estimate</label>
+                                                                <input name="OriginalEstimate" id="OriginalEstimate" placeholder="OriginalEstimate"  style="width:100%" class="form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class=" form-group" style="width:100%">
+                                                                <label for="Remaining" >Remaining</label>
+                                                                <input name="Remaining" id="ItemRemaining" placeholder="Remaining"  style="width:100%" class="form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class=" form-group" style="width:100%">
+                                                                <label for="Compleated">Compleated</label>
+                                                                <input name="Compleated" id="ItemCompleated" placeholder="Compleated"  style="width:100%" class="form-control-sm">
+                                                            </div>
+                                                        </div>
                                                     }
-                                                </select>
-                                            </div>
-                                             <div class="row">
-                                                <p>Integrated in Build</p>
-                                                <select class="form-control-sm form-control" id="ItemResolvedBuild">
-                                                    @foreach(var build in builds)
+                                                    else if(WorkItemType == 2)
                                                     {
-                                                        <option value="@build.Id">@build.ReasonName</option>
+                                                        <div class="row">
+                                                            <h4>Status</h4>
+                                                            <hr/>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p>Start Date</p>
+                                                            <div id="container">
+                                                                <input id="StartDate" type="text" type="text">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p>End Date</p>
+                                                            <div id="container">
+                                                                <input id="EndDate" type="text" type="text">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <h4>Details</h4>
+                                                            <hr/>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p>Priority</p>
+                                                            <select class="form-control-sm form-control" id="ItemPriority">
+                                                                @foreach(var priority in priorities)
+                                                                {
+                                                                    <option value="@priority.Id">@priority.PriorityName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class=" form-group" style="width:100%">
+                                                                <label for="Effort" >Effort</label>
+                                                                <input name="Effort" id="Effort" placeholder="Effort"  style="width:100%" class="form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class=" form-group" style="width:100%">
+                                                                <label for="BValue" >Business Value</label>
+                                                                <input name="BValue" id="BValue" placeholder="Business Value"  style="width:100%" class="form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class=" form-group" style="width:100%">
+                                                                <label for="TimeCriticality" >Time Criticality</label>
+                                                                <input name="TimeCriticality" id="TimeCriticality" placeholder="Time Criticality"  style="width:100%" class="form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p>Value Area</p>
+                                                            <select class="form-control-sm form-control" id="ValueArea">
+                                                                @foreach(var va in ValueAreas)
+                                                                {
+                                                                    <option value="@va.Id">@va.ValueAreaName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
                                                     }
-                                                </select>
+                                                    else if(WorkItemType == 5)
+                                                    {
+                                                        <div class="row">
+                                                            <p>Priority</p>
+                                                            <select class="form-control-sm form-control" id="ItemPriority">
+                                                                @foreach(var priority in priorities)
+                                                                {
+                                                                    <option value="@priority.Id">@priority.PriorityName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p>Risk</p>
+                                                            <select class="form-control-sm form-control" id="Risk">
+                                                                @foreach(var risk in Risks)
+                                                                {
+                                                                    <option value="@risk.Id">@risk.RiskName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class=" form-group" style="width:100%">
+                                                                <label for="Effort" >Effort</label>
+                                                                <input name="Effort" id="Effort" placeholder="Effort"  style="width:100%" class="form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class=" form-group" style="width:100%">
+                                                                <label for="BValue" >Business Value</label>
+                                                                <input name="BValue" id="BValue" placeholder="Business Value"  style="width:100%" class="form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class=" form-group" style="width:100%">
+                                                                <label for="TimeCriticality" >Time Criticality</label>
+                                                                <input name="TimeCriticality" id="TimeCriticality" placeholder="Time Criticality"  style="width:100%" class="form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p>Start Date</p>
+                                                            <div id="container">
+                                                                <input id="StartDate" type="text" type="text">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p>End Date</p>
+                                                            <div id="container">
+                                                                <input id="EndDate" type="text" type="text">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <h4>Classification</h4>
+                                                            <hr/>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p>Value Area</p>
+                                                            <select class="form-control-sm form-control" id="ValueArea">
+                                                                @foreach(var va in ValueAreas)
+                                                                {
+                                                                    <option value="@va.Id">@va.ValueAreaName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    }
+                                                    else if(WorkItemType == 6)
+                                                    {
+                                                        <div class="row">
+                                                            <div class=" form-group" style="width:100%">
+                                                                <label for="Rank" >Stack Rank</label>
+                                                                <input name="Rank" id="Rank" placeholder="Stack Rank"  style="width:100%" class="form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p>Priority</p>
+                                                            <select class="form-control-sm form-control" id="ItemPriority">
+                                                                @foreach(var priority in priorities)
+                                                                {
+                                                                    <option value="@priority.Id">@priority.PriorityName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p>Due Date</p>
+                                                            <div id="container" style="width:100%">
+                                                                <input id="DueDate" type="text">
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else if(WorkItemType == 3)
+                                                    {
+                                                        <div class="row">
+                                                            <p>Priority</p>
+                                                            <select class="form-control-sm form-control" id="ItemPriority">
+                                                                @foreach(var priority in priorities)
+                                                                {
+                                                                    <option value="@priority.Id">@priority.PriorityName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p>Activity</p>
+                                                            <select class="form-control-sm form-control" id="ItemActivity">
+                                                                @foreach(var activity in activities)
+                                                                {
+                                                                    <option value="@activity.Id">@activity.ActivityName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="row">
+                                                            <h4>Efford Hours</h4>
+                                                            <hr/>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class=" form-group" style="width:100%">
+                                                                <label for="OriginalEstimate">Original Estimate</label>
+                                                                <input name="OriginalEstimate" id="OriginalEstimate" placeholder="OriginalEstimate"  style="width:100%" class="form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class=" form-group" style="width:100%">
+                                                                <label for="Remaining" >Remaining</label>
+                                                                <input name="Remaining" id="ItemRemaining" placeholder="Remaining"  style="width:100%" class="form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class=" form-group" style="width:100%">
+                                                                <label for="Compleated">Compleated</label>
+                                                                <input name="Compleated" id="ItemCompleated" placeholder="Compleated"  style="width:100%" class="form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <h4>Implementation</h4>
+                                                            <hr/>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p>Integrated in Build</p>
+                                                            <select class="form-control-sm form-control" id="ItemResolvedBuild">
+                                                                @foreach(var build in builds)
+                                                                {
+                                                                    <option value="@build.Id">@build.ReasonName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    }
+                                                    else if(WorkItemType == 7)
+                                                    {
+                                                        <div class="row">
+                                                            <div class=" form-group" style="width:100%">
+                                                                <label for="StoryPoints">Story Points</label>
+                                                                <input name="StoryPoints" id="StoryPoints" placeholder="Story points"  style="width:100%" class="form-control-sm">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p>Priority</p>
+                                                            <select class="form-control-sm form-control" id="ItemPriority">
+                                                                @foreach(var priority in priorities)
+                                                                {
+                                                                    <option value="@priority.Id">@priority.PriorityName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p>Risk</p>
+                                                            <select class="form-control-sm form-control" id="Risk">
+                                                                @foreach(var risk in Risks)
+                                                                {
+                                                                    <option value="@risk.Id">@risk.RiskName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="row">
+                                                            <h4>Classification</h4>
+                                                            <hr/>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p>Value Area</p>
+                                                            <select class="form-control-sm form-control" id="ValueArea">
+                                                                @foreach(var va in ValueAreas)
+                                                                {
+                                                                    <option value="@va.Id">@va.ValueAreaName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div class="col-md-6" style="padding:20px;">
+                                                    <div class="row">
+                                                        <h4>Development</h4>
+                                                        <h4/>
+                                                    </div>
+                                                    <div class="row">
+
+                                                        
+                                                        <a class="mb-2 mr-2 btn-transition btn btn-outline-info" ><i class="fas fa-plus"></i> Associate</a>
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <h4>Related Work</h4>
+                                                        <h4/>
+                                                        
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="animation-model">
+                                                            
+                                                            <!-- Large modal -->
+                                                        <button type="button"  onclick="OpenModal()" class="btn btn-primary" >Large modal</button>
+                                                        <div class="modal bd-example-modal-lg" id="WorItemsGridPanel" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-lg">
+                                                                <div class="modal-content">
+                                                                    <div id="ModalAdd">
+                                                                        <div class="ModalInnerFix">
+                                                                            <div class="row">
+                                                                                <p>Relation Type</p>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                                
+                                                                                <select class="form-control-sm form-control"  id="WorkItemRelationsGrid">
+                                                                                
+                                                                                </select>
+                                                                            
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                
+                                                                                <div class="e-input-group e-float-icon-left">
+                                                                                    <span class="e-input-group-icon e-input-picture" onclick="CallItemSelect();"></span>
+                                                                                    <div class="e-input-in-wrap">
+                                                                                    <input class="e-input" id="workItemInputObj" type="text" placeholder="Upload Picture" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div id="ModalSelect" hidden>
+                                                                        <div class="ModalInnerFix">
+                                                                            <h3> Select work item</h3>
+                                                                            <div class="row">
+                                                                                <div class="control-section">
+                                                                                    <div class="content-wrapper">
+                                                                                        <div id="Grid"></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <button   id="AcceptWItemChange">Add</button>
+                                                                                <button   id="CancelAddWItemBtn" onclick="CancelGridGlicked()">Cancel</button>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+    
+                                                            </div>
+                                                        </div>
+                                                    <div class="row" style="max-height:200px;overflow-y: scroll;">
+                                                        <ul id="RelatedWork" style="list-style-type:none">
+
+                                                        </ul>
+                                                    </div>
+                                                    <div class="row">
+                                                        <h4>System Info</h4>
+                                                        <h4/>
+                                                    </div>
+                                                    <div class="row">
+                                                        <p>Found in Build</p>
+                                                        <select class="form-control-sm form-control" id="ItemFoundBuild">
+                                                            @foreach(var build in builds)
+                                                            {
+                                                                <option value="@build.Id">@build.ReasonName</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                    <div class="row">
+                                                        <p>Integrated in Build</p>
+                                                        <select class="form-control-sm form-control" id="ItemResolvedBuild">
+                                                            @foreach(var build in builds)
+                                                            {
+                                                                <option value="@build.Id">@build.ReasonName</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="tab-pane" id="profile3" role="tabpanel">
+                                    <p class="m-0">2.Cras consequat in enim ut efficitur. Nulla posuere elit quis auctor interdum praesent sit amet nulla vel enim amet. Donec convallis tellus neque, et imperdiet felis amet.</p>
+                                </div>
+                                <div class="tab-pane" id="messages3" role="tabpanel">
+                                    <p class="m-0">3. This is Photoshop's version of Lorem IpThis is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean mas Cum sociis natoque penatibus et magnis dis.....</p>
+                                </div>
+                               
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab-eg5-1" role="tabpanel"><p>Like Aldus PageMaker including versions of Lorem. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-                            essentially unchanged. </p></div>
-                        <div class="tab-pane" id="tab-eg5-2" role="tabpanel"><p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
-                            type specimen book. It has
-                            survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p></div>
-                    </div>
-                </div>
-            </div>
+   
             <div class="row text-center" style="margin-left:40%; margin-right:40%;">
                 <a class="mb-2 mr-2 btn-transition btn btn-outline-info" onclick="AddNewWorkItem()" > <i class="fas fa-save"></i> Save Changes</a>
                 <a class="mb-2 mr-2 btn-transition btn btn-outline-info" > <i class="fas fa-cancel"></i> Cancel Changes</a>
@@ -560,15 +637,39 @@
  
 
 </div>
+</div>
 
+            </div>
+        </div>
+        <!-- end of main-content -->
 
+        <!-- Initialize default Dialog -->
+<div id="defaultDialog">
+    <div id="tab_default">
+    </div>
 
+</div>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
 
-<script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
- <script>
+ 
+  <script>
+
+    var acceptWItemChange = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    acceptWItemChange.appendTo('#AcceptWItemChange');
+
+    var cancelAddWItemBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    cancelAddWItemBtn.appendTo('#CancelAddWItemBtn');
+    
+    var inputobj2 = new ej.inputs.TextBox({
+        placeholder: 'Work item Id',
+        floatLabelType: 'Auto',
+        enableRtl: true
+    });
+    inputobj2.appendTo('#workItemInputObj');
+     
     function OpenModal()
     {
         console.log("Open modal");
@@ -582,12 +683,15 @@
                     console.log(element);
                     $("#WorkItemRelationsGrid").append("<option value=\""+element.id+"\">"+element.relationName+"</option>");
                 });
+               $('#WorItemsGridPanel').modal('show'); 
+               var element = document.getElementsByClassName("modal-backdrop show");
+                $(element).remove();
             },
             error: function (xhr, status, error) {
                 console.log(xhr);
             }
         });
-        $('#WorItemsGridPanel').modal('show'); 
+   //     $('#WorItemsGridPanel').modal('show'); 
 
     }
 </script>
@@ -631,8 +735,7 @@
         });
         inputobj.appendTo('#IdFilter');
         var id = @projectId;
-        console.log(id);
-          var dto = {
+        var dto = {
             "id": id,
             
         }
@@ -659,6 +762,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
+                console.log(response);
                 InitiliazeGrid(response);
             },
             error: function (xhr, status, error) {
@@ -668,35 +772,29 @@
         startDate = new Date();
         endDate = new Date();
         dueDate = new Date();
-        console.log(startDate);
-        console.log(endDate);
-        console.log(dueDate);
+ 
     });
     function StatChange(args){
-        console.log(args);
-        startDate = args.value;
+         startDate = args.value;
     }
 
     function EndChanged(args){
-        console.log(args);
-        endDate = args.value;
+         endDate = args.value;
     }
     function DueDateChange(args){
-        console.log(args);
-        dueDateVal = args.value;
+         dueDateVal = args.value;
     }
 
    
 
     function InitiliazeGrid(data )
     {
-        console.log(data);
         ej.grids.Grid.Inject(ej.grids.Filter);
         ej.grids.Grid.Inject(ej.grids.Edit, ej.grids.Toolbar);
 
        //console.log(id);
         var grid = new ej.grids.Grid({
-            dataSource: data.noParents,
+            dataSource: data,
             allowSorting: true,
             filterSettings: { type:'Menu' },
             allowFiltering: true,
@@ -715,14 +813,22 @@
     }
  
 
-     
+    function CallItemSelect()
+    {
+        $("#ModalAdd").hide();
+        $("#ModalSelect").show();
+        
+    }
+    function CancelGridGlicked()
+    {
+        $("#ModalAdd").show();
+        $("#ModalSelect").hide();
+    }
     function ItemSelected(args){
-        console.log(args);
-        assignedUser = args.itemData.id;
+         assignedUser = args.itemData.id;
     }
     function InitiliazeComboBox(data){
-        console.log(data);
-         var listObj = new ej.dropdowns.ComboBox({
+          var listObj = new ej.dropdowns.ComboBox({
         //set the data to dataSource property
             dataSource: data,
             // By default, its enabled. For your better understanding, showcase this property.
@@ -773,8 +879,7 @@
             "StoryPoints" : $("#StoryPoints").val(),
             "SelectedChildren" : selectedChildren
         }
-        console.log(dto);
-        if($("#Title").val()) {
+         if($("#Title").val()) {
             $.ajax({
                 type: 'POST',
                 url: '/Dashboard/StageWorkItem',
@@ -803,8 +908,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.log(response);
-                 var grid = new ej.grids.Grid({
+                  var grid = new ej.grids.Grid({
                     dataSource: response,
                     recordDoubleClick: WorkItemGridDoubleClicked,
                     columns: [
@@ -838,6 +942,11 @@
 
       function WorkItemSelected(args){
         console.log(args);
+        var dto = {
+            "WorkItemId" : args.rowData.id,
+            "RelationShipId": $("#WorkItemRelationsGrid :selected").val()
+        }
+        selectedChildren.push(dto);
        AddAssocuatedItem(args.rowData.id);
     }
 
@@ -847,10 +956,12 @@
         
         var dto = {
             "WorkItemId": id,
+            "CurrWorkItemId" : 1,
             "ProjectId" : project,
             "RelationType" :  $("#WorkItemRelationsGrid :selected").val(),
             "LinkedItems" : selectedChildren
         }
+        console.log(dto);
          $.ajax({
             type: 'POST',
             url: '/Dashboard/ValidateSelectedItem',
@@ -881,8 +992,7 @@
                     else if(response.workItemTypeId === 2)
                         $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-cog\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
 
-                    $("[data-dismiss=modal]").trigger({ type: "click" });
-                }
+                 }
                 else
                 {
                     alert("Item with ID" + id+ " Is already linked with the current work item please chose another item!");
@@ -892,6 +1002,9 @@
                         }
                     }
                 }
+                $("#ModalAdd").show();
+                $("#ModalSelect").hide();
+                $("#WorItemsGridPanel").modal('hide');
             },
             error: function (xhr, status, error) {
                 console.log(error);

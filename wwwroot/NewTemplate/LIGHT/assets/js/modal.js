@@ -1,4 +1,4 @@
-  'use strict';
+ 
 $(document).ready(function () {
 //Basic alert
 	document.querySelector('.sweet-1').onclick = function(){

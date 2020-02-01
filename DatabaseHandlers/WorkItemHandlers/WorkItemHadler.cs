@@ -14,7 +14,8 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
             Context.Attach(dbVersion);
             var relationshipId = default(int);
             currentItem.SelectedChildren.ForEach(x=>{
-                var getItem = Context.WorkItemRelations.FirstOrDefault(y=>y.Id == x.RelationShipId);
+                var relId = int.Parse(x.RelationShipId);
+                var getItem = Context.WorkItemRelations.FirstOrDefault(y=>y.Id == relId);
                 if(getItem.RelationName == "Parent")
                     relationshipId = getItem.Id;
             });
@@ -134,7 +135,9 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
         {
                 var relationshipId = default(int);
             currentItem.SelectedChildren.ForEach(x=>{
-                var getItem = Context.WorkItemRelations.FirstOrDefault(y=>y.Id == x.RelationShipId);
+                                var relId = int.Parse(x.RelationShipId);
+
+                var getItem = Context.WorkItemRelations.FirstOrDefault(y=>y.Id == relId);
                 if(getItem.RelationName == "Parent")
                     relationshipId = getItem.Id;
             });
@@ -267,7 +270,9 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 Context.SaveChanges();           
             }
             currentItem.SelectedChildren.ForEach(x=>{
-                    var getItem = Context.WorkItemRelations.FirstOrDefault(y=>y.Id == x.RelationShipId);
+                                                var relId = int.Parse(x.RelationShipId);
+
+                    var getItem = Context.WorkItemRelations.FirstOrDefault(y=>y.Id ==relId);
                     if(getItem.RelationName != "Parent")
                     {
                         if(getItem.RelationName == "Child")
@@ -281,7 +286,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                             Context.AssociatedWrorkItemChildren.Add(new AssociatedWrorkItemChildren{
                                 WorkItemChildId = x.WorkItemId,
                                 WorkItemId = item.Entity.Id,
-                                RelationType = x.RelationShipId
+                                RelationType = relId
                             });
                             Context.SaveChanges();
                         }

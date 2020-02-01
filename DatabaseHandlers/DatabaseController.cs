@@ -166,7 +166,8 @@ namespace Rokono_Control.DatabaseHandlers
         {
             var currentWorkItem = Context.WorkItem.FirstOrDefault(x=>x.Id == incomingRelation.CurrWorkItemId);
             incomingRelation.LinkedItems.ForEach(x=>{
-                if(x.RelationShipId == 1)
+                var relId = int.Parse(x.RelationShipId );
+                if(relId== 1)
                 {
                     currentWorkItem.ParentId = x.WorkItemId;
                     Context.Attach(currentWorkItem);
@@ -178,7 +179,7 @@ namespace Rokono_Control.DatabaseHandlers
                     Context.AssociatedWrorkItemChildren.Add(new AssociatedWrorkItemChildren{
                         WorkItemId = currentWorkItem.Id,
                         WorkItemChildId = x.WorkItemId,
-                        RelationType = x.RelationShipId
+                        RelationType = relId
                     });
                     Context.SaveChanges();
                 }
