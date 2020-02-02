@@ -73,7 +73,8 @@
             nodeId: '01', nodeText: 'Dashboard', iconCss: 'icon-th icon',
             nodeChild: [
                 { nodeId: '01-01', nodeText: 'Home', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ProjectDashboard?id=@ProjectId' },
-                { nodeId: '01-02', nodeText: 'Manage Accounts', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ManageAccounts' },
+                { nodeId: '01-02', nodeText: 'Project Details', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ProjectDetails' },
+                { nodeId: '01-03', nodeText: 'Manage Accounts', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ManageAccounts' },
                
             ]
         },
@@ -326,7 +327,10 @@
     #sidebar-treeview #main-treeview .icon-circle-thin::before {
         content: '\e808';
     }
-
+    .RowContainer{
+        border-top: 6px solid #1d86c8;
+      
+    }
     /* end of icon styles */
 </style>
 </div>

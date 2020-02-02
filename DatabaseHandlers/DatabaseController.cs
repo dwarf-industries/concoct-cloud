@@ -76,13 +76,19 @@ namespace Rokono_Control.DatabaseHandlers
                         .Include(x=>x.WorkItem)
                         .ThenInclude(WorkItem => WorkItem.WorkItemType)
                         .Include(x=>x.WorkItem)
-                        .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItemChild)
-                        .ThenInclude(AssociatedWorkItemDuplicatesWorkItem => AssociatedWorkItemDuplicatesWorkItem.WorkItemChild)
+                        .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItem)
+                        .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.WorkItemChild)
                         .Include(x=>x.WorkItem)
                         .ThenInclude(WorkItem=> WorkItem.AssignedAccountNavigation)
                         .FirstOrDefault(x=>x.ProjectId == projectId && x.WorkItemId == workItem).WorkItem;
         }
-
+        internal List<WorkItem> GetWorkItemChildrenClean(int workItemId)
+        {
+            return Context.AssociatedWrorkItemChildren.Include(x => x.WorkItemChild)
+                .Where(x => x.WorkItemId == workItemId)
+                .Select(x => x.WorkItemChild)
+                .ToList();
+        }
         internal void ChangeWorkItemBoard(IncomingCardRequest card)
         {
             var newBoardAssociation = Context.AssociatedProjectBoards.Include(x=>x.Board).FirstOrDefault(x=> x.ProjectId == card.ProjectId 
@@ -125,19 +131,25 @@ namespace Rokono_Control.DatabaseHandlers
                     Title = x.WorkItemChild.Title,
                     Id = x.WorkItemChild.Id
                 },
-                RelationType = x.RelationTypeNavigation.Name
+                RelationType = x.RelationTypeNavigation.TypeName
             }).ToList());
             var parent = default(WorkItem);
-            if(workItem.ParentId.HasValue)
-                parent = Context.WorkItem.FirstOrDefault(x=>x.Id == workItem.ParentId);
-            bindingRelations.Add(new BindingWorkItemRelation{
-                 WorkItem = new BindingWorkItemDTO
+            if(workItem.ParentId != null)
+            {
+                if(workItem.ParentId != 0)
                 {
-                    Title = parent.Title,
-                    Id = parent.Id
-                },
-                RelationType = "Parent"
-            });
+                    parent = Context.WorkItem.FirstOrDefault(x=>x.Id == workItem.ParentId);
+                
+                    bindingRelations.Add(new BindingWorkItemRelation{
+                        WorkItem = new BindingWorkItemDTO
+                        {
+                            Title = parent.Title,
+                            Id = parent.Id
+                        },
+                        RelationType = "Parent"
+                    });
+                }
+            }
             var res = new StringBuilder();
 
             relations.AddRange(bindingRelations);
@@ -299,7 +311,23 @@ namespace Rokono_Control.DatabaseHandlers
                }
                 
         }
- 
+
+        internal WorkItem GetWorkItemClean(int workItemId, int projectId)
+        {
+            var getWorkItem = Context.AssociatedBoardWorkItems.Include(x=>x.WorkItem).FirstOrDefault(x=>x.WorkItemId == workItemId && x.ProjectId == projectId);
+            if(getWorkItem != null)
+            {
+                getWorkItem.WorkItem.AssociatedWrorkItemChildrenWorkItem = null;
+                getWorkItem.WorkItem.AssociatedWrorkItemChildrenWorkItemChild = null;
+                getWorkItem.WorkItem.AssociatedBoardWorkItems = null;
+                getWorkItem.WorkItem.AssignedAccountNavigation = null;
+
+                return getWorkItem.WorkItem;
+            }
+            
+            
+            return null;
+        }
 
         public List<CommitFileHirarhicalData> GenerateSubDirectory(CommitFileHirarhicalData item, List<string> files, string parent,string directory)
         {
@@ -979,9 +1007,10 @@ namespace Rokono_Control.DatabaseHandlers
             .ToList();       
         }
 
-        internal WorkItem ValidateWorkItemConnection(IncomignWorkItemRelation incomingRequest)
+        internal bool ValidateWorkItemConnection(IncomignWorkItemRelation incomingRequest)
         {
-            return Context.WorkItem.FirstOrDefault(x=> x.PriorityId == incomingRequest.ProjectId && x.Id == incomingRequest.WorkItemId);
+            var result = Context.WorkItem.FirstOrDefault(x=> x.PriorityId == incomingRequest.ProjectId && x.Id == incomingRequest.CurrWorkItemId);
+            return result == null ? true:false;
         }
 
         internal List<WorkItemAreas> GetProjectAreas(int projectId)

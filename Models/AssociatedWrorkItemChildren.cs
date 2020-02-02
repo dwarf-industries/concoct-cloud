@@ -10,7 +10,7 @@ namespace Rokono_Control.Models
         public int? WorkItemChildId { get; set; }
         public int? RelationType { get; set; }
 
-        public virtual WorkItemRealtionshipType RelationTypeNavigation { get; set; }
+        public virtual WorkItemTypes RelationTypeNavigation { get; set; }
         public virtual WorkItem WorkItem { get; set; }
         public virtual WorkItem WorkItemChild { get; set; }
     }

@@ -7,6 +7,7 @@ namespace Rokono_Control.Models
     {
         public WorkItemTypes()
         {
+            AssociatedWrorkItemChildren = new HashSet<AssociatedWrorkItemChildren>();
             WorkItem = new HashSet<WorkItem>();
         }
 
@@ -14,6 +15,7 @@ namespace Rokono_Control.Models
         public string TypeName { get; set; }
         public string Icon { get; set; }
 
+        public virtual ICollection<AssociatedWrorkItemChildren> AssociatedWrorkItemChildren { get; set; }
         public virtual ICollection<WorkItem> WorkItem { get; set; }
     }
 }

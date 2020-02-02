@@ -20,10 +20,10 @@
 <link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
   <!-- end of sidebar element -->
         <!-- main-content declaration -->
-        <div class="main-content" id="main-text" style="height: 94vh;">
-            <div class="sidebar-content"
-                <div class="container">
-<div class="row">
+        <div class="main-content" id="main-text" >
+            <div class="sidebar-content">
+                <div class="container-fluid">
+<div class="row RowContainer">
     <div class="col-md-12">
         <div class="main-card mb-1 card">
             <div class="card-body">
@@ -52,7 +52,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row RowContainer">
     <div class="col-md-12">
         <div class="main-card mb-1 card">
             <div class="card-body">
@@ -171,7 +171,7 @@
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab-eg5-0" role="tabpanel">
-                            <div class="row">
+                            <div class="row RowContainer">
                                 <div class="col-md-6" style="padding-right:50px;">
                                     @if(WorkItemType == 1)
                                     {
@@ -659,15 +659,69 @@
                                                  <h4/>
                                                  
                                              </div>
-                                             <div class="row">
-                                                <a onclick="OpenModal()" class="mb-2 mr-2 btn-transition btn btn-outline-info" ><i class="fas fa-plus"></i> Associate</a>
-                                                <a onclick="OpenDiagram()" class="mb-2 mr-2 btn-transition btn btn-outline-info" ><i class="fas fa-plus"></i> Open relation diagram</a>
+                                           
+                                            <div class="row">                                                            
+                                                        <!-- Large modal -->
+                                                        <a onclick="OpenDiagram()" class="mb-2 mr-2 btn-transition btn btn-outline-info" ><i class="fas fa-plus"></i> Open relation diagram</a>
 
-                                            </div>
-                                            <div class="row" style="max-height:600px; height: 300px;overflow-y: scroll;">
-                                                <ul id="RelatedWork" style="list-style-type:none; padding:0px;">
-                                                    
-                                                </ul>
+                                                        <button type="button"  onclick="OpenModal()" class="btn btn-primary" >Large modal</button>
+                                                        <div class="modal bd-example-modal-lg" id="WorItemsGridPanel" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-lg">
+                                                                <div class="modal-content">
+                                                                    <div id="ModalAdd">
+                                                                        <div class="ModalInnerFix">
+                                                                            <div class="row">
+                                                                                <p>Relation Type</p>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                                
+                                                                                <select class="form-control-sm form-control"  id="WorkItemRelationsGrid">
+                                                                                
+                                                                                </select>
+                                                                            
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                
+                                                                                <div class="e-input-group e-float-icon-left">
+                                                                                    <span class="e-input-group-icon e-input-picture" onclick="CallItemSelect();"></span>
+                                                                                    <div class="e-input-in-wrap">
+                                                                                    <input class="e-input" id="workItemInputObj" type="text" placeholder="Upload Picture" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div id="ModalSelect" hidden>
+                                                                        <div class="ModalInnerFix">
+                                                                            <h3> Select work item</h3>
+                                                                            <div class="row">
+                                                                                <div class="control-section">
+                                                                                    <div class="content-wrapper">
+                                                                                        <div id="Grid"></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <button   id="AcceptWItemChange">Add</button>
+                                                                                <button   id="CancelAddWItemBtn" onclick="CancelGridGlicked()">Cancel</button>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            <div class="row" id="listview-defholder" >
+                                                <div id="listview-def" tabindex="1" >
+                                                    <ul id="RelatedWork" style="list-style-type:none; padding:0px;">
+                                                        @foreach (var relation in WorkItemData.AssociatedWrorkItemChildrenWorkItem)
+                                                        {
+                                                            <li value="@relation.WorkItemChildId">@relation.WorkItemChild.Title</li>
+                                                        }
+                                                    </ul>
+                                                </div>
                                             </div>
                                              <div class="row">
                                                  <h4>System Info</h4>
@@ -733,19 +787,26 @@
   </div>
         </div>
         <!-- end of main-content -->
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
  <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
 <script>
-    function OpenModal()
-    {
-        console.log("Open modal");
-        $('#WorItemsGridPanel').modal('show'); 
-    }
+   
 </script>
 
 <script>
+    var acceptWItemChange = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    acceptWItemChange.appendTo('#AcceptWItemChange');
+
+    var cancelAddWItemBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    cancelAddWItemBtn.appendTo('#CancelAddWItemBtn');
+    //Initialize ListView component
+    var listObj = new ej.lists.ListView();
+
+    //Render initialized ListView component
+    listObj.appendTo('#listview-def');
+
     var assignedUser = @WorkItemData.AssignedAccountNavigation.Id;
     var selectedChildren = [];
     var startDate;
@@ -754,7 +815,6 @@
     $( document ).ready(function() 
     {
         LoadWorkItemRelations();
-        LoadWorkItemsGrid();
         var month = new Date().getMonth();
         var fullYear = new Date().getFullYear();
         
@@ -865,9 +925,9 @@
         ej.grids.Grid.Inject(ej.grids.Filter);
         ej.grids.Grid.Inject(ej.grids.Edit, ej.grids.Toolbar);
 
-       //console.log(id);
+       console.log(data);
         var grid = new ej.grids.Grid({
-            dataSource: data.noParents,
+            dataSource: data,
             allowSorting: true,
             filterSettings: { type:'Menu' },
             allowFiltering: true,
@@ -886,7 +946,46 @@
     }
     function WorkItemSelected(args){
         console.log(args);
+     
        AddAssocuatedItem(args.rowData.id);
+    }
+
+    function CallItemSelect()
+    {
+        $("#ModalAdd").hide();
+        $("#ModalSelect").show();
+        
+    }
+
+    function CancelGridGlicked()
+    {
+        $("#ModalAdd").show();
+        $("#ModalSelect").hide();
+    }
+
+    function OpenModal()
+    {
+        console.log("Open modal");
+        $.ajax({
+            type: 'GET',
+            url: '/Dashboard/GetWorkItemRelations',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                response.forEach(function(element) {
+                    console.log(element);
+                    $("#WorkItemRelationsGrid").append("<option value=\""+element.id+"\">"+element.relationName+"</option>");
+                });
+               $('#WorItemsGridPanel').modal('show'); 
+               var element = document.getElementsByClassName("modal-backdrop show");
+                $(element).remove();
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr);
+            }
+        });
+   //     $('#WorItemsGridPanel').modal('show'); 
+
     }
 
     function AddAssocuatedItem(id){
@@ -895,10 +994,12 @@
         
         var dto = {
             "WorkItemId": id,
+            "CurrWorkItemId" : @WorkItemData.Id,
             "ProjectId" : project,
-            "RelationType" :  $("#RelationshipType :selected").val(),
+            "RelationType" :  $("#WorkItemRelationsGrid :selected").val(),
             "LinkedItems" : selectedChildren
         }
+        console.log(dto);
          $.ajax({
             type: 'POST',
             url: '/Dashboard/ValidateSelectedItem',
@@ -906,35 +1007,60 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                if(response !== undefined)
+                console.log(response);
+                if(response.valid === true)
                 {
-                    var cItem = {
-                        "WorkItemId" : id,
-                        "RelationShipId": $("#RelationshipType :selected").val()
-                    }
-                    console.log(response);
-                    selectedChildren.push(cItem);
-                    if(response.workItemTypeId === 1)
-                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-bug\" style=\"padding:3px;\" ></i>"+response.title+"</a></li>");
-                    else if(response.workItemTypeId === 5)
-                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-crown\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
-                    else if(response.workItemTypeId === 6)
-                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-exclamation-triangle\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
-                    else if(response.workItemTypeId === 4)
-                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-vial\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
-                    else if(response.workItemTypeId === 7)
-                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-user-circle\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
-                    else if(response.workItemTypeId === 3)
-                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-tasks\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
-                    else if(response.workItemTypeId === 2)
-                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-cog\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
 
-                    $("[data-dismiss=modal]").trigger({ type: "click" });
-                }
+                    var wItemDTO = {
+                            "WorkItemId" : response.workItemId,
+                            "RelationShipId": response.relationshipId
+                        };
+                    selectedChildren.push(wItemDTO);
+                    $("#listview-defholder").html("");
+                    var res = "";
+                    res += "<div id=\"listview-def\" tabindex=\"1\" >";
+
+                    res += "<ul>";
+                    response.workItem.forEach(element => 
+                    {
+                        if(element.workItemTypeId === 1)
+                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+" \"><i class=\"fas fa-bug\" style=\"padding:3px;\" ></i>"+element.title+"</li>";
+                        else if(element.workItemTypeId === 5)
+                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+" \"><i class=\"fas fa-crown\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
+                        else if(element.workItemTypeId === 6)
+                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+" \"><i class=\"fas fa-exclamation-triangle\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
+                        else if(element.workItemTypeId === 4)
+                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+" \"><i class=\"fas fa-vial\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
+                        else if(element.workItemTypeId === 7)
+                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+" \"><i class=\"fas fa-user-circle\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
+                        else if(element.workItemTypeId === 3)
+                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+" \"><i class=\"fas fa-tasks\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
+                        else if(element.workItemTypeId === 2)
+                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+" \"><i class=\"fas fa-cog\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
+                      
+                    });
+                    res += "</ul>";
+                    res += "</div>";
+                    $("#listview-defholder").html(res);
+
+                    var listObj = new ej.lists.ListView();
+
+                    //Render initialized ListView component
+                    listObj.appendTo('#listview-def');
+                    console.log(response);
+                 }
                 else
                 {
                     alert("Item with ID" + id+ " Is already linked with the current work item please chose another item!");
+                    for(var i = selectedChildren.length - 1; i >= 0; i--) {
+                        if(selectedChildren[i].WorkItemId === id) {
+                            selectedChildren.splice(i, 1);
+                        }
+                    }
                 }
+                $("#ModalAdd").show();
+                $("#ModalSelect").hide();
+                $("#WorItemsGridPanel").modal('hide');
             },
             error: function (xhr, status, error) {
                 console.log(error);
@@ -1058,27 +1184,22 @@
 
     function WorkItemGridDoubleClicked(args)
     {
-        console.log(args);
-        var dto = {
-            "WorkItemId": @WorkItemData.Id,
-            "CurrWorkItemId" : args.rowData.id,
-            "RelationType": args.rowData.workItemTypeId,
-            "ProjectId" : @projectId
-        }
-          $.ajax({
-                type: 'POST',
-                url: '/Dashboard/AssociatedWorkItemRelation',
-                data: JSON.stringify(dto),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    InitiliazeComboBox(response);
-                },
-                error: function (xhr, status, error) {
-                    console.log(error);
-                }
-            });
+  
         AddAssocuatedItem(args.rowData.id);
         
     }
 </script>
+<style>
+    #listview-def,
+    #listview-grp {
+        border: 1px solid #dddddd;
+        border-radius: 3px;
+    }
+
+    @@media screen and (max-width: 590px) {
+        #flat-list,
+        #group-list {
+            width: 100%;
+        }
+    }
+</style>

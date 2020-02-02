@@ -127,6 +127,30 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
             dbVersion.DueDate = currentItem.DueDate.Ticks == 0 ? DateTime.Now : currentItem.DueDate;
             Context.Entry(dbVersion).State = EntityState.Modified;
             Context.SaveChanges();
+
+            currentItem.SelectedChildren.ForEach(x=>{
+                var relId = int.Parse(x.RelationShipId);
+
+                var getItem = Context.WorkItemRelations.FirstOrDefault(y=>y.Id ==relId);
+                if(getItem.RelationName != "Parent")
+                {
+                    Context.AssociatedWrorkItemChildren.Add(new AssociatedWrorkItemChildren{
+                        WorkItemChildId = x.WorkItemId,
+                        WorkItemId = currentItem.WorkItemId,
+                        RelationType = relId
+                    });
+                    Context.SaveChanges();
+                }
+                else
+                {
+                    var dbItem = Context.WorkItem.FirstOrDefault(y=>y.Id == x.WorkItemId);
+                    dbItem.ParentId = currentItem.WorkItemId;
+                    Context.Attach(dbItem);
+                    Context.Update(dbItem);
+                    Context.SaveChanges();
+                        
+                }
+            });
             return true;
         }
 
@@ -270,27 +294,17 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 Context.SaveChanges();           
             }
             currentItem.SelectedChildren.ForEach(x=>{
-                                                var relId = int.Parse(x.RelationShipId);
+                    var relId = int.Parse(x.RelationShipId);
 
                     var getItem = Context.WorkItemRelations.FirstOrDefault(y=>y.Id ==relId);
                     if(getItem.RelationName != "Parent")
                     {
-                        if(getItem.RelationName == "Child")
-                        {
-                            var getWorkItem = Context.WorkItem.FirstOrDefault(y=> y.Id == x.WorkItemId);
-                            getWorkItem.ParentId =item.Entity.Id;
-                            
-                            Context.Attach(getWorkItem);
-                            Context.Entry(getWorkItem).Property("ParentId").IsModified = true;
-                            Context.SaveChanges();
-                            Context.AssociatedWrorkItemChildren.Add(new AssociatedWrorkItemChildren{
-                                WorkItemChildId = x.WorkItemId,
-                                WorkItemId = item.Entity.Id,
-                                RelationType = relId
-                            });
-                            Context.SaveChanges();
-                        }
-                     
+                        Context.AssociatedWrorkItemChildren.Add(new AssociatedWrorkItemChildren{
+                            WorkItemChildId = x.WorkItemId,
+                            WorkItemId = item.Entity.Id,
+                            RelationType = relId
+                        });
+                        Context.SaveChanges();
                     }
                     else
                     {

@@ -94,6 +94,11 @@ namespace Rokono_Control.Controllers
             return View();
         }
 
+        public IActionResult ProjectDetails()
+        {
+            return View();
+        }
+
         public IActionResult EditAccount(int id)
         {
             var currentUser = this.User;
@@ -328,20 +333,39 @@ namespace Rokono_Control.Controllers
         
         
         [HttpPost] 
-        public WorkItem ValidateSelectedItem([FromBody] IncomignWorkItemRelation incomingRequest)
+        public OutgoingValidWorkItem ValidateSelectedItem([FromBody] IncomignWorkItemRelation incomingRequest)
         {
-            var result = default(WorkItem);
+            
+            var result = new OutgoingValidWorkItem();
           
-                using(var context = new DatabaseController())
+            using(var context = new DatabaseController())
+            {
+                var defaultUserAccount = context.GetDefaultAccount();
+                result.WorkItem = new List<WorkItem>();
+                if(!incomingRequest.LinkedItems.Any(x=>x.WorkItemId == incomingRequest.WorkItemId))
                 {
-                    if(incomingRequest.LinkedItems == null)
-                        result = context.ValidateWorkItemConnection(incomingRequest);
-                    else if(!incomingRequest.LinkedItems.Any(x=>x.WorkItemId == incomingRequest.WorkItemId))
+                    if(incomingRequest.CurrWorkItemId != 1)
                     {
-                        result = context.ValidateWorkItemConnection(incomingRequest);
+                        var workItemData = context.GetWorkItemChildrenClean(incomingRequest.CurrWorkItemId); 
+                        var currentWorkItem = context.GetWorkItemClean(incomingRequest.CurrWorkItemId, incomingRequest.ProjectId);
+                        if(currentWorkItem.ParentId != null )
+                        {
+                            if(currentWorkItem.ParentId != 0)
+                                result.WorkItem.Add(context.GetWorkItemClean(currentWorkItem.ParentId.Value, incomingRequest.ProjectId));
+                        }
+                        result.WorkItem = workItemData;
+
                     }
+                    incomingRequest.LinkedItems.ForEach(x=>{
+                        result.WorkItem.Add(context.GetWorkItemClean(x.WorkItemId, incomingRequest.ProjectId));
+                    });
+                    result.Valid = true;
+                    result.WorkItem.Add(context.GetWorkItemClean(incomingRequest.WorkItemId, incomingRequest.ProjectId));
+                    result.WorkItemTypeId = int.Parse(incomingRequest.RelationType);
+                    result.WorkItemId = incomingRequest.WorkItemId;
+                    result.RelationshipId = incomingRequest.RelationType;
                 }
-           
+            }
             return result;
         }
 

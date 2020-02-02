@@ -40,6 +40,7 @@ namespace Rokono_Control
             }));
            
             services.AddRazorPages();
+ 
             services.AddSignalR();
              services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie();
@@ -70,7 +71,7 @@ namespace Rokono_Control
             {
                 endpoint.MapRazorPages();
                 endpoint.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
-
+                
             });
        }
     }

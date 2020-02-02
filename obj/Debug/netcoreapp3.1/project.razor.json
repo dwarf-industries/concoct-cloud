@@ -20551,6 +20551,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Dashboard/ProjectDetails.cshtml",
+      "TargetPath": "Views/Dashboard/ProjectDetails.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Shared/_LayoutDashboard.cshtml",
       "TargetPath": "Views/Shared/_LayoutDashboard.cshtml",
       "FileKind": "mvc"

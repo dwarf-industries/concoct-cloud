@@ -10,7 +10,7 @@
 
  <!-- end of sidebar element -->
         <!-- main-content declaration -->
-        <div class="main-content" id="main-text" style="height: 94vh;">
+        <div class="main-content" id="main-text" >
             <div class="sidebar-content">
 <div class="row" style="margin:0px;">
 <div class="col-md-12">
@@ -34,7 +34,7 @@
 
                 
             </div>
-           <div class="control-section">
+           <div class="control-section" style="height:97vh;">
                 <div class="content-wrapper">
                     <div id="TreeGrid"></div>
                 </div>
@@ -156,10 +156,10 @@
             allowFiltering: true,
             allowSorting: true,
             toolbar: ['Search'],
-
+            recordDoubleClick: EditWorkItem,
             enableVirtualization: true,
             filterSettings: { type: 'Menu' },
-            selectionSettings: { persistSelection: true, type: "Multiple", checkboxOnly: true },
+            selectionSettings: { persistSelection: true, type: "Multiple" },
             enableHover: false,
             allowPaging: true,
             pageSettings: { pageSize: 20 },
@@ -183,6 +183,12 @@
     }
     function WorkItemSelected(args){
         console.log(args);
+    }
+
+    function EditWorkItem(args)
+    {
+        console.log(args);
+        window.location.href = "/Dashboard/EditWorkItem?projectId=@result&&workItem="+args.rowData.id
     }
     function load(args) {
         this.parentDetails.parentKeyFieldValue = this.parentDetails.parentRowData['id'];

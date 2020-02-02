@@ -30,8 +30,8 @@
         <div class="main-content" id="main-text">
             <div class="sidebar-content">
                
- <div class="container">
-<div class="row">
+ <div class="container-fluid">
+<div class="row RowContainer">
     <div class="col-md-12">
         <div class="main-card mb-1 card">
             <div class="card-body">
@@ -60,7 +60,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row RowContainer">
     <div class="col-md-12">
         <div class="main-card mb-1 card">
             <div class="card-body">
@@ -133,7 +133,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row RowContainer">
     <div class="col-md-12">
         <div class="main-card mb-1 card">
             <div class="card-body">
@@ -159,7 +159,7 @@
                             <!-- Tab panes -->
                             <div class="tab-content card-block">
                                 <div class="tab-pane active" id="home3" role="tabpanel">
-                                    <div class="row">
+                                    <div class="row RowContainer">
                                         <div class="col-md-6" style="padding-right:50px;">
                                             @if(WorkItemType == 1)
                                             {
@@ -208,7 +208,7 @@
                                             } 
 
                                         </div>
-                                        <div class="col-md-6" style="padding-left:3px;">
+                                        <div class="col-md-6 " style="padding-left:3px;">
                                             <div class="row">
                                                 <div class="col-md-6" style="padding:20px;">
                                                     <div class="row">
@@ -516,7 +516,7 @@
                                                         </div>
                                                     }
                                                 </div>
-                                                <div class="col-md-6" style="padding:20px;">
+                                                <div class="col-md-6 " style="padding:20px;">
                                                     <div class="row">
                                                         <h4>Development</h4>
                                                         <h4/>
@@ -527,14 +527,20 @@
                                                         <a class="mb-2 mr-2 btn-transition btn btn-outline-info" ><i class="fas fa-plus"></i> Associate</a>
 
                                                     </div>
+                                         
                                                     <div class="row">
                                                         <h4>Related Work</h4>
                                                         <h4/>
                                                         
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="animation-model">
-                                                            
+                                                    <div class="row" id="listview-defholder" >
+                                                        <div id="listview-def" tabindex="1" >
+                                                            <ul id="RelatedWork" style="list-style-type:none; padding:0px;">
+                                                               
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">                                                            
                                                             <!-- Large modal -->
                                                         <button type="button"  onclick="OpenModal()" class="btn btn-primary" >Large modal</button>
                                                         <div class="modal bd-example-modal-lg" id="WorItemsGridPanel" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -584,6 +590,7 @@
     
                                                             </div>
                                                         </div>
+                                                    </div>
                                                     <div class="row" style="max-height:200px;overflow-y: scroll;">
                                                         <ul id="RelatedWork" style="list-style-type:none">
 
@@ -928,29 +935,18 @@
 
     function WorkItemGridDoubleClicked(args)
     {
-        console.log(args);
-        var dto = 
-        {
-            "WorkItemId" : args.rowData.id,
-            "RelationShipId": args.rowData.workItemTypeId,
-         }
-       // selectedChildren.push(dto);
+  
         AddAssocuatedItem(args.rowData.id);
         
     }
 
 
-      function WorkItemSelected(args){
+    function WorkItemSelected(args){
         console.log(args);
-        var dto = {
-            "WorkItemId" : args.rowData.id,
-            "RelationShipId": $("#WorkItemRelationsGrid :selected").val()
-        }
-        selectedChildren.push(dto);
+       
        AddAssocuatedItem(args.rowData.id);
     }
-
-    function AddAssocuatedItem(id){
+ function AddAssocuatedItem(id){
         var project = @projectId;
 
         
@@ -969,29 +965,47 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                if(response !== undefined)
+                console.log(response);
+                if(response.valid === true)
                 {
-                    var cItem = {
-                        "WorkItemId" : id,
-                        "RelationShipId": $("#RelationshipType :selected").val()
-                    }
-                    console.log(response);
-                    selectedChildren.push(cItem);
-                    if(response.workItemTypeId === 1)
-                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-bug\" style=\"padding:3px;\" ></i>"+response.title+"</a></li>");
-                    else if(response.workItemTypeId === 5)
-                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-crown\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
-                    else if(response.workItemTypeId === 6)
-                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-exclamation-triangle\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
-                    else if(response.workItemTypeId === 4)
-                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-vial\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
-                    else if(response.workItemTypeId === 7)
-                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-user-circle\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
-                    else if(response.workItemTypeId === 3)
-                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-tasks\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
-                    else if(response.workItemTypeId === 2)
-                        $("#RelatedWork").append("<li style=\"padding:5px;width:100%\"><a class=\"BoundRelationRow\" href=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+id+ " \"  ><i class=\"fas fa-cog\"  style=\"padding:3px;\"></i>"+response.title+"</a></li>");
 
+                    var wItemDTO = {
+                            "WorkItemId" : response.workItemId,
+                            "RelationShipId": response.relationshipId
+                        };
+                    selectedChildren.push(wItemDTO);
+                    $("#listview-defholder").html("");
+                    var res = "";
+                    res += "<div id=\"listview-def\" tabindex=\"1\" >";
+
+                    res += "<ul>";
+                    response.workItem.forEach(element => 
+                    {
+                        if(element.workItemTypeId === 1)
+                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+" \"><i class=\"fas fa-bug\" style=\"padding:3px;\" ></i>"+element.title+"</li>";
+                        else if(element.workItemTypeId === 5)
+                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+" \"><i class=\"fas fa-crown\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
+                        else if(element.workItemTypeId === 6)
+                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+" \"><i class=\"fas fa-exclamation-triangle\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
+                        else if(element.workItemTypeId === 4)
+                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+" \"><i class=\"fas fa-vial\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
+                        else if(element.workItemTypeId === 7)
+                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+" \"><i class=\"fas fa-user-circle\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
+                        else if(element.workItemTypeId === 3)
+                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+" \"><i class=\"fas fa-tasks\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
+                        else if(element.workItemTypeId === 2)
+                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+" \"><i class=\"fas fa-cog\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
+                      
+                    });
+                    res += "</ul>";
+                    res += "</div>";
+                    $("#listview-defholder").html(res);
+
+                    var listObj = new ej.lists.ListView();
+
+                    //Render initialized ListView component
+                    listObj.appendTo('#listview-def');
+                    console.log(response);
                  }
                 else
                 {

@@ -51,7 +51,7 @@ namespace Rokono_Control.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=192.168.1.3;Database=RokonoControl;User ID=Kristifor;Password=';;@Hanjolite';");
+                optionsBuilder.UseSqlServer("Server=192.168.1.3;Database=RokonoControl;User ID=rokono;Password='';");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Rokono_Control.Models
                 entity.HasOne(d => d.RelationTypeNavigation)
                     .WithMany(p => p.AssociatedWrorkItemChildren)
                     .HasForeignKey(d => d.RelationType)
-                    .HasConstraintName("FK__Associate__Relat__2EA5EC27");
+                    .HasConstraintName("FK__Associate__Relat__2F9A1060");
 
                 entity.HasOne(d => d.WorkItemChild)
                     .WithMany(p => p.AssociatedWrorkItemChildrenWorkItemChild)
