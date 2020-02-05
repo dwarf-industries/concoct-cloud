@@ -28,6 +28,10 @@ namespace Rokono_Control.DatabaseHandlers
                                                 .ThenInclude(Board => Board.AssociatedBoardWorkItems)
                                                 .ThenInclude(AssociatedBoardWorkItems => AssociatedBoardWorkItems.WorkItem)    
                                                 .ThenInclude(WorkItem => WorkItem.State)   
+                                                .Include(x=>x.Board)
+                                                .ThenInclude(Board => Board.AssociatedBoardWorkItems)
+                                                .ThenInclude(AssociatedBoardWorkItems => AssociatedBoardWorkItems.WorkItem)    
+                                                .ThenInclude(WorkItem => WorkItem.WorkItemType)
                                                 .Where(x=>x.ProjectId == projectId && x.Board.AssociatedBoardWorkItems.Any(z=>z.WorkItem.WorkItemTypeId == workItemType)).ToList();
             
             var result = new List<BindingBoard>();
@@ -43,9 +47,15 @@ namespace Rokono_Control.DatabaseHandlers
                     });
                    
                     Cards.Add(new BindingCards{
-                        Id = y.WorkItem.Id,
-                        Summary = y.WorkItem.Title,
+                        InnerId = y.WorkItem.Id,
+                        Id = $"Task {y.WorkItem.Id}",
+                        Summary = $"asd {y.WorkItem.Description}",
+                        Title = y.WorkItem.Title,
+                        Tags = $"{y.WorkItem.WorkItemType.TypeName}",
+                        Priority = "High",
+                        Type = $"{x.Board.BoardName}",
                         Status = x.Board.BoardName,
+                        Assignee = y.WorkItem.WorkItemType.TypeName
                        // Children = related
                     });
                 });
@@ -97,7 +107,7 @@ namespace Rokono_Control.DatabaseHandlers
 
             currentAssociation.BoardId = newBoardAssociation.Board.Id;
             Context.Attach(currentAssociation);
-            Context.Entry(currentAssociation).Property("BoardId").IsModified = true;
+            Context.Update(currentAssociation);
             Context.SaveChanges();
 
 
