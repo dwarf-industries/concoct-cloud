@@ -63,6 +63,70 @@ namespace Rokono_Control.DatabaseHandlers
             return Cards;
         }
 
+        internal List<BindingCards> GetProjectSprints(int projectId)
+        {
+            var result = new List<BindingBoard>();
+            var Cards = new List<BindingCards>();
+            var projectSprints = Context.WorkItem.Where(x=>x.WorkItemTypeId == 7).ToList();
+            projectSprints.ForEach(x=>{
+                var sprintTasks = Context.AssociatedWrorkItemChildren.Include(y => y.WorkItemChild)
+                                                                     .ThenInclude(WorkItemChild => WorkItemChild.WorkItemType)
+                                                                     .Include(y => y.WorkItemChild)
+                                                                     .ThenInclude(WorkItemChild => WorkItemChild.AssignedAccountNavigation)
+                                                                     .Where(y => y.WorkItemId == x.Id && y.WorkItemChild.WorkItemTypeId == 3)
+                                                                     .ToList();
+                sprintTasks.ForEach(task => {
+                    var taskBoard = Context.AssociatedBoardWorkItems.Include(z => z.Board)
+                                                                    .FirstOrDefault(z=>z.WorkItemId == task.Id);
+
+                    var activeBoard =string.Empty;
+                    if(taskBoard == null)
+                        activeBoard = "Open";
+                    else
+                        activeBoard = taskBoard.Board.BoardName;
+                    Cards.Add(new BindingCards{
+                        InnerId = task.WorkItemChild.Id,
+                        Id = $"Task {task.WorkItemChild.Id}",
+                        Summary = $"asd {task.WorkItemChild.Description}",
+                        Title = task.WorkItemChild.Title,
+                        Tags = $"{task.WorkItemChild.WorkItemType.TypeName}",
+                        Priority = GetCardType(task.WorkItemChild.WorkItemType.TypeName),
+                        Type = $"{activeBoard}",
+                        Status = activeBoard,
+                        Assignee = x.Title,
+                        AssgignedAccount = task.WorkItemChild.AssignedAccountNavigation.GitUsername
+                    });
+                });
+                    
+            });
+        
+            return Cards;
+        }
+
+        private string GetCardType(string board)
+        {
+            var res = string.Empty;
+            switch(board)
+            {
+                case "Epic":
+                    res = "Normal";
+                break;
+                case "Bug":
+                    res = "Bug";
+                break;
+                case "Task":
+                    res = "Task";
+                break;  
+                case "User Story":
+                    res = "Sprint";
+                break;
+                default:
+                    res = "Task";
+                break;
+            }
+            return res;
+        }
+
         internal object GetProjectName(int projectId)
         {
             return Context.Projects.FirstOrDefault(x=>x.Id == projectId).ProjectName;

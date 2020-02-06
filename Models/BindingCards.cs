@@ -12,6 +12,7 @@ namespace RokonoControl.Models
         public string Summary { get; set; }
         public string Status { get; set; }
         public string Tags { get; set; }
+        public string AssgignedAccount { get; set; }
         public string Title { get; set; }
      //   public List<RelatedItems> Children { get; set; }
     }

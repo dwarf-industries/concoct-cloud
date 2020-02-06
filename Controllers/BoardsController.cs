@@ -25,6 +25,21 @@ namespace RokonoControl.Controllers
              }
             return View();
         }
+           public IActionResult Sprints(int projectId)
+        {
+            var currentUser = this.User;
+            var rights = currentUser.Claims.LastOrDefault().Value;
+            ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
+            using(var context = new DatabaseController())
+            {
+                ViewData["ProjectId"] = projectId;
+                ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
+                ViewData["ProjectName"] = context.GetProjectName(projectId);
+
+             }
+            return View();
+        }
+
 
         [HttpGet]
         public List<BindingCards> GetWorkItems(int projectId, int workItemType)
@@ -33,6 +48,17 @@ namespace RokonoControl.Controllers
             using(var context = new DatabaseController())
             {
                result =context.GetProjectCards(projectId, workItemType);
+            }
+            return result;
+        }
+
+         [HttpGet]
+        public List<BindingCards> GetSprints(int projectId)
+        {
+            var result = new List<BindingCards>();
+            using(var context = new DatabaseController())
+            {
+               result = context.GetProjectSprints(projectId);
             }
             return result;
         }

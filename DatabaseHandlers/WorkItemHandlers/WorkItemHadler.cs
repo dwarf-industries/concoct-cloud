@@ -275,7 +275,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
             databaseItem.DueDate = currentItem.DueDate.Ticks == 0 ? DateTime.Now : currentItem.DueDate;
             var item = Context.WorkItem.Add(databaseItem);
             Context.SaveChanges();
-        
+         
             var pBoard = Context.AssociatedProjectBoards.Include(x=>x.Board).FirstOrDefault(x=> x.ProjectId == currentItem.ProjectId && x.Board.BoardName == "Open");
             if(pBoard != null)
             {
