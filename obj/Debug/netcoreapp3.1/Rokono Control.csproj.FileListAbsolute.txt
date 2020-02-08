@@ -85,3 +85,4 @@
 /home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.pdb
 /home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ProjectDetails.cshtml.g.cs
 /home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Boards/Sprints.cshtml.g.cs
+/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Boards/ProjectBacklog.cshtml.g.cs

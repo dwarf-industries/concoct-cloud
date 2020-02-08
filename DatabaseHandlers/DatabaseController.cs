@@ -755,7 +755,7 @@ namespace Rokono_Control.DatabaseHandlers
         }
  
 
-        internal List<AssociatedBoardWorkItems> GetProjectWorkItems(int id)
+        internal List<AssociatedBoardWorkItems> GetProjectWorkItems(int id, int parentType)
         {
             var items = Context.AssociatedBoardWorkItems.Include(x=>x.WorkItem)
                                                    .ThenInclude(WorkItem => WorkItem.WorkItemType)
@@ -769,7 +769,7 @@ namespace Rokono_Control.DatabaseHandlers
                                                    .Include(x=> x.WorkItem)
                                                    .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItem)
                                                    .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.RelationTypeNavigation)
-                                                   .Where(x=>x.ProjectId == id)
+                                                   .Where(x=>x.ProjectId == id && x.WorkItem.WorkItemTypeId == parentType)
                                                    .ToList();
             return  items;
         }

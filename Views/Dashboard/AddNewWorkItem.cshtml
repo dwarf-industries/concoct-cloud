@@ -15,6 +15,7 @@
     var Risks = ViewData["Risks"] as List<Risks>;
     var projectId = ViewData["ProjectId"] as int?;
     var WorkItemType = ViewData["WorkItemType"] as int?;
+    var ParentId = ViewData["ParentId"] as int?;
 }
 
 
@@ -884,7 +885,8 @@
             "DueDate" : dueDateVal,
             "Rank" :$("#Rank").val() ,
             "StoryPoints" : $("#StoryPoints").val(),
-            "SelectedChildren" : selectedChildren
+            "SelectedChildren" : selectedChildren,
+            "ParentId": @ParentId
         }
          if($("#Title").val()) {
             $.ajax({

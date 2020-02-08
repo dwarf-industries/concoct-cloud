@@ -74,7 +74,7 @@
         
           var dto = {
             "id": id,
-            
+            "WorkItemType":5
         }
         console.log(dto);
         $.ajax({
@@ -116,7 +116,7 @@
     function CreateNewWorkItem(id){
         ProjectId = @result;
         boardId = @BoardId;
-        window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+id;
+        window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+id+"&parentId=0";
     }
     function WorkItemSelected(args){
         console.log(args);

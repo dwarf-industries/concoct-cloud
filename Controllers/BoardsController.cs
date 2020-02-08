@@ -25,6 +25,23 @@ namespace RokonoControl.Controllers
              }
             return View();
         }
+
+        public IActionResult ProjectBacklog(int projectId, int boardId)
+        {
+            var currentUser = this.User;
+            var rights = currentUser.Claims.LastOrDefault().Value;
+            ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
+            using(var context = new DatabaseController())
+            {
+                ViewData["Relationships"] = context.GetProjectRelationships();
+                ViewData["ProjectId"] = projectId;
+                ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
+                ViewData["ProjectName"] = context.GetProjectName(projectId);
+                ViewData["BoardId"] = boardId;
+
+             }
+            return View();
+        }
            public IActionResult Sprints(int projectId)
         {
             var currentUser = this.User;

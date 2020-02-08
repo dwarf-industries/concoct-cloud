@@ -35,7 +35,7 @@ namespace Rokono_Control.Controllers
             var result = new List<OutgoingWorkItem>(); 
             using(var context = new DatabaseController())
             {
-                var  data = context.GetProjectWorkItems(IncomingIdRequest.Id);
+                var  data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType);
                 var bData =  data.Select(x=>x.WorkItem).ToList();
                 bData.ForEach(x=>{
                     result.Add(new OutgoingWorkItem{
@@ -52,7 +52,39 @@ namespace Rokono_Control.Controllers
 
             return result;
         }
+        [HttpPost]
+        public List<OutgoingWorkItem> GetBacklogWorkItems([FromBody] IncomingIdRequest IncomingIdRequest)
+        {
+            
+            var result = new List<OutgoingWorkItem>(); 
+            using(var context = new DatabaseController())
+            {
+                var  data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType);
+                var bData =  data.Select(x=>x.WorkItem).ToList();
+                bData.ForEach(x=>{
+                    result.Add(new OutgoingWorkItem{
+                        Id = x.Id,
+                   //     WorkItemIcon = x.WorkItemType.Icon,
+                        Title =x.Title,
+                        TypeId = x.WorkItemTypeId.Value,
+                        Description = x.Description,
+                        AssignedTo = x.AssignedAccountNavigation == null ? "": x.AssignedAccountNavigation.Email,
+                        subtasks = x.AssociatedWrorkItemChildrenWorkItem != null ? context.GetWorkItemChildrenClean(x.Id).Select(y=>new OutgoingWorkItem {
+                                Id = y.Id,
+                              //  WorkItemIcon = y.WorkItemType.Icon,
+                                Title =y.Title,
+                                TypeId = y.WorkItemTypeId.Value,
+                                Description = y.Description,
+                                AssignedTo = y.AssignedAccountNavigation == null ? "": y.AssignedAccountNavigation.Email,
 
+                        }).ToList() : null
+                    });     
+                });
+               // result = GetChildren(data,result);
+            }
+
+            return result;
+        }
        
     }
 }

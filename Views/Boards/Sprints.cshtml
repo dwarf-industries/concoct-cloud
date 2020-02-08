@@ -83,6 +83,9 @@
         </div>
         <!-- end of main-content -->
      <style type="text/css">
+    .e-icons {
+        font-family: "e-icons" !important;
+    }
     .e-kanban .header-template-wrap {
         display: inline-flex;
         font-size: 15px;
@@ -207,6 +210,26 @@
     .bootstrap4 .e-kanban .Close::before {
         content: '\e7d9';
     }
+
+   .e-kanban .e-card .Interactice{
+        padding: 2%;
+        text-align:center;
+    }
+    .e-kanban .e-card .Interactice:hover{
+        padding: 2%;
+        text-align:center;
+        border:0.4px solid #1c86c8;
+    }
+    e-kanban .e-card .e-text .col-3 .status:before{
+        font-family: "e-icons" !important;
+        content:'\e270';
+        color:#ffd600;
+    }
+    .card-template   .e-search:before{
+        font-family: "e-icons" !important;
+        content:'\e526';
+        color:#ffd600;
+    }           
 </style>
 
 
@@ -348,23 +371,42 @@
     <div class="header-template-wrap">
         <div class="header-icon e-icons ${keyField}"></div>
         <div class="header-text">${headerText}</div>
+ 
     </div>
 </script>
 <script id="cardTemplate" type="text/x-jsrender">
-        <div class='card-template ${priority}'>
-	        <div class='card-header e-tooltip-text'>${title}</div>
-            <div class='card-template-wrap'>
-		       <table>
-                <tbody>
-                    <tr>
-				        <td class='e-title e-tooltip-text'><div class='e-text'>${summary}</div></td>
-                        <td class='e-title e-tooltip-text'><div class='e-text' onclick="ChangeOwner()">${AssgignedAccount}</div></td>
-
-				    </tr>
-                </tbody>
-              </table>   
-   
-             </div>
-
+<div class='card-template ${priority}' style='content: "\e511 ";'>
+    <div class='card-header e-tooltip-text'>
+        <div class="row" style="display:flex;">
+            <div class="col-2">
+                <span class="e-search"></span>
+            </div>
+            <div class="col-10" style="width:100%; text-align:center;">
+                <span style="text-align:center;">${title}</span>
+            </div>
         </div>
+    </div>
+        
+   
+    <div class='card-template-wrap'>
+        <div class="row" style="padding:2%;">
+            <div class='e-text'>${summary}</div>
+            
+        </div>
+        <div class="row"  style="padding:2%;">
+            <div class='Interactice' onclick="ChangeOwner()" >${assgignedAccount}</div>
+        </div>
+        <div class="row status" style="display:flex;padding:2%;">
+        
+            <div class="col-3">
+                <span class='status'></span><div class='e-text' style="text-align:left;">Status:</div>
+            </div>
+            <div class="col-9" style="width:100%;">
+                <div class='Interactice' >${status}</div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
 </script>

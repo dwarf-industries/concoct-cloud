@@ -22,17 +22,10 @@
             <div class="btn-group dropdown-split-primary">
                 <button type="button" id="iconbtn" class="btn btn-primary">New Work Item</button>
                                       
-
-               
-
-                <button   id="QueryBtn">Open In Query</button>
-                <button   id="ImportWorkItemBtn"></i>Import Work Items</button>
+                <button   id="QueryBtn" >View as board</button>
+                <button   id="ImportWorkItemBtn"></i>Email report</button>
                 <button   id="ExportWorkItemBtn">Export Work Items</button>
-                <button   Id="RecycleBtn">Recycle Work Items</button>
 
-
-
-                
             </div>
            <div class="control-section" style="height:97vh;">
                 <div class="content-wrapper">
@@ -45,17 +38,27 @@
 </div>
             </div>
         </div>
+
+    <div id="modalDialog">
+        <div class="btn-group dropdown-split-primary" style="text-align:center;">
+             <button   id="taskBtn" onclick="NewTask()">Task</button>
+            <button   id="issueBtn" onclick="NewIssue()"></i>Issue</button>
+            <button   id="bugBtn" onclick="NewBug()">Bug</button>
+        </div>
+    </div>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
 
  <script>
+    ej.treegrid.TreeGrid.Inject(ej.treegrid.Edit, ej.treegrid.CommandColumn);
 
-
-   
+    var treeGridObj;
+    var dialogObj;
     var ProjectId = @result;
     var  boardId = @BoardId;
+    var selected;
     function OpenWorkItem(id)
     {
         console.log(id);
@@ -66,12 +69,12 @@
         
           var dto = {
             "id": id,
-            "WorkItemType":5
+            "WorkItemType": 7
         }
         console.log(dto);
         $.ajax({
             type: 'POST',
-            url: '/Backlogs/GetWorkItems',
+            url: '/Backlogs/GetBacklogWorkItems',
             data: JSON.stringify(dto),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -82,10 +85,22 @@
                 console.log(error);
             }
         });
-        
+        dialogObj = new ej.popups.Dialog({
+            width: '600px',
+            header: 'Choose you the type of work item that you want to associate with the current user story!',
+            isModal: false,
+            animationSettings: { effect: 'None' },
+            visible: false,
+
+            open: dialogOpen,
+            close: dialogClose
+        });
+        dialogObj.appendTo('#modalDialog');
+        dialogObj.hide();
     });
 
     ej.base.enableRipple(true);
+    //Menu Btns
     var queryBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     queryBtn.appendTo('#QueryBtn');
     var importWorkItemBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
@@ -95,6 +110,15 @@
     var recycleBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     recycleBtn.appendTo('#RecycleBtn');
     
+    //Dialog btns
+    var taskBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    taskBtn.appendTo('#taskBtn');
+    var bugBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    bugBtn.appendTo('#bugBtn');
+    var issueBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    issueBtn.appendTo('#issueBtn');
+ 
+
     // DropDownButton items declaration
     var items = [
         {
@@ -145,27 +169,49 @@
        // console.log(args);
     }
 
+    var onClick = function(args){ 
+        var rowIndex = ej.base.closest(args.target, '.e-row').rowIndex;
+        var data = treeGridObj.getCurrentViewRecords();
+        console.log(data[rowIndex]);
+        if(data[rowIndex].typeId === 5)
+            window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+2+"&boardId="+boardId+"&parentId="+data[rowIndex].id;
+        if(data[rowIndex].typeId === 2)
+            window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+7+"&boardId="+boardId+"&parentId="+data[rowIndex].id;
+        if(data[rowIndex].typeId === 7)
+            CallChoiceMenu(data[rowIndex]);
+     } 
+    function CallChoiceMenu(row)
+    {
+        selected = row;
+        dialogObj.show();
+    }
     function InitiliazeGrid(data )
     {
         console.log(data);
 
 
-        var treeGridObj = new ej.treegrid.TreeGrid({
+        treeGridObj = new ej.treegrid.TreeGrid({
             dataSource: data,
             allowSelection: true,
             allowFiltering: true,
             allowSorting: true,
+            allowResizing: true,
+            rowSelecting : GetCurrentRow,
+            childMapping: 'subtasks',
             toolbar: ['Search'],
             recordDoubleClick: EditWorkItem,
-            enableVirtualization: true,
             filterSettings: { type: 'Menu' },
-            selectionSettings: { persistSelection: true, type: "Multiple" },
-            enableHover: false,
+            treeColumnIndex: 1,
             allowPaging: true,
-            pageSettings: { pageSize: 20 },
+            cellEdit: AddNewWorkItem,
+            pageSettings: { pageCount: 2 },
             columns: [
-                { type: "checkbox", field: "", allowFiltering: false, allowSorting: false, width: '60' },
-                { field: 'WorkItemType.TypeName', headerText: 'Title', width: 125 },
+                {
+                    headerText: 'Manage Records', width: 130,
+                    commands: [{ type: 'Edit', buttonOption: { iconCss: ' e-icons e-edit', cssClass: 'e-flat', click:onClick } },
+                   ]
+                },
+                { field: 'WorkItemType.TypeName', headerText: 'Title', width: 60 },
                 { field: 'title', headerText: 'Title', width: 125 },
                 { field: 'description', headerText: 'Description', width: 180 },
                 { field: 'assignedAccountNavigation.Email', headerText: 'AssignedTo', width: 110 },
@@ -179,7 +225,13 @@
     function CreateNewWorkItem(id){
         ProjectId = @result;
         boardId = @BoardId;
-        window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+id+"&boardId="+boardId;
+        window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+id+"&boardId="+boardId+"&parentId=0";
+    }
+    
+    function GetCurrentRow(args)
+    {
+        console.log(args);
+        selected = args.data;
     }
     function WorkItemSelected(args){
         console.log(args);
@@ -193,6 +245,43 @@
     function load(args) {
         this.parentDetails.parentKeyFieldValue = this.parentDetails.parentRowData['id'];
     }
+
+    function AddNewWorkItem(args)
+    {
+        console.log(args);
+    }
+
+    function dialogClose() {
+            document.getElementById('dialogBtn').style.display = 'block';
+    }
+    function dialogOpen() {
+        document.getElementById('dialogBtn').style.display = 'none';
+    }
+
+    // Dialog will be closed, while clicking on overlay
+    function onChange(args) {
+            if(args.checked) {
+                dialogObj.overlayClick = function () {
+                    dialogObj.hide();
+                };
+            }
+            else {
+                dialogObj.overlayClick = function () {
+                    dialogObj.show();
+                };
+            }
+        }
+
+
+        function NewTask(){
+            window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+3+"&boardId="+boardId+"&parentId="+selected.id;
+        }
+        function NewIssue(){
+            window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+6+"&boardId="+boardId+"&parentId="+selected.id;
+        }
+        function NewBug(){
+            window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+1+"&boardId="+boardId+"&parentId="+selected.id;
+        }
  </script>
 
 

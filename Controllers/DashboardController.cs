@@ -26,7 +26,7 @@ namespace Rokono_Control.Controllers
             return View();
         }
      
-        public IActionResult AddNewWorkItem(int projectId, int workItemType)
+        public IActionResult AddNewWorkItem(int projectId, int workItemType, int parentId)
         {     
             var currentUser = this.User;
             using(var context = new DatabaseController())
@@ -45,7 +45,7 @@ namespace Rokono_Control.Controllers
                 ViewData["Risks"] = context.GetProjectRisks(projectId);
                 ViewData["WorkItemType"] = workItemType;
                 ViewData["ProjectId"] = projectId;
-
+                ViewData["ParentId"] = parentId;
             }
             return View();
         }

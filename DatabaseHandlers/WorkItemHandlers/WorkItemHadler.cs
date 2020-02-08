@@ -275,7 +275,16 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
             databaseItem.DueDate = currentItem.DueDate.Ticks == 0 ? DateTime.Now : currentItem.DueDate;
             var item = Context.WorkItem.Add(databaseItem);
             Context.SaveChanges();
-         
+            //Associated with parent id in case its being added as a child of another item
+            if(currentItem.ParentId != 0)
+            {
+                Context.AssociatedWrorkItemChildren.Add(new AssociatedWrorkItemChildren{
+                    RelationType = databaseItem.RelationId,
+                    WorkItemId = currentItem.ParentId,
+                    WorkItemChildId = databaseItem.Id
+                });
+                Context.SaveChanges();
+            }
             var pBoard = Context.AssociatedProjectBoards.Include(x=>x.Board).FirstOrDefault(x=> x.ProjectId == currentItem.ProjectId && x.Board.BoardName == "Open");
             if(pBoard != null)
             {

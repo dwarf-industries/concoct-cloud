@@ -45,7 +45,7 @@ namespace Rokono_Control.Models
         public string StoryPoints { get; set; }
         //Shared
         public List<LinkedItems> SelectedChildren  { get; set; }
-
+        public int ParentId { get; set; }
   
 
     }
