@@ -6828,24 +6828,26 @@
     ]
   },
   "packageFolders": {
-    "/home/kristifor/.nuget/packages/": {}
+    "C:\\Users\\krisk\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/kristifor/Projects/Webplatforms/RokonoControl/Rokono Control.csproj",
+      "projectUniqueName": "D:\\RokonoControl\\Rokono Control.csproj",
       "projectName": "Rokono Control",
-      "projectPath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Rokono Control.csproj",
-      "packagesPath": "/home/kristifor/.nuget/packages/",
-      "outputPath": "/home/kristifor/Projects/Webplatforms/RokonoControl/obj/",
+      "projectPath": "D:\\RokonoControl\\Rokono Control.csproj",
+      "packagesPath": "C:\\Users\\krisk\\.nuget\\packages\\",
+      "outputPath": "D:\\RokonoControl\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/kristifor/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\krisk\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -6919,7 +6921,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

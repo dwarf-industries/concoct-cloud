@@ -20,6 +20,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedCommitFiles> AssociatedCommitFiles { get; set; }
         public virtual DbSet<AssociatedProjectBoards> AssociatedProjectBoards { get; set; }
         public virtual DbSet<AssociatedProjectBuilds> AssociatedProjectBuilds { get; set; }
+        public virtual DbSet<AssociatedProjectIterations> AssociatedProjectIterations { get; set; }
         public virtual DbSet<AssociatedProjectMembers> AssociatedProjectMembers { get; set; }
         public virtual DbSet<AssociatedRepositoryBranches> AssociatedRepositoryBranches { get; set; }
         public virtual DbSet<AssociatedWrorkItemChildren> AssociatedWrorkItemChildren { get; set; }
@@ -51,7 +52,7 @@ namespace Rokono_Control.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=192.168.1.3;Database=RokonoControl;User ID=Kristifor;Password=';;@Hanjolite';");
+                optionsBuilder.UseSqlServer("Server=;Database=RokonoControl;User ID=Kristifor;Password='';");
             }
         }
 
@@ -136,6 +137,21 @@ namespace Rokono_Control.Models
                     .WithMany(p => p.AssociatedProjectBuilds)
                     .HasForeignKey(d => d.RepositoryId)
                     .HasConstraintName("FK__Associate__Repos__7C4F7684");
+            });
+
+            modelBuilder.Entity<AssociatedProjectIterations>(entity =>
+            {
+                entity.HasOne(d => d.Iteration)
+                    .WithMany(p => p.AssociatedProjectIterations)
+                    .HasForeignKey(d => d.IterationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_AssociatedProjectIterations_WorkItemIterations");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.AssociatedProjectIterations)
+                    .HasForeignKey(d => d.ProjectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_AssociatedProjectIterations_Projects");
             });
 
             modelBuilder.Entity<AssociatedProjectMembers>(entity =>

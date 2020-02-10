@@ -5,220 +5,77 @@
     var WorkItemTypes = ViewData["WorkItemTypes"] as List<WorkItemTypes>;
     var ProjectName = ViewData["ProjectName"] as string;
 }
- <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
 
-    <link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
-    <!--[if lt IE 9]>
-    <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
-    <![endif]-->
-
-    @* <link href="~/SuncfusionEj1/web/content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
+<!--[if lt IE 9]>
+<script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
+<![endif]-->
+@* <link href="~/SuncfusionEj1/web/content/ejthemes/default-theme/ej.web.all.min.css" rel="stylesheet" />
     <link href="~/SuncfusionEj1/web/content/default-responsive.css" rel="stylesheet" />
     <link href="~/SuncfusionEj1/web/content/ejthemes/responsive-css/ej.responsive.css" rel="stylesheet" />
     <!--[if IE 9]><!-->
     <script src="~/SuncfusionEj1/web/scripts/jsrender.min.js" type="text/javascript"></script> *@
-    <!--<![endif]-->
-    @* <script src="~/SuncfusionEj1/web/scripts/ej.web.all.min.js" type="text/javascript"></script>
+<!--<![endif]-->
+@* <script src="~/SuncfusionEj1/web/scripts/ej.web.all.min.js" type="text/javascript"></script>
     <script src="~/SuncfusionEj1/web/scripts/properties.js" type="text/javascript"></script> *@
- 
-    <style type="text/css" class="cssStyles">  
-     .e-backlog,.e-inprogress,.e-testing,.e-done {
-         font-size: 16px;
-         padding-right: 5px;
-		 display: inline-block;
-     }
-       .e-backlog:before{
-	       content: "\e807";
-	   }
-	   .e-inprogress:before{
-	   content: "\e808";
-	   }
-	   .e-testing:before{
-	   content:"\e809";
-	   }
-	   .e-done:before{
-	   content: "\e80a";
-	   }		  
-       .row{
-           margin-left: 15px;
-           margin-right: 15px;
-       }
-	   </style>
-       <!-- end of sidebar element -->
-        <!-- main-content declaration -->
-        <div class="main-content" id="main-text" style="height: 94vh;">
-            <div class="sidebar-content">
+
+<link href="~/css/Boards/Index.css" rel="stylesheet" />
+
+<!-- end of sidebar element -->
+<!-- main-content declaration -->
+<div class="main-content" id="main-text" style="height: 94vh;">
+    <div class="sidebar-content">
         <div class="main-card mb-12 card">
             <div class="card-body text-center">
-                 
+
                 <div class="page-title-heading">
                     <div class="page-title-icon">
                         <i class="pe-7s-graph text-success">
                         </i>
                     </div>
-                    <div>Project Dashboard
-                        <div class="page-title-subheading"> @ProjectName
+                    <div>
+                        Project Dashboard
+                        <div class="page-title-subheading">
+                            @ProjectName
                         </div>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
         <div class="main-card mb-12 card">
             <div class="card-body text-center">
-                 
-               <div class="row">
-            <p>Priority</p>
-            <select class="form-control-sm form-control"  id="ItemPriority">
-                @foreach(var wType in WorkItemTypes)
-                {
-                    <option value="@wType.Id">@wType.TypeName</option>
-                }
-            </select>
-        </div>
-        <div class="row">
-            <div class="cols-sample-area" id="board">
-        
-                <div id="KanbanHolder">
-                    <div id="Kanban"></div>
+
+                <div class="row">
+                    <p>Priority</p>
+                    <select class="form-control-sm form-control" id="ItemPriority">
+                        @foreach (var wType in WorkItemTypes)
+                        {
+                            <option value="@wType.Id">@wType.TypeName</option>
+                        }
+                    </select>
                 </div>
-                
+                <div class="row">
+                    <div class="cols-sample-area" id="board">
+
+                        <div id="KanbanHolder">
+                            <div id="Kanban"></div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
-            </div>
-        </div>
-       </div>
-        </div>
-        <!-- end of main-content -->
-     <style type="text/css">
-    .e-kanban .header-template-wrap {
-        display: inline-flex;
-        font-size: 15px;
-        font-weight: 500;
-    }
-
-    .e-kanban .header-template-wrap .header-icon {
-        margin-top: 3px;
-        width: 10%;
-    }
-
-    .e-kanban .header-template-wrap .header-text {
-        margin-left: 15px;
-    }
-
-    .e-kanban .e-card {
-        height: auto !important;
-    }
-
-    .e-kanban .card-template-wrap {
-        line-height: normal;
-        font-size: 12px;
-        width: 100%;
-    }
-
-    .e-kanban .card-template-wrap td {
-        background: none !important;
-        border: none !important;
-        height: auto !important;
-        line-height: 1.6;
-    }
-
-    .e-kanban .card-header,
-    .e-kanban .e-title {
-        padding-left: 12px;
-    }
-
-    .e-kanban .e-title,
-    .e-kanban .e-tag-cell {
-        padding-bottom: 12px;
-    }
-
-    .e-kanban .Open::before {
-        content: '\e607';
-        color: #6495ed;
-        font-size: 16px;
-    }
-
-    .e-kanban .InProgress::before {
-        content: '\e606';
-        color: #0000ff;
-        font-size: 16px;
-    }
-
-    .e-kanban .e-image img {
-        background: #ececec;
-        border: 1px solid #c8c8c8;
-        border-radius: 50%;
-    }
-
-    .e-kanban .e-image {
-        padding-right: 12px;
-    }
-
-    .e-kanban .Review::before {
-        content: '\e345';
-        color: #ffa500;
-        font-size: 16px;
-    }
-
-    .e-kanban .Close::before {
-        content: '\ea84';
-        color: #008000;
-        font-size: 16px;
-    }
-
-    .e-kanban .e-card .e-tag {
-        background: #ececec;
-        color: #6b6b6b;
-        margin-right: 5px;
-        border-radius: 2px;
-        display: inline-block;
-        padding: 1px 7px 3px 7px;
-    }
-
-    .e-kanban .e-card .e-tags {
-        display: table-cell;
-    }
-
-    .card-template.Low {
-        border-left: 3px solid #ffd600
-    }
-
-    .card-template.High {
-        border-left: 3px solid #990099
-    }
-
-    .card-template.Normal {
-        border-left: 3px solid #66cc33
-    }
-
-    .card-template.Critical {
-        border-left: 3px solid #cc0000
-    }
-
-    .bootstrap4 .e-kanban .Open::before {
-        content: '\e729';
-    }
-
-    .bootstrap4 .e-kanban .InProgress::before {
-        content: '\e7c8';
-    }
-
-    .bootstrap4 .e-kanban .Review::before {
-        content: '\e787';
-    }
-
-    .bootstrap4 .e-kanban .Close::before {
-        content: '\e7d9';
-    }
-</style>
+    </div>
+</div>
+ 
 
 
-
-     <script type="text/javascript">
+<script type="text/javascript">
         ej.base.enableRipple(true);
         var card;
         var gData;
@@ -239,7 +96,7 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                     
+
                     GenerateKaban(response);
                 },
                 error: function (xhr, status, error) {
@@ -247,7 +104,7 @@
                 }
             });
          //   var data = ej.DataManager(window.kanbanData).executeLocal(ej.Query().take(20));
-          
+
 		 });
         $("#ItemPriority").on('change', function() {
             alert( this.value );
@@ -257,7 +114,7 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                     
+
                     GenerateKaban(response);
                 },
                 error: function (xhr, status, error) {
@@ -265,16 +122,16 @@
                 }
             });
         });
-          
+
          function GenerateKaban(response)
          {
              $("#KanbanHolder").html("<div id=\"Kanban\"></div>");
              $("#KanbanHolder").html();
-            
+
             var data = ej.base.extend([], response, null, true); // To maintain the property changes, extend the object.
             console.log(data);
             var kanbanObj = new ej.kanban.Kanban({
-                dataSource: data, 
+                dataSource: data,
                 dragStop: DragStopped,
                 actionComplete: CardDropCheck,
                 cardDoubleClick: CardSelected,
@@ -297,18 +154,18 @@
                 }
             });
 
-            
+
             kanbanObj.appendTo('#Kanban');
          }
         function CardSelected(args)
-        {  
+        {
             console.log(args);
-            console.log("/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId); 
+            console.log("/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId);
             window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId;
-            
+
         }
         function CardDropCheck(args)
-        {       
+        {
             console.log(args);
             if(args.requestType == "cardChanged" && card)
             {
@@ -341,11 +198,11 @@
                 "Board" :args.data[0].status,
                 "ProjectId" : @ProjectId
             }
-          
+
          }
 
 
-	</script>
+</script>
 
 
 <script id="headerTemplate" type="text/x-jsrender">
@@ -355,18 +212,18 @@
     </div>
 </script>
 <script id="cardTemplate" type="text/x-jsrender">
-        <div class='card-template ${priority}'>
-	        <div class='card-header e-tooltip-text'>${title}</div>
-            <div class='card-template-wrap'>
-		       <table>
+    <div class='card-template ${priority}'>
+        <div class='card-header e-tooltip-text'>${title}</div>
+        <div class='card-template-wrap'>
+            <table>
                 <tbody>
                     <tr>
-				        <td class='e-title e-tooltip-text'><div class='e-text'>${summary}</div></td>
-				    </tr>
+                        <td class='e-title e-tooltip-text'><div class='e-text'>${summary}</div></td>
+                    </tr>
                 </tbody>
-              </table>   
-   
-             </div>
+            </table>
 
         </div>
+
+    </div>
 </script>

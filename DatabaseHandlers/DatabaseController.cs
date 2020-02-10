@@ -63,11 +63,33 @@ namespace Rokono_Control.DatabaseHandlers
             return Cards;
         }
 
-        internal List<BindingCards> GetProjectSprints(int projectId)
+        internal List<BindingCards> GetProjectSprints(IncomingSprintRequest dataRequest, bool hasRights,int userId)
         {
             var result = new List<BindingBoard>();
             var Cards = new List<BindingCards>();
-            var projectSprints = Context.WorkItem.Where(x=>x.WorkItemTypeId == 7).ToList();
+            var projectSprints = new List<WorkItem>();
+            if(dataRequest.PersonId == 0 && hasRights)
+                projectSprints = Context.AssociatedBoardWorkItems.Include(x=>x.WorkItem).Where(x=>x.WorkItem.WorkItemTypeId == 7 
+                                                                            && x.ProjectId == dataRequest.ProjectId 
+                                                                            && x.WorkItem.Iteration == dataRequest.IterationId)
+                                                                            .Select(x=>x.WorkItem)
+                                                                            .ToList();
+            else if(dataRequest.PersonId != 0 && hasRights)
+                projectSprints = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem).Where(x => x.WorkItem.WorkItemTypeId == 7
+                                                                            && x.ProjectId == dataRequest.ProjectId
+                                                                            && x.WorkItem.Iteration == dataRequest.IterationId
+                                                                            && x.WorkItem.AssignedAccount == dataRequest.PersonId)
+                                                                           .Select(x => x.WorkItem)
+                                                                           .ToList();
+          
+            else
+                projectSprints = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem).Where(x => x.WorkItem.WorkItemTypeId == 7
+                                                                            && x.ProjectId == dataRequest.ProjectId
+                                                                            && x.WorkItem.Iteration == dataRequest.IterationId
+                                                                            && x.WorkItem.AssignedAccount == userId)
+                                                                           .Select(x => x.WorkItem)
+                                                                           .ToList();
+            
             projectSprints.ForEach(x=>{
                 var sprintTasks = Context.AssociatedWrorkItemChildren.Include(y => y.WorkItemChild)
                                                                      .ThenInclude(WorkItemChild => WorkItemChild.WorkItemType)
@@ -77,7 +99,7 @@ namespace Rokono_Control.DatabaseHandlers
                                                                      .ToList();
                 sprintTasks.ForEach(task => {
                     var taskBoard = Context.AssociatedBoardWorkItems.Include(z => z.Board)
-                                                                    .FirstOrDefault(z=>z.WorkItemId == task.Id);
+                                                                    .FirstOrDefault(z=>z.WorkItemId == task.WorkItemChildId);
 
                     var activeBoard =string.Empty;
                     if(taskBoard == null)
@@ -101,6 +123,18 @@ namespace Rokono_Control.DatabaseHandlers
             });
         
             return Cards;
+        }
+
+        internal UserAccounts GetUserAccounts(int userId)
+        {
+            var result = Context.AssociatedProjectMembers.Include(x=>x.UserAccount).FirstOrDefault(x => x.UserAccount.Id == userId);
+            return result != null ? result.UserAccount : null;
+        }
+
+        internal List<UserAccounts> GetProjectPerons(int projectId)
+        {
+            return Context.AssociatedProjectMembers.Include(x => x.UserAccount).Where(x => x.ProjectId
+            == projectId).Select(x => x.UserAccount).ToList();
         }
 
         private string GetCardType(string board)
@@ -1077,8 +1111,8 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal List<WorkItemIterations> GetProjectIterations(int projectId)
         {
-            return Context.WorkItemIterations
-            .ToList();       
+            return Context.AssociatedProjectIterations.Include(x => x.Iteration).Where(x => x.ProjectId == projectId)
+            .Select(x=>x.Iteration).ToList();       
         }
 
         internal bool ValidateWorkItemConnection(IncomignWorkItemRelation incomingRequest)
