@@ -6,5 +6,6 @@ namespace Rokono_Control.Models
         public string ProjectName { get; set; }
         public string ProjectDescription { get; set; }
         public List<OutgoingUserAccounts> Users { get; set; }
+        public List<WorkItemIterations> Iterations { get; set; }
     }
 }

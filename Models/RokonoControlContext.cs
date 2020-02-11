@@ -21,6 +21,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedProjectBoards> AssociatedProjectBoards { get; set; }
         public virtual DbSet<AssociatedProjectBuilds> AssociatedProjectBuilds { get; set; }
         public virtual DbSet<AssociatedProjectIterations> AssociatedProjectIterations { get; set; }
+        public virtual DbSet<AssociatedProjectMemberRights> AssociatedProjectMemberRights { get; set; }
         public virtual DbSet<AssociatedProjectMembers> AssociatedProjectMembers { get; set; }
         public virtual DbSet<AssociatedRepositoryBranches> AssociatedRepositoryBranches { get; set; }
         public virtual DbSet<AssociatedWrorkItemChildren> AssociatedWrorkItemChildren { get; set; }
@@ -34,6 +35,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<Repository> Repository { get; set; }
         public virtual DbSet<Risks> Risks { get; set; }
         public virtual DbSet<UserAccounts> UserAccounts { get; set; }
+        public virtual DbSet<UserRights> UserRights { get; set; }
         public virtual DbSet<ValueAreas> ValueAreas { get; set; }
         public virtual DbSet<WorkItem> WorkItem { get; set; }
         public virtual DbSet<WorkItemActivity> WorkItemActivity { get; set; }
@@ -52,7 +54,7 @@ namespace Rokono_Control.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=;Database=RokonoControl;User ID=Kristifor;Password='';");
+                optionsBuilder.UseSqlServer("Server=84.54.185.144;Database=RokonoControl;User ID=Kristifor;Password=';;@Hanjolite';");
             }
         }
 
@@ -152,6 +154,24 @@ namespace Rokono_Control.Models
                     .HasForeignKey(d => d.ProjectId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_AssociatedProjectIterations_Projects");
+            });
+
+            modelBuilder.Entity<AssociatedProjectMemberRights>(entity =>
+            {
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.AssociatedProjectMemberRights)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK_AssociatedProjectMemberRights_Projects");
+
+                entity.HasOne(d => d.Rights)
+                    .WithMany(p => p.AssociatedProjectMemberRights)
+                    .HasForeignKey(d => d.RightsId)
+                    .HasConstraintName("FK_AssociatedProjectMemberRights_UserRights");
+
+                entity.HasOne(d => d.UserAccount)
+                    .WithMany(p => p.AssociatedProjectMemberRights)
+                    .HasForeignKey(d => d.UserAccountId)
+                    .HasConstraintName("FK_AssociatedProjectMemberRights_UserAccounts");
             });
 
             modelBuilder.Entity<AssociatedProjectMembers>(entity =>

@@ -15,6 +15,11 @@ namespace Rokono_Control.DatabaseHandlers
     public class DatabaseController : IDisposable
     {
         RokonoControlContext Context;
+
+        public DatabaseController(RokonoControlContext context)
+        {
+            Context = context;
+        }
         private int I{get;set;}
         private int InternalId {get;set;}
         internal List<Repository> GetAllRepositories()
@@ -455,10 +460,7 @@ namespace Rokono_Control.DatabaseHandlers
             return item.SubChild;
         }
 
-        public DatabaseController()
-        {
-            Context = new RokonoControlContext();
-        }
+        
 
         internal List<Branches> GetBranchesForProject(int projectId)
         {
@@ -820,11 +822,11 @@ namespace Rokono_Control.DatabaseHandlers
         {
             var projectDetails =  Context.AssociatedProjectMembers.FirstOrDefault(x=>x.ProjectId == id && x.UserAccountId == userId);
             return new OutgoingProjectRules{
-                CanClone = projectDetails.CanClone == 1 ? true : false,
-                CanView  =projectDetails.CanViewWork == 1 ? true : false,
-                CanCommit =projectDetails.CanCommit == 1 ? true : false,
-                CanCreateWork = projectDetails.CanCreateWork == 1 ? true : false,
-                CanDeleteWork =projectDetails.CanDeleteWork == 1 ? true : false,
+                //CanClone = projectDetails.CanClone == 1 ? true : false,
+                //CanView  =projectDetails.CanViewWork == 1 ? true : false,
+                //CanCommit =projectDetails.CanCommit == 1 ? true : false,
+                //CanCreateWork = projectDetails.CanCreateWork == 1 ? true : false,
+                //CanDeleteWork =projectDetails.CanDeleteWork == 1 ? true : false,
             };
         }
 
@@ -889,33 +891,33 @@ namespace Rokono_Control.DatabaseHandlers
             Context.Attach(getProject);
             switch(rule)
             {  
-                case "CommitRule":
+                //case "CommitRule":
 
-                        getProject.CanCommit = projectRuleData.IncomingValue ? 1 :0;
-                        Context.Entry(getProject).Property("CanCommit").IsModified = true;
-                    break;
-                case "CloneRule":
-                    getProject.CanClone = projectRuleData.IncomingValue ? 1 :0;
-                    Context.Entry(getProject).Property("CanClone").IsModified = true;
-
-
-                    break;
-                case "ViewWorkRule":
-                    getProject.CanViewWork = projectRuleData.IncomingValue ? 1 :0;
-                    Context.Entry(getProject).Property("CanViewWork").IsModified = true;
+                //        getProject.CanCommit = projectRuleData.IncomingValue ? 1 :0;
+                //        Context.Entry(getProject).Property("CanCommit").IsModified = true;
+                //    break;
+                //case "CloneRule":
+                //    getProject.CanClone = projectRuleData.IncomingValue ? 1 :0;
+                //    Context.Entry(getProject).Property("CanClone").IsModified = true;
 
 
-                    break;
-                case "CreateWorkRule":
-                    getProject.CanCreateWork = projectRuleData.IncomingValue ? 1 :0;
-                    Context.Entry(getProject).Property("CanCreateWork").IsModified = true;
+                //    break;
+                //case "ViewWorkRule":
+                //    getProject.CanViewWork = projectRuleData.IncomingValue ? 1 :0;
+                //    Context.Entry(getProject).Property("CanViewWork").IsModified = true;
 
-                    break;
-                case "DeleteWorkRule":
-                    getProject.CanDeleteWork = projectRuleData.IncomingValue ? 1 :0;
-                    Context.Entry(getProject).Property("CanDeleteWork").IsModified = true;
 
-                    break;
+                //    break;
+                //case "CreateWorkRule":
+                //    getProject.CanCreateWork = projectRuleData.IncomingValue ? 1 :0;
+                //    Context.Entry(getProject).Property("CanCreateWork").IsModified = true;
+
+                //    break;
+                //case "DeleteWorkRule":
+                //    getProject.CanDeleteWork = projectRuleData.IncomingValue ? 1 :0;
+                //    Context.Entry(getProject).Property("CanDeleteWork").IsModified = true;
+
+                //    break;
             }
             Context.SaveChanges();
 
@@ -1005,16 +1007,15 @@ namespace Rokono_Control.DatabaseHandlers
             {
 
                 var userAccounts = new List<UserAccounts>();
-                currentProject.Users.ForEach(x=>{
-                    userAccounts.Add(Context.UserAccounts.FirstOrDefault(y=>y.Id == x.AccountId));
-                });
+              
                 var repoStatus = true; //RepositoryManager.AddNewProject($"/home/GitRepositories/",currentProject.ProjectName, userAccounts);
                 if(repoStatus)
                 {
-                     var repository = Context.Repository.Add(new Repository{
+                    var repository = Context.Repository.Add(new Repository{
                         FolderPath = $"/home/GitRepositories/{currentProject.ProjectName}"
                     });
                     Context.SaveChanges();
+                   
                     var boardBacklog = Context.Boards.Add(new Boards{
                         RepositoryId = repository.Entity.Id,
                         BoardType = 1,
@@ -1046,6 +1047,56 @@ namespace Rokono_Control.DatabaseHandlers
                         BoardId = boardBacklog.Entity.Id
                     });
                     Context.SaveChanges();
+
+                    currentProject.Iterations.ForEach(x =>
+                    {
+                        var iteration = x;
+                        var currentIteration = Context.WorkItemIterations.Add(iteration);
+                        Context.SaveChanges();
+                        Context.AssociatedProjectIterations.Add(new AssociatedProjectIterations
+                        {
+                            ProjectId = project.Entity.Id,
+                            IterationId = currentIteration.Entity.Id
+                        });
+                        Context.SaveChanges();
+                    });
+                    currentProject.Users.ForEach(x => {
+                    userAccounts.Add(Context.UserAccounts.FirstOrDefault(y => y.Id == x.AccountId));
+                    Context.AssociatedProjectMembers.Add(new AssociatedProjectMembers
+                    {
+                        ProjectId = project.Entity.Id,
+                        UserAccountId = x.AccountId
+                    });
+                    Context.SaveChanges();
+                    var rights = Context.UserRights.FirstOrDefault(y => y.ManageIterations == x.IterationOptions &&
+                                                                    y.ManageUserdays == x.ScheduleManagement &&
+                                                                    y.UpdateUserRights == x.EditUserRights &&
+                                                                    y.ViewOtherPeoplesWork == x.ViewWorkItems &&
+                                                                    y.ChatChannelsRule == x.ChatChannels);
+                    if (rights == null)
+                    {
+                        Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<UserRights> entityEntry = Context.UserRights.Add(new UserRights
+                        {
+                            WorkItemRule = Convert.ToInt16(x.WorkItemOption),
+                            ManageIterations = Convert.ToInt16(x.IterationOptions),
+                            ManageUserdays = Convert.ToInt16(x.ScheduleManagement),
+                            UpdateUserRights = Convert.ToInt16(x.EditUserRights),
+                            ViewOtherPeoplesWork = Convert.ToInt16(x.ViewWorkItems),
+                            ChatChannelsRule = Convert.ToInt16(x.ChatChannels)
+                        });
+                        Context.SaveChanges();
+                        rights = entityEntry.Entity;
+                    }
+
+                    Context.AssociatedProjectMemberRights.Add(new AssociatedProjectMemberRights
+                    {
+                        ProjectId = project.Entity.Id,
+                        UserAccountId = x.AccountId,
+                        RightsId = rights.Id
+
+                    });
+                    Context.SaveChanges();
+                    });
                     Context.AssociatedProjectBoards.Add(new AssociatedProjectBoards{
                         ProjectId = project.Entity.Id,
                         BoardId = boardBacklog.Entity.Id,
@@ -1072,11 +1123,7 @@ namespace Rokono_Control.DatabaseHandlers
                             ProjectId = project.Entity.Id,
                             RepositoryId = repository.Entity.Id,
                             UserAccountId = x.AccountId,
-                            CanClone = 1,
-                            CanCommit = 1,
-                            CanCreateWork = 1,
-                            CanDeleteWork = 1,
-                            CanViewWork = 1
+                 
                         });
                         Context.SaveChanges();
                     });

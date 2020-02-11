@@ -26,7 +26,7 @@
             <div class="card-body text-center">
                  
                 <div class="row">
-                    <a href="#" class="btn btn-block btn-info" data-toggle="modal" data-target=".bd-example-modal-lg"><span class="glyphicon glyphicon-file"></span> Create New Project</a>
+                    <a href="/Dashboard/AddNewProject?user=@userName" class="btn btn-block btn-info"><span class="glyphicon glyphicon-file"></span> Create New Project</a>
                 </div>
             </div>
         </div>
@@ -78,65 +78,3 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
  <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
-
-<script>
-
-    var grid;
-    $( document ).ready(function() 
-    {
-        $.ajax({
-            type: 'GET',
-            url: '/Authenication/GetUsers',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-                LoadAccounts(response);
-            },
-            error: function (xhr, status, error) {
-    
-            }
-        });
-        
-    });
-    function LoadAccounts(data){
-        grid = new ej.grids.Grid({
-            dataSource: data,
-            allowPaging: true,
-            allowSelection: true,
-            selectionSettings: { persistSelection: true },
-            editSettings: { allowDeleting: true },
-            toolbar: [ 'Delete' ],
-            enableHover: false,
-            columns: [
-                { type: 'checkbox', width: 50 },
-                { field: 'name', isPrimaryKey: true, headerText: 'Name', width: 180 },
-               
-            ],
-            pageSettings: { pageCount: 2 }
-        });
-        grid.appendTo('#Grid');
-    }  
-
-    function CreateNewProject()
-    {
-        console.log("in");
-        var dto = {
-            "ProjectName": $("#ProjectName").val(),
-            "ProjectDescription" : $("#Description").val(),
-            "Users" : grid.getSelectedRecords()// get the selected records.
-        }
-         $.ajax({
-            type: 'POST',
-            url: '/Dashboard/AddNewProject',
-            data: JSON.stringify(dto),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-                window.location.href = "/Dashboard/Index";
-            },
-            error: function (xhr, status, error) {
-                console.log(error);
-            }
-        });
-    }  
-</script>

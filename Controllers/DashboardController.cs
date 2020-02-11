@@ -10,12 +10,17 @@ namespace Rokono_Control.Controllers
 
     public class DashboardController : Controller
     {
+        RokonoControlContext Context;
+        public DashboardController(RokonoControlContext context)
+        {
+            Context = context;
+        }
         #region PageRenders
         public IActionResult Index()
         {
             var currentUser = this.User;
             var id = currentUser.Claims.ElementAt(1);         
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 var currentId = int.Parse(id.Value);
                 ViewData["Projects"] = context.GetUserProjects(currentId);
@@ -25,11 +30,15 @@ namespace Rokono_Control.Controllers
             }
             return View();
         }
-     
+        public IActionResult AddNewProject(string user)
+        {
+            ViewData["User"] = user;
+            return View();
+        }
         public IActionResult AddNewWorkItem(int projectId, int workItemType, int parentId)
         {     
             var currentUser = this.User;
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 var rights = currentUser.Claims.LastOrDefault().Value;
                 ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
@@ -53,7 +62,7 @@ namespace Rokono_Control.Controllers
         public IActionResult EditWorkItem(int projectId, int workItem)
         {
             var currentUser = this.User;
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 var defaultUserAccount = context.GetDefaultAccount();
                 var rights = currentUser.Claims.LastOrDefault().Value;
@@ -84,7 +93,7 @@ namespace Rokono_Control.Controllers
         public IActionResult ManageAccounts()
         {
             var currentUser = this.User; 
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 var rights = currentUser.Claims.LastOrDefault().Value;
                 ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
@@ -103,7 +112,7 @@ namespace Rokono_Control.Controllers
         {
             var currentUser = this.User;
 
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 var rights = currentUser.Claims.LastOrDefault().Value;
                 ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
@@ -117,7 +126,7 @@ namespace Rokono_Control.Controllers
         {
             var currentUser = this.User;
 
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 var rights = currentUser.Claims.LastOrDefault().Value;
                 ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
@@ -129,7 +138,7 @@ namespace Rokono_Control.Controllers
         public IActionResult AssignAccountProjects(int id)
         {
             var currentUser = this.User;
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 var rights = currentUser.Claims.LastOrDefault().Value;
                 ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
@@ -145,7 +154,7 @@ namespace Rokono_Control.Controllers
         {
             var currentUser = this.User;
 
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 var rights = currentUser.Claims.LastOrDefault().Value;
                 ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
@@ -162,7 +171,7 @@ namespace Rokono_Control.Controllers
         {
             var currentUser = this.User;
             var id = currentUser.Claims.ElementAt(1);         
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 var rights = currentUser.Claims.LastOrDefault().Value;
                 ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
@@ -182,7 +191,7 @@ namespace Rokono_Control.Controllers
         public List<WorkItemRelations> GetWorkItemRelations() 
         {
             var relationships = new List<WorkItemRelations>();
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
                 relationships = context.GetProjectRelationships();
             return relationships;
         }
@@ -190,7 +199,7 @@ namespace Rokono_Control.Controllers
         public OutgoingBoundRelations GetAllWorkItemRelations(int workItemId, int projectId)
         {
             var result = default(OutgoingBoundRelations);
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 result = context.GetAllWorkItemRelations(workItemId,projectId);
             }
@@ -200,7 +209,7 @@ namespace Rokono_Control.Controllers
         public List<OutgoingBindingWorkItem> GetAllWorkItems(int projectId)
         {
             var result = new List<OutgoingBindingWorkItem>();
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 result = context.GetAllWorkItems(projectId);
             }
@@ -211,7 +220,7 @@ namespace Rokono_Control.Controllers
         public List<CommitChartBindingData> GetCommitChartBindingData([FromBody] IncomingIdRequest request)
         {
             var result = new List<CommitChartBindingData>();
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 result = context.GetCommitsChartForProject(request.Id);
             }
@@ -221,7 +230,7 @@ namespace Rokono_Control.Controllers
         [HttpGet]
         public object GetProjects(){
             var result = default(object);
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 result = context.GetProjects();
             }
@@ -234,7 +243,7 @@ namespace Rokono_Control.Controllers
         public OutgoingProjectRules GetProjectUserRules([FromBody] IncomingProjectRulesRequest project)
         {
             var getProjectRules = default(OutgoingProjectRules);
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 getProjectRules = context.GetProjectRules(int.Parse(project.ProjectId),int.Parse(project.UserId));
             }
@@ -244,7 +253,7 @@ namespace Rokono_Control.Controllers
         [HttpPost]
         public void UpdatePACommitRule([FromBody] IncomignRuleUpdate projectRuleData)
         {
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 context.UpdateProjectUserRule(projectRuleData,"CommitRule");
             }
@@ -253,7 +262,7 @@ namespace Rokono_Control.Controllers
         [HttpPost]
         public void UpdatePACloneRule([FromBody]  IncomignRuleUpdate projectRuleData)
         {
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 context.UpdateProjectUserRule(projectRuleData,"CloneRule");
             }
@@ -262,7 +271,7 @@ namespace Rokono_Control.Controllers
         [HttpPost]
         public void UpdatePAViewWorkRule([FromBody]  IncomignRuleUpdate projectRuleData)
         {
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 context.UpdateProjectUserRule(projectRuleData,"ViewWorkRule");
 
@@ -272,7 +281,7 @@ namespace Rokono_Control.Controllers
         [HttpPost]
         public void UpdatePACreateWorkRule([FromBody]  IncomignRuleUpdate projectRuleData)
         {
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 context.UpdateProjectUserRule(projectRuleData,"CreateWorkRule");
                
@@ -282,7 +291,7 @@ namespace Rokono_Control.Controllers
         [HttpPost]
         public void UpdatePADeleteWorkRule([FromBody]  IncomignRuleUpdate projectRuleData)
         {
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 context.UpdateProjectUserRule(projectRuleData,"DeleteWorkRule");   
             }
@@ -294,7 +303,7 @@ namespace Rokono_Control.Controllers
             var result = default(bool);
          
 
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 result=context.AddNewWorkItem(currentItem);
             }
@@ -304,7 +313,7 @@ namespace Rokono_Control.Controllers
         public bool UpdateWorkItem([FromBody] IncomingWorkItem currentItem)
         {
             var result = default(bool);
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 result=context.UpdateWorkItem(currentItem);
             }
@@ -314,7 +323,7 @@ namespace Rokono_Control.Controllers
         public List<BindingUserAccount> GetUserAccounts([FromBody] IncomingIdRequest IncomingIdRequest)
         {
             var  result =  new List<BindingUserAccount>();
-            using(var context = new DatabaseController()){
+            using(var context = new DatabaseController(Context)){
                 result =  context.GetProjectMembers(IncomingIdRequest.Id);
             }
             return result;
@@ -323,7 +332,7 @@ namespace Rokono_Control.Controllers
          [HttpPost]
         public bool RemoveUserFromProject([FromBody] IncomingRemoveUserFromProject userProject)
         {
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 context.RemoveUserFromProject(userProject);
             }
@@ -338,7 +347,7 @@ namespace Rokono_Control.Controllers
             
             var result = new OutgoingValidWorkItem();
           
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 var defaultUserAccount = context.GetDefaultAccount();
                 result.WorkItem = new List<WorkItem>();
@@ -372,7 +381,7 @@ namespace Rokono_Control.Controllers
         [HttpPost]
         public bool AssociatedWorkItemRelation([FromBody] IncomignWorkItemRelation incomingRelation)
         {
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 context.AssociatedRelation(incomingRelation);
             }
@@ -382,7 +391,7 @@ namespace Rokono_Control.Controllers
         [HttpPost] 
         public string AddProjectToUserAccount([FromBody] IncomingProjectUser incomingRequest)
         {          
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 context.AddProjectToUser(incomingRequest);
             }
@@ -393,7 +402,7 @@ namespace Rokono_Control.Controllers
         public bool AddNewProject([FromBody] IncomingProject currentProject)
         {
             var result = default(bool);
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 var currentUser = this.User;
                 var userDto = currentUser.Claims.ElementAt(1);         

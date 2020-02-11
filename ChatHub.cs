@@ -4,11 +4,19 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using Rokono_Control.DatabaseHandlers;
- 
+using Rokono_Control.Models;
+
 namespace RokonoControl
 {
-      public class ChatHub : Hub
+    public class ChatHub : Hub
     {
+        RokonoControlContext RokonoContext;
+        public ChatHub(RokonoControlContext context)
+        {
+            RokonoContext = context;
+        }
+
+
         [Authorize(Roles = "User")]
         public  Task Send( string message)
         {
@@ -31,7 +39,7 @@ namespace RokonoControl
             {
                  var res = string.Empty;
                 var userId = user.Claims.ElementAt(1);// Call the broadcastMessage method to update clients.
-                using(var context = new DatabaseController())
+                using(var context = new DatabaseController(RokonoContext))
                 {
                     var notifications = context.GetNewNotifications(userId.Value);
                     res = JsonConvert.SerializeObject(notifications);

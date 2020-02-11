@@ -16,23 +16,49 @@ namespace Rokono_Control.Controllers
 
     public class AuthenicationController : Controller
     {
+        RokonoControlContext Context;
+        public AuthenicationController(RokonoControlContext context)
+        {
+            Context = context;
+        }
         public IActionResult Index()
         {
             return View();
         }
+
+
         [HttpGet]
         public List<OutgoingUserAccounts> GetUsers(){
             var result = new List<OutgoingUserAccounts>();
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 result = context.GetUserAccounts();
             }
             return  result;
         }
         [HttpGet]
+        public List<OutgoingUserAccounts> GetAvtiveUsers()
+        {
+            var result = new List<OutgoingUserAccounts>();
+            
+            return result;
+        }
+        [HttpGet]
+        public List<WorkItemIterations> GetNewProjectIterationns()
+        {
+            var result = new List<WorkItemIterations>();
+            result = new List<WorkItemIterations>
+            {
+                new WorkItemIterations{IterationName = "Iteration 1"},
+                new WorkItemIterations{IterationName = "Iteration 2"},
+                new WorkItemIterations{IterationName = "Iteration 3"},
+            };
+            return result;
+        }
+        [HttpGet]
         public List<OutgoingAccountManagment> GetManagmentUsers(){
             var result = new List<OutgoingAccountManagment>();
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 result = context.GetOutgoingManagmentAccounts();
             }
@@ -44,7 +70,7 @@ namespace Rokono_Control.Controllers
         {
             var jsonrResult = Json("False"); 
            // var result = Json("failed"); 
-            using (var context = new DatabaseController())
+            using (var context = new DatabaseController(Context))
             {
                 var result = context.LoginUser(request);
                 if (result!= null)
@@ -84,7 +110,7 @@ namespace Rokono_Control.Controllers
         [HttpPost]
         public void UserProjectRightsUpdated([FromBody]  IncomignRuleUpdate projectRuleData)
         {
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 context.UpdateUserProjectRights(projectRuleData);   
             }
@@ -92,7 +118,7 @@ namespace Rokono_Control.Controllers
         [HttpPost]
         public bool UserAccountUpdated([FromBody]  IncomingUserAccountUpdate projectRuleData)
         {
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 context.UpdateUserAccount(projectRuleData);   
             }
@@ -102,7 +128,7 @@ namespace Rokono_Control.Controllers
         public string AddNewUserAccount([FromBody] IncomingNewUserAccount user)
         {
             var accountId = string.Empty;
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 var cAccountId = context.AddUserAccount(user);
                 accountId = cAccountId.ToString();

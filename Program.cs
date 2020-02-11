@@ -72,14 +72,14 @@ namespace Rokono_Control
             return JsonConvert.DeserializeObject<Config>(config);
         }
 
-        public static void InitCron(string repoName)
-        {
-            using(var repositoryManager = new GitRepositoryManager())
-            {
-                repositoryManager.CollectCommits(repoName);
-            }
+        //public static void InitCron(string repoName)
+        //{
+        //    using(var repositoryManager = new GitRepositoryManager())
+        //    {
+        //        repositoryManager.CollectCommits(repoName);
+        //    }
             
-        }
+        //}
 
         private static void timer1_Tick(object sender, EventArgs e)
         {

@@ -7,6 +7,7 @@ namespace Rokono_Control.Models
     {
         public UserAccounts()
         {
+            AssociatedProjectMemberRights = new HashSet<AssociatedProjectMemberRights>();
             AssociatedProjectMembers = new HashSet<AssociatedProjectMembers>();
             WorkItem = new HashSet<WorkItem>();
         }
@@ -20,6 +21,7 @@ namespace Rokono_Control.Models
         public int? ProjectRights { get; set; }
         public string GitUsername { get; set; }
 
+        public virtual ICollection<AssociatedProjectMemberRights> AssociatedProjectMemberRights { get; set; }
         public virtual ICollection<AssociatedProjectMembers> AssociatedProjectMembers { get; set; }
         public virtual ICollection<WorkItem> WorkItem { get; set; }
     }

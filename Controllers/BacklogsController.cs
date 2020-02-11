@@ -9,14 +9,19 @@ namespace Rokono_Control.Controllers
 
     public class BacklogsController : Controller
     {
-        
+        RokonoControlContext Context;
+        public BacklogsController(RokonoControlContext context)
+        {
+            Context = context;
+        }
+
         public IActionResult Index(int projectId, int boardId)
         {
             var currentUser = this.User;
             var rights = currentUser.Claims.LastOrDefault().Value;
             ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
             var id = currentUser.Claims.ElementAt(1);         
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 var currentId = int.Parse(id.Value);
                 ViewData["ProjectId"] = projectId;
@@ -33,7 +38,7 @@ namespace Rokono_Control.Controllers
         {
             
             var result = new List<OutgoingWorkItem>(); 
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 var  data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType);
                 var bData =  data.Select(x=>x.WorkItem).ToList();
@@ -57,7 +62,7 @@ namespace Rokono_Control.Controllers
         {
             
             var result = new List<OutgoingWorkItem>(); 
-            using(var context = new DatabaseController())
+            using(var context = new DatabaseController(Context))
             {
                 var  data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType);
                 var bData =  data.Select(x=>x.WorkItem).ToList();
