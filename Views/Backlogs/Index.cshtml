@@ -8,65 +8,65 @@
 
 <link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
 
- <!-- end of sidebar element -->
-        <!-- main-content declaration -->
-        <div class="main-content" id="main-text" >
-            <div class="sidebar-content">
-<div class="row" style="margin:0px;">
-<div class="col-md-12">
-  <div class="main-card mb-3 card">
-        <div class="card-body">
-        <h5 class="card-title text-center">Select a project</h5>
-          <div class="row" style="margin-left:10px;">
+<!-- end of sidebar element -->
+<!-- main-content declaration -->
+<div class="main-content" id="main-text">
+    <div class="sidebar-content">
+        <div class="row" style="margin:0px;">
+            <div class="col-md-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Select a project</h5>
+                        <div class="row" style="margin-left:10px;">
 
-            <div class="btn-group dropdown-split-primary">
-                <button type="button" id="iconbtn" class="btn btn-primary">New Work Item</button>
-                                      
-
-               
-
-                <button   id="QueryBtn">Open In Query</button>
-                <button   id="ImportWorkItemBtn"></i>Import Work Items</button>
-                <button   id="ExportWorkItemBtn">Export Work Items</button>
-                <button   Id="RecycleBtn">Recycle Work Items</button>
+                            <div class="btn-group dropdown-split-primary">
+                                <button type="button" id="iconbtn" class="btn btn-primary">New Work Item</button>
 
 
 
-                
-            </div>
-           <div class="control-section" style="height:97vh;">
-                <div class="content-wrapper">
-                    <div id="TreeGrid"></div>
+
+                                <button id="QueryBtn">Open In Query</button>
+                                <button id="ImportWorkItemBtn"></i>Import Work Items</button>
+                                <button id="ExportWorkItemBtn">Export Work Items</button>
+                                <button Id="RecycleBtn">Recycle Work Items</button>
+
+
+
+
+                            </div>
+                            <div class="control-section" style="height:97vh;">
+                                <div class="content-wrapper">
+                                    <div id="TreeGrid"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
-            </div>
-        </div>
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
 
- <script>
+    <script>
 
 
-   
+
     var ProjectId = @result;
     var  boardId = @BoardId;
     function OpenWorkItem(id)
     {
         console.log(id);
     }
-    $( document ).ready(function() 
+    $( document ).ready(function()
     {
         var id = @result;
-        
+
           var dto = {
             "id": id,
-            "WorkItemType":5
+            "WorkItemType":0
         }
         console.log(dto);
         $.ajax({
@@ -82,7 +82,7 @@
                 console.log(error);
             }
         });
-        
+
     });
 
     ej.base.enableRipple(true);
@@ -94,13 +94,13 @@
     exportWorkItemBtn.appendTo('#ExportWorkItemBtn');
     var recycleBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     recycleBtn.appendTo('#RecycleBtn');
-    
+
     // DropDownButton items declaration
     var items = [
         {
             text: 'Feature',
             iconCss: 'e-ddb-icons e-dashboard',
-          
+
             url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+2+"&boardId="+boardId+"&parentId=0"
         },
         {
@@ -131,7 +131,7 @@
             iconCss: 'e-ddb-icons e-logout',
             url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+4+"&boardId="+boardId+"&parentId=0"
          }
-        
+
         ];
 
     var btnObj = new ej.splitbuttons.DropDownButton({ items: items, iconCss: 'e-ddb-icons e-profile',cssClass: 'e-outline', select:WorkItemListClicked });
@@ -193,6 +193,6 @@
     function load(args) {
         this.parentDetails.parentKeyFieldValue = this.parentDetails.parentRowData['id'];
     }
- </script>
+    </script>
 
 

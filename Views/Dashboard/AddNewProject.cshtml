@@ -7,7 +7,7 @@
 <link href="https://cdn.syncfusion.com/ej2/ej2-layouts/styles/material.css" rel="stylesheet" type="text/css" />
 <style>
     .e-card {
-        margin-bottom:2%;
+        margin-bottom: 2%;
     }
 </style>
 <div class="container-fluid">
@@ -176,7 +176,7 @@
     var ViewWorkItems;
     var CurrentSelected;
     $(document).ready(function () {
-        
+
         var outlinebtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
         outlinebtn.appendTo('#outlinebtn');
         WorkItemOption = new ejs.buttons.Switch({ checked: true });
@@ -206,7 +206,7 @@
             }
         });
 
-        
+
         $.ajax({
             type: 'GET',
             url: '/Authenication/GetNewProjectIterationns',
@@ -237,12 +237,12 @@
         GridIterations = new ej.grids.Grid({
             dataSource: data,
             allowPaging: true,
-            editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true, mode: 'Normal', newRowPosition:'Top' },
+            editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true, mode: 'Normal', newRowPosition: 'Top' },
             toolbar: ['Add', 'Edit', 'Delete', 'Update', 'Cancel'],
             allowSelection: true,
             enableHover: false,
             columns: [
-                 { field: 'iterationName',   headerText: 'Name', width: 180 },
+                { field: 'iterationName', headerText: 'Name', width: 180 },
 
             ],
             pageSettings: { pageCount: 2 }
@@ -251,15 +251,15 @@
     }
 
 
-      function LoadActiveUsers(data) {
+    function LoadActiveUsers(data) {
         ActiveUsersGrid = new ej.grids.Grid({
             dataSource: data,
             allowPaging: true,
-            editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true, mode: 'Normal', newRowPosition:'Top' },
-            toolbar: [   'Delete',  'Cancel'],
+            editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true, mode: 'Normal', newRowPosition: 'Top' },
+            toolbar: ['Delete', 'Cancel'],
             allowSelection: true,
             enableHover: false,
-          
+
             pageSettings: { pageCount: 2 }
         });
         ActiveUsersGrid.appendTo('#GridSelectedUsers');
@@ -271,10 +271,10 @@
             allowPaging: true,
             rowSelected: AccountSelected,
             allowSelection: true,
-             editSettings: { allowDeleting: true },
+            editSettings: { allowDeleting: true },
             enableHover: false,
             columns: [
-                 { field: 'name',  headerText: 'Name', width: 180 },
+                { field: 'name', headerText: 'Name', width: 180 },
 
             ],
             pageSettings: { pageCount: 2 }
@@ -283,12 +283,13 @@
     }
 
     function CreateNewProject() {
+
         console.log("in");
         var dto = {
             "ProjectName": $("#ProjectName").val(),
             "ProjectDescription": $("#Description").val(),
-            "Users": ActiveUsersGrid.getSelectedRecords(),// get the selected records.
-            "Iterations": GridIterations.getSelectedRecords()
+            "Users": ActiveUsersGrid.dataSource,// get the selected records.
+            "Iterations": GridIterations.dataSource
         }
         $.ajax({
             type: 'POST',
@@ -337,11 +338,11 @@
 
     function AccountSelected(args) {
         console.log(args);
-
+        console.log(GridIterations.getRows());
         CurrentSelected = args.data;
         console.log(WorkItemOption.properties.checked);
- 
+
     }
 
-    
+
 </script>

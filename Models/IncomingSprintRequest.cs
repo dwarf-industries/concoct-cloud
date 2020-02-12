@@ -11,5 +11,6 @@ namespace Rokono_Control.Models
         public int WorkItemTypeId { get; set; }
         public int IterationId { get; set; }
         public int PersonId { get; set; }
+        public int All { get; set; }
     }
 }

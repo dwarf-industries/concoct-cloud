@@ -3,41 +3,48 @@
     ViewData["Title"] = "Backlog";
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
     var result = ViewData["ProjectId"] as int?;
-    var BoardId = ViewData["BoardId"] as int?;
+    var WorkItemType = ViewData["WorkItemType"] as int?;
+    var WorkItemTypeName = ViewData["GetSelectedWorkItem"] as string;
 }
 
 <link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
 
  <!-- end of sidebar element -->
         <!-- main-content declaration -->
-        <div class="main-content" id="main-text" >
-            <div class="sidebar-content">
-<div class="row" style="margin:0px;">
-<div class="col-md-12">
-  <div class="main-card mb-3 card">
-        <div class="card-body">
-        <h5 class="card-title text-center">Select a project</h5>
-          <div class="row" style="margin-left:10px;">
+<div class="main-content" id="main-text" >
+     <div class="sidebar-content">
+         <div class="col-md-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Select a project</h5>
+                    <div class="row" style="margin-left:10px;">
 
-            <div class="btn-group dropdown-split-primary">
-                <button type="button" id="iconbtn" class="btn btn-primary">New Work Item</button>
-                                      
-                <button   id="QueryBtn" >View as board</button>
-                <button   id="ImportWorkItemBtn"></i>Email report</button>
-                <button   id="ExportWorkItemBtn">Export Work Items</button>
+                        <div class="col-md-5">
+                            <button type="button" id="iconbtn" class="btn btn-primary">New Work Item</button>
 
-            </div>
-           <div class="control-section" style="height:97vh;">
-                <div class="content-wrapper">
-                    <div id="TreeGrid"></div>
+                            <button id="QueryBtn">View as board</button>
+                            <button id="ImportWorkItemBtn"></i>Email report</button>
+                            <button id="ExportWorkItemBtn">Export Work Items</button>
+                        </div>
+                        <div class="col-md-3">
+
+                        </div>
+                        <div class="col-md-4">
+                            <button id="WorkItemTypeBtnFilter" class="btn btn-primary">@WorkItemTypeName</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="control-section" style="height:97vh;">
+                            <div class="content-wrapper">
+                                <div id="TreeGrid"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
-            </div>
-        </div>
 
     <div id="modalDialog">
         <div class="btn-group dropdown-split-primary" style="text-align:center;">
@@ -57,7 +64,7 @@
     var treeGridObj;
     var dialogObj;
     var ProjectId = @result;
-    var  boardId = @BoardId;
+     var boardId = 0;
     var selected;
     function OpenWorkItem(id)
     {
@@ -69,7 +76,7 @@
         
           var dto = {
             "id": id,
-            "WorkItemType": 7
+            "WorkItemType": @WorkItemType
         }
         console.log(dto);
         $.ajax({
@@ -159,7 +166,32 @@
         ];
 
     var btnObj = new ej.splitbuttons.DropDownButton({ items: items, iconCss: 'e-ddb-icons e-profile',cssClass: 'e-outline', select:WorkItemListClicked });
-    btnObj.appendTo('#iconbtn');
+     btnObj.appendTo('#iconbtn');
+
+     var workItemCollection = [
+        {
+            text: 'Epic',
+            iconCss: 'e-ddb-icons e-dashboard',
+            url:" /Boards/ProjectBacklog?projectId="+ProjectId+"&workItemType="+5
+        },
+        {
+            text: 'Feature',
+            iconCss: 'e-ddb-icons e-dashboard',
+          
+            url:" /Boards/ProjectBacklog?projectId="+ProjectId+"&workItemType="+2
+        },
+        {
+            text: 'User Story',
+            iconCss: 'e-ddb-icons e-notifications',
+            url:" /Boards/ProjectBacklog?projectId="+ProjectId+"&workItemType="+7
+
+        },
+       
+        
+        ];
+
+        var WorkItemTypeBtnFilter = new ej.splitbuttons.DropDownButton({ items: workItemCollection, iconCss: 'e-ddb-icons e-profile',cssClass: 'e-outline', select:WorkItemListClicked });
+        WorkItemTypeBtnFilter.appendTo('#WorkItemTypeBtnFilter');
 
     function WorkItemListClicked(args)
     {
@@ -224,7 +256,7 @@
     }
     function CreateNewWorkItem(id){
         ProjectId = @result;
-        boardId = @BoardId;
+        boardId = 0;
         window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+id+"&boardId="+boardId+"&parentId=0";
     }
     

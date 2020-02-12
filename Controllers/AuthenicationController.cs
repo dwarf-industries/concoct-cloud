@@ -28,19 +28,20 @@ namespace Rokono_Control.Controllers
 
 
         [HttpGet]
-        public List<OutgoingUserAccounts> GetUsers(){
+        public List<OutgoingUserAccounts> GetUsers()
+        {
             var result = new List<OutgoingUserAccounts>();
-            using(var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context))
             {
                 result = context.GetUserAccounts();
             }
-            return  result;
+            return result;
         }
         [HttpGet]
         public List<OutgoingUserAccounts> GetAvtiveUsers()
         {
             var result = new List<OutgoingUserAccounts>();
-            
+
             return result;
         }
         [HttpGet]
@@ -56,24 +57,25 @@ namespace Rokono_Control.Controllers
             return result;
         }
         [HttpGet]
-        public List<OutgoingAccountManagment> GetManagmentUsers(){
+        public List<OutgoingAccountManagment> GetManagmentUsers()
+        {
             var result = new List<OutgoingAccountManagment>();
-            using(var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context))
             {
                 result = context.GetOutgoingManagmentAccounts();
             }
-            return  result;
+            return result;
         }
-      
+
         [HttpPost]
         public async Task<JsonResult> Login([FromBody] IncomingLoginRequest request)
         {
-            var jsonrResult = Json("False"); 
-           // var result = Json("failed"); 
+            var jsonrResult = Json("False");
+            // var result = Json("failed"); 
             using (var context = new DatabaseController(Context))
             {
                 var result = context.LoginUser(request);
-                if (result!= null)
+                if (result != null)
                 {
                     jsonrResult = Json("Success");
 
@@ -83,9 +85,9 @@ namespace Rokono_Control.Controllers
                     identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, result.Email));
                     identity.AddClaim(new Claim(ClaimTypes.Actor, result.Id.ToString()));
                     identity.AddClaim(new Claim(ClaimTypes.Email, result.ProjectRights.Value.ToString()));
-                   // identity.AddClaim(new Claim(ClaimTypes.Name,  result.FirstName));
-                   // identity.AddClaim(new Claim(ClaimTypes.Role, "User"));
-                   // identity.AddClaim(new Claim(ClaimTypes.SerialNumber, result.SubscriptionId.ToString()));
+                    // identity.AddClaim(new Claim(ClaimTypes.Name,  result.FirstName));
+                    // identity.AddClaim(new Claim(ClaimTypes.Role, "User"));
+                    // identity.AddClaim(new Claim(ClaimTypes.SerialNumber, result.SubscriptionId.ToString()));
 
                     var principal = new ClaimsPrincipal(identity);
 
@@ -100,27 +102,27 @@ namespace Rokono_Control.Controllers
                     return jsonrResult;
                     //   return new OutgoingJsonData { Data = JsonConvert.SerializeObject(result) };
                 }
-              
-             
 
-              
+
+
+
             }
             return jsonrResult;
         }
         [HttpPost]
         public void UserProjectRightsUpdated([FromBody]  IncomignRuleUpdate projectRuleData)
         {
-            using(var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context))
             {
-                context.UpdateUserProjectRights(projectRuleData);   
+                context.UpdateUserProjectRights(projectRuleData);
             }
         }
         [HttpPost]
         public bool UserAccountUpdated([FromBody]  IncomingUserAccountUpdate projectRuleData)
         {
-            using(var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context))
             {
-                context.UpdateUserAccount(projectRuleData);   
+                context.UpdateUserAccount(projectRuleData);
             }
             return true;
         }
@@ -128,7 +130,7 @@ namespace Rokono_Control.Controllers
         public string AddNewUserAccount([FromBody] IncomingNewUserAccount user)
         {
             var accountId = string.Empty;
-            using(var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context))
             {
                 var cAccountId = context.AddUserAccount(user);
                 accountId = cAccountId.ToString();

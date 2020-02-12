@@ -6,6 +6,7 @@
     var ProjectName = ViewData["ProjectName"] as string;
     var Iteration = ViewData["Iteration"] as int?;
     var Person = ViewData["Person"] as int?;
+    var ViewRights = ViewData["GetUserViewRights"] as int?;
 }
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
@@ -25,7 +26,7 @@
 <!--<![endif]-->
 @* <script src="~/SuncfusionEj1/web/scripts/ej.web.all.min.js" type="text/javascript"></script>
     <script src="~/SuncfusionEj1/web/scripts/properties.js" type="text/javascript"></script> *@
- 
+
 <link href="~/css/Sprints/Sprints.css" rel="stylesheet" />
 <!-- end of sidebar element -->
 <!-- main-content declaration -->
@@ -52,8 +53,8 @@
 
 
             <div class="col-md-5">
-                <button type="button" id="iconbtn" class="btn btn-primary" onclick="CallUrl()">New Sprint</button>
-                <button id="backlogBtn" onclick="CallUrl()">View as backlog</button>
+                <button type="button" id="iconbtn" class="btn btn-primary" onclick="CallUrl('/Dashboard/AddNewWorkItem?projectId='+@ProjectId+'&workItemType='+7+'&boardId='+0+'&parentId=0')">New Sprint</button>
+                <button id="backlogBtn" onclick="CallUrl('/Boards/ProjectBacklog?projectId='+@ProjectId+'&&workItemType=7')">View as backlog</button>
                 <button id="capacityBtn" onclick="CallUrl()">Capacity</button>
                 <button id="analitycsBtn" onclick="CallUrl()">Analitycs</button>
             </div>
@@ -79,10 +80,9 @@
 
             </div>
         </div>
+
     </div>
 </div>
-       </div>
-        </div>
 
 
 
@@ -122,7 +122,8 @@
                 "ProjectId": @ProjectId,
                 "WorkItemTypeId": $("#ItemPriority :selected").val(),
                 "IterationId": @Iteration,
-                "PersonId": @Person
+                "PersonId": @Person,
+                "All" : @ViewRights
             }
 
 
@@ -177,22 +178,7 @@
 
 
 		 });
-        $("#ItemPriority").on('change', function() {
-            alert( this.value );
-            $.ajax({
-                type: 'GET',
-                url: '/Boards/GetWorkItems?projectId=@ProjectId&workItemType='+$("#ItemPriority :selected").val(),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
 
-                    GenerateKaban(response);
-                },
-                error: function (xhr, status, error) {
-                    console.log(xhr);
-                }
-            });
-        });
 
          function GenerateKaban(response)
          {
@@ -274,6 +260,29 @@
          function WorkItemListClicked(args)
          {
              console.log(args);
+            @*var incomingSprintDTO =
+            {
+                "ProjectId": @ProjectId,
+                "WorkItemTypeId":7,
+                "IterationId":  $("#Iterations :selected").val(),
+                "PersonId": @Person
+            }
+
+
+
+             $.ajax({
+                type: 'POST',
+                url: '/Boards/GetSprints',
+                data: JSON.stringify(incomingSprintDTO),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    GenerateKaban(response);
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+            });*@
          }
 
          function PersonClicked(args) {

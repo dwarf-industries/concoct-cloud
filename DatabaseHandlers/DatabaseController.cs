@@ -20,38 +20,43 @@ namespace Rokono_Control.DatabaseHandlers
         {
             Context = context;
         }
-        private int I{get;set;}
-        private int InternalId {get;set;}
+        private int I { get; set; }
+        private int InternalId { get; set; }
         internal List<Repository> GetAllRepositories()
         {
-            return Context.Repository.Include(x=>x.Projects).ToList();
+            return Context.Repository.Include(x => x.Projects).ToList();
         }
 
         internal List<BindingCards> GetProjectCards(int projectId, int workItemType)
         {
-            var boards = Context.AssociatedProjectBoards.Include(x=>x.Board)
+            var boards = Context.AssociatedProjectBoards.Include(x => x.Board)
                                                 .ThenInclude(Board => Board.AssociatedBoardWorkItems)
-                                                .ThenInclude(AssociatedBoardWorkItems => AssociatedBoardWorkItems.WorkItem)    
-                                                .ThenInclude(WorkItem => WorkItem.State)   
-                                                .Include(x=>x.Board)
+                                                .ThenInclude(AssociatedBoardWorkItems => AssociatedBoardWorkItems.WorkItem)
+                                                .ThenInclude(WorkItem => WorkItem.State)
+                                                .Include(x => x.Board)
                                                 .ThenInclude(Board => Board.AssociatedBoardWorkItems)
-                                                .ThenInclude(AssociatedBoardWorkItems => AssociatedBoardWorkItems.WorkItem)    
+                                                .ThenInclude(AssociatedBoardWorkItems => AssociatedBoardWorkItems.WorkItem)
                                                 .ThenInclude(WorkItem => WorkItem.WorkItemType)
-                                                .Where(x=>x.ProjectId == projectId && x.Board.AssociatedBoardWorkItems.Any(z=>z.WorkItem.WorkItemTypeId == workItemType)).ToList();
-            
+                                                .Where(x => x.ProjectId == projectId && x.Board.AssociatedBoardWorkItems.Any(z => z.WorkItem.WorkItemTypeId == workItemType)).ToList();
+
             var result = new List<BindingBoard>();
             var Cards = new List<BindingCards>();
-            boards.ForEach(x=>{
-                x.Board.AssociatedBoardWorkItems.Where(y=>y.WorkItem.WorkItemTypeId == workItemType).ToList().ForEach(y=>{
+            boards.ForEach(x =>
+            {
+                x.Board.AssociatedBoardWorkItems.Where(y => y.WorkItem.WorkItemTypeId == workItemType).ToList().ForEach(y =>
+                {
                     var related = new List<RelatedItems>();
-                    y.WorkItem.AssociatedWrorkItemChildrenWorkItemChild.ToList().ForEach(z=>{
-                        related.Add(new RelatedItems{
+                    y.WorkItem.AssociatedWrorkItemChildrenWorkItemChild.ToList().ForEach(z =>
+                    {
+                        related.Add(new RelatedItems
+                        {
                             Id = z.WorkItem.Id,
                             Name = z.WorkItem.Title
                         });
                     });
-                   
-                    Cards.Add(new BindingCards{
+
+                    Cards.Add(new BindingCards
+                    {
                         InnerId = y.WorkItem.Id,
                         Id = $"Task {y.WorkItem.Id}",
                         Summary = $"asd {y.WorkItem.Description}",
@@ -61,32 +66,37 @@ namespace Rokono_Control.DatabaseHandlers
                         Type = $"{x.Board.BoardName}",
                         Status = x.Board.BoardName,
                         Assignee = y.WorkItem.WorkItemType.TypeName
-                       // Children = related
+                        // Children = related
                     });
                 });
             });
             return Cards;
         }
 
-        internal List<BindingCards> GetProjectSprints(IncomingSprintRequest dataRequest, bool hasRights,int userId)
+        internal string GetWorkItemName(int workItemType)
+        {
+            return Context.WorkItemTypes.FirstOrDefault(x => x.Id == workItemType).TypeName;
+        }
+
+        internal List<BindingCards> GetProjectSprints(IncomingSprintRequest dataRequest, bool hasRights, int userId)
         {
             var result = new List<BindingBoard>();
             var Cards = new List<BindingCards>();
             var projectSprints = new List<WorkItem>();
-            if(dataRequest.PersonId == 0 && hasRights)
-                projectSprints = Context.AssociatedBoardWorkItems.Include(x=>x.WorkItem).Where(x=>x.WorkItem.WorkItemTypeId == 7 
-                                                                            && x.ProjectId == dataRequest.ProjectId 
-                                                                            && x.WorkItem.Iteration == dataRequest.IterationId)
-                                                                            .Select(x=>x.WorkItem)
+            if (dataRequest.All == 1 && hasRights)
+                projectSprints = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem).Where(x => x.WorkItem.WorkItemTypeId == 7
+                                                                              && x.ProjectId == dataRequest.ProjectId
+                                                                              && x.WorkItem.Iteration == dataRequest.IterationId)
+                                                                            .Select(x => x.WorkItem)
                                                                             .ToList();
-            else if(dataRequest.PersonId != 0 && hasRights)
+            else if (dataRequest.PersonId != 0 && hasRights)
                 projectSprints = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem).Where(x => x.WorkItem.WorkItemTypeId == 7
                                                                             && x.ProjectId == dataRequest.ProjectId
                                                                             && x.WorkItem.Iteration == dataRequest.IterationId
                                                                             && x.WorkItem.AssignedAccount == dataRequest.PersonId)
                                                                            .Select(x => x.WorkItem)
                                                                            .ToList();
-          
+
             else
                 projectSprints = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem).Where(x => x.WorkItem.WorkItemTypeId == 7
                                                                             && x.ProjectId == dataRequest.ProjectId
@@ -94,24 +104,27 @@ namespace Rokono_Control.DatabaseHandlers
                                                                             && x.WorkItem.AssignedAccount == userId)
                                                                            .Select(x => x.WorkItem)
                                                                            .ToList();
-            
-            projectSprints.ForEach(x=>{
+
+            projectSprints.ForEach(x =>
+            {
                 var sprintTasks = Context.AssociatedWrorkItemChildren.Include(y => y.WorkItemChild)
                                                                      .ThenInclude(WorkItemChild => WorkItemChild.WorkItemType)
                                                                      .Include(y => y.WorkItemChild)
                                                                      .ThenInclude(WorkItemChild => WorkItemChild.AssignedAccountNavigation)
                                                                      .Where(y => y.WorkItemId == x.Id && y.WorkItemChild.WorkItemTypeId == 3)
                                                                      .ToList();
-                sprintTasks.ForEach(task => {
+                sprintTasks.ForEach(task =>
+                {
                     var taskBoard = Context.AssociatedBoardWorkItems.Include(z => z.Board)
-                                                                    .FirstOrDefault(z=>z.WorkItemId == task.WorkItemChildId);
+                                                                    .FirstOrDefault(z => z.WorkItemId == task.WorkItemChildId);
 
-                    var activeBoard =string.Empty;
-                    if(taskBoard == null)
+                    var activeBoard = string.Empty;
+                    if (taskBoard == null)
                         activeBoard = "Open";
                     else
                         activeBoard = taskBoard.Board.BoardName;
-                    Cards.Add(new BindingCards{
+                    Cards.Add(new BindingCards
+                    {
                         InnerId = task.WorkItemChild.Id,
                         Id = $"Task {task.WorkItemChild.Id}",
                         Summary = $"asd {task.WorkItemChild.Description}",
@@ -121,18 +134,26 @@ namespace Rokono_Control.DatabaseHandlers
                         Type = $"{activeBoard}",
                         Status = activeBoard,
                         Assignee = x.Title,
-                        AssgignedAccount = task.WorkItemChild.AssignedAccountNavigation.GitUsername
+                        AssgignedAccount = task.WorkItemChild.AssignedAccountNavigation != null ? task.WorkItemChild.AssignedAccountNavigation.GitUsername : "Unassigned"
                     });
                 });
-                    
+
             });
-        
+
             return Cards;
+        }
+
+        internal int CheckUserViewWorkitemRights(int userId, int projectId)
+        {
+            return Context.AssociatedProjectMemberRights.Include(x => x.Rights)
+                                                        .FirstOrDefault(x => x.UserAccountId == userId
+                                                        && x.ProjectId == projectId)
+                                                        .Rights.ViewOtherPeoplesWork == 1 ? 1 : 0;
         }
 
         internal UserAccounts GetUserAccounts(int userId)
         {
-            var result = Context.AssociatedProjectMembers.Include(x=>x.UserAccount).FirstOrDefault(x => x.UserAccount.Id == userId);
+            var result = Context.AssociatedProjectMembers.Include(x => x.UserAccount).FirstOrDefault(x => x.UserAccount.Id == userId);
             return result != null ? result.UserAccount : null;
         }
 
@@ -145,35 +166,40 @@ namespace Rokono_Control.DatabaseHandlers
         private string GetCardType(string board)
         {
             var res = string.Empty;
-            switch(board)
+            switch (board)
             {
                 case "Epic":
                     res = "Normal";
-                break;
+                    break;
                 case "Bug":
                     res = "Bug";
-                break;
+                    break;
                 case "Task":
                     res = "Task";
-                break;  
+                    break;
                 case "User Story":
                     res = "Sprint";
-                break;
+                    break;
                 default:
                     res = "Task";
-                break;
+                    break;
             }
             return res;
         }
 
+        internal int GetProjectDefautIteration(int id)
+        {
+            return Context.AssociatedProjectIterations.FirstOrDefault(x => x.ProjectId == id).IterationId;
+        }
+
         internal object GetProjectName(int projectId)
         {
-            return Context.Projects.FirstOrDefault(x=>x.Id == projectId).ProjectName;
+            return Context.Projects.FirstOrDefault(x => x.Id == projectId).ProjectName;
         }
 
         internal UserAccounts GetDefaultAccount()
         {
-            return Context.UserAccounts.FirstOrDefault(x=>x.Id == 1);
+            return Context.UserAccounts.FirstOrDefault(x => x.Id == 1);
         }
 
         internal object GetAllWorkItemTypes() => Context.WorkItemTypes.ToList();
@@ -185,15 +211,15 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal WorkItem GetWorkItem(int workItem, int projectId)
         {
-             return Context.AssociatedBoardWorkItems
-                        .Include(x=>x.WorkItem)
-                        .ThenInclude(WorkItem => WorkItem.WorkItemType)
-                        .Include(x=>x.WorkItem)
-                        .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItem)
-                        .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.WorkItemChild)
-                        .Include(x=>x.WorkItem)
-                        .ThenInclude(WorkItem=> WorkItem.AssignedAccountNavigation)
-                        .FirstOrDefault(x=>x.ProjectId == projectId && x.WorkItemId == workItem).WorkItem;
+            return Context.AssociatedBoardWorkItems
+                       .Include(x => x.WorkItem)
+                       .ThenInclude(WorkItem => WorkItem.WorkItemType)
+                       .Include(x => x.WorkItem)
+                       .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItem)
+                       .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.WorkItemChild)
+                       .Include(x => x.WorkItem)
+                       .ThenInclude(WorkItem => WorkItem.AssignedAccountNavigation)
+                       .FirstOrDefault(x => x.ProjectId == projectId && x.WorkItemId == workItem).WorkItem;
         }
         internal List<WorkItem> GetWorkItemChildrenClean(int workItemId)
         {
@@ -204,9 +230,9 @@ namespace Rokono_Control.DatabaseHandlers
         }
         internal void ChangeWorkItemBoard(IncomingCardRequest card)
         {
-            var newBoardAssociation = Context.AssociatedProjectBoards.Include(x=>x.Board).FirstOrDefault(x=> x.ProjectId == card.ProjectId 
-                                                                                    && x.Board.BoardName == card.Board);
-            var currentAssociation = Context.AssociatedBoardWorkItems.FirstOrDefault(x=> x.WorkItemId == card.CardId);
+            var newBoardAssociation = Context.AssociatedProjectBoards.Include(x => x.Board).FirstOrDefault(x => x.ProjectId == card.ProjectId
+                                                                                      && x.Board.BoardName == card.Board);
+            var currentAssociation = Context.AssociatedBoardWorkItems.FirstOrDefault(x => x.WorkItemId == card.CardId);
 
             currentAssociation.BoardId = newBoardAssociation.Board.Id;
             Context.Attach(currentAssociation);
@@ -218,27 +244,28 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal List<Branches> GetProjectBranches(int projectId)
         {
-            var branches = Context.Projects.Include(x=>x.Repository)
+            var branches = Context.Projects.Include(x => x.Repository)
                                    .ThenInclude(Repository => Repository.AssociatedRepositoryBranches)
                                    .ThenInclude(AssociatedRepositoryBranches => AssociatedRepositoryBranches.Branch)
-                                   .FirstOrDefault(x=>x.Id == projectId);
-            if(branches != null)
-                return branches.Repository.AssociatedRepositoryBranches.Select(y=>y.Branch).ToList();
+                                   .FirstOrDefault(x => x.Id == projectId);
+            if (branches != null)
+                return branches.Repository.AssociatedRepositoryBranches.Select(y => y.Branch).ToList();
             else
                 return null;
-                                   
+
         }
 
         internal OutgoingBoundRelations GetAllWorkItemRelations(int workItemId, int projectId)
         {
-            var workItem = Context.WorkItem.Include(x=>x.AssociatedWrorkItemChildrenWorkItem)
+            var workItem = Context.WorkItem.Include(x => x.AssociatedWrorkItemChildrenWorkItem)
                                            .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.WorkItem)
-                                           .Include(x=> x.AssociatedWrorkItemChildrenWorkItem)
+                                           .Include(x => x.AssociatedWrorkItemChildrenWorkItem)
                                            .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.RelationTypeNavigation)
-                                           .FirstOrDefault(x=>x.Id == workItemId);
+                                           .FirstOrDefault(x => x.Id == workItemId);
             var relations = new List<BindingWorkItemRelation>();
             var bindingRelations = new List<BindingWorkItemRelation>();
-            bindingRelations.AddRange(workItem.AssociatedWrorkItemChildrenWorkItemChild.Select(x=> new BindingWorkItemRelation{
+            bindingRelations.AddRange(workItem.AssociatedWrorkItemChildrenWorkItemChild.Select(x => new BindingWorkItemRelation
+            {
                 WorkItem = new BindingWorkItemDTO
                 {
                     Title = x.WorkItemChild.Title,
@@ -247,13 +274,14 @@ namespace Rokono_Control.DatabaseHandlers
                 RelationType = x.RelationTypeNavigation.TypeName
             }).ToList());
             var parent = default(WorkItem);
-            if(workItem.ParentId != null)
+            if (workItem.ParentId != null)
             {
-                if(workItem.ParentId != 0)
+                if (workItem.ParentId != 0)
                 {
-                    parent = Context.WorkItem.FirstOrDefault(x=>x.Id == workItem.ParentId);
-                
-                    bindingRelations.Add(new BindingWorkItemRelation{
+                    parent = Context.WorkItem.FirstOrDefault(x => x.Id == workItem.ParentId);
+
+                    bindingRelations.Add(new BindingWorkItemRelation
+                    {
                         WorkItem = new BindingWorkItemDTO
                         {
                             Title = parent.Title,
@@ -266,33 +294,36 @@ namespace Rokono_Control.DatabaseHandlers
             var res = new StringBuilder();
 
             relations.AddRange(bindingRelations);
-            res.AppendLine ($"class {RemoveWhitespace(workItem.Title)}");
-            res.AppendLine("{"); 
+            res.AppendLine($"class {RemoveWhitespace(workItem.Title)}");
+            res.AppendLine("{");
             res.AppendLine("}");
-            relations.ForEach(x=>{
+            relations.ForEach(x =>
+            {
                 res.AppendLine($"class {RemoveWhitespace(x.WorkItem.Title)}");
                 res.AppendLine("{");
                 res.AppendLine($" is {x.RelationType} of {workItem.Title}");
                 res.AppendLine($" Open Work Item [[[https://localhost:5001/Dashboard/EditWorkItem?projectId={projectId}&&workItem={x.WorkItem.Id}]]]");
                 res.AppendLine("}");
             });
-        //    AssociatedBoardWorkItems "1" *-- "many" Boards
-            relations.ForEach(x=>{
+            //    AssociatedBoardWorkItems "1" *-- "many" Boards
+            relations.ForEach(x =>
+            {
                 res.AppendLine($" {RemoveWhitespace(x.WorkItem.Title)} \"1\" *--  \"{x.RelationType}\" {RemoveWhitespace(workItem.Title)} ");
             });
             return new OutgoingBoundRelations
             {
-              WorkItems = relations,
-              UmlData = res.ToString()
+                WorkItems = relations,
+                UmlData = res.ToString()
             };
         }
 
         internal void AssociatedRelation(IncomignWorkItemRelation incomingRelation)
         {
-            var currentWorkItem = Context.WorkItem.FirstOrDefault(x=>x.Id == incomingRelation.CurrWorkItemId);
-            incomingRelation.LinkedItems.ForEach(x=>{
-                var relId = int.Parse(x.RelationShipId );
-                if(relId== 1)
+            var currentWorkItem = Context.WorkItem.FirstOrDefault(x => x.Id == incomingRelation.CurrWorkItemId);
+            incomingRelation.LinkedItems.ForEach(x =>
+            {
+                var relId = int.Parse(x.RelationShipId);
+                if (relId == 1)
                 {
                     currentWorkItem.ParentId = x.WorkItemId;
                     Context.Attach(currentWorkItem);
@@ -301,7 +332,8 @@ namespace Rokono_Control.DatabaseHandlers
                 }
                 else
                 {
-                    Context.AssociatedWrorkItemChildren.Add(new AssociatedWrorkItemChildren{
+                    Context.AssociatedWrorkItemChildren.Add(new AssociatedWrorkItemChildren
+                    {
                         WorkItemId = currentWorkItem.Id,
                         WorkItemChildId = x.WorkItemId,
                         RelationType = relId
@@ -309,7 +341,7 @@ namespace Rokono_Control.DatabaseHandlers
                     Context.SaveChanges();
                 }
             });
-         
+
         }
 
         public string RemoveWhitespace(string input)
@@ -319,25 +351,41 @@ namespace Rokono_Control.DatabaseHandlers
                 .ToArray());
         }
 
-        internal OutgoingSourceFile GetSelectedFileByName(string fileName, int projectId,int branchId)
+        internal OutgoingSourceFile GetSelectedFileByName(string fileName, int projectId, int branchId)
         {
-            var project = Context.Projects.Include(x=>x.Repository).FirstOrDefault(x=>x.Id == projectId);
-            var branch = Context.Branches.FirstOrDefault(x=>x.Id == branchId);
+            var project = Context.Projects.Include(x => x.Repository).FirstOrDefault(x => x.Id == projectId);
+            var branch = Context.Branches.FirstOrDefault(x => x.Id == branchId);
             var fileLanauge = GitRepositoryManager.GetFileLanaguage(fileName);
-            var branchCommits = Execute($"{Program.Configuration.ShellScripts.FirstOrDefault(x=>x.Name == "GetGitList.sh").Path}",$"{project.Repository.FolderPath} {branch.BranchName}");
-            var fileData =ExecuteSingle($"{Program.Configuration.ShellScripts.FirstOrDefault(x=>x.Name == "GetCommitFile.sh").Path}", $"{project.Repository.FolderPath} {branchCommits.FirstOrDefault()}:{fileName}");
-             return new OutgoingSourceFile{ Data = fileData, LanguageType=  fileLanauge};
+            var branchCommits = Execute($"{Program.Configuration.ShellScripts.FirstOrDefault(x => x.Name == "GetGitList.sh").Path}", $"{project.Repository.FolderPath} {branch.BranchName}");
+            var fileData = ExecuteSingle($"{Program.Configuration.ShellScripts.FirstOrDefault(x => x.Name == "GetCommitFile.sh").Path}", $"{project.Repository.FolderPath} {branchCommits.FirstOrDefault()}:{fileName}");
+            return new OutgoingSourceFile { Data = fileData, LanguageType = fileLanauge };
+        }
+
+        internal OutgoingUserAccounts GetOutgoingUserAccount(int v)
+        {
+            var account = Context.UserAccounts.FirstOrDefault(x => x.Id == v);
+            return new OutgoingUserAccounts
+            {
+                AccountId = account.Id,
+                ChatChannels = 1,
+                EditUserRights = 1,
+                IterationOptions = 1,
+                ScheduleManagement = 1,
+                ViewWorkItems = 1,
+                WorkItemOption = 1
+            };
         }
 
         internal List<OutgoingBindingWorkItem> GetAllWorkItems(int projectId)
         {
             return Context.AssociatedBoardWorkItems
-                        .Include(x=>x.WorkItem)
+                        .Include(x => x.WorkItem)
                         .ThenInclude(WorkItem => WorkItem.WorkItemType)
-                        .Include(x=>x.WorkItem)
+                        .Include(x => x.WorkItem)
                         .ThenInclude(WorkItem => WorkItem.State)
-                        .Where(x=>x.ProjectId == projectId)
-                        .Select(x=> new OutgoingBindingWorkItem{
+                        .Where(x => x.ProjectId == projectId)
+                        .Select(x => new OutgoingBindingWorkItem
+                        {
                             Id = x.WorkItem.Id,
                             Title = x.WorkItem.Title,
                             ItemState = x.WorkItem.State.StateName,
@@ -349,21 +397,21 @@ namespace Rokono_Control.DatabaseHandlers
         }
 
         internal List<string> GetBranchFiles(int projectId, int branchId)
-        {   
+        {
             var result = new List<string>();
-            var project = Context.Projects.FirstOrDefault(x=>x.Id == projectId);
-            if(project == null)
+            var project = Context.Projects.FirstOrDefault(x => x.Id == projectId);
+            if (project == null)
                 return null;
-            var getBranch = Context.AssociatedRepositoryBranches.Include(x=>x.Branch)
-                                                                .Include(x=>x.Repository)
-                                                                .FirstOrDefault(x=> x.RepositoryId == project.RepositoryId && x.Branch.Id == branchId);
-            if(getBranch != null)
+            var getBranch = Context.AssociatedRepositoryBranches.Include(x => x.Branch)
+                                                                .Include(x => x.Repository)
+                                                                .FirstOrDefault(x => x.RepositoryId == project.RepositoryId && x.Branch.Id == branchId);
+            if (getBranch != null)
             {
                 var name = getBranch.Repository.FolderPath;
                 // var fileName = file.FilePath.Split('/').LastOrDefault();
                 //var fileLanauge = GitRepositoryManager.GetFileLanaguage(fileName);
-                result =Execute($"{Program.Configuration.ShellScripts.FirstOrDefault(x=>x.Name == "LsFiles.sh").Path}", $"{name}");
-                
+                result = Execute($"{Program.Configuration.ShellScripts.FirstOrDefault(x => x.Name == "LsFiles.sh").Path}", $"{name}");
+
             }
             return result;
         }
@@ -376,59 +424,63 @@ namespace Rokono_Control.DatabaseHandlers
             var data = new List<CommitFileHirarhicalData>();
             var count = 1;
             InternalId = 1;
-            files.ForEach(x=>{
+            files.ForEach(x =>
+            {
 
-                   // folders.Add(GenerateDirectory(x,folders.Count));
-                   var item = GenerateDirectory(x,$"{count++}");
-                   if(item != null)
+                // folders.Add(GenerateDirectory(x,folders.Count));
+                var item = GenerateDirectory(x, $"{count++}");
+                if (item != null)
                     folders.Add(item);
-                   count++;
+                count++;
             });
             data.AddRange(folders);
             return data;
         }
         public CommitFileHirarhicalData GenerateDirectory(string path, string count)
         {
-              if(Directory.Exists(path))
-               {
-                   var dFiles = Directory.EnumerateFiles(path);
-                   var item = new CommitFileHirarhicalData{
-                       Name = path.Split("/").LastOrDefault(),
-                       FullPathName = path,
-                        InternalId = InternalId,
-                       Id = $"{count+1}",
-                       SubChild = new List<CommitFileHirarhicalData>()
-                   };
-                   item.SubChild = GenerateSubDirectory(item,dFiles.ToList(),$"{count}-{I++}",path);
-                    InternalId++;
+            if (Directory.Exists(path))
+            {
+                var dFiles = Directory.EnumerateFiles(path);
+                var item = new CommitFileHirarhicalData
+                {
+                    Name = path.Split("/").LastOrDefault(),
+                    FullPathName = path,
+                    InternalId = InternalId,
+                    Id = $"{count + 1}",
+                    SubChild = new List<CommitFileHirarhicalData>()
+                };
+                item.SubChild = GenerateSubDirectory(item, dFiles.ToList(), $"{count}-{I++}", path);
+                InternalId++;
 
-                   var directories = Directory.GetDirectories(path);
-                    directories.ToList().ForEach(e=>{
-                        item.SubChild.Add(GenerateDirectory(e,$"{count}-{item.SubChild.Count+ 1}"));
-                    });
+                var directories = Directory.GetDirectories(path);
+                directories.ToList().ForEach(e =>
+                {
+                    item.SubChild.Add(GenerateDirectory(e, $"{count}-{item.SubChild.Count + 1}"));
+                });
 
-                    return item;
-               }
-               else
-               {
-                   var item = new CommitFileHirarhicalData{
-                       Name = path,
-                        InternalId = InternalId,
+                return item;
+            }
+            else
+            {
+                var item = new CommitFileHirarhicalData
+                {
+                    Name = path,
+                    InternalId = InternalId,
 
-                       FullPathName = path,
-                       Id = $"{count+1}"
-                   };
-                    InternalId++;
+                    FullPathName = path,
+                    Id = $"{count + 1}"
+                };
+                InternalId++;
 
-                   return item;
-               }
-                
+                return item;
+            }
+
         }
 
         internal WorkItem GetWorkItemClean(int workItemId, int projectId)
         {
-            var getWorkItem = Context.AssociatedBoardWorkItems.Include(x=>x.WorkItem).FirstOrDefault(x=>x.WorkItemId == workItemId && x.ProjectId == projectId);
-            if(getWorkItem != null)
+            var getWorkItem = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem).FirstOrDefault(x => x.WorkItemId == workItemId && x.ProjectId == projectId);
+            if (getWorkItem != null)
             {
                 getWorkItem.WorkItem.AssociatedWrorkItemChildrenWorkItem = null;
                 getWorkItem.WorkItem.AssociatedWrorkItemChildrenWorkItemChild = null;
@@ -437,17 +489,19 @@ namespace Rokono_Control.DatabaseHandlers
 
                 return getWorkItem.WorkItem;
             }
-            
-            
+
+
             return null;
         }
 
-        public List<CommitFileHirarhicalData> GenerateSubDirectory(CommitFileHirarhicalData item, List<string> files, string parent,string directory)
+        public List<CommitFileHirarhicalData> GenerateSubDirectory(CommitFileHirarhicalData item, List<string> files, string parent, string directory)
         {
             InternalId++;
 
-             files.ToList().ForEach(z=>{
-                item.SubChild.Add(new CommitFileHirarhicalData{
+            files.ToList().ForEach(z =>
+            {
+                item.SubChild.Add(new CommitFileHirarhicalData
+                {
                     Name = z.Split("/").LastOrDefault(),
                     FullPathName = z,
                     Id = parent,
@@ -456,20 +510,21 @@ namespace Rokono_Control.DatabaseHandlers
                     SubChild = new List<CommitFileHirarhicalData>()
                 });
             });
-            
+
             return item.SubChild;
         }
 
-        
+
 
         internal List<Branches> GetBranchesForProject(int projectId)
         {
             return Context.AssociatedRepositoryBranches
-                        .Include(x=>x.Branch)
-                        .Include(x=>x.Repository)
+                        .Include(x => x.Branch)
+                        .Include(x => x.Repository)
                         .ThenInclude(Repository => Repository.Projects)
-                        .Where(x=>x.Repository.Projects.Any(y=>y.Id == projectId))
-                        .Select(x=>new Branches{
+                        .Where(x => x.Repository.Projects.Any(y => y.Id == projectId))
+                        .Select(x => new Branches
+                        {
                             BranchName = x.Branch.BranchName,
                             Id = x.Branch.Id,
                         }).ToList();
@@ -479,7 +534,7 @@ namespace Rokono_Control.DatabaseHandlers
         internal UserAccounts LoginUser(IncomingLoginRequest request)
         {
             var account = Context.UserAccounts
-                                 .FirstOrDefault(x => x.Email == request.Email 
+                                 .FirstOrDefault(x => x.Email == request.Email
                                  && x.Password == request.Password);
             if (account != null)
                 return account;
@@ -492,99 +547,106 @@ namespace Rokono_Control.DatabaseHandlers
             var folders = new List<CommitFileHirarhicalData>();
             var data = new List<CommitFileHirarhicalData>();
             var files = Context.AssociatedCommitFiles
-                    .Include(x=>x.File)
-                    .Include(x=>x.Commit)
-                    .Where(x=>x.Commit.CommitKey == commitId)
+                    .Include(x => x.File)
+                    .Include(x => x.Commit)
+                    .Where(x => x.Commit.CommitKey == commitId)
                     .ToList();
 
-            files.ForEach(x=>{
+            files.ForEach(x =>
+            {
                 var ifSingle = x.File.FilePath.Split('/').ToList();
-                if(ifSingle.Count() <= 1)
-                    data.Add(new CommitFileHirarhicalData{
-                        Id = $"{data.Count+1}",
+                if (ifSingle.Count() <= 1)
+                    data.Add(new CommitFileHirarhicalData
+                    {
+                        Id = $"{data.Count + 1}",
                         Name = x.File.FilePath,
                         ItemId = x.File.Id
 
                     });
-                        
+
             });
             var count = data.Count + 1;
-            files.ForEach(x=>{
-                    var ifSingle = x.File.FilePath.Split('/').ToList();
-                    var file = ifSingle.LastOrDefault();
-                
-                    if(ifSingle.Count() > 1)
-                    {
-                        ifSingle.Remove(file);
-                        var folder = string.Empty;
-                        ifSingle.ForEach(cFolder =>{
-                                folder += $"{cFolder}/";
-                        });
-                        if(folders.FirstOrDefault(cFolders => cFolders.Name == folder) == null)
-                            folders.Add(new CommitFileHirarhicalData{
-                                Id = $"{count++}",
-                                Name = folder,
-                                SubChild = new List<CommitFileHirarhicalData>(),
-                                ItemId = x.File.Id
+            files.ForEach(x =>
+            {
+                var ifSingle = x.File.FilePath.Split('/').ToList();
+                var file = ifSingle.LastOrDefault();
 
-                            });
-                        else
+                if (ifSingle.Count() > 1)
+                {
+                    ifSingle.Remove(file);
+                    var folder = string.Empty;
+                    ifSingle.ForEach(cFolder =>
+                    {
+                        folder += $"{cFolder}/";
+                    });
+                    if (folders.FirstOrDefault(cFolders => cFolders.Name == folder) == null)
+                        folders.Add(new CommitFileHirarhicalData
                         {
-                            if( folders.FirstOrDefault(z => z.Name == folder).SubChild == null)
-                                folders.FirstOrDefault(z => z.Name == folder).SubChild = new List<CommitFileHirarhicalData>();
-                            folders.FirstOrDefault(z => z.Name == folder).SubChild.Add(new CommitFileHirarhicalData{
-                                Id = $"{count}-{folders.FirstOrDefault(z => z.Name == folder).SubChild.Count + 1}",
-                                Name = file,
-                                ItemId = x.File.Id
-                            });
-                        }
+                            Id = $"{count++}",
+                            Name = folder,
+                            SubChild = new List<CommitFileHirarhicalData>(),
+                            ItemId = x.File.Id
+
+                        });
+                    else
+                    {
+                        if (folders.FirstOrDefault(z => z.Name == folder).SubChild == null)
+                            folders.FirstOrDefault(z => z.Name == folder).SubChild = new List<CommitFileHirarhicalData>();
+                        folders.FirstOrDefault(z => z.Name == folder).SubChild.Add(new CommitFileHirarhicalData
+                        {
+                            Id = $"{count}-{folders.FirstOrDefault(z => z.Name == folder).SubChild.Count + 1}",
+                            Name = file,
+                            ItemId = x.File.Id
+                        });
                     }
+                }
             });
             data.AddRange(folders);
             return data;
-         }
+        }
 
         internal OutgoingSourceFile GetSelectedFileById(int fileId, int branch)
         {
             var file = Context.Files
-                            .Include(x=>x.AssociatedCommitFiles)
+                            .Include(x => x.AssociatedCommitFiles)
                             .ThenInclude(AssociatedCommitFiles => AssociatedCommitFiles.Commit)
-                            .FirstOrDefault(x=>x.Id == fileId);
+                            .FirstOrDefault(x => x.Id == fileId);
             var commitKey = file.AssociatedCommitFiles.FirstOrDefault().Commit.CommitKey;
             var repository = Context.Repository
-                                    .Include(x=>x.AssociatedRepositoryBranches)
+                                    .Include(x => x.AssociatedRepositoryBranches)
                                     .ThenInclude(AssociatedRepositoryBranches => AssociatedRepositoryBranches.Branch)
                                     .ThenInclude(Branch => Branch.AssociatedBranchCommits)
                                     .ThenInclude(AssociatedBranchCommits => AssociatedBranchCommits.Commit)
-                                    .FirstOrDefault(x=>
+                                    .FirstOrDefault(x =>
                                     x.AssociatedRepositoryBranches
-                                    .Any(z=>
+                                    .Any(z =>
                                     z.Branch.AssociatedBranchCommits
-                                    .Any(y=>
+                                    .Any(y =>
                                     y.Commit.CommitKey == commitKey)));
             var fileName = file.FilePath.Split('/').LastOrDefault();
             var fileLanauge = GitRepositoryManager.GetFileLanaguage(fileName);
-            var fileData =ExecuteSingle($"{Program.Configuration.ShellScripts.FirstOrDefault(x=>x.Name == "GetCommitFile.sh").Path}", $"{repository.FolderPath} {commitKey}:{file.FilePath}");
-            return new OutgoingSourceFile{ Data = fileData, LanguageType=  fileLanauge};
+            var fileData = ExecuteSingle($"{Program.Configuration.ShellScripts.FirstOrDefault(x => x.Name == "GetCommitFile.sh").Path}", $"{repository.FolderPath} {commitKey}:{file.FilePath}");
+            return new OutgoingSourceFile { Data = fileData, LanguageType = fileLanauge };
         }
 
         internal List<OutgoingCommitData> GetCommitData(int projectId, int branch)
         {
-            return  Context.Commits
-                        .Include(x=>x.AssociatedBranchCommits)
+            return Context.Commits
+                        .Include(x => x.AssociatedBranchCommits)
                         .ThenInclude(AssociatedBranchCommits => AssociatedBranchCommits.Branch)
                         .ThenInclude(Branch => Branch.AssociatedRepositoryBranches)
                         .ThenInclude(AssociatedRepositoryBranches => AssociatedRepositoryBranches.Repository)
                         .ThenInclude(Repository => Repository.Projects)
-                        .Where(x=>
-                        x.AssociatedBranchCommits 
-                        .Any(y=>
-                        y.BranchId == branch 
+                        .Where(x =>
+                        x.AssociatedBranchCommits
+                        .Any(y =>
+                        y.BranchId == branch
                         && y.Branch.AssociatedRepositoryBranches
-                        .Any(z=>
+                        .Any(z =>
                             z.Repository.Projects
-                            .Any(d=>
-                                d.Id == projectId)))).Select(commit => new OutgoingCommitData{
+                            .Any(d =>
+                                d.Id == projectId)))).Select(commit => new OutgoingCommitData
+                                {
                                     Author = commit.CommitedBy,
                                     CommitKey = commit.CommitKey,
                                     Date = commit.DateOfCommit.Value,
@@ -592,26 +654,27 @@ namespace Rokono_Control.DatabaseHandlers
                                     Message = commit.CommitData,
 
                                 }).ToList();
-         
+
         }
 
         internal List<OutgoingCommitData> GetCommitDataMaster(int projectId)
         {
-            return  Context.Commits
-                        .Include(x=>x.AssociatedBranchCommits)
+            return Context.Commits
+                        .Include(x => x.AssociatedBranchCommits)
                         .ThenInclude(AssociatedBranchCommits => AssociatedBranchCommits.Branch)
                         .ThenInclude(Branch => Branch.AssociatedRepositoryBranches)
                         .ThenInclude(AssociatedRepositoryBranches => AssociatedRepositoryBranches.Repository)
                         .ThenInclude(Repository => Repository.Projects)
-                        .Where(x=>
-                        x.AssociatedBranchCommits 
-                        .Any(y=>
-                        y.Branch.BranchName == "Master" 
+                        .Where(x =>
+                        x.AssociatedBranchCommits
+                        .Any(y =>
+                        y.Branch.BranchName == "Master"
                         && y.Branch.AssociatedRepositoryBranches
-                        .Any(z=>
+                        .Any(z =>
                             z.Repository.Projects
-                            .Any(d=>
-                                d.Id == projectId)))).Select(commit => new OutgoingCommitData{
+                            .Any(d =>
+                                d.Id == projectId)))).Select(commit => new OutgoingCommitData
+                                {
                                     Author = commit.CommitedBy,
                                     CommitKey = commit.CommitKey,
                                     Date = commit.DateOfCommit.Value,
@@ -619,17 +682,19 @@ namespace Rokono_Control.DatabaseHandlers
                                     Message = commit.CommitData,
 
                                 }).ToList();
-         
+
         }
 
-        internal Branches CreateBrach(string b, int repoId,int projectId)
+        internal Branches CreateBrach(string b, int repoId, int projectId)
         {
-            var branch = Context.Branches.Add(new  Branches{
-                BranchName =b,
+            var branch = Context.Branches.Add(new Branches
+            {
+                BranchName = b,
                 ProjectId = projectId,
             });
             Context.SaveChanges();
-            Context.AssociatedRepositoryBranches.Add(new AssociatedRepositoryBranches{
+            Context.AssociatedRepositoryBranches.Add(new AssociatedRepositoryBranches
+            {
                 RepositoryId = repoId,
                 BranchId = branch.Entity.Id
             });
@@ -641,18 +706,18 @@ namespace Rokono_Control.DatabaseHandlers
         internal List<string> GetBranches(int repoId)
         {
             return Context.AssociatedRepositoryBranches
-                          .Include(x=>x.Branch)
-                          .Where(x=>x.RepositoryId == repoId)
-                          .Select(x=>x.Branch.BranchName)
+                          .Include(x => x.Branch)
+                          .Where(x => x.RepositoryId == repoId)
+                          .Select(x => x.Branch.BranchName)
                           .ToList();
         }
 
         internal bool CheckIfBranchCommitExists(string commitId, int branchId)
         {
             return Context.Commits
-                          .Include(x=>x.AssociatedBranchCommits)
-                          .Where(x=>x.AssociatedBranchCommits.Any(y=>y.BranchId == branchId))
-                          .Any(x=>x.CommitKey == commitId);
+                          .Include(x => x.AssociatedBranchCommits)
+                          .Where(x => x.AssociatedBranchCommits.Any(y => y.BranchId == branchId))
+                          .Any(x => x.CommitKey == commitId);
         }
 
         internal List<Repository> GetRepositories()
@@ -662,19 +727,21 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal List<OutgoingUserAccounts> GetUserAccounts()
         {
-            return Context.UserAccounts.Select(x=> new OutgoingUserAccounts{
+            return Context.UserAccounts.Select(x => new OutgoingUserAccounts
+            {
                 Name = $"{x.FirstName.FirstOrDefault()} {x.LastName}",
                 AccountId = x.Id
             }).ToList();
         }
 
-        internal  void AssociatedCommitsWithBranch(List<Files> commitFiles, int id,string commitKey, string commitedBy)
+        internal void AssociatedCommitsWithBranch(List<Files> commitFiles, int id, string commitKey, string commitedBy)
         {
             var commit = default(Commits);
-            var commiteExists = Context.Commits.Any(x=>x.CommitKey == commitKey);
-            if(!commiteExists)
+            var commiteExists = Context.Commits.Any(x => x.CommitKey == commitKey);
+            if (!commiteExists)
             {
-                commit = Context.Commits.Add(new Commits{
+                commit = Context.Commits.Add(new Commits
+                {
                     CommitedBy = commitedBy,
                     CommitKey = commitKey,
                     DateOfCommit = DateTime.Now,
@@ -683,75 +750,81 @@ namespace Rokono_Control.DatabaseHandlers
                 Context.SaveChanges();
             }
             else
-                commit = Context.Commits.FirstOrDefault(x=>x.CommitKey == commitKey);
+                commit = Context.Commits.FirstOrDefault(x => x.CommitKey == commitKey);
 
             var branchCommitAssociation = default(AssociatedBranchCommits);
-            var commitAssociationExist =Context.AssociatedBranchCommits.Include(x=>x.Commit).FirstOrDefault(x=>x.Commit.CommitKey == commitKey);
-            if(commitAssociationExist != null)
+            var commitAssociationExist = Context.AssociatedBranchCommits.Include(x => x.Commit).FirstOrDefault(x => x.Commit.CommitKey == commitKey);
+            if (commitAssociationExist != null)
                 branchCommitAssociation = commitAssociationExist;
             else
             {
-                branchCommitAssociation = Context.AssociatedBranchCommits.Add(new AssociatedBranchCommits{
-                    BranchId = id, 
+                branchCommitAssociation = Context.AssociatedBranchCommits.Add(new AssociatedBranchCommits
+                {
+                    BranchId = id,
                     CommitId = commit.Id,
                 }).Entity;
                 Context.SaveChanges();
             }
-            commitFiles.ForEach(x=>
+            commitFiles.ForEach(x =>
             {
                 var file = x;
-                if(!Context.AssociatedCommitFiles.Include(y=>y.File)
-                                                .Include(y=>y.Commit)
-                                                .Any(y=>y.Commit.CommitKey == commitKey && file.FilePath == y.File.FilePath))
+                if (!Context.AssociatedCommitFiles.Include(y => y.File)
+                                                .Include(y => y.Commit)
+                                                .Any(y => y.Commit.CommitKey == commitKey && file.FilePath == y.File.FilePath))
                 {
-                    var fileExist = Context.Files.FirstOrDefault(y=>  y.DateOfFile == file.DateOfFile
+                    var fileExist = Context.Files.FirstOrDefault(y => y.DateOfFile == file.DateOfFile
                                                 && y.CurrentName == file.CurrentName
                                                 && y.FilePath == file.FilePath);
-                    
+
                     var cFile = default(Files);
-                    if(fileExist != null)
+                    if (fileExist != null)
                         cFile = fileExist;
                     else
-                        cFile = Context.Files.Add(new Files{
+                        cFile = Context.Files.Add(new Files
+                        {
                             CurrentName = file.CurrentName,
                             FilePath = file.FilePath,
                             FileData = "",
                             DateOfFile = file.DateOfFile,
 
                         }).Entity;
-                    Context.AssociatedCommitFiles.Add(new AssociatedCommitFiles{
+                    Context.AssociatedCommitFiles.Add(new AssociatedCommitFiles
+                    {
                         CommitId = commit.Id,
                         FileId = cFile.Id,
-                        DateOfCommit=  DateTime.Now
+                        DateOfCommit = DateTime.Now
                     });
                     Context.SaveChanges();
                 }
             });
-        
+
         }
-        internal void AssociatedCommitFilesWithExistingBranch (List<Files> commitFiles, int id, string commitKey,string commitedBy)
+        internal void AssociatedCommitFilesWithExistingBranch(List<Files> commitFiles, int id, string commitKey, string commitedBy)
         {
-            
+
             var newCommit = default(bool);
-            var commit  =default(Commits);
-            if(!Context.Commits.Any(x=>x.CommitKey == commitKey))
+            var commit = default(Commits);
+            if (!Context.Commits.Any(x => x.CommitKey == commitKey))
             {
                 newCommit = true;
-                commit =Context.Commits.Add(new Commits{
+                commit = Context.Commits.Add(new Commits
+                {
                     CommitKey = commitKey,
                     CommitedBy = commitedBy,
                     CommitData = "",
-                    DateOfCommit = DateTime.Now        
+                    DateOfCommit = DateTime.Now
                 }).Entity;
                 Context.SaveChanges();
             }
-            commitFiles.ForEach(x=>{
-                if(commit != null)
+            commitFiles.ForEach(x =>
+            {
+                if (commit != null)
                 {
                     var file = Context.Files.Add(x);
                     Context.SaveChanges();
-                     
-                    var associatedCommitFile = Context.AssociatedCommitFiles.Add(new AssociatedCommitFiles{
+
+                    var associatedCommitFile = Context.AssociatedCommitFiles.Add(new AssociatedCommitFiles
+                    {
                         CommitId = commit.Id,
                         FileId = file.Entity.Id,
                         DateOfCommit = DateTime.Now
@@ -759,10 +832,11 @@ namespace Rokono_Control.DatabaseHandlers
                     Context.SaveChanges();
                 }
             });
-            
-            if(newCommit)
+
+            if (newCommit)
             {
-                Context.AssociatedBranchCommits.Add(new AssociatedBranchCommits{
+                Context.AssociatedBranchCommits.Add(new AssociatedBranchCommits
+                {
                     CommitId = commit.Id,
                     BranchId = id,
                 });
@@ -772,47 +846,71 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal Branches GetBranch(string b, int id)
         {
-            return Context.Branches.FirstOrDefault(x=>x.BranchName == b && x.ProjectId == id);
+            return Context.Branches.FirstOrDefault(x => x.BranchName == b && x.ProjectId == id);
         }
 
         internal List<OutgoingAccountManagment> GetOutgoingManagmentAccounts()
         {
-            var accounts = Context.UserAccounts.Include(x=>x.AssociatedProjectMembers)
+            var accounts = Context.UserAccounts.Include(x => x.AssociatedProjectMembers)
                                         .ThenInclude(AssociatedProjectsMembers => AssociatedProjectsMembers.Project)
                                         .ToList();
-            return accounts.Select(x=> new OutgoingAccountManagment{
-                                            AccountId = x.Id,
-                                            Name = $"{x.FirstName} {x.LastName}",
-                                            Type = x.ProjectRights == 1 ? "Regular" : "Administrator",
-                                            Email = x.Email,
-                                            CreationDate = x.CreationDate,
-                                            Projects = GetJsonData(x.AssociatedProjectMembers.Select(y=>y.Project).ToList())
+            return accounts.Select(x => new OutgoingAccountManagment
+            {
+                AccountId = x.Id,
+                Name = $"{x.FirstName} {x.LastName}",
+                Type = x.ProjectRights == 1 ? "Regular" : "Administrator",
+                Email = x.Email,
+                CreationDate = x.CreationDate,
+                Projects = GetJsonData(x.AssociatedProjectMembers.Select(y => y.Project).ToList())
             }).ToList();
         }
- 
+
 
         internal List<AssociatedBoardWorkItems> GetProjectWorkItems(int id, int parentType)
         {
-            var items = Context.AssociatedBoardWorkItems.Include(x=>x.WorkItem)
-                                                   .ThenInclude(WorkItem => WorkItem.WorkItemType)
-                                                   .Include(x=>x.WorkItem)
-                                                   .ThenInclude(WorkItem => WorkItem.State)
-                                                   .Include(x=>x.WorkItem)
-                                                   .ThenInclude(WorkItem => WorkItem.AssignedAccountNavigation)
-                                                   .Include(x=>x.WorkItem)
-                                                   .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItem)
-                                                   .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.WorkItemChild)
-                                                   .Include(x=> x.WorkItem)
-                                                   .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItem)
-                                                   .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.RelationTypeNavigation)
-                                                   .Where(x=>x.ProjectId == id && x.WorkItem.WorkItemTypeId == parentType)
-                                                   .ToList();
-            return  items;
+            var items = new List<AssociatedBoardWorkItems>();
+            if (parentType == 0)
+            {
+                items = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem)
+                                       .ThenInclude(WorkItem => WorkItem.WorkItemType)
+                                       .Include(x => x.WorkItem)
+                                       .ThenInclude(WorkItem => WorkItem.State)
+                                       .Include(x => x.WorkItem)
+                                       .ThenInclude(WorkItem => WorkItem.AssignedAccountNavigation)
+                                       .Include(x => x.WorkItem)
+                                       .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItem)
+                                       .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.WorkItemChild)
+                                       .Include(x => x.WorkItem)
+                                       .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItem)
+                                       .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.RelationTypeNavigation)
+                                       .Where(x => x.ProjectId == id)
+                                       .ToList();
+            }
+            else
+            {
+                items = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem)
+                                                       .ThenInclude(WorkItem => WorkItem.WorkItemType)
+                                                       .Include(x => x.WorkItem)
+                                                       .ThenInclude(WorkItem => WorkItem.State)
+                                                       .Include(x => x.WorkItem)
+                                                       .ThenInclude(WorkItem => WorkItem.AssignedAccountNavigation)
+                                                       .Include(x => x.WorkItem)
+                                                       .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItem)
+                                                       .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.WorkItemChild)
+                                                       .Include(x => x.WorkItem)
+                                                       .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItem)
+                                                       .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.RelationTypeNavigation)
+                                                       .Where(x => x.ProjectId == id && x.WorkItem.WorkItemTypeId == parentType)
+                                                       .ToList();
+            }
+
+            return items;
         }
 
         internal object GetProjects()
         {
-            return Context.Projects.Select(x=> new{
+            return Context.Projects.Select(x => new
+            {
                 Name = x.ProjectName,
                 Id = x.Id
             }).ToList();
@@ -820,8 +918,9 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal OutgoingProjectRules GetProjectRules(int id, int userId)
         {
-            var projectDetails =  Context.AssociatedProjectMembers.FirstOrDefault(x=>x.ProjectId == id && x.UserAccountId == userId);
-            return new OutgoingProjectRules{
+            var projectDetails = Context.AssociatedProjectMembers.FirstOrDefault(x => x.ProjectId == id && x.UserAccountId == userId);
+            return new OutgoingProjectRules
+            {
                 //CanClone = projectDetails.CanClone == 1 ? true : false,
                 //CanView  =projectDetails.CanViewWork == 1 ? true : false,
                 //CanCommit =projectDetails.CanCommit == 1 ? true : false,
@@ -832,28 +931,29 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal List<CommitChartBindingData> GetCommitsChartForProject(int id)
         {
-            return Context.AssociatedBranchCommits.Where(x=>x.Branch.ProjectId == id).Select(x=> new CommitChartBindingData{
+            return Context.AssociatedBranchCommits.Where(x => x.Branch.ProjectId == id).Select(x => new CommitChartBindingData
+            {
                 DateOfCommit = x.Commit.DateOfCommit.Value,
-                DayCount = Context.Commits.Where(y=>y.DateOfCommit == x.Commit.DateOfCommit).Count(),
+                DayCount = Context.Commits.Where(y => y.DateOfCommit == x.Commit.DateOfCommit).Count(),
             }).ToList();
         }
 
         internal Projects GetProjectData(int id)
         {
- 
-            return Context.Projects.Include(x=>x.Branches)
+
+            return Context.Projects.Include(x => x.Branches)
                                    .ThenInclude(Brances => Brances.AssociatedBranchCommits)
                                    .ThenInclude(AssociatedBranchCommits => AssociatedBranchCommits.Commit)
-                                   .FirstOrDefault(x=>x.Id == id);
+                                   .FirstOrDefault(x => x.Id == id);
 
         }
 
         internal void UpdateUserAccount(IncomingUserAccountUpdate userData)
         {
-            var userAccount = Context.UserAccounts.FirstOrDefault(x=>x.Id == userData.Id);
+            var userAccount = Context.UserAccounts.FirstOrDefault(x => x.Id == userData.Id);
             Context.Attach(userAccount);
             userAccount.Email = userData.Email;
-            if(!string.IsNullOrEmpty(userData.Password))
+            if (!string.IsNullOrEmpty(userData.Password))
             {
                 userAccount.Password = userData.Password;
                 Context.Entry(userAccount).Property("Password").IsModified = true;
@@ -864,21 +964,21 @@ namespace Rokono_Control.DatabaseHandlers
             Context.Entry(userAccount).Property("FirstName").IsModified = true;
             Context.Entry(userAccount).Property("LastName").IsModified = true;
             Context.Entry(userAccount).Property("Email").IsModified = true;
-            Context.SaveChanges();      
+            Context.SaveChanges();
         }
 
         internal void UpdateUserProjectRights(IncomignRuleUpdate projectRuleData)
         {
-            var userAccount = Context.UserAccounts.FirstOrDefault(x=>x.Id == projectRuleData.UserId);
+            var userAccount = Context.UserAccounts.FirstOrDefault(x => x.Id == projectRuleData.UserId);
             Context.Attach(userAccount);
-            userAccount.ProjectRights = projectRuleData.IncomingValue ? 1:0;
+            userAccount.ProjectRights = projectRuleData.IncomingValue ? 1 : 0;
             Context.Entry(userAccount).Property("ProjectRights").IsModified = true;
             Context.SaveChanges();
         }
 
         internal void RemoveUserFromProject(IncomingRemoveUserFromProject userProject)
         {
-            var userAccount = Context.AssociatedProjectMembers.FirstOrDefault(x=>x.ProjectId == userProject.ProjectId && x.UserAccountId == userProject.UserId);
+            var userAccount = Context.AssociatedProjectMembers.FirstOrDefault(x => x.ProjectId == userProject.ProjectId && x.UserAccountId == userProject.UserId);
             Context.Attach(userAccount);
             Context.Remove(userAccount);
             Context.SaveChanges();
@@ -886,11 +986,11 @@ namespace Rokono_Control.DatabaseHandlers
         internal void UpdateProjectUserRule(IncomignRuleUpdate projectRuleData, string rule)
         {
             var getProject = Context.AssociatedProjectMembers
-                                    .FirstOrDefault(x=>x.ProjectId == projectRuleData.ProjId
+                                    .FirstOrDefault(x => x.ProjectId == projectRuleData.ProjId
                                     && x.UserAccountId == projectRuleData.UserId);
             Context.Attach(getProject);
-            switch(rule)
-            {  
+            switch (rule)
+            {
                 //case "CommitRule":
 
                 //        getProject.CanCommit = projectRuleData.IncomingValue ? 1 :0;
@@ -925,13 +1025,14 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal int AddUserAccount(IncomingNewUserAccount user)
         {
-            var account = Context.UserAccounts.Add(new UserAccounts{
-                    Email = user.Email,
-                    Password = user.Password,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    ProjectRights = user.ProjectRights? 1 :0,
-                    CreationDate = DateTime.Now
+            var account = Context.UserAccounts.Add(new UserAccounts
+            {
+                Email = user.Email,
+                Password = user.Password,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                ProjectRights = user.ProjectRights ? 1 : 0,
+                CreationDate = DateTime.Now
             });
             Context.SaveChanges();
             return account.Entity.Id;
@@ -939,29 +1040,30 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal OutgoingAccountManagment GetSpecificUserEdit(int id)
         {
-            var account = Context.UserAccounts.Include(x=>x.AssociatedProjectMembers)
+            var account = Context.UserAccounts.Include(x => x.AssociatedProjectMembers)
                                         .ThenInclude(AssociatedProjectsMembers => AssociatedProjectsMembers.Project)
-                                       .FirstOrDefault(x=>x.Id == id);
+                                       .FirstOrDefault(x => x.Id == id);
 
             return new OutgoingAccountManagment
             {
-                                            AccountId = account.Id,
-                                            Name = $"{account.FirstName} {account.LastName}",
-                                            Type = account.ProjectRights == 1 ? "Regular" : "Administrator",
-                                            Email = account.Email,
-                                            FirstName = account.FirstName,
-                                            LastName = account.LastName,
-                                            CreationDate = account.CreationDate,
-                                            ProjectRights = account.ProjectRights == 1 ? true: false,
-                                            Projects = $@"{GetJsonData(account.AssociatedProjectMembers.Select(y=>y.Project).ToList())}"
+                AccountId = account.Id,
+                Name = $"{account.FirstName} {account.LastName}",
+                Type = account.ProjectRights == 1 ? "Regular" : "Administrator",
+                Email = account.Email,
+                FirstName = account.FirstName,
+                LastName = account.LastName,
+                CreationDate = account.CreationDate,
+                ProjectRights = account.ProjectRights == 1 ? true : false,
+                Projects = $@"{GetJsonData(account.AssociatedProjectMembers.Select(y => y.Project).ToList())}"
             };
- 
+
         }
 
         internal void AddProjectToUser(IncomingProjectUser incomingRequest)
         {
-            var project = Context.Projects.FirstOrDefault(x=>x.Id == incomingRequest.Id);
-            Context.AssociatedProjectMembers.Add(new  AssociatedProjectMembers{
+            var project = Context.Projects.FirstOrDefault(x => x.Id == incomingRequest.Id);
+            Context.AssociatedProjectMembers.Add(new AssociatedProjectMembers
+            {
                 ProjectId = incomingRequest.Id,
                 UserAccountId = incomingRequest.UserId,
                 RepositoryId = project.RepositoryId
@@ -971,8 +1073,9 @@ namespace Rokono_Control.DatabaseHandlers
 
         private string GetJsonData(Object currnet)
         {
-            return JsonConvert.SerializeObject(currnet, Formatting.Indented, 
-                new JsonSerializerSettings { 
+            return JsonConvert.SerializeObject(currnet, Formatting.Indented,
+                new JsonSerializerSettings
+                {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 });
         }
@@ -980,8 +1083,9 @@ namespace Rokono_Control.DatabaseHandlers
         internal List<BindingUserAccount> GetProjectMembers(int projectId)
         {
             return Context.UserAccounts
-            .Include(x=> x.AssociatedProjectMembers)
-            .Where(x=>x.AssociatedProjectMembers.Any(y=>y.ProjectId == projectId)).Select(x=> new BindingUserAccount{
+            .Include(x => x.AssociatedProjectMembers)
+            .Where(x => x.AssociatedProjectMembers.Any(y => y.ProjectId == projectId)).Select(x => new BindingUserAccount
+            {
                 Email = x.Email,
                 AliasName = $"{x.FirstName.FirstOrDefault()}.{x.LastName.FirstOrDefault()}",
                 Id = x.Id
@@ -999,47 +1103,53 @@ namespace Rokono_Control.DatabaseHandlers
             return Context.ValueAreas.ToList();
         }
 
-        internal bool UpdateWorkItem(IncomingWorkItem currentItem) => WorkItemHadler.UpdateWorkItem(currentItem,Context);
+        internal bool UpdateWorkItem(IncomingWorkItem currentItem) => WorkItemHadler.UpdateWorkItem(currentItem, Context);
 
         internal bool AddNewProject(IncomingProject currentProject, int v)
         {
-            if(Context.UserAccounts.FirstOrDefault(x=>x.Id == v).ProjectRights == 1)
+            if (Context.UserAccounts.FirstOrDefault(x => x.Id == v).ProjectRights == 1)
             {
 
                 var userAccounts = new List<UserAccounts>();
-              
+
                 var repoStatus = true; //RepositoryManager.AddNewProject($"/home/GitRepositories/",currentProject.ProjectName, userAccounts);
-                if(repoStatus)
+                if (repoStatus)
                 {
-                    var repository = Context.Repository.Add(new Repository{
+                    var repository = Context.Repository.Add(new Repository
+                    {
                         FolderPath = $"/home/GitRepositories/{currentProject.ProjectName}"
                     });
                     Context.SaveChanges();
-                   
-                    var boardBacklog = Context.Boards.Add(new Boards{
+
+                    var boardBacklog = Context.Boards.Add(new Boards
+                    {
                         RepositoryId = repository.Entity.Id,
                         BoardType = 1,
                         BoardName = "Open"
                     });
-                    var boardActive = Context.Boards.Add(new Boards{
+                    var boardActive = Context.Boards.Add(new Boards
+                    {
                         RepositoryId = repository.Entity.Id,
                         BoardType = 2,
                         BoardName = "InProgress"
                     });
-                    var boardTesting = Context.Boards.Add(new Boards{
+                    var boardTesting = Context.Boards.Add(new Boards
+                    {
                         RepositoryId = repository.Entity.Id,
                         BoardType = 3,
                         BoardName = "Testing"
                     });
-                    var boardDone = Context.Boards.Add(new Boards{
+                    var boardDone = Context.Boards.Add(new Boards
+                    {
                         RepositoryId = repository.Entity.Id,
                         BoardType = 4,
                         BoardName = "Done"
                     });
 
-                   
+
                     Context.SaveChanges();
-                    var project = Context.Projects.Add(new Projects{
+                    var project = Context.Projects.Add(new Projects
+                    {
                         ProjectDescription = currentProject.ProjectDescription,
                         ProjectName = currentProject.ProjectName,
                         ProjectTitle = "",
@@ -1060,84 +1170,92 @@ namespace Rokono_Control.DatabaseHandlers
                         });
                         Context.SaveChanges();
                     });
-                    currentProject.Users.ForEach(x => {
-                    userAccounts.Add(Context.UserAccounts.FirstOrDefault(y => y.Id == x.AccountId));
-                    Context.AssociatedProjectMembers.Add(new AssociatedProjectMembers
+                    currentProject.Users.ForEach(x =>
                     {
-                        ProjectId = project.Entity.Id,
-                        UserAccountId = x.AccountId
-                    });
-                    Context.SaveChanges();
-                    var rights = Context.UserRights.FirstOrDefault(y => y.ManageIterations == x.IterationOptions &&
-                                                                    y.ManageUserdays == x.ScheduleManagement &&
-                                                                    y.UpdateUserRights == x.EditUserRights &&
-                                                                    y.ViewOtherPeoplesWork == x.ViewWorkItems &&
-                                                                    y.ChatChannelsRule == x.ChatChannels);
-                    if (rights == null)
-                    {
-                        Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<UserRights> entityEntry = Context.UserRights.Add(new UserRights
+                        userAccounts.Add(Context.UserAccounts.FirstOrDefault(y => y.Id == x.AccountId));
+                        Context.AssociatedProjectMembers.Add(new AssociatedProjectMembers
                         {
-                            WorkItemRule = Convert.ToInt16(x.WorkItemOption),
-                            ManageIterations = Convert.ToInt16(x.IterationOptions),
-                            ManageUserdays = Convert.ToInt16(x.ScheduleManagement),
-                            UpdateUserRights = Convert.ToInt16(x.EditUserRights),
-                            ViewOtherPeoplesWork = Convert.ToInt16(x.ViewWorkItems),
-                            ChatChannelsRule = Convert.ToInt16(x.ChatChannels)
+                            ProjectId = project.Entity.Id,
+                            UserAccountId = x.AccountId,
+                            RepositoryId = repository.Entity.Id
                         });
                         Context.SaveChanges();
-                        rights = entityEntry.Entity;
-                    }
+                        var rights = Context.UserRights.FirstOrDefault(y => y.ManageIterations == x.IterationOptions &&
+                                                                        y.ManageUserdays == x.ScheduleManagement &&
+                                                                        y.UpdateUserRights == x.EditUserRights &&
+                                                                        y.ViewOtherPeoplesWork == x.ViewWorkItems &&
+                                                                        y.ChatChannelsRule == x.ChatChannels);
+                        if (rights == null)
+                        {
+                            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<UserRights> entityEntry = Context.UserRights.Add(new UserRights
+                            {
+                                WorkItemRule = Convert.ToInt16(x.WorkItemOption),
+                                ManageIterations = Convert.ToInt16(x.IterationOptions),
+                                ManageUserdays = Convert.ToInt16(x.ScheduleManagement),
+                                UpdateUserRights = Convert.ToInt16(x.EditUserRights),
+                                ViewOtherPeoplesWork = Convert.ToInt16(x.ViewWorkItems),
+                                ChatChannelsRule = Convert.ToInt16(x.ChatChannels)
+                            });
+                            Context.SaveChanges();
+                            rights = entityEntry.Entity;
+                        }
 
-                    Context.AssociatedProjectMemberRights.Add(new AssociatedProjectMemberRights
+                        Context.AssociatedProjectMemberRights.Add(new AssociatedProjectMemberRights
+                        {
+                            ProjectId = project.Entity.Id,
+                            UserAccountId = x.AccountId,
+                            RightsId = rights.Id
+
+                        });
+                        Context.SaveChanges();
+                    });
+                    Context.AssociatedProjectBoards.Add(new AssociatedProjectBoards
                     {
-                        ProjectId = project.Entity.Id,
-                        UserAccountId = x.AccountId,
-                        RightsId = rights.Id
-
-                    });
-                    Context.SaveChanges();
-                    });
-                    Context.AssociatedProjectBoards.Add(new AssociatedProjectBoards{
                         ProjectId = project.Entity.Id,
                         BoardId = boardBacklog.Entity.Id,
                         Position = 1
                     });
-                    Context.AssociatedProjectBoards.Add(new AssociatedProjectBoards{
+                    Context.AssociatedProjectBoards.Add(new AssociatedProjectBoards
+                    {
                         ProjectId = project.Entity.Id,
                         BoardId = boardActive.Entity.Id,
                         Position = 2
                     });
-                    Context.AssociatedProjectBoards.Add(new AssociatedProjectBoards{
+                    Context.AssociatedProjectBoards.Add(new AssociatedProjectBoards
+                    {
                         ProjectId = project.Entity.Id,
                         BoardId = boardTesting.Entity.Id,
                         Position = 3
                     });
-                    Context.AssociatedProjectBoards.Add(new AssociatedProjectBoards{
+                    Context.AssociatedProjectBoards.Add(new AssociatedProjectBoards
+                    {
                         ProjectId = project.Entity.Id,
                         BoardId = boardDone.Entity.Id,
                         Position = 4
                     });
                     Context.SaveChanges();
-                    currentProject.Users.ForEach(x=>{
-                        Context.AssociatedProjectMembers.Add(new AssociatedProjectMembers{
+                    currentProject.Users.ForEach(x =>
+                    {
+                        Context.AssociatedProjectMembers.Add(new AssociatedProjectMembers
+                        {
                             ProjectId = project.Entity.Id,
                             RepositoryId = repository.Entity.Id,
                             UserAccountId = x.AccountId,
-                 
+
                         });
                         Context.SaveChanges();
                     });
-                   
+
 
                 }
-               
+
             }
-           return true;
+            return true;
         }
-        internal bool AddNewWorkItem (IncomingWorkItem currentItem)
+        internal bool AddNewWorkItem(IncomingWorkItem currentItem)
         {
-            return WorkItemHadler.AddNewWorkItem(currentItem,Context);
-        
+            return WorkItemHadler.AddNewWorkItem(currentItem, Context);
+
         }
         internal List<WorkItemRelations> GetProjectRelationships()
         {
@@ -1147,36 +1265,36 @@ namespace Rokono_Control.DatabaseHandlers
         internal List<WorkItemActivity> GetProjectActivities(int projectId)
         {
             return Context.WorkItemActivity
-            .ToList();     
+            .ToList();
         }
 
         internal List<WorkItemSeverities> GetProjectSeverities(int projectId)
         {
             return Context.WorkItemSeverities
-            .ToList();     
+            .ToList();
         }
 
         internal List<WorkItemIterations> GetProjectIterations(int projectId)
         {
             return Context.AssociatedProjectIterations.Include(x => x.Iteration).Where(x => x.ProjectId == projectId)
-            .Select(x=>x.Iteration).ToList();       
+            .Select(x => x.Iteration).ToList();
         }
 
         internal bool ValidateWorkItemConnection(IncomignWorkItemRelation incomingRequest)
         {
-            var result = Context.WorkItem.FirstOrDefault(x=> x.PriorityId == incomingRequest.ProjectId && x.Id == incomingRequest.CurrWorkItemId);
-            return result == null ? true:false;
+            var result = Context.WorkItem.FirstOrDefault(x => x.PriorityId == incomingRequest.ProjectId && x.Id == incomingRequest.CurrWorkItemId);
+            return result == null ? true : false;
         }
 
         internal List<WorkItemAreas> GetProjectAreas(int projectId)
         {
             return Context.WorkItemAreas
-            .ToList();        
+            .ToList();
         }
         internal List<WorkItemReasons> GetProjectReasons(int projectId)
         {
             return Context.WorkItemReasons
-            .ToList();        
+            .ToList();
         }
 
         internal List<WorkItemPriorities> GetProjectPriorities(int projectId)
@@ -1188,61 +1306,63 @@ namespace Rokono_Control.DatabaseHandlers
         internal List<Builds> GetProjectBuilds(int projectId)
         {
             return Context.AssociatedProjectBuilds
-            .Where(x=>x.ProjectId == projectId)
-            .Select(x=> x.Build)
+            .Where(x => x.ProjectId == projectId)
+            .Select(x => x.Build)
             .ToList();
         }
 
         internal string GetUsername(int currentId)
         {
-            var account = Context.UserAccounts.FirstOrDefault(x=> x.Id == currentId);
+            var account = Context.UserAccounts.FirstOrDefault(x => x.Id == currentId);
             return $"{account.FirstName} {account.LastName}";
         }
 
         internal List<Projects> GetUserProjects(int id)
         {
-            return Context.Projects.Include(x=>x.AssociatedProjectMembers)
+            return Context.Projects.Include(x => x.AssociatedProjectMembers)
                                     .ThenInclude(AssociatedProjectMembers => AssociatedProjectMembers.UserAccount)
-                                    .Where(x=> x.AssociatedProjectMembers.Any(y=> y.UserAccountId == id)).ToList();
+                                    .Where(x => x.AssociatedProjectMembers.Any(y => y.UserAccountId == id)).ToList();
         }
-        public List<string> Execute(string shPath,string repoPath)
+        public List<string> Execute(string shPath, string repoPath)
         {
             System.Console.WriteLine(shPath);
             System.Console.WriteLine(repoPath);
-             var current = OS.GetCurrent();
+            var current = OS.GetCurrent();
             System.Console.WriteLine(current);
-            if(current == "gnu")
-            { 
-                try{
+            if (current == "gnu")
+            {
+                try
+                {
                     var cmdResult = RepositoryManager.ExecuteCmd("/bin/bash", $"{shPath} {repoPath}");
-                    var data =cmdResult.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                    var data = cmdResult.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
-                    System.Console.WriteLine(cmdResult);  
+                    System.Console.WriteLine(cmdResult);
                     return data;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     System.Console.WriteLine(ex);
-                  //  return false;
+                    //  return false;
                 }
             }
             return null;
         }
-        public string ExecuteSingle(string shPath,string repoPath)
+        public string ExecuteSingle(string shPath, string repoPath)
         {
             System.Console.WriteLine(shPath);
             System.Console.WriteLine(repoPath);
-             var current = OS.GetCurrent();
+            var current = OS.GetCurrent();
             System.Console.WriteLine(current);
-            if(current == "gnu")
-            { 
-                try{
+            if (current == "gnu")
+            {
+                try
+                {
                     return RepositoryManager.ExecuteCmd("/bin/bash", $"{shPath} {repoPath}");
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     System.Console.WriteLine(ex);
-                  //  return false;
+                    //  return false;
                 }
             }
             return string.Empty;
@@ -1250,10 +1370,10 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal Repository GetRepositoryByName(string rName)
         {
-            var projectExist = Context.Projects.Include(x=>x.Repository).FirstOrDefault(x=>x.ProjectName == rName);
-            if(projectExist !=null)
+            var projectExist = Context.Projects.Include(x => x.Repository).FirstOrDefault(x => x.ProjectName == rName);
+            if (projectExist != null)
                 return projectExist.Repository;
-            
+
             return null;
         }
         #region IDisposable Support

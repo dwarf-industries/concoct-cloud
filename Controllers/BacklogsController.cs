@@ -20,39 +20,45 @@ namespace Rokono_Control.Controllers
             var currentUser = this.User;
             var rights = currentUser.Claims.LastOrDefault().Value;
             ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
-            var id = currentUser.Claims.ElementAt(1);         
-            using(var context = new DatabaseController(Context))
+            var id = currentUser.Claims.ElementAt(1);
+            using (var context = new DatabaseController(Context))
             {
+                ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
+
                 var currentId = int.Parse(id.Value);
                 ViewData["ProjectId"] = projectId;
                 ViewData["Relationships"] = context.GetProjectRelationships();
                 ViewData["Name"] = context.GetUsername(currentId);
                 ViewData["BoardId"] = boardId;
+                ViewData["DefaultIteration"] = context.GetProjectDefautIteration(projectId);
+
             }
             return View();
         }
 
-      //  [Authorize(Roles = "User")]
-         [HttpPost]
+        //  [Authorize(Roles = "User")]
+        [HttpPost]
         public List<OutgoingWorkItem> GetWorkItems([FromBody] IncomingIdRequest IncomingIdRequest)
         {
-            
-            var result = new List<OutgoingWorkItem>(); 
-            using(var context = new DatabaseController(Context))
+
+            var result = new List<OutgoingWorkItem>();
+            using (var context = new DatabaseController(Context))
             {
-                var  data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType);
-                var bData =  data.Select(x=>x.WorkItem).ToList();
-                bData.ForEach(x=>{
-                    result.Add(new OutgoingWorkItem{
+                var data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType);
+                var bData = data.Select(x => x.WorkItem).ToList();
+                bData.ForEach(x =>
+                {
+                    result.Add(new OutgoingWorkItem
+                    {
                         Id = x.Id,
                         WorkItemIcon = x.WorkItemType.Icon,
-                        Title =x.Title,
+                        Title = x.Title,
                         Description = x.Description,
-                        AssignedTo = x.AssignedAccountNavigation == null ? "": x.AssignedAccountNavigation.Email,
-                    //    subtasks = new List<OutgoingWorkItem>()
-                    });     
+                        AssignedTo = x.AssignedAccountNavigation == null ? "" : x.AssignedAccountNavigation.Email,
+                        //    subtasks = new List<OutgoingWorkItem>()
+                    });
                 });
-               // result = GetChildren(data,result);
+                // result = GetChildren(data,result);
             }
 
             return result;
@@ -60,40 +66,43 @@ namespace Rokono_Control.Controllers
         [HttpPost]
         public List<OutgoingWorkItem> GetBacklogWorkItems([FromBody] IncomingIdRequest IncomingIdRequest)
         {
-            
-            var result = new List<OutgoingWorkItem>(); 
-            using(var context = new DatabaseController(Context))
+
+            var result = new List<OutgoingWorkItem>();
+            using (var context = new DatabaseController(Context))
             {
-                var  data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType);
-                var bData =  data.Select(x=>x.WorkItem).ToList();
-                bData.ForEach(x=>{
-                    result.Add(new OutgoingWorkItem{
+                var data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType);
+                var bData = data.Select(x => x.WorkItem).ToList();
+                bData.ForEach(x =>
+                {
+                    result.Add(new OutgoingWorkItem
+                    {
                         Id = x.Id,
-                   //     WorkItemIcon = x.WorkItemType.Icon,
-                        Title =x.Title,
+                        //     WorkItemIcon = x.WorkItemType.Icon,
+                        Title = x.Title,
                         TypeId = x.WorkItemTypeId.Value,
                         Description = x.Description,
-                        AssignedTo = x.AssignedAccountNavigation == null ? "": x.AssignedAccountNavigation.Email,
-                        subtasks = x.AssociatedWrorkItemChildrenWorkItem != null ? context.GetWorkItemChildrenClean(x.Id).Select(y=>new OutgoingWorkItem {
-                                Id = y.Id,
-                              //  WorkItemIcon = y.WorkItemType.Icon,
-                                Title =y.Title,
-                                TypeId = y.WorkItemTypeId.Value,
-                                Description = y.Description,
-                                AssignedTo = y.AssignedAccountNavigation == null ? "": y.AssignedAccountNavigation.Email,
+                        AssignedTo = x.AssignedAccountNavigation == null ? "" : x.AssignedAccountNavigation.Email,
+                        subtasks = x.AssociatedWrorkItemChildrenWorkItem != null ? context.GetWorkItemChildrenClean(x.Id).Select(y => new OutgoingWorkItem
+                        {
+                            Id = y.Id,
+                            //  WorkItemIcon = y.WorkItemType.Icon,
+                            Title = y.Title,
+                            TypeId = y.WorkItemTypeId.Value,
+                            Description = y.Description,
+                            AssignedTo = y.AssignedAccountNavigation == null ? "" : y.AssignedAccountNavigation.Email,
 
                         }).ToList() : null
-                    });     
+                    });
                 });
-               // result = GetChildren(data,result);
+                // result = GetChildren(data,result);
             }
 
             return result;
         }
-       
+
     }
 }
- 
+
 
 
 //Select(z=> new OutgoingWorkItem{

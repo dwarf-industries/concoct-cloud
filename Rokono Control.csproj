@@ -20,5 +20,9 @@
     <PackageReference Include="Microsoft.AspNet.SignalR.JS" Version="2.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="3.1.0" />
   </ItemGroup>
+ 
+  <ItemGroup>
+    <Folder Include="wwwroot\Logo\" />
+  </ItemGroup>
 
 </Project>
