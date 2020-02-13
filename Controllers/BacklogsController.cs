@@ -19,7 +19,7 @@ namespace Rokono_Control.Controllers
         {
             var currentUser = this.User;
             var rights = currentUser.Claims.LastOrDefault().Value;
-            ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
+            ViewData["IsAdmin"] = rights;
             var id = currentUser.Claims.ElementAt(1);
             using (var context = new DatabaseController(Context))
             {

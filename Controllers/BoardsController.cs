@@ -22,7 +22,7 @@ namespace RokonoControl.Controllers
             var rights = currentUser.Claims.LastOrDefault().Value;
             var id = currentUser.Claims.ElementAt(1);
 
-            ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
+            ViewData["IsAdmin"] = rights;
             using (var context = new DatabaseController(Context))
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
@@ -42,7 +42,7 @@ namespace RokonoControl.Controllers
         {
             var currentUser = this.User;
             var rights = currentUser.Claims.LastOrDefault().Value;
-            ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
+            ViewData["IsAdmin"] = rights;
             var id = currentUser.Claims.ElementAt(1);
 
             using (var context = new DatabaseController(Context))
@@ -67,7 +67,7 @@ namespace RokonoControl.Controllers
             var rights = currentUser.Claims.LastOrDefault().Value;
             var id = currentUser.Claims.ElementAt(1);
 
-            ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
+            ViewData["IsAdmin"] = rights;
             using (var context = new DatabaseController(Context))
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
@@ -89,7 +89,7 @@ namespace RokonoControl.Controllers
             var rights = currentUser.Claims.LastOrDefault().Value;
             var id = currentUser.Claims.ElementAt(1);
 
-            ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
+            ViewData["IsAdmin"] = rights;
             using (var context = new DatabaseController(Context))
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));

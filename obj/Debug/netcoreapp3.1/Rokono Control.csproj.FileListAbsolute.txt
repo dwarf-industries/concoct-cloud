@@ -126,7 +126,6 @@ D:\RokonoControl\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.R
 D:\RokonoControl\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\RokonoControl\obj\Debug\netcoreapp3.1\staticwebassets\Rokono Control.StaticWebAssets.Manifest.cache
 D:\RokonoControl\obj\Debug\netcoreapp3.1\staticwebassets\Rokono Control.StaticWebAssets.xml
-D:\RokonoControl\obj\Debug\netcoreapp3.1\Rokono Control.MvcApplicationPartsAssemblyInfo.cache
 D:\RokonoControl\obj\Debug\netcoreapp3.1\Rokono Control.RazorAssemblyInfo.cache
 D:\RokonoControl\obj\Debug\netcoreapp3.1\Rokono Control.RazorAssemblyInfo.cs
 D:\RokonoControl\obj\Debug\netcoreapp3.1\Rokono Control.AssemblyInfoInputs.cache
@@ -172,3 +171,77 @@ D:\RokonoControl\obj\Debug\netcoreapp3.1\Rokono Control.dll
 D:\RokonoControl\obj\Debug\netcoreapp3.1\Rokono Control.pdb
 D:\RokonoControl\obj\Debug\netcoreapp3.1\Rokono Control.csprojAssemblyReference.cache
 D:\RokonoControl\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\AddNewProject.cshtml.g.cs
+D:\RokonoControl\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.Razor.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.Workspaces.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGeneration.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\dotnet-aspnet-codegenerator-design.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\NuGet.Frameworks.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\System.Composition.AttributedModel.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\System.Composition.Convention.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\System.Composition.Hosting.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\System.Composition.Runtime.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\System.Composition.TypedParts.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\cs\Microsoft.CodeAnalysis.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\de\Microsoft.CodeAnalysis.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\es\Microsoft.CodeAnalysis.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\fr\Microsoft.CodeAnalysis.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\it\Microsoft.CodeAnalysis.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\ja\Microsoft.CodeAnalysis.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\ko\Microsoft.CodeAnalysis.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\pl\Microsoft.CodeAnalysis.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\pt-BR\Microsoft.CodeAnalysis.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\ru\Microsoft.CodeAnalysis.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\RokonoControl\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\RokonoControl\obj\Debug\netcoreapp3.1\Rokono Control.MvcApplicationPartsAssemblyInfo.cache
+D:\RokonoControl\obj\Debug\netcoreapp3.1\Razor\Views\Accounts\ManageProjectMemebers.cshtml.g.cs

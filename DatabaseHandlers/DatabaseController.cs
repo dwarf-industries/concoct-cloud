@@ -4,7 +4,9 @@ namespace Rokono_Control.DatabaseHandlers
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Security.Cryptography;
     using System.Text;
+    using Microsoft.AspNetCore.Cryptography.KeyDerivation;
     using Microsoft.EntityFrameworkCore;
     using Newtonsoft.Json;
     using Rokono_Control.DataHandlers;
@@ -186,6 +188,10 @@ namespace Rokono_Control.DatabaseHandlers
             }
             return res;
         }
+
+        internal int GetCreatedWorkItemCount(int id) => Context.AssociatedBoardWorkItems.Where(x => x.ProjectId == id).Count();
+        internal int GetWorkItemCountByType(int id, int boardType) => Context.AssociatedBoardWorkItems.Include(x => x.Board).Where(x => x.ProjectId == id && x.Board.BoardType == boardType).Count();
+
 
         internal int GetProjectDefautIteration(int id)
         {
@@ -534,9 +540,19 @@ namespace Rokono_Control.DatabaseHandlers
         internal UserAccounts LoginUser(IncomingLoginRequest request)
         {
             var account = Context.UserAccounts
-                                 .FirstOrDefault(x => x.Email == request.Email
-                                 && x.Password == request.Password);
-            if (account != null)
+                                 .FirstOrDefault(x => x.Email == request.Email);
+            if (account == null)
+                return null;
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+              password: request.Password,
+              salt: Convert.FromBase64String(account.Salt),
+              prf: KeyDerivationPrf.HMACSHA1,
+              iterationCount: 10000,
+              numBytesRequested: 256 / 8));
+
+
+
+            if (hashed == account.Password)
                 return account;
             else
                 return null;
@@ -1034,6 +1050,23 @@ namespace Rokono_Control.DatabaseHandlers
                 ProjectRights = user.ProjectRights ? 1 : 0,
                 CreationDate = DateTime.Now
             });
+            // generate a 128-bit salt using a secure PRNG
+            byte[] salt = new byte[128 / 8];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(salt);
+            }
+            Console.WriteLine($"Salt: {Convert.ToBase64String(salt)}");
+
+            // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: user.Password,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA1,
+                iterationCount: 10000,
+                numBytesRequested: 256 / 8));
+            account.Entity.Salt = Convert.ToBase64String(salt);
+            account.Entity.Password = hashed;
             Context.SaveChanges();
             return account.Entity.Id;
         }

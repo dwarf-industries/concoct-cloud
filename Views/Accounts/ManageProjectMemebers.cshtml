@@ -1,0 +1,256 @@
+﻿
+@{
+    ViewData["Title"] = "ManageProjectMemebers";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var ProjectId = ViewData["ProjectId"];
+
+}
+
+<link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
+
+
+<style>
+      .innerRow {
+        padding: 5%;
+    }
+</style>
+<div class="main-content" id="main-text" >
+    <div class="sidebar-content">
+        <div class="container-fluid">
+            <div class="row innerRow">
+                <div tabindex="0" class="e-card" id="basic_card">
+                    <div class="e-card-header">
+                        <h2 style="text-align:center;">Invite members to join by email</h2>
+
+                    </div>
+                    <div class="e-card-content">
+                        <div class="row innerRow">
+                            <div class="row innerRow">
+                                <div class="Thumbwrapper">
+                                </div>
+                            </div>
+                            <div class="row innerRow">
+                                <div class="col-md-6">
+                                    <input id="email" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input id="gitUsername" />
+                                </div>
+                            </div>
+                            <div class="row innerRow">
+                                <div class="col-md-6">
+                                    <input id="password" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input id="password2" />
+                                </div>
+                            </div>
+                            <div class="row innerRow">
+                                <div class="content-wrapper">
+                                    <div class="col-md-6">
+                                        <div class="row innerRow">
+                                            <div>
+                                                <label for="WorkItemUserOption" style="padding:2%; min-width:303px;"> Add/Edit Work Items</label>
+                                                <input id="WorkItemUserOption" type="checkbox" />
+                                            </div>
+                                        </div>
+                                        <div class="row innerRow">
+                                            <div>
+                                                <label for="ChatUserChannels" style="padding:2%; min-width:303px;">Create Chat Channels</label>
+                                                <input id="ChatUserChannels" type="checkbox" />
+                                            </div>
+                                        </div>
+                                        <div class="row innerRow">
+                                            <div>
+                                                <label for="EditUserRightsUser" style="padding:2%; min-width:303px;">Manage other user rights</label>
+                                                <input id="EditUserRightsUser" type="checkbox" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row innerRow">
+                                            <div>
+                                                <label for="IterationUserOptions" style="padding:2%; min-width:303px;"> Manage Project Iterations</label>
+                                                <input id="IterationUserOptions" type="checkbox" />
+                                            </div>
+                                        </div>
+                                        <div class="row innerRow">
+                                            <div>
+                                                <label for="ScheduleUserManagement" style="padding:2%; min-width:303px;">Manage user work days</label>
+                                                <input id="ScheduleUserManagement" type="checkbox" />
+                                            </div>
+                                        </div>
+                                        <div class="row innerRow">
+                                            <div>
+                                                <label for="ViewWorkUserItems" style="padding: 2%; min-width:303px;">View other people work items</label>
+                                                <input id="ViewWorkUserItems" type="checkbox" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row innerRow">
+                                <button type="button" id="Persons" class="btn btn-primary" style="margin-top:2px;">Add member</button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row innerRow">
+                <div tabindex="0" class="e-card" id="basic_card">
+                    <div class="e-card-header">
+                        <h2 style="text-align:center;">Or add a member with existing account</h2>
+
+                    </div>
+                    <div class="e-card-content">
+                        <div class="row innerRow">
+                            <div class="col-md-6">
+                                <p class="text-center"> Existing Members</p>
+                                <div class="content-wrapper">
+                                    <div id="Gird"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="text-center"> Assign project rights.</p>
+                                <div class="content-wrapper">
+                                    <div class="row innerRow">
+                                        <div>
+                                            <label for="WorkItemOption" style="padding:2%; min-width:303px;"> Add/Edit Work Items</label>
+                                            <input id="WorkItemOption" type="checkbox" />
+                                        </div>
+                                    </div>
+                                    <div class="row innerRow">
+                                        <div>
+                                            <label for="ChatChannels" style="padding:2%; min-width:303px;">Create Chat Channels</label>
+                                            <input id="ChatChannels" type="checkbox" />
+                                        </div>
+                                    </div>
+                                    <div class="row innerRow">
+                                        <div>
+                                            <label for="EditUserRights" style="padding:2%; min-width:303px;">Manage other user rights</label>
+                                            <input id="EditUserRights" type="checkbox" />
+                                        </div>
+                                    </div>
+                                    <div class="row innerRow">
+                                        <div>
+                                            <label for="IterationOptions" style="padding:2%; min-width:303px;"> Manage Project Iterations</label>
+                                            <input id="IterationOptions" type="checkbox" />
+                                        </div>
+                                    </div>
+                                    <div class="row innerRow">
+                                        <div>
+                                            <label for="ScheduleManagement" style="padding:2%; min-width:303px;">Manage user work days</label>
+                                            <input id="ScheduleManagement" type="checkbox" />
+                                        </div>
+                                    </div>
+                                    <div class="row innerRow">
+                                        <div>
+                                            <label for="ViewWorkItems" style="padding: 2%; min-width:303px;">View other people work items</label>
+                                            <input id="ViewWorkItems" type="checkbox" />
+                                        </div>
+                                    </div>
+                                    <div class="row innerRow">
+                                        <button id="outlinebtn" onclick="AddSelectedUser()">Add selected user and this these project rights.</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+<script>
+
+    //Initializing new user input fields
+    var email = new ej.inputs.TextBox({
+        placeholder: 'email',
+        cssClass: 'e-outline',
+        floatLabelType: 'Auto'
+    });
+    email.appendTo('#email');
+    var password = new ej.inputs.TextBox({
+        placeholder: 'Password',
+        cssClass: 'e-outline',
+        floatLabelType: 'Auto'
+    });
+    password.appendTo('#password');
+    var password2 = new ej.inputs.TextBox({
+        placeholder: 'Confirm password',
+        cssClass: 'e-outline',
+        floatLabelType: 'Auto'
+    });
+    password2.appendTo('#password2');
+    var gitUsername = new ej.inputs.TextBox({
+        placeholder: 'Username',
+        cssClass: 'e-outline',
+        floatLabelType: 'Auto'
+    });
+    gitUsername.appendTo('#gitUsername');
+
+
+    var WorkItemUserOption = new ejs.buttons.Switch({ checked: true });
+    WorkItemUserOption.appendTo('#WorkItemUserOption');
+    var ChatUserChannels = new ejs.buttons.Switch({ checked: true });
+    ChatUserChannels.appendTo('#ChatUserChannels');
+    var EditUserRightsUser = new ejs.buttons.Switch({ checked: true });
+    EditUserRightsUser.appendTo('#EditUserRightsUser');
+    var IterationUserOptions = new ejs.buttons.Switch({ checked: true });
+    IterationUserOptions.appendTo('#IterationUserOptions');
+    var ScheduleUserManagement = new ejs.buttons.Switch({ checked: true });
+    ScheduleUserManagement.appendTo('#ScheduleUserManagement');
+    var ViewWorkUserItems = new ejs.buttons.Switch({ checked: true });
+    ViewWorkUserItems.appendTo('#ViewWorkUserItems');
+    //Initializing existing user fields
+
+    var WorkItemOption = new ejs.buttons.Switch({ checked: true });
+    WorkItemOption.appendTo('#WorkItemOption');
+    var ChatChannels = new ejs.buttons.Switch({ checked: true });
+    ChatChannels.appendTo('#ChatChannels');
+    var EditUserRights = new ejs.buttons.Switch({ checked: true });
+    EditUserRights.appendTo('#EditUserRights');
+    var IterationOptions = new ejs.buttons.Switch({ checked: true });
+    IterationOptions.appendTo('#IterationOptions');
+    var ScheduleManagement = new ejs.buttons.Switch({ checked: true });
+    ScheduleManagement.appendTo('#ScheduleManagement');
+    var ViewWorkItems = new ejs.buttons.Switch({ checked: true });
+    ViewWorkItems.appendTo('#ViewWorkItems');
+
+
+    function LoadActiveUsers(data) {
+        ActiveUsersGrid = new ej.grids.Grid({
+            dataSource: data,
+            allowPaging: true,
+            allowSelection: true,
+            enableHover: false,
+
+            pageSettings: { pageCount: 2 }
+        });
+        ActiveUsersGrid.appendTo('#Gird');
+    }
+
+    $.ajax({
+        type: 'GET',
+        url: '/Authenication/GetAvtiveUsers',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            LoadActiveUsers(response);
+        },
+        error: function (xhr, status, error) {
+
+        }
+    });
+</script>

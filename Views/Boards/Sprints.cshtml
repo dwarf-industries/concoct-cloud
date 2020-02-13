@@ -80,6 +80,16 @@
 
             </div>
         </div>
+        <div class="row text-center">
+            <h2>Empty User Stories</h2>
+        </div>
+        <div class="row">
+            <div class="control-section" style="height:97vh;">
+                <div class="content-wrapper">
+                    <div id="TreeGrid"></div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>
@@ -175,7 +185,25 @@
                 }
             });
 
-
+            
+            var dto = {
+                "id": @ProjectId,
+                "WorkItemType":7
+            }
+            console.log(dto);
+            $.ajax({
+                type: 'POST',
+                url: '/Backlogs/GetWorkItems',
+                data: JSON.stringify(dto),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    InitiliazeGrid(response);
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
 
 		 });
 
@@ -296,7 +324,45 @@
 
          function CallUrl(url) {
              window.location.href = url;
-         }
+    }
+
+    function InitiliazeGrid(data )
+    {
+        console.log(data);
+
+
+        var treeGridObj = new ej.treegrid.TreeGrid({
+            dataSource: data,
+            allowSelection: true,
+            allowFiltering: true,
+            allowSorting: true,
+            toolbar: ['Search'],
+            recordDoubleClick: EditWorkItem,
+            enableVirtualization: true,
+            filterSettings: { type: 'Menu' },
+            selectionSettings: { persistSelection: true, type: "Multiple" },
+            enableHover: false,
+            allowPaging: true,
+            pageSettings: { pageSize: 20 },
+            columns: [
+                { type: "checkbox", field: "", allowFiltering: false, allowSorting: false, width: '60' },
+                { field: 'workItemType.TypeName', headerText: 'Type', width: 60 },
+                { field: 'title', headerText: 'Title', width: 125 },
+                { field: 'description', headerText: 'Description', width: 180 },
+                { field: 'assignedAccountNavigation.Email', headerText: 'AssignedTo', width: 110 },
+            ]
+        });
+
+        treeGridObj.appendTo('#TreeGrid');
+
+
+    }
+
+    function EditWorkItem(args)
+    {
+        console.log(args);
+        window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.rowData.id
+    }
 </script>
 
 

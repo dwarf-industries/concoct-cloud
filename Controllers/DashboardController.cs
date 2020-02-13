@@ -26,14 +26,21 @@ namespace Rokono_Control.Controllers
                 ViewData["Projects"] = context.GetUserProjects(currentId);
                 ViewData["Name"] = context.GetUsername(currentId);
                 var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
+                ViewData["IsAdmin"] = rights;
 
             }
             return View();
         }
         public IActionResult AddNewProject(string user)
         {
-            ViewData["User"] = user;
+            var currentUser = this.User;
+            var id = currentUser.Claims.ElementAt(1);
+
+            using (var context = new DatabaseController(Context))
+            {
+                var currentId = int.Parse(id.Value);
+                ViewData["User"] = context.GetUsername(currentId);
+            }
             return View();
         }
         public IActionResult AddNewWorkItem(int projectId, int workItemType, int parentId)
@@ -45,7 +52,7 @@ namespace Rokono_Control.Controllers
             using (var context = new DatabaseController(Context))
             {
                 var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
+                ViewData["IsAdmin"] = rights;
                 ViewData["Priorities"] = context.GetProjectPriorities(projectId);
                 ViewData["Areas"] = context.GetProjectAreas(projectId);
                 ViewData["Iterations"] = context.GetProjectIterations(projectId);
@@ -76,7 +83,7 @@ namespace Rokono_Control.Controllers
             {
                 var defaultUserAccount = context.GetDefaultAccount();
                 var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
+                ViewData["IsAdmin"] = rights;
                 var workItemData = context.GetWorkItem(workItem, projectId);
                 workItemData.DueDate = workItemData.DueDate.HasValue ? workItemData.DueDate.Value : new System.DateTime();
                 workItemData.StartDate = workItemData.StartDate.HasValue ? workItemData.StartDate.Value : new System.DateTime();
@@ -110,7 +117,7 @@ namespace Rokono_Control.Controllers
             using (var context = new DatabaseController(Context))
             {
                 var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
+                ViewData["IsAdmin"] = rights;
                 ViewData["Relationships"] = context.GetProjectRelationships();
                 ViewData["UserAccounts"] = context.GetUserAccounts();
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(currentUserId.Value));
@@ -142,7 +149,7 @@ namespace Rokono_Control.Controllers
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(currentUserId.Value));
 
                 var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
+                ViewData["IsAdmin"] = rights;
                 ViewData["Relationships"] = context.GetProjectRelationships();
                 ViewData["UserAccount"] = context.GetSpecificUserEdit(id);
                 ViewData["UserId"] = id;
@@ -159,7 +166,7 @@ namespace Rokono_Control.Controllers
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(currentUserId.Value));
 
                 var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
+                ViewData["IsAdmin"] = rights;
                 ViewData["Relationships"] = context.GetProjectRelationships();
 
 
@@ -174,7 +181,7 @@ namespace Rokono_Control.Controllers
             {
                 ViewData["Relationships"] = context.GetProjectRelationships();
                 var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
+                ViewData["IsAdmin"] = rights;
                 ViewData["Relationships"] = context.GetProjectRelationships();
                 ViewData["UserAccount"] = context.GetSpecificUserEdit(id);
                 ViewData["UserId"] = id;
@@ -192,15 +199,24 @@ namespace Rokono_Control.Controllers
             var currentUserId = currentUser.Claims.ElementAt(1);
             using (var context = new DatabaseController(Context))
             {
+                var project = context.GetProjectData(id);
+                var initials = project.ProjectName.ToUpper().Substring(0, 2);
                 var currentId = int.Parse(currentUserId.Value);
                 ViewData["Projects"] = context.GetUserProjects(currentId);
                 var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
+                ViewData["IsAdmin"] = rights;
                 ViewData["Relationships"] = context.GetProjectRelationships();
-                ViewData["Project"] = context.GetProjectData(id);
+                ViewData["Project"] = project;
                 ViewData["ProjectMembers"] = context.GetProjectMembers(id);
                 ViewData["ProjectId"] = id;
                 ViewData["DefaultIteration"] = context.GetProjectDefautIteration(id);
+                ViewData["Initials"] = initials;
+                ViewData["WorkItemsCreated"] = context.GetCreatedWorkItemCount(id);
+                ViewData["WorkItemsNew"] = context.GetWorkItemCountByType(id, 1);
+                ViewData["WorkItemsActive"] = context.GetWorkItemCountByType(id, 2);
+                ViewData["WorkItemsTesting"] = context.GetWorkItemCountByType(id, 3);
+                ViewData["WorkItemsCompleated"] = context.GetWorkItemCountByType(id, 4);
+
             }
             return View();
         }
@@ -214,7 +230,7 @@ namespace Rokono_Control.Controllers
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
 
                 var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
+                ViewData["IsAdmin"] = rights;
                 var currentId = int.Parse(id.Value);
                 ViewData["ProjectId"] = projectId;
                 ViewData["Relationships"] = context.GetProjectRelationships();

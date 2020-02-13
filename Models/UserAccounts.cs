@@ -20,6 +20,7 @@ namespace Rokono_Control.Models
         public string LastName { get; set; }
         public int? ProjectRights { get; set; }
         public string GitUsername { get; set; }
+        public string Salt { get; set; }
 
         public virtual ICollection<AssociatedProjectMemberRights> AssociatedProjectMemberRights { get; set; }
         public virtual ICollection<AssociatedProjectMembers> AssociatedProjectMembers { get; set; }
