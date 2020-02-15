@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "D:\\RokonoControl\\Rokono Control.csproj": {}
+    "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Rokono Control.csproj": {}
   },
   "projects": {
-    "D:\\RokonoControl\\Rokono Control.csproj": {
+    "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Rokono Control.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\RokonoControl\\Rokono Control.csproj",
+        "projectUniqueName": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Rokono Control.csproj",
         "projectName": "Rokono Control",
-        "projectPath": "D:\\RokonoControl\\Rokono Control.csproj",
-        "packagesPath": "C:\\Users\\krisk\\.nuget\\packages\\",
-        "outputPath": "D:\\RokonoControl\\obj\\",
+        "projectPath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Rokono Control.csproj",
+        "packagesPath": "/home/dwarfdevelopment/.nuget/packages/",
+        "outputPath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\krisk\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/dwarfdevelopment/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -99,7 +97,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
         }
       }
     }

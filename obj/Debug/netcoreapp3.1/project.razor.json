@@ -1,5 +1,5 @@
 {
-  "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Rokono Control.csproj",
+  "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Rokono Control.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "3.0",
@@ -14440,7 +14440,7 @@
         "Kind": "ITagHelper",
         "Name": "Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper",
         "AssemblyName": "Microsoft.AspNetCore.Mvc.Razor",
-        "Documentation": null,
+        "Documentation": "\n            <summary>\n            <see cref=\"T:Microsoft.AspNetCore.Razor.TagHelpers.ITagHelper\" /> implementation targeting elements containing attributes with URL expected values.\n            </summary>\n            <remarks>Resolves URLs starting with '~/' (relative to the application's 'webroot' setting) that are not\n            targeted by other <see cref=\"T:Microsoft.AspNetCore.Razor.TagHelpers.ITagHelper\" />s. Runs prior to other <see cref=\"T:Microsoft.AspNetCore.Razor.TagHelpers.ITagHelper\" />s to ensure\n            application-relative URLs are resolved.</remarks>\n        ",
         "TagOutputHint": null,
         "CaseSensitive": false,
         "TagMatchingRules": [
@@ -20496,153 +20496,173 @@
         }
       }
     ],
-    "CSharpLanguageVersion": 703
+    "CSharpLanguageVersion": 800
   },
   "RootNamespace": "Rokono_Control",
   "Documents": [
     {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Shared/_LayoutProjects.cshtml",
-      "TargetPath": "Views/Shared/_LayoutProjects.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Dashboard/Cmmits.cshtml",
-      "TargetPath": "Views/Dashboard/Cmmits.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Commit/Index.cshtml",
-      "TargetPath": "Views/Commit/Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Home/Index.cshtml",
-      "TargetPath": "Views/Home/Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/_ViewImports.cshtml",
-      "TargetPath": "Views/_ViewImports.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Dashboard/ManageAccounts.cshtml",
-      "TargetPath": "Views/Dashboard/ManageAccounts.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Shared/_Layout.cshtml",
-      "TargetPath": "Views/Shared/_Layout.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Shared/_CookieConsentPartial.cshtml",
-      "TargetPath": "Views/Shared/_CookieConsentPartial.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Dashboard/ProjectDashboard.cshtml",
-      "TargetPath": "Views/Dashboard/ProjectDashboard.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Shared/Error.cshtml",
-      "TargetPath": "Views/Shared/Error.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Dashboard/ProjectDetails.cshtml",
-      "TargetPath": "Views/Dashboard/ProjectDetails.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Shared/_LayoutDashboard.cshtml",
-      "TargetPath": "Views/Shared/_LayoutDashboard.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Dashboard/index.cshtml",
-      "TargetPath": "Views/Dashboard/index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Boards/ProjectBacklog.cshtml",
-      "TargetPath": "Views/Boards/ProjectBacklog.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Dashboard/EditAccount.cshtml",
-      "TargetPath": "Views/Dashboard/EditAccount.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Backlogs/Index.cshtml",
-      "TargetPath": "Views/Backlogs/Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Home/Privacy.cshtml",
-      "TargetPath": "Views/Home/Privacy.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Dashboard/Project.cshtml",
-      "TargetPath": "Views/Dashboard/Project.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Dashboard/AddNewWorkItem.cshtml",
-      "TargetPath": "Views/Dashboard/AddNewWorkItem.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Commit/Files.cshtml",
-      "TargetPath": "Views/Commit/Files.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Dashboard/AddNewAccount.cshtml",
-      "TargetPath": "Views/Dashboard/AddNewAccount.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Boards/Index.cshtml",
-      "TargetPath": "Views/Boards/Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Boards/Sprints.cshtml",
-      "TargetPath": "Views/Boards/Sprints.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Commit/CommitData.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Commit/CommitData.cshtml",
       "TargetPath": "Views/Commit/CommitData.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Shared/_ValidationScriptsPartial.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Boards/Sprints.cshtml",
+      "TargetPath": "Views/Boards/Sprints.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Dashboard/Cmmits.cshtml",
+      "TargetPath": "Views/Dashboard/Cmmits.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/_ViewImports.cshtml",
+      "TargetPath": "Views/_ViewImports.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Shared/_ValidationScriptsPartial.cshtml",
       "TargetPath": "Views/Shared/_ValidationScriptsPartial.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/_ViewStart.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Boards/ProjectBacklog.cshtml",
+      "TargetPath": "Views/Boards/ProjectBacklog.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/_ViewStart.cshtml",
       "TargetPath": "Views/_ViewStart.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Dashboard/AssignAccountProjects.cshtml",
-      "TargetPath": "Views/Dashboard/AssignAccountProjects.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Dashboard/ManageAccounts.cshtml",
+      "TargetPath": "Views/Dashboard/ManageAccounts.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Dashboard/WorkItems.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Dashboard/ProjectDetails.cshtml",
+      "TargetPath": "Views/Dashboard/ProjectDetails.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Shared/_LayoutProjects.cshtml",
+      "TargetPath": "Views/Shared/_LayoutProjects.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Accounts/Administration.cshtml",
+      "TargetPath": "Views/Accounts/Administration.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Shared/_LayoutDashboard.cshtml",
+      "TargetPath": "Views/Shared/_LayoutDashboard.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Dashboard/EditAccount.cshtml",
+      "TargetPath": "Views/Dashboard/EditAccount.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Dashboard/AddNewProject.cshtml",
+      "TargetPath": "Views/Dashboard/AddNewProject.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Dashboard/Project.cshtml",
+      "TargetPath": "Views/Dashboard/Project.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Dashboard/EditWorkItem.cshtml",
+      "TargetPath": "Views/Dashboard/EditWorkItem.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Shared/_Layout.cshtml",
+      "TargetPath": "Views/Shared/_Layout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Dashboard/WorkItems.cshtml",
       "TargetPath": "Views/Dashboard/WorkItems.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/kristifor/Projects/Webplatforms/RokonoControl/Views/Dashboard/EditWorkItem.cshtml",
-      "TargetPath": "Views/Dashboard/EditWorkItem.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Backlogs/Index.cshtml",
+      "TargetPath": "Views/Backlogs/Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Boards/Index.cshtml",
+      "TargetPath": "Views/Boards/Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Dashboard/ProjectDashboard.cshtml",
+      "TargetPath": "Views/Dashboard/ProjectDashboard.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Home/Index.cshtml",
+      "TargetPath": "Views/Home/Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Shared/Error.cshtml",
+      "TargetPath": "Views/Shared/Error.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Accounts/ManageProjectMemebers.cshtml",
+      "TargetPath": "Views/Accounts/ManageProjectMemebers.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Commit/Files.cshtml",
+      "TargetPath": "Views/Commit/Files.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Shared/_CookieConsentPartial.cshtml",
+      "TargetPath": "Views/Shared/_CookieConsentPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Home/Privacy.cshtml",
+      "TargetPath": "Views/Home/Privacy.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Boards/SprintBacklogs.cshtml",
+      "TargetPath": "Views/Boards/SprintBacklogs.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Dashboard/AssignAccountProjects.cshtml",
+      "TargetPath": "Views/Dashboard/AssignAccountProjects.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Dashboard/AddNewWorkItem.cshtml",
+      "TargetPath": "Views/Dashboard/AddNewWorkItem.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Dashboard/AddNewAccount.cshtml",
+      "TargetPath": "Views/Dashboard/AddNewAccount.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Commit/Index.cshtml",
+      "TargetPath": "Views/Commit/Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Views/Dashboard/index.cshtml",
+      "TargetPath": "Views/Dashboard/index.cshtml",
       "FileKind": "mvc"
     }
   ],
