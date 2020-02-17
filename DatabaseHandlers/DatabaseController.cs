@@ -77,6 +77,95 @@ namespace Rokono_Control.DatabaseHandlers
             return Cards;
         }
 
+        internal void AssociatedProjectExistingMembers(IncomingExistingProjectMembers accounts)
+        {
+            var projectRepository = Context.Projects.FirstOrDefault(x=> x.Id == accounts.ProjectId).RepositoryId;
+            accounts.Accounts.ForEach(y=>{
+
+            
+                Context.AssociatedProjectMembers.Add(new AssociatedProjectMembers{
+                    ProjectId = accounts.ProjectId,
+                    RepositoryId = projectRepository,
+                    UserAccountId = y.AccountId,
+                });
+                Context.SaveChanges();
+                var commonRightsId = default(int);
+                var getCommonRights  = Context.UserRights.FirstOrDefault(x=>x.ManageIterations == y.IterationOptions && 
+                                                                            x.ChatChannelsRule == y.ChatChannels &&
+                                                                            x.ManageUserdays == y.ScheduleManagement &&
+                                                                            x.UpdateUserRights == y.EditUserRights &&
+                                                                            x.ViewOtherPeoplesWork == y.ViewWorkItems &&
+                                                                            x.WorkItemRule == y.WorkItemOption);
+                if(getCommonRights != null)
+                    commonRightsId = getCommonRights.Id;
+                else
+                {
+
+                    commonRightsId = Context.UserRights.Add(new UserRights{
+                        ChatChannelsRule = Convert.ToInt16(y.ChatChannels),
+                        ManageIterations = Convert.ToInt16(y.IterationOptions),
+                        ViewOtherPeoplesWork = Convert.ToInt16(y.ViewWorkItems),
+                        ManageUserdays = Convert.ToInt16(y.ScheduleManagement),
+                        UpdateUserRights = Convert.ToInt16(y.EditUserRights),
+                        WorkItemRule = Convert.ToInt16(y.WorkItemOption)
+                    }).Entity.Id;
+                    Context.SaveChanges();
+                }
+                Context.AssociatedProjectMemberRights.Add(new AssociatedProjectMemberRights{
+                    ProjectId = accounts.ProjectId,
+                    UserAccountId = y.AccountId,
+                    RightsId = commonRightsId
+                });
+                Context.SaveChanges();
+            });
+        }
+
+        internal void AddProjectInvitation(IncomingProjectAccount projectAccount)
+        {
+            var accountId = AddUserAccount(new IncomingNewUserAccount{
+                Email = projectAccount.email,
+                Password = projectAccount.password,
+                ProjectRights = false,
+                FirstName = "Unassigned",
+                LastName = "Unassigned"
+            });
+            var projectRepository = Context.Projects.FirstOrDefault(x=> x.Id == projectAccount.ProjectId).RepositoryId;
+            Context.AssociatedProjectMembers.Add(new AssociatedProjectMembers{
+                ProjectId = projectAccount.ProjectId,
+                RepositoryId = projectRepository,
+                UserAccountId = accountId,
+            });
+            Context.SaveChanges();
+            var commonRightsId = default(int);
+            var getCommonRights  = Context.UserRights.FirstOrDefault(x=>x.ManageIterations == projectAccount.accountRights.IterationOptions && 
+                                                                        x.ChatChannelsRule == projectAccount.accountRights.ChatChannels &&
+                                                                        x.ManageUserdays == projectAccount.accountRights.ScheduleManagement &&
+                                                                        x.UpdateUserRights == projectAccount.accountRights.EditUserRights &&
+                                                                        x.ViewOtherPeoplesWork == projectAccount.accountRights.ViewWorkItems &&
+                                                                        x.WorkItemRule == projectAccount.accountRights.WorkItemOption);
+            if(getCommonRights != null)
+                commonRightsId = getCommonRights.Id;
+            else
+            {
+
+                commonRightsId = Context.UserRights.Add(new UserRights{
+                     ChatChannelsRule = Convert.ToInt16(projectAccount.accountRights.ChatChannels),
+                     ManageIterations = Convert.ToInt16(projectAccount.accountRights.IterationOptions),
+                     ViewOtherPeoplesWork = Convert.ToInt16(projectAccount.accountRights.ViewWorkItems),
+                     ManageUserdays = Convert.ToInt16(projectAccount.accountRights.ScheduleManagement),
+                     UpdateUserRights = Convert.ToInt16(projectAccount.accountRights.EditUserRights),
+                     WorkItemRule = Convert.ToInt16(projectAccount.accountRights.WorkItemOption)
+                 }).Entity.Id;
+                Context.SaveChanges();
+            }
+            Context.AssociatedProjectMemberRights.Add(new AssociatedProjectMemberRights{
+                ProjectId = projectAccount.ProjectId,
+                UserAccountId = accountId,
+                RightsId = commonRightsId
+            });
+            Context.SaveChanges();
+        }
+
         internal string GetWorkItemName(int workItemType)
         {
             return Context.WorkItemTypes.FirstOrDefault(x => x.Id == workItemType).TypeName;
@@ -1420,7 +1509,7 @@ namespace Rokono_Control.DatabaseHandlers
             {
                 if (disposing)
                 {
-                    // TODO: dispose managed state (managed objects).
+                    Context.Dispose();
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.

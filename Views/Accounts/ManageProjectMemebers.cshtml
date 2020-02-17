@@ -91,7 +91,7 @@
                                 </div>
                             </div>
                             <div class="row innerRow">
-                                <button type="button" id="Persons" class="btn btn-primary" style="margin-top:2px;">Add member</button>
+                                <button type="button" id="Persons" class="btn btn-primary" style="margin-top:2px;" onclick="AssignProjectUser()">Add member</button>
 
                             </div>
                         </div>
@@ -109,9 +109,17 @@
                     <div class="e-card-content">
                         <div class="row innerRow">
                             <div class="col-md-6">
-                                <p class="text-center"> Existing Members</p>
-                                <div class="content-wrapper">
-                                    <div id="Gird"></div>
+                                <div class="row">
+                                    <p class="text-center"> Existing Members</p>
+                                    <div class="content-wrapper">
+                                        <div id="Grid"></div>
+                                    </div>
+                                </div>
+                                  <div class="row">
+                                    <p class="text-center"> Existing Members</p>
+                                    <div class="content-wrapper">
+                                        <div id="ActiveMembersGird"></div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -154,14 +162,17 @@
                                         </div>
                                     </div>
                                     <div class="row innerRow">
-                                        <button id="outlinebtn" onclick="AddSelectedUser()">Add selected user and this these project rights.</button>
+                                        <button id="SelectUser" onclick="AddSelectedUser()">Add selected user and this these project rights.</button>
 
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="row innerRow">
+                        <button id="AssignPUsers" onclick="InviteProjectMember()">Assign Users</button>
 
+                    </div>
                 </div>
             </div>
         </div>
@@ -173,7 +184,9 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 <script>
-
+    var ActiveUsersGrid;
+    var grid;
+    var CurrentSelected;
     //Initializing new user input fields
     var email = new ej.inputs.TextBox({
         placeholder: 'email',
@@ -199,6 +212,14 @@
         floatLabelType: 'Auto'
     });
     gitUsername.appendTo('#gitUsername');
+
+    var SelectUser = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    SelectUser.appendTo('#SelectUser');
+
+    var SelectUser = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    SelectUser.appendTo('#SelectUser');
+    var AssignPUsers = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    AssignPUsers.appendTo('#AssignPUsers');
 
 
     var WorkItemUserOption = new ejs.buttons.Switch({ checked: true });
@@ -228,17 +249,68 @@
     var ViewWorkItems = new ejs.buttons.Switch({ checked: true });
     ViewWorkItems.appendTo('#ViewWorkItems');
 
+    function LoadAccounts(data) {
 
+       
+        grid = new ej.grids.Grid({
+            dataSource: data,
+            allowPaging: true,
+            rowSelected: AccountSelected,
+            allowSelection: true,
+           
+            enableHover: false,
+            columns: [
+                { field: 'name', headerText: 'Name', width: 180 },
+
+            ],
+            pageSettings: { pageCount: 2 }
+        });
+        grid.appendTo('#Grid');
+    }
     function LoadActiveUsers(data) {
         ActiveUsersGrid = new ej.grids.Grid({
             dataSource: data,
             allowPaging: true,
+            editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true, mode: 'Normal', newRowPosition: 'Top' },
+
             allowSelection: true,
             enableHover: false,
 
             pageSettings: { pageCount: 2 }
         });
-        ActiveUsersGrid.appendTo('#Gird');
+        ActiveUsersGrid.appendTo('#ActiveMembersGird');
+    }
+
+
+    function AddSelectedUser() {
+        if (WorkItemOption.properties.checked === true)
+            CurrentSelected.workItemOption = 1;
+        else
+            CurrentSelected.workItemOption = 0;
+        if (ChatChannels.properties.checked === true)
+            CurrentSelected.chatChannels = 1;
+        else
+            CurrentSelected.chatChannels = 0;
+        if (EditUserRights.properties.checked === true)
+            CurrentSelected.editUserRights = 1;
+        else
+            CurrentSelected.editUserRights = 0;
+        if (IterationOptions.properties.checked === true)
+            CurrentSelected.iterationOptions = 1;
+        else
+            CurrentSelected.iterationOptions = 0;
+        if (ScheduleManagement.properties.checked === true)
+            CurrentSelected.scheduleManagement = 1;
+        else
+            CurrentSelected.scheduleManagement = 0;
+        if (ViewWorkItems.properties.checked === true)
+            CurrentSelected.viewWorkItems = 1;
+        else
+            CurrentSelected.viewWorkItems = 0;
+        console.log(CurrentSelected);
+        console.log(ActiveUsersGrid);
+        ActiveUsersGrid.addRecord(CurrentSelected);
+        ActiveUsersGrid.refresh(); // refresh the Grid.
     }
 
     $.ajax({
@@ -247,10 +319,92 @@
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {
+            console.log(response);
             LoadActiveUsers(response);
         },
         error: function (xhr, status, error) {
 
         }
     });
+
+
+    $.ajax({
+        type: 'GET',
+        url: '/Authenication/GetUsers',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+            LoadAccounts(response);
+        },
+        error: function (xhr, status, error) {
+
+        }
+    });
+    function AccountSelected(args) {
+        console.log(args);
+        console.log(grid.getRows());
+        CurrentSelected = args.data;
+ 
+    }
+
+
+    function AssignProjectUser() {
+
+        console.log("in");
+        var accountRights =
+        {
+            "WorkItemOption": WorkItemOption.properties.checked === true ? 1: 0,
+            "ChatChannels": ChatChannels.properties.checked === true? 1:0,
+            "EditUserRights":EditUserRights.properties.checked === true? 1:0,
+            "IterationOptions":IterationOptions.properties.checked === true? 1: 0,
+            "ViewWorkItems": ViewWorkItems.properties.checked === true ? 1 : 0, 
+            "ScheduleManagement": ScheduleManagement.properties.checked === true? 1 :0,
+            "Name":"asd",
+            "AccountId": 0
+        }
+        var dto = {
+            "ProjectId": @ProjectId,
+            "email": $("#email").val(),
+            "Username":$("#gitUsername").val(),
+            "password":$("#password").val(),
+            "accountRights" : accountRights
+                
+         }
+         console.log(dto);
+        $.ajax({
+            type: 'POST',
+            url: '/Accounts/AssociateNewUserAccount',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                window.location.href = "/Dashboard/Index";
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+    function InviteProjectMember() {
+
+        console.log("in");
+        var dto = {
+            "ProjectId": @ProjectId,
+            "Accounts": ActiveUsersGrid.dataSource,// get the selected records.
+         }
+        $.ajax({
+            type: 'POST',
+            url: '/Accounts/AssociateMembers',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                window.location.href = "/Dashboard/Index";
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
 </script>

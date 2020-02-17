@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Rokono_Control.DatabaseHandlers;
 using Rokono_Control.Models;
+using RokonoControl.Models;
 
 namespace Rokono_Control.Controllers
 {
@@ -36,6 +37,26 @@ namespace Rokono_Control.Controllers
                 ViewData["DefaultIteration"] = context.GetProjectDefautIteration(projectId);
             }
             return View();
+        }
+        
+        [HttpPost]
+        public string AssociateNewUserAccount([FromBody] IncomingProjectAccount projectAccount)
+        {
+            using(var context = new DatabaseController(Context))
+            {
+                context.AddProjectInvitation(projectAccount);
+            }
+            return "Success";
+        }
+
+        [HttpPost] 
+        public string AssociateMembers([FromBody] IncomingExistingProjectMembers accounts)
+        {
+            using(var context  = new DatabaseController(Context))
+            {
+                context.AssociatedProjectExistingMembers(accounts);
+            }
+            return  "Ok";
         }
     }
 }
