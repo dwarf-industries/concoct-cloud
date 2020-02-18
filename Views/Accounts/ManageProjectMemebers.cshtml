@@ -91,7 +91,7 @@
                                 </div>
                             </div>
                             <div class="row innerRow">
-                                <button type="button" id="Persons" class="btn btn-primary" style="margin-top:2px;" onclick="AssignProjectUser()">Add member</button>
+                                <button type="button" id="Persons" class="btn btn-primary" style="margin-top:2px;width:100%;" onclick="AssignProjectUser()">Add member</button>
 
                             </div>
                         </div>
@@ -170,7 +170,7 @@
                         </div>
                     </div>
                     <div class="row innerRow">
-                        <button id="AssignPUsers" onclick="InviteProjectMember()">Assign Users</button>
+                        <button id="AssignPUsers" onclick="InviteProjectMember()" style="width:100%;">Assign Users</button>
 
                     </div>
                 </div>
@@ -354,12 +354,12 @@
         console.log("in");
         var accountRights =
         {
-            "WorkItemOption": WorkItemOption.properties.checked === true ? 1: 0,
-            "ChatChannels": ChatChannels.properties.checked === true? 1:0,
-            "EditUserRights":EditUserRights.properties.checked === true? 1:0,
-            "IterationOptions":IterationOptions.properties.checked === true? 1: 0,
-            "ViewWorkItems": ViewWorkItems.properties.checked === true ? 1 : 0, 
-            "ScheduleManagement": ScheduleManagement.properties.checked === true? 1 :0,
+            "WorkItemOption": WorkItemUserOption.properties.checked === true ? 1: 0,
+            "ChatChannels": ChatUserChannels.properties.checked === true? 1:0,
+            "EditUserRights":EditUserRightsUser.properties.checked === true? 1:0,
+            "IterationOptions":IterationUserOptions.properties.checked === true? 1: 0,
+            "ViewWorkItems": ViewWorkUserItems.properties.checked === true ? 1 : 0, 
+            "ScheduleManagement": ScheduleUserManagement.properties.checked === true? 1 :0,
             "Name":"asd",
             "AccountId": 0
         }
@@ -379,7 +379,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                window.location.href = "/Dashboard/Index";
+                alert("Record has been added!");
             },
             error: function (xhr, status, error) {
                 console.log(error);
@@ -400,7 +400,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                window.location.href = "/Dashboard/Index";
+                alert("Records have been added!");
             },
             error: function (xhr, status, error) {
                 console.log(error);

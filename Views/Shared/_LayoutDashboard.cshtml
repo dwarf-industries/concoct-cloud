@@ -46,7 +46,7 @@
                         <div class="table-content" style="padding:0;">
                             @if (IsAdmin == 1)
                             {
-                                <button type="button" id="Persons" class="btn btn-primary" style="margin-top:2px;" onclick="CallUrl('/Dashboard/AddNewProject?user=')">Add new project</button>
+                                <button  type="button" id="Persons" class="btn btn-primary" style="margin-top:2px; width:100%" onclick="CallUrl('/Dashboard/AddNewProject?user=')">Add new project</button>
 
                             }
                             <div id="default" style='padding-top:75px;'>
@@ -105,6 +105,7 @@
         placeholder: 'Select Project',
         // set the height of the popup element
         popupHeight: '200px',
+        index: 0,
         // bind the change event
         change: ProjectChanged
     });
@@ -133,7 +134,7 @@
             nodeChild: [
                 { nodeId: '01-01', nodeText: 'Home', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ProjectDashboard?id=@ProjectId' },
                 { nodeId: '01-02', nodeText: 'Project Details', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ProjectDetails' },
-                { nodeId: '01-03', nodeText: 'Manage Accounts', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ManageAccounts' },
+                { nodeId: '01-03', nodeText: 'Manage Accounts', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ManageAccounts?id=@ProjectId' },
 
             ]
         },
@@ -176,6 +177,11 @@
             function ProjectChanged(args) {
                 console.log(args);
                 window.location.href = "/Dashboard/ProjectDashboard?id=" + parseInt(args.value);
+            }
+
+            function CallUrl(url)
+            {
+                window.location.href = url;
             }
     </script>
 

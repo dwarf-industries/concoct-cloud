@@ -2,7 +2,7 @@
 namespace Rokono_Control.Models
 {
     using System.Collections.Generic;
-    public class IncomignWorkItemRelation
+    public class IncomingWorkItemRelation
     {
         public int WorkItemId { get; set; }
         public int CurrWorkItemId {get;set;}

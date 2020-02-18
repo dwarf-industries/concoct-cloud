@@ -109,7 +109,7 @@ namespace Rokono_Control.Controllers
             return View();
         }
 
-        public IActionResult ManageAccounts()
+        public IActionResult ManageAccounts(int id)
         {
             var currentUser = this.User;
             var currentUserId = currentUser.Claims.ElementAt(1);
@@ -121,6 +121,7 @@ namespace Rokono_Control.Controllers
                 ViewData["Relationships"] = context.GetProjectRelationships();
                 ViewData["UserAccounts"] = context.GetUserAccounts();
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(currentUserId.Value));
+                ViewData["ProjectId"] = id;
 
             }
             return View();
@@ -139,7 +140,7 @@ namespace Rokono_Control.Controllers
             return View();
         }
 
-        public IActionResult EditAccount(int id)
+        public IActionResult EditAccount(int id, int projectId)
         {
             var currentUser = this.User;
             var currentUserId = currentUser.Claims.ElementAt(1);
@@ -149,10 +150,12 @@ namespace Rokono_Control.Controllers
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(currentUserId.Value));
 
                 var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = rights;
+                ViewData["IsAdmin"] = int.Parse(rights);
                 ViewData["Relationships"] = context.GetProjectRelationships();
                 ViewData["UserAccount"] = context.GetSpecificUserEdit(id);
                 ViewData["UserId"] = id;
+                ViewData["ProjectId"] = projectId;
+                ViewData["UserRight"] = context.GetUserRights(id, projectId);
             }
             return View();
         }
@@ -306,54 +309,10 @@ namespace Rokono_Control.Controllers
             }
             return getProjectRules;
         }
+ 
+ 
 
-        [HttpPost]
-        public void UpdatePACommitRule([FromBody] IncomignRuleUpdate projectRuleData)
-        {
-            using (var context = new DatabaseController(Context))
-            {
-                context.UpdateProjectUserRule(projectRuleData, "CommitRule");
-            }
-        }
-
-        [HttpPost]
-        public void UpdatePACloneRule([FromBody]  IncomignRuleUpdate projectRuleData)
-        {
-            using (var context = new DatabaseController(Context))
-            {
-                context.UpdateProjectUserRule(projectRuleData, "CloneRule");
-            }
-        }
-
-        [HttpPost]
-        public void UpdatePAViewWorkRule([FromBody]  IncomignRuleUpdate projectRuleData)
-        {
-            using (var context = new DatabaseController(Context))
-            {
-                context.UpdateProjectUserRule(projectRuleData, "ViewWorkRule");
-
-            }
-        }
-
-        [HttpPost]
-        public void UpdatePACreateWorkRule([FromBody]  IncomignRuleUpdate projectRuleData)
-        {
-            using (var context = new DatabaseController(Context))
-            {
-                context.UpdateProjectUserRule(projectRuleData, "CreateWorkRule");
-
-            }
-        }
-
-        [HttpPost]
-        public void UpdatePADeleteWorkRule([FromBody]  IncomignRuleUpdate projectRuleData)
-        {
-            using (var context = new DatabaseController(Context))
-            {
-                context.UpdateProjectUserRule(projectRuleData, "DeleteWorkRule");
-            }
-        }
-
+     
         [HttpPost]
         public bool StageWorkItem([FromBody] IncomingWorkItem currentItem)
         {
@@ -400,7 +359,7 @@ namespace Rokono_Control.Controllers
 
 
         [HttpPost]
-        public OutgoingValidWorkItem ValidateSelectedItem([FromBody] IncomignWorkItemRelation incomingRequest)
+        public OutgoingValidWorkItem ValidateSelectedItem([FromBody] IncomingWorkItemRelation incomingRequest)
         {
 
             var result = new OutgoingValidWorkItem();
@@ -438,7 +397,7 @@ namespace Rokono_Control.Controllers
         }
 
         [HttpPost]
-        public bool AssociatedWorkItemRelation([FromBody] IncomignWorkItemRelation incomingRelation)
+        public bool AssociatedWorkItemRelation([FromBody] IncomingWorkItemRelation incomingRelation)
         {
             using (var context = new DatabaseController(Context))
             {

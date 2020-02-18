@@ -57,12 +57,12 @@ namespace Rokono_Control.Controllers
             return result;
         }
         [HttpGet]
-        public List<OutgoingAccountManagment> GetManagmentUsers()
+        public List<OutgoingAccountManagment> GetManagmentUsers(int projectId)
         {
             var result = new List<OutgoingAccountManagment>();
             using (var context = new DatabaseController(Context))
             {
-                result = context.GetOutgoingManagmentAccounts();
+                result = context.GetOutgoingManagmentAccounts(projectId);
             }
             return result;
         }
@@ -109,14 +109,7 @@ namespace Rokono_Control.Controllers
             }
             return jsonrResult;
         }
-        [HttpPost]
-        public void UserProjectRightsUpdated([FromBody]  IncomignRuleUpdate projectRuleData)
-        {
-            using (var context = new DatabaseController(Context))
-            {
-                context.UpdateUserProjectRights(projectRuleData);
-            }
-        }
+        
         [HttpPost]
         public bool UserAccountUpdated([FromBody]  IncomingUserAccountUpdate projectRuleData)
         {

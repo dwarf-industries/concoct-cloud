@@ -9,5 +9,6 @@ namespace RokonoControl.Models
         public string password {get; set;}
         public OutgoingUserAccounts accountRights {get; set;}
         public int ProjectId { get; set; }
+        public int AccountId { get; set;}
     }
 }

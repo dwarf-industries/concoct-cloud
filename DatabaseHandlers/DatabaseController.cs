@@ -77,6 +77,23 @@ namespace Rokono_Control.DatabaseHandlers
             return Cards;
         }
 
+        internal void DeleteAccountFromProject(IncomingProjectAccount accounts)
+        {
+            var association = Context.AssociatedProjectMembers.FirstOrDefault(x=>x.ProjectId == accounts.ProjectId && x.UserAccountId == accounts.AccountId);
+            Context.AssociatedProjectMembers.Remove(association);
+            Context.SaveChanges();
+            var memberRights = Context.AssociatedProjectMemberRights.Where(x=>x.ProjectId == accounts.ProjectId && x.UserAccountId == accounts.AccountId).ToList();
+            Context.AssociatedProjectMemberRights.RemoveRange(memberRights);
+            Context.SaveChanges();
+            var WorkItemsAssigned = Context.WorkItem.Where(x=>x.AssignedAccount == accounts.AccountId).ToList();
+            WorkItemsAssigned.ForEach(x=>{
+                var workItem = x;
+                workItem.AssignedAccount =null;
+                Context.Update(workItem);
+                Context.SaveChanges();
+            });
+        }
+
         internal void AssociatedProjectExistingMembers(IncomingExistingProjectMembers accounts)
         {
             var projectRepository = Context.Projects.FirstOrDefault(x=> x.Id == accounts.ProjectId).RepositoryId;
@@ -164,6 +181,16 @@ namespace Rokono_Control.DatabaseHandlers
                 RightsId = commonRightsId
             });
             Context.SaveChanges();
+        }
+
+        internal UserRights GetUserRights(int id, int projectId)
+        {
+            return Context.AssociatedProjectMemberRights
+                          .Include(x=>x.Rights)
+                          .Where(x=>x.ProjectId == projectId && x.UserAccountId == id)
+                          .ToList()
+                          .LastOrDefault()
+                          .Rights;
         }
 
         internal string GetWorkItemName(int workItemType)
@@ -414,7 +441,7 @@ namespace Rokono_Control.DatabaseHandlers
             };
         }
 
-        internal void AssociatedRelation(IncomignWorkItemRelation incomingRelation)
+        internal void AssociatedRelation(IncomingWorkItemRelation incomingRelation)
         {
             var currentWorkItem = Context.WorkItem.FirstOrDefault(x => x.Id == incomingRelation.CurrWorkItemId);
             incomingRelation.LinkedItems.ForEach(x =>
@@ -956,10 +983,11 @@ namespace Rokono_Control.DatabaseHandlers
             return Context.Branches.FirstOrDefault(x => x.BranchName == b && x.ProjectId == id);
         }
 
-        internal List<OutgoingAccountManagment> GetOutgoingManagmentAccounts()
+        internal List<OutgoingAccountManagment> GetOutgoingManagmentAccounts(int projectId)
         {
             var accounts = Context.UserAccounts.Include(x => x.AssociatedProjectMembers)
                                         .ThenInclude(AssociatedProjectsMembers => AssociatedProjectsMembers.Project)
+                                        .Where(x=>x.AssociatedProjectMembers.Any(y=>y.ProjectId == projectId))
                                         .ToList();
             return accounts.Select(x => new OutgoingAccountManagment
             {
@@ -1062,27 +1090,67 @@ namespace Rokono_Control.DatabaseHandlers
             userAccount.Email = userData.Email;
             if (!string.IsNullOrEmpty(userData.Password))
             {
-                userAccount.Password = userData.Password;
+
+                 // generate a 128-bit salt using a secure PRNG
+                byte[] salt = new byte[128 / 8];
+                using (var rng = RandomNumberGenerator.Create())
+                {
+                    rng.GetBytes(salt);
+                }
+                Console.WriteLine($"Salt: {Convert.ToBase64String(salt)}");
+
+                // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
+                string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                    password: userData.Password,
+                    salt: salt,
+                    prf: KeyDerivationPrf.HMACSHA1,
+                    iterationCount: 10000,
+                    numBytesRequested: 256 / 8));
+                userAccount.Salt = Convert.ToBase64String(salt);
+                userAccount.Password = hashed;
                 Context.Entry(userAccount).Property("Password").IsModified = true;
+                Context.Entry(userAccount).Property("Salt").IsModified = true;
+
 
             }
             userAccount.FirstName = userData.FirstName;
             userAccount.LastName = userData.LastName;
-            Context.Entry(userAccount).Property("FirstName").IsModified = true;
-            Context.Entry(userAccount).Property("LastName").IsModified = true;
-            Context.Entry(userAccount).Property("Email").IsModified = true;
+            Context.Update(userAccount);
+            Context.SaveChanges();
+            var rights = default(UserRights);
+            var getCommonRight = Context.UserRights.FirstOrDefault(x=> x.ManageIterations == userData.Rights.IterationOptions &&
+                                                                    x.ManageUserdays == userData.Rights.ScheduleManagement &&
+                                                                    x.UpdateUserRights == userData.Rights.EditUserRights &&
+                                                                    x.ViewOtherPeoplesWork == userData.Rights.ViewWorkItems &&
+                                                                    x.WorkItemRule == userData.Rights.WorkItemOption &&
+                                                                    x.ChatChannelsRule == userData.Rights.ChatChannels);
+            if(getCommonRight != null)
+            {
+                rights = getCommonRight;
+            }
+            else
+            {
+                var newRights = Context.UserRights.Add(new UserRights{
+                    ManageIterations= Convert.ToInt16(userData.Rights.IterationOptions),
+                    ManageUserdays = Convert.ToInt16(userData.Rights.ScheduleManagement),
+                    ChatChannelsRule = Convert.ToInt16(userData.Rights.ChatChannels),
+                    UpdateUserRights = Convert.ToInt16(userData.Rights.EditUserRights),
+                    ViewOtherPeoplesWork = Convert.ToInt16(userData.Rights.ViewWorkItems),
+                    WorkItemRule = Convert.ToInt16(userData.Rights.WorkItemOption)  
+                });
+                rights = newRights.Entity;
+                Context.SaveChanges();
+            }
+
+            Context.AssociatedProjectMemberRights.Add(new AssociatedProjectMemberRights{
+                ProjectId  = userData.ProjectId,
+                RightsId = rights.Id,
+                UserAccountId = userAccount.Id
+            });
             Context.SaveChanges();
         }
 
-        internal void UpdateUserProjectRights(IncomignRuleUpdate projectRuleData)
-        {
-            var userAccount = Context.UserAccounts.FirstOrDefault(x => x.Id == projectRuleData.UserId);
-            Context.Attach(userAccount);
-            userAccount.ProjectRights = projectRuleData.IncomingValue ? 1 : 0;
-            Context.Entry(userAccount).Property("ProjectRights").IsModified = true;
-            Context.SaveChanges();
-        }
-
+        
         internal void RemoveUserFromProject(IncomingRemoveUserFromProject userProject)
         {
             var userAccount = Context.AssociatedProjectMembers.FirstOrDefault(x => x.ProjectId == userProject.ProjectId && x.UserAccountId == userProject.UserId);
@@ -1090,46 +1158,7 @@ namespace Rokono_Control.DatabaseHandlers
             Context.Remove(userAccount);
             Context.SaveChanges();
         }
-        internal void UpdateProjectUserRule(IncomignRuleUpdate projectRuleData, string rule)
-        {
-            var getProject = Context.AssociatedProjectMembers
-                                    .FirstOrDefault(x => x.ProjectId == projectRuleData.ProjId
-                                    && x.UserAccountId == projectRuleData.UserId);
-            Context.Attach(getProject);
-            switch (rule)
-            {
-                //case "CommitRule":
-
-                //        getProject.CanCommit = projectRuleData.IncomingValue ? 1 :0;
-                //        Context.Entry(getProject).Property("CanCommit").IsModified = true;
-                //    break;
-                //case "CloneRule":
-                //    getProject.CanClone = projectRuleData.IncomingValue ? 1 :0;
-                //    Context.Entry(getProject).Property("CanClone").IsModified = true;
-
-
-                //    break;
-                //case "ViewWorkRule":
-                //    getProject.CanViewWork = projectRuleData.IncomingValue ? 1 :0;
-                //    Context.Entry(getProject).Property("CanViewWork").IsModified = true;
-
-
-                //    break;
-                //case "CreateWorkRule":
-                //    getProject.CanCreateWork = projectRuleData.IncomingValue ? 1 :0;
-                //    Context.Entry(getProject).Property("CanCreateWork").IsModified = true;
-
-                //    break;
-                //case "DeleteWorkRule":
-                //    getProject.CanDeleteWork = projectRuleData.IncomingValue ? 1 :0;
-                //    Context.Entry(getProject).Property("CanDeleteWork").IsModified = true;
-
-                //    break;
-            }
-            Context.SaveChanges();
-
-        }
-
+         
         internal int AddUserAccount(IncomingNewUserAccount user)
         {
             var account = Context.UserAccounts.Add(new UserAccounts
@@ -1404,7 +1433,7 @@ namespace Rokono_Control.DatabaseHandlers
             .Select(x => x.Iteration).ToList();
         }
 
-        internal bool ValidateWorkItemConnection(IncomignWorkItemRelation incomingRequest)
+        internal bool ValidateWorkItemConnection(IncomingWorkItemRelation incomingRequest)
         {
             var result = Context.WorkItem.FirstOrDefault(x => x.PriorityId == incomingRequest.ProjectId && x.Id == incomingRequest.CurrWorkItemId);
             return result == null ? true : false;

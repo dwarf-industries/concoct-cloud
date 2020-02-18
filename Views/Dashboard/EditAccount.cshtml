@@ -4,33 +4,22 @@
     var result = ViewData["UserAccount"] as OutgoingAccountManagment;
     var User = ViewData["UserId"] as int?;
     ViewData["Title"] = $"Editing {result.Name}";
+    var ProjectId = ViewData["ProjectId"] as int?;
+    var UserRights = ViewData["UserRight"] as UserRights;
 }
-<link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
-
-  <!-- end of sidebar element -->
-        <!-- main-content declaration -->
-        <div class="main-content" id="main-text" style="height: 94vh;">
-            <div class="sidebar-content"
-<div class="row" style="margin:0px;">
-    <div class="col-md-12">
-        <div class="main-card mb-3 card">
-            <div class="card-body text-center">
-               <div class="row" style="padding:50px;">
-                    <div class="col-md-4">
+ 
+   
+<div class="main-content" id="main-text" style="height: 94vh;">
+    <div class="sidebar-content"> 
+        <div class="row" style="margin:0px;">
+            <div class="row" style="padding:50px;">
+                    <div class="col-md-6">
                         <input id="Email" />
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <input id="Password" />
-
                     </div>
-                    <div class="col-md-4">
-                        <div>
-                            <label for="PRights" style="padding: 10px 70px 10px 0"> Project Rights </label>
-                            <input id="PRights" type="checkbox" />
-                        </div>
-
-                    </div>
-               </div>
+                </div>
                 <div class="row" style="padding:50px;">
                     <div class="col-md-4">
                         <input id="FirstName" />
@@ -41,94 +30,81 @@
                     </div>
                     <div class="col-md-4">
                         <input id="LastName" />
-
                     </div>
-               </div>
-               <div class="row" style="padding:50px;">
-                   <div class="col-md-6" id="ProjSettings">
-                       <div class="row">
-                           <h3 class="text-center"> Project Rights </h3>
-                       </div>
-                       <div class="row" style="padding:10px;">
-                           <div class="col-md-6">
-                                <div id="commit">
-                                    <label for="PCanCommit" style="padding: 10px 70px 10px 0"> Can Commit </label>
-                                    <input id="PCanCommit" type="checkbox" />
-                                </div>
-                           </div>
-                            <div class="col-md-6">
-                                <div id="clone">
-                                    <label for="PCanClone" style="padding: 10px 70px 10px 0"> Can Clone </label>
-                                    <input id="PCanClone" type="checkbox" />
-                                </div>
-                           </div>
-                       </div>
-                       <div class="row" style="padding:10px;">
-                           <div class="col-md-6">
-                                <div class="InnerPadding" id="create">
-                                    <label for="PCanCreateWork" style="padding: 10px 70px 10px 0"> Can Create Work Items </label>
-                                    <input id="PCanCreateWork" type="checkbox" />
-                                </div>
-                           </div>
-                            <div class="col-md-6">
-                                <div id="delete">
-                                    <label for="PCanDeleteWork" style="padding: 10px 70px 10px 0"> Can Delete Work Items</label>
-                                    <input id="PCanDeleteWork" type="checkbox" />
-                                </div>
-                           </div>
-                       </div>
-                       <div class="row" style="padding:10px;">
-                           <div class="col-md-6">
-                                <div id="view">
-                                    <label for="PCanViewWork" style="padding: 10px 70px 10px 0"> Can View Work </label>
-                                    <input id="PCanViewWork" type="checkbox" />
-                                </div>
-                           </div>
-                       </div>
-                   </div>
+                </div>
+
+            </div>
+           
+            <div class="row ">
+                <div class="content-wrapper">
                     <div class="col-md-6">
-                        <div class="row" style="padding:10px;">
-                            <h4>Projects</h4>
-                            <a href="#" class="btn btn-block btn-info" data-toggle="modal" data-target="#ProjectsModal" onclick="OpenProjects()" ><span class="glyphicon glyphicon-file"></span> Assign to new project</a>
-                        </div>
-                        <div class="row" style="padding:10px;">
-                             <div class="control-section">
-                                <div class="content-wrapper">
-                                    <div id="Grid">
-                                    </div>
-                                </div>
+                        <div class="row innerRow">
+                            <div>
+                                <label for="WorkItemUserOption" style="padding:2%; min-width:303px;"> Add/Edit Work Items</label>
+                                <input id="WorkItemUserOption" type="checkbox" />
                             </div>
                         </div>
-                   </div> 
-               </div>
-               <div class="row">
-                    <a href="#" class="btn btn-block btn-info" onclick="SaveChanges()"><span class="glyphicon glyphicon-file" ></span> Save Changes</a>
-               </div>
-            </div>
+                        <div class="row innerRow">
+                            <div>
+                                <label for="ChatUserChannels" style="padding:2%; min-width:303px;">Create Chat Channels</label>
+                                <input id="ChatUserChannels" type="checkbox" />
+                            </div>
+                        </div>
+                        <div class="row innerRow">
+                            <div>
+                                <label for="EditUserRightsUser" style="padding:2%; min-width:303px;">Manage other user rights</label>
+                                <input id="EditUserRightsUser" type="checkbox" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row innerRow">
+                            <div>
+                                <label for="IterationUserOptions" style="padding:2%; min-width:303px;"> Manage Project Iterations</label>
+                                <input id="IterationUserOptions" type="checkbox" />
+                            </div>
+                        </div>
+                        <div class="row innerRow">
+                            <div>
+                                <label for="ScheduleUserManagement" style="padding:2%; min-width:303px;">Manage user work days</label>
+                                <input id="ScheduleUserManagement" type="checkbox" />
+                            </div>
+                        </div>
+                        <div class="row innerRow">
+                            <div>
+                                <label for="ViewWorkUserItems" style="padding: 2%; min-width:303px;">View other people work items</label>
+                                <input id="ViewWorkUserItems" type="checkbox" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <button href="#"   id="SaveChanges" onclick="SaveChanges()" style="width: 100%;"><span class="glyphicon glyphicon-file" ></span> Save Changes</button>
+                </div>
         </div>
-    </div>
+        
+        
+     </div>
 </div>
-          </div>
-        </div>
-        <!-- end of main-content -->
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
  
- <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
- <script>
+ 
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
 var UserId = @User;
 var projectsRaw = '@result.Projects';
 var cEmail ='@result.Email';
 var cFName ='@result.FirstName';
 var cLastName =  '@result.LastName';
-var projects = JSON.parse(projectsRaw.replace(/&quot;/g, '"'));
-
+var projectId = @ProjectId;
 var rights;
-if ('@result.ProjectRights' === 'True')
-    rights = true;
-else
-    rights = false;
-    
+
+var workItemRule = @UserRights.WorkItemRule;
+var viewWorkItem = @UserRights.ViewOtherPeoplesWork;
+var scheduleItem = @UserRights.ManageUserdays;
+var chatRule = @UserRights.ChatChannelsRule;
+var iterationRule = @UserRights.ManageIterations;
+var editUserRights = @UserRights.UpdateUserRights;
+ 
 </script>
  <script src="~/js/EditUserAccount.js"></script>

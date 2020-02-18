@@ -2,47 +2,48 @@
     ViewData["Title"] = "New Work Item";
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
     var result = ViewData["UserAccounts"] as List<UserAccounts>;
+    var ProjectId = ViewData["ProjectId"] as int?;
 
 }
-<link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
- <!-- end of sidebar element -->
-        <!-- main-content declaration -->
-        <div class="main-content" id="main-text" style="height: 94vh;">
-            <div class="sidebar-content">
-<div class="row">
-    <div class="col-md-12">
-        <div class="main-card mb-3 card">
-            <div class="card-body text-center">
-               <div class="row">
-                   <h3>User Account Managment</h3>
-               </div>
-               <div class="row">
-                    <a href="/Dashboard/AddNewAccount" class="btn btn-block btn-info"  ><span class="glyphicon glyphicon-file"></span> Add New User</a>
-               </div>
+
+<link href="https://cdn.syncfusion.com/ej2/ej2-base/styles/material.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.syncfusion.com/ej2/ej2-layouts/styles/material.css" rel="stylesheet" type="text/css" />
+
+<div class="main-content" id="main-text" style="height: 94vh;">
+    <div class="sidebar-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body text-center">
+                    <div class="row">
+                        <h3>User Account Managment</h3>
+                    </div>
+                    <div class="row">
+                            <button onclick="CallUrl('/Accounts/ManageProjectMemebers?projectId=@ProjectId')" id="AddNewMember" style="width: 100%;" ><span class="glyphicon glyphicon-file"></span> Add New User</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="control-section">
+                <div class="content-wrapper">
+                    <div id="Grid"></div>        
+                </div>
             </div>
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="control-section">
-        <div class="content-wrapper">
-            <div id="Grid"></div>        
-        </div>
-    </div>
-</div>
-          </div>
-        </div>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
- <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
  <script>
     $( document ).ready(function() 
     {
+        var AddNewMember = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+        AddNewMember.appendTo('#AddNewMember');
         $.ajax({
             type: 'GET',
-            url: '/Authenication/GetManagmentUsers',
+            url: '/Authenication/GetManagmentUsers?projectId=@ProjectId',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
@@ -60,6 +61,7 @@
             dataSource: data,
             editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true, allowEditOnDblClick: false },
             beginEdit : EditClicked,
+            actionBegin: ActionComplete,
              columns: [
                 { field: 'name', headerText: 'Name', width: 120, textAlign: 'Right' },
                 { field: 'email', headerText: 'Email', width: 150 },
@@ -79,9 +81,39 @@
     }
     function EditClicked(args){
         console.log(args);
-        window.location.href="/Dashboard/EditAccount?id="+args.rowData.accountId;
+        window.location.href="/Dashboard/EditAccount?id="+args.rowData.accountId+"&&projectId="+@ProjectId;
     }
-    function DeleteClicked(args){
+    function ActionComplete(args){
+        console.log(args);
+        if(args.requestType == "delete")
+        {
+            var dto = {
+                "AccountId" : args.data[0].accountId,
+                "ProjectId" : @ProjectId
+            }
+            $.ajax({
+            type: 'POST',
+                url: '/Accounts/DeleteProjectAccount',
+                data: JSON.stringify(dto),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    alert("Records have been added!");
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        }
+    }
 
+    function DeleteClicked()
+    {
+        
+    }
+
+    function CallUrl(url)
+    {
+        window.location.href=url;
     }
 </script>

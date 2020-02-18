@@ -40,23 +40,40 @@ namespace Rokono_Control.Controllers
         }
         
         [HttpPost]
-        public string AssociateNewUserAccount([FromBody] IncomingProjectAccount projectAccount)
+        public JsonResult AssociateNewUserAccount([FromBody] IncomingProjectAccount projectAccount)
         {
             using(var context = new DatabaseController(Context))
             {
                 context.AddProjectInvitation(projectAccount);
             }
-            return "Success";
+             return  Json(new IncomingProjectAccount {
+
+            });
         }
 
         [HttpPost] 
-        public string AssociateMembers([FromBody] IncomingExistingProjectMembers accounts)
+        public JsonResult AssociateMembers([FromBody] IncomingExistingProjectMembers accounts)
         {
             using(var context  = new DatabaseController(Context))
             {
                 context.AssociatedProjectExistingMembers(accounts);
             }
-            return  "Ok";
+            return  Json(new IncomingExistingProjectMembers {
+
+            });
+        }
+
+
+        [HttpPost] 
+        public JsonResult DeleteProjectAccount([FromBody] IncomingProjectAccount accounts)
+        {
+            using(var context  = new DatabaseController(Context))
+            {
+                context.DeleteAccountFromProject(accounts);
+            }
+            return  Json(new IncomingExistingProjectMembers {
+
+            });
         }
     }
 }
