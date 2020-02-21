@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Platform.Models;
 using Rokono_Control;
 using Rokono_Control.DatabaseHandlers;
 using Rokono_Control.Models;
@@ -195,6 +196,16 @@ namespace RokonoControl.Controllers
             using (var context = new DatabaseController(Context))
             {
                 context.ChangeWorkItemBoard(card);
+            }
+            return true;
+        }
+
+        [HttpPost]
+        public bool ChangeCardOwner([FromBody] IncomingCardOwnerRequest card)
+        {
+            using (var context = new DatabaseController(Context))
+            {
+                context.ChangeCardOwner(card);
             }
             return true;
         }

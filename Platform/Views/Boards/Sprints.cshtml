@@ -10,8 +10,7 @@
 }
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-<script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
-
+ 
 <link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
@@ -91,6 +90,21 @@
             </div>
         </div>
 
+
+    <!-- Modals -->
+    <div id="AssignModel">
+        <div class="btn-group dropdown-split-primary" style="text-align:center;">
+            <div class="row">
+                <div id="ProjectUsers"></div>
+            </div>
+            <div class="row">
+                <button   id="assignBtn" onclick="AssignNewUser()">Assign</button>
+                <button   id="cancelBtn" onclick="CancelAssign()">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+
     </div>
 </div>
 
@@ -99,7 +113,7 @@
 
 <script type="text/javascript">
 
-
+        var dialogObj;
         var iconbtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
         iconbtn.appendTo('#iconbtn');
         var backlogBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
@@ -110,11 +124,18 @@
         analitycsBtn.appendTo('#analitycsBtn');
 
 
+        var assignBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+        assignBtn.appendTo('#assignBtn');
+
+        var cancelBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+        cancelBtn.appendTo('#cancelBtn');
 
     // DropDownButton items declaration
 
 
         ej.base.enableRipple(true);
+        var selectedChanging;
+        var selectedRowData;
         var card;
         var gData;
         window.getTags = function (data) {
@@ -126,7 +147,32 @@
             }
             return tagDiv.concat('</div>');
         };
+
+        $.ajax({
+            type: 'GET',
+            url: '/Accounts/GetProjectUsers?projectId=@ProjectId',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                InitliazePUsersGrid(response);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
         $(function() {
+
+             dialogObj = new ej.popups.Dialog({
+                width: '600px',
+                header: 'Chose a user',
+                isModal: true,
+                animationSettings: { effect: 'None' },
+                visible: false,
+                open: dialogOpen,
+                close: dialogClose
+            });
+            dialogObj.appendTo('#AssignModel');
+            dialogObj.hide();
             var incomingSprintDTO =
             {
                 "ProjectId": @ProjectId,
@@ -204,6 +250,11 @@
                     console.log(error);
                 }
             });
+          
+            console.log(dto);
+          
+
+
 
 		 });
 
@@ -317,16 +368,73 @@
              console.log(args);
          }
 
-        function ChangeOwner()
+        function ChangeOwner(data)
         {
+
+            selectedChanging = data;
+            console.log(data);
+        //    selectedChangingId = id;
             console.log("Changing Owner");
+            dialogOpen();
         }
 
          function CallUrl(url) {
              window.location.href = url;
     }
 
-    function InitiliazeGrid(data )
+    function AssignNewUser()
+    {
+        selectedChanging.textContent = selectedRowData.name;
+        ChangeCardOwner(selectedChanging.id, selectedRowData.name);
+        CancelAssign();
+    }
+    function CancelAssign()
+    {
+        dialogClose();
+        dialogObj.hide();
+
+    }
+    function dialogClose() {
+            document.getElementById('AssignModel').style.display = 'none';
+
+    }
+    function dialogOpen() {
+        dialogObj.show();
+
+        document.getElementById('AssignModel').style.display = 'block';
+    }
+    function InitliazePUsersGrid(data)
+    {
+        console.log(data);
+         var ProjectUsers = new ej.treegrid.TreeGrid({
+            dataSource: data,
+            allowSelection: true,
+            allowFiltering: true,
+            allowSorting: true,
+            toolbar: ['Search'],
+            rowSelected: UserRowSelected,
+            recordDoubleClick: UserSelected,
+            filterSettings: { type: 'Menu' },
+            enableHover: false,
+            columns: [
+                 { field: 'name', headerText: 'Email', width: 110 },
+            ]
+        });
+
+        ProjectUsers.appendTo('#ProjectUsers');
+    }
+    function UserRowSelected(args)
+    {
+        selectedRowData = args.data;
+        console.log(args);
+    }
+    function UserSelected(args)
+    {
+        selectedChanging.textContent = args.rowData.name;
+        CancelAssign();
+        ChangeCardOwner(selectedChanging.id, args.rowData.name);
+    }
+    function InitiliazeGrid()
     {
         console.log(data);
 
@@ -363,6 +471,29 @@
         console.log(args);
         window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.rowData.id
     }
+
+    function ChangeCardOwner(id,name)
+    {
+        var incomingSprintDTO =
+        {
+            "CardId": id,
+            "Name": name
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Boards/ChangeCardOwner',
+            data: JSON.stringify(incomingSprintDTO),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(response) {
+                
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
 </script>
 
 
@@ -393,7 +524,7 @@
 
             </div>
             <div class="row" style="padding:2%;">
-                <div class='Interactice' onclick="ChangeOwner()">${assgignedAccount}</div>
+                <div class='Interactice' onclick='ChangeOwner(this)' id='${id}'>${assgignedAccount}</div>
             </div>
             <div class="row status" style="display:flex;padding:2%;">
 

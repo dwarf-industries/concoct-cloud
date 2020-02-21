@@ -38,7 +38,16 @@ namespace Rokono_Control.Controllers
             }
             return View();
         }
-        
+        [HttpGet]
+        public  List<OutgoingUserAccounts> GetProjectUsers(int projectId)
+        {
+            var outgoingUserList = new List<OutgoingUserAccounts>();
+            using(var context = new DatabaseController(Context))
+            {
+                outgoingUserList = context.GetProjectUsers(projectId);
+            }
+            return  outgoingUserList;
+        }
         [HttpPost]
         public JsonResult AssociateNewUserAccount([FromBody] IncomingProjectAccount projectAccount)
         {

@@ -9,6 +9,7 @@ namespace Rokono_Control.DatabaseHandlers
     using Microsoft.AspNetCore.Cryptography.KeyDerivation;
     using Microsoft.EntityFrameworkCore;
     using Newtonsoft.Json;
+    using Platform.Models;
     using Rokono_Control.DataHandlers;
     using Rokono_Control.Models;
     using RokonoControl.DatabaseHandlers.WorkItemHandlers;
@@ -75,6 +76,14 @@ namespace Rokono_Control.DatabaseHandlers
                 });
             });
             return Cards;
+        }
+
+        internal List<OutgoingUserAccounts> GetProjectUsers(int projectId)
+        {
+            return Context.AssociatedProjectMembers.Include(x=>x.UserAccount).Where(x=>x.ProjectId == projectId).Select(x=> new OutgoingUserAccounts{
+                Name = x.UserAccount.Email,
+                AccountId = x.UserAccount.Id
+            }).ToList();
         }
 
         internal bool IsNotParent(int parentId)
@@ -188,6 +197,18 @@ namespace Rokono_Control.DatabaseHandlers
             Context.SaveChanges();
         }
 
+        internal void ChangeCardOwner(IncomingCardOwnerRequest card)
+        {
+            var getId = card.CardId.Split(" ");
+            var parse = int.Parse(getId[1]);
+            var getAccount = Context.UserAccounts.FirstOrDefault(x=>x.Email == card.Name);
+            var currentCard = Context.WorkItem.FirstOrDefault(x=>x.Id == parse);
+            currentCard.AssignedAccount = getAccount.Id;
+            Context.Attach(currentCard);
+            Context.Update(currentCard);
+            Context.SaveChanges();
+        }
+
         internal UserRights GetUserRights(int id, int projectId)
         {
             return Context.AssociatedProjectMemberRights
@@ -261,6 +282,7 @@ namespace Rokono_Control.DatabaseHandlers
                         Priority = GetCardType(sprintTasks.WorkItemType.TypeName),
                         Type = $"{activeBoard}",
                         Status = activeBoard,
+                        AssigneeId = sprintTasks.AssignedAccountNavigation != null ? sprintTasks.AssignedAccountNavigation.Id : 0,
                         Assignee = x.Title,
                         AssgignedAccount = sprintTasks.AssignedAccountNavigation != null ? sprintTasks.AssignedAccountNavigation.GitUsername : "Unassigned"
                     });

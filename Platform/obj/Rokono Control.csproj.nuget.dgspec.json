@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Rokono Control.csproj": {}
+    "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Rokono Control.csproj": {}
   },
   "projects": {
-    "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Rokono Control.csproj": {
+    "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Rokono Control.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Rokono Control.csproj",
+        "projectUniqueName": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Rokono Control.csproj",
         "projectName": "Rokono Control",
-        "projectPath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Rokono Control.csproj",
+        "projectPath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Rokono Control.csproj",
         "packagesPath": "/home/dwarfdevelopment/.nuget/packages/",
-        "outputPath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/",
+        "outputPath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/dwarfdevelopment/.nuget/NuGet/NuGet.Config"
