@@ -17,8 +17,10 @@
     var WorkItemType = ViewData["WorkItemType"] as int?;
     var ParentId = ViewData["ParentId"] as int?;
 }
-
-
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<!-- Main Quill library -->
+<script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
 <style>
     .modal-backdrop
     {
@@ -165,28 +167,28 @@
                                             @if(WorkItemType == 1)
                                             {
                                                 <div class="row">
-                                                    <div class="position-relative form-group" style="width:100%;" ><label for="RepoSteps" class="">Repo Steps</label><textarea name="RepoSteps" id="RepoSteps" class="form-control"></textarea></div>
+                                                    <div class="position-relative form-group" style="width:100%;" ><label for="RepoSteps" class="">Repo Steps</label><div name="RepoSteps" id="RepoSteps" class="form-control"></div></div>
                                                 </div>
                                         
                                                 <div class="row">
-                                                    <div class="position-relative form-group" style="width:100%;"><label for="SystemInfo" class="">System Info</label><textarea name="SystemInfo" id="SystemInfo" class="form-control"></textarea></div>
+                                                    <div class="position-relative form-group" style="width:100%;"><label for="SystemInfo" class="">System Info</label><div name="SystemInfo" id="SystemInfo" class="form-control"></div></div>
                                                 </div>
                                             }
 
                                             @if(WorkItemType == 2)
                                             {
                                                 <div class="row">
-                                                    <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" id="Description" class="form-control"></textarea></div>
+                                                    <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><div name="Description" id="Description" class="form-control"></div></div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="position-relative form-group" style="width:100%;"><label for="AcceptanceCriteria" class="">Acceptance Criteria</label><textarea name="AcceptanceCriteria" id="AcceptanceCriteria" class="form-control"></textarea></div>
+                                                    <div class="position-relative form-group" style="width:100%;"><label for="AcceptanceCriteria" class="">Acceptance Criteria</label><div name="AcceptanceCriteria" id="AcceptanceCriteria" class="form-control"></div></div>
                                                 </div>
                                             
                                             }
                                             @if(WorkItemType == 3)
                                             {
                                                 <div class="row">
-                                                    <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" id="Description" class="form-control"></textarea></div>
+                                                    <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><div name="Description" id="Description" class="form-control"></div></div>
                                                 </div>
                                             
                                             
@@ -194,17 +196,17 @@
                                             @if(WorkItemType == 7)
                                             {
                                                 <div class="row">
-                                                    <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" id="Description" class="form-control"></textarea></div>
+                                                    <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><div name="Description" id="Description" class="form-control"></div></div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="position-relative form-group" style="width:100%;"><label for="AcceptanceCriteria" class="">Acceptance Criteria</label><textarea name="AcceptanceCriteria" id="AcceptanceCriteria" class="form-control"></textarea></div>
+                                                    <div class="position-relative form-group" style="width:100%;"><label for="AcceptanceCriteria" class="">Acceptance Criteria</label><div name="AcceptanceCriteria" id="AcceptanceCriteria" class="form-control"></div></div>
                                                 </div>
                                             
                                             }
                                             @if(WorkItemType == 5)
                                             {
                                                 <div class="row">
-                                                    <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><textarea name="Description" id="Description" class="form-control"></textarea></div>
+                                                    <div class="position-relative form-group" style="width:100%;"><label for="Description" class="">Description</label><div name="Description" id="Description" class="form-control"></div></div>
                                                 </div>
                                             } 
 
@@ -525,7 +527,7 @@
                                                     <div class="row">
 
                                                         
-                                                        <a class="mb-2 mr-2 btn-transition btn btn-outline-info" ><i class="fas fa-plus"></i> Associate</a>
+                                                        <button id="AssociateBuild"><i class="fas fa-plus"></i> Associate</a>
 
                                                     </div>
                                          
@@ -543,7 +545,7 @@
                                                     </div>
                                                     <div class="row">                                                            
                                                             <!-- Large modal -->
-                                                        <button type="button"  onclick="OpenModal()" class="btn btn-primary" >Large modal</button>
+                                                        <button type="button" id="ModalBtn" onclick="OpenModal()" class="btn btn-primary" >Add new relation</button>
                                                         <div class="modal bd-example-modal-lg" id="WorItemsGridPanel" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog modal-lg">
                                                                 <div class="modal-content">
@@ -635,8 +637,8 @@
                         </div>
    
             <div class="row text-center" style="margin-left:40%; margin-right:40%;">
-                <a class="mb-2 mr-2 btn-transition btn btn-outline-info" onclick="AddNewWorkItem()" > <i class="fas fa-save"></i> Save Changes</a>
-                <a class="mb-2 mr-2 btn-transition btn btn-outline-info" > <i class="fas fa-cancel"></i> Cancel Changes</a>
+                <button onclick="AddNewWorkItem()" id="AcceptBtn"> <i class="fas fa-save"></i> Save Changes</button>
+                <button id="CancelBtn"> <i class="fas fa-cancel"></i> Cancel Changes</button>
 
             </div>
         </div>
@@ -670,6 +672,12 @@
 
     var cancelAddWItemBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     cancelAddWItemBtn.appendTo('#CancelAddWItemBtn');
+    
+   var AcceptBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    AcceptBtn.appendTo('#AcceptBtn');
+ var CancelBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    CancelBtn.appendTo('#CancelBtn');
+
     
     var inputobj2 = new ej.inputs.TextBox({
         placeholder: 'Work item Id',
@@ -710,6 +718,18 @@
     var startDate;
     var endDate;
     var dueDateVal;
+    var RepoSteps;
+    var SystemInfo;
+    var Description;
+    var AcceptanceCriteria;
+ 
+    var AssociateBuild = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    AssociateBuild.appendTo('#AssociateBuild');
+
+    var ModalBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    ModalBtn.appendTo('#ModalBtn');
+
+    
     $( document ).ready(function() 
     {
 
@@ -780,8 +800,137 @@
         startDate = new Date();
         endDate = new Date();
         dueDate = new Date();
- 
+
+        var ItemState = new ej.dropdowns.DropDownList({
+
+            // set the placeholder to DropDownList input element
+            placeholder: 'State',
+            // set the height of the popup element
+            popupHeight: '200px',
+            index: 0,
+          
+        });
+        ItemState.appendTo('#ItemState');
+
+        var ItemIteration = new ej.dropdowns.DropDownList({
+
+            // set the placeholder to DropDownList input element
+            placeholder: 'Iteration',
+            // set the height of the popup element
+            popupHeight: '200px',
+            index: 0,
+          
+        });
+        ItemIteration.appendTo('#ItemIteration');
+        var ItemArea = new ej.dropdowns.DropDownList({
+
+            // set the placeholder to DropDownList input element
+            placeholder: 'Area',
+            // set the height of the popup element
+            popupHeight: '200px',
+            index: 0,
+          
+        });
+        ItemArea.appendTo('#ItemArea');
+        var ItemReason = new ej.dropdowns.DropDownList({
+
+            // set the placeholder to DropDownList input element
+            placeholder: 'Reason',
+            // set the height of the popup element
+            popupHeight: '200px',
+            index: 0,
+          
+        });
+        ItemReason.appendTo('#ItemReason');
+        var ItemPriority = new ej.dropdowns.DropDownList({
+
+            // set the placeholder to DropDownList input element
+            placeholder: 'Priority',
+            // set the height of the popup element
+            popupHeight: '200px',
+            index: 0,
+          
+        });
+        ItemPriority.appendTo('#ItemPriority');
+        var ItemSeverity = new ej.dropdowns.DropDownList({
+
+            // set the placeholder to DropDownList input element
+            placeholder: 'Priority',
+            // set the height of the popup element
+            popupHeight: '200px',
+            index: 0,
+          
+        });
+        ItemSeverity.appendTo('#ItemSeverity');
+        var ItemActivity = new ej.dropdowns.DropDownList({
+
+            // set the placeholder to DropDownList input element
+            placeholder: 'Priority',
+            // set the height of the popup element
+            popupHeight: '200px',
+            index: 0,
+          
+        });
+        ItemActivity.appendTo('#ItemActivity');
+        var ValueArea = new ej.dropdowns.DropDownList({
+
+            // set the placeholder to DropDownList input element
+            placeholder: 'Priority',
+            // set the height of the popup element
+            popupHeight: '200px',
+            index: 0,
+          
+        });
+        ValueArea.appendTo('#ValueArea');
+        var ItemResolvedBuild = new ej.dropdowns.DropDownList({
+
+            // set the placeholder to DropDownList input element
+            placeholder: 'Priority',
+            // set the height of the popup element
+            popupHeight: '200px',
+            index: 0,
+          
+        });
+        ItemResolvedBuild.appendTo('#ItemResolvedBuild');
+        var Risk = new ej.dropdowns.DropDownList({
+
+            // set the placeholder to DropDownList input element
+            placeholder: 'Priority',
+            // set the height of the popup element
+            popupHeight: '200px',
+            index: 0,
+          
+        });
+        Risk.appendTo('#Risk');
+        var ItemFoundBuild = new ej.dropdowns.DropDownList({
+
+            // set the placeholder to DropDownList input element
+            placeholder: 'Priority',
+            // set the height of the popup element
+            popupHeight: '200px',
+            index: 0,
+          
+        });
+        ItemFoundBuild.appendTo('#ItemFoundBuild');
+
+        
+        RepoSteps = new Quill('#RepoSteps', {
+            theme: 'snow'
+        });
+        SystemInfo = new Quill('#SystemInfo', {
+            theme: 'snow'
+        });
+        Description = new Quill('#Description', {
+            theme: 'snow'
+        });
+        AcceptanceCriteria = new Quill('#AcceptanceCriteria', {
+            theme: 'snow'
+        });
+        
     });
+
+  
+
     function StatChange(args){
          startDate = args.value;
     }
@@ -859,8 +1008,8 @@
             "Title": $("#Title").val(),
             "ProjectId" : id,
             "AssignedUser" :assignedUser,
-            "Description" : $("#Description").val(),
-            "AcceptanceCriteria": $("#AcceptanceCriteria").val(),
+            "Description" : ""  ,
+            "AcceptanceCriteria": "" ,
             "State" :  $("#ItemState :selected").val(),
             "ItemReason" :  $("#ItemReason :selected").val(),
             "ItemArea" : $("#ItemArea :selected").val(),
@@ -870,8 +1019,8 @@
             "ItemActivity" : $("#ItemActivity :selected").val(),
             "FoundInBuild" :$("#ItemFoundBuild :selected").val(),
             "ResolvedInBuild" : $("#ItemResolvedBuild").val(),
-            "RepoSteps" : $("#RepoSteps").val(),
-            "SystemInfo" : $("#SystemInfo").val(),
+            "RepoSteps" :  "",
+            "SystemInfo" : "",
             "OriginalEstimate" : $("#OriginalEstimate").val(),
             "ItemRemaining" : $("#ItemRemaining").val(),
             "ItemCompleated" : $("#ItemCompleated").val(),
@@ -888,7 +1037,15 @@
             "SelectedChildren" : selectedChildren,
             "ParentId": @ParentId
         }
-         if($("#Title").val()) {
+        if($("#Description").val() !== undefined)
+            dto.Description = $("#Description").children()[0].innerHTML;
+        if($("#AcceptanceCriteria").val() !== undefined)
+            dto.AcceptanceCriteria = $("#AcceptanceCriteria").children()[0].innerHTML;
+        if($("#RepoSteps").val() !== undefined)
+            dto.RepoSteps =  $("#RepoSteps").children()[0].innerHTML;
+        if($("#SystemInfo").val() !== undefined)
+            dto.SystemInfo = $("#SystemInfo").children()[0].innerHTML;
+        if($("#Title").val()) {
             $.ajax({
                 type: 'POST',
                 url: '/Dashboard/StageWorkItem',
