@@ -45,5 +45,5 @@ See also the  list of [contributors](https://github.com/KristiforMilchev/RokonoC
 
 ## License
 
-This project is licensed under the Non-Profit Open Software License 3.0 (NPOSL-3.0) - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the Non-Profit Open Software License 3.0 (NPOSL-3.0) - see the [LICENSE.md](https://github.com/KristiforMilchev/RokonoControl/blob/master/License.md) file for details
 
