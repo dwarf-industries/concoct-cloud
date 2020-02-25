@@ -86,6 +86,9 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 dbVersion.ValueAreaId = int.Parse(currentItem.ValueAreId);
                 dbVersion.StartDate = currentItem.StartDate == null ? DateTime.Now : currentItem.StartDate;
                 dbVersion.EndDate = currentItem.EndDate == null ? DateTime.Now : currentItem.EndDate;
+                if(!string.IsNullOrEmpty(currentItem.Description))
+                dbVersion.Description = currentItem.Description;
+
                 
             }
             else if(currentItem.WorktItemType == 6)
@@ -234,6 +237,8 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 databaseItem.ValueAreaId = int.Parse(currentItem.ValueAreId);
                 databaseItem.StartDate = currentItem.StartDate == null ? DateTime.Now : currentItem.StartDate;
                 databaseItem.EndDate = currentItem.EndDate == null ? DateTime.Now : currentItem.EndDate;
+                if(!string.IsNullOrEmpty(currentItem.Description))
+                databaseItem.Description = currentItem.Description;
             }
             else if(currentItem.WorktItemType == 6)
             {

@@ -729,7 +729,17 @@
     var ModalBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     ModalBtn.appendTo('#ModalBtn');
 
-    
+    var ItemState;
+    var ItemArea;
+    var ItemReason;
+    var ItemIteration;
+    var ItemPriority;
+    var ItemSeverity;
+    var ValueArea;
+    var ItemActivity;
+    var ItemResolvedBuild;
+    var Risk;
+    var ItemFoundBuild;
     $( document ).ready(function() 
     {
 
@@ -801,7 +811,7 @@
         endDate = new Date();
         dueDate = new Date();
 
-        var ItemState = new ej.dropdowns.DropDownList({
+        ItemState = new ej.dropdowns.DropDownList({
 
             // set the placeholder to DropDownList input element
             placeholder: 'State',
@@ -812,7 +822,7 @@
         });
         ItemState.appendTo('#ItemState');
 
-        var ItemIteration = new ej.dropdowns.DropDownList({
+        ItemIteration = new ej.dropdowns.DropDownList({
 
             // set the placeholder to DropDownList input element
             placeholder: 'Iteration',
@@ -822,7 +832,7 @@
           
         });
         ItemIteration.appendTo('#ItemIteration');
-        var ItemArea = new ej.dropdowns.DropDownList({
+        ItemArea = new ej.dropdowns.DropDownList({
 
             // set the placeholder to DropDownList input element
             placeholder: 'Area',
@@ -832,7 +842,7 @@
           
         });
         ItemArea.appendTo('#ItemArea');
-        var ItemReason = new ej.dropdowns.DropDownList({
+        ItemReason = new ej.dropdowns.DropDownList({
 
             // set the placeholder to DropDownList input element
             placeholder: 'Reason',
@@ -842,7 +852,7 @@
           
         });
         ItemReason.appendTo('#ItemReason');
-        var ItemPriority = new ej.dropdowns.DropDownList({
+        ItemPriority = new ej.dropdowns.DropDownList({
 
             // set the placeholder to DropDownList input element
             placeholder: 'Priority',
@@ -852,60 +862,60 @@
           
         });
         ItemPriority.appendTo('#ItemPriority');
-        var ItemSeverity = new ej.dropdowns.DropDownList({
+        ItemSeverity = new ej.dropdowns.DropDownList({
 
             // set the placeholder to DropDownList input element
-            placeholder: 'Priority',
+            placeholder: 'Severity',
             // set the height of the popup element
             popupHeight: '200px',
             index: 0,
           
         });
         ItemSeverity.appendTo('#ItemSeverity');
-        var ItemActivity = new ej.dropdowns.DropDownList({
+        ItemActivity = new ej.dropdowns.DropDownList({
 
             // set the placeholder to DropDownList input element
-            placeholder: 'Priority',
+            placeholder: 'Activity',
             // set the height of the popup element
             popupHeight: '200px',
             index: 0,
           
         });
         ItemActivity.appendTo('#ItemActivity');
-        var ValueArea = new ej.dropdowns.DropDownList({
+        ValueArea = new ej.dropdowns.DropDownList({
 
             // set the placeholder to DropDownList input element
-            placeholder: 'Priority',
+            placeholder: 'Value Area',
             // set the height of the popup element
             popupHeight: '200px',
             index: 0,
           
         });
         ValueArea.appendTo('#ValueArea');
-        var ItemResolvedBuild = new ej.dropdowns.DropDownList({
+        ItemResolvedBuild = new ej.dropdowns.DropDownList({
 
             // set the placeholder to DropDownList input element
-            placeholder: 'Priority',
+            placeholder: 'Resolved in build',
             // set the height of the popup element
             popupHeight: '200px',
             index: 0,
           
         });
         ItemResolvedBuild.appendTo('#ItemResolvedBuild');
-        var Risk = new ej.dropdowns.DropDownList({
+        Risk = new ej.dropdowns.DropDownList({
 
             // set the placeholder to DropDownList input element
-            placeholder: 'Priority',
+            placeholder: 'Risk',
             // set the height of the popup element
             popupHeight: '200px',
             index: 0,
           
         });
         Risk.appendTo('#Risk');
-        var ItemFoundBuild = new ej.dropdowns.DropDownList({
+        ItemFoundBuild = new ej.dropdowns.DropDownList({
 
             // set the placeholder to DropDownList input element
-            placeholder: 'Priority',
+            placeholder: 'Found in build',
             // set the height of the popup element
             popupHeight: '200px',
             index: 0,
@@ -1007,18 +1017,17 @@
             "WorktItemType" : workItemTypeId,
             "Title": $("#Title").val(),
             "ProjectId" : id,
+            "Description": "",
             "AssignedUser" :assignedUser,
-            "Description" : ""  ,
-            "AcceptanceCriteria": "" ,
-            "State" :  $("#ItemState :selected").val(),
-            "ItemReason" :  $("#ItemReason :selected").val(),
-            "ItemArea" : $("#ItemArea :selected").val(),
-            "ItemIteration" : $("#ItemIteration :selected").val(),
-            "ItemPriority" : $("#ItemPriority :selected").val(),
-            "ItemSeverity" : $("#ItemSeverity :selected").val(),
-            "ItemActivity" : $("#ItemActivity :selected").val(),
-            "FoundInBuild" :$("#ItemFoundBuild :selected").val(),
-            "ResolvedInBuild" : $("#ItemResolvedBuild").val(),
+            "State" :  ItemState.value,
+            "ItemReason" :  ItemReason.value,
+            "ItemArea" : ItemArea.value,
+            "ItemIteration" : ItemIteration.value,
+            "ItemPriority" : ItemPriority.value,
+            "ItemSeverity" : ItemSeverity.value,
+            "ItemActivity" : ItemActivity.value,
+            "FoundInBuild" :ItemFoundBuild.value,
+            "ResolvedInBuild" : ItemResolvedBuild.value,
             "RepoSteps" :  "",
             "SystemInfo" : "",
             "OriginalEstimate" : $("#OriginalEstimate").val(),
@@ -1030,7 +1039,7 @@
             "TimeCriticality" : $("#TimeCriticality").val(),
             "StartDate" : startDate,
             "EndDate" : endDate,
-            "ValueAreId" :  $("#ValueArea :selected").val(),
+            "ValueAreId" :   ValueArea.value,
             "DueDate" : dueDateVal,
             "Rank" :$("#Rank").val() ,
             "StoryPoints" : $("#StoryPoints").val(),
