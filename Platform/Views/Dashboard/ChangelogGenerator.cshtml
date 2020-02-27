@@ -1,0 +1,118 @@
+@{
+    ViewData["Title"] = "Generate Changelog";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var projectId = ViewData["ProjectId"] as int?;
+}
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<!-- Main Quill library -->
+<script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+<!-- end of sidebar element -->
+<!-- main-content declaration -->
+<div class="main-content" id="main-text" style="min-height: 94vh;">
+    <div class="sidebar-content">
+        <div id="ChangelogInput">
+            <div class="row  card-layout" style="margin-bottom: 10px;">
+                <div class="col-md-12">
+                    <!-- Basic Card Layout  -->
+                    <div tabindex="0" class="e-card" id="basic_card">
+                        <div class="e-card-header">
+                            Changelog generation
+                        </div>
+                        <div class="e-card-content">
+                            <div class="row">
+                                <div class="content-wrapper">
+                                    <div id="Grid"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <button id="saveGenerated" onclick="GenerateChangelog()" style="width: 100%;"> Generate Changelog from closed work items</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row  card-layout" style="margin-bottom: 10px;">
+                <div class="col-md-12">
+                    <!-- Basic Card Layout  -->
+                    <div tabindex="0" class="e-card" id="basic_card">
+                        <div class="e-card-header">
+                            Manually fill up a changelog
+                        </div>
+                        <div class="e-card-content">
+                            <div class="row">
+                                <div class="position-relative form-group" style="width:100%;"><div name="Description" id="Description" class="form-control"></div></div>
+                            </div>
+                            <div class="row">
+                                <button id="saveCustom" onclick="CallProject('/')" style="width: 100%;"> Save changelog to collection</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="Confirm">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+
+<script>
+    var  Description = new Quill('#Description', {
+        theme: 'snow'
+    });
+
+    var saveCustom = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    saveCustom.appendTo('#saveCustom');
+    var saveGenerated = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    saveGenerated.appendTo('#saveGenerated');
+
+    $.ajax({
+        type: 'GET',
+        url: '/Dashboard/UnassociatedChangelogItems?projectId=@projectId',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+            LoadWorkItems(response);
+        //    grid.appendTo('#WorkItemsGrid');
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr);
+        }
+    });
+    function LoadWorkItems(data)
+    {
+        grid = new ej.grids.Grid({
+                dataSource: data,
+                rowSelected: WorkItemSelected,
+                allowSelection: true,
+                filterSettings: { type: 'Menu' },
+                selectionSettings: { persistSelection: true, type: "Multiple" },
+                enableHover: false,
+                columns: [
+                    { type: "checkbox", field: "", allowFiltering: false, allowSorting: false, width: '60' },
+                    { field: 'id', headerText: 'Identifier', width: 30 },
+                    { field: 'workItemTypeName', headerText: 'Type', width: 60 },
+                    { field: 'name', headerText: 'Name', width: 180 },
+
+                ],
+         });
+        grid.appendTo('#Grid');
+    }
+
+    function WorkItemSelected(args)
+    {
+        
+    }
+
+    function GenerateChangelog()
+    {
+        
+    }
+</script>

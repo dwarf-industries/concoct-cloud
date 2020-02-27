@@ -53,8 +53,7 @@ namespace RCServerCli.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                 optionsBuilder.UseSqlServer("Server=localhost;Database=RokonoControl;User ID=SA;Password='';");
-            }
+             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

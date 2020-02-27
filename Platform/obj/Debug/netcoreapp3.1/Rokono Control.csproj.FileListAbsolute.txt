@@ -573,3 +573,4 @@ D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Accounts/ManageProjectMemeb
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.csproj.CopyComplete
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.dll
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.pdb
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ChangelogGenerator.cshtml.g.cs

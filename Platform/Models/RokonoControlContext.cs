@@ -20,14 +20,17 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedCommitFiles> AssociatedCommitFiles { get; set; }
         public virtual DbSet<AssociatedProjectBoards> AssociatedProjectBoards { get; set; }
         public virtual DbSet<AssociatedProjectBuilds> AssociatedProjectBuilds { get; set; }
+        public virtual DbSet<AssociatedProjectChangelogs> AssociatedProjectChangelogs { get; set; }
         public virtual DbSet<AssociatedProjectIterations> AssociatedProjectIterations { get; set; }
         public virtual DbSet<AssociatedProjectMemberRights> AssociatedProjectMemberRights { get; set; }
         public virtual DbSet<AssociatedProjectMembers> AssociatedProjectMembers { get; set; }
         public virtual DbSet<AssociatedRepositoryBranches> AssociatedRepositoryBranches { get; set; }
+        public virtual DbSet<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
         public virtual DbSet<AssociatedWrorkItemChildren> AssociatedWrorkItemChildren { get; set; }
         public virtual DbSet<Boards> Boards { get; set; }
         public virtual DbSet<Branches> Branches { get; set; }
         public virtual DbSet<Builds> Builds { get; set; }
+        public virtual DbSet<Changelogs> Changelogs { get; set; }
         public virtual DbSet<Commits> Commits { get; set; }
         public virtual DbSet<Efforts> Efforts { get; set; }
         public virtual DbSet<Files> Files { get; set; }
@@ -49,7 +52,14 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
 
-
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=192.168.1.3;Database=RokonoControl;User ID=kristifor;Password=';;@Hanjolite';");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -134,6 +144,19 @@ namespace Rokono_Control.Models
                     .HasConstraintName("FK__Associate__Repos__7C4F7684");
             });
 
+            modelBuilder.Entity<AssociatedProjectChangelogs>(entity =>
+            {
+                entity.HasOne(d => d.Log)
+                    .WithMany(p => p.AssociatedProjectChangelogs)
+                    .HasForeignKey(d => d.LogId)
+                    .HasConstraintName("FK__Associate__LogId__6BAEFA67");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.AssociatedProjectChangelogs)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK__Associate__Proje__6ABAD62E");
+            });
+
             modelBuilder.Entity<AssociatedProjectIterations>(entity =>
             {
                 entity.HasOne(d => d.Iteration)
@@ -203,6 +226,26 @@ namespace Rokono_Control.Models
                     .HasConstraintName("FK__Associate__Repos__47A6A41B");
             });
 
+            modelBuilder.Entity<AssociatedWorkItemChangelogs>(entity =>
+            {
+                entity.Property(e => e.WorkitemId).HasColumnName("workitemId");
+
+                entity.HasOne(d => d.Log)
+                    .WithMany(p => p.AssociatedWorkItemChangelogs)
+                    .HasForeignKey(d => d.LogId)
+                    .HasConstraintName("FK__Associate__LogId__6E8B6712");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.AssociatedWorkItemChangelogs)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK__Associate__Proje__7073AF84");
+
+                entity.HasOne(d => d.Workitem)
+                    .WithMany(p => p.AssociatedWorkItemChangelogs)
+                    .HasForeignKey(d => d.WorkitemId)
+                    .HasConstraintName("FK__Associate__worki__6F7F8B4B");
+            });
+
             modelBuilder.Entity<AssociatedWrorkItemChildren>(entity =>
             {
                 entity.HasOne(d => d.RelationTypeNavigation)
@@ -244,6 +287,13 @@ namespace Rokono_Control.Models
                 entity.Property(e => e.ReasonName)
                     .IsRequired()
                     .HasMaxLength(600);
+            });
+
+            modelBuilder.Entity<Changelogs>(entity =>
+            {
+                entity.Property(e => e.LogDetails)
+                    .IsRequired()
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Commits>(entity =>

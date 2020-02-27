@@ -317,6 +317,15 @@ namespace Rokono_Control.DatabaseHandlers
             return Cards;
         }
 
+        internal List<WorkItem> GetEmptyChangelogWorktItems(int projectId)
+        {
+
+            return Context.WorkItem.Include(x => x.AssociatedWorkItemChangelogs)
+                                   .Include(x=>x.WorkItemType)
+                                   .Where(x => !x.AssociatedWorkItemChangelogs.Any(y =>  y.ProjectId == projectId) && x.AssociatedBoardWorkItems.Any(x=>x.Board.BoardType == 4))
+                                   .ToList();
+        }
+
         internal int CheckUserViewWorkitemRights(int userId, int projectId)
         {
             return Context.AssociatedProjectMemberRights.Include(x => x.Rights)

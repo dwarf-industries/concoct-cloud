@@ -4,6 +4,7 @@ namespace Rokono_Control.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.AspNetCore.Mvc;
+    using Platform.Models;
     using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
     using RokonoControl.Models;
@@ -242,10 +243,42 @@ namespace Rokono_Control.Controllers
             }
             return View();
         }
+        public IActionResult ChangelogGenerator(int projectId)
+        {
+              var currentUser = this.User;
+            var id = currentUser.Claims.ElementAt(1);
+            using (var context = new DatabaseController(Context))
+            {
+                ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
 
+                var rights = currentUser.Claims.LastOrDefault().Value;
+                ViewData["IsAdmin"] = rights;
+                var currentId = int.Parse(id.Value);
+                ViewData["ProjectId"] = projectId;
+                ViewData["Relationships"] = context.GetProjectRelationships();
+                ViewData["BoardId"] = 0;
+                
+
+            }
+            return View();
+        }
         #endregion
 
         #region AjaxRequests
+        [HttpGet]
+        public List<OutgoingWorkItemSimple> UnassociatedChangelogItems(int projectId)
+        {
+            var result = new List<OutgoingWorkItemSimple>();
+            using(var context = new DatabaseController(Context))
+            {
+                result = context.GetEmptyChangelogWorktItems(projectId).Select(y=> new OutgoingWorkItemSimple{
+                    Id = y.Id,
+                    Name = string.IsNullOrEmpty(y.Title) ? "" : y.Title ,
+                    WorkItemTypeName = y.WorkItemType == null ? "" : y.WorkItemType.TypeName
+                }).ToList();
+            }
+            return result;
+        }
         [HttpGet]
         public List<WorkItemRelations> GetWorkItemRelations()
         {

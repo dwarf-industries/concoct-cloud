@@ -8,6 +8,7 @@ namespace Rokono_Control.Models
         public WorkItem()
         {
             AssociatedBoardWorkItems = new HashSet<AssociatedBoardWorkItems>();
+            AssociatedWorkItemChangelogs = new HashSet<AssociatedWorkItemChangelogs>();
             AssociatedWrorkItemChildrenWorkItem = new HashSet<AssociatedWrorkItemChildren>();
             AssociatedWrorkItemChildrenWorkItemChild = new HashSet<AssociatedWrorkItemChildren>();
         }
@@ -64,6 +65,7 @@ namespace Rokono_Control.Models
         public virtual ValueAreas ValueArea { get; set; }
         public virtual WorkItemTypes WorkItemType { get; set; }
         public virtual ICollection<AssociatedBoardWorkItems> AssociatedBoardWorkItems { get; set; }
+        public virtual ICollection<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
         public virtual ICollection<AssociatedWrorkItemChildren> AssociatedWrorkItemChildrenWorkItem { get; set; }
         public virtual ICollection<AssociatedWrorkItemChildren> AssociatedWrorkItemChildrenWorkItemChild { get; set; }
     }
