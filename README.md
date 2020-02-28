@@ -1,4 +1,6 @@
 # Project Title
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FKristiforMilchev%2FRokonoControl.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FKristiforMilchev%2FRokonoControl?ref=badge_shield)
+
 
 Rokono Control is an open source project management system that combines lots of diffrent features. Its based over the agile project 
 management metodologies and the default planning workflow follows the pattern of Epic->Feature->User Story -> Task | Bug | Issue.
@@ -47,3 +49,6 @@ See also the  list of [contributors](https://github.com/KristiforMilchev/RokonoC
 
 This project is licensed under the Non-Profit Open Software License 3.0 (NPOSL-3.0) - see the [LICENSE.md](https://github.com/KristiforMilchev/RokonoControl/blob/master/License.md) file for details
 
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FKristiforMilchev%2FRokonoControl.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FKristiforMilchev%2FRokonoControl?ref=badge_large)
