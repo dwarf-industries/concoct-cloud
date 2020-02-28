@@ -9102,19 +9102,19 @@
     ]
   },
   "packageFolders": {
-    "/home/dwarfdevelopment/.nuget/packages/": {}
+    "/home/kristifor/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Rokono Control.csproj",
+      "projectUniqueName": "/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Rokono Control.csproj",
       "projectName": "Rokono Control",
-      "projectPath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Rokono Control.csproj",
-      "packagesPath": "/home/dwarfdevelopment/.nuget/packages/",
-      "outputPath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/",
+      "projectPath": "/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Rokono Control.csproj",
+      "packagesPath": "/home/kristifor/.nuget/packages/",
+      "outputPath": "/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/dwarfdevelopment/.nuget/NuGet/NuGet.Config"
+        "/home/kristifor/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"

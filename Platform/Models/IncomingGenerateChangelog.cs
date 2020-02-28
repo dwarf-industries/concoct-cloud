@@ -6,5 +6,6 @@ namespace Platform.Models
     {
         public List<OutgoingWorkItemSimple> Items { get; set; }
         public string Chagelog { get; set; }
+        public int ProjectId { get; set; }
     }
 }

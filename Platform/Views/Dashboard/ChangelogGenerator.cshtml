@@ -47,14 +47,37 @@
                                 <div class="position-relative form-group" style="width:100%;"><div name="Description" id="Description" class="form-control"></div></div>
                             </div>
                             <div class="row">
-                                <button id="saveCustom" onclick="CallProject('/')" style="width: 100%;"> Save changelog to collection</button>
+                                <button id="saveCustom" onclick="ManualChangelog()" style="width: 100%;"> Save changelog to collection</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="Confirm">
-
+          
+        </div>
+        <div id="Confirm" hidden >
+              <div class="row  card-layout" style="margin-bottom: 10px;">
+                <div class="col-md-12">
+                    <!-- Basic Card Layout  -->
+                    <div tabindex="0" class="e-card" id="basic_card">
+                        <div class="e-card-header">
+                            Manually fill up a changelog
+                        </div>
+                        <div class="e-card-content" style="padding:6%">
+                            <div class="row">
+                                <div id="ChangelogContent"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button id="confirmBtn" onclick="ConfirmChangelog()" style="width: 100%;">Confirm</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button id="cancelBtn" onclick="CancelChangelog()" style="width: 100%;">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -66,11 +89,16 @@
     var  Description = new Quill('#Description', {
         theme: 'snow'
     });
-
+    var currentGrid;
+    var selectedRecords = [];
     var saveCustom = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     saveCustom.appendTo('#saveCustom');
     var saveGenerated = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     saveGenerated.appendTo('#saveGenerated');
+    var confirmBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    confirmBtn.appendTo('#confirmBtn');
+    var cancelBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    cancelBtn.appendTo('#cancelBtn');
 
     $.ajax({
         type: 'GET',
@@ -88,9 +116,10 @@
     });
     function LoadWorkItems(data)
     {
-        grid = new ej.grids.Grid({
+        currentGrid = new ej.grids.Grid({
                 dataSource: data,
                 rowSelected: WorkItemSelected,
+                rowDeselected: WorkItemDeselected,
                 allowSelection: true,
                 filterSettings: { type: 'Menu' },
                 selectionSettings: { persistSelection: true, type: "Multiple" },
@@ -103,16 +132,91 @@
 
                 ],
          });
-        grid.appendTo('#Grid');
+        currentGrid.appendTo('#Grid');
     }
 
     function WorkItemSelected(args)
     {
+        console.log(args);
+        selectedRecords.push(args.data);
+    }
+
+    function WorkItemDeselected(args)
+    {
+        console.log(args);
         
+        var index = selectedRecords.indexOf(args.data[0]);
+        if (index !== -1) selectedRecords.splice(index, 1);
+
+        console.log(selectedRecords);
     }
 
     function GenerateChangelog()
     {
-        
+        console.log(currentGrid);
+
+         var dto = {
+            "Items":  selectedRecords
+            
+        }
+        console.log(dto);
+        $.ajax({
+            type: 'POST',
+            url: '/Changelog/GenerateChangelog',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+               // window.location.href = "/Dashboard/Index";
+               $("#ChangelogInput").hide();
+               $("#ChangelogContent").html(response.chagelog);
+               $("#Confirm").show();
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function ManualChangelog()
+    {
+        var  content = $("#Description").children()[0].innerHTML;
+        $("#ChangelogInput").hide();
+        $("#ChangelogContent").html(content);
+        $("#Confirm").show();
+    }
+
+    function ConfirmChangelog()
+    {
+        console.log($("#ChangelogContent").html());
+          var dto = {
+            "Items": selectedRecords,
+            "Chagelog": ""+$("#ChangelogContent").html(),
+            "projectId" : @projectId
+        }
+        console.log(dto);
+        $.ajax({
+            type: 'POST',
+            url: '/Changelog/ConfirmChangelog',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                alert("Changelog generated!!!");
+                $("#ChangelogInput").show();
+                $("#ChangelogContent").html("");
+                $("#Confirm").hide();
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function CancelChangelog()
+    {
+        $("#ChangelogInput").show();
+        $("#ChangelogContent").html("");
+        $("#Confirm").hide();
     }
 </script>

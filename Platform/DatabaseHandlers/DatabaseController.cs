@@ -78,6 +78,30 @@ namespace Rokono_Control.DatabaseHandlers
             return Cards;
         }
 
+        internal void AssociatedChangelogItems(IncomingGenerateChangelog changelog)
+        {
+            var currentChangelog = Context.Changelogs.Add(new Changelogs{  
+                DayOfLog =  DateTime.Now.Day,
+                LogDetails = changelog.Chagelog
+            });
+            Context.SaveChanges();
+            Context.AssociatedProjectChangelogs.Add(new AssociatedProjectChangelogs{
+                CurrentMonth = DateTime.Now.Month,
+                ProjectId = changelog.ProjectId,
+                LogYear = DateTime.Now.Year,
+                LogId = currentChangelog.Entity.Id
+            });
+            Context.SaveChanges();
+            changelog.Items.ForEach(x=>{
+                Context.AssociatedWorkItemChangelogs.Add(new AssociatedWorkItemChangelogs{
+                    LogId = currentChangelog.Entity.Id,
+                    WorkitemId = x.Id,
+                    ProjectId = changelog.ProjectId
+                });
+                Context.SaveChanges();
+            });
+        }
+
         internal List<OutgoingUserAccounts> GetProjectUsers(int projectId)
         {
             return Context.AssociatedProjectMembers.Include(x=>x.UserAccount).Where(x=>x.ProjectId == projectId).Select(x=> new OutgoingUserAccounts{

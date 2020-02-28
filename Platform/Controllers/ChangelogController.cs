@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Platform.DataHandlers;
 using Platform.Models;
+using Rokono_Control.DatabaseHandlers;
 using Rokono_Control.Models;
 
 namespace Platform.Controllers
@@ -14,14 +15,25 @@ namespace Platform.Controllers
         }
 
         [HttpPost]
-        public string GenerateChangelog([FromBody] IncomingGenerateChangelog changelog)
+        public IncomingGenerateChangelog GenerateChangelog([FromBody] IncomingGenerateChangelog changelog)
         {
-            var result = string.Empty;
+            var result = new IncomingGenerateChangelog();
             using(var generator = new ChangelogGenerator(Context))
             {
-                result = generator.GenerateChangelog(changelog);
+                result.Chagelog = generator.GenerateChangelog(changelog);
             }
             return result;
+        }
+
+        [HttpPost]
+        public JsonResult ConfirmChangelog([FromBody] IncomingGenerateChangelog changelog)
+        {
+
+            using(var context = new DatabaseController(Context))
+            {
+                context.AssociatedChangelogItems(changelog);
+            }
+            return Json(new object());
         }
     }
 }
