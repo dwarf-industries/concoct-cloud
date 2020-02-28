@@ -1,0 +1,42 @@
+@{
+    ViewData["Title"] = "View Changelogs";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var result = ViewData["ProjectId"] as int?;
+    
+    var changelogs = ViewData["Changelogs"] as List<Changelogs>;
+}
+<div class="main-content" id="main-text" style="min-height: 94vh;">
+    <div class="sidebar-content">
+        
+        @foreach (var log in  changelogs)
+        {
+            var currentId = $"#editChangelog{@log.Id}";
+            <div class="row  card-layout" style="margin-bottom: 10px;">
+                <div class="col-md-12">
+                    <!-- Basic Card Layout  -->
+                    <div tabindex="0" class="e-card" id="basic_card">
+                        <div class="e-card-header">
+                            Manually fill up a changelog
+                        </div>
+                        <div class="e-card-content" style="padding:6%">
+                            <div class="row">
+                                @Html.Raw(log.LogDetails)
+                            </div>
+                            <div class="row">
+                                <button id="@currentId" onclick="EditChangelog('/Changelog/EditChangelog?projectId=@result&&changelog=@log.Id')" class="e-control e-btn e-lib e-outline e-primary" style="width: 100%;">Edit Changelog</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+      
+
+    </div>
+ </div>
+<script>
+    function EditChangelog(item)
+    {
+        window.location.href = item;
+    }
+</script>

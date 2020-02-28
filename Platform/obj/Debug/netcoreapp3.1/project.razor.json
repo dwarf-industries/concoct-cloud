@@ -20516,6 +20516,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Changelog/ViewChangelogs.cshtml",
+      "TargetPath": "Views/Changelog/ViewChangelogs.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Home/Index.cshtml",
       "TargetPath": "Views/Home/Index.cshtml",
       "FileKind": "mvc"
@@ -20613,6 +20618,11 @@
     {
       "FilePath": "/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Boards/ProjectBacklog.cshtml",
       "TargetPath": "Views/Boards/ProjectBacklog.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Changelog/EditChangelog.cshtml",
+      "TargetPath": "Views/Changelog/EditChangelog.cshtml",
       "FileKind": "mvc"
     },
     {

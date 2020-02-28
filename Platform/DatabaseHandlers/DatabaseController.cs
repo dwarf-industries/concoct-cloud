@@ -78,6 +78,28 @@ namespace Rokono_Control.DatabaseHandlers
             return Cards;
         }
 
+        internal void EditChangelog(ChangelogEditRequest changelog)
+        {
+            var current = Context.Changelogs.FirstOrDefault(x=>x.Id == changelog.Id);
+            current.LogDetails = changelog.Content;
+            Context.Attach(current);
+            Context.Update(current);
+            Context.SaveChanges();
+        }
+
+        internal Changelogs GetSpecificChangelog(int changelog)
+        {
+            return Context.Changelogs.FirstOrDefault(x=>x.Id == changelog);
+        }
+
+        internal List<Changelogs> GetProjectChangelogs(int projectId)
+        {
+            return Context.AssociatedProjectChangelogs.Include(x => x.Log)
+                                                      .Where(x => x.ProjectId == projectId)
+                                                      .Select(x => x.Log)
+                                                      .ToList();
+        }
+
         internal void AssociatedChangelogItems(IncomingGenerateChangelog changelog)
         {
             var currentChangelog = Context.Changelogs.Add(new Changelogs{  

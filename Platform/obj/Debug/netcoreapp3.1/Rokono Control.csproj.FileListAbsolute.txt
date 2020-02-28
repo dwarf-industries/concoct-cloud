@@ -739,3 +739,5 @@ D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Accounts/ManageProjectMemeb
 /media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.csproj.CopyComplete
 /media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.dll
 /media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.pdb
+/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Changelog/ViewChangelogs.cshtml.g.cs
+/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Changelog/EditChangelog.cshtml.g.cs

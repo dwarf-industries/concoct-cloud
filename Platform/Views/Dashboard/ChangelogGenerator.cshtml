@@ -203,9 +203,7 @@
             dataType: "json",
             success: function (response) {
                 alert("Changelog generated!!!");
-                $("#ChangelogInput").show();
-                $("#ChangelogContent").html("");
-                $("#Confirm").hide();
+                window.location.href = "/Changelog/ViewChangelogs?projectId=@projectId";
             },
             error: function (xhr, status, error) {
                 console.log(error);
