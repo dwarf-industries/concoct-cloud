@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Platform.DataHandlers;
 using Rokono_Control.Models;
 
 namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
@@ -158,7 +160,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
         }
 
 
-        public static bool AddNewWorkItem (IncomingWorkItem currentItem, RokonoControlContext Context)
+        public static bool AddNewWorkItem (IncomingWorkItem currentItem, RokonoControlContext Context,IConfiguration configuration, int userId)
         {
                 var relationshipId = default(int);
             currentItem.SelectedChildren.ForEach(x=>{
@@ -330,6 +332,15 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                             
                     }
                 });
+            if(currentItem.AssignedUser != 0)
+            {
+                var projectName = Context.Projects.FirstOrDefault(X=>X.Id == currentItem.ProjectId).ProjectName;
+                var getCurrentCreator = Context.UserAccounts.FirstOrDefault(x=>x.Id == currentItem.AssignedUser);
+                using(var notificationHandler = new NotificationHandler(configuration))
+                {
+                    notificationHandler.GenerateNewWorkItemNotification(item.Entity,getCurrentCreator, projectName);
+                }
+            }
             return true;
         }
     }

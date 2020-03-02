@@ -4,15 +4,19 @@ namespace Rokono_Control.Controllers
     using System.Linq;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
     using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
 
     public class BacklogsController : Controller
     {
         RokonoControlContext Context;
-        public BacklogsController(RokonoControlContext context)
+        IConfiguration Configuration;
+
+        public BacklogsController(RokonoControlContext context, IConfiguration config)
         {
             Context = context;
+            Configuration = config;
         }
 
         public IActionResult Index(int projectId, int boardId)
@@ -21,7 +25,7 @@ namespace Rokono_Control.Controllers
             var rights = currentUser.Claims.LastOrDefault().Value;
             ViewData["IsAdmin"] = rights;
             var id = currentUser.Claims.ElementAt(1);
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
 
@@ -42,7 +46,7 @@ namespace Rokono_Control.Controllers
         {
 
             var result = new List<OutgoingWorkItem>();
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 var data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType);
                 var bData = data.Select(x => x.WorkItem).ToList();
@@ -70,7 +74,7 @@ namespace Rokono_Control.Controllers
         {
 
             var result = new List<OutgoingWorkItem>();
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 var data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType);
                 var bData = data.Select(x => x.WorkItem).ToList();
@@ -100,7 +104,7 @@ namespace Rokono_Control.Controllers
         {
 
             var result = new List<OutgoingWorkItem>();
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 var data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType);
                 var bData = data.Select(x => x.WorkItem).ToList();

@@ -8,6 +8,7 @@ namespace Rokono_Control.DatabaseHandlers
     using System.Text;
     using Microsoft.AspNetCore.Cryptography.KeyDerivation;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
     using Platform.Models;
     using Rokono_Control.DataHandlers;
@@ -18,10 +19,11 @@ namespace Rokono_Control.DatabaseHandlers
     public class DatabaseController : IDisposable
     {
         RokonoControlContext Context;
-
-        public DatabaseController(RokonoControlContext context)
+        IConfiguration Configuration;
+        public DatabaseController(RokonoControlContext context, IConfiguration config)
         {
             Context = context;
+            Configuration = config;
         }
  
 
@@ -1516,9 +1518,9 @@ namespace Rokono_Control.DatabaseHandlers
             }
             return true;
         }
-        internal bool AddNewWorkItem(IncomingWorkItem currentItem)
+        internal bool AddNewWorkItem(IncomingWorkItem currentItem,int userId)
         {
-            return WorkItemHadler.AddNewWorkItem(currentItem, Context);
+            return WorkItemHadler.AddNewWorkItem(currentItem, Context, Configuration, userId);
 
         }
         internal List<WorkItemRelations> GetProjectRelationships()

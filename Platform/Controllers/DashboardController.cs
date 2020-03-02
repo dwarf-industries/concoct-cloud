@@ -4,6 +4,8 @@ namespace Rokono_Control.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Platform.DataHandlers;
     using Platform.Models;
     using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
@@ -12,16 +14,18 @@ namespace Rokono_Control.Controllers
     public class DashboardController : Controller
     {
         RokonoControlContext Context;
-        public DashboardController(RokonoControlContext context)
+        IConfiguration Configuration;
+        public DashboardController(RokonoControlContext context, IConfiguration config)
         {
             Context = context;
+            Configuration = config;
         }
         #region PageRenders
         public IActionResult Index()
         {
             var currentUser = this.User;
             var id = currentUser.Claims.ElementAt(1);
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 var currentId = int.Parse(id.Value);
                 ViewData["Projects"] = context.GetUserProjects(currentId);
@@ -37,7 +41,7 @@ namespace Rokono_Control.Controllers
             var currentUser = this.User;
             var id = currentUser.Claims.ElementAt(1);
 
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 var currentId = int.Parse(id.Value);
                 ViewData["User"] = context.GetUsername(currentId);
@@ -50,7 +54,7 @@ namespace Rokono_Control.Controllers
             var currentUserId = currentUser.Claims.ElementAt(1);
 
 
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 var rights = currentUser.Claims.LastOrDefault().Value;
                 ViewData["IsAdmin"] = rights;
@@ -80,7 +84,7 @@ namespace Rokono_Control.Controllers
             var currentUser = this.User;
             var currentUserId = currentUser.Claims.ElementAt(1);
 
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 var defaultUserAccount = context.GetDefaultAccount();
                 var rights = currentUser.Claims.LastOrDefault().Value;
@@ -115,7 +119,7 @@ namespace Rokono_Control.Controllers
             var currentUser = this.User;
             var currentUserId = currentUser.Claims.ElementAt(1);
 
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 var rights = currentUser.Claims.LastOrDefault().Value;
                 ViewData["IsAdmin"] = rights;
@@ -133,7 +137,7 @@ namespace Rokono_Control.Controllers
             var currentUser = this.User;
             var currentUserId = currentUser.Claims.ElementAt(1);
 
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(currentUserId.Value));
 
@@ -146,7 +150,7 @@ namespace Rokono_Control.Controllers
             var currentUser = this.User;
             var currentUserId = currentUser.Claims.ElementAt(1);
 
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(currentUserId.Value));
 
@@ -165,7 +169,7 @@ namespace Rokono_Control.Controllers
             var currentUser = this.User;
             var currentUserId = currentUser.Claims.ElementAt(1);
 
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(currentUserId.Value));
 
@@ -181,7 +185,7 @@ namespace Rokono_Control.Controllers
         {
             var currentUser = this.User;
             var currentUserId = currentUser.Claims.ElementAt(1);
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["Relationships"] = context.GetProjectRelationships();
                 var rights = currentUser.Claims.LastOrDefault().Value;
@@ -201,7 +205,7 @@ namespace Rokono_Control.Controllers
         {
             var currentUser = this.User;
             var currentUserId = currentUser.Claims.ElementAt(1);
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 var project = context.GetProjectData(id);
                 var initials = project.ProjectName.ToUpper().Substring(0, 2);
@@ -220,8 +224,10 @@ namespace Rokono_Control.Controllers
                 ViewData["WorkItemsActive"] = context.GetWorkItemCountByType(id, 2);
                 ViewData["WorkItemsTesting"] = context.GetWorkItemCountByType(id, 3);
                 ViewData["WorkItemsCompleated"] = context.GetWorkItemCountByType(id, 4);
+                 
 
             }
+           
             return View();
         }
 
@@ -229,7 +235,7 @@ namespace Rokono_Control.Controllers
         {
             var currentUser = this.User;
             var id = currentUser.Claims.ElementAt(1);
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
 
@@ -247,7 +253,7 @@ namespace Rokono_Control.Controllers
         {
               var currentUser = this.User;
             var id = currentUser.Claims.ElementAt(1);
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
 
@@ -269,7 +275,7 @@ namespace Rokono_Control.Controllers
         public List<OutgoingWorkItemSimple> UnassociatedChangelogItems(int projectId)
         {
             var result = new List<OutgoingWorkItemSimple>();
-            using(var context = new DatabaseController(Context))
+            using(var context = new DatabaseController(Context, Configuration))
             {
                 result = context.GetEmptyChangelogWorktItems(projectId).Select(y=> new OutgoingWorkItemSimple{
                     Id = y.Id,
@@ -283,7 +289,7 @@ namespace Rokono_Control.Controllers
         public List<WorkItemRelations> GetWorkItemRelations()
         {
             var relationships = new List<WorkItemRelations>();
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
                 relationships = context.GetProjectRelationships();
             return relationships;
         }
@@ -291,7 +297,7 @@ namespace Rokono_Control.Controllers
         public OutgoingBoundRelations GetAllWorkItemRelations(int workItemId, int projectId)
         {
             var result = default(OutgoingBoundRelations);
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 result = context.GetAllWorkItemRelations(workItemId, projectId);
             }
@@ -301,7 +307,7 @@ namespace Rokono_Control.Controllers
         public List<OutgoingBindingWorkItem> GetAllWorkItems(int projectId)
         {
             var result = new List<OutgoingBindingWorkItem>();
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 result = context.GetAllWorkItems(projectId);
             }
@@ -312,7 +318,7 @@ namespace Rokono_Control.Controllers
         public List<CommitChartBindingData> GetCommitChartBindingData([FromBody] IncomingIdRequest request)
         {
             var result = new List<CommitChartBindingData>();
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 result = context.GetCommitsChartForProject(request.Id);
             }
@@ -323,7 +329,7 @@ namespace Rokono_Control.Controllers
         public object GetProjects()
         {
             var result = default(object);
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 result = context.GetProjects();
             }
@@ -336,7 +342,7 @@ namespace Rokono_Control.Controllers
         public OutgoingProjectRules GetProjectUserRules([FromBody] IncomingProjectRulesRequest project)
         {
             var getProjectRules = default(OutgoingProjectRules);
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 getProjectRules = context.GetProjectRules(int.Parse(project.ProjectId), int.Parse(project.UserId));
             }
@@ -351,10 +357,11 @@ namespace Rokono_Control.Controllers
         {
             var result = default(bool);
 
-
-            using (var context = new DatabaseController(Context))
+            var currentUser = this.User;
+            var id = int.Parse(currentUser.Claims.ElementAt(1).Value);
+            using (var context = new DatabaseController(Context,Configuration))
             {
-                result = context.AddNewWorkItem(currentItem);
+                result = context.AddNewWorkItem(currentItem,id);
             }
             return result;
         }
@@ -362,7 +369,7 @@ namespace Rokono_Control.Controllers
         public bool UpdateWorkItem([FromBody] IncomingWorkItem currentItem)
         {
             var result = default(bool);
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 result = context.UpdateWorkItem(currentItem);
             }
@@ -372,7 +379,7 @@ namespace Rokono_Control.Controllers
         public List<BindingUserAccount> GetUserAccounts([FromBody] IncomingIdRequest IncomingIdRequest)
         {
             var result = new List<BindingUserAccount>();
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 result = context.GetProjectMembers(IncomingIdRequest.Id);
             }
@@ -382,7 +389,7 @@ namespace Rokono_Control.Controllers
         [HttpPost]
         public bool RemoveUserFromProject([FromBody] IncomingRemoveUserFromProject userProject)
         {
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 context.RemoveUserFromProject(userProject);
             }
@@ -397,7 +404,7 @@ namespace Rokono_Control.Controllers
 
             var result = new OutgoingValidWorkItem();
 
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 var defaultUserAccount = context.GetDefaultAccount();
                 result.WorkItem = new List<WorkItem>();
@@ -432,7 +439,7 @@ namespace Rokono_Control.Controllers
         [HttpPost]
         public bool AssociatedWorkItemRelation([FromBody] IncomingWorkItemRelation incomingRelation)
         {
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 context.AssociatedRelation(incomingRelation);
             }
@@ -442,7 +449,7 @@ namespace Rokono_Control.Controllers
         [HttpPost]
         public string AddProjectToUserAccount([FromBody] IncomingProjectUser incomingRequest)
         {
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 context.AddProjectToUser(incomingRequest);
             }
@@ -453,7 +460,7 @@ namespace Rokono_Control.Controllers
         public bool AddNewProject([FromBody] IncomingProject currentProject)
         {
             var result = default(bool);
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 var currentUser = this.User;
                 var userDto = currentUser.Claims.ElementAt(1);

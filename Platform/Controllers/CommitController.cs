@@ -3,6 +3,7 @@ namespace RokonoControl.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
     using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
     using RokonoControl.Models;
@@ -11,6 +12,8 @@ namespace RokonoControl.Controllers
     {
 
         RokonoControlContext Context;
+        IConfiguration Configuration;
+
         public CommitController(RokonoControlContext context)
         {
             Context = context;
@@ -22,7 +25,7 @@ namespace RokonoControl.Controllers
 
             var rights = currentUser.Claims.LastOrDefault().Value;
             ViewData["IsAdmin"] = rights;
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
 
@@ -45,7 +48,7 @@ namespace RokonoControl.Controllers
             ViewData["CommitKey"] = commitId;
             ViewData["BranchId"] = branchId;
             ViewData["ProjectId"] = projectId;
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
 
@@ -63,7 +66,7 @@ namespace RokonoControl.Controllers
             var rights = currentUser.Claims.LastOrDefault().Value;
             ViewData["IsAdmin"] = rights;
             ViewData["ProjectId"] = projectId;
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
 
@@ -87,7 +90,7 @@ namespace RokonoControl.Controllers
         public List<OutgoingCommitData> GetCommits(int projectId, int branchId)
         {
             var data = new List<OutgoingCommitData>();
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 if (branchId != 0)
                     data = context.GetCommitData(projectId, branchId);
@@ -101,7 +104,7 @@ namespace RokonoControl.Controllers
         public List<CommitFileHirarhicalData> GetCommitFiles(string commitId)
         {
             var data = new List<CommitFileHirarhicalData>();
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 data = context.GetCommitFilesHirarchy(commitId);
             }
@@ -112,7 +115,7 @@ namespace RokonoControl.Controllers
         public OutgoingSourceFile GetCommitFileData(int fileId, int branch)
         {
             var result = default(OutgoingSourceFile);
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 result = context.GetSelectedFileById(fileId, branch);
             }
@@ -122,7 +125,7 @@ namespace RokonoControl.Controllers
         public List<CommitFileHirarhicalData> GetBranchFiles(int projectId, int branchId)
         {
             var result = new List<CommitFileHirarhicalData>();
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 var getProject = context.GetBranchFiles(projectId, branchId);
                 if (getProject != null)
@@ -135,7 +138,7 @@ namespace RokonoControl.Controllers
         public OutgoingSourceFile GetSelectedFile(string fileName, int projectId, int branch)
         {
             var result = default(OutgoingSourceFile);
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 result = context.GetSelectedFileByName(fileName, projectId, branch);
             }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Platform.Models;
 using Rokono_Control;
 using Rokono_Control.DatabaseHandlers;
@@ -12,9 +13,12 @@ namespace RokonoControl.Controllers
     public class BoardsController : Controller
     {
         RokonoControlContext Context;
-        public BoardsController(RokonoControlContext context)
+        IConfiguration Configuration;
+
+        public BoardsController(RokonoControlContext context, IConfiguration config)
         {
             Context = context;
+            Configuration = config;
         }
 
         public IActionResult Index(int projectId)
@@ -24,7 +28,7 @@ namespace RokonoControl.Controllers
             var id = currentUser.Claims.ElementAt(1);
 
             ViewData["IsAdmin"] = rights;
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
 
@@ -46,7 +50,7 @@ namespace RokonoControl.Controllers
             ViewData["IsAdmin"] = rights;
             var id = currentUser.Claims.ElementAt(1);
 
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
 
@@ -69,7 +73,7 @@ namespace RokonoControl.Controllers
             var id = currentUser.Claims.ElementAt(1);
 
             ViewData["IsAdmin"] = rights;
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
 
@@ -91,7 +95,7 @@ namespace RokonoControl.Controllers
             var id = currentUser.Claims.ElementAt(1);
 
             ViewData["IsAdmin"] = rights;
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
                 ViewData["ProjectId"] = projectId;
@@ -111,7 +115,7 @@ namespace RokonoControl.Controllers
         public List<BindingCards> GetWorkItems(int projectId, int workItemType)
         {
             var result = new List<BindingCards>();
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 result = context.GetProjectCards(projectId, workItemType);
             }
@@ -121,7 +125,7 @@ namespace RokonoControl.Controllers
         public List<OutgoingIterationModel> GetIterations([FromBody] IncomingIterationRequest request)
         {
             var result = new List<OutgoingIterationModel>();
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 var dataResult = context.GetProjectIterations(request.ProjectId);
                 dataResult.ForEach(x =>
@@ -140,7 +144,7 @@ namespace RokonoControl.Controllers
         public List<OutgoingIterationModel> GetPersons([FromBody] IncomingIterationRequest request)
         {
             var result = new List<OutgoingIterationModel>();
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 var dataResult = new List<UserAccounts>();
                 var currentUser = this.User;
@@ -179,7 +183,7 @@ namespace RokonoControl.Controllers
         public List<BindingCards> GetSprints([FromBody] IncomingSprintRequest dataRequest)
         {
             var result = new List<BindingCards>();
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 var currentUser = this.User;
                 var email = currentUser.Claims.LastOrDefault().Value;
@@ -193,7 +197,7 @@ namespace RokonoControl.Controllers
         [HttpPost]
         public bool ChangeWorkItemBoard([FromBody] IncomingCardRequest card)
         {
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 context.ChangeWorkItemBoard(card);
             }
@@ -203,7 +207,7 @@ namespace RokonoControl.Controllers
         [HttpPost]
         public bool ChangeCardOwner([FromBody] IncomingCardOwnerRequest card)
         {
-            using (var context = new DatabaseController(Context))
+            using (var context = new DatabaseController(Context,Configuration))
             {
                 context.ChangeCardOwner(card);
             }
