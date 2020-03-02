@@ -27,13 +27,39 @@ and MySqlDatabaseGenerationScript.sql contains the scripts for MySql databases, 
 Give examples
 In order to install .net core runtime go to this link https://dotnet.microsoft.com/download all UI components are delivered trough CDN but if you'd like you can go and download them from Syncfusion 
 
+Database of your choice either MSSQL or MySql.
+
 ### Installing
  
- You can easily get the system running, all you need to do in order to get started is to install the dependencies mentioned aboe and then you need to navigate to the root directoy of the project
+ -You can easily get the system running, all you need to do in order to get started is to install the dependencies mentioned aboe and then you need to navigate to the root directoy of the project
  open up powershell on windows or any terminal on your favorite linux destribution and execute the following command cd Platform && dotnet -c Release -r targetpatform for linux (linux-x65)
- Once that is done you need to navigate to /Platform/bin/Release/netcoreapp3.1/publish take the content of that folder and deploy it on your favorite server like NGINX 
- Edit the configuration file inside NGINX create a systemctl service to start automatically under linux https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-3.1 here iss a good tutorial by Microsoft
+ -Once that is done you need to navigate to /Platform/bin/Release/netcoreapp3.1/publish take the content of that folder and deploy it on your favorite server like NGINX 
+ -Edit the configuration file inside NGINX create a systemctl service to start automatically under linux https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-3.1 here iss a good tutorial by Microsoft
 
+The last step is to deploy your database either by adding it to an existing server or installing either MSSQL or MySQL server. 
+
+- [MySQL server installation guide](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/) 
+- [MSSQL server installation guide](https://docs.microsoft.com/en-us/sql/database-engine/install-windows/install-sql-server?view=sql-server-ver15)
+
+Once you have installed or deployed server its time to deploy the database, you can do that by navigating inside the cloned project folder then click on the folder named Platform and find the corresponding creation script for your datbase enviroment. 
+
+-For MySql use: MySqlDatabaseGenerationScript.sql
+-For MSSQL use: MSSQLGenerationScript.sql
+
+If its all setup its time to scaffold your context in order to connect everything together, the project uses database first approach so its important to scaffold the database when you're deploying on a new hoting enviroment it might work without it just by changing the connection string although i advise of doing a fresh scaffold each time you upgrade.
+
+For MSSQL Server use this guide: 
+https://www.entityframeworktutorial.net/efcore/create-model-for-existing-database-in-ef-core.aspx
+For MySQL:
+Use the same guide but chagne  Microsoft.EntityFrameworkCore.SqlServer to Pomelo.EntityFrameworkCore.MySql
+Detailed guide if you're converting the datbases to use another engine or server can be found here :
+https://docs.microsoft.com/en-us/ef/core/providers/?tabs=dotnet-core-cli
+
+## Deploying
+
+The last step is to initialize the default server configuration, go to the rokono-cl folder. Make sure that you build the tool and deploying only on the hosting envroment, do not give access to people that don't have administrative status as this tool can manage all projects deployed on the system.
+
+Once you have deploying the tool use rokono-cl --Help for the full set of commands, make sure that you create remote administrator account, initialize default project setups and you should be ready to login create your first project 
 
 ## Contributing
 
