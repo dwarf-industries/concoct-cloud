@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using MailKit.Net.Smtp;
@@ -13,30 +14,44 @@ namespace Platform.DataHandlers
 {
     public class NotificationHandler : IDisposable
     {
-
+        public IConfiguration Configuration;
+        RokonoConfig Config;
         public NotificationHandler(IConfiguration configuration)
         {
             Configuration = configuration;
+            Config = new RokonoConfig();
+            Config.Username = Configuration.GetValue<string>("EmailConfiguration:Username"); 
+            Config.Password = Configuration.GetValue<string>("EmailConfiguration:Password"); 
+            Config.SMTP =   Configuration.GetValue<string>("EmailConfiguration:SMTP");
+            Config.IMAP =  Configuration.GetValue<string>("EmailConfiguration:IMAP");
+            Config.SmtpPort=  Configuration.GetValue<string>("EmailConfiguration:SmtpPort");  
+            Config.ImapPort = Configuration.GetValue<string>("EmailConfiguration:ImapPort");  
+            Config.CompanyName = Configuration.GetValue<string>("EmailConfiguration:CompanyName");
         }
 
-        public IConfiguration Configuration;
 
         internal void GenerateNewWorkItemNotification(WorkItem workItem, UserAccounts accounts, string project)
         {
-            var config = new RokonoConfig();
-            config.Username = Configuration.GetValue<string>("EmailConfiguration:Username"); 
-            config.Password = Configuration.GetValue<string>("EmailConfiguration:Password"); 
-            config.SMTP =   Configuration.GetValue<string>("EmailConfiguration:SMTP");
-            config.IMAP =  Configuration.GetValue<string>("EmailConfiguration:IMAP");
-            config.SmtpPort=  Configuration.GetValue<string>("EmailConfiguration:SmtpPort");  
-            config.ImapPort = Configuration.GetValue<string>("EmailConfiguration:ImapPort");  
-            config.CompanyName = Configuration.GetValue<string>("EmailConfiguration:CompanyName");  
+          
             // var configurationDetails = configData;
-            var msgBody =$"<h1>Automatic Message from Rokono Control, licensed to {config.CompanyName}</h1>";
+            var msgBody =$"<h1>Automatic Message from Rokono Control, licensed to {Config.CompanyName}</h1>";
             msgBody += $"<p> a new work item has been assigned to your account {accounts.GitUsername}, you can review it at your dasboard page for project {project}</p>";
             msgBody += $"<div style = 'width:300px;border-left:3px solid {GetCardColor(workItem.WorkItemTypeId)}; padding:2%;'> <h3 style='text-align:center;'> {workItem.Title} <h3> {GetWorkItemText(workItem)} </div>";
             accounts.Email = "kristiformilchev615@gmail.com";
-            SendEmail(config, $"{accounts.FirstName} {accounts.LastName}", accounts.Email,  "Rokono Control new work item assigned", msgBody);
+            SendEmail(Config, $"{accounts.FirstName} {accounts.LastName}", accounts.Email,  "Rokono Control new work item assigned", msgBody);
+
+        }
+
+        internal void GeneraBacklogReport(List<WorkItem> items, UserAccounts account)
+        {
+            account.Email = "kristiformilchev615@gmail.com";
+
+            var msgBody =$"<h1>Automatic Message from Rokono Control, licensed to {Config.CompanyName}</h1>";
+            msgBody += $"<p> a new backlog email report has been generated for your account {account.GitUsername}, you for more details reffer to the system administrator managing your instance of Rokono Control at  {Config.CompanyName}";
+            items.ForEach(x=>{
+                msgBody += $"<div style = 'width:300px;border-left:3px solid {GetCardColor(x.WorkItemTypeId)}; padding:2%;'> <h3 style='text-align:center;'> {x.Title} <h3> {GetWorkItemText(x)} </div>";
+            });
+            SendEmail(Config, $"{account.FirstName} {account.LastName}", account.Email,  "Rokono Control new work item assigned", msgBody);
 
         }
 

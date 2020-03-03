@@ -52,7 +52,7 @@
 
 
             <div class="col-md-5">
-                <button type="button" id="iconbtn" class="btn btn-primary" onclick="CallUrl('/Dashboard/AddNewWorkItem?projectId='+@ProjectId+'&workItemType='+7+'&boardId='+0+'&parentId=0')">New Sprint</button>
+                <button type="button" id="iconbtn" class="btn btn-primary" onclick="CallUrl('/Dashboard/AddNewWorkItem?projectId='+@ProjectId+'&workItemType='+7+'&boardId='+0+'&parentId=0&returnUrl='+window.location.href+')">New Sprint</button>
                 <button id="backlogBtn" onclick="CallUrl('/Boards/ProjectBacklog?projectId='+@ProjectId+'&&workItemType=7')">View as backlog</button>
                 <button id="capacityBtn" onclick="CallUrl()">Capacity</button>
                 <button id="analitycsBtn" onclick="CallUrl()">Analitycs</button>
@@ -297,7 +297,7 @@
         {
             console.log(args);
             console.log("/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId);
-            window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId;
+            window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId+"&returnUrl="+window.location.href;
 
         }
         function CardDropCheck(args)
@@ -469,7 +469,7 @@
     function EditWorkItem(args)
     {
         console.log(args);
-        window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.rowData.id
+        window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.rowData.id+"&returnUrl="+window.location.href;
     }
 
     function ChangeCardOwner(id,name)

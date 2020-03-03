@@ -116,7 +116,7 @@
     function CreateNewWorkItem(id){
         ProjectId = @result;
         boardId = @BoardId;
-        window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+id+"&parentId=0";
+        window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+id+"&parentId=0&returnUrl="+window.location.href;
     }
     function WorkItemSelected(args){
         console.log(args);
@@ -129,7 +129,7 @@
     {
         console.log(args);
  //       args.rowData.id
-        window.location.href = "/Dashboard/EditWorkItem?projectId=@result&&workItem="+args.rowData.id;
+        window.location.href = "/Dashboard/EditWorkItem?projectId=@result&&workItem="+args.rowData.id+"&returnUrl="+window.location.href;
     }
  </script>
 

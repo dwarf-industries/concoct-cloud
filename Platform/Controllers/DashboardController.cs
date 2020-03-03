@@ -48,7 +48,7 @@ namespace Rokono_Control.Controllers
             }
             return View();
         }
-        public IActionResult AddNewWorkItem(int projectId, int workItemType, int parentId)
+        public IActionResult AddNewWorkItem(int projectId, int workItemType, int parentId, string returnUrl)
         {
             var currentUser = this.User;
             var currentUserId = currentUser.Claims.ElementAt(1);
@@ -73,13 +73,13 @@ namespace Rokono_Control.Controllers
                 ViewData["ParentId"] = parentId;
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(currentUserId.Value));
                 ViewData["DefaultIteration"] = context.GetProjectDefautIteration(projectId);
-
+                ViewData["ReturnPath"] = returnUrl;
 
             }
             return View();
         }
 
-        public IActionResult EditWorkItem(int projectId, int workItem)
+        public IActionResult EditWorkItem(int projectId, int workItem, string returnUrl)
         {
             var currentUser = this.User;
             var currentUserId = currentUser.Claims.ElementAt(1);
@@ -109,6 +109,8 @@ namespace Rokono_Control.Controllers
                 ViewData["WorkItemData"] = currentWorkItem;
                 ViewData["ProjectId"] = projectId;
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(currentUserId.Value));
+                ViewData["ReturnPath"] = returnUrl;
+
 
             }
             return View();

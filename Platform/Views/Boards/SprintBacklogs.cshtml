@@ -125,35 +125,35 @@
             text: 'Feature',
             iconCss: 'e-ddb-icons e-dashboard',
 
-            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+2+"&boardId="+boardId+"&parentId=0"
+            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+2+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
         },
         {
             text: 'User Story',
             iconCss: 'e-ddb-icons e-notifications',
-             url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+7+"&boardId="+boardId+"&parentId=0"
+             url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+7+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
 
         },
         {
             text: 'Task',
             iconCss: 'e-ddb-icons e-settings',
-            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+3+"&boardId="+boardId+"&parentId=0"
+            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+3+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
 
         },
         {
             text: 'Bug',
             iconCss: 'e-ddb-icons e-logout',
-            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+1+"&boardId="+boardId+"&parentId=0"
+            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+1+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
         },
         {
             text: 'Issue',
             iconCss: 'e-ddb-icons e-logout',
-            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+6+"&boardId="+boardId+"&parentId=0"
+            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+6+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
 
         },
         {
             text: 'Test',
             iconCss: 'e-ddb-icons e-logout',
-            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+4+"&boardId="+boardId+"&parentId=0"
+            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+4+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
          }
 
         ];
@@ -174,9 +174,9 @@
         var data = treeGridObj.getCurrentViewRecords();
         console.log(data[rowIndex]);
         if(data[rowIndex].typeId === 5)
-            window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+2+"&boardId="+boardId+"&parentId="+data[rowIndex].id;
+            window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+2+"&boardId="+boardId+"&parentId="+data[rowIndex].id+"&returnUrl="+window.location.href;
         if(data[rowIndex].typeId === 2)
-            window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+7+"&boardId="+boardId+"&parentId="+data[rowIndex].id;
+            window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+7+"&boardId="+boardId+"&parentId="+data[rowIndex].id+"&returnUrl="+window.location.href;
         if(data[rowIndex].typeId === 7)
             CallChoiceMenu(data[rowIndex]);
      }
@@ -225,7 +225,7 @@
     function CreateNewWorkItem(id){
         ProjectId = @result;
         boardId = @BoardId;
-        window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+id+"&boardId="+boardId+"&parentId=0";
+        window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+id+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href;
     }
 
     function GetCurrentRow(args)
@@ -240,7 +240,7 @@
     function EditWorkItem(args)
     {
         console.log(args);
-        window.location.href = "/Dashboard/EditWorkItem?projectId=@result&&workItem="+args.rowData.id
+        window.location.href = "/Dashboard/EditWorkItem?projectId=@result&&workItem="+args.rowData.id+"&returnUrl="+window.location.href;
     }
     function load(args) {
         this.parentDetails.parentKeyFieldValue = this.parentDetails.parentRowData['id'];
@@ -274,13 +274,13 @@
 
 
         function NewTask(){
-            window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+3+"&boardId="+boardId+"&parentId="+selected.id;
+            window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+3+"&boardId="+boardId+"&parentId="+selected.id+"&returnUrl="+window.location.href;
         }
         function NewIssue(){
-            window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+6+"&boardId="+boardId+"&parentId="+selected.id;
+            window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+6+"&boardId="+boardId+"&parentId="+selected.id+"&returnUrl="+window.location.href;
         }
         function NewBug(){
-            window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+1+"&boardId="+boardId+"&parentId="+selected.id;
+            window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+1+"&boardId="+boardId+"&parentId="+selected.id+"&returnUrl="+window.location.href;
         }
     </script>
 

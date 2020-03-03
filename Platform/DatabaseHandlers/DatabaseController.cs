@@ -10,6 +10,7 @@ namespace Rokono_Control.DatabaseHandlers
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
+    using Platform.DataHandlers;
     using Platform.Models;
     using Rokono_Control.DataHandlers;
     using Rokono_Control.Models;
@@ -26,8 +27,25 @@ namespace Rokono_Control.DatabaseHandlers
             Configuration = config;
         }
  
-
         private int I { get; set; }
+
+        internal UserAccounts GetUserAccount(int id)
+        {
+            return Context.UserAccounts.FirstOrDefault(x=>x.Id == id);
+        }
+
+        internal List<WorkItem> BackgroundWorkItems(List<OutgoingWorkItem> items)
+        {
+            var result = new List<WorkItem>();
+            items.ForEach(x=>{
+                result.Add(Context.WorkItem.FirstOrDefault(y=>y.Id ==x.Id));
+                x.subtasks.ForEach(y=>{
+                    result.Add(Context.WorkItem.FirstOrDefault(z=>z.Id == y.Id));
+                });
+            });
+            return result;
+        }
+
         private int InternalId { get; set; }
         internal List<Repository> GetAllRepositories()
         {

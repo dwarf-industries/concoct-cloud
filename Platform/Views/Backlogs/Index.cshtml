@@ -110,41 +110,41 @@
             text: 'Epic',
             iconCss: 'e-icons e-epic',
 
-            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+5+"&boardId="+boardId+"&parentId=0"
+            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+5+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
         },
         {
             text: 'Feature',
             iconCss: 'e-icons e-Feature',
 
-            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+2+"&boardId="+boardId+"&parentId=0"
+            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+2+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
         },
         {
             text: 'User Story',
             iconCss: 'e-icons e-Story',
-             url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+7+"&boardId="+boardId+"&parentId=0"
+             url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+7+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
 
         },
         {
             text: 'Task',
             iconCss: 'e-icons e-Task',
-            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+3+"&boardId="+boardId+"&parentId=0"
+            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+3+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
 
         },
         {
             text: 'Bug',
             iconCss: 'e-icons e-Bug',
-            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+1+"&boardId="+boardId+"&parentId=0"
+            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+1+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
         },
         {
             text: 'Issue',
             iconCss: 'e-icons e-Issue',
-            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+6+"&boardId="+boardId+"&parentId=0"
+            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+6+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
 
         },
         {
             text: 'Test',
             iconCss: 'e-icons e-Test',
-            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+4+"&boardId="+boardId+"&parentId=0"
+            url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+4+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
          }
 
         ];
@@ -194,7 +194,7 @@
     function CreateNewWorkItem(id){
         ProjectId = @result;
         boardId = @BoardId;
-        window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+id+"&boardId="+boardId;
+        window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+id+"&boardId="+boardId+"&returnUrl="+window.location.href;
     }
     function WorkItemSelected(args){
         console.log(args);
@@ -203,7 +203,7 @@
     function EditWorkItem(args)
     {
         console.log(args);
-        window.location.href = "/Dashboard/EditWorkItem?projectId=@result&&workItem="+args.rowData.id
+        window.location.href = "/Dashboard/EditWorkItem?projectId=@result&&workItem="+args.rowData.id+"&returnUrl="+window.location.href;
     }
     function load(args) {
         this.parentDetails.parentKeyFieldValue = this.parentDetails.parentRowData['id'];

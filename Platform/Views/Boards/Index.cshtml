@@ -161,7 +161,7 @@
         {
             console.log(args);
             console.log("/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId);
-            window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId;
+            window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId+"&returnUrl="+window.location.href;
 
         }
         function CardDropCheck(args)
