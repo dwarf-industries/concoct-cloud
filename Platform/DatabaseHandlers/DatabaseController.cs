@@ -383,6 +383,33 @@ namespace Rokono_Control.DatabaseHandlers
             return Cards;
         }
 
+        internal AssociatedWorkItemMessages AddNewWorkItemMessage(IncomingWorkItemMessage request, int id)
+        {
+            var message = Context.WorkItemMessage.Add(new WorkItemMessage{
+                SenderId = id,
+                Content = request.Message,
+                DateOfMessage = DateTime.Now
+            });
+            Context.SaveChanges();
+            var association = Context.AssociatedWorkItemMessages.Add(new AssociatedWorkItemMessages{
+                MessageId = message.Entity.Id,
+                WorkItemId = request.WorkItemId
+            });
+            Context.SaveChanges();
+            return association.Entity;
+        }
+
+        internal List<AssociatedWorkItemMessages> GetWorkItemDiscussions(int projectId, int workItemId)
+        {
+            return  Context.AssociatedWorkItemMessages.Include(x => x.Message)
+                                                             .ThenInclude(Message => Message.Sender)
+                                                             .Include(x => x.Message)
+                                                             .Where(x => x.WorkItemId == workItemId)
+                                                             .ToList();
+
+        }
+
+
         internal List<WorkItem> GetEmptyChangelogWorktItems(int projectId)
         {
 

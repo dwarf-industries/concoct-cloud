@@ -10,6 +10,7 @@ namespace Rokono_Control.Models
             AssociatedProjectMemberRights = new HashSet<AssociatedProjectMemberRights>();
             AssociatedProjectMembers = new HashSet<AssociatedProjectMembers>();
             WorkItem = new HashSet<WorkItem>();
+            WorkItemMessage = new HashSet<WorkItemMessage>();
         }
 
         public int Id { get; set; }
@@ -25,5 +26,6 @@ namespace Rokono_Control.Models
         public virtual ICollection<AssociatedProjectMemberRights> AssociatedProjectMemberRights { get; set; }
         public virtual ICollection<AssociatedProjectMembers> AssociatedProjectMembers { get; set; }
         public virtual ICollection<WorkItem> WorkItem { get; set; }
+        public virtual ICollection<WorkItemMessage> WorkItemMessage { get; set; }
     }
 }

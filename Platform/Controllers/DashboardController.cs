@@ -338,7 +338,31 @@ namespace Rokono_Control.Controllers
             return result;
         }
 
-
+        [HttpPost]
+        public List<AssociatedWorkItemMessages> GetWorkItemDiscussions([FromBody] IncomingWorkItem request)
+        {
+            var result = new List<AssociatedWorkItemMessages>();
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                result = context.GetWorkItemDiscussions(request.ProjectId, request.WorkItemId);
+            }
+            return result;
+        }
+        [HttpPost]
+        public AssociatedWorkItemMessages WorkItemAddMessage([FromBody] IncomingWorkItemMessage request)
+        {
+            var result = default(AssociatedWorkItemMessages);
+            var currentUser = this.User;
+            var id = int.Parse(currentUser.Claims.ElementAt(1).Value);
+            using(var context =new DatabaseController(Context,Configuration))
+            {
+                result = context.AddNewWorkItemMessage(request, id);
+                result.Message.AssociatedWorkItemMessages = null;
+                result.Message.Sender = context.GetUserAccount(result.Message.SenderId);
+            }
+            return result;
+        }
+        //GetWorkItemDiscussions
 
         [HttpPost]
         public OutgoingProjectRules GetProjectUserRules([FromBody] IncomingProjectRulesRequest project)

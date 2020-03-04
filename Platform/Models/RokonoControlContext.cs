@@ -26,6 +26,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedProjectMembers> AssociatedProjectMembers { get; set; }
         public virtual DbSet<AssociatedRepositoryBranches> AssociatedRepositoryBranches { get; set; }
         public virtual DbSet<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
+        public virtual DbSet<AssociatedWorkItemMessages> AssociatedWorkItemMessages { get; set; }
         public virtual DbSet<AssociatedWrorkItemChildren> AssociatedWrorkItemChildren { get; set; }
         public virtual DbSet<Boards> Boards { get; set; }
         public virtual DbSet<Branches> Branches { get; set; }
@@ -44,6 +45,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemActivity> WorkItemActivity { get; set; }
         public virtual DbSet<WorkItemAreas> WorkItemAreas { get; set; }
         public virtual DbSet<WorkItemIterations> WorkItemIterations { get; set; }
+        public virtual DbSet<WorkItemMessage> WorkItemMessage { get; set; }
         public virtual DbSet<WorkItemPriorities> WorkItemPriorities { get; set; }
         public virtual DbSet<WorkItemRealtionshipType> WorkItemRealtionshipType { get; set; }
         public virtual DbSet<WorkItemReasons> WorkItemReasons { get; set; }
@@ -54,7 +56,11 @@ namespace Rokono_Control.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=192.168.1.3;Database=RokonoControl;User ID=kristifor;Password=';;@Kakadu';");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -240,6 +246,21 @@ namespace Rokono_Control.Models
                     .WithMany(p => p.AssociatedWorkItemChangelogs)
                     .HasForeignKey(d => d.WorkitemId)
                     .HasConstraintName("FK__Associate__worki__6F7F8B4B");
+            });
+
+            modelBuilder.Entity<AssociatedWorkItemMessages>(entity =>
+            {
+                entity.HasOne(d => d.Message)
+                    .WithMany(p => p.AssociatedWorkItemMessages)
+                    .HasForeignKey(d => d.MessageId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Associate__Messa__7DCDAAA2");
+
+                entity.HasOne(d => d.WorkItem)
+                    .WithMany(p => p.AssociatedWorkItemMessages)
+                    .HasForeignKey(d => d.WorkItemId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Associate__WorkI__7CD98669");
             });
 
             modelBuilder.Entity<AssociatedWrorkItemChildren>(entity =>
@@ -456,6 +477,17 @@ namespace Rokono_Control.Models
                 entity.Property(e => e.IterationName)
                     .IsRequired()
                     .HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<WorkItemMessage>(entity =>
+            {
+                entity.Property(e => e.DateOfMessage).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Sender)
+                    .WithMany(p => p.WorkItemMessage)
+                    .HasForeignKey(d => d.SenderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__WorkItemM__Sende__019E3B86");
             });
 
             modelBuilder.Entity<WorkItemPriorities>(entity =>

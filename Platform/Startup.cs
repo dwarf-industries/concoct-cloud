@@ -44,11 +44,15 @@ namespace Rokono_Control
             services.AddDbContext<RokonoControlContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("RokonoControlContext")));
             services.AddRazorPages();
-            
             services.AddSignalR();
              services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie();
-            
+
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
