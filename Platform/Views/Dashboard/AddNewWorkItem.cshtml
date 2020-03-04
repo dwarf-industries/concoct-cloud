@@ -142,28 +142,13 @@
         <div class="main-card mb-1 card">
             <div class="card-body">
 
-                          
-               <div class="sub-title">Default</div>                                        
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs md-tabs" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#home3" role="tab">Item Details</a>
-                                    <div class="slide"></div>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#profile3" role="tab">Discussions</a>
-                                    <div class="slide"></div>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#messages3" role="tab">Files</a>
-                                    <div class="slide"></div>
-                                </li>
-                               
-                            </ul>
-                            <!-- Tab panes -->
-                            <div class="tab-content card-block">
-                                <div class="tab-pane active" id="home3" role="tabpanel">
-                                    <div class="row RowContainer">
+                                     
+                <div id="element"></div>
+      
+   
+               
+                <div id="tab1_content" style="display: none; min-height:53vh;">
+                        <div class="row RowContainer">
                                         <div class="col-md-6" style="padding-right:50px;">
                                             @if(WorkItemType == 1)
                                             {
@@ -626,21 +611,18 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="tab-pane" id="profile3" role="tabpanel">
-                                    <p class="m-0">2.Cras consequat in enim ut efficitur. Nulla posuere elit quis auctor interdum praesent sit amet nulla vel enim amet. Donec convallis tellus neque, et imperdiet felis amet.</p>
-                                </div>
-                                <div class="tab-pane" id="messages3" role="tabpanel">
-                                    <p class="m-0">3. This is Photoshop's version of Lorem IpThis is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean mas Cum sociis natoque penatibus et magnis dis.....</p>
-                                </div>
-                               
-                            </div>
-                        </div>
-   
-            <div class="row text-center" style="margin-left:40%; margin-right:40%;">
-                <button onclick="AddNewWorkItem()" id="AcceptBtn"> <i class="fas fa-save"></i> Save Changes</button>
-                <button id="CancelBtn"> <i class="fas fa-cancel"></i> Cancel Changes</button>
+                </div>
+                <div id="tab2_content" style="display: none; min-height:53vh;">
+                        
+                </div>
+                <div id="tab3_content" style="display: none; min-height:53vh;">
+                        
+                </div>
+                <div class="row text-center" style="margin-left:40%; margin-right:40%;">
+                    <button onclick="AddNewWorkItem()" id="AcceptBtn"> <i class="fas fa-save"></i> Save Changes</button>
+                    <button id="CancelBtn" onclick="ReturnBack()"> <i class="fas fa-cancel"></i> Cancel Changes</button>
 
+                </div>
             </div>
         </div>
        
@@ -747,7 +729,26 @@
     var ItemFoundBuild;
     $( document ).ready(function() 
     {
-
+                //Initialize Tab component
+        var tabObj = new ej.navigations.Tab({
+            selected: tabSelected,
+            items: [
+                {
+                    header: { 'text': 'Work Item Details' },
+                    content: '#tab1_content'
+                },
+                {
+                    header: { 'text': 'Discussions' },
+                    content: '#tab2_content'
+                },
+                {
+                    header: { 'text': 'Attachments' },
+                    content: '#tab3_content'
+                }
+            ]
+        });
+        //Render initialized Tab component
+        tabObj.appendTo('#element');
         LoadWorkItemsGrid();
         var month = new Date().getMonth();
         var fullYear = new Date().getFullYear();
@@ -1204,5 +1205,10 @@
     function ReturnBack()
     {
         window.location.href = "@ReturnPath";
+    }
+
+    function tabSelected(args)
+    {
+        console.log(args);
     }
 </script>

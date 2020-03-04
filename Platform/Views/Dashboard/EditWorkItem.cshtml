@@ -152,21 +152,10 @@
     <div class="col-md-12">
         <div class="main-card mb-1 card">
             <div class="card-body">
-                <div class="card-header-tab card-header">
-                    <div class="card-header-title">
-                        <i class="header-icon lnr-bicycle icon-gradient bg-love-kiss" > </i>
-                        Header Alternate Tabs
-                    </div>
-                    <ul class="nav">
-                        <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-0" class="active nav-link">Details</a></li>
-                        <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-1" class="nav-link">Tab 2</a></li>
-                        <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-2" class="nav-link">Tab 3</a></li>
-                    </ul>
-                </div>
-                <div class="card-body">
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tab-eg5-0" role="tabpanel">
-                            <div class="row RowContainer">
+                <div id="element"></div>
+
+                <div id="tab1_content" style="display: none">
+                        <div class="row RowContainer">
                                 <div class="col-md-6" style="padding-right:50px;">
                                     @if(WorkItemType == 1)
                                     {
@@ -669,24 +658,23 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="tab-pane" id="tab-eg5-1" role="tabpanel"><p>Like Aldus PageMaker including versions of Lorem. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-                            essentially unchanged. </p></div>
-                        <div class="tab-pane" id="tab-eg5-2" role="tabpanel"><p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
-                            type specimen book. It has
-                            survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p></div>
-                    </div>
+                </div>
+                <div id="tab2_content" style="display: none; min-height:53vh;">
+                        
+                </div>
+                <div id="tab3_content" style="display: none; min-height:53vh;">
+                        
                 </div>
             </div>
             <div class="row text-center" style="margin-left:40%; margin-right:40%;">
                 <button class="mb-2 mr-2 btn-transition btn btn-outline-info" onclick="AddNewWorkItem()" id="AcceptBtn" > <i class="fas fa-save"></i> Save Changes</button>
-                <button class="mb-2 mr-2 btn-transition btn btn-outline-info" id="CancelBtn"> <i class="fas fa-cancel"></i> Cancel Changes</button>
+                <button class="mb-2 mr-2 btn-transition btn btn-outline-info"  onclick="GoBack()" id="CancelBtn"> <i class="fas fa-cancel"></i> Cancel Changes</button>
 
             </div>
         </div>
        
     </div>
- 
+    
 
 </div>
 </div>
@@ -756,6 +744,27 @@
     var ItemFoundBuild;
     $( document ).ready(function() 
     {
+
+        //Initialize Tab component
+        var tabObj = new ej.navigations.Tab({
+            selected: tabSelected,
+            items: [
+                {
+                    header: { 'text': 'Work Item Details' },
+                    content: '#tab1_content'
+                },
+                {
+                    header: { 'text': 'Discussions' },
+                    content: '#tab2_content'
+                },
+                {
+                    header: { 'text': 'Attachments' },
+                    content: '#tab3_content'
+                }
+            ]
+        });
+        //Render initialized Tab component
+        tabObj.appendTo('#element');
         LoadWorkItemRelations();
         var month = new Date().getMonth();
         var fullYear = new Date().getFullYear();
@@ -1274,6 +1283,11 @@
     function GoBack()
     {
         window.location.href = "@ReturnPath";
+    }
+
+    function tabSelected(args)
+    {
+        console.log(args);
     }
 </script>
 <style>
