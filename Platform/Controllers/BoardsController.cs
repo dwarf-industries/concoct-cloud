@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
@@ -247,7 +248,9 @@ namespace RokonoControl.Controllers
             var result = string.Empty;
             using(var context = new DatabaseController(Context,Configuration))
             {
-                result = context.ChangeProjectBoardStatus(request);
+                var domain = Request.Host.Host;
+
+                result = context.ChangeProjectBoardStatus(request, domain);
             }
             return new OutgoingJsonData{ Data = result};
         }

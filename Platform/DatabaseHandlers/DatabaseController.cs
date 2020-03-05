@@ -7,6 +7,7 @@ namespace Rokono_Control.DatabaseHandlers
     using System.Security.Cryptography;
     using System.Text;
     using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
@@ -228,7 +229,7 @@ namespace Rokono_Control.DatabaseHandlers
             });
         }
 
-        internal string ChangeProjectBoardStatus(IncomingPublicBoardRequest request)
+        internal string ChangeProjectBoardStatus(IncomingPublicBoardRequest request, string domain)
         {
             var getProject = Context.Projects.FirstOrDefault(x=>x.Id == request.ProjectId);
             getProject.PublicBoard = request.IsChecked;
@@ -237,8 +238,9 @@ namespace Rokono_Control.DatabaseHandlers
             Context.SaveChanges();
             var iteration = GetProjectIterations(request.ProjectId).FirstOrDefault();
 
+
             if(request.IsChecked == 1)
-                return $"https://rokonocontrol.com/Boards/PublicBoard?projectId={request.ProjectId}&iteration={iteration.Id}&person=0";
+                return $"https://{domain}/Boards/PublicBoard?projectId={request.ProjectId}&iteration={iteration.Id}&person=0";
             else
                 return string.Empty;
         }

@@ -943,3 +943,5 @@
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Razor/Views/Changelog/EditChangelog.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Razor/Views/Changelog/ViewChangelogs.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Razor/Views/Dashboard/ChangelogGenerator.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Razor/Views/Boards/PublicBoard.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Razor/Views/Home/Error.cshtml.g.cs
