@@ -25,6 +25,7 @@ namespace Rokono_Control.Models
         public string ProjectTitle { get; set; }
         public DateTime? CreationDate { get; set; }
         public int? BoardId { get; set; }
+        public int? PublicBoard { get; set; }
 
         public virtual Repository Repository { get; set; }
         public virtual ICollection<AssociatedBoardWorkItems> AssociatedBoardWorkItems { get; set; }

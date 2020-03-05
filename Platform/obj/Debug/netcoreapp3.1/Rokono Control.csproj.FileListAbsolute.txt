@@ -746,3 +746,5 @@ D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Accounts/ManageProjectMemeb
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.JsonPatch.dll
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Newtonsoft.Json.Bson.dll
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Boards/PublicBoard.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Home/Error.cshtml.g.cs

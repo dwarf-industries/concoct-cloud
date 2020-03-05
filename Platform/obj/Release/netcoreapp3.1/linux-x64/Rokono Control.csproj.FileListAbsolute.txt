@@ -937,3 +937,9 @@
 /media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Rokono Control.csproj.CopyComplete
 /media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Rokono Control.dll
 /media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Rokono Control.pdb
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Release/netcoreapp3.1/linux-x64/Microsoft.AspNetCore.JsonPatch.dll
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Release/netcoreapp3.1/linux-x64/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Release/netcoreapp3.1/linux-x64/Newtonsoft.Json.Bson.dll
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Razor/Views/Changelog/EditChangelog.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Razor/Views/Changelog/ViewChangelogs.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Razor/Views/Dashboard/ChangelogGenerator.cshtml.g.cs

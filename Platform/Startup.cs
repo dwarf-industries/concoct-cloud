@@ -42,7 +42,8 @@ namespace Rokono_Control
                     .AllowAnyHeader();
             }));
             services.AddDbContext<RokonoControlContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("RokonoControlContext")));
+                options.UseSqlServer(Configuration.GetConnectionString("RokonoControlContext"))
+            );
             services.AddRazorPages();
             services.AddSignalR();
              services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

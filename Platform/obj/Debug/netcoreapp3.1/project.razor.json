@@ -20596,6 +20596,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Boards/PublicBoard.cshtml",
+      "TargetPath": "Views/Boards/PublicBoard.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Accounts/Administration.cshtml",
       "TargetPath": "Views/Accounts/Administration.cshtml",
       "FileKind": "mvc"
@@ -20663,6 +20668,11 @@
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/_LayoutDashboard.cshtml",
       "TargetPath": "Views/Shared/_LayoutDashboard.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Home/Error.cshtml",
+      "TargetPath": "Views/Home/Error.cshtml",
       "FileKind": "mvc"
     },
     {

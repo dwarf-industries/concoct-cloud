@@ -120,6 +120,17 @@ namespace Rokono_Control.DatabaseHandlers
                                                       .ToList();
         }
 
+        internal bool GetPublicBoardRights(int projectId)
+        {
+            var project = Context.Projects.FirstOrDefault(x=>x.Id == projectId);
+            if(project != null)
+            {
+                return project.PublicBoard == 1 ? true :false;
+            }
+            else
+                return false;
+        }
+
         internal void AssociatedChangelogItems(IncomingGenerateChangelog changelog)
         {
             var currentChangelog = Context.Changelogs.Add(new Changelogs{  
@@ -215,6 +226,21 @@ namespace Rokono_Control.DatabaseHandlers
                 });
                 Context.SaveChanges();
             });
+        }
+
+        internal string ChangeProjectBoardStatus(IncomingPublicBoardRequest request)
+        {
+            var getProject = Context.Projects.FirstOrDefault(x=>x.Id == request.ProjectId);
+            getProject.PublicBoard = request.IsChecked;
+            Context.Attach(getProject);
+            Context.Update(getProject);
+            Context.SaveChanges();
+            var iteration = GetProjectIterations(request.ProjectId).FirstOrDefault();
+
+            if(request.IsChecked == 1)
+                return $"https://rokonocontrol.com/Boards/PublicBoard?projectId={request.ProjectId}&iteration={iteration.Id}&person=0";
+            else
+                return string.Empty;
         }
 
         internal void AddProjectInvitation(IncomingProjectAccount projectAccount)

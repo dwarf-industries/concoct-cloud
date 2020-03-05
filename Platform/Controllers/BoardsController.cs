@@ -110,6 +110,32 @@ namespace RokonoControl.Controllers
             return View();
         }
 
+        public IActionResult PublicBoard(int projectId, int iteration, int person)
+        {
+            var currentUser = this.User;
+            var rights = currentUser.Claims.LastOrDefault().Value;
+            var id = currentUser.Claims.ElementAt(1);
+            var viewRights  = default(bool);
+            ViewData["IsAdmin"] = rights;
+            using (var context = new DatabaseController(Context,Configuration))
+            {
+                viewRights = context.GetPublicBoardRights(projectId);
+                if(viewRights)
+                {
+                    ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
+                    ViewData["ProjectId"] = projectId;
+                    ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
+                    ViewData["ProjectName"] = context.GetProjectName(projectId);
+                    ViewData["Iteration"] = iteration;
+                    ViewData["Person"] = person;
+                    ViewData["GetUserViewRights"] = context.CheckUserViewWorkitemRights(int.Parse(id.Value), projectId);
+                    ViewData["DefaultIteration"] = context.GetProjectDefautIteration(projectId);
+                }
+            }
+            var view =  viewRights ? View() : View("~/Views/Home/Error.cshtml");
+            return view;
+        }
+
 
         [HttpGet]
         public List<BindingCards> GetWorkItems(int projectId, int workItemType)
@@ -130,11 +156,12 @@ namespace RokonoControl.Controllers
                 var dataResult = context.GetProjectIterations(request.ProjectId);
                 dataResult.ForEach(x =>
                 {
+                    var boardName = request.IsPublic ? "PublicBoard" : "Sprints";
                     result.Add(new OutgoingIterationModel
                     {
                         Text = x.IterationName,
                         IconCss = "e-ddb-icons e-settings",
-                        Url = $"/Boards/Sprints?projectId={request.ProjectId}&&workItemType=7&&iteration={x.Id}&&person=0"
+                        Url = $"/Boards/{boardName}?projectId={request.ProjectId}&&workItemType=7&&iteration={x.Id}&&person=0"
                     });
                 });
             }
@@ -214,11 +241,22 @@ namespace RokonoControl.Controllers
             return true;
         }
 
+        [HttpPost]
+        public OutgoingJsonData MakeBoardPublic([FromBody] IncomingPublicBoardRequest request)
+        {
+            var result = string.Empty;
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                result = context.ChangeProjectBoardStatus(request);
+            }
+            return new OutgoingJsonData{ Data = result};
+        }
         [HttpGet]
         public bool LogRepository(string repoName)
         {
             // Program.InitCron(repoName);
             return true;
         }
+
     }
 }

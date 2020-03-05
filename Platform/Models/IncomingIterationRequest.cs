@@ -8,6 +8,7 @@ namespace Rokono_Control.Models
     public class IncomingIterationRequest
     {
         public int ProjectId { get; set; }
+        public bool IsPublic { get; set; }
         public int Iteration { get; set; }
     }
 }
