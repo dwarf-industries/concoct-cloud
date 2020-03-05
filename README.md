@@ -65,6 +65,10 @@ Once you have deploying the tool use rokono-cl --Help for the full set of comman
 
 Please read [CONTRIBUTING.md](https://github.com/KristiforMilchev/RokonoControl/blob/master/Contributing.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
+For a list of planned features and tasks you can view the project public board at:
+
+https://platform.rokonocontrol.com/Boards/PublicBoard?projectId=5012&iteration=1004&person=0
+
 ## Authors
 
 * **Kristifor Milchev** - *Initial work* - (https://github.com/kristiformilchev)
