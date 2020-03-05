@@ -6,7 +6,10 @@
     var WorkItemType = ViewData["WorkItemType"] as int?;
     var WorkItemTypeName = ViewData["GetSelectedWorkItem"] as string;
 }
-
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<!-- Main Quill library -->
+<script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
 <link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
 
  <!-- end of sidebar element -->
@@ -24,7 +27,7 @@
 
                             <button id="QueryBtn">View as board</button>
                             <button id="ImportWorkItemBtn" onclick="GenerateMailModal()"></i>Email report</button>
-                            <button id="ExportWorkItemBtn">Export Work Items</button>
+                            <button id="ExportWorkItemBtn" onclick="ExportWorkItems()">Export Work Items</button>
                         </div>
                         <div class="col-md-3">
 
@@ -68,7 +71,15 @@
             </div>
         </div>
     </div>
-
+    <div id="exportDialog">
+        <div class="row">
+            <button id="CancelExportBtn" style="width: 100%;" onclick="CancelExport()">Close</button>
+        </div>
+        <div class="row" style="padding:2%;">
+            <div class="position-relative form-group" style="width:100%;height:300px;" ><label for="exportContent"  class="">Manual Creation Script</label><div name="exportContent" id="exportContent"  style="max-height: 400px;"  class="form-control"></div></div>
+        </div>
+        
+    </div>
     
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -77,10 +88,11 @@
 
  <script>
     ej.treegrid.TreeGrid.Inject(ej.treegrid.Edit, ej.treegrid.CommandColumn);
-
+    var exportContent;
     var treeGridObj;
     var dialogObj;
     var emailDialog;
+    var exportDialog;
     var ProjectId = @result;
     var boardId = 0;
     var selected;
@@ -90,6 +102,10 @@
     }
     $( document ).ready(function() 
     {
+        exportContent = new Quill('#exportContent', {
+            theme: 'snow',
+            height: '300px'
+        });
         var id = @result;
         
           var dto = {
@@ -132,8 +148,18 @@
             close: EmailDialogClose
         });
         emailDialog.appendTo('#emailReport');
+        exportDialog = new ej.popups.Dialog({
+            width: '600px',
+            header: 'Project Backup',
+            isModal: true,
+            animationSettings: { effect: 'None' },
+            visible: false,
+            open: ExportDialogOpen,
+            close: ExportDialogClose
+        });
+        exportDialog.appendTo('#exportDialog');
         dialogObj.hide();
-       
+       exportDialog.hide();
         emailDialog.hide();
         
     });
@@ -163,6 +189,10 @@
     CancelEmailReport.appendTo('#CancelEmailReport');
     var GenerateReport = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     GenerateReport.appendTo('#GenerateReport');
+
+    var CancelExportBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    CancelExportBtn.appendTo('#CancelExportBtn');
+
 
     // DropDownButton items declaration
     var items = [
@@ -369,7 +399,15 @@
         document.getElementById('emailReport').style.display = 'none';
 
     }
+    function ExportDialogOpen()
+    {
+        document.getElementById('exportDialog').style.display = 'block';
+    }
+    function ExportDialogClose()
+    {
+        document.getElementById('exportDialog').style.display = 'none';
 
+    }
     function EmailConfirm()
     {
         var id = @result;
@@ -393,10 +431,39 @@
             }
         });
     }
+    function ExportWorkItems()
+    {
+        var id = @result;
+    
+        var dto = {
+            "ProjectId": id,
+         }
+        console.log(dto);
+        $.ajax({
+            type: 'POST',
+            url: '/Boards/ExportWorkItems',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                alert("Project has been backup up in your server backup folder. We have also generated a creation script in case something goes wrong with your server!!!");
+                $("#exportContent").children()[0].innerHTML = response.data;
+                exportDialog.show();
+
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
 
     function CancelEmailConfirm()
     {
         emailDialog.hide();
+    }
+     function CancelExport()
+    {
+        exportDialog.hide();
     }
  </script>
 

@@ -228,6 +228,75 @@ namespace Rokono_Control.DatabaseHandlers
                 Context.SaveChanges();
             });
         }
+        internal OutboundBackupModel BackUpSpecificProject(int projectId)
+        {
+            var result = string.Empty;
+            var project = Context.Projects.FirstOrDefault(x=>x.Id == projectId);
+            var Iterations = new List<WorkItemIterations>();
+            var members = new List<UserAccounts>();
+            var boards = new List<Boards>();
+            var workItems = new List<WorkItem>();
+ 
+            result += "I:{";
+            var getProjectIterations = Context.AssociatedProjectIterations.Where(x=>x.ProjectId == projectId).ToList();
+            getProjectIterations.ForEach(x=>{
+                var iteration = Context.WorkItemIterations.FirstOrDefault(y=>y.Id == x.IterationId);
+                result += $"{iteration.IterationName},";
+                Iterations.Add(iteration);
+            });
+            result += "},";
+            result += "Pm:{";
+            var projectMembers = Context.AssociatedProjectMembers.Where(x=>x.ProjectId == projectId).ToList();
+            projectMembers.ForEach(x=>{
+                var member = Context.UserAccounts.FirstOrDefault(y=>y.Id == x.UserAccountId);
+                result += $"{member.Email}|{member.FirstName}|{member.LastName}|{member.Password}|{member.Salt}|{member.Id},";
+                members.Add(member);
+            });
+
+            result += "},";
+            result += "MR:{";
+            Context.AssociatedProjectMemberRights.Where(x => x.ProjectId == projectId)
+            .ToList().ForEach(x=>{
+                result += $"{x.ProjectId}|{x.RightsId}|{x.UserAccountId}";
+            });
+            result += "},";
+
+            result +="Pb:{";
+            var associatedProjectBoards = Context.AssociatedProjectBoards.Where(x=>x.ProjectId == projectId).ToList();
+            associatedProjectBoards.ForEach(x=>{
+                var board =Context.Boards.FirstOrDefault(y=>y.Id == x.BoardId);
+                result += $"{board.RepositoryId}|{board.BoardName}|{board.BoardType}|{board.Id},";
+                boards.Add(board);
+            });
+
+            result += "},";
+            result += "APW:{";
+            var assocaitedProjectWorkItems = Context.AssociatedBoardWorkItems.Where(x=>x.ProjectId == projectId).ToList();
+            assocaitedProjectWorkItems.ForEach(x=>{
+                var workItem = Context.WorkItem.FirstOrDefault(y=>y.Id == x.WorkItemId);
+                result += $"{workItem.IntegratedInBuild}|{workItem.Iteration}|{workItem.ItemPriority}|{workItem.OriginEstitame}|{workItem.ParentId}|{workItem.PriorityId}|{workItem.ReasonId}|{workItem.RelationId}|{workItem.RepoSteps}|{workItem.ResolvedReason}|{workItem.RiskId}|{workItem.Severity}|{workItem.StackRank}|{workItem.StartDate.ToString()}|{workItem.StateId}|{workItem.StoryPoints}|{workItem.SystemInfo}|{workItem.TimeCapacity}|{workItem.Title}|{workItem.ValueAreaId}|{workItem.WorkItemTypeId}|{workItem.AreaId},";
+
+                workItems.Add(workItem);
+            });
+            result += "},";
+            result += "APWC:{";
+            Context.AssociatedWrorkItemChildren
+                .Where(x=>x.WorkItem.AssociatedBoardWorkItems.Any(y=>y.ProjectId == projectId))
+                .ToList()
+                .ForEach(x=>{
+                    result += $"{x.WorkItemId}|{x.WorkItemChildId}|{x.RelationType},";
+                });
+            result += "},";
+            var outgoingResult = new OutboundBackupModel{
+                Iterations = Iterations,
+                Boards  = boards,
+                CurrentProject = project,
+                UserAccounts = members,
+                WorkItems = workItems,
+                Serialized = result
+            };
+            return outgoingResult;
+        }
 
         internal string ChangeProjectBoardStatus(IncomingPublicBoardRequest request, string domain)
         {

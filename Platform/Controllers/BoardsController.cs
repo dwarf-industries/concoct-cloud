@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Platform.DataHandlers;
 using Platform.Models;
 using Rokono_Control;
 using Rokono_Control.DatabaseHandlers;
@@ -253,6 +255,21 @@ namespace RokonoControl.Controllers
                 result = context.ChangeProjectBoardStatus(request, domain);
             }
             return new OutgoingJsonData{ Data = result};
+        }
+
+        [HttpPost]
+        public OutgoingJsonData ExportWorkItems([FromBody] IncomingPublicBoardRequest request)
+        {
+            var result = default(OutboundBackupModel);
+            var text  = string.Empty;
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                result = context.BackUpSpecificProject(request.ProjectId);
+             
+                text =Backupwriter.CreateBackup($"{result.CurrentProject.ProjectName}.json",result );
+
+            }
+            return new OutgoingJsonData{ Data = text};
         }
         [HttpGet]
         public bool LogRepository(string repoName)
