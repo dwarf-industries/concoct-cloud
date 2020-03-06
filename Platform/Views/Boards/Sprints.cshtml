@@ -109,13 +109,36 @@
         </div>
     </div>
 
+    <div id="newWorkItemModal">
+        <div class="btn-group dropdown-split-primary" style="text-align:center;">
+             <button   id="taskBtn" onclick="NewTask()">Task</button>
+            <button   id="issueBtn" onclick="NewIssue()"></i>Issue</button>
+            <button   id="bugBtn" onclick="NewBug()">Bug</button>
+        </div>
+    </div>
+
     </div>
 </div>
 
+<style>
+       .swimlane-template {
+        display: inline-block;
+        font-size: 15px;
+        font-weight: 500;
+        width: 95%;
+    }
 
+  
+
+    .swimlane-template span {
+        padding-left: 10px;
+    }
+</style>
 
 
 <script type="text/javascript">
+
+        var workItemName;
         var publicCheck = new ejs.buttons.Switch({ checked: false });
         publicCheck.appendTo('#publicCheck');
 
@@ -137,7 +160,14 @@
         cancelBtn.appendTo('#cancelBtn');
 
     // DropDownButton items declaration
-
+        var dialogNewWI;
+        var taskBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+        taskBtn.appendTo('#taskBtn');
+        var issueBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+        issueBtn.appendTo('#issueBtn');
+        var bugBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+        bugBtn.appendTo('#issueBtn');
+        
 
         ej.base.enableRipple(true);
         var selectedChanging;
@@ -167,6 +197,18 @@
             }
         });
         $(function() {
+            
+            dialogNewWI = new ej.popups.Dialog({
+                width: '600px',
+                header: 'Choose you the type of work item that you want to associate with the current user story!',
+                isModal: true,
+                animationSettings: { effect: 'None' },
+                visible: false,
+
+                open: dialogOpenWorkItem,
+                close: dialogCloseWorkItem
+            });
+            dialogNewWI.appendTo('#newWorkItemModal');
 
              dialogObj = new ej.popups.Dialog({
                 width: '600px',
@@ -277,6 +319,7 @@
                 dataSource: data,
                 dragStop: DragStopped,
                 actionComplete: CardDropCheck,
+                actionBegin: SwimlineBegin,
                 cardDoubleClick: CardSelected,
                 keyField: 'status',
                 enableTooltip: true,
@@ -292,9 +335,11 @@
                     template: '#cardTemplate',
                     selectionType: 'Multiple'
                 },
-                swimlaneSettings: {
+                  swimlaneSettings: {
                     keyField: 'assignee',
-                }
+                    template: '#swimlaneTemplate',
+                    showEmptyRow: true               
+                },
             });
 
 
@@ -406,9 +451,19 @@
 
     }
     function dialogOpen() {
-        dialogObj.show();
-
+ 
         document.getElementById('AssignModel').style.display = 'block';
+    }
+
+
+    function dialogOpenWorkItem()
+    {
+        document.getElementById('newWorkItemModal').style.display = 'block';
+    }
+
+    function dialogCloseWorkItem()
+    {
+        document.getElementById('newWorkItemModal').style.display = 'none';
     }
     function InitliazePUsersGrid(data)
     {
@@ -531,6 +586,29 @@
             }
         });
     }
+    function NewWorkItem(btn)
+    {
+        console.log(btn.id);
+        workItemName = btn.id;
+        dialogNewWI.show();
+
+    }
+
+    function SwimlineBegin(args)
+    {
+ 
+    }
+
+
+     function NewTask(){
+        window.location.href = "/Dashboard/AddNewWorkItem?projectId=@ProjectId&workItemType="+3+"&boardId=0&parentId=0&&returnUrl="+window.location.href+"&title="+workItemName;
+    }
+    function NewIssue(){
+        window.location.href = "/Dashboard/AddNewWorkItem?projectId=@ProjectId&workItemType="+6+"&boardId=0&parentId=0&&returnUrl="+window.location.href+"&title="+workItemName;
+    }
+    function NewBug(){
+        window.location.href = "/Dashboard/AddNewWorkItem?projectId=@ProjectId&workItemType="+1+"&boardId=0&parentId=0&&returnUrl="+window.location.href+"&title="+workItemName;
+    }
 </script>
 
 
@@ -576,4 +654,11 @@
         </div>
 
     </div>
+</script>
+
+<script id="swimlaneTemplate" type="text/x-jsrender">
+     <div style="width:100%; display:inline-block">
+        <span >${textField}</span>
+        <button class="e-control e-btn e-lib e-outline e-primary" style="margin-left:10px;" id="${textField}"  onclick='NewWorkItem(this)' ><span class="e-icons plus">New Work Item</span></button>
+    </div>  
 </script>

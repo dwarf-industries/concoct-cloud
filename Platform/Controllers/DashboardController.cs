@@ -48,7 +48,7 @@ namespace Rokono_Control.Controllers
             }
             return View();
         }
-        public IActionResult AddNewWorkItem(int projectId, int workItemType, int parentId, string returnUrl)
+        public IActionResult AddNewWorkItem(int projectId, int workItemType, int parentId, string returnUrl, string title)
         {
             var currentUser = this.User;
             var currentUserId = currentUser.Claims.ElementAt(1);
@@ -57,6 +57,9 @@ namespace Rokono_Control.Controllers
             using (var context = new DatabaseController(Context,Configuration))
             {
                 var rights = currentUser.Claims.LastOrDefault().Value;
+                var workItemBytitle = context.GetWorkItemByTitle(title);
+                if(workItemBytitle != null && parentId == 0)
+                    parentId = workItemBytitle.Id;
                 ViewData["IsAdmin"] = rights;
                 ViewData["Priorities"] = context.GetProjectPriorities(projectId);
                 ViewData["Areas"] = context.GetProjectAreas(projectId);

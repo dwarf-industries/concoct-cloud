@@ -99,6 +99,11 @@ namespace Rokono_Control.DatabaseHandlers
             return Cards;
         }
 
+        internal WorkItem GetWorkItemByTitle(string title)
+        {
+            return Context.WorkItem.FirstOrDefault(x=>x.Title == title);
+        }
+
         internal void EditChangelog(ChangelogEditRequest changelog)
         {
             var current = Context.Changelogs.FirstOrDefault(x=>x.Id == changelog.Id);

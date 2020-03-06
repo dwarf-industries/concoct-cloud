@@ -1285,7 +1285,8 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    window.location.href = "@ReturnPath";
+                    window.location=document.referrer;
+                   // window.location.href = "@ReturnPath";
                 },
                 error: function (xhr, status, error) {
                     console.log(error);
@@ -1334,7 +1335,8 @@
 
     function GoBack()
     {
-        window.location.href = "@ReturnPath";
+       window.location=document.referrer;
+        //window.location.href = "@ReturnPath";
     }
 
     function tabSelected(args)

@@ -3,6 +3,11 @@
     font-family: "e-icons" !important;
 }
 
+.e-control .e-btn .e-lib .e-outline .e-primary .plus{
+    content: '\e7f9';
+    font-size: 16px;
+}
+
 .e-kanban .header-template-wrap {
     display: inline-flex;
     font-size: 15px;
@@ -56,6 +61,19 @@
     color: #0000ff;
     font-size: 16px;
 }
+
+.e-kanban .Testing::before {
+    content: '\ea8e';
+    color: #0000ff;
+    font-size: 16px;
+}
+.e-kanban .Done::before {
+    content: '\e7ff';
+    color: #0000ff;
+    font-size: 16px;
+}
+
+
 
 .e-kanban .e-image img {
     background: #ececec;
