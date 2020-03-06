@@ -5,6 +5,7 @@ namespace Rokono_Control.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Platform.Models;
     using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
 
@@ -98,7 +99,15 @@ namespace Rokono_Control.Controllers
             return result;
         }
 
-
+        [HttpPost]
+        public OutgoingJsonData ItemsRemoved([FromBody] IncomingWorkItemRecycle Items)
+        {
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                context.RemoveWorkItems(Items.Items);
+            }
+            return new OutgoingJsonData{ Data = ""};
+        }
         [HttpPost]
         public List<OutgoingWorkItem> GetBacklogWorkItems([FromBody] IncomingIdRequest IncomingIdRequest)
         {

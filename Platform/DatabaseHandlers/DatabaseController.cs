@@ -99,6 +99,36 @@ namespace Rokono_Control.DatabaseHandlers
             return Cards;
         }
 
+        internal void RemoveWorkItems(List<OutgoingWorkItem> items)
+        {
+            items.ForEach(x=>{
+                var item = Context.WorkItem.FirstOrDefault(y=>y.Id == x.Id);
+                var associationsWhereParent = Context.WorkItem.Where(y=>y.ParentId == x.Id).ToList();
+                var AssociatedWrorkItemChildren =  Context.AssociatedWrorkItemChildren.Where(y=>y.WorkItemChildId == x.Id).ToList();
+                associationsWhereParent.ForEach(z=>{
+                    var pItem = z;
+                    pItem.ParentId = 0;
+                    Context.Attach(pItem);
+                    Context.Update(pItem);
+                    Context.SaveChanges();
+                });
+                AssociatedWrorkItemChildren.ForEach(z=>{
+                    var association = z;
+                    Context.AssociatedWrorkItemChildren.Remove(association);
+                    Context.SaveChanges();
+                });
+                var discussions = Context.AssociatedWorkItemMessages.Where(y=>y.WorkItemId == x.Id).ToList();
+                Context.RemoveRange(discussions);
+                Context.SaveChanges();
+                var changelogs = Context.AssociatedWorkItemChangelogs.Where(y=>y.WorkitemId == x.Id).ToList();
+                Context.AssociatedWorkItemChangelogs.RemoveRange(changelogs);
+                Context.SaveChanges();
+                var boards = Context.AssociatedBoardWorkItems.Where(y=>y.WorkItemId == x.Id).ToList();
+                Context.AssociatedBoardWorkItems.RemoveRange(boards);
+                Context.SaveChanges();
+            });
+        }
+
         internal WorkItem GetWorkItemByTitle(string title)
         {
             return Context.WorkItem.FirstOrDefault(x=>x.Title == title);

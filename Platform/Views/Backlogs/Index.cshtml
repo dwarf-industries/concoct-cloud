@@ -28,7 +28,7 @@
                                 <button id="QueryBtn">Open In Query</button>
                                 <button id="ImportWorkItemBtn"></i>Import Work Items</button>
                                 <button id="ExportWorkItemBtn">Export Work Items</button>
-                                <button Id="RecycleBtn">Recycle Work Items</button>
+                                <button Id="RecycleBtn" onclick="DeleteWorkItems()">Recycle Work Items</button>
 
 
 
@@ -62,7 +62,7 @@
     <script>
 
 
-
+    var selectedRows = [];
     var ProjectId = @result;
     var  boardId = @BoardId;
     function OpenWorkItem(id)
@@ -172,6 +172,8 @@
             allowSorting: true,
             toolbar: ['Search'],
             recordDoubleClick: EditWorkItem,
+            rowSelected: RowSelected,
+            rowDeselected: RowDeselected,
             enableVirtualization: true,
             filterSettings: { type: 'Menu' },
             selectionSettings: { persistSelection: true, type: "Multiple" },
@@ -207,6 +209,46 @@
     }
     function load(args) {
         this.parentDetails.parentKeyFieldValue = this.parentDetails.parentRowData['id'];
+    }
+    function RowSelected(args)
+    {
+        console.log(args);
+        selectedRows.push(args.data);
+    }
+
+    function RowDeselected(args)
+    {
+        console.log(args.data);
+        var index = selectedRows.indexOf(args.data[0]);
+        if (index > -1) {
+            selectedRows.splice(index, 1);
+        }
+        console.log(selectedRows);
+
+    }
+    function DeleteWorkItems()
+    {
+        console.log(selectedRows);
+        var incomingSprintDTO =
+        {
+            "Items":  selectedRows
+        }
+
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/Backlogs/ItemsRemoved',
+            data: JSON.stringify(incomingSprintDTO),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(response) {
+               window.location.href = window.location;
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
     }
     </script>
 
