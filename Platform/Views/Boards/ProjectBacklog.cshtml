@@ -14,33 +14,39 @@
 <link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
 
  <!-- end of sidebar element -->
+ 
         <!-- main-content declaration -->
 <div class="main-content" id="main-text" >
      <div class="sidebar-content">
-         <div class="col-md-12">
-            <div class="main-card mb-3 card">
-                <div class="card-body">
-                    <h5 class="card-title text-center">Select a project</h5>
-                    <div class="row" style="margin-left:10px;">
+        <div id="spinner">
+             <div id="loader"></div>
+        </div>
+        <div id="Content" style="display: none;">
+            <div class="col-md-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Select a project</h5>
+                        <div class="row" style="margin-left:10px;">
 
-                        <div class="col-md-5">
-                            <button type="button" id="iconbtn" class="btn btn-primary">New Work Item</button>
+                            <div class="col-md-5">
+                                <button type="button" id="iconbtn" class="btn btn-primary">New Work Item</button>
 
-                            <button id="QueryBtn">View as board</button>
-                            <button id="ImportWorkItemBtn" onclick="GenerateMailModal()"></i>Email report</button>
-                            <button id="ExportWorkItemBtn" onclick="ExportWorkItems()">Export Work Items</button>
-                        </div>
-                        <div class="col-md-3">
+                                <button id="QueryBtn">View as board</button>
+                                <button id="ImportWorkItemBtn" onclick="GenerateMailModal()"></i>Email report</button>
+                                <button id="ExportWorkItemBtn" onclick="ExportWorkItems()">Export Work Items</button>
+                            </div>
+                            <div class="col-md-3">
 
+                            </div>
+                            <div class="col-md-4">
+                                <button id="WorkItemTypeBtnFilter" class="btn btn-primary">@WorkItemTypeName</button>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <button id="WorkItemTypeBtnFilter" class="btn btn-primary">@WorkItemTypeName</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="control-section" style="height:97vh;">
-                            <div class="content-wrapper">
-                                <div id="TreeGrid"></div>
+                        <div class="row">
+                            <div class="control-section" style="height:97vh;">
+                                <div class="content-wrapper">
+                                    <div id="TreeGrid"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -327,8 +333,10 @@
 
         treeGridObj.appendTo('#TreeGrid');
 
-
+        ShowContent();
     }
+
+     
     function CreateNewWorkItem(id){
         ProjectId = @result;
         boardId = 0;

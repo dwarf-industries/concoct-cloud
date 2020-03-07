@@ -16,13 +16,11 @@
     <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
     <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    
 </head>
 <body>
-    <style>
-        .table-content {
-            padding: 0;
-        }
-    </style>
+ 
     <div class="stackblitz-container material">
         <div class="control-section">
 
@@ -93,8 +91,8 @@
 
     </div>
 
-    <script>
-        ej.base.enableRipple(true);
+<script>
+    ej.base.enableRipple(true);
 
          var Persons = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
         Persons.appendTo('#Persons');
@@ -172,19 +170,24 @@
             });
         });
 
-      // console.log(data.find(x => x.nodeChild.nodeId === args.nodeData.id));
+    // console.log(data.find(x => x.nodeChild.nodeId === args.nodeData.id));
     }
 
-            function ProjectChanged(args) {
-                console.log(args);
-                window.location.href = "/Dashboard/ProjectDashboard?id=" + parseInt(args.value);
-            }
+    function ProjectChanged(args) {
+        console.log(args);
+        window.location.href = "/Dashboard/ProjectDashboard?id=" + parseInt(args.value);
+    }
 
-            function CallUrl(url)
-            {
-                window.location.href = url;
-            }
-    </script>
+    function CallUrl(url)
+    {
+        window.location.href = url;
+    }
+    function ShowContent()
+    {
+        $("#spinner").hide();
+        $("#Content").show();
+    }
+</script>
 
 </body>
 </html>

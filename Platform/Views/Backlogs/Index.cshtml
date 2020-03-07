@@ -12,31 +12,36 @@
 <!-- main-content declaration -->
 <div class="main-content" id="main-text">
     <div class="sidebar-content">
-        <div class="row" style="margin:0px;">
-            <div class="col-md-12">
-                <div class="main-card mb-3 card">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Select a project</h5>
-                        <div class="row" style="margin-left:10px;">
+        <div id="spinner">
+            <div id="loader"></div>
+        </div>
+        <div id="Content" hidden>
+            <div class="row" style="margin:0px;">
+                <div class="col-md-12">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Select a project</h5>
+                            <div class="row" style="margin-left:10px;">
 
-                            <div class="btn-group dropdown-split-primary">
-                                <button type="button" id="iconbtn" class="btn btn-primary">New Work Item</button>
-
-
-
-
-                                <button id="QueryBtn">Open In Query</button>
-                                <button id="ImportWorkItemBtn"></i>Import Work Items</button>
-                                <button id="ExportWorkItemBtn">Export Work Items</button>
-                                <button Id="RecycleBtn" onclick="DeleteWorkItems()">Recycle Work Items</button>
+                                <div class="btn-group dropdown-split-primary">
+                                    <button type="button" id="iconbtn" class="btn btn-primary">New Work Item</button>
 
 
 
 
-                            </div>
-                            <div class="control-section" style="height:97vh;">
-                                <div class="content-wrapper">
-                                    <div id="TreeGrid"></div>
+                                    <button id="QueryBtn">Open In Query</button>
+                                    <button id="ImportWorkItemBtn"></i>Import Work Items</button>
+                                    <button id="ExportWorkItemBtn">Export Work Items</button>
+                                    <button Id="RecycleBtn" onclick="DeleteWorkItems()">Recycle Work Items</button>
+
+
+
+
+                                </div>
+                                <div class="control-section" style="height:97vh;">
+                                    <div class="content-wrapper">
+                                        <div id="TreeGrid"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -190,6 +195,7 @@
         });
 
         treeGridObj.appendTo('#TreeGrid');
+        ShowContent();
 
 
     }

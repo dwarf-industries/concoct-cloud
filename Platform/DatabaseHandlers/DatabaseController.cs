@@ -460,7 +460,7 @@ namespace Rokono_Control.DatabaseHandlers
                                                                      .ToList();
                 var whereParent = Context.WorkItem.Include(b=>b.AssignedAccountNavigation)
                                                   .Include(b=>b.WorkItemType)
-                                                  .Where(b=>b.ParentId == x.Id).ToList();
+                                                  .Where(b=>b.ParentId == x.Id && x.Id != b.Id).ToList();
                 whereParent.ForEach(sprintTasks => {
                     var taskBoard = Context.AssociatedBoardWorkItems.Include(z => z.Board)
                                                                     .FirstOrDefault(z => z.WorkItemId == sprintTasks.Id);

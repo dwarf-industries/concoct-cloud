@@ -96,7 +96,8 @@
             "Documentation": "Specifies the parameter name for all child content expressions.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -193,7 +194,8 @@
             "Documentation": "Specifies the parameter name for all child content expressions.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -284,7 +286,8 @@
             "Documentation": "Specifies the parameter name for the 'NotAuthorized' child content expression.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -324,7 +327,8 @@
             "Documentation": "Specifies the parameter name for the 'NotAuthorized' child content expression.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -467,7 +471,8 @@
             "Documentation": "Specifies the parameter name for all child content expressions.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -608,7 +613,8 @@
             "Documentation": "Specifies the parameter name for all child content expressions.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -648,7 +654,8 @@
             "Documentation": "Specifies the parameter name for the 'Authorized' child content expression.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -688,7 +695,8 @@
             "Documentation": "Specifies the parameter name for the 'Authorized' child content expression.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -780,7 +788,8 @@
             "Documentation": "Specifies the parameter name for the 'ChildContent' child content expression.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -820,7 +829,8 @@
             "Documentation": "Specifies the parameter name for the 'ChildContent' child content expression.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -861,7 +871,8 @@
             "Documentation": "Specifies the parameter name for the 'NotAuthorized' child content expression.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -901,7 +912,8 @@
             "Documentation": "Specifies the parameter name for the 'NotAuthorized' child content expression.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -1649,7 +1661,8 @@
             "Documentation": "Specifies the parameter name for all child content expressions.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -1746,7 +1759,8 @@
             "Documentation": "Specifies the parameter name for all child content expressions.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -1786,7 +1800,8 @@
             "Documentation": "Specifies the parameter name for the 'Found' child content expression.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -1826,7 +1841,8 @@
             "Documentation": "Specifies the parameter name for the 'Found' child content expression.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -2069,7 +2085,8 @@
             "Documentation": "Specifies the parameter name for all child content expressions.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -2210,7 +2227,8 @@
             "Documentation": "Specifies the parameter name for all child content expressions.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -2250,7 +2268,8 @@
             "Documentation": "Specifies the parameter name for the 'ChildContent' child content expression.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -2290,7 +2309,8 @@
             "Documentation": "Specifies the parameter name for the 'ChildContent' child content expression.",
             "Diagnostics": [],
             "Metadata": {
-              "Components.ChildContentParameterName": "True"
+              "Components.ChildContentParameterName": "True",
+              "Common.PropertyName": "Context"
             },
             "BoundAttributeParameters": []
           }
@@ -20502,192 +20522,192 @@
   "Documents": [
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/index.cshtml",
-      "TargetPath": "Views/Dashboard/index.cshtml",
+      "TargetPath": "Views\\Dashboard\\index.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Changelog/EditChangelog.cshtml",
-      "TargetPath": "Views/Changelog/EditChangelog.cshtml",
+      "TargetPath": "Views\\Changelog\\EditChangelog.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/Project.cshtml",
-      "TargetPath": "Views/Dashboard/Project.cshtml",
+      "TargetPath": "Views\\Dashboard\\Project.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Commit/Files.cshtml",
-      "TargetPath": "Views/Commit/Files.cshtml",
+      "TargetPath": "Views\\Commit\\Files.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Accounts/ManageProjectMemebers.cshtml",
-      "TargetPath": "Views/Accounts/ManageProjectMemebers.cshtml",
+      "TargetPath": "Views\\Accounts\\ManageProjectMemebers.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/_Layout.cshtml",
-      "TargetPath": "Views/Shared/_Layout.cshtml",
+      "TargetPath": "Views\\Shared\\_Layout.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/_CookieConsentPartial.cshtml",
-      "TargetPath": "Views/Shared/_CookieConsentPartial.cshtml",
+      "TargetPath": "Views\\Shared\\_CookieConsentPartial.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/Cmmits.cshtml",
-      "TargetPath": "Views/Dashboard/Cmmits.cshtml",
+      "TargetPath": "Views\\Dashboard\\Cmmits.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/AddNewAccount.cshtml",
-      "TargetPath": "Views/Dashboard/AddNewAccount.cshtml",
+      "TargetPath": "Views\\Dashboard\\AddNewAccount.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Home/Privacy.cshtml",
-      "TargetPath": "Views/Home/Privacy.cshtml",
+      "TargetPath": "Views\\Home\\Privacy.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Changelog/ViewChangelogs.cshtml",
-      "TargetPath": "Views/Changelog/ViewChangelogs.cshtml",
+      "TargetPath": "Views\\Changelog\\ViewChangelogs.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Boards/SprintBacklogs.cshtml",
-      "TargetPath": "Views/Boards/SprintBacklogs.cshtml",
+      "TargetPath": "Views\\Boards\\SprintBacklogs.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Boards/ProjectBacklog.cshtml",
-      "TargetPath": "Views/Boards/ProjectBacklog.cshtml",
+      "TargetPath": "Views\\Boards\\ProjectBacklog.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Boards/Index.cshtml",
-      "TargetPath": "Views/Boards/Index.cshtml",
+      "TargetPath": "Views\\Boards\\Index.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/_ValidationScriptsPartial.cshtml",
-      "TargetPath": "Views/Shared/_ValidationScriptsPartial.cshtml",
+      "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Backlogs/Index.cshtml",
-      "TargetPath": "Views/Backlogs/Index.cshtml",
+      "TargetPath": "Views\\Backlogs\\Index.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/_ViewStart.cshtml",
-      "TargetPath": "Views/_ViewStart.cshtml",
+      "TargetPath": "Views\\_ViewStart.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/ProjectDetails.cshtml",
-      "TargetPath": "Views/Dashboard/ProjectDetails.cshtml",
+      "TargetPath": "Views\\Dashboard\\ProjectDetails.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/WorkItems.cshtml",
-      "TargetPath": "Views/Dashboard/WorkItems.cshtml",
+      "TargetPath": "Views\\Dashboard\\WorkItems.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Boards/PublicBoard.cshtml",
-      "TargetPath": "Views/Boards/PublicBoard.cshtml",
+      "TargetPath": "Views\\Boards\\PublicBoard.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Accounts/Administration.cshtml",
-      "TargetPath": "Views/Accounts/Administration.cshtml",
+      "TargetPath": "Views\\Accounts\\Administration.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Error.cshtml",
-      "TargetPath": "Views/Shared/Error.cshtml",
+      "TargetPath": "Views\\Shared\\Error.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Boards/Sprints.cshtml",
-      "TargetPath": "Views/Boards/Sprints.cshtml",
+      "TargetPath": "Views\\Boards\\Sprints.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/ProjectDashboard.cshtml",
-      "TargetPath": "Views/Dashboard/ProjectDashboard.cshtml",
+      "TargetPath": "Views\\Dashboard\\ProjectDashboard.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/_LayoutProjects.cshtml",
-      "TargetPath": "Views/Shared/_LayoutProjects.cshtml",
+      "TargetPath": "Views\\Shared\\_LayoutProjects.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/ChangelogGenerator.cshtml",
-      "TargetPath": "Views/Dashboard/ChangelogGenerator.cshtml",
+      "TargetPath": "Views\\Dashboard\\ChangelogGenerator.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/AssignAccountProjects.cshtml",
-      "TargetPath": "Views/Dashboard/AssignAccountProjects.cshtml",
+      "TargetPath": "Views\\Dashboard\\AssignAccountProjects.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/EditAccount.cshtml",
-      "TargetPath": "Views/Dashboard/EditAccount.cshtml",
+      "TargetPath": "Views\\Dashboard\\EditAccount.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Commit/Index.cshtml",
-      "TargetPath": "Views/Commit/Index.cshtml",
+      "TargetPath": "Views\\Commit\\Index.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/EditWorkItem.cshtml",
-      "TargetPath": "Views/Dashboard/EditWorkItem.cshtml",
+      "TargetPath": "Views\\Dashboard\\EditWorkItem.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/AddNewWorkItem.cshtml",
-      "TargetPath": "Views/Dashboard/AddNewWorkItem.cshtml",
+      "TargetPath": "Views\\Dashboard\\AddNewWorkItem.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/ManageAccounts.cshtml",
-      "TargetPath": "Views/Dashboard/ManageAccounts.cshtml",
+      "TargetPath": "Views\\Dashboard\\ManageAccounts.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/AddNewProject.cshtml",
-      "TargetPath": "Views/Dashboard/AddNewProject.cshtml",
+      "TargetPath": "Views\\Dashboard\\AddNewProject.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/_LayoutDashboard.cshtml",
-      "TargetPath": "Views/Shared/_LayoutDashboard.cshtml",
+      "TargetPath": "Views\\Shared\\_LayoutDashboard.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Home/Error.cshtml",
-      "TargetPath": "Views/Home/Error.cshtml",
+      "TargetPath": "Views\\Home\\Error.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Commit/CommitData.cshtml",
-      "TargetPath": "Views/Commit/CommitData.cshtml",
+      "TargetPath": "Views\\Commit\\CommitData.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Home/Index.cshtml",
-      "TargetPath": "Views/Home/Index.cshtml",
+      "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"
     },
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/_ViewImports.cshtml",
-      "TargetPath": "Views/_ViewImports.cshtml",
+      "TargetPath": "Views\\_ViewImports.cshtml",
       "FileKind": "mvc"
     }
   ],
