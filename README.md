@@ -14,11 +14,11 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
-The project is created using asp.net core 3.1, its not based on blazor because its a version that is being migrated from asp.net core v 1.0 so you need to get the proper runtimes from micosoft.
-The DatabaseLayer is written in entity framework core using Database First approach.
+The project is created using asp.net core 3.1, its not based on blazor because its a version that is being migrated from asp.net core v 1.0 so you need to get the proper runtime from Microsoft.
+The Database Layer is written in entity framework core using Database First approach.
 Currently we offer two database files that are inside the RokonoContol/Platform directory MSSQLGenerationScript.sql contains the creations scripts for MSSQL server
 and MySqlDatabaseGenerationScript.sql contains the scripts for MySql databases, currently the default database that is used for testing is MSSQL so if you're doing a clone make sure to scaffold your proper database.
-Give examples
+
 In order to install .net core runtime go to this link https://dotnet.microsoft.com/download all UI components are delivered trough CDN but if you'd like you can go and download them from Syncfusion 
 
 Database of your choice either MSSQL or MySql.
@@ -26,7 +26,7 @@ Database of your choice either MSSQL or MySql.
 ### Installing
  
  -You can easily get the system running, all you need to do in order to get started is to install the dependencies mentioned above and then you need to navigate to the root directory of the project
- open up powershell on windows or any terminal on your favorite linux distribution and execute the following command cd Platform && dotnet -c Release -r target patform for linux (linux-x65)
+ open up powershell on windows or any terminal on your favorite linux distribution and execute the following command cd Platform && dotnet -c Release -r target patform for linux (linux-x64)
  -Once that is done you need to navigate to /Platform/bin/Release/netcoreapp3.1/publish take the content of that folder and deploy it on your favorite server like NGINX 
  -Edit the configuration file inside NGINX create a systemctl service to start automatically under linux https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-3.1 here is a good tutorial by Microsoft
 
@@ -51,7 +51,7 @@ https://docs.microsoft.com/en-us/ef/core/providers/?tabs=dotnet-core-cli
 
 ## Deploying
 
-The last step is to initialize the default server configuration, go to the rokono-cl folder. Make sure that you build the tool and deploying only on the hosting envroment, do not give access to people that don't have administrative status as this tool can manage all projects deployed on the system.
+The last step is to initialize the default server configuration, go to the rokono-cl folder. Make sure that you build the tool and deploying only on the hosting environment, do not give access to people that don't have administrative status as this tool can manage all projects deployed on the system.
 
 Once you have deploying the tool use rokono-cl --Help for the full set of commands, make sure that you create remote administrator account, initialize default project setups and you should be ready to login create your first project 
 
