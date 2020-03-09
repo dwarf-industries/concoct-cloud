@@ -277,6 +277,14 @@ namespace RokonoControl.Controllers
             // Program.InitCron(repoName);
             return true;
         }
-
+        [HttpPost]
+        public OutgoingJsonData ImportWorkItems([FromBody] OutgoingJsonData data)
+        {
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                context.ImportExistingProject(data.Data);
+            }
+            return new OutgoingJsonData { Data = ""} ;
+        }
     }
 }

@@ -28,7 +28,13 @@ namespace Rokono_Control.DatabaseHandlers
             Configuration = config;
         }
  
-        private int I { get; set; }
+        public DatabaseController(int i, int internalId) 
+        {
+            this.I = i;
+                this.InternalId = internalId;
+               
+        }
+                private int I { get; set; }
 
         internal UserAccounts GetUserAccount(int id)
         {
@@ -271,57 +277,63 @@ namespace Rokono_Control.DatabaseHandlers
             var members = new List<UserAccounts>();
             var boards = new List<Boards>();
             var workItems = new List<WorkItem>();
- 
-            result += "I:{";
+            project.CreationDate = project.CreationDate == null ? DateTime.Now : project.CreationDate;
+            result += $"{project.ProjectName};";
+            result += $"{project.ProjectTitle};";
+            result += $"{project.RepositoryId};";
+            result += $"{project.ProjectDescription};";
+            result += $"{project.CreationDate.Value.Year}|{project.CreationDate.Value.Month}|{project.CreationDate.Value.Day}";
+            result += ",";
             var getProjectIterations = Context.AssociatedProjectIterations.Where(x=>x.ProjectId == projectId).ToList();
             getProjectIterations.ForEach(x=>{
                 var iteration = Context.WorkItemIterations.FirstOrDefault(y=>y.Id == x.IterationId);
-                result += $"{iteration.IterationName},";
+                result += $"{iteration.IterationName};";
                 Iterations.Add(iteration);
             });
-            result += "},";
-            result += "Pm:{";
+            result += ",";
             var projectMembers = Context.AssociatedProjectMembers.Where(x=>x.ProjectId == projectId).ToList();
             projectMembers.ForEach(x=>{
                 var member = Context.UserAccounts.FirstOrDefault(y=>y.Id == x.UserAccountId);
-                result += $"{member.Email}|{member.FirstName}|{member.LastName}|{member.Password}|{member.Salt}|{member.Id},";
+                result += $"{member.Email}|{member.FirstName}|{member.LastName}|{member.Password}|{member.Salt}|{member.Id};";
                 members.Add(member);
             });
-
-            result += "},";
-            result += "MR:{";
-            Context.AssociatedProjectMemberRights.Where(x => x.ProjectId == projectId)
+            result += ",";
+            Context.AssociatedProjectMemberRights.Include(x=>x.Rights).Where(x => x.ProjectId == projectId)
             .ToList().ForEach(x=>{
-                result += $"{x.ProjectId}|{x.RightsId}|{x.UserAccountId}";
+                var userMail = Context.UserAccounts.FirstOrDefault(y=>y.Id == x.UserAccountId);
+                result += $"{x.ProjectId}|{x.RightsId}|{userMail.Email}|{x.Rights.ManageIterations}|{x.Rights.ManageUserdays}|{x.Rights.UpdateUserRights}|{x.Rights.ViewOtherPeoplesWork}|{x.Rights.WorkItemRule}|{x.Rights.ChatChannelsRule};";
             });
-            result += "},";
-
-            result +="Pb:{";
+            result += ",";
             var associatedProjectBoards = Context.AssociatedProjectBoards.Where(x=>x.ProjectId == projectId).ToList();
             associatedProjectBoards.ForEach(x=>{
                 var board =Context.Boards.FirstOrDefault(y=>y.Id == x.BoardId);
-                result += $"{board.RepositoryId}|{board.BoardName}|{board.BoardType}|{board.Id},";
+                result += $"{board.RepositoryId}|{board.BoardName}|{board.BoardType}|{board.Id};";
                 boards.Add(board);
             });
 
-            result += "},";
-            result += "APW:{";
+            result += ",";
             var assocaitedProjectWorkItems = Context.AssociatedBoardWorkItems.Where(x=>x.ProjectId == projectId).ToList();
             assocaitedProjectWorkItems.ForEach(x=>{
                 var workItem = Context.WorkItem.FirstOrDefault(y=>y.Id == x.WorkItemId);
-                result += $"{workItem.IntegratedInBuild}|{workItem.Iteration}|{workItem.ItemPriority}|{workItem.OriginEstitame}|{workItem.ParentId}|{workItem.PriorityId}|{workItem.ReasonId}|{workItem.RelationId}|{workItem.RepoSteps}|{workItem.ResolvedReason}|{workItem.RiskId}|{workItem.Severity}|{workItem.StackRank}|{workItem.StartDate.ToString()}|{workItem.StateId}|{workItem.StoryPoints}|{workItem.SystemInfo}|{workItem.TimeCapacity}|{workItem.Title}|{workItem.ValueAreaId}|{workItem.WorkItemTypeId}|{workItem.AreaId},";
-
+                if(workItem.ParentId == 0)
+                    result += $"{x.Board.BoardType}|{workItem.IntegratedInBuild}|{workItem.Iteration}|{workItem.ItemPriority}|{workItem.OriginEstitame}|{workItem.ParentId}|{workItem.PriorityId}|{workItem.ReasonId}|{workItem.RelationId}|{workItem.RepoSteps}|{workItem.ResolvedReason}|{workItem.RiskId}|{workItem.Severity}|{workItem.StackRank}|{workItem.StartDate.ToString()}|{workItem.StateId}|{workItem.StoryPoints}|{workItem.SystemInfo}|{workItem.TimeCapacity}|{workItem.Title}|{workItem.ValueAreaId}|{workItem.WorkItemTypeId}|{workItem.AreaId};";
+                else
+                {
+                    var parent = Context.WorkItem.FirstOrDefault(y=>y.Id == workItem.ParentId);
+                    result += $"{x.Board.BoardType}|{workItem.IntegratedInBuild}|{workItem.Iteration}|{workItem.ItemPriority}|{workItem.OriginEstitame}|{parent.Title}|{workItem.PriorityId}|{workItem.ReasonId}|{workItem.RelationId}|{workItem.RepoSteps}|{workItem.ResolvedReason}|{workItem.RiskId}|{workItem.Severity}|{workItem.StackRank}|{workItem.StartDate.ToString()}|{workItem.StateId}|{workItem.StoryPoints}|{workItem.SystemInfo}|{workItem.TimeCapacity}|{workItem.Title}|{workItem.ValueAreaId}|{workItem.WorkItemTypeId}|{workItem.AreaId};";
+                }
                 workItems.Add(workItem);
             });
-            result += "},";
-            result += "APWC:{";
-            Context.AssociatedWrorkItemChildren
+            result += ",";
+            Context.AssociatedWrorkItemChildren.Include(x=>x.WorkItemChild)
+                                                .Include(x=>x.WorkItem)
+                                                .Include(x=>x.RelationTypeNavigation)
                 .Where(x=>x.WorkItem.AssociatedBoardWorkItems.Any(y=>y.ProjectId == projectId))
                 .ToList()
                 .ForEach(x=>{
-                    result += $"{x.WorkItemId}|{x.WorkItemChildId}|{x.RelationType},";
+                    result += $"{x.WorkItem.Title}|{x.WorkItemChild.Title}|{x.RelationType};";
                 });
-            result += "},";
+
             var outgoingResult = new OutboundBackupModel{
                 Iterations = Iterations,
                 Boards  = boards,
@@ -332,7 +344,238 @@ namespace Rokono_Control.DatabaseHandlers
             };
             return outgoingResult;
         }
+        internal bool ImportExistingProject(string data)
+        {
+            var projectDta = data.Split(',');
+            var projectDataHolder = projectDta[0].Split(';');
+            var dataOfProjectData =  projectDataHolder[4].Split('|');
+            var project = Context.Projects.FirstOrDefault(x=>x.ProjectName == projectDataHolder[0]);
+            if(project == null)
+            {
+                 project = Context.Projects.Add(new Projects{
+                    ProjectName = projectDataHolder[0],
+                    ProjectTitle = projectDataHolder[1],
+                    ProjectDescription = projectDataHolder[2],
+                    CreationDate = new DateTime(int.Parse(dataOfProjectData[0]),int.Parse(dataOfProjectData[1]),int.Parse(dataOfProjectData[2])),
+                    RepositoryId = 5013
+                }).Entity;
+                Context.SaveChanges();
+            }
+            
+            var iterationsDataHolder = projectDta[1];
+            var iterationsData = iterationsDataHolder.Split(';');
+            iterationsData.ToList().ForEach(x=> {
+                var iteration = Context.WorkItemIterations.Add(new WorkItemIterations{
+                    IterationName = x,
+                });
+                Context.SaveChanges();
+                Context.AssociatedProjectIterations.Add(new AssociatedProjectIterations{
+                    IterationId = iteration.Entity.Id,
+                    ProjectId = project.Id
+                });
+                Context.SaveChanges();
+            });
+            var projectMemberData = projectDta[2].Split(';');
+            var memebrs = new List<UserAccounts>();
+            projectMemberData.ToList().ForEach(x=>{
+                if(x != "")
+                {
+                    var accData = x.Split('|');
 
+                    var checkExistingAccount = Context.UserAccounts.FirstOrDefault(y=>y.Email == accData[0]);
+                    if(checkExistingAccount == null)
+                    {
+                        checkExistingAccount = Context.UserAccounts.Add(new UserAccounts{
+                            Email = accData[0],
+                            FirstName = accData[1],
+                            LastName = accData[2],
+                            Password = accData[3],
+                            Salt = accData[4]
+                        }).Entity;
+
+                        Context.SaveChanges();
+                    }
+                    memebrs.Add(checkExistingAccount);
+                    Context.AssociatedProjectMembers.Add(new AssociatedProjectMembers{
+                        ProjectId = project.Id,
+                        UserAccountId = checkExistingAccount.Id,
+                        RepositoryId = project.RepositoryId
+                    });
+                    Context.SaveChanges();
+                }
+            });
+            var memberRightsData =  projectDta[3].Split(';');
+            memberRightsData.ToList().ForEach(x=>
+            {
+                if(x != "")
+                {
+                    var currentRigh = x.Split('|');
+                    var checkExistingMemberRight = Context.UserRights.FirstOrDefault(y=>y.ManageIterations == short.Parse(currentRigh[3]) 
+                    && y.ManageUserdays == short.Parse(currentRigh[4]) 
+                    && y.UpdateUserRights == short.Parse(currentRigh[5]) 
+                    && y.ViewOtherPeoplesWork == short.Parse(currentRigh[6]) 
+                    && y.WorkItemRule == short.Parse(currentRigh[7]) 
+                    && y.ChatChannelsRule ==short.Parse(currentRigh[8]));
+                    if(checkExistingMemberRight == null)
+                    {
+                        checkExistingMemberRight = Context.UserRights.Add(new UserRights{
+                            ManageIterations = short.Parse(currentRigh[3]), 
+                            ManageUserdays = short.Parse(currentRigh[4]),
+                            UpdateUserRights = short.Parse(currentRigh[5]), 
+                            ViewOtherPeoplesWork = short.Parse(currentRigh[6]), 
+                            WorkItemRule = short.Parse(currentRigh[7]),
+                            ChatChannelsRule = short.Parse(currentRigh[8])
+                        }).Entity;
+                        Context.SaveChanges();
+                    }
+                    var member = Context.UserAccounts.FirstOrDefault(x=>x.Email == currentRigh[2]);
+                    Context.AssociatedProjectMemberRights.Add(new AssociatedProjectMemberRights{
+                            ProjectId = project.Id,
+                            RightsId = checkExistingMemberRight.Id,
+                            UserAccountId = member.Id
+                    });
+                    Context.SaveChanges();
+                }
+            });
+            var boardsDataHolder = projectDta[4].Split(';');
+            var boards = new List<Boards>();
+            boardsDataHolder.ToList().ForEach(x=>{
+                if(x != "")
+                {
+                    var boardData = x.Split('|');
+                    var cBoard = Context.Boards.Add(new Boards{
+                        RepositoryId = project.RepositoryId,
+                        BoardName = boardData[1],
+                        BoardType = int.Parse(boardData[2]),
+                    });
+                    Context.SaveChanges();
+                    Context.AssociatedProjectBoards.Add(new AssociatedProjectBoards{
+                        BoardId = cBoard.Entity.Id,
+                        Position = cBoard.Entity.BoardType,
+                        ProjectId = project.Id,
+                    });
+                    Context.SaveChanges();
+                    boards.Add(cBoard.Entity);
+                }
+            });
+            var workItemData = projectDta[5].Split(';');
+            workItemData.ToList().ForEach(x=>{
+                if(x != "")
+                {
+                    var itemData = x.Split('|');
+                    var currentWItem = new WorkItem();
+                    if(itemData[5] == "0")
+                    {
+                        var parent = Context.AssociatedBoardWorkItems.Include(y=>y.WorkItem).FirstOrDefault(y=>y.WorkItem.Title == itemData[5]);
+                        if(!string.IsNullOrEmpty(itemData[1]) )
+                            currentWItem.IntegratedInBuild = int.Parse(itemData[1]);
+                        if(!string.IsNullOrEmpty(itemData[2]) )
+                            currentWItem.Iteration =  int.Parse(itemData[2]);
+                        if(!string.IsNullOrEmpty(itemData[3]))
+                        currentWItem.ItemPriority = int.Parse(itemData[3]);
+                        currentWItem.OriginEstitame = itemData[4];
+                        currentWItem.ParentId = parent.Id;
+                        if(!string.IsNullOrEmpty(itemData[6]))
+                            currentWItem.PriorityId =  int.Parse(itemData[6]);
+                        if(!string.IsNullOrEmpty(itemData[7]) )
+                        currentWItem.ReasonId =  int.Parse(itemData[7]);
+                        if(!string.IsNullOrEmpty(itemData[8]))
+                            currentWItem.RelationId =  int.Parse(itemData[8]);
+                        currentWItem.RepoSteps = itemData[9];
+                        currentWItem.ResolvedReason = itemData[10];
+                        if(!string.IsNullOrEmpty(itemData[11]))
+                            currentWItem.RiskId =   int.Parse(itemData[11]);
+                        if(!string.IsNullOrEmpty(itemData[12]))
+                            currentWItem.Severity = int.Parse(itemData[12]);
+                        currentWItem.StackRank = itemData[13];
+                        currentWItem.StartDate = DateTime.Parse(itemData[14]);
+                        if(!string.IsNullOrEmpty(itemData[15]))
+                            currentWItem.StateId = int.Parse(itemData[15]);
+                        currentWItem.StoryPoints = itemData[16];
+                        currentWItem.SystemInfo = itemData[17];
+                        currentWItem.TimeCapacity = itemData[18];
+                        currentWItem.Title = itemData[19];
+                        if(!string.IsNullOrEmpty(itemData[20]))
+                            currentWItem.ValueAreaId = int.Parse(itemData[20]);
+                        if(!string.IsNullOrEmpty(itemData[21]))
+                            currentWItem.WorkItemTypeId =  int.Parse(itemData[21]);
+                        if(!string.IsNullOrEmpty(itemData[22]))
+                            currentWItem.AreaId = int.Parse(itemData[22]);
+                        
+                        currentWItem = Context.WorkItem.Add(currentWItem).Entity;
+                    }
+                    else
+                    {
+                        if(!string.IsNullOrEmpty(itemData[1]) )
+                            currentWItem.IntegratedInBuild = int.Parse(itemData[1]);
+                        if(!string.IsNullOrEmpty(itemData[2]) )
+                            currentWItem.Iteration =  int.Parse(itemData[2]);
+                        if(!string.IsNullOrEmpty(itemData[3]))
+                        currentWItem.ItemPriority = int.Parse(itemData[3]);
+                        currentWItem.OriginEstitame = itemData[4];
+                        if(!string.IsNullOrEmpty(itemData[6]))
+                            currentWItem.PriorityId =  int.Parse(itemData[6]);
+                        if(!string.IsNullOrEmpty(itemData[7]) )
+                        currentWItem.ReasonId =  int.Parse(itemData[7]);
+                        if(!string.IsNullOrEmpty(itemData[8]))
+                            currentWItem.RelationId =  int.Parse(itemData[8]);
+                        currentWItem.RepoSteps = itemData[9];
+                        currentWItem.ResolvedReason = itemData[10];
+                        if(!string.IsNullOrEmpty(itemData[11]))
+                            currentWItem.RiskId =   int.Parse(itemData[11]);
+                        if(!string.IsNullOrEmpty(itemData[12]))
+                            currentWItem.Severity = int.Parse(itemData[12]);
+                        currentWItem.StackRank = itemData[13];
+                        currentWItem.StartDate = DateTime.Parse(itemData[14]);
+                        if(!string.IsNullOrEmpty(itemData[15]))
+                            currentWItem.StateId = int.Parse(itemData[15]);
+                        currentWItem.StoryPoints = itemData[16];
+                        currentWItem.SystemInfo = itemData[17];
+                        currentWItem.TimeCapacity = itemData[18];
+                        currentWItem.Title = itemData[19];
+                        if(!string.IsNullOrEmpty(itemData[20]))
+                            currentWItem.ValueAreaId = int.Parse(itemData[20]);
+                        if(!string.IsNullOrEmpty(itemData[21]))
+                            currentWItem.WorkItemTypeId =  int.Parse(itemData[21]);
+                        if(!string.IsNullOrEmpty(itemData[22]))
+                            currentWItem.AreaId = int.Parse(itemData[22]);
+                        
+                        currentWItem = Context.WorkItem.Add(currentWItem).Entity;
+
+                    }
+                    Context.SaveChanges();
+                    Context.AssociatedBoardWorkItems.Add(new AssociatedBoardWorkItems{
+                        ProjectId = project.Id,
+                        WorkItemId = currentWItem.Id,
+                        BoardId = boards.FirstOrDefault(x=>x.BoardType == int.Parse(itemData[0])).Id ,
+                        
+                    });
+                    Context.SaveChanges();
+                }
+            });
+            var workitemAssociations = projectDta[6].Split(';');
+            workitemAssociations.ToList().ForEach(x=>{
+                if(x  != "")
+                {
+                    var currentAssociation = x.Split('|');
+                    var WId = Context.AssociatedBoardWorkItems.Include(y=>y.WorkItem).FirstOrDefault(y=> y.WorkItem.Title == currentAssociation[0]);
+                    var child = Context.AssociatedBoardWorkItems.Include(y=>y.WorkItem).FirstOrDefault(y=> y.WorkItem.Title == currentAssociation[1]);
+                    var cAssociation =  new AssociatedWrorkItemChildren();
+                    cAssociation.WorkItemId = WId.Id;
+                    cAssociation.WorkItemChildId = child.Id;
+
+                    var checkassociation = Context.AssociatedWrorkItemChildren.FirstOrDefault(y=>y.WorkItemId == WId.Id && y.WorkItemChildId == child.Id);
+                    if(checkassociation == null)
+                    {
+                        if(!string.IsNullOrEmpty(currentAssociation[2]))
+                            cAssociation.RelationType = int.Parse(currentAssociation[2]);
+                        Context.AssociatedWrorkItemChildren.Add(cAssociation);
+                        Context.SaveChanges();
+                    }
+                }
+            });
+            return true;
+        }
         internal string ChangeProjectBoardStatus(IncomingPublicBoardRequest request, string domain)
         {
             var getProject = Context.Projects.FirstOrDefault(x=>x.Id == request.ProjectId);
