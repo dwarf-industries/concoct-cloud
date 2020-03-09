@@ -717,7 +717,7 @@ namespace Rokono_Control.DatabaseHandlers
                     {
                         InnerId = sprintTasks.Id,
                         Id = $"Task {sprintTasks.Id}",
-                        Summary = $"asd {sprintTasks.Description}",
+                        Summary = $"Description: {sprintTasks.Description} <br/> Acceptence creteria: {sprintTasks.AcceptanceCriteria} ",
                         Title = sprintTasks.Title,
                         Tags = $"{sprintTasks.WorkItemType.TypeName}",
                         Priority = GetCardType(sprintTasks.WorkItemType.TypeName),
@@ -742,7 +742,7 @@ namespace Rokono_Control.DatabaseHandlers
                     {
                         InnerId = task.WorkItemChild.Id,
                         Id = $"Task {task.WorkItemChild.Id}",
-                        Summary = $"asd {task.WorkItemChild.Description}",
+                        Summary = $"Description: {task.WorkItemChild.Description} <br/> Acceptence creteria: {task.WorkItemChild.AcceptanceCriteria} ",
                         Title = task.WorkItemChild.Title,
                         Tags = $"{task.WorkItemChild.WorkItemType.TypeName}",
                         Priority = GetCardType(task.WorkItemChild.WorkItemType.TypeName),
