@@ -269,3 +269,7 @@
     .table-content {
         padding: 0;
     }
+
+    #spinner{
+        min-height: 90vh;
+    }

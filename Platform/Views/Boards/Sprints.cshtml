@@ -207,7 +207,7 @@
             });
             dialogNewWI.appendTo('#newWorkItemModal');
 
-             dialogObj = new ej.popups.Dialog({
+            dialogObj = new ej.popups.Dialog({
                 width: '600px',
                 header: 'Chose a user',
                 isModal: true,
@@ -428,7 +428,7 @@
             console.log(data);
         //    selectedChangingId = id;
             console.log("Changing Owner");
-            dialogOpen();
+            dialogObj.show();
         }
 
          function CallUrl(url) {
@@ -625,7 +625,7 @@
         <div class='card-header e-tooltip-text'>
             <div class="row" style="display:flex;">
                 <div class="col-2">
-                    <span class="e-search"></span>
+                    <span class="e-search ${priority}"></span>
                 </div>
                 <div class="col-10" style="width:100%; text-align:center;">
                     <span style="text-align:center;">${id} ${title}</span>

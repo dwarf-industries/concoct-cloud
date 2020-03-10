@@ -69,6 +69,10 @@ namespace Rokono_Control.DatabaseHandlers
                                                 .ThenInclude(Board => Board.AssociatedBoardWorkItems)
                                                 .ThenInclude(AssociatedBoardWorkItems => AssociatedBoardWorkItems.WorkItem)
                                                 .ThenInclude(WorkItem => WorkItem.WorkItemType)
+                                                .Include(x => x.Board)
+                                                .ThenInclude(Board => Board.AssociatedBoardWorkItems)
+                                                .ThenInclude(AssociatedBoardWorkItems => AssociatedBoardWorkItems.WorkItem)
+                                                .ThenInclude(WorkItem => WorkItem.AssignedAccountNavigation)
                                                 .Where(x => x.ProjectId == projectId && x.Board.AssociatedBoardWorkItems.Any(z => z.WorkItem.WorkItemTypeId == workItemType)).ToList();
 
             var result = new List<BindingBoard>();
@@ -91,12 +95,14 @@ namespace Rokono_Control.DatabaseHandlers
                     {
                         InnerId = y.WorkItem.Id,
                         Id = $"Task {y.WorkItem.Id}",
-                        Summary = $"asd {y.WorkItem.Description}",
+                        Summary = $"Description: {y.WorkItem.Description} <br/> Acceptence creteria: {y.WorkItem.AcceptanceCriteria} ",
                         Title = y.WorkItem.Title,
                         Tags = $"{y.WorkItem.WorkItemType.TypeName}",
-                        Priority = "High",
+                        Priority = GetCardType(y.WorkItem.WorkItemType.TypeName),
                         Type = $"{x.Board.BoardName}",
                         Status = x.Board.BoardName,
+                        AssgignedAccount = y.WorkItem.AssignedAccountNavigation != null ? y.WorkItem.AssignedAccountNavigation.Email : "Unassigned",
+                        AssigneeId = y.WorkItem.AssignedAccountNavigation != null ? y.WorkItem.AssignedAccountNavigation.Id : 0,
                         Assignee = y.WorkItem.WorkItemType.TypeName
                         // Children = related
                     });
@@ -137,7 +143,7 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal WorkItem GetWorkItemByTitle(string title)
         {
-            return Context.WorkItem.FirstOrDefault(x=>x.Title == title);
+            return Context.WorkItem.FirstOrDefault(x=>x.Title == title && x.WorkItemTypeId == 7);
         }
 
         internal void EditChangelog(ChangelogEditRequest changelog)
@@ -699,14 +705,19 @@ namespace Rokono_Control.DatabaseHandlers
                                                                      .ThenInclude(WorkItemChild => WorkItemChild.WorkItemType)
                                                                      .Include(y => y.WorkItemChild)
                                                                      .ThenInclude(WorkItemChild => WorkItemChild.AssignedAccountNavigation)
-                                                                     .Where(y => y.WorkItemId == x.Id && y.WorkItemChild.WorkItemTypeId == 3)
+                                                                     .Where(y => y.WorkItemId == x.Id
+                                                                                 && y.WorkItemChild.WorkItemTypeId != 7
+                                                                                 && y.WorkItemChild.WorkItemTypeId != 2
+                                                                                 && y.WorkItemChild.WorkItemTypeId != 5)
                                                                      .ToList();
                 var whereParent = Context.WorkItem.Include(b=>b.AssignedAccountNavigation)
                                                   .Include(b=>b.WorkItemType)
-                                                  .Where(b=>b.ParentId == x.Id && x.Id != b.Id).ToList();
-                whereParent.ForEach(sprintTasks => {
+                                                  .Where(b=>b.ParentId == x.Id  && b.WorkItemTypeId != 7
+                                                                                 && b.WorkItemTypeId != 2
+                                                                                 && b.WorkItemTypeId != 5).ToList();
+                whereParent.ForEach(sprintTask => {
                     var taskBoard = Context.AssociatedBoardWorkItems.Include(z => z.Board)
-                                                                    .FirstOrDefault(z => z.WorkItemId == sprintTasks.Id);
+                                                                    .FirstOrDefault(z => z.WorkItemId == sprintTask.Id);
 
                     var activeBoard = string.Empty;
                     if (taskBoard == null)
@@ -715,17 +726,17 @@ namespace Rokono_Control.DatabaseHandlers
                         activeBoard = taskBoard.Board.BoardName;
                     Cards.Add(new BindingCards
                     {
-                        InnerId = sprintTasks.Id,
-                        Id = $"Task {sprintTasks.Id}",
-                        Summary = $"Description: {sprintTasks.Description} <br/> Acceptence creteria: {sprintTasks.AcceptanceCriteria} ",
-                        Title = sprintTasks.Title,
-                        Tags = $"{sprintTasks.WorkItemType.TypeName}",
-                        Priority = GetCardType(sprintTasks.WorkItemType.TypeName),
+                        InnerId = sprintTask.Id,
+                        Id = $"Task {sprintTask.Id}",
+                        Summary = $"Description: {sprintTask.Description} <br/> Acceptence creteria: {sprintTask.AcceptanceCriteria} ",
+                        Title = sprintTask.Title,
+                        Tags = $"{sprintTask.WorkItemType.TypeName}",
+                        Priority = GetCardType(sprintTask.WorkItemType.TypeName),
                         Type = $"{activeBoard}",
                         Status = activeBoard,
-                        AssigneeId = sprintTasks.AssignedAccountNavigation != null ? sprintTasks.AssignedAccountNavigation.Id : 0,
+                        AssigneeId = sprintTask.AssignedAccountNavigation != null ? sprintTask.AssignedAccountNavigation.Id : 0,
                         Assignee = x.Title,
-                        AssgignedAccount = sprintTasks.AssignedAccountNavigation != null ? sprintTasks.AssignedAccountNavigation.GitUsername : "Unassigned"
+                        AssgignedAccount = sprintTask.AssignedAccountNavigation != null ? sprintTask.AssignedAccountNavigation.GitUsername : "Unassigned"
                     });
                 });
                 sprintTasks.ForEach(task =>
@@ -820,7 +831,7 @@ namespace Rokono_Control.DatabaseHandlers
             switch (board)
             {
                 case "Epic":
-                    res = "Normal";
+                    res = "Epic";
                     break;
                 case "Bug":
                     res = "Bug";
@@ -831,6 +842,13 @@ namespace Rokono_Control.DatabaseHandlers
                 case "User Story":
                     res = "Sprint";
                     break;
+                 case "Issue":
+                    res = "Issue";
+                    break;
+                case "Test":
+                    res = "Test";
+                    break;
+                    
                 default:
                     res = "Task";
                     break;

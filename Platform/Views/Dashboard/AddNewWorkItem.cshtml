@@ -33,7 +33,10 @@
         <!-- main-content declaration -->
         <div class="main-content" id="main-text">
             <div class="sidebar-content">
-               
+                  <div id="spinner">
+            <div id="loader"></div>
+        </div>
+        <div id="Content" hidden>
  <div class="container-fluid">
 <div class="row RowContainer">
     <div class="col-md-12">
@@ -627,7 +630,7 @@
         </div>
        
     </div>
- 
+    </div>
 
 </div>
 </div>
@@ -649,7 +652,6 @@
 
  
   <script>
-
     var acceptWItemChange = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     acceptWItemChange.appendTo('#AcceptWItemChange');
 
@@ -729,6 +731,8 @@
     var ItemFoundBuild;
     $( document ).ready(function() 
     {
+        ShowContent();
+
                 //Initialize Tab component
         var tabObj = new ej.navigations.Tab({
             selected: tabSelected,
@@ -1018,7 +1022,7 @@
          var id = @projectId;
          var workItemTypeId = @WorkItemType;
          console.log($("#ItemReason :selected").val()); // The value of the selected option
-
+         ShowLoader();
           var dto = {
             "WorktItemType" : workItemTypeId,
             "Title": $("#Title").val(),

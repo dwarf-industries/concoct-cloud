@@ -115,19 +115,56 @@
 }
 
 .card-template.Bug {
-    border-left: 3px solid #990099
+    border-left: 3px solid #990000
 }
 
 .card-template.Epic {
-    border-left: 3px solid #66cc33
+    border-left: 3px solid #8f3400
 }
 
 .card-template.Sprint {
-    border-left: 3px solid #cc0000
+    border-left: 3px solid #22478b
 }
 
-.card-template.Sprint {
-    border-left: 3px solid #280099
+.card-template.Issue {
+    border-left: 3px solid #ff7b0088
+}
+
+.card-template.Test {
+    border-left: 3px solid #0df7ff
+}
+
+.card-template .e-search.Task:before {
+    font-family: "e-icons" !important;
+    content: '\e526';
+    color: #ffd600;
+}
+
+.card-template .e-search.Bug:before {
+    font-family: "e-icons" !important;
+    content: '\ec1a';
+    color: #990000;
+}
+
+.card-template .e-search.Epic:before {
+    font-family: "e-icons" !important;
+    content: '\e35d';
+    color: #8f3400
+}
+.card-template .e-search.Sprint:before {
+    font-family: "e-icons" !important;
+    content: '\ea93';
+    color: #22478b;
+}
+.card-template .e-search.Issue:before {
+    font-family: "e-icons" !important;
+    content: '\ec09';
+    color: #ff7b0088;
+}
+.card-template .e-search.Test:before {
+    font-family: "e-icons" !important;
+    content: '\e344';
+    color: #0df7ff;
 }
 
 .bootstrap4 .e-kanban .Open::before {
@@ -163,11 +200,7 @@ e-kanban .e-card .e-text .col-3 .status:before {
     color: #ffd600;
 }
 
-.card-template .e-search:before {
-    font-family: "e-icons" !important;
-    content: '\e526';
-    color: #ffd600;
-}
+
 
 .e-backlog, .e-inprogress, .e-testing, .e-done {
     font-size: 16px;
