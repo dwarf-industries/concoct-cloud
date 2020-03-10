@@ -23,6 +23,14 @@ In order to install .net core runtime go to this link https://dotnet.microsoft.c
 
 Database of your choice either MSSQL or MySql.
 
+### Using our public databse (MSSQL instance rules) 
+If you don't want to setup your own database but want to contribute to the project you can use our existing database that i use to develop the software, however DO NOT delete any Work Items that are related to the project Rokono Control in there, DO NOT delete the project itself, we have daily backups of this server but lets not waste our time. I know that this is generally a bad idea and someone will try to do it but please, this is up for people that don't want to setup servers to contribute to the project. There is one more thing, when you're testing something create a project of your own within the system for example Rokono Control-YourBranch or something else to people know not to touch it. I thank you in advance for your good behaviour the credentials are as follow:
+
+Server Ip: 84.54.185.144
+Username: RGSOC
+Password: EmkV3*eRjVbZ0!KpKlDHX
+ 
+
 ### Installing
  
  -You can easily get the system running, all you need to do in order to get started is to install the dependencies mentioned above and then you need to navigate to the root directory of the project
