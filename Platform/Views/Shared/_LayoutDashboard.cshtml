@@ -47,15 +47,7 @@
                                 <button  type="button" id="Persons" class="btn btn-primary" style="margin-top:2px; width:100%" onclick="CallUrl('/Dashboard/AddNewProject?user=')">Add new project</button>
 
                             }
-                            <div id="default" style='padding-top:75px;'>
-                                <select id="projects">
-                                    @foreach (var project in Projects)
-                                    {
-                                        <option value="@project.Id">@project.ProjectName</option>
-                                    }
-
-                                </select>
-                            </div>
+                            @await Component.InvokeAsync("LoadedProjects", @ProjectId)
                             <div class="row" style="background-color:#4fb9fc; margin:0;">
                                 <img src="~/Logo/logo.png" class="img-responsive" style="width:50%;height:59%; margin-left:25%;" />
                             </div>
@@ -97,17 +89,7 @@
          var Persons = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
         Persons.appendTo('#Persons');
 
-        var projects = new ej.dropdowns.DropDownList({
-
-        // set the placeholder to DropDownList input element
-        placeholder: 'Select Project',
-        // set the height of the popup element
-        popupHeight: '200px',
-        index: 0,
-        // bind the change event
-        change: ProjectChanged
-    });
-    projects.appendTo('#projects');
+     
     var data;
     // Sidebar Initialization
     var sidebarMenu = new ej.navigations.Sidebar({
@@ -173,10 +155,7 @@
     // console.log(data.find(x => x.nodeChild.nodeId === args.nodeData.id));
     }
 
-    function ProjectChanged(args) {
-        console.log(args);
-        window.location.href = "/Dashboard/ProjectDashboard?id=" + parseInt(args.value);
-    }
+   
 
     function CallUrl(url)
     {

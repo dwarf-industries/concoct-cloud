@@ -215,7 +215,6 @@ namespace Rokono_Control.Controllers
                 var project = context.GetProjectData(id);
                 var initials = project.ProjectName.ToUpper().Substring(0, 2);
                 var currentId = int.Parse(currentUserId.Value);
-                ViewData["Projects"] = context.GetUserProjects(currentId);
                 var rights = currentUser.Claims.LastOrDefault().Value;
                 ViewData["IsAdmin"] = rights;
                 ViewData["Relationships"] = context.GetProjectRelationships();

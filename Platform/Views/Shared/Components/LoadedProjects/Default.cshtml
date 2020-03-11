@@ -1,0 +1,38 @@
+@{
+    var Projects = ViewData["Projects"] as List<Projects>;
+    var Index = ViewData["SelectedIndex"] as int?;
+
+}
+
+<div id="default" style='padding-top:75px;'>
+    <select id="projects">
+        @foreach (var project in Projects)
+        {
+            <option value="@project.Id">@project.ProjectName</option>
+        }
+
+    </select>
+</div>
+
+
+<script>
+    ej.base.enableRipple(true);
+
+    var projects = new ej.dropdowns.DropDownList({
+
+        // set the placeholder to DropDownList input element
+        placeholder: 'Select Project',
+        // set the height of the popup element
+        popupHeight: '200px',
+        index: @Index,
+        // bind the change event
+        change: ProjectChanged
+    });
+    projects.appendTo('#projects');
+
+
+    function ProjectChanged(args) {
+        console.log(args);
+        window.location.href = "/Dashboard/ProjectDashboard?id=" + parseInt(args.value);
+    }
+</script>

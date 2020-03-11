@@ -2089,7 +2089,7 @@ namespace Rokono_Control.DatabaseHandlers
             {
                 if (disposing)
                 {
-                    Context.Dispose();
+                    //Context.Dispose();
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.

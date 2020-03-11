@@ -752,3 +752,4 @@ D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Accounts/ManageProjectMemeb
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Stories Unraveled.json
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/ddd.json
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/asd.json
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/LoadedProjects/Default.cshtml.g.cs

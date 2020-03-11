@@ -87,22 +87,62 @@
     display: table-cell;
 }
 
-.card-template.Low {
+.card-template.Task {
     border-left: 3px solid #ffd600
 }
 
-.card-template.High {
-    border-left: 3px solid #990099
+.card-template.Bug {
+    border-left: 3px solid #990000
 }
 
-.card-template.Normal {
-    border-left: 3px solid #66cc33
+.card-template.Epic {
+    border-left: 3px solid #8f3400
 }
 
-.card-template.Critical {
-    border-left: 3px solid #cc0000
+.card-template.Sprint {
+    border-left: 3px solid #22478b
 }
 
+.card-template.Issue {
+    border-left: 3px solid #ff7b0088
+}
+
+.card-template.Test {
+    border-left: 3px solid #0df7ff
+}
+
+.card-template .e-search.Task:before {
+    font-family: "e-icons" !important;
+    content: '\e526';
+    color: #ffd600;
+}
+
+.card-template .e-search.Bug:before {
+    font-family: "e-icons" !important;
+    content: '\ec1a';
+    color: #990000;
+}
+
+.card-template .e-search.Epic:before {
+    font-family: "e-icons" !important;
+    content: '\e35d';
+    color: #8f3400
+}
+.card-template .e-search.Sprint:before {
+    font-family: "e-icons" !important;
+    content: '\ea93';
+    color: #22478b;
+}
+.card-template .e-search.Issue:before {
+    font-family: "e-icons" !important;
+    content: '\ec09';
+    color: #ff7b0088;
+}
+.card-template .e-search.Test:before {
+    font-family: "e-icons" !important;
+    content: '\e344';
+    color: #0df7ff;
+}
 .bootstrap4 .e-kanban .Open::before {
     content: '\e729';
 }
@@ -118,27 +158,43 @@
 .bootstrap4 .e-kanban .Close::before {
     content: '\e7d9';
 }
+
+.e-kanban .e-card .Interactice {
+    padding: 2%;
+    text-align: center;
+}
+.e-kanban .e-card .Interactice:hover {
+    padding: 2%;
+    text-align: center;
+    border: 0.4px solid #1c86c8;
+}
+e-kanban .e-card .e-text .col-3 .status:before {
+    font-family: "e-icons" !important;
+    content: '\e270';
+    color: #ffd600;
+}
+
 .e-backlog, .e-inprogress, .e-testing, .e-done {
     font-size: 16px;
     padding-right: 5px;
     display: inline-block;
 }
 
-    .e-backlog:before {
-        content: "\e807";
-    }
+.e-backlog:before {
+    content: "\e807";
+}
 
-    .e-inprogress:before {
-        content: "\e808";
-    }
+.e-inprogress:before {
+    content: "\e808";
+}
 
-    .e-testing:before {
-        content: "\e809";
-    }
+.e-testing:before {
+    content: "\e809";
+}
 
-    .e-done:before {
-        content: "\e80a";
-    }
+.e-done:before {
+    content: "\e80a";
+}
 
 .row {
     margin-left: 15px;
