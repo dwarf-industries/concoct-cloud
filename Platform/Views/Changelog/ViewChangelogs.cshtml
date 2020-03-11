@@ -5,8 +5,7 @@
     
     var changelogs = ViewData["Changelogs"] as List<Changelogs>;
 }
-<div class="main-content" id="main-text" style="min-height: 94vh;">
-    <div class="sidebar-content">
+ 
         
         @foreach (var log in  changelogs)
         {
@@ -32,8 +31,7 @@
         }
       
 
-    </div>
- </div>
+ 
 <script>
     function EditChangelog(item)
     {

@@ -17917,6 +17917,55 @@
         }
       },
       {
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__NotesViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:notes",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "project-id",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "project-id",
+            "TypeName": "System.Int32",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "projectId"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__NotesViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "Notes"
+        }
+      },
+      {
         "Kind": "Components.Bind",
         "Name": "Bind",
         "AssemblyName": "Microsoft.AspNetCore.Components",
@@ -20570,11 +20619,6 @@
   "RootNamespace": "Rokono_Control",
   "Documents": [
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/MytestView/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\MytestView\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/index.cshtml",
       "TargetPath": "Views\\Dashboard\\index.cshtml",
       "FileKind": "mvc"
@@ -20622,6 +20666,11 @@
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Home/Privacy.cshtml",
       "TargetPath": "Views\\Home\\Privacy.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Notes/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Notes\\Default.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -20712,6 +20761,11 @@
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/EditAccount.cshtml",
       "TargetPath": "Views\\Dashboard\\EditAccount.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/LoadedProjects/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\LoadedProjects\\Default.cshtml",
       "FileKind": "mvc"
     },
     {

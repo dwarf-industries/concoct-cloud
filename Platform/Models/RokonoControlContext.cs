@@ -15,6 +15,7 @@ namespace Rokono_Control.Models
         {
         }
 
+        public virtual DbSet<AssociatedAccountNotes> AssociatedAccountNotes { get; set; }
         public virtual DbSet<AssociatedBoardWorkItems> AssociatedBoardWorkItems { get; set; }
         public virtual DbSet<AssociatedBranchCommits> AssociatedBranchCommits { get; set; }
         public virtual DbSet<AssociatedCommitFiles> AssociatedCommitFiles { get; set; }
@@ -39,6 +40,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<Repository> Repository { get; set; }
         public virtual DbSet<Risks> Risks { get; set; }
         public virtual DbSet<UserAccounts> UserAccounts { get; set; }
+        public virtual DbSet<UserNotes> UserNotes { get; set; }
         public virtual DbSet<UserRights> UserRights { get; set; }
         public virtual DbSet<ValueAreas> ValueAreas { get; set; }
         public virtual DbSet<WorkItem> WorkItem { get; set; }
@@ -65,6 +67,27 @@ namespace Rokono_Control.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AssociatedAccountNotes>(entity =>
+            {
+                entity.HasOne(d => d.Note)
+                    .WithMany(p => p.AssociatedAccountNotes)
+                    .HasForeignKey(d => d.NoteId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Associate__NoteI__0662F0A3");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.AssociatedAccountNotes)
+                    .HasForeignKey(d => d.ProjectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Associate__Proje__084B3915");
+
+                entity.HasOne(d => d.UserAccount)
+                    .WithMany(p => p.AssociatedAccountNotes)
+                    .HasForeignKey(d => d.UserAccountId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Associate__UserA__075714DC");
+            });
+
             modelBuilder.Entity<AssociatedBoardWorkItems>(entity =>
             {
                 entity.HasOne(d => d.Board)
@@ -366,6 +389,19 @@ namespace Rokono_Control.Models
                 entity.Property(e => e.LastName).HasMaxLength(400);
 
                 entity.Property(e => e.Password).IsRequired();
+            });
+
+            modelBuilder.Entity<UserNotes>(entity =>
+            {
+                entity.Property(e => e.DateOfMessage).HasColumnType("datetime");
+
+                entity.Property(e => e.NoteBackground)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.NoteForeground)
+                    .IsRequired()
+                    .HasMaxLength(200);
             });
 
             modelBuilder.Entity<ValueAreas>(entity =>

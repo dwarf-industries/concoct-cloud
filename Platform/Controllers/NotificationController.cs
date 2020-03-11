@@ -38,5 +38,17 @@ namespace Platform.Controllers
            
             return Json(new object{});
         }
+        [HttpPost]
+        public OutgoingJsonData AddNewNote([FromBody] IncomingNoteRequest note)
+        {
+            var currentUser = this.User;
+            var id = int.Parse(currentUser.Claims.ElementAt(1).Value);
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                 context.AddNewUserNote(note, id);
+            }
+
+            return new OutgoingJsonData { Data = ""};
+        }
     }
 }

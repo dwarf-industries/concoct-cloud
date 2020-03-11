@@ -16,8 +16,7 @@
     <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
     <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-
-    
+  
 </head>
 <body>
  
@@ -57,6 +56,7 @@
                             </div>
                             <div class="row" style="margin:0;">
                                 <p class="main-menu-header">Navigation</p>
+                                <button  type="button" id="NotesBtn" class="btn btn-primary" style="margin-top:2px; width:100%" onclick="ShowNotes()" >Notes</button>
 
                             </div>
                             <div class="row" style="margin:0;">
@@ -73,8 +73,13 @@
                     </div>
                 </aside>
 
+                <div class="main-content" id="main-text" style="min-height: 94vh;">
+                    <div class="sidebar-content">
+                        @await Component.InvokeAsync("Notes", @ProjectId)
 
-                @RenderBody()
+                        @RenderBody()
+                    </div>
+                </div>
 
             </div>
 
@@ -84,12 +89,10 @@
     </div>
 
 <script>
-    ej.base.enableRipple(true);
+  
 
-         var Persons = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
-        Persons.appendTo('#Persons');
-
-     
+    var Persons = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    Persons.appendTo('#Persons');
     var data;
     // Sidebar Initialization
     var sidebarMenu = new ej.navigations.Sidebar({
@@ -172,6 +175,8 @@
         $("#spinner").hide();
         $("#Content").show();
     }
+
+
 </script>
 
 </body>

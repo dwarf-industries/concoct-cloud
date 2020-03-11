@@ -27,7 +27,39 @@ namespace Rokono_Control.DatabaseHandlers
             Context = context;
             Configuration = config;
         }
- 
+
+        internal List<UserNotes> GetUserNotes(int id, int projectId)
+        {
+            if(projectId == 0)
+                return Context.AssociatedAccountNotes.Include(x => x.Note)
+                                                     .Where(x => x.UserAccountId == id)
+                                                     .Select(x => x.Note)
+                                                     .ToList();
+            else
+                return Context.AssociatedAccountNotes.Include(x => x.Note)
+                                                     .Where(x => x.UserAccountId == id && x.ProjectId == projectId)
+                                                     .Select(x => x.Note)
+                                                     .ToList();
+
+        }
+
+        internal void AddNewUserNote(IncomingNoteRequest note, int id)
+        {
+            var currentNote = Context.UserNotes.Add(new UserNotes{
+                Content = note.Content,
+                DateOfMessage = DateTime.Now,
+                NoteBackground = note.Background,
+                NoteForeground = note.FontColor
+            });
+            Context.SaveChanges();
+            Context.AssociatedAccountNotes.Add(new AssociatedAccountNotes{
+                NoteId = currentNote.Entity.Id,
+                ProjectId = note.ProjectId,
+                UserAccountId = id
+            });
+            Context.SaveChanges();
+        }
+
         public DatabaseController(int i, int internalId) 
         {
             this.I = i;

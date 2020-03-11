@@ -7,6 +7,7 @@ namespace Rokono_Control.Models
     {
         public Projects()
         {
+            AssociatedAccountNotes = new HashSet<AssociatedAccountNotes>();
             AssociatedBoardWorkItems = new HashSet<AssociatedBoardWorkItems>();
             AssociatedProjectBoards = new HashSet<AssociatedProjectBoards>();
             AssociatedProjectBuilds = new HashSet<AssociatedProjectBuilds>();
@@ -28,6 +29,7 @@ namespace Rokono_Control.Models
         public int? PublicBoard { get; set; }
 
         public virtual Repository Repository { get; set; }
+        public virtual ICollection<AssociatedAccountNotes> AssociatedAccountNotes { get; set; }
         public virtual ICollection<AssociatedBoardWorkItems> AssociatedBoardWorkItems { get; set; }
         public virtual ICollection<AssociatedProjectBoards> AssociatedProjectBoards { get; set; }
         public virtual ICollection<AssociatedProjectBuilds> AssociatedProjectBuilds { get; set; }
