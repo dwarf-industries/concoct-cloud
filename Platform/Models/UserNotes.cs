@@ -15,6 +15,8 @@ namespace Rokono_Control.Models
         public string NoteForeground { get; set; }
         public string Content { get; set; }
         public DateTime? DateOfMessage { get; set; }
+        public string TopPos { get; set; }
+        public string LeftPos { get; set; }
 
         public virtual ICollection<AssociatedAccountNotes> AssociatedAccountNotes { get; set; }
     }

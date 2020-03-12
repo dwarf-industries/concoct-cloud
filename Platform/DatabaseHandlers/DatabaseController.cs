@@ -60,6 +60,25 @@ namespace Rokono_Control.DatabaseHandlers
             Context.SaveChanges();
         }
 
+        internal void ChangeNotePosition(IncomingNoteRequest note)
+        {
+            var currentNote = Context.UserNotes.FirstOrDefault(x=>x.Id == note.NoteId);
+            currentNote.TopPos = note.Top;
+            currentNote.LeftPos = note.Left;
+            Context.Attach(currentNote);
+            Context.Update(currentNote);
+            Context.SaveChanges();
+        }
+
+        internal void DeleteNote(IncomingNoteRequest note)
+        {
+            var currentNote = Context.UserNotes.FirstOrDefault(x=>x.Id == note.NoteId);
+            Context.UserNotes.Remove(currentNote);
+            var associatedNotes = Context.AssociatedAccountNotes.Where(x=>x.NoteId == note.NoteId).ToList();
+            Context.AssociatedAccountNotes.RemoveRange(associatedNotes);
+            Context.SaveChanges();
+        }
+
         public DatabaseController(int i, int internalId) 
         {
             this.I = i;

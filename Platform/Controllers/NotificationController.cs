@@ -50,5 +50,30 @@ namespace Platform.Controllers
 
             return new OutgoingJsonData { Data = ""};
         }
+
+        [HttpPost]
+        public OutgoingJsonData ChangeNotePosition([FromBody] IncomingNoteRequest note)
+        {
+            var currentUser = this.User;
+            var id = int.Parse(currentUser.Claims.ElementAt(1).Value);
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                 context.ChangeNotePosition(note);
+            }
+
+            return new OutgoingJsonData { Data = ""};
+        }
+         [HttpPost]
+        public OutgoingJsonData DeleteNote([FromBody] IncomingNoteRequest note)
+        {
+            var currentUser = this.User;
+            var id = int.Parse(currentUser.Claims.ElementAt(1).Value);
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                 context.DeleteNote(note);
+            }
+
+            return new OutgoingJsonData { Data = ""};
+        }
     }
 }

@@ -17,11 +17,31 @@
     width: 200px;
     height: 200px;
     background-color:orange; 
+    overflow: hidden;
 }
 .Icon-FullScreen::before
 {
     font-family: "e-icons" !important;
     content: '\e342';
+    font-size: large;
+    cursor: pointer;
+
+}
+.Icon-Edit::before
+{
+    font-family: "e-icons" !important;
+    content: '\e81e';
+    font-size: large;
+
+    cursor: pointer;
+
+}
+.Icon-Delete::before
+{
+    font-family: "e-icons" !important;
+    content: '\e84e';
+    font-size: large;
+    cursor: pointer;
 
 }
 .NoteEditor{
@@ -43,13 +63,19 @@
     <div class="row" id="NotesHolder">
         @foreach(var note in Notes)
         {
-            <div id="Note_@note.Id" onclick="DragEnableNote('Note_@note.Id')" class="Note">
+            <div id="Note_@note.Id" style="Background-Color:@note.NoteBackground; Color:@note.NoteForeground; top:@note.TopPos; left:@note.LeftPos;" onclick="DragEnableNote('Note_@note.Id', @note.Id)" class="Note">
                 <div class="row">
                     <div class="col-md-8">
                         <span>@note.DateOfMessage.Value.ToShortDateString()</span>
                     </div>
                     <div class="col-md-4">
-                        <span class="Icon-FullScreen" onclick="ChangeNoteContent(@note.Id,'@note.Content','@note.NoteBackground', '@note.NoteForeground')">
+                        <span class="Icon-FullScreen" onclick="OpenFullScreen('@note.TopPos', '@note.LeftPos', 'Note_@note.Id')">
+
+                        </span>
+                        <span class="Icon-Edit" onclick="ChangeNoteContent(@note.Id,'@note.Content','@note.NoteBackground', '@note.NoteForeground')">
+
+                        </span>
+                        <span class="Icon-Delete" onclick="DeleteNote(@note.Id)">
 
                         </span>
                     </div>
@@ -109,9 +135,13 @@
 
 
 <script>
-      ej.base.enableRipple(true);
-
-
+    ej.base.enableRipple(true);
+    var selectedNote;
+    var NoteId;
+    var lastTop;
+    var latLeft;
+    var isOpen = false;
+    var lastNote;
     var BackgroundColorPicker = new ej.inputs.ColorPicker({
         mode: 'Picker',
         modeSwitcher: false,
@@ -175,9 +205,12 @@ function AddNewNote()
     $("#NoteEditor").show();
     $("#NotesOverlay").hide();
 }
-function DragEnableNote(id)
+function DragEnableNote(id, noteId)
 {
-    dragElement(document.getElementById(id));
+    NoteId = noteId;
+    selectedNote = document.getElementById(id);
+    dragElement(selectedNote);
+
 }
 
 
@@ -215,7 +248,30 @@ function dragElement(elmnt) {
     elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
   }
 
-  function closeDragElement() {
+  function closeDragElement(e) {
+    console.log(selectedNote.style.top);
+    console.log(selectedNote.style.left);
+
+    var dto = {
+            "NoteId" :NoteId,
+            "Top" :selectedNote.style.top,
+            "Left": selectedNote.style.left
+        }
+    $.ajax({
+    type: 'POST',
+        url: '/Notification/ChangeNotePosition',
+        data: JSON.stringify(dto),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    });
+    //console.log(selectedNote.css("left"));
+
     // stop moving when mouse button is released:
     document.onmouseup = null;
     document.onmousemove = null;
@@ -255,6 +311,52 @@ function AcceptChanges()
         });
 }
 
+
+function DeleteNote(id)
+{
+    ShowLoader();
+    var dto = {
+        "NoteId":id
+    }
+    $.ajax({
+    type: 'POST',
+        url: '/Notification/DeleteNote',
+        data: JSON.stringify(dto),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            location.reload(); 
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
+function OpenFullScreen(top,left,id)
+{
+    console.log("in");
+    if(isOpen == false)
+    {
+        lastNote = document.getElementById(id);
+        lastTop = top;
+        lastLeft = left;
+        lastNote.style.left = 0;
+        lastNote.style.top = 0;
+        lastNote.style.width = '100%';
+        lastNote.style.height = '100%';
+        isOpen = true;
+    }
+    else
+    {
+        console.log("out");
+        lastNote.style.width = '200px';
+        lastNote.style.height = '200px';
+        lastNote.style.top = lastTop;
+        lastNote.style.left = lastLeft;
+      
+        isOpen = false;
+    }
+}
 function CancelChanges()
 {
     $("#NoteEditor").hide();
