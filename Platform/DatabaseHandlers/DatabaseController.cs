@@ -79,6 +79,17 @@ namespace Rokono_Control.DatabaseHandlers
             Context.SaveChanges();
         }
 
+        internal void EditNote(IncomingNoteRequest note)
+        {
+            var currentNote = Context.UserNotes.FirstOrDefault(x=>x.Id == note.NoteId);
+            currentNote.NoteBackground = note.Background;
+            currentNote.NoteForeground = note.FontColor;
+            currentNote.Content = note.Content;
+            Context.Attach(currentNote);
+            Context.Update(currentNote);
+            Context.SaveChanges();
+        }
+
         public DatabaseController(int i, int internalId) 
         {
             this.I = i;

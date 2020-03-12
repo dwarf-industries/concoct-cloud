@@ -63,7 +63,7 @@ namespace Platform.Controllers
 
             return new OutgoingJsonData { Data = ""};
         }
-         [HttpPost]
+        [HttpPost]
         public OutgoingJsonData DeleteNote([FromBody] IncomingNoteRequest note)
         {
             var currentUser = this.User;
@@ -75,5 +75,19 @@ namespace Platform.Controllers
 
             return new OutgoingJsonData { Data = ""};
         }
+        [HttpPost]
+        public OutgoingJsonData EditNote([FromBody] IncomingNoteRequest note)
+        {
+            var currentUser = this.User;
+            var id = int.Parse(currentUser.Claims.ElementAt(1).Value);
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                 context.EditNote(note);
+            }
+
+            return new OutgoingJsonData { Data = ""};
+        }
+
+        
     }
 }
