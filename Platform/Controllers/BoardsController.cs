@@ -115,25 +115,21 @@ namespace RokonoControl.Controllers
 
         public IActionResult PublicBoard(int projectId, int iteration, int person)
         {
-            var currentUser = this.User;
-            var rights = currentUser.Claims.LastOrDefault().Value;
-            var id = currentUser.Claims.ElementAt(1);
-            var viewRights  = default(bool);
-            ViewData["IsAdmin"] = rights;
+           var viewRights = default(bool);
             using (var context = new DatabaseController(Context,Configuration))
             {
                 viewRights = context.GetPublicBoardRights(projectId);
                 if(viewRights)
                 {
-                    ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
-                    ViewData["ProjectId"] = projectId;
+                     ViewData["ProjectId"] = projectId;
                     ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
                     ViewData["ProjectName"] = context.GetProjectName(projectId);
                     ViewData["Iteration"] = iteration;
                     ViewData["Person"] = person;
-                    ViewData["GetUserViewRights"] = context.CheckUserViewWorkitemRights(int.Parse(id.Value), projectId);
+                    ViewData["GetUserViewRights"] = 1;
                     ViewData["DefaultIteration"] = context.GetProjectDefautIteration(projectId);
                 }
+
             }
             var view =  viewRights ? View() : View("~/Views/Home/Error.cshtml");
             return view;
@@ -224,6 +220,17 @@ namespace RokonoControl.Controllers
             return result;
         }
 
+        [HttpPost]
+        public List<BindingCards> GetSprintsPublic([FromBody] IncomingSprintRequest dataRequest)
+        {
+            var result = new List<BindingCards>();
+            using (var context = new DatabaseController(Context,Configuration))
+            {
+             
+                result = context.GetProjectSprints(dataRequest, true, 0);
+            }
+            return result;
+        }
         [HttpPost]
         public bool ChangeWorkItemBoard([FromBody] IncomingCardRequest card)
         {

@@ -949,3 +949,5 @@
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Release/netcoreapp3.1/linux-x64/asd.json
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Release/netcoreapp3.1/linux-x64/ddd.json
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Release/netcoreapp3.1/linux-x64/Stories Unraveled.json
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Razor/Views/Shared/Components/LoadedProjects/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Razor/Views/Shared/Components/Notes/Default.cshtml.g.cs
