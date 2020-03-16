@@ -1,0 +1,18 @@
+@{
+    var IsAdmin = ViewData["IsAdmin"] as int?;
+    var UserId = ViewData["UserId"] as int?;
+}
+
+
+@if (IsAdmin == 1)
+{
+<button  type="button" id="CurrentPersonRights" class="btn btn-primary" style="margin-top:2px; width:100%" onclick="CallUrl('/Dashboard/AddNewProject?user=')">Add new project</button>
+
+}
+
+
+
+<script>
+    var CurrentPersonRights = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    CurrentPersonRights.appendTo('#CurrentPersonRights');
+</script>

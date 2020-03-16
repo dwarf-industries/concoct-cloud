@@ -29,17 +29,9 @@ namespace Rokono_Control.Controllers
         {
             var currentUser = this.User;
             var currentUserId = currentUser.Claims.ElementAt(1);
-            var rights = currentUser.Claims.LastOrDefault().Value;
             ViewData["ProjectId"] = projectId;
-            ViewData["IsAdmin"] = int.Parse(rights) == 1 ? true : false;
-
-            using (var context = new DatabaseController(Context, Configuration))
-            {
-                ViewData["Relationships"] = context.GetProjectRelationships();
-                ViewData["Branches"] = context.GetBranchesForProject(projectId);
-                ViewData["Projects"] = context.GetUserProjects(int.Parse(currentUserId.Value));
-                ViewData["DefaultIteration"] = context.GetProjectDefautIteration(projectId);
-            }
+ 
+          
             return View();
         }
         [HttpGet]

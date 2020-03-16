@@ -9,11 +9,12 @@ namespace Platform.ViewComponents
     public class NotesViewComponent : ViewComponent
     {
         private readonly RokonoControlContext Context;
-        private readonly IConfiguration configuration;
+        private readonly IConfiguration Configuration;
 
         public NotesViewComponent(RokonoControlContext context, IConfiguration config)
         {
             Context = context;
+            Configuration = config;
         }
 
         public IViewComponentResult Invoke(int projectId)
@@ -21,7 +22,7 @@ namespace Platform.ViewComponents
             
             var user =  Request.HttpContext.User.Claims.ElementAt(1);
             var Id = int.Parse(user.Value);
-            using(var context = new DatabaseController(Context,configuration))
+            using(var context = new DatabaseController(Context,Configuration))
             {
                 var Notes =  context.GetUserNotes(Id, projectId);
                 ViewData["Notes"] = Notes;

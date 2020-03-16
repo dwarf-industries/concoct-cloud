@@ -30,8 +30,7 @@ namespace Rokono_Control.Controllers
                 var currentId = int.Parse(id.Value);
                 ViewData["Projects"] = context.GetUserProjects(currentId);
                 ViewData["Name"] = context.GetUsername(currentId);
-                var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = rights;
+
 
             }
             return View();
@@ -56,11 +55,9 @@ namespace Rokono_Control.Controllers
 
             using (var context = new DatabaseController(Context,Configuration))
             {
-                var rights = currentUser.Claims.LastOrDefault().Value;
                 var workItemBytitle = context.GetWorkItemByTitle(title);
                 if(workItemBytitle != null && parentId == 0)
                     parentId = workItemBytitle.Id;
-                ViewData["IsAdmin"] = rights;
                 ViewData["Priorities"] = context.GetProjectPriorities(projectId);
                 ViewData["Areas"] = context.GetProjectAreas(projectId);
                 ViewData["Iterations"] = context.GetProjectIterations(projectId);
@@ -68,14 +65,12 @@ namespace Rokono_Control.Controllers
                 ViewData["Activities"] = context.GetProjectActivities(projectId);
                 ViewData["Reasons"] = context.GetProjectReasons(projectId);
                 ViewData["Builds"] = context.GetProjectBuilds(projectId);
-                ViewData["Relationships"] = context.GetProjectRelationships();
                 ViewData["ValueAreas"] = context.GetProjectValueAreas(projectId);
                 ViewData["Risks"] = context.GetProjectRisks(projectId);
                 ViewData["WorkItemType"] = workItemType;
                 ViewData["ProjectId"] = projectId;
                 ViewData["ParentId"] = parentId;
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(currentUserId.Value));
-                ViewData["DefaultIteration"] = context.GetProjectDefautIteration(projectId);
                 ViewData["ReturnPath"] = returnUrl;
 
             }
@@ -90,8 +85,7 @@ namespace Rokono_Control.Controllers
             using (var context = new DatabaseController(Context,Configuration))
             {
                 var defaultUserAccount = context.GetDefaultAccount();
-                var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = rights;
+
                 var workItemData = context.GetWorkItem(workItem, projectId);
                 workItemData.DueDate = workItemData.DueDate.HasValue ? workItemData.DueDate.Value : new System.DateTime();
                 workItemData.StartDate = workItemData.StartDate.HasValue ? workItemData.StartDate.Value : new System.DateTime();
@@ -105,13 +99,11 @@ namespace Rokono_Control.Controllers
                 ViewData["Activities"] = context.GetProjectActivities(projectId);
                 ViewData["Reasons"] = context.GetProjectReasons(projectId);
                 ViewData["Builds"] = context.GetProjectBuilds(projectId);
-                ViewData["Relationships"] = context.GetProjectRelationships();
                 ViewData["ValueAreas"] = context.GetProjectValueAreas(projectId);
                 ViewData["Risks"] = context.GetProjectRisks(projectId);
                 ViewData["WorkItemType"] = currentWorkItem.WorkItemTypeId;
                 ViewData["WorkItemData"] = currentWorkItem;
                 ViewData["ProjectId"] = projectId;
-                ViewData["Projects"] = context.GetUserProjects(int.Parse(currentUserId.Value));
                 ViewData["ReturnPath"] = returnUrl;
 
 
@@ -126,11 +118,8 @@ namespace Rokono_Control.Controllers
 
             using (var context = new DatabaseController(Context,Configuration))
             {
-                var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = rights;
-                ViewData["Relationships"] = context.GetProjectRelationships();
+
                 ViewData["UserAccounts"] = context.GetUserAccounts();
-                ViewData["Projects"] = context.GetUserProjects(int.Parse(currentUserId.Value));
                 ViewData["ProjectId"] = id;
 
             }
@@ -139,14 +128,7 @@ namespace Rokono_Control.Controllers
 
         public IActionResult ProjectDetails()
         {
-            var currentUser = this.User;
-            var currentUserId = currentUser.Claims.ElementAt(1);
-
-            using (var context = new DatabaseController(Context,Configuration))
-            {
-                ViewData["Projects"] = context.GetUserProjects(int.Parse(currentUserId.Value));
-
-            }
+            
             return View();
         }
 
@@ -159,9 +141,7 @@ namespace Rokono_Control.Controllers
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(currentUserId.Value));
 
-                var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = int.Parse(rights);
-                ViewData["Relationships"] = context.GetProjectRelationships();
+
                 ViewData["UserAccount"] = context.GetSpecificUserEdit(id);
                 ViewData["UserId"] = id;
                 ViewData["ProjectId"] = projectId;
@@ -178,8 +158,7 @@ namespace Rokono_Control.Controllers
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(currentUserId.Value));
 
-                var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = rights;
+
                 ViewData["Relationships"] = context.GetProjectRelationships();
 
 
@@ -192,14 +171,10 @@ namespace Rokono_Control.Controllers
             var currentUserId = currentUser.Claims.ElementAt(1);
             using (var context = new DatabaseController(Context,Configuration))
             {
-                ViewData["Relationships"] = context.GetProjectRelationships();
-                var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = rights;
-                ViewData["Relationships"] = context.GetProjectRelationships();
+
                 ViewData["UserAccount"] = context.GetSpecificUserEdit(id);
                 ViewData["UserId"] = id;
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(currentUserId.Value));
-                ViewData["DefaultIteration"] = context.GetProjectDefautIteration(id);
 
             }
             return View();
@@ -215,13 +190,10 @@ namespace Rokono_Control.Controllers
                 var project = context.GetProjectData(id);
                 var initials = project.ProjectName.ToUpper().Substring(0, 2);
                 var currentId = int.Parse(currentUserId.Value);
-                var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = rights;
-                ViewData["Relationships"] = context.GetProjectRelationships();
+
                 ViewData["Project"] = project;
                 ViewData["ProjectMembers"] = context.GetProjectMembers(id);
                 ViewData["ProjectId"] = id;
-                ViewData["DefaultIteration"] = context.GetProjectDefautIteration(id);
                 ViewData["Initials"] = initials;
                 ViewData["WorkItemsCreated"] = context.GetCreatedWorkItemCount(id);
                 ViewData["WorkItemsNew"] = context.GetWorkItemCountByType(id, 1);
@@ -241,13 +213,10 @@ namespace Rokono_Control.Controllers
             var id = currentUser.Claims.ElementAt(1);
             using (var context = new DatabaseController(Context,Configuration))
             {
-                ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
 
-                var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = rights;
+    
                 var currentId = int.Parse(id.Value);
                 ViewData["ProjectId"] = projectId;
-                ViewData["Relationships"] = context.GetProjectRelationships();
                 ViewData["Name"] = context.GetUsername(currentId);
                 ViewData["BoardId"] = boardId;
             }
@@ -255,21 +224,8 @@ namespace Rokono_Control.Controllers
         }
         public IActionResult ChangelogGenerator(int projectId)
         {
-              var currentUser = this.User;
-            var id = currentUser.Claims.ElementAt(1);
-            using (var context = new DatabaseController(Context,Configuration))
-            {
-                ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
-
-                var rights = currentUser.Claims.LastOrDefault().Value;
-                ViewData["IsAdmin"] = rights;
-                var currentId = int.Parse(id.Value);
-                ViewData["ProjectId"] = projectId;
-                ViewData["Relationships"] = context.GetProjectRelationships();
-                ViewData["BoardId"] = 0;
-                
-
-            }
+            ViewData["ProjectId"] = projectId;
+            ViewData["BoardId"] = 0;
             return View();
         }
         #endregion

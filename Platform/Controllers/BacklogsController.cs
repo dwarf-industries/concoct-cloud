@@ -21,23 +21,9 @@ namespace Rokono_Control.Controllers
         }
 
         public IActionResult Index(int projectId, int boardId)
-        {
-            var currentUser = this.User;
-            var rights = currentUser.Claims.LastOrDefault().Value;
-            ViewData["IsAdmin"] = rights;
-            var id = currentUser.Claims.ElementAt(1);
-            using (var context = new DatabaseController(Context,Configuration))
-            {
-                ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
-
-                var currentId = int.Parse(id.Value);
-                ViewData["ProjectId"] = projectId;
-                ViewData["Relationships"] = context.GetProjectRelationships();
-                ViewData["Name"] = context.GetUsername(currentId);
-                ViewData["BoardId"] = boardId;
-                ViewData["DefaultIteration"] = context.GetProjectDefautIteration(projectId);
-
-            }
+        {           
+            ViewData["ProjectId"] = projectId;
+            ViewData["BoardId"] = boardId;
             return View();
         }
       

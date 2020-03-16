@@ -23,8 +23,6 @@ namespace RokonoControl.Controllers
             var currentUser = this.User;
             var id = currentUser.Claims.ElementAt(1);
 
-            var rights = currentUser.Claims.LastOrDefault().Value;
-            ViewData["IsAdmin"] = rights;
             using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
@@ -41,21 +39,12 @@ namespace RokonoControl.Controllers
         public IActionResult CommitData(string commitId, int projectId, int branchId)
         {
             var currentUser = this.User;
-            var rights = currentUser.Claims.LastOrDefault().Value;
             var id = currentUser.Claims.ElementAt(1);
 
-            ViewData["IsAdmin"] = rights;
             ViewData["CommitKey"] = commitId;
             ViewData["BranchId"] = branchId;
             ViewData["ProjectId"] = projectId;
-            using (var context = new DatabaseController(Context,Configuration))
-            {
-                ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
-
-                ViewData["Relationships"] = context.GetProjectRelationships();
-                ViewData["DefaultIteration"] = context.GetProjectDefautIteration(projectId);
-
-            }
+            
             return View();
         }
         public IActionResult Files(int projectId)
@@ -63,8 +52,7 @@ namespace RokonoControl.Controllers
             var currentUser = this.User;
             var id = currentUser.Claims.ElementAt(1);
 
-            var rights = currentUser.Claims.LastOrDefault().Value;
-            ViewData["IsAdmin"] = rights;
+
             ViewData["ProjectId"] = projectId;
             using (var context = new DatabaseController(Context,Configuration))
             {

@@ -9,11 +9,12 @@ namespace Platform.ViewComponents
     public class LoadedProjectsViewComponent : ViewComponent
     {
          private readonly RokonoControlContext Context;
-         private readonly IConfiguration configuration;
+         private readonly IConfiguration Configuration;
 
         public LoadedProjectsViewComponent(RokonoControlContext context, IConfiguration config)
         {
             Context = context;
+            Configuration = config;
         }
 
         public IViewComponentResult Invoke(int projectId)
@@ -21,12 +22,13 @@ namespace Platform.ViewComponents
             
             var user =  Request.HttpContext.User.Claims.ElementAt(1);
             var Id = int.Parse(user.Value);
-            using(var context = new DatabaseController(Context,configuration))
+            using(var context = new DatabaseController(Context,Configuration))
             {
                 var projects =  context.GetUserProjects(Id);
                 var current = projects.FirstOrDefault(x=>x.Id == projectId);
                 ViewData["Projects"] = projects;
                 ViewData["SelectedIndex"] = projects.IndexOf(current);
+     
             }
             return View();
         }

@@ -1,10 +1,6 @@
 @{
-    var builds = ViewData["Builds"] as List<Builds>;
-    var relationships = ViewData["Relationships"] as List<WorkItemRelations>;
-    var ProjectId = ViewData["ProjectId"];
-    var Projects = ViewData["Projects"] as List<Projects>;
-    var defaultIteration = ViewData["DefaultIteration"] as int?;
-    var IsAdmin = ViewData["IsAdmin"] as int?;
+    var ProjectId = ViewData["ProjectId"] as int?;
+    var BoardId = ViewData["BoardId"] as int?;
 }
 
 <!doctype html>
@@ -41,11 +37,8 @@
                 <aside id="sidebar-treeview">
                     <div class="main-menu">
                         <div class="table-content" style="padding:0;">
-                            @if (IsAdmin == 1)
-                            {
-                                <button  type="button" id="Persons" class="btn btn-primary" style="margin-top:2px; width:100%" onclick="CallUrl('/Dashboard/AddNewProject?user=')">Add new project</button>
-
-                            }
+                    
+                            @await Component.InvokeAsync("ManagementRights", @ProjectId)
                             @await Component.InvokeAsync("LoadedProjects", @ProjectId)
                             <div class="row" style="background-color:#4fb9fc; margin:0;">
                                 <img src="~/Logo/logo.png" class="img-responsive" style="width:50%;height:59%; margin-left:25%;" />
@@ -59,12 +52,8 @@
                                 <button  type="button" id="NotesBtn" class="btn btn-primary" style="margin-top:2px; width:100%" onclick="ShowNotes()" >Notes</button>
 
                             </div>
-                            <div class="row" style="margin:0;">
-                                <div>
-                                    <ul id="main-treeview">
-                                    </ul>
-                                </div>
-                            </div>
+                            @await Component.InvokeAsync("NavigationMenu", @ProjectId)
+
 
                         </div>
 
@@ -91,8 +80,7 @@
 <script>
   
 
-    var Persons = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
-    Persons.appendTo('#Persons');
+    
     var data;
     // Sidebar Initialization
     var sidebarMenu = new ej.navigations.Sidebar({
@@ -108,56 +96,7 @@
         sidebarMenu.toggle();
     });
     // open new tab
-    var URL = location.href.replace(location.search, '');
-  //  document.getElementById('newTab').setAttribute('href', URL.split('#')[0] + 'sidebar/responsive-panel/index.html');
-    data = [
-
-        {
-            nodeId: '01', nodeText: 'Dashboard', iconCss: 'icon-th icon',
-            nodeChild: [
-                { nodeId: '01-01', nodeText: 'Home', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ProjectDashboard?id=@ProjectId' },
-                { nodeId: '01-02', nodeText: 'Project Details', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ProjectDetails' },
-                { nodeId: '01-03', nodeText: 'Manage Accounts', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ManageAccounts?id=@ProjectId' },
-                { nodeId: '01-04', nodeText: 'Generate Changelog', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ChangelogGenerator?projectId=@ProjectId' },
-            ]
-        },
-        {
-            nodeId: '02', nodeText: 'Backlog', iconCss: 'icon-code icon',
-            nodeChild: [
-                { nodeId: '02-01', nodeText: 'Work Items', iconCss: 'icon-circle-thin icon', link: '/Backlogs/Index?projectId=@ProjectId&&boardId' },
-                { nodeId: '02-02', nodeText: 'Planning Boards', iconCss: 'icon-circle-thin icon', link: '/Boards/Index?projectId=@ProjectId' },
-                { nodeId: '02-03', nodeText: 'Backlog', iconCss: 'icon-circle-thin icon', link: '/Boards/ProjectBacklog?projectId=@ProjectId&&workItemType=5' },
-                { nodeId: '02-04', nodeText: 'Sprints', iconCss: 'icon-circle-thin icon', link: '/Boards/Sprints?projectId=@ProjectId&&workItemType=7&&iteration=@defaultIteration&&person=0' },
-                { nodeId: '02-05', nodeText: 'View Changelogs', iconCss: 'icon-circle-thin icon', link: '/Changelog/ViewChangelogs?projectId=@ProjectId' },
-
-            ]
-        },
-
-    ];
-    console.log(data);
-    // TreeView  initialization
-    var mainTreeView= new ej.navigations.TreeView({
-        fields: { dataSource: data, id: 'nodeId', text: 'nodeText', child: 'nodeChild' },nodeSelected: LinkSelected, expandOn: 'Click'
-    });
-
-    mainTreeView.appendTo('#main-treeview');
-
-    function LinkSelected(args)
-    {
-        console.log(args);
-        data.forEach(element =>
-        {
-            console.log(element);
-            element.nodeChild.forEach(child =>
-            {
-                if(child.nodeId === args.nodeData.id)
-                    window.location.href = child.link;
-            });
-        });
-
-    // console.log(data.find(x => x.nodeChild.nodeId === args.nodeData.id));
-    }
-
+  
    
 
     function CallUrl(url)
