@@ -1601,6 +1601,7 @@ namespace Rokono_Control.DatabaseHandlers
         {
             var accounts = Context.UserAccounts.Include(x => x.AssociatedProjectMembers)
                                         .ThenInclude(AssociatedProjectsMembers => AssociatedProjectsMembers.Project)
+                                        
                                         .Where(x=>x.AssociatedProjectMembers.Any(y=>y.ProjectId == projectId))
                                         .ToList();
             return accounts.Select(x => new OutgoingAccountManagment
@@ -1610,7 +1611,6 @@ namespace Rokono_Control.DatabaseHandlers
                 Type = x.ProjectRights == 1 ? "Regular" : "Administrator",
                 Email = x.Email,
                 CreationDate = x.CreationDate,
-                Projects = GetJsonData(x.AssociatedProjectMembers.Select(y => y.Project).ToList())
             }).ToList();
         }
 

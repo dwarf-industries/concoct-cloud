@@ -17918,55 +17918,6 @@
       },
       {
         "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__NotesViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "Documentation": null,
-        "TagOutputHint": null,
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:notes",
-            "ParentTag": null,
-            "TagStructure": 0,
-            "Attributes": [
-              {
-                "Name": "project-id",
-                "NameComparison": 0,
-                "Value": null,
-                "ValueComparison": 0,
-                "Diagnostics": [],
-                "Metadata": {}
-              }
-            ],
-            "Diagnostics": []
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "project-id",
-            "TypeName": "System.Int32",
-            "IsEnum": false,
-            "IndexerNamePrefix": null,
-            "IndexerTypeName": null,
-            "Documentation": null,
-            "Diagnostics": [],
-            "Metadata": {
-              "Common.PropertyName": "projectId"
-            },
-            "BoundAttributeParameters": []
-          }
-        ],
-        "AllowedChildTags": [],
-        "Diagnostics": [],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__NotesViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "Notes"
-        }
-      },
-      {
-        "Kind": "MVC.ViewComponent",
         "Name": "__Generated__ManagementRightsViewComponentTagHelper",
         "AssemblyName": "Rokono Control",
         "Documentation": null,
@@ -18061,6 +18012,55 @@
           "Runtime.Name": "ITagHelper",
           "Common.TypeName": "__Generated__NavigationMenuViewComponentTagHelper",
           "MVC.ViewComponent.Name": "NavigationMenu"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__NotesViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:notes",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "project-id",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "project-id",
+            "TypeName": "System.Int32",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "projectId"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__NotesViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "Notes"
         }
       },
       {

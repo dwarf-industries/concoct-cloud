@@ -8,7 +8,10 @@
 
 <link href="https://cdn.syncfusion.com/ej2/ej2-base/styles/material.css" rel="stylesheet" type="text/css" />
 <link href="https://cdn.syncfusion.com/ej2/ej2-layouts/styles/material.css" rel="stylesheet" type="text/css" />
- 
+     <div id="spinner">
+            <div id="loader"></div>
+        </div>
+        <div id="Content" hidden>
         <div class="row">
             <div class="col-md-12">
                 <div class="main-card mb-3 card">
@@ -25,20 +28,29 @@
         </div>
         <div class="row">
             <div class="control-section">
-                <div class="content-wrapper">
+                <div class="content-wrapper" id="GridHolder">
                     <div id="Grid"></div>        
                 </div>
             </div>
+        </div>
         </div>
  
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
  <script>
+     var selectedDeleteId;
     $( document ).ready(function() 
     {
         var AddNewMember = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
         AddNewMember.appendTo('#AddNewMember');
-        $.ajax({
+        GetAccountsData();
+        
+    });
+
+    function GetAccountsData()
+    {
+        ShowLoader();
+         $.ajax({
             type: 'GET',
             url: '/Authenication/GetManagmentUsers?projectId=@ProjectId',
             contentType: "application/json; charset=utf-8",
@@ -50,14 +62,17 @@
     
             }
         });
-        
-    });
+    }
 
     function LoadAccounts(data){
+        $("#GridHolder").html("");
+        $("#GridHolder").html("<div id=\"Grid\"></div>");
+
         var grid = new ej.grids.Grid({
             dataSource: data,
             editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true, allowEditOnDblClick: false },
             beginEdit : EditClicked,
+
             actionBegin: ActionComplete,
              columns: [
                 { field: 'name', headerText: 'Name', width: 120, textAlign: 'Right' },
@@ -75,17 +90,26 @@
             ]
         });
         grid.appendTo('#Grid');
+        ShowContent();
     }
     function EditClicked(args){
         console.log(args);
         window.location.href="/Dashboard/EditAccount?id="+args.rowData.accountId+"&&projectId="+@ProjectId;
     }
     function ActionComplete(args){
-        console.log(args);
+        //console.log(args);
         if(args.requestType == "delete")
         {
+            selectedDeleteId = args.data[0].accountId;
+            ShowLoader();
+            DeleteClicked();
+        }
+    }
+
+    function DeleteClicked()
+    {
             var dto = {
-                "AccountId" : args.data[0].accountId,
+                "AccountId" : selectedDeleteId,
                 "ProjectId" : @ProjectId
             }
             $.ajax({
@@ -95,18 +119,12 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    alert("Records have been added!");
+                    GetAccountsData();
                 },
                 error: function (xhr, status, error) {
                     console.log(error);
                 }
             });
-        }
-    }
-
-    function DeleteClicked()
-    {
-        
     }
 
     function CallUrl(url)
