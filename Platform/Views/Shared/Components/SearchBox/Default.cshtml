@@ -1,0 +1,26 @@
+@{
+    var ProjectId = ViewData["ProjectId"] as int?;
+}
+
+<div class="row" style="margin:0;">
+    <input type="text" id="SearchBox" style="width:100%; height:30px;" >
+</div>
+
+<script>
+
+    var SearchBox = new ej.inputs.TextBox({
+        placeholder: 'Search work item by title',
+        floatLabelType: 'Auto'
+    });
+    SearchBox.appendTo('#SearchBox');
+
+
+
+
+$("#SearchBox").on('keyup', function (e) {
+       if (e.keyCode === 13) {
+        window.location.href ="/Backlogs/Index?projectId=@ProjectId&&boardId=0&&phase="+$("#SearchBox").val();
+    }
+});
+
+</script>

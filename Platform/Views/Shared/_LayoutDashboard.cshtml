@@ -8,6 +8,7 @@
 <head>
     <link href="~/css/Shared/_LayoutDashboard.css" rel="stylesheet" />
 
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
     <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
     <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
@@ -44,9 +45,8 @@
                                 <img src="~/Logo/logo.png" class="img-responsive" style="width:50%;height:59%; margin-left:25%;" />
                             </div>
 
-                            <div class="row" style="margin:0;">
-                                <input type="text" placeholder="Search..." style="width:100%;" class="search-icon">
-                            </div>
+                            @await Component.InvokeAsync("SearchBox", @ProjectId)
+
                             <div class="row" style="margin:0;">
                                 <p class="main-menu-header">Navigation</p>
                                 <button  type="button" id="NotesBtn" class="btn btn-primary" style="margin-top:2px; width:100%" onclick="ShowNotes()" >Notes</button>

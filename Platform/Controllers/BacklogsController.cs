@@ -20,10 +20,14 @@ namespace Rokono_Control.Controllers
             Configuration = config;
         }
 
-        public IActionResult Index(int projectId, int boardId)
+        public IActionResult Index(int projectId, int boardId, string phase)
         {           
             ViewData["ProjectId"] = projectId;
             ViewData["BoardId"] = boardId;
+            if(string.IsNullOrEmpty(phase))
+                ViewData["Phase"] = "!";
+            else
+                ViewData["Phase"] = phase;
             return View();
         }
       
@@ -36,6 +40,8 @@ namespace Rokono_Control.Controllers
             using (var context = new DatabaseController(Context,Configuration))
             {
                 var data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType);
+                if(IncomingIdRequest.Phase != "!")
+                    data = data.Where(x=>x.WorkItem.Title.Contains(IncomingIdRequest.Phase)).ToList();
                 var bData = data.Select(x => x.WorkItem).ToList();
                 bData.ForEach(x =>
                 {
