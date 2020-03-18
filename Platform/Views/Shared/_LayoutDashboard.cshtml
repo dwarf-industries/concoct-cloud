@@ -40,6 +40,7 @@
                         <div class="table-content" style="padding:0;">
                     
                             @await Component.InvokeAsync("ManagementRights", @ProjectId)
+                            @await Component.InvokeAsync("UserSettings", @ProjectId)
                             @await Component.InvokeAsync("LoadedProjects", @ProjectId)
                             <div class="row" style="background-color:#4fb9fc; margin:0;">
                                 <img src="~/Logo/logo.png" class="img-responsive" style="width:50%;height:59%; margin-left:25%;" />
