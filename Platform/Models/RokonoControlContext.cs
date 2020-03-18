@@ -25,6 +25,8 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedProjectIterations> AssociatedProjectIterations { get; set; }
         public virtual DbSet<AssociatedProjectMemberRights> AssociatedProjectMemberRights { get; set; }
         public virtual DbSet<AssociatedProjectMembers> AssociatedProjectMembers { get; set; }
+        public virtual DbSet<AssociatedProjectNotifications> AssociatedProjectNotifications { get; set; }
+        public virtual DbSet<AssociatedProjectPublicMessages> AssociatedProjectPublicMessages { get; set; }
         public virtual DbSet<AssociatedRepositoryBranches> AssociatedRepositoryBranches { get; set; }
         public virtual DbSet<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
         public virtual DbSet<AssociatedWorkItemMessages> AssociatedWorkItemMessages { get; set; }
@@ -36,7 +38,10 @@ namespace Rokono_Control.Models
         public virtual DbSet<Commits> Commits { get; set; }
         public virtual DbSet<Efforts> Efforts { get; set; }
         public virtual DbSet<Files> Files { get; set; }
+        public virtual DbSet<NotificationTypes> NotificationTypes { get; set; }
+        public virtual DbSet<Notifications> Notifications { get; set; }
         public virtual DbSet<Projects> Projects { get; set; }
+        public virtual DbSet<PublicMessage> PublicMessage { get; set; }
         public virtual DbSet<Repository> Repository { get; set; }
         public virtual DbSet<Risks> Risks { get; set; }
         public virtual DbSet<UserAccounts> UserAccounts { get; set; }
@@ -55,7 +60,8 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemSeverities> WorkItemSeverities { get; set; }
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
- 
+
+      
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AssociatedAccountNotes>(entity =>
@@ -227,6 +233,36 @@ namespace Rokono_Control.Models
                     .HasConstraintName("FK__Associate__UserA__5441852A");
             });
 
+            modelBuilder.Entity<AssociatedProjectNotifications>(entity =>
+            {
+                entity.HasOne(d => d.Notification)
+                    .WithMany(p => p.AssociatedProjectNotifications)
+                    .HasForeignKey(d => d.NotificationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Associate__Notif__178D7CA5");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.AssociatedProjectNotifications)
+                    .HasForeignKey(d => d.ProjectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Associate__Proje__1881A0DE");
+            });
+
+            modelBuilder.Entity<AssociatedProjectPublicMessages>(entity =>
+            {
+                entity.HasOne(d => d.Message)
+                    .WithMany(p => p.AssociatedProjectPublicMessages)
+                    .HasForeignKey(d => d.MessageId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Associate__Messa__10E07F16");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.AssociatedProjectPublicMessages)
+                    .HasForeignKey(d => d.ProjectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Associate__Proje__0FEC5ADD");
+            });
+
             modelBuilder.Entity<AssociatedRepositoryBranches>(entity =>
             {
                 entity.HasOne(d => d.Branch)
@@ -346,6 +382,23 @@ namespace Rokono_Control.Models
                 entity.Property(e => e.DateOfFile).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<NotificationTypes>(entity =>
+            {
+                entity.Property(e => e.NotificationType).IsRequired();
+            });
+
+            modelBuilder.Entity<Notifications>(entity =>
+            {
+                entity.Property(e => e.Content).IsRequired();
+
+                entity.Property(e => e.DateOfMessage).HasColumnType("datetime");
+
+                entity.HasOne(d => d.NotificationTypeNavigation)
+                    .WithMany(p => p.Notifications)
+                    .HasForeignKey(d => d.NotificationType)
+                    .HasConstraintName("FK__Notificat__Notif__1975C517");
+            });
+
             modelBuilder.Entity<Projects>(entity =>
             {
                 entity.Property(e => e.CreationDate).HasColumnType("datetime");
@@ -355,6 +408,17 @@ namespace Rokono_Control.Models
                     .HasForeignKey(d => d.RepositoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Projects__Reposi__4BAC3F29");
+            });
+
+            modelBuilder.Entity<PublicMessage>(entity =>
+            {
+                entity.Property(e => e.Content).IsRequired();
+
+                entity.Property(e => e.DateOfMessage).HasColumnType("datetime");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(200);
             });
 
             modelBuilder.Entity<Repository>(entity =>

@@ -15,6 +15,8 @@ namespace Rokono_Control.Models
             AssociatedProjectIterations = new HashSet<AssociatedProjectIterations>();
             AssociatedProjectMemberRights = new HashSet<AssociatedProjectMemberRights>();
             AssociatedProjectMembers = new HashSet<AssociatedProjectMembers>();
+            AssociatedProjectNotifications = new HashSet<AssociatedProjectNotifications>();
+            AssociatedProjectPublicMessages = new HashSet<AssociatedProjectPublicMessages>();
             AssociatedWorkItemChangelogs = new HashSet<AssociatedWorkItemChangelogs>();
             Branches = new HashSet<Branches>();
         }
@@ -27,6 +29,11 @@ namespace Rokono_Control.Models
         public DateTime? CreationDate { get; set; }
         public int? BoardId { get; set; }
         public int? PublicBoard { get; set; }
+        public int? AllowPublicControl { get; set; }
+        public int? AllowPublicFeatures { get; set; }
+        public int? AllowPublicBugs { get; set; }
+        public int? AllowPublicFeedback { get; set; }
+        public int? AllowPublicMessages { get; set; }
 
         public virtual Repository Repository { get; set; }
         public virtual ICollection<AssociatedAccountNotes> AssociatedAccountNotes { get; set; }
@@ -37,6 +44,8 @@ namespace Rokono_Control.Models
         public virtual ICollection<AssociatedProjectIterations> AssociatedProjectIterations { get; set; }
         public virtual ICollection<AssociatedProjectMemberRights> AssociatedProjectMemberRights { get; set; }
         public virtual ICollection<AssociatedProjectMembers> AssociatedProjectMembers { get; set; }
+        public virtual ICollection<AssociatedProjectNotifications> AssociatedProjectNotifications { get; set; }
+        public virtual ICollection<AssociatedProjectPublicMessages> AssociatedProjectPublicMessages { get; set; }
         public virtual ICollection<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
         public virtual ICollection<Branches> Branches { get; set; }
     }

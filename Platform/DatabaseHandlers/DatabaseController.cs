@@ -43,6 +43,11 @@ namespace Rokono_Control.DatabaseHandlers
 
         }
 
+        internal object GetAllUserNotifications()
+        {
+            throw new NotImplementedException();
+        }
+
         internal void AddNewUserNote(IncomingNoteRequest note, int id)
         {
             var currentNote = Context.UserNotes.Add(new UserNotes{
