@@ -43,9 +43,14 @@ namespace Rokono_Control.DatabaseHandlers
 
         }
 
-        internal object GetAllUserNotifications()
+        internal List<Notifications> GetAllUserNotifications(int accountId)
         {
-            throw new NotImplementedException();
+            var projectNotifications = Context.AssociatedProjectNotifications.Include(x=>x.Notification).Where(x=>x.UserAccountId == accountId && x.NewNotification == 1).ToList();
+            var userNotifications = Context.AssociatedUserNotifications.Include(x=>x.Notification).Where(x=>x.UserId == accountId && x.NewNotification == 1).ToList();
+            var notifications = new List<Notifications>();
+            notifications.AddRange(projectNotifications.Select(x=>x.Notification).ToList());
+            notifications.AddRange(userNotifications.Select(x=>x.Notification).ToList());
+            return notifications;
         }
 
         internal void AddNewUserNote(IncomingNoteRequest note, int id)

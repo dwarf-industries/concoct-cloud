@@ -62,7 +62,8 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
 
-  
+      
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AssociatedAccountNotes>(entity =>
@@ -247,6 +248,11 @@ namespace Rokono_Control.Models
                     .HasForeignKey(d => d.ProjectId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Associate__Proje__1881A0DE");
+
+                entity.HasOne(d => d.UserAccount)
+                    .WithMany(p => p.AssociatedProjectNotifications)
+                    .HasForeignKey(d => d.UserAccountId)
+                    .HasConstraintName("FK__Associate__UserA__1E3A7A34");
             });
 
             modelBuilder.Entity<AssociatedProjectPublicMessages>(entity =>
