@@ -28,6 +28,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedProjectNotifications> AssociatedProjectNotifications { get; set; }
         public virtual DbSet<AssociatedProjectPublicMessages> AssociatedProjectPublicMessages { get; set; }
         public virtual DbSet<AssociatedRepositoryBranches> AssociatedRepositoryBranches { get; set; }
+        public virtual DbSet<AssociatedUserNotifications> AssociatedUserNotifications { get; set; }
         public virtual DbSet<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
         public virtual DbSet<AssociatedWorkItemMessages> AssociatedWorkItemMessages { get; set; }
         public virtual DbSet<AssociatedWrorkItemChildren> AssociatedWrorkItemChildren { get; set; }
@@ -61,7 +62,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
 
-      
+  
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AssociatedAccountNotes>(entity =>
@@ -276,6 +277,21 @@ namespace Rokono_Control.Models
                     .HasForeignKey(d => d.RepositoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Associate__Repos__47A6A41B");
+            });
+
+            modelBuilder.Entity<AssociatedUserNotifications>(entity =>
+            {
+                entity.HasOne(d => d.Notification)
+                    .WithMany(p => p.AssociatedUserNotifications)
+                    .HasForeignKey(d => d.NotificationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Associate__Notif__1C5231C2");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AssociatedUserNotifications)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Associate__UserI__1D4655FB");
             });
 
             modelBuilder.Entity<AssociatedWorkItemChangelogs>(entity =>
