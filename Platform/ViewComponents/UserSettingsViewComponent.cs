@@ -25,8 +25,7 @@ namespace Platform.ViewComponents
             using(var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["UserData"] = context.GetUserAccount(Id);
-                ViewData["Notifications"] = context.GetAllUserNotifications(Id, projectId);
-            }
+             }
             return View();
         }
     }

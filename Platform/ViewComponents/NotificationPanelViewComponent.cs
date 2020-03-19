@@ -1,3 +1,4 @@
+
 namespace Platform.ViewComponents
 {
     using System.Linq;
@@ -6,12 +7,13 @@ namespace Platform.ViewComponents
     using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
 
-    public class SearchBoxViewComponent : ViewComponent
+    public class NotificationPanelViewComponent : ViewComponent
     {
+        
         private readonly RokonoControlContext Context;
         private readonly IConfiguration Configuration;
 
-        public SearchBoxViewComponent(RokonoControlContext context, IConfiguration config)
+        public NotificationPanelViewComponent(RokonoControlContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;
@@ -19,9 +21,14 @@ namespace Platform.ViewComponents
 
         public IViewComponentResult Invoke(int projectId)
         {
-            
-           
+            var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var Id = int.Parse(user.Value);
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                ViewData["UserId"] = Id;
+            }
             return View();
         }
+        
     }
 }

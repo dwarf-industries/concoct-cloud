@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -86,6 +87,20 @@ namespace Platform.Controllers
             }
 
             return new OutgoingJsonData { Data = ""};
+        }
+
+        [HttpPost]
+        public List<Notifications> GetUserNotifications([FromBody] IncomingNoteRequest note)
+        {
+            var result = new List<Notifications>();
+            var currentUser = this.User;
+            var id = int.Parse(currentUser.Claims.ElementAt(1).Value);
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                result = context.GetAllUserNotifications(id, note.ProjectId);
+            }
+
+            return result;
         }
 
         

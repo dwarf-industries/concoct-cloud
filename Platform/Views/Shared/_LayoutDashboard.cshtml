@@ -6,7 +6,7 @@
 <!doctype html>
 <html>
 <head>
-    <link href="~/css/Shared/_LayoutDashboard.css" rel="stylesheet" />
+<link href="~/css/Shared/_LayoutDashboard.css" rel="stylesheet" />
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
@@ -53,8 +53,12 @@
                                 <button  type="button" id="NotesBtn" class="btn btn-primary" style="margin-top:2px; width:100%" onclick="ShowNotes()" >Notes</button>
 
                             </div>
-                            @await Component.InvokeAsync("NavigationMenu", @ProjectId)
-
+                            <div id="NavGrid">
+                                @await Component.InvokeAsync("NavigationMenu", @ProjectId)
+                            </div>
+                            <div id="NotificationGrid" style="display: none;">
+                                @await Component.InvokeAsync("NotificationPanel", @ProjectId)
+                            </div>
 
                         </div>
 

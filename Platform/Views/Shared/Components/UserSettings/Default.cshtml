@@ -74,7 +74,7 @@
                 </div>
                 <div>
                     <div class="badge-block">
-                        <div class="message icons"></div>
+                        <div class="message icons" onclick="OpenNotifications()"></div>
                         <!-- Notification Badge -->
                         <span class="e-badge e-badge-primary e-badge-notification e-badge-overlap" style="background-color: #1c86c8;">35</span>
                     </div>
@@ -130,4 +130,11 @@
     var userBar = new ej.navigations.Toolbar();
     //Render initialized Toolbar component
     userBar.appendTo('#userBar');
+
+
+    function OpenNotifications()
+    {
+        $('#NavGrid').slideToggle();
+        $('#NotificationGrid').slideToggle();
+    }
 </script>
