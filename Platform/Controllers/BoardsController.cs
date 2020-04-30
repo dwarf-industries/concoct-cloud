@@ -224,6 +224,11 @@ namespace RokonoControl.Controllers
             using (var context = new DatabaseController(Context,Configuration))
             {
                 context.ChangeCardOwner(card);
+                var getId = card.CardId.Split(" ");
+                var parse = int.Parse(getId[1]);
+                var workItem = context.GetWorkItemById(parse);
+                var getUserByName = context.GetUserAccountByName(card.Name);
+                context.AddNewUserNotification(1,workItem,getUserByName.Id);
             }
             return true;
         }

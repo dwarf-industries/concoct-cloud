@@ -156,6 +156,20 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                         
                 }
             });
+            var notification = Context.Notifications.Add(new Notifications{
+                DateOfMessage = DateTime.Now,
+                Content = $"WorkItem {currentItem.WorkItemId}: Has been updated",
+                NotificationType = 4,
+                WorkItemRelationid = currentItem.WorkItemId
+            });
+            Context.SaveChanges();
+            Context.AssociatedProjectNotifications.Add(new AssociatedProjectNotifications{
+                NewNotification = 1,
+                NotificationId = notification.Entity.Id,
+                ProjectId = currentItem.ProjectId,
+                UserAccountId = currentItem.AssignedUser
+            });
+            Context.SaveChanges();
             return true;
         }
 
@@ -332,15 +346,31 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                             
                     }
                 });
+            var currentUser = "Unassigned";
             if(currentItem.AssignedUser != 0)
             {
                 var projectName = Context.Projects.FirstOrDefault(X=>X.Id == currentItem.ProjectId).ProjectName;
                 var getCurrentCreator = Context.UserAccounts.FirstOrDefault(x=>x.Id == currentItem.AssignedUser);
+                currentUser = getCurrentCreator.GitUsername;
                 using(var notificationHandler = new NotificationHandler(configuration))
                 {
                     notificationHandler.GenerateNewWorkItemNotification(item.Entity,getCurrentCreator, projectName);
                 }
             }
+            var notification = Context.Notifications.Add(new Notifications{
+                DateOfMessage = DateTime.Now,
+                Content = $"WorkItem {currentItem.WorkItemId}: Has been created and assigned to {currentUser}",
+                NotificationType = 3,
+                WorkItemRelationid = currentItem.WorkItemId
+            });
+            Context.SaveChanges();
+            Context.AssociatedProjectNotifications.Add(new AssociatedProjectNotifications{
+                NewNotification = 1,
+                NotificationId = notification.Entity.Id,
+                ProjectId = currentItem.ProjectId,
+                UserAccountId = currentItem.AssignedUser
+            });
+            Context.SaveChanges();
             return true;
         }
     }

@@ -145,7 +145,8 @@ namespace Rokono_Control.DatabaseHandlers
                                                 .ThenInclude(Board => Board.AssociatedBoardWorkItems)
                                                 .ThenInclude(AssociatedBoardWorkItems => AssociatedBoardWorkItems.WorkItem)
                                                 .ThenInclude(WorkItem => WorkItem.AssignedAccountNavigation)
-                                                .Where(x => x.ProjectId == projectId && x.Board.AssociatedBoardWorkItems.Any(z => z.WorkItem.WorkItemTypeId == workItemType)).ToList();
+                                                .Where(x => x.ProjectId == projectId && x.Board.AssociatedBoardWorkItems.Any(z => z.WorkItem.WorkItemTypeId == workItemType))
+                                                .ToList();
 
             var result = new List<BindingBoard>();
             var Cards = new List<BindingCards>();
@@ -211,6 +212,33 @@ namespace Rokono_Control.DatabaseHandlers
                 Context.AssociatedBoardWorkItems.RemoveRange(boards);
                 Context.SaveChanges();
             });
+        }
+
+        internal WorkItem GetWorkItemById(int parse)
+        {
+            return Context.WorkItem.FirstOrDefault(x=>x.Id == parse);
+        }
+
+        internal UserAccounts GetUserAccountByName(string name)
+        {
+            return Context.UserAccounts.FirstOrDefault(x=>x.Email == name);
+        }
+
+        internal void AddNewUserNotification(int v, WorkItem getWorKItemByName, int userId)
+        {
+            var notification = Context.Notifications.Add(new Notifications{
+                NotificationType = v,
+                Content = $"Work item -> {getWorKItemByName.Title} has been assigned to you",
+                DateOfMessage = DateTime.Now,
+                WorkItemRelationid = getWorKItemByName.Id
+            });
+            Context.SaveChanges();
+            Context.AssociatedUserNotifications.Add(new AssociatedUserNotifications{
+                NotificationId = notification.Entity.Id,
+                UserId =  userId,
+                NewNotification = 2
+            });
+            Context.SaveChanges();
         }
 
         internal WorkItem GetWorkItemByTitle(string title)
@@ -1126,6 +1154,7 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal List<OutgoingBindingWorkItem> GetAllWorkItems(int projectId)
         {
+    
             return Context.AssociatedBoardWorkItems
                         .Include(x => x.WorkItem)
                         .ThenInclude(WorkItem => WorkItem.WorkItemType)
@@ -1142,6 +1171,7 @@ namespace Rokono_Control.DatabaseHandlers
                             ItemTypeId = x.WorkItem.WorkItemType.Id
                         })
                         .ToList();
+
         }
 
         internal List<string> GetBranchFiles(int projectId, int branchId)

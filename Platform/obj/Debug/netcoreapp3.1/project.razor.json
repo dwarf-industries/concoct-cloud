@@ -18065,6 +18065,55 @@
       },
       {
         "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__NotificationPanelViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:notification-panel",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "project-id",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "project-id",
+            "TypeName": "System.Int32",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "projectId"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__NotificationPanelViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "NotificationPanel"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
         "Name": "__Generated__SearchBoxViewComponentTagHelper",
         "AssemblyName": "Rokono Control",
         "Documentation": null,
@@ -18159,55 +18208,6 @@
           "Runtime.Name": "ITagHelper",
           "Common.TypeName": "__Generated__UserSettingsViewComponentTagHelper",
           "MVC.ViewComponent.Name": "UserSettings"
-        }
-      },
-      {
-        "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__NotificationPanelViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "Documentation": null,
-        "TagOutputHint": null,
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:notification-panel",
-            "ParentTag": null,
-            "TagStructure": 0,
-            "Attributes": [
-              {
-                "Name": "project-id",
-                "NameComparison": 0,
-                "Value": null,
-                "ValueComparison": 0,
-                "Diagnostics": [],
-                "Metadata": {}
-              }
-            ],
-            "Diagnostics": []
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "project-id",
-            "TypeName": "System.Int32",
-            "IsEnum": false,
-            "IndexerNamePrefix": null,
-            "IndexerTypeName": null,
-            "Documentation": null,
-            "Diagnostics": [],
-            "Metadata": {
-              "Common.PropertyName": "projectId"
-            },
-            "BoundAttributeParameters": []
-          }
-        ],
-        "AllowedChildTags": [],
-        "Diagnostics": [],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__NotificationPanelViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "NotificationPanel"
         }
       },
       {
