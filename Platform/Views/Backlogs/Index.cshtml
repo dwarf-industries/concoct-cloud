@@ -13,6 +13,60 @@
 <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
 <link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
 
+<style>
+    .fa-bug:before{
+        font-family: "e-icons" !important;
+        content: '\e191';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .fa-cog:before{
+        font-family: "e-icons" !important;
+        content: '\e679';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .fa-tasks:before{
+        font-family: "e-icons" !important;
+        content: '\e728';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .fa-vial:before{
+        font-family: "e-icons" !important;
+        content: '\e664';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .fa-crown:before{
+        font-family: "e-icons" !important;
+        content: '\e824';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .fa-exclamation-triangle:before{
+        font-family: "e-icons" !important;
+        content: '\e74c';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .fa-user-circle:before{
+        font-family: "e-icons" !important;
+        content: '\e193';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+
+</style>
+
+
 <!-- end of sidebar element -->
 <!-- main-content declaration -->
  
@@ -220,16 +274,18 @@
             rowDeselected: RowDeselected,
             enableVirtualization: true,
             filterSettings: { type: 'Menu' },
+            queryCellInfo: customiseCell,
             selectionSettings: { persistSelection: true, type: "Multiple" },
             enableHover: false,
             allowPaging: true,
             pageSettings: { pageSize: 20 },
+            height:'750px',
             columns: [
                 { type: "checkbox", field: "", allowFiltering: false, allowSorting: false, width: '60' },
-                { field: 'workItemType.TypeName', headerText: 'Type', width: 60 },
+                { field: 'workItemType.TypeName', headerText: 'Type', width: 60,customAttributes: {class: "workItemIcon"}, textAlign: 'Right' },
                 { field: 'title', headerText: 'Title', width: 125 },
                 { field: 'description', headerText: 'Description', width: 180 },
-                { field: 'assignedAccountNavigation.Email', headerText: 'AssignedTo', width: 110 },
+                { field: 'assignedTo', headerText: 'AssignedTo', width: 110 },
             ]
         });
 
@@ -238,6 +294,14 @@
 
 
     }
+
+    function customiseCell(args) {
+        console.log(args);
+        if (args.column.headerText === 'Type' ){
+            args.cell.setAttribute('class', args.data.workItemIcon);
+        } 
+    }
+    
     function CreateNewWorkItem(id){
         ProjectId = @result;
         boardId = @BoardId;

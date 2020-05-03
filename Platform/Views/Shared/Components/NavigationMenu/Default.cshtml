@@ -18,16 +18,15 @@
     data = [
 
         {
-            nodeId: '01', nodeText: 'Dashboard', iconCss: 'icon-th icon',
+            nodeId: '01', nodeText: 'Dashboard', iconCss: 'icon-th icon',expanded: true,
             nodeChild: [
                 { nodeId: '01-01', nodeText: 'Home', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ProjectDashboard?id=@ProjectId' },
                 { nodeId: '01-02', nodeText: 'Project Details', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ProjectDetails' },
-                { nodeId: '01-03', nodeText: 'Manage Accounts', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ManageAccounts?id=@ProjectId' },
-                { nodeId: '01-04', nodeText: 'Generate Changelog', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ChangelogGenerator?projectId=@ProjectId' },
+          
             ]
         },
         {
-            nodeId: '02', nodeText: 'Backlog', iconCss: 'icon-code icon',
+            nodeId: '02', nodeText: 'Backlog', iconCss: 'icon-code icon',expanded: true,
             nodeChild: [
                 { nodeId: '02-01', nodeText: 'Work Items', iconCss: 'icon-circle-thin icon', link: '/Backlogs/Index?projectId=@ProjectId&&boardId' },
                 { nodeId: '02-02', nodeText: 'Planning Boards', iconCss: 'icon-circle-thin icon', link: '/Boards/Index?projectId=@ProjectId' },
@@ -37,6 +36,16 @@
 
             ]
         },
+         {
+            nodeId: '03', nodeText: 'Administration', iconCss: 'icon-code icon',expanded: true,
+            nodeChild: [
+                { nodeId: '03-01', nodeText: 'Manage Accounts', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ManageAccounts?id=@ProjectId' },
+                { nodeId: '03-02', nodeText: 'Generate Changelog', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ChangelogGenerator?projectId=@ProjectId' },
+                { nodeId: '03-03', nodeText: 'API Key Integations', iconCss: 'icon-circle-thin icon', link:'#' },
+
+            ]
+        },
+
 
     ];
     console.log(data);

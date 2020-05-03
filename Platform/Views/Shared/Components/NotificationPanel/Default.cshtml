@@ -5,6 +5,34 @@
 }
 
 <style type="text/css" class="cssStyles">
+
+  
+    .PM:before {
+        font-family: "e-icons" !important;
+        content: '\e75e';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .AI:before {
+        font-family: "e-icons" !important;
+        content: '\e315';
+        color: #1f248c;
+        width: 30px;
+        height: 30px;
+    }
+    .CW:before {
+        font-family: "e-icons" !important;
+        content: '\e30d';
+        color: #4e8c1f;
+        width: 30px;
+        height: 30px;
+    }
+    .UW:before {
+        font-family: "e-icons" !important;
+        content: '\e93c';
+        color: #1f8c71;
+    }
     .photo img {
         width: 100px;
         height: 100px;
@@ -66,7 +94,9 @@
 <script id="currentTemplate" type="text/x-template">
     <tr>
         <td class="photo">
-            <img src="src/grid/images/${notificationTypeNavigation.notificationType}.png" alt="${notificationTypeNavigation.notificationType}" />
+            <span class="${notificationTypeNavigation.icon}">
+
+            </span>
         </td>
         <td class="details">
             <table class="CardTable"  >

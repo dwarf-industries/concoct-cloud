@@ -12,6 +12,7 @@ namespace Rokono_Control.Models
 
         public int Id { get; set; }
         public string NotificationType { get; set; }
+        public string Icon { get; set; }
 
         public virtual ICollection<Notifications> Notifications { get; set; }
     }

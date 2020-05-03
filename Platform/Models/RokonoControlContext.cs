@@ -62,8 +62,6 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
 
-      
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AssociatedAccountNotes>(entity =>
@@ -406,6 +404,8 @@ namespace Rokono_Control.Models
 
             modelBuilder.Entity<NotificationTypes>(entity =>
             {
+                entity.Property(e => e.Icon).HasMaxLength(300);
+
                 entity.Property(e => e.NotificationType).IsRequired();
             });
 
