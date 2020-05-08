@@ -1,416 +1,9 @@
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/appsettings.Development.json
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.deps.json
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.runtimeconfig.json
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.runtimeconfig.dev.json
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.pdb
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.Views.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.Views.pdb
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/MailKit.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.AspNet.SignalR.Client.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Http.Connections.Client.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.SignalR.Client.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.SignalR.Client.Core.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.Bcl.AsyncInterfaces.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.Bcl.HashCode.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.Data.SqlClient.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Abstractions.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Design.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Relational.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.SqlServer.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.Identity.Client.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/MimeKit.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/BouncyCastle.Crypto.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/System.Collections.Immutable.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/System.ComponentModel.Annotations.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/System.Configuration.ConfigurationManager.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/System.Diagnostics.DiagnosticSource.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/System.Runtime.Caching.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/System.Security.Cryptography.ProtectedData.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/System.Threading.Channels.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win-arm64/native/sni.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win-x64/native/sni.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win-x86/native/sni.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.csprojAssemblyReference.cache
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/staticwebassets/Rokono Control.StaticWebAssets.Manifest.cache
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/staticwebassets/Rokono Control.StaticWebAssets.xml
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.MvcApplicationPartsAssemblyInfo.cache
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorAssemblyInfo.cache
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorAssemblyInfo.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.AssemblyInfoInputs.cache
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.AssemblyInfo.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.TagHelpers.input.cache
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.TagHelpers.output.cache
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorCoreGenerate.cache
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Backlogs/Index.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Boards/Index.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Commit/CommitData.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Commit/Files.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Commit/Index.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AddNewAccount.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AddNewWorkItem.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AssignAccountProjects.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/Cmmits.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/EditAccount.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/EditWorkItem.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/index.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ManageAccounts.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/Project.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ProjectDashboard.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/WorkItems.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Home/Index.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Home/Privacy.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Error.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_CookieConsentPartial.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutDashboard.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutProjects.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/_ViewImports.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/_ViewStart.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorTargetAssemblyInfo.cache
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorTargetAssemblyInfo.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.Views.pdb
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.csproj.CopyComplete
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.dll
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.pdb
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ProjectDetails.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Boards/Sprints.cshtml.g.cs
-/home/kristifor/Projects/Webplatforms/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Boards/ProjectBacklog.cshtml.g.cs
-D:/RokonoControl/bin/Debug/netcoreapp3.1/appsettings.Development.json
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.exe
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.deps.json
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.runtimeconfig.json
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.runtimeconfig.dev.json
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.pdb
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.Views.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.Views.pdb
-D:/RokonoControl/bin/Debug/netcoreapp3.1/MailKit.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.AspNet.SignalR.Client.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Http.Connections.Client.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.SignalR.Client.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.SignalR.Client.Core.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.Bcl.AsyncInterfaces.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.Bcl.HashCode.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.Data.SqlClient.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Abstractions.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Design.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Relational.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.SqlServer.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.Identity.Client.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/MimeKit.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/BouncyCastle.Crypto.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/System.Configuration.ConfigurationManager.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/System.Runtime.Caching.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/System.Security.Cryptography.ProtectedData.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win-arm64/native/sni.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win-x64/native/sni.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win-x86/native/sni.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
-D:/RokonoControl/obj/Debug/netcoreapp3.1/staticwebassets/Rokono Control.StaticWebAssets.Manifest.cache
-D:/RokonoControl/obj/Debug/netcoreapp3.1/staticwebassets/Rokono Control.StaticWebAssets.xml
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorAssemblyInfo.cache
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorAssemblyInfo.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.AssemblyInfoInputs.cache
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.AssemblyInfo.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.TagHelpers.input.cache
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.TagHelpers.output.cache
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorCoreGenerate.cache
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Backlogs/Index.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Boards/Index.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Boards/ProjectBacklog.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Boards/SprintBacklogs.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Boards/Sprints.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Commit/CommitData.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Commit/Files.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Commit/Index.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AddNewAccount.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AddNewWorkItem.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AssignAccountProjects.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/Cmmits.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/EditAccount.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/EditWorkItem.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/index.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ManageAccounts.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/Project.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ProjectDashboard.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ProjectDetails.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/WorkItems.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Home/Index.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Home/Privacy.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Error.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_CookieConsentPartial.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutDashboard.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutProjects.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/_ViewImports.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/_ViewStart.cshtml.g.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorTargetAssemblyInfo.cache
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorTargetAssemblyInfo.cs
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.Views.pdb
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.csproj.CopyComplete
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.dll
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.pdb
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.csprojAssemblyReference.cache
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AddNewProject.cshtml.g.cs
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Razor.Language.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.CSharp.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.CSharp.Workspaces.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.Razor.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.Workspaces.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/dotnet-aspnet-codegenerator-design.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/NuGet.Frameworks.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/System.Composition.AttributedModel.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/System.Composition.Convention.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/System.Composition.Hosting.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/System.Composition.Runtime.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/System.Composition.TypedParts.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/cs/Microsoft.CodeAnalysis.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/de/Microsoft.CodeAnalysis.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/es/Microsoft.CodeAnalysis.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/fr/Microsoft.CodeAnalysis.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/it/Microsoft.CodeAnalysis.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/ja/Microsoft.CodeAnalysis.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/ko/Microsoft.CodeAnalysis.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/pl/Microsoft.CodeAnalysis.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/pt-BR/Microsoft.CodeAnalysis.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/ru/Microsoft.CodeAnalysis.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/tr/Microsoft.CodeAnalysis.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/zh-Hans/Microsoft.CodeAnalysis.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/cs/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/de/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/es/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/fr/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/it/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/ja/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/ko/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/pl/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/ru/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/tr/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/fr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/it/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/ja/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/ko/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/pl/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/pt-BR/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/ru/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/de/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/es/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/fr/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/it/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/ja/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/ko/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/pl/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/pt-BR/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/ru/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/RokonoControl/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.MvcApplicationPartsAssemblyInfo.cache
-D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Accounts/ManageProjectMemebers.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/appsettings.Development.json
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.deps.json
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.runtimeconfig.json
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.runtimeconfig.dev.json
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.pdb
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.Views.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Rokono Control.Views.pdb
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/MailKit.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.AspNet.SignalR.Client.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Http.Connections.Client.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Razor.Language.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.SignalR.Client.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.SignalR.Client.Core.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.Bcl.AsyncInterfaces.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.Bcl.HashCode.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.CSharp.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.CSharp.Workspaces.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.Razor.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.Workspaces.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.Data.SqlClient.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Abstractions.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Design.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Relational.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.SqlServer.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.Identity.Client.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/dotnet-aspnet-codegenerator-design.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/MimeKit.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/NuGet.Frameworks.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/BouncyCastle.Crypto.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/System.Collections.Immutable.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/System.ComponentModel.Annotations.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/System.Composition.AttributedModel.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/System.Composition.Convention.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/System.Composition.Hosting.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/System.Composition.Runtime.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/System.Composition.TypedParts.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/System.Configuration.ConfigurationManager.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/System.Diagnostics.DiagnosticSource.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/System.Runtime.Caching.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/System.Security.Cryptography.ProtectedData.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/System.Threading.Channels.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/cs/Microsoft.CodeAnalysis.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/de/Microsoft.CodeAnalysis.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/es/Microsoft.CodeAnalysis.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/fr/Microsoft.CodeAnalysis.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/it/Microsoft.CodeAnalysis.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/ja/Microsoft.CodeAnalysis.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/ko/Microsoft.CodeAnalysis.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/pl/Microsoft.CodeAnalysis.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/pt-BR/Microsoft.CodeAnalysis.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/ru/Microsoft.CodeAnalysis.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/tr/Microsoft.CodeAnalysis.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/zh-Hans/Microsoft.CodeAnalysis.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/cs/Microsoft.CodeAnalysis.CSharp.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/de/Microsoft.CodeAnalysis.CSharp.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/es/Microsoft.CodeAnalysis.CSharp.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/fr/Microsoft.CodeAnalysis.CSharp.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/it/Microsoft.CodeAnalysis.CSharp.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/ja/Microsoft.CodeAnalysis.CSharp.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/ko/Microsoft.CodeAnalysis.CSharp.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/pl/Microsoft.CodeAnalysis.CSharp.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/ru/Microsoft.CodeAnalysis.CSharp.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/tr/Microsoft.CodeAnalysis.CSharp.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/fr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/it/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/ja/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/ko/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/pl/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/pt-BR/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/ru/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/de/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/es/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/fr/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/it/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/ja/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/ko/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/pl/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/pt-BR/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/ru/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win-arm64/native/sni.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win-x64/native/sni.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win-x86/native/sni.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.csprojAssemblyReference.cache
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/staticwebassets/Rokono Control.StaticWebAssets.Manifest.cache
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/staticwebassets/Rokono Control.StaticWebAssets.xml
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.MvcApplicationPartsAssemblyInfo.cache
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorAssemblyInfo.cache
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorAssemblyInfo.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.AssemblyInfoInputs.cache
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.AssemblyInfo.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.TagHelpers.input.cache
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.TagHelpers.output.cache
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorCoreGenerate.cache
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Accounts/ManageProjectMemebers.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Backlogs/Index.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Boards/Index.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Boards/ProjectBacklog.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Boards/SprintBacklogs.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Boards/Sprints.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Commit/CommitData.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Commit/Files.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Commit/Index.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AddNewAccount.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AddNewProject.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AddNewWorkItem.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AssignAccountProjects.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/Cmmits.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/EditAccount.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/EditWorkItem.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/index.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ManageAccounts.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/Project.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ProjectDashboard.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ProjectDetails.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/WorkItems.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Home/Index.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Home/Privacy.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Error.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_CookieConsentPartial.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutDashboard.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutProjects.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/_ViewImports.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/_ViewStart.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorTargetAssemblyInfo.cache
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.RazorTargetAssemblyInfo.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.Views.pdb
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.csproj.CopyComplete
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Rokono Control.pdb
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Accounts/Administration.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/appsettings.Development.json
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/asd.json
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/ddd.json
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Rokono Control.json
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Stories Unraveled.json
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Rokono Control
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Rokono Control.deps.json
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Rokono Control.runtimeconfig.json
@@ -422,6 +15,8 @@ D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Accounts/ManageProjectMemeb
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/MailKit.dll
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.AspNet.SignalR.Client.dll
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Http.Connections.Client.dll
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.JsonPatch.dll
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Razor.Language.dll
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.SignalR.Client.dll
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.SignalR.Client.Core.dll
@@ -449,6 +44,7 @@ D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Accounts/ManageProjectMemeb
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/MimeKit.dll
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Newtonsoft.Json.Bson.dll
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/NuGet.Frameworks.dll
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/BouncyCastle.Crypto.dll
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Collections.Immutable.dll
@@ -539,8 +135,11 @@ D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Accounts/ManageProjectMemeb
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Backlogs/Index.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Boards/Index.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Boards/ProjectBacklog.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Boards/PublicBoard.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Boards/SprintBacklogs.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Boards/Sprints.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Changelog/EditChangelog.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Changelog/ViewChangelogs.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Commit/CommitData.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Commit/Files.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Commit/Index.cshtml.g.cs
@@ -548,6 +147,7 @@ D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Accounts/ManageProjectMemeb
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AddNewProject.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AddNewWorkItem.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AssignAccountProjects.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ChangelogGenerator.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/Cmmits.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/EditAccount.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/EditWorkItem.cshtml.g.cs
@@ -557,8 +157,16 @@ D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Accounts/ManageProjectMemeb
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ProjectDashboard.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ProjectDetails.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/WorkItems.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Home/Error.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Home/Index.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Home/Privacy.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/LoadedProjects/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ManagementRights/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/NavigationMenu/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Notes/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/NotificationPanel/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/SearchBox/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/UserSettings/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Error.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_CookieConsentPartial.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs
@@ -573,189 +181,3 @@ D:/RokonoControl/obj/Debug/netcoreapp3.1/Razor/Views/Accounts/ManageProjectMemeb
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.csproj.CopyComplete
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.dll
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.pdb
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ChangelogGenerator.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/appsettings.Development.json
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Rokono Control
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Rokono Control.deps.json
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Rokono Control.runtimeconfig.json
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Rokono Control.runtimeconfig.dev.json
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Rokono Control.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Rokono Control.pdb
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Rokono Control.Views.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Rokono Control.Views.pdb
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/MailKit.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.AspNet.SignalR.Client.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Http.Connections.Client.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Razor.Language.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.SignalR.Client.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.SignalR.Client.Core.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.Bcl.AsyncInterfaces.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.Bcl.HashCode.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.CSharp.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.CSharp.Workspaces.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.Razor.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.Workspaces.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.Data.SqlClient.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Abstractions.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Design.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Relational.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.SqlServer.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.Identity.Client.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/dotnet-aspnet-codegenerator-design.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/MimeKit.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/NuGet.Frameworks.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/BouncyCastle.Crypto.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Collections.Immutable.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.ComponentModel.Annotations.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Composition.AttributedModel.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Composition.Convention.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Composition.Hosting.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Composition.Runtime.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Composition.TypedParts.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Configuration.ConfigurationManager.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Diagnostics.DiagnosticSource.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Runtime.Caching.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Security.Cryptography.ProtectedData.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Threading.Channels.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/cs/Microsoft.CodeAnalysis.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/de/Microsoft.CodeAnalysis.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/es/Microsoft.CodeAnalysis.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/fr/Microsoft.CodeAnalysis.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/it/Microsoft.CodeAnalysis.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/ja/Microsoft.CodeAnalysis.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/ko/Microsoft.CodeAnalysis.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/pl/Microsoft.CodeAnalysis.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/pt-BR/Microsoft.CodeAnalysis.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/ru/Microsoft.CodeAnalysis.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/tr/Microsoft.CodeAnalysis.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/zh-Hans/Microsoft.CodeAnalysis.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/cs/Microsoft.CodeAnalysis.CSharp.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/de/Microsoft.CodeAnalysis.CSharp.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/es/Microsoft.CodeAnalysis.CSharp.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/fr/Microsoft.CodeAnalysis.CSharp.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/it/Microsoft.CodeAnalysis.CSharp.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/ja/Microsoft.CodeAnalysis.CSharp.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/ko/Microsoft.CodeAnalysis.CSharp.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/pl/Microsoft.CodeAnalysis.CSharp.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/ru/Microsoft.CodeAnalysis.CSharp.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/tr/Microsoft.CodeAnalysis.CSharp.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/fr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/it/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/ja/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/ko/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/pl/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/pt-BR/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/ru/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/de/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/es/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/fr/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/it/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/ja/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/ko/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/pl/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/pt-BR/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/ru/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/runtimes/win-arm64/native/sni.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/runtimes/win-x64/native/sni.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/runtimes/win-x86/native/sni.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.csprojAssemblyReference.cache
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/staticwebassets/Rokono Control.StaticWebAssets.Manifest.cache
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/staticwebassets/Rokono Control.StaticWebAssets.xml
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.MvcApplicationPartsAssemblyInfo.cache
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.RazorAssemblyInfo.cache
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.RazorAssemblyInfo.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.AssemblyInfoInputs.cache
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.AssemblyInfo.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.TagHelpers.input.cache
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.TagHelpers.output.cache
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.RazorCoreGenerate.cache
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Accounts/Administration.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Accounts/ManageProjectMemebers.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Backlogs/Index.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Boards/Index.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Boards/ProjectBacklog.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Boards/SprintBacklogs.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Boards/Sprints.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Commit/CommitData.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Commit/Files.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Commit/Index.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AddNewAccount.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AddNewProject.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AddNewWorkItem.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/AssignAccountProjects.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ChangelogGenerator.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/Cmmits.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/EditAccount.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/EditWorkItem.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/index.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ManageAccounts.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/Project.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ProjectDashboard.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ProjectDetails.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/WorkItems.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Home/Index.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Home/Privacy.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Error.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_CookieConsentPartial.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutDashboard.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutProjects.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/_ViewImports.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/_ViewStart.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.RazorTargetAssemblyInfo.cache
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.RazorTargetAssemblyInfo.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.Views.pdb
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.csproj.CopyComplete
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.dll
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.pdb
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Changelog/ViewChangelogs.cshtml.g.cs
-/media/kristifor/a203090e-761b-4e8f-85d9-b11075e932dd/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Changelog/EditChangelog.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Changelog/EditChangelog.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Changelog/ViewChangelogs.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.JsonPatch.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Newtonsoft.Json.Bson.dll
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Boards/PublicBoard.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Home/Error.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Rokono Control.json
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Stories Unraveled.json
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/ddd.json
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/asd.json
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/LoadedProjects/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Notes/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ManagementRights/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/NavigationMenu/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/SearchBox/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/UserSettings/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/NotificationPanel/Default.cshtml.g.cs

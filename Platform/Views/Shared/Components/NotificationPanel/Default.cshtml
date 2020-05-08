@@ -33,6 +33,18 @@
         content: '\e93c';
         color: #1f8c71;
     }
+    .CloseBtn:before {
+        font-family: "e-icons" !important;
+        content: '\ea7f';
+        color: #bd1e33;
+    }
+    .CloseBtn:hover {
+        font-family: "e-icons" !important;
+        font-size: 20px;
+        content: '\ea7f';
+        color: #1c86c8;
+    }
+    
     .photo img {
         width: 100px;
         height: 100px;
@@ -92,20 +104,21 @@
      }
 </style>
 <script id="currentTemplate" type="text/x-template">
-    <tr>
+    <tr id="ID_${id}">
         <td class="photo">
             <span class="${notificationTypeNavigation.icon}">
 
             </span>
         </td>
         <td class="details">
-            <table class="CardTable"  >
+            <table class="CardTable">
                
                 <tbody>
                     
                     <tr>
-                        <td class="CardHeader">Content:</td>
                         <td>${content} </td>
+                        <td><span onclick="RemoveNotification(${id})" class="CloseBtn"></span></td>
+
                     </tr>
                 </tbody>
             </table>
@@ -160,7 +173,30 @@
     }
 
 
-
+    function RemoveNotification(id)
+    {
+        console.log(id);
+        $("#ID_"+id).remove();
+        var countA =  $("#NotificationCount").html();
+        var newCount = parseInt(countA) -1;
+        $("#NotificationCount").html(newCount);
+        var dto = {
+            "Id": id
+            
+        }
+        $.ajax({
+        type: 'POST',
+            url: '/Notification/NotificationRead',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
     //Toast initialization 
 
      @* var toastObj = new ej.notifications.Toast({

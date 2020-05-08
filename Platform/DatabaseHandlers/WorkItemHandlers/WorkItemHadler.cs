@@ -158,18 +158,24 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
             });
             var notification = Context.Notifications.Add(new Notifications{
                 DateOfMessage = DateTime.Now,
-                Content = $"WorkItem {currentItem.WorkItemId}: Has been updated",
+                Content = $"Work Item  Title:{dbVersion.Title} ID:{dbVersion.Id}- Has been updated",
                 NotificationType = 4,
                 WorkItemRelationid = currentItem.WorkItemId
             });
             Context.SaveChanges();
-            Context.AssociatedProjectNotifications.Add(new AssociatedProjectNotifications{
-                NewNotification = 1,
-                NotificationId = notification.Entity.Id,
-                ProjectId = currentItem.ProjectId,
-                UserAccountId = currentItem.AssignedUser
+            var projectUsers = Context.AssociatedProjectMembers.Where(x=>x.ProjectId == currentItem.ProjectId).ToList();
+
+            //Todo: Thows duplicate error, database mapping should be reworked to allow cross project notification based on user view
+            projectUsers.ForEach(x=>{
+                Context.AssociatedProjectNotifications.Add(new AssociatedProjectNotifications{
+                    NotificationId = notification.Entity.Id,
+                    ProjectId = currentItem.ProjectId,
+                    NewNotification = 1,
+                    UserAccountId = x.Id
+                });
+                Context.SaveChanges();
             });
-            Context.SaveChanges();
+            
             return true;
         }
 
@@ -347,30 +353,27 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                     }
                 });
             var currentUser = "Unassigned";
-            if(currentItem.AssignedUser != 0)
-            {
-                var projectName = Context.Projects.FirstOrDefault(X=>X.Id == currentItem.ProjectId).ProjectName;
-                var getCurrentCreator = Context.UserAccounts.FirstOrDefault(x=>x.Id == currentItem.AssignedUser);
-                currentUser = getCurrentCreator.GitUsername;
-                using(var notificationHandler = new NotificationHandler(configuration))
-                {
-                    notificationHandler.GenerateNewWorkItemNotification(item.Entity,getCurrentCreator, projectName);
-                }
-            }
+            
             var notification = Context.Notifications.Add(new Notifications{
                 DateOfMessage = DateTime.Now,
-                Content = $"WorkItem {currentItem.WorkItemId}: Has been created and assigned to {currentUser}",
+                Content = $"Work Item  Title:{item.Entity.Title} ID:{item.Entity.Id}- Has been created and assigned to {currentUser}",
                 NotificationType = 3,
-                WorkItemRelationid = currentItem.WorkItemId
+                WorkItemRelationid = currentItem.WorkItemId,
             });
             Context.SaveChanges();
-            Context.AssociatedProjectNotifications.Add(new AssociatedProjectNotifications{
-                NewNotification = 1,
-                NotificationId = notification.Entity.Id,
-                ProjectId = currentItem.ProjectId,
-                UserAccountId = currentItem.AssignedUser
+            var projectUsers = Context.AssociatedProjectMembers.Where(x=>x.ProjectId == currentItem.ProjectId).ToList();
+
+            //Todo: Thows duplicate error, database mapping should be reworked to allow cross project notification based on user view
+            projectUsers.ForEach(x=>{
+                Context.AssociatedProjectNotifications.Add(new AssociatedProjectNotifications{
+                    NotificationId = notification.Entity.Id,
+                    ProjectId = currentItem.ProjectId,
+                    NewNotification = 1,
+                    UserAccountId = x.UserAccountId
+                });
+                Context.SaveChanges();
             });
-            Context.SaveChanges();
+            
             return true;
         }
     }

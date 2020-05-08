@@ -53,6 +53,18 @@ namespace Platform.Controllers
         }
 
         [HttpPost]
+        public OutgoingJsonData NotificationRead([FromBody] IncomingIdRequest request)
+        {
+            var currentUser = this.User;
+            var id = int.Parse(currentUser.Claims.ElementAt(1).Value);
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                context.NotificationRead(request.Id, id);
+            }
+            return new OutgoingJsonData{};
+        }
+
+        [HttpPost]
         public OutgoingJsonData ChangeNotePosition([FromBody] IncomingNoteRequest note)
         {
             var currentUser = this.User;

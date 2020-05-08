@@ -53,6 +53,15 @@ namespace Rokono_Control.DatabaseHandlers
             return notifications;
         }
 
+        internal void NotificationRead(int id, int id1)
+        {
+            var notification = Context.AssociatedProjectNotifications.FirstOrDefault(x=>x.NotificationId == id && x.UserAccountId == id1);
+            notification.NewNotification = 0;
+            Context.Attach(notification);
+            Context.Update(notification);
+            Context.SaveChanges();
+        }
+
         internal void AddNewUserNote(IncomingNoteRequest note, int id)
         {
             var currentNote = Context.UserNotes.Add(new UserNotes{
@@ -2058,10 +2067,13 @@ namespace Rokono_Control.DatabaseHandlers
             }
             return true;
         }
-        internal bool AddNewWorkItem(IncomingWorkItem currentItem,int userId)
+        internal OutgoingJsonData AddNewWorkItem(IncomingWorkItem currentItem,int userId)
         {
-            return WorkItemHadler.AddNewWorkItem(currentItem, Context, Configuration, userId);
-
+            var result = WorkItemHadler.AddNewWorkItem(currentItem, Context, Configuration, userId);
+            if(result)
+                return new OutgoingJsonData{ Data = "true"};
+            else
+                return new OutgoingJsonData{ Data = "false"};
         }
         internal List<WorkItemRelations> GetProjectRelationships()
         {

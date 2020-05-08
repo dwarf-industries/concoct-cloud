@@ -337,9 +337,9 @@ namespace Rokono_Control.Controllers
 
      
         [HttpPost]
-        public bool StageWorkItem([FromBody] IncomingWorkItem currentItem)
+        public OutgoingJsonData StageWorkItem([FromBody] IncomingWorkItem currentItem)
         {
-            var result = default(bool);
+            var result = new OutgoingJsonData { Data = ""};
 
             var currentUser = this.User;
             var id = int.Parse(currentUser.Claims.ElementAt(1).Value);

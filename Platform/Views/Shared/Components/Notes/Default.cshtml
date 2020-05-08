@@ -309,7 +309,7 @@ function ForegroundChange(args) {
 function AcceptChanges()
 {
     if(IsNew == true)
-        NewNote();
+        InsertNewNote();
     else
         EditNote();
 }
@@ -335,7 +335,7 @@ function EditNote()
         }
     });
 }
-function NewNote()
+function InsertNewNote()
 {
        var dto = {
             "ProjectId" : @ProjectId,
