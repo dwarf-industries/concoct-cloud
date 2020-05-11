@@ -1,0 +1,81 @@
+@{
+    ViewData["Title"] = "Public Details Page";
+    Layout = "~/Views/Shared/_LayoutProjects.cshtml";
+    var ProjectId = ViewData["ProjectId"] as int?;
+    var EnabledFeatures =ViewData["EnabledFeatures"] as Platform.Models.OutgoingProjectRightsDTO;
+    var ProjectName = ViewData["ProjectName"] as string;
+ }
+<style>
+    .e-toolbar.e-control[class*="e-toolbar"] {
+    box-sizing: content-box;
+    text-align: center;
+}
+
+</style>
+
+        <div class="row  card-layout">
+            <div class="col-md-12">
+                <!-- Basic Card Layout  -->
+                <div tabindex="0" class="e-card" id="basic_card">
+                    <div class="e-card-header">
+
+                        <h3 class="center">@ProjectName</h3>
+
+                    </div>
+                    
+                    <div class="e-card-content">
+                        <div id="element"></div>
+
+                        <div id="tab1_content" style="display: none; min-height:80vh;">
+                            @await Component.InvokeAsync("PublicFeedback", @ProjectId)
+                        </div>
+                        <div id="tab2_content" style="display: none; min-height:80vh;">
+                            @await Component.InvokeAsync("PublicDisscussionBoard", @ProjectId)
+                        </div>
+                        <div id="tab3_content" style="display: none; min-height:80vh;">
+                            @await Component.InvokeAsync("BugReportForm", @ProjectId)
+                        </div>
+                        <div id="tab4_content" style="display: none; min-height:80vh;">
+                            
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+<script>
+$( document ).ready(function() {
+   var tabObj = new ej.navigations.Tab({
+            selected: tabSelected,
+            items: [
+                {
+                    header: { 'text': 'Public Feedback' },
+                    content: '#tab1_content'
+                },
+                {
+                    header: { 'text': 'Discussions' },
+                    content: '#tab2_content'
+                },
+                {
+                    header: { 'text': 'Bug Report' },
+                    content: '#tab3_content'
+                },
+                {
+                    header: { 'text': 'Feature Request' },
+                    content: '#tab4_content'
+                }
+            ]
+        });
+        //Render initialized Tab component
+        tabObj.appendTo('#element');
+
+});
+        //Initialize Tab component
+        
+
+        function tabSelected(args)
+        {
+
+        }
+</script>

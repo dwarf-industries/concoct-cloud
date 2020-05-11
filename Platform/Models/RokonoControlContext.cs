@@ -22,14 +22,17 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedProjectBoards> AssociatedProjectBoards { get; set; }
         public virtual DbSet<AssociatedProjectBuilds> AssociatedProjectBuilds { get; set; }
         public virtual DbSet<AssociatedProjectChangelogs> AssociatedProjectChangelogs { get; set; }
+        public virtual DbSet<AssociatedProjectFeedback> AssociatedProjectFeedback { get; set; }
         public virtual DbSet<AssociatedProjectIterations> AssociatedProjectIterations { get; set; }
         public virtual DbSet<AssociatedProjectMemberRights> AssociatedProjectMemberRights { get; set; }
         public virtual DbSet<AssociatedProjectMembers> AssociatedProjectMembers { get; set; }
         public virtual DbSet<AssociatedProjectNotifications> AssociatedProjectNotifications { get; set; }
+        public virtual DbSet<AssociatedProjectPublicDiscussions> AssociatedProjectPublicDiscussions { get; set; }
         public virtual DbSet<AssociatedProjectPublicMessages> AssociatedProjectPublicMessages { get; set; }
         public virtual DbSet<AssociatedRepositoryBranches> AssociatedRepositoryBranches { get; set; }
         public virtual DbSet<AssociatedUserNotifications> AssociatedUserNotifications { get; set; }
         public virtual DbSet<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
+        public virtual DbSet<AssociatedWorkItemFiles> AssociatedWorkItemFiles { get; set; }
         public virtual DbSet<AssociatedWorkItemMessages> AssociatedWorkItemMessages { get; set; }
         public virtual DbSet<AssociatedWrorkItemChildren> AssociatedWrorkItemChildren { get; set; }
         public virtual DbSet<Boards> Boards { get; set; }
@@ -43,8 +46,10 @@ namespace Rokono_Control.Models
         public virtual DbSet<Notifications> Notifications { get; set; }
         public virtual DbSet<Projects> Projects { get; set; }
         public virtual DbSet<PublicMessage> PublicMessage { get; set; }
+        public virtual DbSet<PublicMessages> PublicMessages { get; set; }
         public virtual DbSet<Repository> Repository { get; set; }
         public virtual DbSet<Risks> Risks { get; set; }
+        public virtual DbSet<SystemFiles> SystemFiles { get; set; }
         public virtual DbSet<UserAccounts> UserAccounts { get; set; }
         public virtual DbSet<UserNotes> UserNotes { get; set; }
         public virtual DbSet<UserRights> UserRights { get; set; }
@@ -61,6 +66,15 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemSeverities> WorkItemSeverities { get; set; }
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=84.54.185.144;Database=RokonoControl;User ID=Kristifor;Password=';;@Hanjolite';");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -179,6 +193,21 @@ namespace Rokono_Control.Models
                     .HasConstraintName("FK__Associate__Proje__6ABAD62E");
             });
 
+            modelBuilder.Entity<AssociatedProjectFeedback>(entity =>
+            {
+                entity.Property(e => e.Rating).HasColumnName("rating");
+
+                entity.HasOne(d => d.Message)
+                    .WithMany(p => p.AssociatedProjectFeedback)
+                    .HasForeignKey(d => d.MessageId)
+                    .HasConstraintName("FK__Associate__Messa__38EE7070");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.AssociatedProjectFeedback)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK__Associate__Proje__39E294A9");
+            });
+
             modelBuilder.Entity<AssociatedProjectIterations>(entity =>
             {
                 entity.HasOne(d => d.Iteration)
@@ -253,6 +282,19 @@ namespace Rokono_Control.Models
                     .HasConstraintName("FK__Associate__UserA__1E3A7A34");
             });
 
+            modelBuilder.Entity<AssociatedProjectPublicDiscussions>(entity =>
+            {
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.AssociatedProjectPublicDiscussions)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK__Associate__Proje__28B808A7");
+
+                entity.HasOne(d => d.PublicMessage)
+                    .WithMany(p => p.AssociatedProjectPublicDiscussions)
+                    .HasForeignKey(d => d.PublicMessageId)
+                    .HasConstraintName("FK__Associate__Publi__29AC2CE0");
+            });
+
             modelBuilder.Entity<AssociatedProjectPublicMessages>(entity =>
             {
                 entity.HasOne(d => d.Message)
@@ -316,6 +358,19 @@ namespace Rokono_Control.Models
                     .WithMany(p => p.AssociatedWorkItemChangelogs)
                     .HasForeignKey(d => d.WorkitemId)
                     .HasConstraintName("FK__Associate__worki__6F7F8B4B");
+            });
+
+            modelBuilder.Entity<AssociatedWorkItemFiles>(entity =>
+            {
+                entity.HasOne(d => d.File)
+                    .WithMany(p => p.AssociatedWorkItemFiles)
+                    .HasForeignKey(d => d.FileId)
+                    .HasConstraintName("FK__Associate__FileI__2E70E1FD");
+
+                entity.HasOne(d => d.WorkItem)
+                    .WithMany(p => p.AssociatedWorkItemFiles)
+                    .HasForeignKey(d => d.WorkItemId)
+                    .HasConstraintName("FK__Associate__WorkI__2F650636");
             });
 
             modelBuilder.Entity<AssociatedWorkItemMessages>(entity =>
@@ -443,6 +498,15 @@ namespace Rokono_Control.Models
                     .HasMaxLength(200);
             });
 
+            modelBuilder.Entity<PublicMessages>(entity =>
+            {
+                entity.Property(e => e.DateOfMessage).HasColumnType("datetime");
+
+                entity.Property(e => e.SenderName)
+                    .IsRequired()
+                    .HasMaxLength(255);
+            });
+
             modelBuilder.Entity<Repository>(entity =>
             {
                 entity.Property(e => e.FolderPath).IsRequired();
@@ -453,6 +517,17 @@ namespace Rokono_Control.Models
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.RiskName).HasMaxLength(300);
+            });
+
+            modelBuilder.Entity<SystemFiles>(entity =>
+            {
+                entity.Property(e => e.DateOfMessage).HasColumnType("datetime");
+
+                entity.Property(e => e.Filetype).HasMaxLength(50);
+
+                entity.Property(e => e.SenderName)
+                    .IsRequired()
+                    .HasMaxLength(255);
             });
 
             modelBuilder.Entity<UserAccounts>(entity =>

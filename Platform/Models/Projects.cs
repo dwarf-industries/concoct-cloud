@@ -12,10 +12,12 @@ namespace Rokono_Control.Models
             AssociatedProjectBoards = new HashSet<AssociatedProjectBoards>();
             AssociatedProjectBuilds = new HashSet<AssociatedProjectBuilds>();
             AssociatedProjectChangelogs = new HashSet<AssociatedProjectChangelogs>();
+            AssociatedProjectFeedback = new HashSet<AssociatedProjectFeedback>();
             AssociatedProjectIterations = new HashSet<AssociatedProjectIterations>();
             AssociatedProjectMemberRights = new HashSet<AssociatedProjectMemberRights>();
             AssociatedProjectMembers = new HashSet<AssociatedProjectMembers>();
             AssociatedProjectNotifications = new HashSet<AssociatedProjectNotifications>();
+            AssociatedProjectPublicDiscussions = new HashSet<AssociatedProjectPublicDiscussions>();
             AssociatedProjectPublicMessages = new HashSet<AssociatedProjectPublicMessages>();
             AssociatedWorkItemChangelogs = new HashSet<AssociatedWorkItemChangelogs>();
             Branches = new HashSet<Branches>();
@@ -41,10 +43,12 @@ namespace Rokono_Control.Models
         public virtual ICollection<AssociatedProjectBoards> AssociatedProjectBoards { get; set; }
         public virtual ICollection<AssociatedProjectBuilds> AssociatedProjectBuilds { get; set; }
         public virtual ICollection<AssociatedProjectChangelogs> AssociatedProjectChangelogs { get; set; }
+        public virtual ICollection<AssociatedProjectFeedback> AssociatedProjectFeedback { get; set; }
         public virtual ICollection<AssociatedProjectIterations> AssociatedProjectIterations { get; set; }
         public virtual ICollection<AssociatedProjectMemberRights> AssociatedProjectMemberRights { get; set; }
         public virtual ICollection<AssociatedProjectMembers> AssociatedProjectMembers { get; set; }
         public virtual ICollection<AssociatedProjectNotifications> AssociatedProjectNotifications { get; set; }
+        public virtual ICollection<AssociatedProjectPublicDiscussions> AssociatedProjectPublicDiscussions { get; set; }
         public virtual ICollection<AssociatedProjectPublicMessages> AssociatedProjectPublicMessages { get; set; }
         public virtual ICollection<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
         public virtual ICollection<Branches> Branches { get; set; }

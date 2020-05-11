@@ -160,11 +160,15 @@
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Home/Error.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Home/Index.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Home/Privacy.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/OutboundDetails/RelatedProject.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/BugReportForm/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/LoadedProjects/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ManagementRights/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/NavigationMenu/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Notes/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/NotificationPanel/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/PublicDisscussionBoard/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/PublicFeedback/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/SearchBox/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/UserSettings/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Error.cshtml.g.cs

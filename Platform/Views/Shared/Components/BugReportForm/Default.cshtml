@@ -1,0 +1,119 @@
+@{
+    var ProjectId = ViewData["ProjectId"] as int?;
+}
+<style>
+      .e-upload {
+        width: 100%;
+        position: relative;
+        margin-top: 15px;
+        float: none;
+    }
+    .e-upload .e-upload-actions {
+        float: none;
+        text-align: right;
+    }
+    .control_wrapper .e-upload .e-upload-drag-hover {
+        margin: 0;
+    }
+</style>
+
+
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<!-- Main Quill library -->
+<script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+<div class="col-lg-12 control-section">
+    <div class="row">
+        <div class="control_wrapper">
+            <!-- Initialize Uploader -->
+            <input type='file' id='fileupload' name='UploadFiles'/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="content-wrapper">
+            <input id="currentSender" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="content-wrapper">
+            <div class="position-relative form-group" style="width:100%;">
+                <label for="BugDescription" class="">Add description for the bug</label>
+                <div name="BugDescription" id="BugDescription" class="form-control"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="content-wrapper">
+            <button  onclick="SendBugReport()" id="SendBugBtn" style="width:100%;"> <i class="fas fa-save"></i> Send</button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var BugDescription;
+    var currentSender = new ej.inputs.TextBox({
+        placeholder: 'First Name',
+        floatLabelType: 'Auto'
+    });
+    currentSender.appendTo('#currentSender');
+    var SendBugBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    SendBugBtn.appendTo('#SendBugBtn');
+    BugDescription = new Quill('#BugDescription', {
+        theme: 'snow'
+    });
+    var selectedImage;
+    var dropElement = document.getElementsByClassName('control-fluid')[0];
+
+    var uploadObj = new ej.inputs.Uploader({
+        asyncSettings: {
+            saveUrl: '/Uploader/Save',
+            removeUrl: '/Uploader/Remove',
+
+        },
+        removing: onFileRemove,
+        dropArea: dropElement,
+        selected: ItemSelected
+
+    });
+    uploadObj.appendTo('#fileupload');
+    function ItemSelected(args) {
+        console.log(args);
+       selectedImage = args.filesData[0].rawFile.name;
+    }
+    function onFileRemove(args) {
+        args.postRawFile = false;
+    }
+
+
+    function SendBugReport()
+    {
+        var messagesDto= {
+            "ProjectId":@ProjectId,
+            "SenderName": $("#currentSender").val(),
+            "BugDescription": $("#BugDescription").children()[0].innerHTML,
+            "ImagePath": selectedImage,
+            "WorkItemId": 0
+        }
+        console.log(messagesDto);
+        if($("#currentSender").val() && $("#BugDescription").children()[0].innerHTML)
+        {
+            $.ajax({
+                type: 'POST',
+                url: '/OutboundDetails/AddNewBugReport',
+                data: JSON.stringify(messagesDto),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                
+                success: function (response) {
+                    console.log(response);
+                    window.location=document.referrer;
+
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        }
+    }
+</script>
