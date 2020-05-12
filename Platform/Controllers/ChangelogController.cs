@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +32,20 @@ namespace Platform.Controllers
             }
             return View();
         }
+
+        [HttpPost]
+        public List<Changelogs> GetPublicChangelogs([FromBody] IncomingApiAuthenicationRequest request)
+        {
+            var result = new List<Changelogs>();
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                var autherizeReqiest = context.CheckApiCallCredentials(request);
+                if(context.CheckProjectAuthorizedFeature(autherizeReqiest, request.FeatureRequest))
+                    result = context.GetProjectChangelogs(autherizeReqiest);
+            }
+            return result;
+        }
+
         public IActionResult EditChangelog(int projectId,int changelog)
         {
             var currentUser = this.User;

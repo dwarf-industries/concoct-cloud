@@ -45,6 +45,37 @@ namespace Rokono_Control.DatabaseHandlers
             return result;
         }
 
+        internal bool CheckProjectAuthorizedFeature(int autherizeReqiest, string featureRequest)
+        {
+            var result = default(bool);
+            var getProject = Context.Projects.FirstOrDefault(x=>x.Id == autherizeReqiest);
+            if(getProject == null)
+                return result;
+            switch(featureRequest)
+            {
+                case "BugReport":
+                    result = getProject.AllowPublicBugs == 1 ? true: false;
+                break;
+                case "Discussions":
+                    result = getProject.AllowPublicMessages == 1 ? true: false;
+                break;
+                case "Feedback":
+                    result = getProject.AllowPublicFeedback == 1 ? true: false;
+                break;
+            }
+            return result;
+        }
+
+        internal int CheckApiCallCredentials(IncomingApiAuthenicationRequest request)
+        {
+            var checkEnabledFeature = Context.AssociatedProjectApiKeys.Include(x => x.Key)
+                                                                      .FirstOrDefault(x=>x.Key.SecretKey == request.PrivateSecret
+                                                                                    && x.Key.FeatureName == request.FeatureRequest);
+            if(checkEnabledFeature != null)
+                return checkEnabledFeature.ProjectId.Value;
+            return 0;
+        }
+
         internal PublicMessages AddNewPublicMessage(IncomingPublicMessage newMessage)
         {
             var message = Context.PublicMessages.Add(new PublicMessages{

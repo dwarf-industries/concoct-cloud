@@ -15,10 +15,12 @@ namespace Rokono_Control.Models
         {
         }
 
+        public virtual DbSet<ApiKeys> ApiKeys { get; set; }
         public virtual DbSet<AssociatedAccountNotes> AssociatedAccountNotes { get; set; }
         public virtual DbSet<AssociatedBoardWorkItems> AssociatedBoardWorkItems { get; set; }
         public virtual DbSet<AssociatedBranchCommits> AssociatedBranchCommits { get; set; }
         public virtual DbSet<AssociatedCommitFiles> AssociatedCommitFiles { get; set; }
+        public virtual DbSet<AssociatedProjectApiKeys> AssociatedProjectApiKeys { get; set; }
         public virtual DbSet<AssociatedProjectBoards> AssociatedProjectBoards { get; set; }
         public virtual DbSet<AssociatedProjectBuilds> AssociatedProjectBuilds { get; set; }
         public virtual DbSet<AssociatedProjectChangelogs> AssociatedProjectChangelogs { get; set; }
@@ -78,6 +80,11 @@ namespace Rokono_Control.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ApiKeys>(entity =>
+            {
+                entity.Property(e => e.FeatureName).HasMaxLength(300);
+            });
+
             modelBuilder.Entity<AssociatedAccountNotes>(entity =>
             {
                 entity.HasOne(d => d.Note)
@@ -147,6 +154,19 @@ namespace Rokono_Control.Models
                     .WithMany(p => p.AssociatedCommitFiles)
                     .HasForeignKey(d => d.FileId)
                     .HasConstraintName("FK__Associate__FileI__73852659");
+            });
+
+            modelBuilder.Entity<AssociatedProjectApiKeys>(entity =>
+            {
+                entity.HasOne(d => d.Key)
+                    .WithMany(p => p.AssociatedProjectApiKeys)
+                    .HasForeignKey(d => d.KeyId)
+                    .HasConstraintName("FK__Associate__KeyId__3F9B6DFF");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.AssociatedProjectApiKeys)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK__Associate__Proje__3EA749C6");
             });
 
             modelBuilder.Entity<AssociatedProjectBoards>(entity =>
