@@ -75,7 +75,7 @@
     .photo {
         border-width: 1px 0px 0px 0px;
         text-align: center;
-        width: 70px;
+        width: 50px;
     }
     
     .details {
@@ -99,9 +99,17 @@
         font-weight: 600;
     }
     
-  .e-grid .e-gridheader{
-         padding:0px;
-     }
+ 
+     
+
+.e-grid .e-gridheader  {
+  background-color: #fff;
+  border-bottom-color: #e0e0e0;
+  border-top-color: #e0e0e0;
+  color: rgba(0, 0, 0, 0.54);
+  padding: 0 !important;
+
+}
 </style>
 <script id="currentTemplate" type="text/x-template">
     <tr id="ID_${id}">
@@ -116,8 +124,8 @@
                 <tbody>
                     
                     <tr>
-                        <td>${content} </td>
-                        <td><span onclick="RemoveNotification(${id})" class="CloseBtn"></span></td>
+                        <td style="text-align:justify; max-width:85px;"> ${content} </td>
+                        <td style="text-align:center;"><span onclick="RemoveNotification(${id})" class="CloseBtn"></span></td>
 
                     </tr>
                 </tbody>
