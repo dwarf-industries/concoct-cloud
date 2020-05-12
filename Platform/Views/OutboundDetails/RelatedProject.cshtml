@@ -27,17 +27,27 @@
                         <div id="element"></div>
 
                         <div id="tab1_content" style="display: none; min-height:80vh;">
-                            @await Component.InvokeAsync("PublicFeedback", @ProjectId)
+                           @if(@EnabledFeatures.FeaturesEnabled)
+                                @await Component.InvokeAsync("PublicFeedback", @ProjectId)
+                            else
+                                @await Component.InvokeAsync("ModuleDisabledWarning", @ProjectId)
+
                         </div>
                         <div id="tab2_content" style="display: none; min-height:80vh;">
-                            @await Component.InvokeAsync("PublicDisscussionBoard", @ProjectId)
+                            @if(@EnabledFeatures.ChatEnabled)
+                                @await Component.InvokeAsync("PublicDisscussionBoard", @ProjectId)
+                            else
+                                @await Component.InvokeAsync("ModuleDisabledWarning", @ProjectId)
+
                         </div>
                         <div id="tab3_content" style="display: none; min-height:80vh;">
-                            @await Component.InvokeAsync("BugReportForm", @ProjectId)
+                            @if(@EnabledFeatures.BugReportEnabled)
+                                @await Component.InvokeAsync("BugReportForm", @ProjectId)
+                            else
+                                @await Component.InvokeAsync("ModuleDisabledWarning", @ProjectId)
+
                         </div>
-                        <div id="tab4_content" style="display: none; min-height:80vh;">
-                            
-                        </div>
+                        
                     </div>
 
                 </div>
@@ -60,10 +70,6 @@ $( document ).ready(function() {
                 {
                     header: { 'text': 'Bug Report' },
                     content: '#tab3_content'
-                },
-                {
-                    header: { 'text': 'Feature Request' },
-                    content: '#tab4_content'
                 }
             ]
         });
