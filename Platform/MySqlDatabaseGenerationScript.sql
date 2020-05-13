@@ -230,7 +230,6 @@ CREATE TABLE IF NOT EXISTS UserNotes (
 );CREATE TABLE IF NOT EXISTS WorkItemRelations (
     Id INT AUTO_INCREMENT PRIMARY KEY
 );
-
 ALTER TABLE AssociatedAccountNotes ADD FOREIGN KEY (NoteId) REFERENCES UserNotes(Id);
 ALTER TABLE AssociatedAccountNotes ADD FOREIGN KEY (UserAccountId) REFERENCES UserAccounts(Id);
 ALTER TABLE AssociatedAccountNotes ADD FOREIGN KEY (ProjectId) REFERENCES Projects(Id);

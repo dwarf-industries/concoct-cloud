@@ -1,0 +1,91 @@
+@{
+   
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    ViewData["Title"] = $"Manage API Keys";
+    var ProjectId = ViewData["ProjectId"] as int?;
+}
+
+<style>
+    .e-toolbar.e-control[class*="e-toolbar"] {
+    box-sizing: content-box;
+    text-align: center;
+}
+
+</style>
+
+        <div class="row  card-layout">
+            <div class="col-md-12">
+                <!-- Basic Card Layout  -->
+                <div tabindex="0" class="e-card" id="basic_card">
+                    <div class="e-card-header">
+
+ 
+                    </div>
+                    
+                    <div class="e-card-content">
+                        <div id="element"></div>
+
+                        <div id="tab1_content" style="display: none; min-height:80vh;">
+                            @await Component.InvokeAsync("BugReportFormSettings", @ProjectId)
+
+
+                        </div>
+                        <div id="tab2_content" style="display: none; min-height:80vh;">
+                           
+                            @await Component.InvokeAsync("PublicDiscussionBoardSetting", @ProjectId)
+
+                        </div>
+                        <div id="tab3_content" style="display: none; min-height:80vh;">
+                             @await Component.InvokeAsync("PublicFeedbackSettings", @ProjectId)
+
+                        </div>
+                        
+                    </div>
+
+                </div>
+            </div>
+
+
+<script>
+$( document ).ready(function() {
+   var tabObj = new ej.navigations.Tab({
+            selected: tabSelected,
+            items: [
+                {
+                    header: { 'text': 'Bug Report Settings' },
+                    content: '#tab1_content'
+                },
+                {
+                    header: { 'text': 'Discussions Settings' },
+                    content: '#tab2_content'
+                },
+                {
+                    header: { 'text': 'Feedback Settings' },
+                    content: '#tab3_content'
+                }
+            ]
+        });
+        //Render initialized Tab component
+        tabObj.appendTo('#element');
+
+});
+//Initialize Tab component
+
+function CopyToClipboard()
+{
+     /* Get the text field */
+  var copyText = document.getElementById("myInput");
+
+  /* Select the text field */
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+
+}
+function tabSelected(args)
+{
+
+}
+</script>

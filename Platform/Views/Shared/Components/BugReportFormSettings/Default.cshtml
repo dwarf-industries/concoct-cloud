@@ -1,0 +1,87 @@
+@{
+    var KeySettings = ViewData["ProjectKey"] as AssociatedProjectApiKeys;
+    var ProjectId = ViewData["ProjectId"] as int?;
+    var value = ViewData["RuleValueBugReport"] as int?;
+}
+<style>
+    .e-input-picture:before {
+        content: '\e30d';
+        font-family: e-icons;
+    }
+    
+    .e-input-calendar:before {
+        content:'\e901';
+        font-family: e-icons;
+        font-size: 13px;
+    }
+
+</style>
+
+<div class="col-lg-12 control-section">
+    <div class="row">
+        <div class="control_wrapper">
+            <div class="col-md-6">
+                <label for="EnableBugReports" style="padding:2%; min-width:303px;">Enable Bug Report</label>
+                <input id="EnableBugReports" onchange="BugHandlerChanged()" type="checkbox" />
+            </div>
+            <div class="col-md-6">
+                <div class="e-input-group e-float-icon-left">
+                    <span class="e-input-group-icon e-input-picture" onclick="CopyToClipboard()"></span>
+                    <div class="e-input-in-wrap">
+                        <input class="e-input" id="InputBugReport" type="text" placeholder="Enable Public Bug Reporting" value="@KeySettings.ApiSecret" disabled/>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+      <div class="row">
+        <div class="control_wrapper">
+           
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var EnableBugReports;
+    EnableBugReports = new ejs.buttons.Switch({ checked: @value });
+    EnableBugReports.appendTo('#EnableBugReports');
+    var BugReportChecked = 0;
+    function BugHandlerChanged()
+    {
+        if (EnableBugReports.properties.checked === true)
+        {
+            BugReportChecked= 1;
+            $("#InputBugReport").prop( "disabled", false )
+        }
+        else
+        {
+            BugReportChecked = 0;
+            $("#InputBugReport").prop( "disabled", true )
+
+        }
+          var dto = {
+            "ProjectId":@ProjectId,
+            "RuleName": "BugReport",
+            "Value": BugReportChecked
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/ApiKeySettings/EnableProjectFeature',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                alert("Feature enabled, please save you api key to authorize the connection on the front end of your application.");
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+</script>
+
+
+

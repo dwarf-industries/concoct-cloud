@@ -22,6 +22,33 @@ namespace Rokono_Control.DatabaseHandlers
     {
         RokonoControlContext Context;
 
+        internal AssociatedProjectApiKeys GetProjectApiKey(int projectId, string keyName)
+        {
+            var projectKey = Context.AssociatedProjectApiKeys.Include(x => x.Key)
+                                    .FirstOrDefault(x => x.ProjectId == projectId);
+            if(projectKey == null)
+                projectKey = GenerateProjectKey(keyName, projectId);
+            
+            return projectKey;
+        }
+ 
+
+        private AssociatedProjectApiKeys GenerateProjectKey(string keyName, int projectId)
+        {
+            var getKey = Context.ApiKeys.FirstOrDefault(x=> x.FeatureName == keyName);
+            if(getKey == null)
+                return null;
+
+            var projectKey = Context.AssociatedProjectApiKeys.Add(new AssociatedProjectApiKeys{
+                KeyId = getKey.Id,
+                ProjectId = projectId,
+                ApiSecret = $"{Guid.NewGuid()}{DateTime.Now.Ticks}"
+            });
+            Context.SaveChanges();
+            projectKey.Entity.Key = getKey;
+            return projectKey.Entity;
+        }
+
         internal OutgoingProjectRightsDTO GetProjectOutboundFeatures(int projectId)
         {
             var project = Context.Projects.FirstOrDefault(x=>x.Id == projectId);
@@ -34,6 +61,37 @@ namespace Rokono_Control.DatabaseHandlers
             };
             
             return null;
+        }
+
+        internal void EnableProjectFeature(IncomignFeatureRequest request)
+        {
+            var project = Context.Projects.FirstOrDefault(x=>x.Id == request.ProjectId);
+            switch(request.RuleName)
+            {
+                case "BugReport":
+                    project.AllowPublicBugs = request.Value;
+                break;
+                case "FeatureRequest":
+                    project.AllowPublicFeatures = request.Value;
+                break;
+                case "PublicMessage":
+                    project.AllowPublicMessages = request.Value;
+                break;
+                case "FeedbackPage":
+                    project.AllowPublicFeedback = request.Value;
+                break;
+            }
+            Context.Attach(project);
+            Context.Update(project);
+            Context.SaveChanges();
+        }
+
+        internal List<ApiKeys> GetProjectApiKeys(int projectId)
+        {
+            return Context.AssociatedProjectApiKeys.Include(x => x.Key)
+                                                   .Where(x => x.ProjectId == projectId)
+                                                   .Select(x => x.Key)
+                                                   .ToList();
         }
 
         internal List<PublicMessages> GetAllPublicMessagesForProject(int id)
@@ -61,6 +119,27 @@ namespace Rokono_Control.DatabaseHandlers
                 break;
                 case "Feedback":
                     result = getProject.AllowPublicFeedback == 1 ? true: false;
+                break;
+            }
+            return result;
+        }
+        
+        internal int GetProjectActiveRule(int projectId, string ruleName)
+        {
+            var result = default(int);
+            var getProject = Context.Projects.FirstOrDefault(x=>x.Id == projectId);
+            if(getProject == null)
+                return result;
+            switch(ruleName)
+            {
+                case "BugReport":
+                    result = getProject.AllowPublicBugs == null ? 0 : getProject.AllowPublicBugs.Value;
+                break;
+                case "PublicMessage":
+                    result = getProject.AllowPublicMessages == null ? 0 : getProject.AllowPublicMessages.Value;
+                break;
+                case "FeedbackPage":
+                    result = getProject.AllowPublicFeedback == null ? 0 : getProject.AllowPublicFeedback.Value;
                 break;
             }
             return result;

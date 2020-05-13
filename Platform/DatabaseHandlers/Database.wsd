@@ -1,3 +1,29 @@
+class UserNotes
+{
+    Id int |  | NO
+    NoteBackground nvarchar |  | NO
+    NoteForeground nvarchar |  | NO
+    Content nvarchar |  | YES
+    DateOfMessage datetime |  | YES
+    TopPos nvarchar |  | YES
+    LeftPos nvarchar |  | YES
+}
+class AssociatedAccountNotes
+{
+    Id int |  | NO
+    NoteId int |  | NO
+    UserAccountId int |  | NO
+    ProjectId int |  | NO
+}
+class PublicMessage
+{
+    Id int |  | NO
+    Content nvarchar |  | NO
+    WorkItemRelationid int |  | YES
+    Rating int |  | YES
+    Email nvarchar |  | NO
+    DateOfMessage datetime |  | YES
+}
 class AssociatedProjectBoards
 {
     Id int |  | NO
@@ -5,15 +31,50 @@ class AssociatedProjectBoards
     ProjectId int |  | YES
     Position int |  | YES
 }
+class AssociatedProjectPublicMessages
+{
+    Id int |  | NO
+    MessageId int |  | NO
+    ProjectId int |  | NO
+}
+class Notifications
+{
+    Id int |  | NO
+    Content nvarchar |  | NO
+    WorkItemRelationid int |  | YES
+    DateOfMessage datetime |  | YES
+    NotificationType int |  | YES
+}
+class NotificationTypes
+{
+    Id int |  | NO
+    NotificationType nvarchar |  | NO
+    Icon nvarchar |  | YES
+}
 class Risks
 {
     Id int |  | NO
     RiskName nvarchar |  | YES
 }
+class AssociatedProjectNotifications
+{
+    Id int |  | NO
+    NotificationId int |  | NO
+    ProjectId int |  | NO
+    NewNotification int |  | YES
+    UserAccountId int |  | YES
+}
 class Efforts
 {
     Id int |  | NO
     EffortName nvarchar |  | YES
+}
+class AssociatedUserNotifications
+{
+    Id int |  | NO
+    NotificationId int |  | NO
+    UserId int |  | NO
+    NewNotification int |  | YES
 }
 class ValueAreas
 {
@@ -26,6 +87,19 @@ class AssociatedWrorkItemChildren
     WorkItemId int |  | YES
     WorkItemChildId int |  | YES
     RelationType int |  | YES
+}
+class PublicMessages
+{
+    Id int |  | NO
+    SenderName nvarchar |  | NO
+    MessageContent nvarchar |  | YES
+    DateOfMessage datetime |  | YES
+}
+class AssociatedProjectPublicDiscussions
+{
+    Id int |  | NO
+    ProjectId int |  | YES
+    PublicMessageId int |  | YES
 }
 class Commits
 {
@@ -42,16 +116,37 @@ class Branches
     DateOfCreation datetime |  | YES
     BranchName nvarchar |  | YES
 }
+class SystemFiles
+{
+    Id int |  | NO
+    SenderName nvarchar |  | NO
+    FileLocation nvarchar |  | YES
+    Filetype nvarchar |  | YES
+    DateOfMessage datetime |  | YES
+}
 class AssociatedBranchCommits
 {
     Id int |  | NO
     CommitId int |  | NO
     BranchId int |  | NO
 }
+class AssociatedWorkItemFiles
+{
+    Id int |  | NO
+    WorkItemId int |  | YES
+    FileId int |  | YES
+}
 class WorkItemRealtionshipType
 {
     Id int |  | NO
     Name nvarchar |  | NO
+}
+class AssociatedProjectFeedback
+{
+    Id int |  | NO
+    ProjectId int |  | YES
+    MessageId int |  | YES
+    rating int |  | YES
 }
 class UserAccounts
 {
@@ -71,11 +166,23 @@ class AssociatedRepositoryBranches
     RepositoryId int |  | NO
     BranchId int |  | NO
 }
+class ApiKeys
+{
+    Id int |  | NO
+    FeatureName nvarchar |  | YES
+    SecretKey nvarchar |  | YES
+}
 class WorkItemTypes
 {
     Id int |  | NO
     TypeName nvarchar |  | YES
     Icon nvarchar |  | YES
+}
+class AssociatedProjectApiKeys
+{
+    Id int |  | NO
+    ProjectId int |  | YES
+    KeyId int |  | YES
 }
 class WorkItem
 {
@@ -127,6 +234,12 @@ class Projects
     ProjectTitle nvarchar |  | YES
     CreationDate datetime |  | YES
     BoardId int |  | YES
+    PublicBoard int |  | YES
+    AllowPublicControl int |  | YES
+    AllowPublicFeatures int |  | YES
+    AllowPublicBugs int |  | YES
+    AllowPublicFeedback int |  | YES
+    AllowPublicMessages int |  | YES
 }
 class sysdiagrams
 {
@@ -210,6 +323,20 @@ class WorkItemAreas
     ID int |  | NO
     AreaName nvarchar |  | NO
 }
+class Changelogs
+{
+    Id int |  | NO
+    LogDetails varchar |  | NO
+    DayOfLog int |  | YES
+}
+class AssociatedProjectChangelogs
+{
+    Id int |  | NO
+    LogId int |  | YES
+    ProjectId int |  | YES
+    CurrentMonth int |  | YES
+    LogYear int |  | YES
+}
 class WorkItemPriorities
 {
     Id int |  | NO
@@ -220,6 +347,13 @@ class WorkItemSeverities
     Id int |  | NO
     SeverityName nvarchar |  | NO
 }
+class AssociatedWorkItemChangelogs
+{
+    Id int |  | NO
+    LogId int |  | YES
+    workitemId int |  | YES
+    ProjectId int |  | YES
+}
 class WorkItemActivity
 {
     Id int |  | NO
@@ -229,6 +363,7 @@ class WorkItemIterations
 {
     Id int |  | NO
     IterationName nvarchar |  | NO
+    IsActive int |  | YES
 }
 class WorkItemReasons
 {
@@ -245,6 +380,13 @@ class Builds
     AccountId int |  | YES
     PlatformId int |  | YES
 }
+class WorkItemMessage
+{
+    Id int |  | NO
+    SenderId int |  | NO
+    Content nvarchar |  | YES
+    DateOfMessage datetime |  | YES
+}
 class AssociatedProjectBuilds
 {
     Id int |  | NO
@@ -252,11 +394,20 @@ class AssociatedProjectBuilds
     BuildId int |  | YES
     ProjectId int |  | YES
 }
+class AssociatedWorkItemMessages
+{
+    Id int |  | NO
+    WorkItemId int |  | NO
+    MessageId int |  | NO
+}
 class WorkItemRelations
 {
     Id int |  | NO
     RelationName nvarchar |  | YES
 }
+AssociatedAccountNotes "1" *-- "many" UserNotes
+AssociatedAccountNotes "1" *-- "many" UserAccounts
+AssociatedAccountNotes "1" *-- "many" Projects
 AssociatedBoardWorkItems "1" *-- "many" Boards
 AssociatedBoardWorkItems "1" *-- "many" WorkItem
 AssociatedBoardWorkItems "1" *-- "many" Projects
@@ -264,11 +415,17 @@ AssociatedBranchCommits "1" *-- "many" Commits
 AssociatedBranchCommits "1" *-- "many" Branches
 AssociatedCommitFiles "1" *-- "many" Files
 AssociatedCommitFiles "1" *-- "many" Commits
+AssociatedProjectApiKeys "1" *-- "many" Projects
+AssociatedProjectApiKeys "1" *-- "many" ApiKeys
 AssociatedProjectBoards "1" *-- "many" Boards
 AssociatedProjectBoards "1" *-- "many" Projects
 AssociatedProjectBuilds "1" *-- "many" Repository
 AssociatedProjectBuilds "1" *-- "many" Builds
 AssociatedProjectBuilds "1" *-- "many" Projects
+AssociatedProjectChangelogs "1" *-- "many" Changelogs
+AssociatedProjectChangelogs "1" *-- "many" Projects
+AssociatedProjectFeedback "1" *-- "many" Projects
+AssociatedProjectFeedback "1" *-- "many" PublicMessages
 AssociatedProjectIterations "1" *-- "many" Projects
 AssociatedProjectIterations "1" *-- "many" WorkItemIterations
 AssociatedProjectMemberRights "1" *-- "many" UserRights
@@ -277,12 +434,29 @@ AssociatedProjectMemberRights "1" *-- "many" Projects
 AssociatedProjectMembers "1" *-- "many" UserAccounts
 AssociatedProjectMembers "1" *-- "many" Projects
 AssociatedProjectMembers "1" *-- "many" Repository
+AssociatedProjectNotifications "1" *-- "many" Notifications
+AssociatedProjectNotifications "1" *-- "many" Projects
+AssociatedProjectNotifications "1" *-- "many" UserAccounts
+AssociatedProjectPublicDiscussions "1" *-- "many" Projects
+AssociatedProjectPublicDiscussions "1" *-- "many" PublicMessages
+AssociatedProjectPublicMessages "1" *-- "many" PublicMessage
+AssociatedProjectPublicMessages "1" *-- "many" Projects
 AssociatedRepositoryBranches "1" *-- "many" Repository
 AssociatedRepositoryBranches "1" *-- "many" Branches
+AssociatedUserNotifications "1" *-- "many" Notifications
+AssociatedUserNotifications "1" *-- "many" UserAccounts
+AssociatedWorkItemChangelogs "1" *-- "many" Changelogs
+AssociatedWorkItemChangelogs "1" *-- "many" WorkItem
+AssociatedWorkItemChangelogs "1" *-- "many" Projects
+AssociatedWorkItemFiles "1" *-- "many" WorkItem
+AssociatedWorkItemFiles "1" *-- "many" SystemFiles
+AssociatedWorkItemMessages "1" *-- "many" WorkItem
+AssociatedWorkItemMessages "1" *-- "many" WorkItemMessage
 AssociatedWrorkItemChildren "1" *-- "many" WorkItem
 AssociatedWrorkItemChildren "1" *-- "many" WorkItem
 AssociatedWrorkItemChildren "1" *-- "many" WorkItemTypes
 Branches "1" *-- "many" Projects
+Notifications "1" *-- "many" NotificationTypes
 Projects "1" *-- "many" Repository
 WorkItem "1" *-- "many" WorkItemTypes
 WorkItem "1" *-- "many" UserAccounts
@@ -296,3 +470,4 @@ WorkItem "1" *-- "many" WorkItemReasons
 WorkItem "1" *-- "many" WorkItemRelations
 WorkItem "1" *-- "many" Risks
 WorkItem "1" *-- "many" ValueAreas
+WorkItemMessage "1" *-- "many" UserAccounts
