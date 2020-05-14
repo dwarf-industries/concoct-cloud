@@ -563,53 +563,7 @@
                                                         <button onclick="OpenDiagram()" id="OpenRelationDiagram" ><i class="fas fa-plus"></i> Open relation diagram</button>
 
                                                         <button type="button"  onclick="OpenModal()" class="btn btn-primary"  id="relationBtn">Add new relation</button>
-                                                        <div class="modal bd-example-modal-lg" id="WorItemsGridPanel" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-lg">
-                                                                <div class="modal-content">
-                                                                    <div id="ModalAdd">
-                                                                        <div class="ModalInnerFix">
-                                                                            <div class="row">
-                                                                                <p>Relation Type</p>
-                                                                            </div>
-                                                                            <div class="row">
-                                                                                                
-                                                                                <select class="form-control-sm form-control"  id="WorkItemRelationsGrid">
-                                                                                
-                                                                                </select>
-                                                                            
-                                                                            </div>
-                                                                            <div class="row">
-                                                                                
-                                                                                <div class="e-input-group e-float-icon-left">
-                                                                                    <span class="e-input-group-icon e-input-picture" onclick="CallItemSelect();"></span>
-                                                                                    <div class="e-input-in-wrap">
-                                                                                    <input class="e-input" id="workItemInputObj" type="text" placeholder="Upload Picture" />
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div id="ModalSelect" hidden>
-                                                                        <div class="ModalInnerFix">
-                                                                            <h3> Select work item</h3>
-                                                                            <div class="row">
-                                                                                <div class="control-section">
-                                                                                    <div class="content-wrapper">
-                                                                                        <div id="Grid"></div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="row">
-                                                                                <button   id="AcceptWItemChange">Add</button>
-                                                                                <button   id="CancelAddWItemBtn" onclick="CancelGridGlicked()">Cancel</button>
-
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-    
-                                                            </div>
-                                                        </div>
+                                                       
                                                     </div>
                                             <div class="row" id="listview-defholder" >
                                                 <div id="listview-def" tabindex="1" >
@@ -694,7 +648,11 @@
     </div>
 </div>
 </div>
- 
+@await Component.InvokeAsync("RelateWorkItem", new IncomingIdRequest{
+    Id = @WorkItemData.Id,
+    WorkItemType = @projectId.Value
+})
+
         <!-- end of main-content -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -814,12 +772,7 @@
             floatLabelType: 'Auto',
         });
         inputobj.appendTo('#IdFilter');
-        var id = @projectId;
-        console.log(id);
-          var dto = {
-            "id": id,
-            
-        }
+      
         var messagesDto= {
             "ProjectId":id,
             "WorkItemId": @WorkItemData.Id
@@ -840,19 +793,7 @@
             }
         });
 
-         $.ajax({
-            type: 'POST',
-            url: '/Backlogs/GetWorkItems',
-            data: JSON.stringify(dto),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-                InitiliazeGrid(response);
-            },
-            error: function (xhr, status, error) {
-                console.log(error);
-            }
-        });
+         
         $.ajax({
             type: 'POST',
             url: '/Dashboard/GetWorkItemDiscussions',
@@ -1070,18 +1011,7 @@
        AddAssocuatedItem(args.rowData.id);
     }
 
-    function CallItemSelect()
-    {
-        $("#ModalAdd").hide();
-        $("#ModalSelect").show();
-        
-    }
-
-    function CancelGridGlicked()
-    {
-        $("#ModalAdd").show();
-        $("#ModalSelect").hide();
-    }
+   
 
     function InitalizeChatDiscussion(data)
     {
@@ -1099,111 +1029,7 @@
         });
         chatGrid.appendTo('#chatGrid');
     }
-    function OpenModal()
-    {
-        console.log("Open modal");
-        $.ajax({
-            type: 'GET',
-            url: '/Dashboard/GetWorkItemRelations',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-                response.forEach(function(element) {
-                    console.log(element);
-                    $("#WorkItemRelationsGrid").append("<option value=\""+element.id+"\">"+element.relationName+"</option>");
-                });
-               $('#WorItemsGridPanel').modal('show'); 
-               var element = document.getElementsByClassName("modal-backdrop show");
-                $(element).remove();
-            },
-            error: function (xhr, status, error) {
-                console.log(xhr);
-            }
-        });
-   //     $('#WorItemsGridPanel').modal('show'); 
-
-    }
-
-    function AddAssocuatedItem(id){
-        var project = @projectId;
-
-        
-        var dto = {
-            "WorkItemId": id,
-            "CurrWorkItemId" : @WorkItemData.Id,
-            "ProjectId" : project,
-            "RelationType" :  $("#WorkItemRelationsGrid :selected").val(),
-            "LinkedItems" : selectedChildren
-        }
-        console.log(dto);
-         $.ajax({
-            type: 'POST',
-            url: '/Dashboard/ValidateSelectedItem',
-            data: JSON.stringify(dto),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-                console.log(response);
-                if(response.valid === true)
-                {
-
-                    var wItemDTO = {
-                            "WorkItemId" : response.workItemId,
-                            "RelationShipId": response.relationshipId
-                        };
-                    selectedChildren.push(wItemDTO);
-                    $("#listview-defholder").html("");
-                    var res = "";
-                    res += "<div id=\"listview-def\" tabindex=\"1\" >";
-
-                    res += "<ul>";
-                    response.workItem.forEach(element => 
-                    {
-                        if(element.workItemTypeId === 1)
-                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+"&returnUrl="+window.location.href+" \"><i class=\"fas fa-bug\" style=\"padding:3px;\" ></i>"+element.title+"</li>";
-                        else if(element.workItemTypeId === 5)
-                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+"&returnUrl="+window.location.href+" \"><i class=\"fas fa-crown\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
-                        else if(element.workItemTypeId === 6)
-                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+"&returnUrl="+window.location.href+" \"><i class=\"fas fa-exclamation-triangle\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
-                        else if(element.workItemTypeId === 4)
-                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+"&returnUrl="+window.location.href+" \"><i class=\"fas fa-vial\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
-                        else if(element.workItemTypeId === 7)
-                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+"&returnUrl="+window.location.href+" \"><i class=\"fas fa-user-circle\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
-                        else if(element.workItemTypeId === 3)
-                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+"&returnUrl="+window.location.href+" \"><i class=\"fas fa-tasks\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
-                        else if(element.workItemTypeId === 2)
-                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+"&returnUrl="+window.location.href+" \"><i class=\"fas fa-cog\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
-                      
-                    });
-                    res += "</ul>";
-                    res += "</div>";
-                    $("#listview-defholder").html(res);
-
-                    var listObj = new ej.lists.ListView();
-
-                    //Render initialized ListView component
-                    listObj.appendTo('#listview-def');
-                    console.log(response);
-                 }
-                else
-                {
-                    alert("Item with ID" + id+ " Is already linked with the current work item please chose another item!");
-                    for(var i = selectedChildren.length - 1; i >= 0; i--) {
-                        if(selectedChildren[i].WorkItemId === id) {
-                            selectedChildren.splice(i, 1);
-                        }
-                    }
-                }
-                $("#ModalAdd").show();
-                $("#ModalSelect").hide();
-                $("#WorItemsGridPanel").modal('hide');
-            },
-            error: function (xhr, status, error) {
-                console.log(error);
-            }
-        });
-        console.log(selectedChildren);
-    }
+  
     function ItemSelected(args){
         console.log(args);
         assignedUser = args.itemData.id;

@@ -53,6 +53,7 @@ namespace Rokono_Control.Models
         public DateTime? DueDate { get; set; }
         public string StoryPoints { get; set; }
         public string AcceptanceCriteria { get; set; }
+        public int? IsPublic { get; set; }
 
         public virtual WorkItemActivity ActivityNavigation { get; set; }
         public virtual WorkItemAreas Area { get; set; }

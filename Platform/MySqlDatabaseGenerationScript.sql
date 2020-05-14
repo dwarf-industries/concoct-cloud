@@ -65,7 +65,8 @@ CREATE TABLE IF NOT EXISTS UserNotes (
     DateOfCreation DATETIME
 );CREATE TABLE IF NOT EXISTS SystemFiles (
     Id INT AUTO_INCREMENT PRIMARY KEY,
-    DateOfMessage DATETIME
+    DateOfMessage DATETIME,
+    FileType INT
 );CREATE TABLE IF NOT EXISTS AssociatedBranchCommits (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     CommitId INT NOT NULL,
@@ -121,7 +122,8 @@ CREATE TABLE IF NOT EXISTS UserNotes (
     RelationId INT,
     RiskId INT,
     ValueAreaId INT,
-    DueDate DATETIME
+    DueDate DATETIME,
+    IsPublic INT
 );CREATE TABLE IF NOT EXISTS Projects (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     RepositoryId INT NOT NULL,
@@ -133,6 +135,8 @@ CREATE TABLE IF NOT EXISTS UserNotes (
     AllowPublicBugs INT,
     AllowPublicFeedback INT,
     AllowPublicMessages INT
+);CREATE TABLE IF NOT EXISTS FileTypes (
+    Id INT AUTO_INCREMENT PRIMARY KEY
 );CREATE TABLE IF NOT EXISTS sysdiagrams (
     principal_id INT NOT NULL,
     diagram_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -283,6 +287,7 @@ ALTER TABLE AssociatedWrorkItemChildren ADD FOREIGN KEY (RelationType) REFERENCE
 ALTER TABLE Branches ADD FOREIGN KEY (ProjectId) REFERENCES Projects(Id);
 ALTER TABLE Notifications ADD FOREIGN KEY (NotificationType) REFERENCES NotificationTypes(Id);
 ALTER TABLE Projects ADD FOREIGN KEY (RepositoryId) REFERENCES Repository(Id);
+ALTER TABLE SystemFiles ADD FOREIGN KEY (FileType) REFERENCES FileTypes(Id);
 ALTER TABLE WorkItem ADD FOREIGN KEY (WorkItemTypeId) REFERENCES WorkItemTypes(Id);
 ALTER TABLE WorkItem ADD FOREIGN KEY (AssignedAccount) REFERENCES UserAccounts(Id);
 ALTER TABLE WorkItem ADD FOREIGN KEY (StateId) REFERENCES WorkItemStates(Id);

@@ -62,6 +62,52 @@ namespace Rokono_Control.Controllers
 
             return result;
         }
+
+        [HttpPost]
+        public List<OutgoingWorkItem> GetPublicBugReports([FromBody] IncomingIdRequest IncomingIdRequest)
+        {
+
+            var result = new List<OutgoingWorkItem>();
+            using (var context = new DatabaseController(Context,Configuration))
+            {
+                var data = context.GetPublicBugReports(IncomingIdRequest.Id);
+           
+                var bData = data.Select(x => x.WorkItem).ToList();
+                bData.ForEach(x =>
+                {
+            
+                        result.Add(new OutgoingWorkItem
+                        {
+                            Id = x.Id,
+                            WorkItemIcon = x.WorkItemType.Icon,
+                            Title = x.Title,
+                            Description = x.Description,
+                            AssignedTo = x.AssignedAccountNavigation == null ? "" : x.AssignedAccountNavigation.Email,
+                            //    subtasks = new List<OutgoingWorkItem>()
+                        });
+                  
+                });
+                // result = GetChildren(data,result);
+            }
+
+            return result;
+        }
+
+
+
+        [HttpPost]
+        public WorkItem GetPublicBugReport([FromBody] IncomingIdRequest IncomingIdRequest)
+        {
+
+            var result = default(WorkItem);
+            using (var context = new DatabaseController(Context,Configuration))
+            {
+                result = context.GetPublicBugReport(IncomingIdRequest.Id);
+            }
+
+            return result;
+        }
+        
         [HttpPost]
         public List<OutgoingWorkItem> GetEmptyStories([FromBody] IncomingIdRequest IncomingIdRequest)
         {

@@ -14,7 +14,11 @@
         font-family: e-icons;
         font-size: 13px;
     }
-
+    .FileIcon:before {
+        content: '\ec2a';
+        font-family: e-icons;
+        font-size: 107px;
+    }
 </style>
 
 <div class="col-lg-12 control-section">
@@ -26,7 +30,7 @@
             </div>
             <div class="col-md-6">
                 <div class="e-input-group e-float-icon-left">
-                    <span class="e-input-group-icon e-input-picture" onclick="CopyToClipboard()"></span>
+                    <span class="e-input-group-icon e-input-picture" id="copyButton"></span>
                     <div class="e-input-in-wrap">
                         <input class="e-input" id="InputBugReport" type="text" placeholder="Enable Public Bug Reporting" value="@KeySettings.ApiSecret" disabled/>
                     </div>
@@ -35,19 +39,86 @@
 
         </div>
     </div>
-      <div class="row">
-        <div class="control_wrapper">
-           
+
+    <div class="row">
+        <div class="col-lg-6 control-section">
+            <div class="control_wrapper">
+                <div id="TreeGrid"></div>
+            </div>
+        </div>
+       <div class="col-lg-6 control-section">
+            <div class="control_wrapper">
+                <h2 id="WorkItemTitle" style="text-align: center;">I am a Heading</h2>
+                <p id="RepoSteps" style="text-align: justify;">
+                  Reproduction Steps: <span id="RepoSteps"></span>
+                </p>
+                <div class="row" id="FileHolder">
+                    <div class="col-md-4">
+                        <div class="row">
+                            <img src="~/Files/Uploads/tvc_f4b7854e16de4fd5f7702124201b3db7.png" style="width: -moz-available;" />
+                        </div>
+                        <p style="text-align: center;">FileName</p>
+                        <div class="row" style="text-align: center;">
+                            <button  class="btn btn-primary e-control e-btn e-lib e-outline e-primary">
+                                Download
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="row" style="text-align: center;">
+                            <span class="FileIcon"></span>
+                        </div>
+                        <p style="text-align: center;">FileName</p>
+                        <div class="row" style="text-align: center;">
+                            <button  class="btn btn-primary e-control e-btn e-lib e-outline e-primary">
+                                Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="text-align: center;">
+                    <button type="button"  onclick="OpenModal()" class="btn btn-primary e-control e-btn e-lib e-outline e-primary"  id="relationBtn">Add new relation</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-
+@await Component.InvokeAsync("RelateWorkItem", new IncomingIdRequest{
+    Id = 0,
+    WorkItemType = @ProjectId.Value
+})
 <script>
     var EnableBugReports;
     EnableBugReports = new ejs.buttons.Switch({ checked: @value });
     EnableBugReports.appendTo('#EnableBugReports');
     var BugReportChecked = 0;
+ 
+    var dto = {
+        "id": @ProjectId,
+     }
+    console.log(dto);
+
+    if(@value === 1)
+        $("#InputBugReport").prop( "disabled", false )
+    else
+        $("#InputBugReport").prop( "disabled", true )
+
+    $.ajax({
+        type: 'POST',
+        url: '/Backlogs/GetPublicBugReports',
+        data: JSON.stringify(dto),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            InitializePublicBugGrid(response);
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    });
+
     function BugHandlerChanged()
     {
         if (EnableBugReports.properties.checked === true)
@@ -80,7 +151,103 @@
             }
         });
     }
+    function InitializePublicBugGrid(data )
+    {
+        console.log(data);
 
+
+        var treeGridObj = new ej.treegrid.TreeGrid({
+            dataSource: data,
+            allowSelection: true,
+            allowFiltering: true,
+            allowSorting: true,
+            toolbar: ['Search'],
+            recordDoubleClick: EditWorkItemBugGrid,
+            enableVirtualization: true,
+            filterSettings: { type: 'Menu' },
+            selectionSettings: { persistSelection: true, type: "Multiple" },
+            enableHover: false,
+            allowPaging: true,
+            pageSettings: { pageSize: 20 },
+            height:'750px',
+            columns: [
+                { type: "checkbox", field: "", allowFiltering: false, allowSorting: false, width: '60' },
+                { field: 'workItemType.TypeName', headerText: 'Type', width: 60,customAttributes: {class: "workItemIcon"}, textAlign: 'Right' },
+                { field: 'title', headerText: 'Title', width: 125 },
+                { field: 'description', headerText: 'Description', width: 180 },
+                { field: 'assignedTo', headerText: 'AssignedTo', width: 110 },
+            ]
+        });
+
+        treeGridObj.appendTo('#TreeGrid');
+        ShowContent();
+
+
+    }
+
+    function EditWorkItemBugGrid(args)
+    {
+        console.log(args);
+        var dto = {
+            "id": args.rowData.id
+        }
+        AssociationHander.CurrWorkItemId = args.rowData.id;
+        ChangeWorkItemId(args.rowData.id)
+         $.ajax({
+            type: 'POST',
+            url: '/Backlogs/GetPublicBugReport',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                $("#WorkItemTitle").html(response.title);
+                $("#RepoSteps").html(response.repoSteps);
+                var bindingData = "";
+                response.associatedWorkItemFiles.forEach(element => 
+                {
+                    console.log(element.file.fileType);
+
+                    if(element.file.fileType === 1)
+                    {
+                        bindingData += "<div class=\"col-md-4\">"+
+                                            "<div class=\"row\">"+
+                                                "<img src=\"~/Files/Uploads/"+element.file.fileLocation+" style=\"width: -moz-available;\" />"+
+                                            "</div>"+
+                                            "<p style=\"text-align: center;\">"+element.file.fileLocation+"</p>"+
+                                            "<div class=\"row\" style=\"text-align: center;\">"+
+                                                "<button  class=\"btn btn-primary e-control e-btn e-lib e-outline e-primary\">"+
+                                                    "Download"+
+                                                "</button>"+
+                                            "</div>"+
+                                        "</div>";
+                    }
+                    else
+                    {
+                        bindingData += "<div class=\"col-md-4\">"+
+                                            "<div class=\"row\" style=\"text-align:center;\">"+
+                                               "<span class=\"FileIcon\"></span>"+
+                                            "</div>"+
+                                            "<p style=\"text-align: center;\">"+element.file.fileLocation+"</p>"+
+                                            "<div class=\"row\" style=\"text-align: center;\">"+
+                                                "<button  class=\"btn btn-primary e-control e-btn e-lib e-outline e-primary\">"+
+                                                    "Download"+
+                                                "</button>"+
+                                            "</div>"+
+                                        "</div>";              
+                    }
+                });
+                $("#FileHolder").html(bindingData);
+
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+ 
+ 
+   
 </script>
 
 

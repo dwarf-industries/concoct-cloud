@@ -43,6 +43,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<Changelogs> Changelogs { get; set; }
         public virtual DbSet<Commits> Commits { get; set; }
         public virtual DbSet<Efforts> Efforts { get; set; }
+        public virtual DbSet<FileTypes> FileTypes { get; set; }
         public virtual DbSet<Files> Files { get; set; }
         public virtual DbSet<NotificationTypes> NotificationTypes { get; set; }
         public virtual DbSet<Notifications> Notifications { get; set; }
@@ -69,7 +70,8 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
 
- 
+       
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ApiKeys>(entity =>
@@ -464,6 +466,11 @@ namespace Rokono_Control.Models
                 entity.Property(e => e.EffortName).HasMaxLength(300);
             });
 
+            modelBuilder.Entity<FileTypes>(entity =>
+            {
+                entity.Property(e => e.TypeName).HasMaxLength(300);
+            });
+
             modelBuilder.Entity<Files>(entity =>
             {
                 entity.Property(e => e.DateOfFile).HasColumnType("datetime");
@@ -535,11 +542,14 @@ namespace Rokono_Control.Models
             {
                 entity.Property(e => e.DateOfMessage).HasColumnType("datetime");
 
-                entity.Property(e => e.Filetype).HasMaxLength(50);
-
                 entity.Property(e => e.SenderName)
                     .IsRequired()
                     .HasMaxLength(255);
+
+                entity.HasOne(d => d.FileTypeNavigation)
+                    .WithMany(p => p.SystemFiles)
+                    .HasForeignKey(d => d.FileType)
+                    .HasConstraintName("FK__SystemFil__FileT__45544755");
             });
 
             modelBuilder.Entity<UserAccounts>(entity =>

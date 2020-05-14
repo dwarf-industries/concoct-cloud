@@ -86,6 +86,39 @@ namespace Rokono_Control.DatabaseHandlers
             Context.SaveChanges();
         }
 
+        internal List<AssociatedBoardWorkItems> GetPublicBugReports(int id)
+        {
+            var  items = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem)
+                                .ThenInclude(WorkItem => WorkItem.WorkItemType)
+                                .Include(x => x.WorkItem)
+                                .ThenInclude(WorkItem => WorkItem.State)
+                                .Include(x => x.WorkItem)
+                                .ThenInclude(WorkItem => WorkItem.AssignedAccountNavigation)
+                                .Include(x => x.WorkItem)
+                                .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItem)
+                                .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.WorkItemChild)
+                                .Include(x => x.WorkItem)
+                                .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItem)
+                                .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.RelationTypeNavigation)
+                                .Where(x => x.ProjectId == id && x.WorkItem.IsPublic == 1 && x.WorkItem.WorkItemTypeId == 1)
+                                .ToList();
+
+            return items;
+        }
+
+        internal WorkItem GetPublicBugReport(int id)
+        {
+            var  item = Context.WorkItem
+                            .Include(WorkItem => WorkItem.AssociatedWorkItemFiles)
+                            .ThenInclude(AssociatedWorkItemFiles => AssociatedWorkItemFiles.File)
+                            .ThenInclude(File => File.FileTypeNavigation)
+                            .FirstOrDefault( x=>x.Id == id);
+            if(item != null)
+                return item;
+
+            return null;
+        }
+
         internal List<ApiKeys> GetProjectApiKeys(int projectId)
         {
             return Context.AssociatedProjectApiKeys.Include(x => x.Key)
@@ -212,6 +245,7 @@ namespace Rokono_Control.DatabaseHandlers
             databaseItem.Remaining = "0";
             databaseItem.OriginEstitame = "0";
             databaseItem.Severity=1;
+            databaseItem.IsPublic = 1;
 //                databaseItem.ParentId = relationshipId;
                 
             
@@ -258,7 +292,7 @@ namespace Rokono_Control.DatabaseHandlers
             if(string.IsNullOrEmpty(report.ImagePath))
                 return;
             var file = Context.SystemFiles.Add(new SystemFiles{
-                Filetype = "PNG",
+                FileType = 1,
                 FileLocation = report.ImagePath,
                 SenderName = report.SenderName,
                 DateOfMessage = DateTime.Now
@@ -1314,16 +1348,18 @@ namespace Rokono_Control.DatabaseHandlers
                 if (workItem.ParentId != 0)
                 {
                     parent = Context.WorkItem.FirstOrDefault(x => x.Id == workItem.ParentId);
-
-                    bindingRelations.Add(new BindingWorkItemRelation
+                    if(parent != null)
                     {
-                        WorkItem = new BindingWorkItemDTO
+                        bindingRelations.Add(new BindingWorkItemRelation
                         {
-                            Title = parent.Title,
-                            Id = parent.Id
-                        },
-                        RelationType = "Parent"
-                    });
+                            WorkItem = new BindingWorkItemDTO
+                            {
+                                Title = parent.Title,
+                                Id = parent.Id
+                            },
+                            RelationType = "Parent"
+                        });
+                    }
                 }
             }
             var res = new StringBuilder();

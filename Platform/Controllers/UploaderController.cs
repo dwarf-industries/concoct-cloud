@@ -11,8 +11,8 @@ namespace Platform.Controllers
 {
     public partial class UploaderController : Controller
     {
-        private IHostingEnvironment hostingEnv;
-        public UploaderController(IHostingEnvironment env)
+        private IWebHostEnvironment hostingEnv;
+        public UploaderController(IWebHostEnvironment env)
         {
             this.hostingEnv = env;
         }
@@ -26,7 +26,7 @@ namespace Platform.Controllers
                     if (UploadFiles != null)
                     {
                         var filename = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                        filename = hostingEnv.WebRootPath + $@"\{filename}";
+                        filename = hostingEnv.WebRootPath + $@"/Files/Uploads/{filename}";
                         if (!System.IO.File.Exists(filename))
                         {
                             using (FileStream fs = System.IO.File.Create(filename))
