@@ -387,18 +387,18 @@ namespace Rokono_Control.Controllers
         {
 
             var result = new OutgoingValidWorkItem();
-
+            var currentItem = default(WorkItem);
             using (var context = new DatabaseController(Context,Configuration))
             {
                 var defaultUserAccount = context.GetDefaultAccount();
                 result.WorkItem = new List<WorkItem>();
-                if (!incomingRequest.LinkedItems.Any(x => x.WorkItemId == incomingRequest.WorkItemId))
+                if (!incomingRequest.LinkedItems.Any(x => x.WorkItemId == incomingRequest.WorkItemId) && incomingRequest.RelationType != "1")
                 {
                     if (incomingRequest.CurrWorkItemId != 1)
                     {
                         var workItemData = context.GetWorkItemChildrenClean(incomingRequest.CurrWorkItemId);
                         var currentWorkItem = context.GetWorkItemClean(incomingRequest.CurrWorkItemId, incomingRequest.ProjectId);
-                        if (currentWorkItem.ParentId != null)
+                        if (currentWorkItem != null)
                         {
                             if (currentWorkItem.ParentId != 0)
                                 result.WorkItem.Add(context.GetWorkItemClean(currentWorkItem.ParentId.Value, incomingRequest.ProjectId));
@@ -410,8 +410,21 @@ namespace Rokono_Control.Controllers
                     {
                         result.WorkItem.Add(context.GetWorkItemClean(x.WorkItemId, incomingRequest.ProjectId));
                     });
+                    currentItem = context.GetWorkItemById(incomingRequest.WorkItemId);
+                    result.Last = currentItem;
                     result.Valid = true;
                     result.WorkItem.Add(context.GetWorkItemClean(incomingRequest.WorkItemId, incomingRequest.ProjectId));
+                    result.WorkItemTypeId = int.Parse(incomingRequest.RelationType);
+                    result.WorkItemId = incomingRequest.WorkItemId;
+                    result.RelationshipId = incomingRequest.RelationType;
+                }
+                else
+                {
+                    
+                    currentItem = context.GetWorkItemById(incomingRequest.WorkItemId);
+                    result.Last = currentItem;
+                    result.WorkItem.Add(context.AddChildrenToParent(incomingRequest.WorkItemId, incomingRequest.CurrWorkItemId));
+                    result.Valid = true;
                     result.WorkItemTypeId = int.Parse(incomingRequest.RelationType);
                     result.WorkItemId = incomingRequest.WorkItemId;
                     result.RelationshipId = incomingRequest.RelationType;

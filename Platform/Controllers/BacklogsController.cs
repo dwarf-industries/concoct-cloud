@@ -146,6 +146,25 @@ namespace Rokono_Control.Controllers
             }
             return new OutgoingJsonData{ Data = ""};
         }
+
+        [HttpPost]
+        public OutgoingJsonData MakeWorkItemPrivate([FromBody] IncomingIdRequest request)
+        {
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                context.MakeWorkItemPrivate(request.Id,0);
+            }
+            return new OutgoingJsonData{ Data = ""};
+        }
+        [HttpPost]
+        public OutgoingJsonData MakeWorkItemPublic([FromBody] IncomingIdRequest request)
+        {
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                context.MakeWorkItemPrivate(request.Id,1);
+            }
+            return new OutgoingJsonData{ Data = ""};
+        }
         [HttpPost]
         public List<OutgoingWorkItem> GetBacklogWorkItems([FromBody] IncomingIdRequest IncomingIdRequest)
         {

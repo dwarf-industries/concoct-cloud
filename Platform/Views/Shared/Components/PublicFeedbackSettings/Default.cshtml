@@ -27,7 +27,7 @@
             </div>
             <div class="col-md-6">
                 <div class="e-input-group e-float-icon-left">
-                    <span class="e-input-group-icon e-input-picture" onclick="CopyToClipboard()"></span>
+                    <span class="e-input-group-icon e-input-picture" onclick="CopyToClipboardFeedback()"></span>
                     <div class="e-input-in-wrap">
                         <input class="e-input" id="InputFeedback" type="text" placeholder="Enable Public Bug Reporting" value="@KeySettings.ApiSecret" disabled/>
                     </div>
@@ -38,7 +38,7 @@
     </div>
       <div class="row">
         <div class="control_wrapper">
-           
+            <div id="feedbackGrid"></div>
         </div>
     </div>
 </div>
@@ -49,6 +49,30 @@
     EnableFeedbacks = new ejs.buttons.Switch({ checked: @value });
     EnableFeedbacks.appendTo('#EnableFeedbacks');
     var FeedbackChecked = 0;
+     if(@value === 1)
+        $("#InputFeedback").prop( "disabled", false )
+    else
+        $("#InputFeedback").prop( "disabled", true )
+
+    var messagesDto=
+    {
+        "id":id,
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/ApiKeySettings/GetAllFeedback',
+        data: JSON.stringify(messagesDto),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        
+        success: function (response) {
+            InitPublicFeedback(response);
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    });
+    
     function FeedbacksHandlerChanged()
     {
         if (EnableFeedbacks.properties.checked === true)
@@ -82,6 +106,42 @@
         });
     }
 
+
+    function InitPublicFeedback(data)
+    {
+        feedbackGrid = new ej.grids.Grid({
+            dataSource: data,
+            height: 335,
+            editSettings: {allowAdding: true, mode: 'Normal', newRowPosition: 'Bottom' },
+            actionBegin: feedbackGridBegin,
+            allowPaging: false,
+            width: 'auto',
+            columns: [
+                { headerText: 'Name', width: 150, textAlign: 'Center', field: 'senderName' },
+                { headerText: 'Message', width: 300, field: 'messageContent', textAlign: 'Left' }
+            ]
+        });
+        feedbackGrid.appendTo('#feedbackGrid');
+    }
+    function feedbackGridBegin(args) {
+        if (args.requestType === 'save') {
+            chatGrid.dataSource.shift();// Remove the newly added record from first position 
+            chatGrid.dataSource.push(args.data)// Push the newly added record in data source 
+            chatGrid.refresh(); // refresh the Grid.
+            $("#ChatMessageBar").children()[0].innerHTML = "";
+        }
+    }
+
+    function CopyToClipboardFeedback()
+    {
+        var copyText =  document.getElementById("InputFeedback");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+        /* Copy the text inside the text field */
+        document.execCommand("copy");
+    }
+    
 </script>
 
 

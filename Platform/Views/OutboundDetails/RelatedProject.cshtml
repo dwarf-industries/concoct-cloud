@@ -27,7 +27,7 @@
                         <div id="element"></div>
 
                         <div id="tab1_content" style="display: none; min-height:80vh;">
-                           @if(@EnabledFeatures.FeaturesEnabled)
+                           @if(@EnabledFeatures.FeedbackEnabled)
                                 @await Component.InvokeAsync("PublicFeedback", @ProjectId)
                             else
                                 @await Component.InvokeAsync("ModuleDisabledWarning", @ProjectId)

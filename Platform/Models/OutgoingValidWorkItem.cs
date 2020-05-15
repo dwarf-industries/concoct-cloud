@@ -10,5 +10,6 @@ namespace RokonoControl.Models
         public int WorkItemTypeId { get; set; }
         public int WorkItemId { get; set; }
         public string  RelationshipId { get; set; }
+        public WorkItem Last { get; set; }
     }
 }

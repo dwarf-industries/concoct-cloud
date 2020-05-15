@@ -19,6 +19,11 @@
         font-family: e-icons;
         font-size: 107px;
     }
+    .UploadHolder{
+        min-height: 400px;
+        max-height: 500px;
+        overflow-y: auto;
+    }
 </style>
 
 <div class="col-lg-12 control-section">
@@ -30,7 +35,7 @@
             </div>
             <div class="col-md-6">
                 <div class="e-input-group e-float-icon-left">
-                    <span class="e-input-group-icon e-input-picture" id="copyButton"></span>
+                    <span class="e-input-group-icon e-input-picture" onclick="CopyToClipboardBugs()" id="copyButton"></span>
                     <div class="e-input-in-wrap">
                         <input class="e-input" id="InputBugReport" type="text" placeholder="Enable Public Bug Reporting" value="@KeySettings.ApiSecret" disabled/>
                     </div>
@@ -42,7 +47,7 @@
 
     <div class="row">
         <div class="col-lg-6 control-section">
-            <div class="control_wrapper">
+            <div class="control_wrapper" id="GridHolder">
                 <div id="TreeGrid"></div>
             </div>
         </div>
@@ -52,7 +57,7 @@
                 <p id="RepoSteps" style="text-align: justify;">
                   Reproduction Steps: <span id="RepoSteps"></span>
                 </p>
-                <div class="row" id="FileHolder">
+                <div class="row UploadHolder" id="FileHolder">
                     <div class="col-md-4">
                         <div class="row">
                             <img src="~/Files/Uploads/tvc_f4b7854e16de4fd5f7702124201b3db7.png" style="width: -moz-available;" />
@@ -80,44 +85,63 @@
                 <div class="row" style="text-align: center;">
                     <button type="button"  onclick="OpenModal()" class="btn btn-primary e-control e-btn e-lib e-outline e-primary"  id="relationBtn">Add new relation</button>
                 </div>
+                 <div class="row" style="text-align: center;">
+                    <h2>Relationship Type: <span id="RelationShipWItemType"></span></h2>
+                    <p>Work Item ID: <span id="RelationWorkItemId"></span></p>
+                    <p>Work Item Name: <span id="RelationWorkItemName"></span></p>
+                 </div>
+                 <div class="row">
+                     <p style="text-align: justify;">
+                         Description : <span id="RelationDescription"></span>
+                     </p>
+                 </div>
+                 <div class="row" style="text-align: center;">
+                    <button type="button"  onclick="SaveChanges()" class="btn btn-primary e-control e-btn e-lib e-outline e-primary"  id="saveChangesBtn">Save Changes</button>
+                    <button type="button"  onclick="CancelChanges()" class="btn btn-primary e-control e-btn e-lib e-outline e-primary"  id="cancelBtn">Remove Changes</button>
+                 </div>
             </div>
         </div>
     </div>
 </div>
-
-@await Component.InvokeAsync("RelateWorkItem", new IncomingIdRequest{
-    Id = 0,
-    WorkItemType = @ProjectId.Value
-})
+ 
 <script>
+    var id = @ProjectId;
+    var wItemId = 0;
     var EnableBugReports;
     EnableBugReports = new ejs.buttons.Switch({ checked: @value });
     EnableBugReports.appendTo('#EnableBugReports');
     var BugReportChecked = 0;
- 
-    var dto = {
-        "id": @ProjectId,
-     }
-    console.log(dto);
-
+    var lastActiveId;
     if(@value === 1)
         $("#InputBugReport").prop( "disabled", false )
     else
         $("#InputBugReport").prop( "disabled", true )
 
-    $.ajax({
-        type: 'POST',
-        url: '/Backlogs/GetPublicBugReports',
-        data: JSON.stringify(dto),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (response) {
-            InitializePublicBugGrid(response);
-        },
-        error: function (xhr, status, error) {
-            console.log(error);
+    LoadPublicGrid();
+
+    function LoadPublicGrid()
+    {
+         var dto = {
+            "id": @ProjectId,
         }
-    });
+            console.log(dto);
+
+     
+
+        $.ajax({
+            type: 'POST',
+            url: '/Backlogs/GetPublicBugReports',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                InitializePublicBugGrid(response);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
 
     function BugHandlerChanged()
     {
@@ -154,7 +178,8 @@
     function InitializePublicBugGrid(data )
     {
         console.log(data);
-
+        $("#GridHolder").html("");
+        $("#GridHolder").html("<div id=\"TreeGrid\"></div>");
 
         var treeGridObj = new ej.treegrid.TreeGrid({
             dataSource: data,
@@ -191,9 +216,9 @@
         var dto = {
             "id": args.rowData.id
         }
-        AssociationHander.CurrWorkItemId = args.rowData.id;
-        ChangeWorkItemId(args.rowData.id)
-         $.ajax({
+        wItemId =args.rowData.id;
+
+        $.ajax({
             type: 'POST',
             url: '/Backlogs/GetPublicBugReport',
             data: JSON.stringify(dto),
@@ -246,9 +271,62 @@
         });
     }
  
+    function SaveChanges()
+    {
+        var dto = {
+            "id": wItemId
+        }
  
-   
+        $.ajax({
+            type: 'POST',
+            url: '/Backlogs/MakeWorkItemPrivate',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                LoadPublicGrid();
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function CancelChanges()
+    {
+        var dto = {
+            "id": wItemId
+        }
+ 
+        $.ajax({
+            type: 'POST',
+            url: '/Backlogs/MakeWorkItemPublic',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                LoadPublicGrid();
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+   function CopyToClipboardBugs()
+    {
+        var copyText =  document.getElementById("InputBugReport");
+         copyText.select();
+        copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+        /* Copy the text inside the text field */
+        document.execCommand("copy");
+    }
 </script>
 
 
 
+
+@await Component.InvokeAsync("RelateWorkItem", new IncomingIdRequest{
+    Id = 0,
+    WorkItemType = @ProjectId.Value
+})

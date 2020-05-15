@@ -36,7 +36,7 @@ namespace Platform.Controllers
             var result = new List<PublicMessages>();
             using(var context = new DatabaseController(Context,Configuration))
             {
-                result = context.GetAllPublicMessagesForProject(request.Id);
+                result = context.GetAllPublicMessagesForProject(request.Id,0);
             }
             return result;
         }

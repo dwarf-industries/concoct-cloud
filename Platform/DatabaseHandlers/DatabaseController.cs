@@ -86,6 +86,15 @@ namespace Rokono_Control.DatabaseHandlers
             Context.SaveChanges();
         }
 
+        internal List<PublicMessages> GetAllFeedback(int id)
+        {
+            var feedback = Context.AssociatedProjectFeedback.Include(x => x.Message)
+                                                            .Where(x => x.ProjectId == id)
+                                                            .Select(x => x.Message)
+                                                            .ToList();
+            return feedback;
+        }
+
         internal List<AssociatedBoardWorkItems> GetPublicBugReports(int id)
         {
             var  items = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem)
@@ -127,13 +136,40 @@ namespace Rokono_Control.DatabaseHandlers
                                                    .ToList();
         }
 
-        internal List<PublicMessages> GetAllPublicMessagesForProject(int id)
+        internal List<PublicMessages> GetAllPublicMessagesForProject(int id, int v)
         {
-            var result = Context.AssociatedProjectPublicDiscussions.Include(x => x.PublicMessage)
-                                                             .Where(x => x.ProjectId == id)
-                                                             .Select(x => x.PublicMessage)
-                                                             .ToList();
-            return result;
+            if(v == 1)
+            {
+                var result = Context.AssociatedProjectPublicDiscussions.Include(x => x.PublicMessage)
+                                                                .Where(x => x.ProjectId == id && x.PublicMessage.IsNew == 1)
+                                                                .Select(x => x.PublicMessage)
+                                                                .ToList();
+                result.ForEach(x=>{
+                    x.IsNew = 0;
+                    Context.Attach(x);
+                    Context.Update(x);
+                    Context.SaveChanges();
+                });
+                return result;
+            }
+            else
+            {
+                var allMesages = Context.AssociatedProjectPublicDiscussions.Include(x => x.PublicMessage)
+                                                                .Where(x => x.ProjectId == id )
+                                                                .Select(x => x.PublicMessage)
+                                                                .ToList();
+                
+                return allMesages;
+            }
+        }
+
+        internal void MakeWorkItemPrivate(int id, int status)
+        {
+            var workItem = Context.WorkItem.FirstOrDefault(x=>x.Id == id);
+            workItem.IsPublic = status;
+            Context.Attach(workItem);
+            Context.Update(workItem);
+            Context.SaveChanges();
         }
 
         internal bool CheckProjectAuthorizedFeature(int autherizeReqiest, string featureRequest)
@@ -193,7 +229,8 @@ namespace Rokono_Control.DatabaseHandlers
             var message = Context.PublicMessages.Add(new PublicMessages{
                 DateOfMessage = DateTime.Now,
                 SenderName = newMessage.SenderName,
-                MessageContent = newMessage.MessageContent
+                MessageContent = newMessage.MessageContent,
+                IsNew = 1
             });
             Context.SaveChanges();
             var association = Context.AssociatedProjectPublicDiscussions.Add(new AssociatedProjectPublicDiscussions{
@@ -382,6 +419,16 @@ namespace Rokono_Control.DatabaseHandlers
             Context.SaveChanges();
         }
 
+        internal WorkItem AddChildrenToParent(int workItemId, int currWorkItemId)
+        {
+            var getWorkItem = Context.WorkItem.Include(x=>x.WorkItemType).FirstOrDefault(x=>x.Id == currWorkItemId);
+            getWorkItem.ParentId = workItemId;
+            Context.Attach(getWorkItem);
+            Context.Update(getWorkItem);
+            Context.SaveChanges();
+            return getWorkItem;
+        }
+
         internal void EditNote(IncomingNoteRequest note)
         {
             var currentNote = Context.UserNotes.FirstOrDefault(x=>x.Id == note.NoteId);
@@ -509,7 +556,8 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal WorkItem GetWorkItemById(int parse)
         {
-            return Context.WorkItem.FirstOrDefault(x=>x.Id == parse);
+            return Context.WorkItem.Include(x => x.WorkItemType)
+                                   .FirstOrDefault(x=>x.Id == parse);
         }
 
         internal UserAccounts GetUserAccountByName(string name)

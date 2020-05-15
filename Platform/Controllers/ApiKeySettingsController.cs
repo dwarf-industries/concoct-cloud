@@ -50,5 +50,39 @@ namespace Platform.Controllers
             }
             return new OutgoingJsonData{};
         }
+
+        
+        [HttpPost]
+        public List<PublicMessages> GetAllPublicMessages([FromBody] IncomingIdRequest request)
+        {
+            var result = new List<PublicMessages>();
+            using(var context = new DatabaseController(Context,Configuration))
+            {   
+                result = context.GetAllPublicMessagesForProject(request.Id,0);
+            }
+            return result;
+        }
+        [HttpPost]
+        public List<PublicMessages> GetPublicMessages([FromBody] IncomingIdRequest request)
+        {
+            var result = new List<PublicMessages>();
+            using(var context = new DatabaseController(Context,Configuration))
+            {   
+                result = context.GetAllPublicMessagesForProject(request.Id,1);
+            }
+            return result;
+        }
+        [HttpPost]
+        public List<PublicMessages> GetAllFeedback([FromBody] IncomingIdRequest request)
+        {
+            var result = new List<PublicMessages>();
+            using(var context = new DatabaseController(Context,Configuration))
+            {   
+                result = context.GetAllFeedback(request.Id);
+            }
+            return result;
+        }
+
+        
     }
 }
