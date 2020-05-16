@@ -11,7 +11,6 @@
     </div>
 </div>
 
-
 <script>
       var URL = location.href.replace(location.search, '');
   //  document.getElementById('newTab').setAttribute('href', URL.split('#')[0] + 'sidebar/responsive-panel/index.html');
@@ -51,8 +50,16 @@
     console.log(data);
     // TreeView  initialization
     var mainTreeView= new ej.navigations.TreeView({
-        fields: { dataSource: data, id: 'nodeId', text: 'nodeText', child: 'nodeChild' },nodeSelected: LinkSelected, expandOn: 'Click'
-    });
+        fields: 
+        {
+            dataSource: data,
+            id: 'nodeId',
+            text: 'nodeText',
+            child: 'nodeChild'
+        }
+        ,nodeSelected: LinkSelected,
+        expandOn: 'Click',
+     });
 
     mainTreeView.appendTo('#main-treeview');
 

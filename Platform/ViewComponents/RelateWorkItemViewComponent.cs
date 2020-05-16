@@ -1,11 +1,12 @@
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Rokono_Control.DatabaseHandlers;
-using Rokono_Control.Models;
 
 namespace Platform.ViewComponents
 {
+    using System.Linq;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Rokono_Control.DatabaseHandlers;
+    using Rokono_Control.Models;
+
     public class RelateWorkItemViewComponent : ViewComponent
     {
         private readonly RokonoControlContext Context;

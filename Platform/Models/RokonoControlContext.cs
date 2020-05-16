@@ -19,6 +19,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedAccountNotes> AssociatedAccountNotes { get; set; }
         public virtual DbSet<AssociatedBoardWorkItems> AssociatedBoardWorkItems { get; set; }
         public virtual DbSet<AssociatedBranchCommits> AssociatedBranchCommits { get; set; }
+        public virtual DbSet<AssociatedChatChannelMessages> AssociatedChatChannelMessages { get; set; }
         public virtual DbSet<AssociatedCommitFiles> AssociatedCommitFiles { get; set; }
         public virtual DbSet<AssociatedProjectApiKeys> AssociatedProjectApiKeys { get; set; }
         public virtual DbSet<AssociatedProjectBoards> AssociatedProjectBoards { get; set; }
@@ -41,6 +42,8 @@ namespace Rokono_Control.Models
         public virtual DbSet<Branches> Branches { get; set; }
         public virtual DbSet<Builds> Builds { get; set; }
         public virtual DbSet<Changelogs> Changelogs { get; set; }
+        public virtual DbSet<ChatChannelTypes> ChatChannelTypes { get; set; }
+        public virtual DbSet<ChatChannels> ChatChannels { get; set; }
         public virtual DbSet<Commits> Commits { get; set; }
         public virtual DbSet<Efforts> Efforts { get; set; }
         public virtual DbSet<FileTypes> FileTypes { get; set; }
@@ -70,7 +73,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
 
- 
+      
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -133,6 +136,24 @@ namespace Rokono_Control.Models
                     .HasForeignKey(d => d.CommitId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Associate__Commi__2CF2ADDF");
+            });
+
+            modelBuilder.Entity<AssociatedChatChannelMessages>(entity =>
+            {
+                entity.HasOne(d => d.ChatChannel)
+                    .WithMany(p => p.AssociatedChatChannelMessages)
+                    .HasForeignKey(d => d.ChatChannelId)
+                    .HasConstraintName("FK__Associate__ChatC__4CF5691D");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.AssociatedChatChannelMessages)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK__Associate__Proje__4DE98D56");
+
+                entity.HasOne(d => d.PublicMessage)
+                    .WithMany(p => p.AssociatedChatChannelMessages)
+                    .HasForeignKey(d => d.PublicMessageId)
+                    .HasConstraintName("FK__Associate__Publi__4C0144E4");
             });
 
             modelBuilder.Entity<AssociatedCommitFiles>(entity =>
@@ -450,6 +471,21 @@ namespace Rokono_Control.Models
                 entity.Property(e => e.LogDetails)
                     .IsRequired()
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<ChatChannelTypes>(entity =>
+            {
+                entity.Property(e => e.TypeName).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<ChatChannels>(entity =>
+            {
+                entity.Property(e => e.ChannelName).HasMaxLength(300);
+
+                entity.HasOne(d => d.ChannelTypeNavigation)
+                    .WithMany(p => p.ChatChannels)
+                    .HasForeignKey(d => d.ChannelType)
+                    .HasConstraintName("FK__ChatChann__Chann__4EDDB18F");
             });
 
             modelBuilder.Entity<Commits>(entity =>

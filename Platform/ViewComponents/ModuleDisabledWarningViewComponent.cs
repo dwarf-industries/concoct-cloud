@@ -1,9 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Rokono_Control.Models;
 
 namespace Platform.ViewComponents
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Rokono_Control.Models;
+    
     public class ModuleDisabledWarningViewComponent : ViewComponent 
     {
         private readonly RokonoControlContext Context;

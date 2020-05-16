@@ -31,49 +31,77 @@
                             <b>Rokono Control</b>
                         </li>
                         <li class="header-style float-right support border-left"><b>Support</b></li>
-                        <li class="header-style float-right support border-left"><b>Open Chat</b></li>
+                        <li class="header-style float-right support border-left" onclick="ChatToggle(1)"><b>Open Chat</b></li>
 
                     </ul>
                 </div>
                 <!-- end of header-section -->
-                <!-- sidebar element declaration -->
-                <aside id="sidebar-treeview" style="overflow-x:hidden;">
-                    <div class="main-menu">
-                        <div class="table-content" style="padding:0;">
-                    
-                            @await Component.InvokeAsync("ManagementRights", @ProjectId)
-                            @await Component.InvokeAsync("UserSettings", @ProjectId)
-                            @await Component.InvokeAsync("LoadedProjects", @ProjectId)
-                            <div class="row" style="background-color:#4fb9fc; margin:0;">
-                                <img src="~/Logo/logo.png" class="img-responsive" style="width:50%;height:59%; margin-left:25%;" />
+                <div id="PlatformElement" >
+                    <!-- sidebar element declaration -->
+                    <aside id="sidebar-treeview" style="overflow-x:hidden;">
+                        <div class="main-menu">
+                            <div class="table-content" style="padding:0;">
+                        
+                                @await Component.InvokeAsync("ManagementRights", @ProjectId)
+                                @await Component.InvokeAsync("UserSettings", @ProjectId)
+                                @await Component.InvokeAsync("LoadedProjects", @ProjectId)
+                                <div class="row" style="background-color:#4fb9fc; margin:0;">
+                                    <img src="~/Logo/logo.png" class="img-responsive" style="width:50%;height:59%; margin-left:25%;" />
+                                </div>
+
+                                @await Component.InvokeAsync("SearchBox", @ProjectId)
+
+                                <div class="row" style="margin:0;">
+                                    <p class="main-menu-header">Navigation</p>
+                                    <button  type="button" id="NotesBtn" class="btn btn-primary" style="margin-top:2px; width:100%" onclick="ShowNotes()" >Notes</button>
+
+                                </div>
+                                <div id="NavGrid">
+                                    @await Component.InvokeAsync("NavigationMenu", @ProjectId)
+                                </div>
+                                <div id="NotificationGrid" style="display: none;">
+                                    @await Component.InvokeAsync("NotificationPanel", @ProjectId)
+                                </div>
+
                             </div>
 
-                            @await Component.InvokeAsync("SearchBox", @ProjectId)
 
-                            <div class="row" style="margin:0;">
-                                <p class="main-menu-header">Navigation</p>
-                                <button  type="button" id="NotesBtn" class="btn btn-primary" style="margin-top:2px; width:100%" onclick="ShowNotes()" >Notes</button>
-
-                            </div>
-                            <div id="NavGrid">
-                                @await Component.InvokeAsync("NavigationMenu", @ProjectId)
-                            </div>
-                            <div id="NotificationGrid" style="display: none;">
-                                @await Component.InvokeAsync("NotificationPanel", @ProjectId)
-                            </div>
 
                         </div>
+                    </aside>
 
+                    <div class="main-content" id="main-text" style="min-height: 94vh;">
+                        <div class="sidebar-content">
+                            @await Component.InvokeAsync("Notes", @ProjectId)
 
-
+                            @RenderBody()
+                        </div>
                     </div>
-                </aside>
+                </div>
+                <div id="ChatElement" hidden >
+                            <!-- sidebar element declaration -->
+                    <aside id="sidebar-chatview" style="overflow-x:hidden;">
+                        <div class="main-menu">
+                            <div class="table-content" style="padding:0;">
+                                <div class="row">
+                                    @await Component.InvokeAsync("SelectProject", @ProjectId)
+                                </div>
+                               <div class="row">
+                                    @await Component.InvokeAsync("ChatNavigation", @ProjectId)
+                               </div>
 
-                <div class="main-content" id="main-text" style="min-height: 94vh;">
-                    <div class="sidebar-content">
-                        @await Component.InvokeAsync("Notes", @ProjectId)
+                            </div>
 
-                        @RenderBody()
+
+
+                        </div>
+                    </aside>
+
+                    <div class="main-content-chat" id="main-chatwindow" style="min-height: 94vh;">
+                        <div class="sidebar-content">
+                            @await Component.InvokeAsync("Notes", @ProjectId)
+
+                         </div>
                     </div>
                 </div>
 
@@ -86,7 +114,7 @@
 
 <script>
   
-
+    var IsOpen = 0;
     
     var data;
     // Sidebar Initialization
@@ -98,9 +126,18 @@
     sidebarMenu.appendTo('#sidebar-treeview');
     //end of Sidebar initialization
 
+    var sidebarChat = new ej.navigations.Sidebar({
+        width: '290px',
+        target: '.main-content-chat',
+        mediaQuery: '(min-width: 600px)',
+    });
+    sidebarChat.appendTo('#sidebar-chatview');
+    //end of Sidebar initialization
+
     // Toggle the Sidebar
     document.getElementById('hamburger').addEventListener('click', function () {
         sidebarMenu.toggle();
+        sidebarChat.toggle();
     });
     // open new tab
   
@@ -122,7 +159,20 @@
         $("#Content").show();
     }
 
-
+    function ChatToggle(val)
+    {
+        if(IsOpen == 1)
+        {
+            $("#PlatformElement").slideToggle();
+            $("#ChatElement").slideToggle();
+        }
+        else
+        {
+            $("#PlatformElement").slideToggle();
+            $("#ChatElement").slideToggle();
+        }
+        IsOpen = val;
+    }
 </script>
 
 </body>
