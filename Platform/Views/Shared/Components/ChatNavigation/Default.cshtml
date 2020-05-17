@@ -24,7 +24,26 @@
 </script>
 
 <script>
-      var URL = location.href.replace(location.search, '');
+
+    var dto = {
+        "ProjectId":@ProjectId,
+         
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/ApiKeySettings/EnableProjectFeature',
+        data: JSON.stringify(dto),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            InitializeChatItems(response);
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    });
+
+    var URL = location.href.replace(location.search, '');
   //  document.getElementById('newTab').setAttribute('href', URL.split('#')[0] + 'sidebar/responsive-panel/index.html');
     data = [
 
@@ -39,24 +58,26 @@
          
     ];
     console.log(data);
-    // TreeView  initialization
-    var mainTreeView= new ej.navigations.TreeView({
-        fields:
-        {
-            dataSource: data,
-            id: 'nodeId',
-            text: 'nodeText', 
-            child: 'nodeChild'
-        },
-        nodeSelected: LinkSelected,
-        expandOn: 'Click',
-        nodeTemplate: '#treeTemplate'
+    function InitializeChatItems(incomingData)
+    {
+         // TreeView  initialization
+        var mainTreeView= new ej.navigations.TreeView({
+            fields:
+            {
+                dataSource: incomingData,
+                id: 'nodeId',
+                text: 'nodeText', 
+                child: 'nodeChild'
+            },
+            nodeSelected: LinkSelected,
+            expandOn: 'Click',
+            nodeTemplate: '#treeTemplate'
 
-    });
+        });
 
-    mainTreeView.appendTo('#chat-treeview');
+        mainTreeView.appendTo('#chat-treeview');
+    }
 
- 
     function LinkSelected(args)
     {
         console.log(args);

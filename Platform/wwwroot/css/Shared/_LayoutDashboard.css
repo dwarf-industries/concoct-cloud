@@ -212,6 +212,58 @@
     content: '\e808';
 }
 
+
+
+#sidebar-treeview #chat-treeview .icon {
+    font-family: 'fontello';
+    font-size: 16px;
+}
+
+ 
+#sidebar-treeview #chat-treeview .icon-microchip::before {
+    content: '\e806';
+}
+
+#sidebar-treeview #chat-treeview .icon-thumbs-up-alt::before {
+    content: '\e805';
+}
+
+#sidebar-treeview #chat-treeview .icon-docs::before {
+    content: '\e802';
+}
+
+#sidebar-treeview #chat-treeview .icon-th::before {
+    content: '\e803';
+}
+
+#sidebar-treeview #chat-treeview .icon-code::before {
+    content: '\e804';
+}
+
+#sidebar-treeview #chat-treeview .icon-chrome::before {
+    content: '\e807';
+}
+
+#sidebar-treeview #chat-treeview .icon-up-hand::before {
+    content: '\e810';
+}
+
+#sidebar-treeview #chat-treeview .icon-bookmark-empty::before {
+    content: '\e811';
+}
+
+#sidebar-treeview #chat-treeview .icon-help-circled::before {
+    content: '\e813';
+}
+
+#sidebar-treeview #chat-treeview .icon-doc-text::before {
+    content: '\e812';
+}
+
+#sidebar-treeview #chat-treeview .icon-circle-thin::before {
+    content: '\e808';
+}
+
 .RowContainer {
     border-top: 6px solid #1d86c8;
 }
@@ -272,4 +324,45 @@
 
     #spinner{
         min-height: 90vh;
+    }
+
+    .e-card  .UserDetailsPanel
+    {
+        border: 0;
+        height: 61px;
+    }
+
+
+    .SettingsIcon:before {
+        font-family: "e-icons" !important;
+        content: '\e679';
+        color: #656a70;
+        width: 30px;
+        cursor: pointer;
+        font-size: large;
+        height: 30px;
+    }
+
+
+
+    .Microphone:before {
+        font-family: "e-icons" !important;
+        content: '\e22b';
+        color: #656a70;
+        cursor: pointer;
+        font-size: large;
+
+        width: 30px;
+        height: 30px;
+    }
+
+    .HeadPhones:before {
+        font-family: "e-icons" !important;
+        content: '\e22a';
+        color: #656a70;
+        cursor: pointer;
+        font-size: large;
+
+        width: 30px;
+        height: 30px;
     }

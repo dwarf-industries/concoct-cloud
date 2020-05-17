@@ -44,6 +44,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<Changelogs> Changelogs { get; set; }
         public virtual DbSet<ChatChannelTypes> ChatChannelTypes { get; set; }
         public virtual DbSet<ChatChannels> ChatChannels { get; set; }
+        public virtual DbSet<ChatRooms> ChatRooms { get; set; }
         public virtual DbSet<Commits> Commits { get; set; }
         public virtual DbSet<Efforts> Efforts { get; set; }
         public virtual DbSet<FileTypes> FileTypes { get; set; }
@@ -73,8 +74,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
 
-      
-
+ 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ApiKeys>(entity =>
@@ -144,11 +144,6 @@ namespace Rokono_Control.Models
                     .WithMany(p => p.AssociatedChatChannelMessages)
                     .HasForeignKey(d => d.ChatChannelId)
                     .HasConstraintName("FK__Associate__ChatC__4CF5691D");
-
-                entity.HasOne(d => d.Project)
-                    .WithMany(p => p.AssociatedChatChannelMessages)
-                    .HasForeignKey(d => d.ProjectId)
-                    .HasConstraintName("FK__Associate__Proje__4DE98D56");
 
                 entity.HasOne(d => d.PublicMessage)
                     .WithMany(p => p.AssociatedChatChannelMessages)
@@ -486,6 +481,21 @@ namespace Rokono_Control.Models
                     .WithMany(p => p.ChatChannels)
                     .HasForeignKey(d => d.ChannelType)
                     .HasConstraintName("FK__ChatChann__Chann__4EDDB18F");
+
+                entity.HasOne(d => d.ChatRoomNavigation)
+                    .WithMany(p => p.ChatChannels)
+                    .HasForeignKey(d => d.ChatRoom)
+                    .HasConstraintName("FK__ChatChann__ChatR__53A266AC");
+            });
+
+            modelBuilder.Entity<ChatRooms>(entity =>
+            {
+                entity.Property(e => e.RoomName).HasMaxLength(300);
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.ChatRooms)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK__ChatRooms__Proje__52AE4273");
             });
 
             modelBuilder.Entity<Commits>(entity =>

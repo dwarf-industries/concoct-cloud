@@ -8,10 +8,8 @@ namespace Rokono_Control.Models
         public int Id { get; set; }
         public int? PublicMessageId { get; set; }
         public int? ChatChannelId { get; set; }
-        public int? ProjectId { get; set; }
 
         public virtual ChatChannels ChatChannel { get; set; }
-        public virtual Projects Project { get; set; }
         public virtual PublicMessages PublicMessage { get; set; }
     }
 }

@@ -9,7 +9,6 @@ namespace Rokono_Control.Models
         {
             AssociatedAccountNotes = new HashSet<AssociatedAccountNotes>();
             AssociatedBoardWorkItems = new HashSet<AssociatedBoardWorkItems>();
-            AssociatedChatChannelMessages = new HashSet<AssociatedChatChannelMessages>();
             AssociatedProjectApiKeys = new HashSet<AssociatedProjectApiKeys>();
             AssociatedProjectBoards = new HashSet<AssociatedProjectBoards>();
             AssociatedProjectBuilds = new HashSet<AssociatedProjectBuilds>();
@@ -23,6 +22,7 @@ namespace Rokono_Control.Models
             AssociatedProjectPublicMessages = new HashSet<AssociatedProjectPublicMessages>();
             AssociatedWorkItemChangelogs = new HashSet<AssociatedWorkItemChangelogs>();
             Branches = new HashSet<Branches>();
+            ChatRooms = new HashSet<ChatRooms>();
         }
 
         public int Id { get; set; }
@@ -42,7 +42,6 @@ namespace Rokono_Control.Models
         public virtual Repository Repository { get; set; }
         public virtual ICollection<AssociatedAccountNotes> AssociatedAccountNotes { get; set; }
         public virtual ICollection<AssociatedBoardWorkItems> AssociatedBoardWorkItems { get; set; }
-        public virtual ICollection<AssociatedChatChannelMessages> AssociatedChatChannelMessages { get; set; }
         public virtual ICollection<AssociatedProjectApiKeys> AssociatedProjectApiKeys { get; set; }
         public virtual ICollection<AssociatedProjectBoards> AssociatedProjectBoards { get; set; }
         public virtual ICollection<AssociatedProjectBuilds> AssociatedProjectBuilds { get; set; }
@@ -56,5 +55,6 @@ namespace Rokono_Control.Models
         public virtual ICollection<AssociatedProjectPublicMessages> AssociatedProjectPublicMessages { get; set; }
         public virtual ICollection<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
         public virtual ICollection<Branches> Branches { get; set; }
+        public virtual ICollection<ChatRooms> ChatRooms { get; set; }
     }
 }

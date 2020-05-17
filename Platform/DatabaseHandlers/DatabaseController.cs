@@ -31,7 +31,28 @@ namespace Rokono_Control.DatabaseHandlers
             
             return projectKey;
         }
- 
+
+        internal List<OutgoingChatItem> GetChatChannels(int id)
+        {
+            var t= Context.ChatRooms.Include(x=>x.ChatChannels).Where(x=>x.ProjectId == id).Select(x=> new OutgoingChatItem{
+                NodeId = $"{x.Id}",
+                NodeText = x.RoomName,
+                IconCss = "icon-th icon",
+                Link = "",
+                ChannelType = 0,
+                IsParent = true,
+                NodeChild = x.ChatChannels.Select(y=> new OutgoingChatItem{
+                    NodeId = $"{x.Id}-{y.Id}",
+                    NodeText = y.ChannelName,
+                    ChannelType = y.ChannelType.Value,
+                    IconCss = "icon-circle-thin icon",
+                    Link = "",
+                    IsParent = false,
+                }).ToList()
+
+            }).ToList();
+            return new List<OutgoingChatItem>();
+        }
 
         private AssociatedProjectApiKeys GenerateProjectKey(string keyName, int projectId)
         {
