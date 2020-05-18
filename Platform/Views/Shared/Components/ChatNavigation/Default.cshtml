@@ -44,19 +44,7 @@
     });
 
     var URL = location.href.replace(location.search, '');
-  //  document.getElementById('newTab').setAttribute('href', URL.split('#')[0] + 'sidebar/responsive-panel/index.html');
-    data = [
-
-        {
-            nodeId: '01', nodeText: 'Dashboard', iconCss: 'icon-th icon',expanded: true,
-            nodeChild: [
-                { nodeId: '01-01', nodeText: 'Home', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ProjectDashboard?id=@ProjectId' },
-                { nodeId: '01-02', nodeText: 'Project Details', iconCss: 'icon-circle-thin icon', link:'/Dashboard/ProjectDetails' },
-          
-            ]
-        }
-         
-    ];
+ 
     console.log(data);
     function InitializeChatItems(incomingData)
     {
@@ -69,7 +57,7 @@
                 text: 'nodeText', 
                 child: 'nodeChild'
             },
-            nodeSelected: LinkSelected,
+            nodeSelected: ChatLinkSelected,
             expandOn: 'Click',
             nodeTemplate: '#treeTemplate'
 
@@ -78,7 +66,7 @@
         mainTreeView.appendTo('#chat-treeview');
     }
 
-    function LinkSelected(args)
+    function ChatLinkSelected(args)
     {
         console.log(args);
         data.forEach(element =>

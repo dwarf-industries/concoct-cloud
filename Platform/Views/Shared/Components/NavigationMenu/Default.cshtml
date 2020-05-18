@@ -66,14 +66,19 @@
  
     function LinkSelected(args)
     {
-        console.log(args);
+        @* console.log(args); *@
         data.forEach(element =>
         {
-            console.log(element);
+            @* console.log(element); *@
             element.nodeChild.forEach(child =>
             {
+               
                 if(child.nodeId === args.nodeData.id)
+                {
+                    console.log(child.nodeId);
+                    console.log(args.nodeData.id);
                     window.location.href = child.link;
+                }
             });
         });
 
