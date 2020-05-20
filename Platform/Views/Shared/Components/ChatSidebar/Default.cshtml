@@ -1,0 +1,180 @@
+
+@{
+    var ProjectId = ViewData["ProjectId"] as int?;
+    var Username =  ViewData["Username"] as string;
+}
+
+
+<style>
+    .SideBarRow{
+        text-align: center;
+        width: 100%;
+        padding: 2%;
+        margin: 0;
+    }
+    .InlineFlex {
+        display: inline-flex;
+        width: 100%;
+        margin: 0;
+    }
+</style>`
+
+<!-- sidebar element declaration -->
+<aside id="sidebar-chatview" style="overflow-x:hidden;">
+    <div class="main-menu" style="position: relative;">
+        <div class="table-content" style="padding:0;height: 86vh;max-height: 86vh;">
+            <div class="row">
+                   <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="OpenNewCategoryModal()">Add new Category</button>
+            </div>
+            <div class="row SideBarRow" style="text-align: center;">
+                @await Component.InvokeAsync("SelectProject", @ProjectId)
+            </div>
+            <div class="row SideBarRow">
+                @await Component.InvokeAsync("ChatNavigation", @ProjectId)
+            </div>
+
+        </div>
+        <div class="row  UserDetailsPanel" style="padding: 0;margin: 0;">
+            <div class="col-md-12" style="padding:0px;">
+                <!-- Basic Card Layout  -->
+                <div tabindex="0" class="e-card " id="basic_card" style="height: 68px; bottom: 0px;position: fixed;width: 100%;margin: 0px;padding: 0px;">
+                    <div class="e-card-content">
+                        <div class="col-md-6">
+                            <p style="cursor: pointer;">
+                                @Username
+                            </p>
+                        </div>
+                        
+                        <div class="col-md-2">
+                            <span class="Microphone"></span>
+                        </div>
+                        <div class="col-md-2">
+                            <span class="HeadPhones"></span>
+                        </div>
+                        <div class="col-md-2">
+                            <span class="SettingsIcon"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</aside>
+
+<div class="main-content-chat" id="main-chatwindow" style="min-height: 94vh;">
+    <div class="sidebar-content">
+        @await Component.InvokeAsync("Notes", @ProjectId)
+        <div class="row">
+            <div id="MainContentOverlay" class="col-md-9">
+                <h1> i am content</h1>
+            </div>
+            <div id="UserListOverlay" class="col-md-3">
+                                <h1> i am content</h1>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="ChatAddNewCategoryModal">
+    <div class="row">
+            <input id="InputNewChatCategory" />
+    </div>
+    <div class="row InlineFlex">
+        <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="SaveNewChatCategory()">Submit</button>
+        <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="CloseNewCategoryModal()">Cancel</button>
+    </div>
+
+</div>
+
+<script>
+var InputNewChatCategory = new ej.inputs.TextBox({
+    placeholder: 'Category Name',
+    floatLabelType: 'Auto'
+});
+InputNewChatCategory.appendTo('#InputNewChatCategory');
+var sidebarChat = new ej.navigations.Sidebar({
+    width: '290px',
+    target: '.main-content-chat',
+    mediaQuery: '(min-width: 600px)',
+});
+sidebarChat.appendTo('#sidebar-chatview');
+//end of Sidebar initialization
+var ChatAddNewCategoryModal;
+
+
+ChatAddNewCategoryModal = new ej.popups.Dialog({
+    width: '600px',
+    header: 'Name your new category',
+    isModal: true,
+    animationSettings: { effect: 'None' },
+    visible: false,
+
+    open: ChatAddNewCategoryModalDialogOpen,
+    close: ChatAddNewCategoryModalDialogClose
+});
+ChatAddNewCategoryModal.appendTo('#ChatAddNewCategoryModal');
+
+ChatAddNewCategoryModal.hide();
+
+
+// Dialog will be closed, while clicking on overlay
+function onChange(args) {
+    if(args.checked) {
+        ChatAddNewCategoryModal.overlayClick = function () {
+            ChatAddNewCategoryModal.hide();
+        };
+    }
+    else {
+        ChatAddNewCategoryModal.overlayClick = function () {
+            ChatAddNewCategoryModal.show();
+        };
+    }
+}
+
+function OpenNewCategoryModal(){
+    ChatAddNewCategoryModal.show();
+}
+function CloseNewCategoryModal()
+{
+    ChatAddNewCategoryModal.hide();
+
+}
+function ChatAddNewCategoryModalDialogOpen() {
+    document.getElementById('dialogBtn').style.display = 'none';
+}
+
+function ChatAddNewCategoryModalDialogClose() {
+    document.getElementById('dialogBtn').style.display = 'block';
+}
+function SaveNewChatCategory()
+{
+    var messagesDto = {
+        "Id": @ProjectId,
+        "Phase" : $("#InputNewChatCategory").val()
+    }
+    if($("#InputNewChatCategory").val())
+    {
+        ChatAddNewCategoryModal.hide();
+
+        $.ajax({
+                type: 'POST',
+                url: '/Chat/AddNewCategory',
+                data: JSON.stringify(messagesDto),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                
+                success: function (response) {
+                    InitalizeChatDiscussion(response);
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+        });
+    }
+    else
+        ShowAlert("Input field Category Name must contain a value!!!");
+
+}
+</script>

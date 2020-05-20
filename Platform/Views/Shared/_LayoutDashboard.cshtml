@@ -1,6 +1,7 @@
 @{
     var ProjectId = ViewData["ProjectId"] as int?;
     var BoardId = ViewData["BoardId"] as int?;
+
 }
 
 <!doctype html>
@@ -85,51 +86,8 @@
                     </div>
                 </div>
                 <div id="ChatElement" hidden >
-                            <!-- sidebar element declaration -->
-                    <aside id="sidebar-chatview" style="overflow-x:hidden;">
-                        <div class="main-menu" style="position: relative;">
-                            <div class="table-content" style="padding:0;height: 86vh;max-height: 86vh;">
-                                <div class="row">
-                                    @await Component.InvokeAsync("SelectProject", @ProjectId)
-                                </div>
-                               <div class="row">
-                                    @await Component.InvokeAsync("ChatNavigation", @ProjectId)
-                               </div>
+                    @await Component.InvokeAsync("ChatSidebar", @ProjectId)
 
-                            </div>
-                            <div class="row  UserDetailsPanel" style="padding: 0;margin: 0;">
-                                <div class="col-md-12" style="padding:0px;">
-                                    <!-- Basic Card Layout  -->
-                                    <div tabindex="0" class="e-card " id="basic_card" style="height: 68px; bottom: 0px;position: fixed;width: 100%;margin: 0px;padding: 0px;">
-                                        <div class="e-card-content">
-                                            <div class="col-md-6">
-                                                <p style="cursor: pointer;">Some Name here</p>
-                                            </div>
-                                           
-                                            <div class="col-md-2">
-                                                <span class="Microphone"></span>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <span class="HeadPhones"></span>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <span class="SettingsIcon"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </aside>
-
-                    <div class="main-content-chat" id="main-chatwindow" style="min-height: 94vh;">
-                        <div class="sidebar-content">
-                            @await Component.InvokeAsync("Notes", @ProjectId)
-
-                         </div>
-                    </div>
                 </div>
 
             </div>
@@ -153,13 +111,6 @@
     sidebarMenu.appendTo('#sidebar-treeview');
     //end of Sidebar initialization
 
-    var sidebarChat = new ej.navigations.Sidebar({
-        width: '290px',
-        target: '.main-content-chat',
-        mediaQuery: '(min-width: 600px)',
-    });
-    sidebarChat.appendTo('#sidebar-chatview');
-    //end of Sidebar initialization
 
     // Toggle the Sidebar
     document.getElementById('hamburger').addEventListener('click', function () {

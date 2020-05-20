@@ -321,7 +321,17 @@
         });
     }
     
-    
+    function ShowAlert(text)
+    {
+        toastObj.show(
+        {
+            title: "Error",
+            content: text, 
+            cssClass: 'e-toast-danger',
+            icon: 'e-error toast-icons' 
+        });
+
+    }
     setTimeout(function () {
        
     }, 200);

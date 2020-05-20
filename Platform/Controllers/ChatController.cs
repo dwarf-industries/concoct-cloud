@@ -29,5 +29,16 @@ namespace Platform.Controllers
             }
             return result;
         }
+
+        [HttpPost]
+        public string AddNewCategory([FromBody] IncomingIdRequest request)
+        {
+            var result = string.Empty;
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                context.AddNewChatChannel(request);
+            }
+            return result;
+        }
     }
 }

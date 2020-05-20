@@ -54,6 +54,15 @@ namespace Rokono_Control.DatabaseHandlers
             return new List<OutgoingChatItem>();
         }
 
+        internal void AddNewChatChannel(IncomingIdRequest request)
+        {
+            Context.ChatRooms.Add(new ChatRooms{
+                ProjectId = request.Id,
+                RoomName = request.Phase
+            });
+            Context.SaveChanges();
+        }
+
         private AssociatedProjectApiKeys GenerateProjectKey(string keyName, int projectId)
         {
             var getKey = Context.ApiKeys.FirstOrDefault(x=> x.FeatureName == keyName);
