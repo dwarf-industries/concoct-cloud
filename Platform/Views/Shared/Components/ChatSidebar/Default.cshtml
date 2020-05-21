@@ -24,7 +24,7 @@
     <div class="main-menu" style="position: relative;">
         <div class="table-content" style="padding:0;height: 86vh;max-height: 86vh;">
             <div class="row">
-                   <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="OpenNewCategoryModal()">Add new Category</button>
+                   <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="OpenNewCategoryModal()" id="OpenNewCategoryModal">Add new Category</button>
             </div>
             <div class="row SideBarRow" style="text-align: center;">
                 @await Component.InvokeAsync("SelectProject", @ProjectId)
@@ -63,7 +63,7 @@
     </div>
 </aside>
 
-<div class="main-content-chat" id="main-chatwindow" style="min-height: 94vh;">
+<div class="main-content-chat" id="main-chatwindow" style="min-height: 92.142vh; top: -20px;">
     <div class="sidebar-content">
         @await Component.InvokeAsync("Notes", @ProjectId)
         <div class="row">
@@ -88,7 +88,28 @@
 
 </div>
 
+
+
+<div id="ChatAddNewRoomModal">
+    <div class="row">
+            <input id="InputNewChatRoom" />
+    </div>
+    <div class="row InlineFlex">
+        <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="SaveNewChatRoom()">Submit</button>
+        <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="CloseNewChatRoomModal()">Cancel</button>
+    </div>
+
+</div>
+
+
+
 <script>
+var SelectedCategoryId;
+var InputNewChatRoom = new ej.inputs.TextBox({
+    placeholder: 'Channel name',
+    floatLabelType: 'Auto'
+});
+InputNewChatRoom.appendTo('#InputNewChatRoom');
 var InputNewChatCategory = new ej.inputs.TextBox({
     placeholder: 'Category Name',
     floatLabelType: 'Auto'
@@ -111,13 +132,27 @@ ChatAddNewCategoryModal = new ej.popups.Dialog({
     animationSettings: { effect: 'None' },
     visible: false,
 
-    open: ChatAddNewCategoryModalDialogOpen,
-    close: ChatAddNewCategoryModalDialogClose
+ 
 });
 ChatAddNewCategoryModal.appendTo('#ChatAddNewCategoryModal');
 
 ChatAddNewCategoryModal.hide();
 
+
+var ChatAddNewRoomModal;
+
+
+ChatAddNewRoomModal = new ej.popups.Dialog({
+    width: '600px',
+    header: 'Name your new category',
+    isModal: true,
+    animationSettings: { effect: 'None' },
+    visible: false,
+ 
+});
+ChatAddNewRoomModal.appendTo('#ChatAddNewRoomModal');
+
+ChatAddNewRoomModal.hide();
 
 // Dialog will be closed, while clicking on overlay
 function onChange(args) {
@@ -125,10 +160,16 @@ function onChange(args) {
         ChatAddNewCategoryModal.overlayClick = function () {
             ChatAddNewCategoryModal.hide();
         };
+        ChatAddNewCategoryModal.overlayClick = function () {
+            ChatAddNewCategoryModal.hide();
+        };
     }
     else {
-        ChatAddNewCategoryModal.overlayClick = function () {
-            ChatAddNewCategoryModal.show();
+        ChatAddNewRoomModal.overlayClick = function () {
+            ChatAddNewRoomModal.show();
+        };
+        ChatAddNewRoomModal.overlayClick = function () {
+            ChatAddNewRoomModal.show();
         };
     }
 }
@@ -141,13 +182,21 @@ function CloseNewCategoryModal()
     ChatAddNewCategoryModal.hide();
 
 }
-function ChatAddNewCategoryModalDialogOpen() {
-    document.getElementById('dialogBtn').style.display = 'none';
+
+
+function AddNewChannelModal(id)
+{
+    console.log(id);
+    SelectedCategoryId = id;
+    ChatAddNewRoomModal.show();
+}
+ 
+
+function CloseNewChatRoomModal()
+{
+        ChatAddNewRoomModal.hide();
 }
 
-function ChatAddNewCategoryModalDialogClose() {
-    document.getElementById('dialogBtn').style.display = 'block';
-}
 function SaveNewChatCategory()
 {
     var messagesDto = {
@@ -156,7 +205,6 @@ function SaveNewChatCategory()
     }
     if($("#InputNewChatCategory").val())
     {
-        ChatAddNewCategoryModal.hide();
 
         $.ajax({
                 type: 'POST',
@@ -166,7 +214,9 @@ function SaveNewChatCategory()
                 dataType: "json",
                 
                 success: function (response) {
-                    InitalizeChatDiscussion(response);
+                    InitializeChatItems(response);
+                    ChatAddNewCategoryModal.hide();
+
                 },
                 error: function (xhr, status, error) {
                     console.log(error);
@@ -176,5 +226,36 @@ function SaveNewChatCategory()
     else
         ShowAlert("Input field Category Name must contain a value!!!");
 
+}
+
+
+function SaveNewChatRoom()
+{
+    var messagesDto = {
+        "Id": SelectedCategoryId,
+        "Phase" : $("#InputNewChatRoom").val(),
+        "WorkItemType": @ProjectId
+    }
+    if($("#InputNewChatRoom").val())
+    {
+
+        $.ajax({
+                type: 'POST',
+                url: '/Chat/AddNewChatRoom',
+                data: JSON.stringify(messagesDto),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                
+                success: function (response) {
+                    InitializeChatItems(response);
+                    ChatAddNewRoomModal.hide();
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+        });
+    }
+    else
+        ShowAlert("Input field Channel Name must contain a value!!!");
 }
 </script>

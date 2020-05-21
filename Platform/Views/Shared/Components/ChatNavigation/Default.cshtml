@@ -1,37 +1,125 @@
 @{
-      var ProjectId = ViewData["ProjectId"];
+    var ProjectId = ViewData["ProjectId"] as int?;
     var defaultIteration = ViewData["DefaultIteration"] as int?;
 }
 
-
-<div class="row" style="margin:0;">
-    <div>
-        <ul id="chat-treeview" style="margin: 0; padding: 0;">
-        </ul>
-    </div>
-</div>
-
-<!-- Template to render tree node -->
-<script id="treeTemplate" type="text/x-template">
- <div>
-    <div class="treeviewdiv">
-        <div class="nodetext">
-            <span class="treeName">${nodeText}</span>
-        </div>
+<style>
+    .ChatChannelIcon:before{
+        content:'\e99a';
+        font-family: e-icons;
+        padding:3px;
+        font-size: 13px;
+    }
+    .TreeNewItem:before{
+        padding:3px;
+        content:'\e7f9';
+        font-family: e-icons;
+        font-size: 13px;
+    }
+    .CategoryIcon:before{
+        padding:3px;
+        content:'\e714';
+        font-family: e-icons;
+        font-size: 13px;
+    }
+    .CategoryIcon:hover{
+        color:rgb(230, 50, 111);
+    }
+    .TreeNewItem:hover{
+        color:rgb(230, 50, 111);
+    }
+    .ChatChannelIcon:hover{
+        color:rgb(230, 50, 111);
         
+    }
+    #chat-treeview .e-list-parent .e-ul
+    {
+        padding: 0;
+        margin:  0;
+    } 
+    #chat-treeview .e-text-content
+    {
+        padding: 0;
+    }
+
+    #chat-treeview  .e-text-content
+    {
+        text-align: initial;
+    }
+    #chat-treeview .e-list-text
+    {
+        width: 80%;
+    }
+    #chat-treeview  .e-gridheader
+    {
+        height:0px;
+        display: none;
+    }
+    .nodetext{
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        padding: 2%;
+        font-size: 16px;
+        text-align: left;
+        padding-left: 5px;
+    }
+    .nodetext:hover{
+        background-color: #fff;
+        border-color: #000;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
+    }
+     .nodetextHeading:hover{
+        background-color: #fff;
+        border-color: #000;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
+    }
+    .nodetextHeading
+    {
+        ont-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        padding: 2%;
+        font-size: 18px;
+        text-align: left;
+    }
+</style>
+<div class="row" style="margin:0;">
+    <div id="ChatTreeViewHolder">
+        @* <ul id="chat-treeview" style="margin: 0; padding: 0;">
+        </ul> *@
+                <div id="chat-treeview"></div>
     </div>
 </div>
+
+
+
+<script id="rowtemplate" type="text/x-template" >
+     ${if(isParent)}
+            <div class="nodetextHeading">
+                <div class="row" style="padding:5px; margin:0;" >
+                    <div class="col-md-9">
+                        <span class="CategoryIcon"></span><span class="ChatTreeMainText">${nodeText}</span>
+                    </div>
+                    <div class="col-md-2"   >
+                        <span onclick="AddNewChannelModal(${internalId})" class="TreeNewItem"></span>
+                    </div>
+                </div>
+            </div>  
+            ${else}
+            <div class="nodetext">
+               <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" onclick="OpenChannel()">${nodeText}</span>
+            </div>
+            ${/if}
+   
 </script>
 
-<script>
 
+<script>
+    var chatMenuGridObj;
     var dto = {
-        "ProjectId":@ProjectId,
+        "Id":@ProjectId,
          
     }
     $.ajax({
         type: 'POST',
-        url: '/ApiKeySettings/EnableProjectFeature',
+        url: '/Chat/GetChatChannels',
         data: JSON.stringify(dto),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -44,42 +132,37 @@
     });
 
     var URL = location.href.replace(location.search, '');
- 
-    console.log(data);
+    
+     
     function InitializeChatItems(incomingData)
     {
-         // TreeView  initialization
-        var mainTreeView= new ej.navigations.TreeView({
-            fields:
-            {
-                dataSource: incomingData,
-                id: 'nodeId',
-                text: 'nodeText', 
-                child: 'nodeChild'
-            },
-            nodeSelected: ChatLinkSelected,
-            expandOn: 'Click',
-            nodeTemplate: '#treeTemplate'
+        chatMenuGridObj = null;
+        $("#ChatTreeViewHolder").html("");
+        $("#ChatTreeViewHolder").html("<div id=\"chat-treeview\"></div>");
+ 
+        console.log(incomingData);
 
+        chatMenuGridObj= new ej.treegrid.TreeGrid({
+            dataSource: incomingData,
+            childMapping: 'nodeChild',
+            treeColumnIndex: 0,
+            rowSelected: ChatMenuGridObjRowSelected,
+            rowTemplate:'#rowtemplate',
+            allowPaging: false,
+            rowHeight: 83,
+            columns: [
+                { field: 'nodeText',  width: 220 },
+              
+            ]
         });
-
-        mainTreeView.appendTo('#chat-treeview');
+        chatMenuGridObj.appendTo('#chat-treeview');
     }
-
-    function ChatLinkSelected(args)
+    function ChatMenuGridObjRowSelected(args)
     {
         console.log(args);
-        data.forEach(element =>
-        {
-            console.log(element);
-            element.nodeChild.forEach(child =>
-            {
-                if(child.nodeId === args.nodeData.id)
-                    window.location.href = child.link;
-            });
-        });
-
-    // console.log(data.find(x => x.nodeChild.nodeId === args.nodeData.id));
     }
+    function OpenChannel()
+    {
 
+    }
 </script>

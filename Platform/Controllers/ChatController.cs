@@ -31,12 +31,25 @@ namespace Platform.Controllers
         }
 
         [HttpPost]
-        public string AddNewCategory([FromBody] IncomingIdRequest request)
+        public List<OutgoingChatItem> AddNewCategory([FromBody] IncomingIdRequest request)
         {
-            var result = string.Empty;
+            var result = new  List<OutgoingChatItem>();
             using(var context = new DatabaseController(Context, Configuration))
             {
                 context.AddNewChatChannel(request);
+                result = context.GetChatChannels(request.Id);
+            }
+            return result;
+        }
+
+         [HttpPost]
+        public List<OutgoingChatItem> AddNewChatRoom([FromBody] IncomingIdRequest request)
+        {
+            var result = new  List<OutgoingChatItem>();
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                context.AddNewChatRoom(request);
+                result = context.GetChatChannels(request.WorkItemType);
             }
             return result;
         }

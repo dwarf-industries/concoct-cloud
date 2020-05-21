@@ -35,6 +35,7 @@ namespace Rokono_Control.DatabaseHandlers
         internal List<OutgoingChatItem> GetChatChannels(int id)
         {
             var t= Context.ChatRooms.Include(x=>x.ChatChannels).Where(x=>x.ProjectId == id).Select(x=> new OutgoingChatItem{
+                InternalId = x.Id,
                 NodeId = $"{x.Id}",
                 NodeText = x.RoomName,
                 IconCss = "icon-th icon",
@@ -42,16 +43,27 @@ namespace Rokono_Control.DatabaseHandlers
                 ChannelType = 0,
                 IsParent = true,
                 NodeChild = x.ChatChannels.Select(y=> new OutgoingChatItem{
+                    InternalId = y.Id,
                     NodeId = $"{x.Id}-{y.Id}",
                     NodeText = y.ChannelName,
                     ChannelType = y.ChannelType.Value,
                     IconCss = "icon-circle-thin icon",
                     Link = "",
                     IsParent = false,
-                }).ToList()
+                 }).ToList()
 
             }).ToList();
-            return new List<OutgoingChatItem>();
+            return t;
+        }
+
+        internal void AddNewChatRoom(IncomingIdRequest request)
+        {
+            var room = Context.ChatChannels.Add(new ChatChannels{
+                ChannelType = 1,
+                ChannelName = request.Phase,
+                ChatRoom = request.Id
+            });
+            Context.SaveChanges();
         }
 
         internal void AddNewChatChannel(IncomingIdRequest request)
