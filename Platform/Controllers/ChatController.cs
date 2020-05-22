@@ -42,7 +42,7 @@ namespace Platform.Controllers
             return result;
         }
 
-         [HttpPost]
+        [HttpPost]
         public List<OutgoingChatItem> AddNewChatRoom([FromBody] IncomingIdRequest request)
         {
             var result = new  List<OutgoingChatItem>();
@@ -52,6 +52,12 @@ namespace Platform.Controllers
                 result = context.GetChatChannels(request.WorkItemType);
             }
             return result;
+        }
+
+        [HttpGet]
+        public IActionResult GetChatRoom(int id) 
+        {
+            return ViewComponent("ChatWIndow", id);
         }
     }
 }

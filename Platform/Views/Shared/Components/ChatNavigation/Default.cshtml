@@ -110,8 +110,8 @@
             </div>
         </div>  
     ${else}
-        <div class="nodetext">
-            <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" onclick="OpenChannel()">${nodeText}</span>
+        <div class="nodetext" onclick="OpenChannel(${internalId})">
+            <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>
         </div>
     ${/if}
     </td>
@@ -165,8 +165,20 @@
         chatMenuGridObj.appendTo('#chat-treeview');
     }
      
-    function OpenChannel()
+    function OpenChannel(id)
     {
-
+        console.log("in");
+        console.log(id);
+        $("#MainChatContent").load('/Chat/GetChatRoom?id='+id);
+         @* $.ajax({
+            type: 'GET',
+            url: '/Chat/GetChatRoom?id='+id,
+            success: function (response) {
+                
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        }); *@
     }
 </script>

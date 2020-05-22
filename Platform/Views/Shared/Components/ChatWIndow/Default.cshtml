@@ -1,0 +1,197 @@
+@{
+    var id = ViewData["TransferId"] as int?;
+}
+
+
+<style>
+
+    .e-chat:hover {
+    background-color: #fff;
+    border-color: #000;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
+}
+.e-chat:hover {
+    background-color: #fff;
+    border-color: #000;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
+}
+.e-chat {
+    -webkit-tap-highlight-color: transparent;
+    background-color: #fff;
+    border: 1px none #000;
+        border-top-color: rgb(0, 0, 0);
+        border-right-color: rgb(0, 0, 0);
+        border-bottom-color: rgb(0, 0, 0);
+        border-left-color: rgb(0, 0, 0);
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
+    color: rgba(0, 0, 0, 0.87);
+    outline: none;
+}
+.e-chat {
+    border-radius: 2px;
+    box-sizing: border-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont";
+    font-size: 15px;
+    -ms-flex-pack: center;
+    justify-content: center;
+    line-height: 36px;
+    min-height: 36px;
+    overflow: hidden;
+    position: relative;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    width: 100%;
+}
+ 
+.e-chat {
+    -webkit-tap-highlight-color: transparent;
+    background-color: #fff;
+    border: 1px none #000;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
+    color: rgba(0, 0, 0, 0.87);
+    outline: none;
+}
+.e-chat {
+    border-radius: 2px;
+    box-sizing: border-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont";
+    font-size: 15px;
+    -ms-flex-pack: center;
+    justify-content: center;
+    line-height: 36px;
+    min-height: 36px;
+    overflow: hidden;
+    position: relative;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    width: 100%;
+}
+
+
+
+.e-UserList:hover {
+    background-color: #fff;
+    border-color: #000;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
+}
+.e-UserList:hover {
+    background-color: #fff;
+    border-color: #000;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
+}
+.e-UserList {
+    -webkit-tap-highlight-color: transparent;
+    background-color: #fff;
+    border: 1px none #000;
+        border-top-color: rgb(0, 0, 0);
+        border-right-color: rgb(0, 0, 0);
+        border-bottom-color: rgb(0, 0, 0);
+        border-left-color: rgb(0, 0, 0);
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
+    color: rgba(0, 0, 0, 0.87);
+    outline: none;
+}
+.e-UserList {
+    border-radius: 2px;
+    box-sizing: border-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont";
+    font-size: 15px;
+    -ms-flex-pack: center;
+    justify-content: center;
+    line-height: 36px;
+    min-height: 36px;
+    overflow: hidden;
+    position: relative;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    width: 100%;
+}
+ 
+.e-UserList {
+    -webkit-tap-highlight-color: transparent;
+    background-color: #fff;
+    border: 1px none #000;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
+    color: rgba(0, 0, 0, 0.87);
+    outline: none;
+}
+.e-UserList {
+    border-radius: 2px;
+    box-sizing: border-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont";
+    font-size: 15px;
+    -ms-flex-pack: center;
+    justify-content: center;
+    line-height: 36px;
+    min-height: 36px;
+    overflow: hidden;
+    position: relative;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    width: 100%;
+}
+ 
+</style>
+
+<div id="MainContentOverlay" class="col-md-9">
+    <div class="row "  style="padding: 0;margin: 0;">
+        <!-- Basic Card Layout  -->
+        <div tabindex="0" class="e-chat"   style="height: 84vh;" id="ChatCard" >
+            <div class="e-card-content">
+                    
+            </div>
+        </div>
+
+     </div>
+    <div class="row" style="padding: 0;margin: 0;">
+        <!-- Basic Card Layout  -->
+        <div tabindex="0" class="e-card " style="height: 100px;" id="ChatCard" >
+            <div class="e-card-content">
+                <div class="col-md-9">
+                    <input id="InputChat" />
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="SendNewChatMessage()">Submit</button>
+                </div>
+            </div>
+        </div>
+
+     </div>
+</div>
+<div id="UserListOverlay" class="col-md-3">
+     <div class="row "  style="padding: 0;margin: 0;">
+        <!-- Basic Card Layout  -->
+        <div tabindex="0" class="e-UserList"   style="height: 94vh;" id="ChatCard" >
+            <div class="e-card-content">
+                    
+            </div>
+        </div>
+
+     </div>            
+
+</div>
+
+<script>
+var InputChat = new ej.inputs.TextBox({
+    placeholder: "What's on your mind",
+    floatLabelType: 'Auto'
+});
+InputChat.appendTo('#InputChat');
+
+</script>
