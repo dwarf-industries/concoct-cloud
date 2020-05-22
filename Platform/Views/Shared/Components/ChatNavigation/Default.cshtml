@@ -55,6 +55,11 @@
         height:0px;
         display: none;
     }
+
+     #chat-treeview .e-treecell
+     {
+         width: 100%;
+     }
     .nodetext{
         font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
         padding: 2%;
@@ -90,24 +95,27 @@
 
 
 
-<script id="rowtemplate" type="text/x-template" >
+<script id="chatRowTemplate" type="text/x-template" >
+<tr>
+    <td>
      ${if(isParent)}
-            <div class="nodetextHeading">
-                <div class="row" style="padding:5px; margin:0;" >
-                    <div class="col-md-9">
-                        <span class="CategoryIcon"></span><span class="ChatTreeMainText">${nodeText}</span>
-                    </div>
-                    <div class="col-md-2"   >
-                        <span onclick="AddNewChannelModal(${internalId})" class="TreeNewItem"></span>
-                    </div>
+        <div class="nodetextHeading">
+            <div class="row" style="padding:5px; margin:0;" >
+                <div class="col-md-9">
+                    <span class="CategoryIcon"></span><span class="ChatTreeMainText">${nodeText}</span>
                 </div>
-            </div>  
-            ${else}
-            <div class="nodetext">
-               <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" onclick="OpenChannel()">${nodeText}</span>
+                <div class="col-md-2"   >
+                    <span onclick="AddNewChannelModal(${internalId})" class="TreeNewItem"></span>
+                </div>
             </div>
-            ${/if}
-   
+        </div>  
+    ${else}
+        <div class="nodetext">
+            <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" onclick="OpenChannel()">${nodeText}</span>
+        </div>
+    ${/if}
+    </td>
+</tr>
 </script>
 
 
@@ -146,8 +154,7 @@
             dataSource: incomingData,
             childMapping: 'nodeChild',
             treeColumnIndex: 0,
-            rowSelected: ChatMenuGridObjRowSelected,
-            rowTemplate:'#rowtemplate',
+            rowTemplate:'#chatRowTemplate',
             allowPaging: false,
             rowHeight: 83,
             columns: [
@@ -157,10 +164,7 @@
         });
         chatMenuGridObj.appendTo('#chat-treeview');
     }
-    function ChatMenuGridObjRowSelected(args)
-    {
-        console.log(args);
-    }
+     
     function OpenChannel()
     {
 

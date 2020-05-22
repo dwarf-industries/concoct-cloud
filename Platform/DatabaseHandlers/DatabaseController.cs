@@ -34,26 +34,33 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal List<OutgoingChatItem> GetChatChannels(int id)
         {
-            var t= Context.ChatRooms.Include(x=>x.ChatChannels).Where(x=>x.ProjectId == id).Select(x=> new OutgoingChatItem{
-                InternalId = x.Id,
-                NodeId = $"{x.Id}",
-                NodeText = x.RoomName,
-                IconCss = "icon-th icon",
-                Link = "",
-                ChannelType = 0,
-                IsParent = true,
-                NodeChild = x.ChatChannels.Select(y=> new OutgoingChatItem{
-                    InternalId = y.Id,
-                    NodeId = $"{x.Id}-{y.Id}",
-                    NodeText = y.ChannelName,
-                    ChannelType = y.ChannelType.Value,
-                    IconCss = "icon-circle-thin icon",
+            var i = 1;
+            var result = new List<OutgoingChatItem>();
+            Context.ChatRooms.Include(x=>x.ChatChannels).Where(x=>x.ProjectId == id).ToList().ForEach(x=>{
+                var cItem = new OutgoingChatItem
+                {     
+                    InternalId = x.Id,
+                    // NodeId = i++,
+                    NodeText = x.RoomName,
+                    IconCss = "icon-th icon",
                     Link = "",
-                    IsParent = false,
-                 }).ToList()
-
-            }).ToList();
-            return t;
+                    ChannelType = 0,
+                    IsParent = true,
+                    ParentId = x.Id,
+                    NodeChild = x.ChatChannels.Select(y=> new OutgoingChatItemChild{
+                        InternalId = y.Id,
+                        // NodeId = i++,
+                        NodeText = y.ChannelName,
+                        ChannelType = y.ChannelType.Value,
+                        IconCss = "icon-circle-thin icon",
+                        Link = "",
+                        ParentId = x.Id
+                    }).ToList()
+                };
+                
+                result.Add(cItem);
+            });
+            return result;
         }
 
         internal void AddNewChatRoom(IncomingIdRequest request)
