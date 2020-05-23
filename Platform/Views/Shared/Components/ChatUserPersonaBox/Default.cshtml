@@ -1,0 +1,47 @@
+@{
+    var channelRights = ViewData["UserAdministrativeRights"] as bool?;   
+    var InputName = Guid.NewGuid().ToString(); 
+    var UserId = ViewData["UserId"] as int?;
+}
+
+<style>
+    #chip-default-wrapper .sample-padding {
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .chips-headers {
+        font-size: 12px;
+        text-align: center;
+        padding-top: 10px;
+    }
+</style>
+
+<div class="row">
+    <input id="@InputName" />
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <div class="ChatTag">
+            <span>Owner</span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="CloseChatUserPreview()">Close</button>
+</div>
+<script>
+var UserControlChatInput = new ej.inputs.TextBox({
+    placeholder: "What's on your mind",
+    floatLabelType: 'Auto'
+});
+UserControlChatInput.appendTo('#@InputName');
+
+
+@* new ej.buttons.ChipList({ chips: window.chipsData.avatarData, enableDelete: true }, '#chip-avatar'); *@
+
+
+</script>
+

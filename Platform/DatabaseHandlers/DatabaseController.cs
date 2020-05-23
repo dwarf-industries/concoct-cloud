@@ -1148,12 +1148,15 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal UserRights GetUserRights(int id, int projectId)
         {
-            return Context.AssociatedProjectMemberRights
+            var rights = Context.AssociatedProjectMemberRights
                           .Include(x=>x.Rights)
                           .Where(x=>x.ProjectId == projectId && x.UserAccountId == id)
                           .ToList()
-                          .LastOrDefault()
-                          .Rights;
+                          .LastOrDefault();
+            if(rights != null)
+                return rights.Rights;
+
+            return null;
         }
 
         internal string GetWorkItemName(int workItemType)

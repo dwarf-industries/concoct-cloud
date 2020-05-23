@@ -55,9 +55,21 @@ namespace Platform.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetChatRoom(int id) 
+        public IActionResult GetChatRoom(int id, int projectId) 
         {
-            return ViewComponent("ChatWIndow", id);
+            return ViewComponent("ChatWIndow", new IncomingIdRequest{
+                Id = id,
+                ProjectId = projectId
+            });
+        }
+
+        [HttpGet]
+        public IActionResult GetUserDirectMessageControl(int projectId,int id) 
+        {
+            return ViewComponent("ChatUserPersonaBox", new IncomingIdRequest{
+                Id = id,
+                ProjectId = projectId
+            });
         }
     }
 }

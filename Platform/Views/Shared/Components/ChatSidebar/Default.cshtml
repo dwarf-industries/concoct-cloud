@@ -68,7 +68,10 @@
         @await Component.InvokeAsync("Notes", @ProjectId)
 
         <div class="row" id="MainChatContent">
-            @await Component.InvokeAsync("ChatWIndow", @ProjectId)
+            @await Component.InvokeAsync("ChatWIndow", new IncomingIdRequest{
+                ProjectId = @ProjectId.Value,
+                Id = 1
+            })
         </div>
     </div>
 </div>

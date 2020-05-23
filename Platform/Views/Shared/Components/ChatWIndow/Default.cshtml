@@ -1,5 +1,6 @@
 @{
     var id = ViewData["TransferId"] as int?;
+    var ProjectId = ViewData["ProjectId"] as int?;
 }
 
 
@@ -179,6 +180,19 @@
     margin-top: 20%;
     margin-left: 20%;
  }
+ .ResponsiveUserListImage
+ {
+       width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+    -webkit-box-flex: 0;
+    pointer-events: none;
+    margin-top: 20%;
+    margin-left: 20%;
+ }
  
  .ChatUserName{
     color: #fff;
@@ -194,6 +208,26 @@
     @* white-space: break-spaces; *@
     word-wrap: break-word;
  }
+
+ .UserList{
+  height: 93vh;
+
+ }
+ .UserListRow{
+    min-height: 70px;
+    padding-left: 20px;
+    padding-right: 20px;
+   
+ }
+ .UserListRow:hover{
+    background-color: #fff;
+    border-color: #000;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
+ }
+
+
+ 
+     
 </style>
 
 <div id="MainContentOverlay" class="col-md-9">
@@ -246,7 +280,25 @@
         <!-- Basic Card Layout  -->
         <div tabindex="0" class="e-UserList"   style="height: 93.6vh;" id="ChatCard" >
             <div class="e-card-content">
-                
+                <div class="UserList">
+                   <div class="row UserListRow" id="Email" >
+                       <div class="row">
+                            <div class="col-md-2">
+                                    <img class="ResponsiveUserListImage" src="https://www.medicinelodge.ca/wp-content/uploads/missing-avatar.jpg" />
+                            </div>
+                            <div class="col-md-6" style="font-size: 22px; padding-top:2%">
+                                <span  onclick="OpenUserModal()">Kristifor</span>
+                            </div>
+                            <div class="col-md-2" style="font-size: 16px; padding-top:2%">
+                                Online
+                            </div>
+                       </div>
+                       <div id="UserInputControl1">
+                           <hr/>
+                       
+                        </div>
+                   </div>
+                </div>
             </div>
         </div>
 
@@ -260,5 +312,18 @@ var InputChat = new ej.inputs.TextBox({
     floatLabelType: 'Auto'
 });
 InputChat.appendTo('#InputChat');
+var LastContent;
+function OpenUserModal()
+{
+    LastContent = "#UserInputControl1";
+    $(LastContent).html("");
+    $("#UserInputControl1").load("/Chat/GetUserDirectMessageControl?projectId=@ProjectId&&id="+2);
+}
 
+
+function CloseChatUserPreview()
+{
+    $(LastContent).html("");
+
+}
 </script>

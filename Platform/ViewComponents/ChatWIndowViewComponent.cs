@@ -18,15 +18,11 @@ namespace Platform.ViewComponents
             Configuration = config;
         }
 
-        public IViewComponentResult Invoke(int chatroomId)
+        public IViewComponentResult Invoke(IncomingIdRequest request)
         {
             
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var Id = int.Parse(user.Value);
-            using(var context = new DatabaseController(Context,Configuration))
-            {
-                ViewData["TransferId"] = chatroomId;
-            }
+            ViewData["TransferId"] = request.Id;
+            ViewData["ProjectId"] = request.ProjectId;
             return View();
         }
     }

@@ -40,7 +40,7 @@
         <div class="btn-group dropdown-split-primary" style="text-align:center;">
             <button id="taskBtn" onclick="NewTask()">Task</button>
             <button id="issueBtn" onclick="NewIssue()"></i>Issue</button>
-            <button id="bugBtn" onclick="NewBug()">Bug</button>
+            <button id="bugButton" class="btn btn-primary e-control e-btn e-lib e-outline e-primary" onclick="NewBug()">Bug</button>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -110,8 +110,7 @@
     //Dialog btns
     var taskBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     taskBtn.appendTo('#taskBtn');
-    var bugBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
-    bugBtn.appendTo('#bugBtn');
+  
     var issueBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     issueBtn.appendTo('#issueBtn');
 
