@@ -46,6 +46,8 @@ namespace Rokono_Control.Models
         public virtual DbSet<ChatChannels> ChatChannels { get; set; }
         public virtual DbSet<ChatRooms> ChatRooms { get; set; }
         public virtual DbSet<Commits> Commits { get; set; }
+        public virtual DbSet<DocumentationArea> DocumentationArea { get; set; }
+        public virtual DbSet<DocumentationCategory> DocumentationCategory { get; set; }
         public virtual DbSet<Efforts> Efforts { get; set; }
         public virtual DbSet<FileTypes> FileTypes { get; set; }
         public virtual DbSet<Files> Files { get; set; }
@@ -75,6 +77,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
 
  
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ApiKeys>(entity =>
@@ -503,6 +506,32 @@ namespace Rokono_Control.Models
                 entity.Property(e => e.CommitData).IsRequired();
 
                 entity.Property(e => e.DateOfCommit).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<DocumentationArea>(entity =>
+            {
+                entity.Property(e => e.AreaName)
+                    .IsRequired()
+                    .HasMaxLength(555)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.DocumentationArea)
+                    .HasForeignKey(d => d.CategoryId)
+                    .HasConstraintName("FK__Documenta__Categ__5D2BD0E6");
+            });
+
+            modelBuilder.Entity<DocumentationCategory>(entity =>
+            {
+                entity.Property(e => e.CategoryName)
+                    .IsRequired()
+                    .HasMaxLength(555)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.DocumentationCategory)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK__Documenta__Proje__5C37ACAD");
             });
 
             modelBuilder.Entity<Efforts>(entity =>

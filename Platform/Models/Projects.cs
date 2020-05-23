@@ -23,6 +23,7 @@ namespace Rokono_Control.Models
             AssociatedWorkItemChangelogs = new HashSet<AssociatedWorkItemChangelogs>();
             Branches = new HashSet<Branches>();
             ChatRooms = new HashSet<ChatRooms>();
+            DocumentationCategory = new HashSet<DocumentationCategory>();
         }
 
         public int Id { get; set; }
@@ -56,5 +57,6 @@ namespace Rokono_Control.Models
         public virtual ICollection<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
         public virtual ICollection<Branches> Branches { get; set; }
         public virtual ICollection<ChatRooms> ChatRooms { get; set; }
+        public virtual ICollection<DocumentationCategory> DocumentationCategory { get; set; }
     }
 }
