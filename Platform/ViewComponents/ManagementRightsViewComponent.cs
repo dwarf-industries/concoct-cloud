@@ -18,7 +18,7 @@ namespace Platform.ViewComponents
 
         public IViewComponentResult Invoke(int projectId)
         {
-            var rights =  Request.HttpContext.User.Claims.LastOrDefault().Value;
+            var rights =  Request.HttpContext.User.Claims.ElementAt(2).Value;
             ViewData["IsAdmin"] = int.Parse(rights);
             return View();
         }

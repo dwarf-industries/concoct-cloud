@@ -71,13 +71,14 @@ namespace Rokono_Control
             app.UseStaticFiles();
           
 
-            app.UseSignalR(x => x.MapHub<ChatHub>("/ChatHub"));
+            // app.UseSignalR(x => x.MapHub<ChatHub>("/ChatHub"));
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();          
 
             app.UseEndpoints(endpoint =>
             {
+                endpoint.MapHub<ChatHub>("/ChatHub");
                 endpoint.MapRazorPages();
                 endpoint.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Platform.Models;
 using Rokono_Control.DatabaseHandlers;
 using Rokono_Control.DataHandlers;
 using RokonoControl.Models;
@@ -19,6 +20,7 @@ namespace Rokono_Control
     {
         public static bool HasCompleate { get; set; }
         public static Config Configuration {get; set;}
+        public static List<HubMappedMembers> Members { get; set; }
         public static void Main(string[] args)
         {
             if(!File.Exists("Configuration.txt"))
@@ -26,7 +28,7 @@ namespace Rokono_Control
             else
                 Configuration = ReadConfig("Configuration.txt");
 
-
+            Members = new List<HubMappedMembers>();
      //       InitCron();
             var current = OS.GetCurrent();
             System.Console.WriteLine(current);

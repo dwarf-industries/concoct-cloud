@@ -34,7 +34,7 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal List<OutgoingChatItem> GetChatChannels(int id)
         {
-            var i = 1;
+            // var i = 1;
             var result = new List<OutgoingChatItem>();
             Context.ChatRooms.Include(x=>x.ChatChannels).Where(x=>x.ProjectId == id).ToList().ForEach(x=>{
                 var cItem = new OutgoingChatItem

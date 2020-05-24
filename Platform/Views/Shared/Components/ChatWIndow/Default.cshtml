@@ -2,240 +2,15 @@
     var id = ViewData["TransferId"] as int?;
     var ProjectId = ViewData["ProjectId"] as int?;
 }
+<link href="~/css/ViewComponents/ChatWindow/Index.css" rel="stylesheet">
 
-
-<style>
-
-.e-chat:hover {
-    background-color: #fff;
-    border-color: #000;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
-}
-.e-chat:hover {
-    background-color: #fff;
-    border-color: #000;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
-}
-.e-chat {
-    -webkit-tap-highlight-color: transparent;
-    background-color: #fff;
-    border: 1px none #000;
-        border-top-color: rgb(0, 0, 0);
-        border-right-color: rgb(0, 0, 0);
-        border-bottom-color: rgb(0, 0, 0);
-        border-left-color: rgb(0, 0, 0);
-    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
-    color: rgba(0, 0, 0, 0.87);
-    outline: none;
-}
-
-#chat-treeview  .e-content{
-    height: 77vh !important;
-    overflow: inherit; 
-}
-.e-chat {
-    border-radius: 2px;
-    box-sizing: border-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont";
-    font-size: 15px;
-    -ms-flex-pack: center;
-    justify-content: center;
-    line-height: 36px;
-    min-height: 36px;
-    overflow: hidden;
-    position: relative;
-    text-overflow: ellipsis;
-    vertical-align: middle;
-    width: 100%;
-}
- 
-.e-chat {
-    -webkit-tap-highlight-color: transparent;
-    background-color: #fff;
-    border: 1px none #000;
-    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
-    color: rgba(0, 0, 0, 0.87);
-    outline: none;
-}
-.e-chat {
-    border-radius: 2px;
-    box-sizing: border-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont";
-    font-size: 15px;
-    -ms-flex-pack: center;
-    justify-content: center;
-    line-height: 36px;
-    min-height: 36px;
-    overflow: hidden;
-    position: relative;
-    text-overflow: ellipsis;
-    vertical-align: middle;
-    width: 100%;
-}
-
-
-
-.e-UserList:hover {
-    background-color: #fff;
-    border-color: #000;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
-}
-.e-UserList:hover {
-    background-color: #fff;
-    border-color: #000;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
-}
-.e-UserList {
-    -webkit-tap-highlight-color: transparent;
-    background-color: #fff;
-    border: 1px none #000;
-        border-top-color: rgb(0, 0, 0);
-        border-right-color: rgb(0, 0, 0);
-        border-bottom-color: rgb(0, 0, 0);
-        border-left-color: rgb(0, 0, 0);
-    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
-    color: rgba(0, 0, 0, 0.87);
-    outline: none;
-}
-.e-UserList {
-    border-radius: 2px;
-    box-sizing: border-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont";
-    font-size: 15px;
-    -ms-flex-pack: center;
-    justify-content: center;
-    line-height: 36px;
-    min-height: 36px;
-    overflow: hidden;
-    position: relative;
-    text-overflow: ellipsis;
-    vertical-align: middle;
-    width: 100%;
-}
- 
-.e-UserList {
-    -webkit-tap-highlight-color: transparent;
-    background-color: #fff;
-    border: 1px none #000;
-    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
-    color: rgba(0, 0, 0, 0.87);
-    outline: none;
-}
-.e-UserList {
-    border-radius: 2px;
-    box-sizing: border-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont";
-    font-size: 15px;
-    -ms-flex-pack: center;
-    justify-content: center;
-    line-height: 36px;
-    min-height: 36px;
-    overflow: hidden;
-    position: relative;
-    text-overflow: ellipsis;
-    vertical-align: middle;
-    width: 100%;
-}
-
-.ChatArea {
-    background-color: #dae1de;
-    height: 82vh;
-    margin: 5px;
- }
-.ChatMessage{
-    margin: 0;
-    color: rgba(51, 62, 77, 0.87);
-    background-color: #9f9fa821;
-}
-.ChatMessage:hover{
-    background-color: #1c86c8;
-    color: white;
-}
-
- .ResponsiveChatImage{
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-    user-select: none;
-    -webkit-box-flex: 0;
-    pointer-events: none;
-    margin-top: 20%;
-    margin-left: 20%;
- }
- .ResponsiveUserListImage
- {
-       width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-    user-select: none;
-    -webkit-box-flex: 0;
-    pointer-events: none;
-    margin-top: 20%;
-    margin-left: 20%;
- }
- 
- .ChatUserName{
-    color: #fff;
-    font-size: 25px;
- }
-
- .ChatMessageContent{
-    user-select: text;
-    color: var(--text-normal);
-    font-weight: 93;
-    font-size: 1.5rem;
-    line-height: 1.375rem;
-    @* white-space: break-spaces; *@
-    word-wrap: break-word;
- }
-
- .UserList{
-  height: 93vh;
-
- }
- .UserListRow{
-    min-height: 70px;
-    padding-left: 20px;
-    padding-right: 20px;
-   
- }
- .UserListRow:hover{
-    background-color: #fff;
-    border-color: #000;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
- }
-
-
- 
-     
-</style>
 
 <div id="MainContentOverlay" class="col-md-9">
     <div class="row "  style="padding: 0;margin: 0;">
         <!-- Basic Card Layout  -->
         <div tabindex="0" class="e-chat"   style="height: 83vh;" id="ChatCard" >
             <div class="e-card-content">
-                <div class="ChatArea">
+                <div class="ChatArea" id="ChatArea">
                     
                     <div class="row ChatMessage">
                         <div class="col-md-2">
@@ -243,12 +18,12 @@
                         </div>
                         <div class="col-md-10">
                             <div class="row">
-                                <p 
+                                <p> 
                                     <span class="ChatUserName">Kristifor</span>, 11.5.2020
                                 </p>
                             </div>
                              <div class="row ChatMessageContent">
-                                <p>
+                                <p  class="AlignText">
                                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                                 </p>
                             </div>
@@ -268,7 +43,11 @@
                     <input id="InputChat" />
                 </div>
                 <div class="col-md-3">
+<<<<<<< HEAD
+                    <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;text-align: center;margin-left: 25%;margin-right: 25%;margin-top: 10%;margin-bottom: 10%;" onclick="SendChatRoomMessage()">Submit</button>
+=======
                     <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;text-align: center;margin-left: 25%;margin-right: 25%;margin-top: 10%;margin-bottom: 10%;" onclick="SendNewChatMessage()">Submit</button>
+>>>>>>> 58f0b919a2df23f687234ea5ec387e0b7ac8835a
                 </div>
             </div>
         </div>

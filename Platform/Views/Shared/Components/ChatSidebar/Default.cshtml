@@ -2,6 +2,7 @@
 @{
     var ProjectId = ViewData["ProjectId"] as int?;
     var Username =  ViewData["Username"] as string;
+    var ActiveRoom = ViewData["GetDefaultActiveRoom"] as int?;
 }
 
 
@@ -102,6 +103,12 @@
 
 
 <script>
+
+var ActiveUser=
+{
+    "Name" : "@Username",
+    "ActiveRoom" : @ActiveRoom
+};
 var SelectedCategoryId;
 var InputNewChatRoom = new ej.inputs.TextBox({
     placeholder: 'Channel name',
@@ -257,3 +264,5 @@ function SaveNewChatRoom()
         ShowAlert("Input field Channel Name must contain a value!!!");
 }
 </script>
+<script src="~/lib/@@aspnet/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/ChatHandler.js"></script>
