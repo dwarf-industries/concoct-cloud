@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Platform.Models;
@@ -50,6 +51,18 @@ namespace Platform.Controllers
             {
                 context.AddNewChatRoom(request);
                 result = context.GetChatChannels(request.WorkItemType);
+            }
+            return result;
+        }
+        [HttpPost]
+        public List<AssociatedUserChatNotifications> GetChannelNotifications([FromBody] IncomingIdRequest request)
+        {
+            var result = new  List<AssociatedUserChatNotifications>();
+            var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var id = int.Parse(user.Value);
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                result = context.GetChatNotifications(request.Id, id);
             }
             return result;
         }

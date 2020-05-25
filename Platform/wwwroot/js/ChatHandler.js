@@ -27,25 +27,45 @@ function resetChat() {
 }
 
 
-chatConnectionBuilder.on("ReciveMessage", (user, message) => {
+chatConnectionBuilder.on("ReciveMessage", (message) => {
 
     var control = "";
     var date = formatAMPM(new Date());
     //TODO change chat message handler
+    var OutgoingChatHubData = JSON.parse(message);
+    // {
+    //     "ActiveRoom" : ActiveUser.ActiveRoom,
+    //     "ProjectId" : ActiveUser.ProjectId,
+    //     "Message" : text
+    // };
+    if(ActiveUser.ActiveRoom === OutgoingChatHubData.ActiveRoom)
+    {
+        control =   "<div class=\"row ChatMessage\">"+
+                            "<div class=\"col-md-2\">"+
+                                "<img class=\"ResponsiveChatImage\" src=\"https://www.medicinelodge.ca/wp-content/uploads/missing-avatar.jpg\" />"+
+                            "</div>"+
+                            "<div class=\"col-md-10\">"+
+                                "<div class=\"row\">"+
+                                    "<p>"+ 
+                                        "<span class=\"ChatUserName\">"+OutgoingChatHubData.SenderName+"</span>,"+ date+""+
+                                    "</p>"+
+                                "</div>"+
+                                "<div class=\"row ChatMessageContent\">"+
+                                    "<p class=\"AlignText\">"+
+                                    OutgoingChatHubData.Message
+                                    +"</p>"+
+                                "</div>"+
+                            "</div>"+
+                        "</div>";
+        $("ChatArea").append(control).scrollTop($("ChatArea").prop('scrollHeight'));
+        //setTimeout(
+        //    function () {
 
-    control = '<li style="width:100%;">' +
-        '<div class="msj-rta macro">' +
-        '<div class="text text-r">' +
-        '<p>' + message + '</p>' +
-        '<p><small>' + date + '</small></p>' +
-        '</div>' +
-        '<div class="avatar" style="padding:0px 0px 0px 10px !important"><img class="img-circle" style="width:100%;" src="' + you.avatar + '" /></div>' +
-        '</li>';
-    $("chat").append(control).scrollTop($("chat").prop('scrollHeight'));
-    //setTimeout(
-    //    function () {
+        //    }, time);
+    }
+    else
+        SetRoomNewMessage(OutgoingChatHubData.ActiveRoom);
 
-    //    }, time);
 });
 
 

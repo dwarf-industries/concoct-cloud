@@ -263,6 +263,11 @@ function SaveNewChatRoom()
     else
         ShowAlert("Input field Channel Name must contain a value!!!");
 }
+
+function SetRoomNewMessage(id)
+{
+    $( "#ChatChannel_"+id ).addClass("NewMessage");
+}
 </script>
 <script src="~/lib/@@aspnet/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/ChatHandler.js"></script>

@@ -20,6 +20,7 @@ namespace Rokono_Control.Models
             AssociatedProjectNotifications = new HashSet<AssociatedProjectNotifications>();
             AssociatedProjectPublicDiscussions = new HashSet<AssociatedProjectPublicDiscussions>();
             AssociatedProjectPublicMessages = new HashSet<AssociatedProjectPublicMessages>();
+            AssociatedUserChatNotifications = new HashSet<AssociatedUserChatNotifications>();
             AssociatedWorkItemChangelogs = new HashSet<AssociatedWorkItemChangelogs>();
             Branches = new HashSet<Branches>();
             ChatRooms = new HashSet<ChatRooms>();
@@ -54,6 +55,7 @@ namespace Rokono_Control.Models
         public virtual ICollection<AssociatedProjectNotifications> AssociatedProjectNotifications { get; set; }
         public virtual ICollection<AssociatedProjectPublicDiscussions> AssociatedProjectPublicDiscussions { get; set; }
         public virtual ICollection<AssociatedProjectPublicMessages> AssociatedProjectPublicMessages { get; set; }
+        public virtual ICollection<AssociatedUserChatNotifications> AssociatedUserChatNotifications { get; set; }
         public virtual ICollection<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
         public virtual ICollection<Branches> Branches { get; set; }
         public virtual ICollection<ChatRooms> ChatRooms { get; set; }

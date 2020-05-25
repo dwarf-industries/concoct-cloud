@@ -63,6 +63,47 @@ namespace Rokono_Control.DatabaseHandlers
             return result;
         }
 
+        internal List<AssociatedUserChatNotifications> GetChatNotifications(int id, int userId)
+        {
+            return Context.AssociatedUserChatNotifications
+                          .Where(x=>x.ProjectId == id && x.UserId == userId)
+                          .ToList();
+        }
+
+        internal string AddChatRoomMessage(IncomingChatMessage messageData, int sender)
+        {
+            var chatRoom = Context.ChatRooms.FirstOrDefault(x=> x.Id == messageData.ActiveRoom);
+            var projectUsers = Context.AssociatedProjectMembers.Where(x=>x.ProjectId == messageData.ProjectId).ToList();
+            if(chatRoom == null)
+                return string.Empty;
+            projectUsers.ForEach(x=>{
+                if(!Context.AssociatedUserChatNotifications.Any(y=>y.ChatroomId == messageData.ActiveRoom && y.ProjectId == x.ProjectId) && x.UserAccountId != sender)
+                {
+                    Context.AssociatedUserChatNotifications.Add(new AssociatedUserChatNotifications{
+                        ChatroomId = chatRoom.Id,
+                        ProjectId = messageData.ProjectId,
+                        UserId = x.Id
+                    });
+                    Context.SaveChanges();
+                }
+            });
+            var email = Context.UserAccounts.FirstOrDefault(x=>x.Id == sender).Email;
+            var message = Context.PublicMessages.Add(new PublicMessages{
+                IsNew = 1,
+                SenderId = sender,
+                MessageContent = messageData.Message,
+                DateOfMessage = DateTime.Now,
+                SenderName = email
+            });
+            Context.SaveChanges();
+            Context.AssociatedChatChannelMessages.Add(new AssociatedChatChannelMessages{
+                ChatChannelId = messageData.ActiveRoom,
+                PublicMessageId = message.Entity.Id,
+            });
+            Context.SaveChanges();
+            return email;
+        }
+
         internal void AddNewChatRoom(IncomingIdRequest request)
         {
             var room = Context.ChatChannels.Add(new ChatChannels{

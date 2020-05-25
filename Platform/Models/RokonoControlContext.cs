@@ -33,6 +33,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedProjectPublicDiscussions> AssociatedProjectPublicDiscussions { get; set; }
         public virtual DbSet<AssociatedProjectPublicMessages> AssociatedProjectPublicMessages { get; set; }
         public virtual DbSet<AssociatedRepositoryBranches> AssociatedRepositoryBranches { get; set; }
+        public virtual DbSet<AssociatedUserChatNotifications> AssociatedUserChatNotifications { get; set; }
         public virtual DbSet<AssociatedUserNotifications> AssociatedUserNotifications { get; set; }
         public virtual DbSet<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
         public virtual DbSet<AssociatedWorkItemFiles> AssociatedWorkItemFiles { get; set; }
@@ -76,7 +77,14 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
 
- 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=192.168.1.3;Database=RokonoControl;User ID=Kristifor;Password='::@Drakon87Katil';");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -356,6 +364,24 @@ namespace Rokono_Control.Models
                     .HasForeignKey(d => d.RepositoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Associate__Repos__47A6A41B");
+            });
+
+            modelBuilder.Entity<AssociatedUserChatNotifications>(entity =>
+            {
+                entity.HasOne(d => d.Chatroom)
+                    .WithMany(p => p.AssociatedUserChatNotifications)
+                    .HasForeignKey(d => d.ChatroomId)
+                    .HasConstraintName("FK__Associate__Chatr__6E565CE8");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.AssociatedUserChatNotifications)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK__Associate__Proje__703EA55A");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AssociatedUserChatNotifications)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK__Associate__UserI__6F4A8121");
             });
 
             modelBuilder.Entity<AssociatedUserNotifications>(entity =>

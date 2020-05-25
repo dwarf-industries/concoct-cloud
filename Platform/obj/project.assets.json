@@ -9199,11 +9199,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Rokono Control.csproj",
+      "projectUniqueName": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Rokono Control.csproj",
       "projectName": "Rokono Control",
-      "projectPath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Rokono Control.csproj",
+      "projectPath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Rokono Control.csproj",
       "packagesPath": "/home/dwarfdevelopment/.nuget/packages/",
-      "outputPath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/",
+      "outputPath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/dwarfdevelopment/.nuget/NuGet/NuGet.Config"

@@ -5,32 +5,69 @@
 }
 
 <style>
-    #chip-default-wrapper .sample-padding {
-        padding: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+ .ChipTag{
+    background: red;
+    border-radius: 15px;
+    padding: 4px;
+    color: white;
+ }
+ .ChipTag:hover{
+    background: red;
+    border-radius: 15px;
+    padding: 4px;
+    color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
+ }
 
-    .chips-headers {
-        font-size: 12px;
-        text-align: center;
-        padding-top: 10px;
-    }
+.ChipCloseBtn:before{
+    content:'\e7e9';
+    font-family: e-icons;
+    padding:3px;
+    font-size: 13px;
+}
+.AddNewRoleTag{
+    cursor: pointer;
+}
+.AddNewRoleTag:before
+{
+    content:'\e823';
+    font-family: e-icons;
+    padding:3px;
+    font-size: 13px;
+    cursor: pointer;
+}
+.AddNewRoleTag:hover{
+    color: red;
+}
 </style>
 
 <div class="row">
-    <input id="@InputName" />
+    <input id="@InputName"  style="margin: 5px;"/>
+</div>
+<div class="row" style="text-align: center;">
+    <span class="AddNewRoleTag">New Role</span>
+</div>
+<div class="row" style="padding: 15px;">
+    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
+    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
+    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
+    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
+    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
+    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
+    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
+    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
+    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
+    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
+    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
+    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
+    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
+    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
+    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
+    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
+
 </div>
 <div class="row">
-    <div class="col-md-2">
-        <div class="ChatTag">
-            <span>Owner</span>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="CloseChatUserPreview()">Close</button>
+    <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="CloseChatUserPreview()">Close</button>
 </div>
 <script>
 var UserControlChatInput = new ej.inputs.TextBox({
@@ -42,6 +79,9 @@ UserControlChatInput.appendTo('#@InputName');
 
 @* new ej.buttons.ChipList({ chips: window.chipsData.avatarData, enableDelete: true }, '#chip-avatar'); *@
 
-
+function DeletingTag(id)
+{
+    console.log(id);
+}
 </script>
 

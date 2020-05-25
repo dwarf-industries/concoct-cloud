@@ -151,7 +151,7 @@ namespace RokonoControl.Controllers
             {
                 var dataResult = new List<UserAccounts>();
                 var currentUser = this.User;
-                var email = currentUser.Claims.LastOrDefault().Value;
+                var email = currentUser.Claims.ElementAt(2).Value;
                 var userRights = context.GetUserAccounts(int.Parse(email));
                 if (userRights != null)
                 {
@@ -189,7 +189,7 @@ namespace RokonoControl.Controllers
             using (var context = new DatabaseController(Context,Configuration))
             {
                 var currentUser = this.User;
-                var email = currentUser.Claims.LastOrDefault().Value;
+                var email = currentUser.Claims.ElementAt(2).Value;
                 var userRights = context.GetUserAccounts(int.Parse(email));
                 if (userRights != null)
                     result = context.GetProjectSprints(dataRequest, userRights.ProjectRights == 1 ? true : false, userRights.Id);

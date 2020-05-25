@@ -7,6 +7,7 @@ namespace Platform.Hubs
     using Microsoft.AspNetCore.SignalR;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
+    using Platform.Models;
     using Rokono_Control;
     using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
@@ -25,13 +26,19 @@ namespace Platform.Hubs
         [Authorize(Roles = "User")]
         public  Task Send(string incomingData)
         {
+            if(string.IsNullOrEmpty(incomingData))
+                return null;
 
+            var messageData = JsonConvert.DeserializeObject<IncomingChatMessage>(incomingData);
             var user = Context.User;
             if (user != null)
             {
                 var username = user.Claims.FirstOrDefault();// Call the broadcastMessage method to update clients.
-                //ChatHandlerPackets.SendMessage($"{username.Value.ToString()}  |  {DateTime.Now.ToString()}",message, username.Value.ToString());
-               // return Clients.Others.SendAsync("ReciveMessage", username.Value.ToString(), message);
+                using(var context =new DatabaseController(DatabaseContext,Configuration))
+                {
+                    messageData.SenderName = context.AddChatRoomMessage(messageData, int.Parse(user.Claims.ElementAt(1).Value));
+                }
+                return Clients.Others.SendAsync("ReciveMessage", messageData);
             }
             return null;
         }
