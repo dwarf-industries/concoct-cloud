@@ -1,6 +1,6 @@
 
 
-﻿const chatConnectionBuilder = new signalR.HubConnectionBuilder().withUrl("/ChatHub")
+﻿const chatConnectionBuilder = new signalR.HubConnectionBuilder().withUrl("/messageHub")
 
     .configureLogging(signalR.LogLevel.Information)
     .build();
@@ -27,44 +27,49 @@ function resetChat() {
 }
 
 
-chatConnectionBuilder.on("ReciveMessage", (message) => {
+chatConnectionBuilder.on("ReciveMessage", (name, data) => {
 
     var control = "";
     var date = formatAMPM(new Date());
+    // console.log(data);
     //TODO change chat message handler
-    var OutgoingChatHubData = JSON.parse(message);
-    // {
-    //     "ActiveRoom" : ActiveUser.ActiveRoom,
-    //     "ProjectId" : ActiveUser.ProjectId,
-    //     "Message" : text
-    // };
-    if(ActiveUser.ActiveRoom === OutgoingChatHubData.ActiveRoom)
+    console.log(""+name);
+    var incomingChatHubData = JSON.parse(data);
+     
+    console.log(incomingChatHubData);
+    console.log(ActiveUser);
+    console.log(ActiveUser.ActiveRoom === incomingChatHubData.ActiveRoom);
+    if(ActiveUser.ActiveRoom === incomingChatHubData.ActiveRoom)
     {
-        control =   "<div class=\"row ChatMessage\">"+
-                            "<div class=\"col-md-2\">"+
-                                "<img class=\"ResponsiveChatImage\" src=\"https://www.medicinelodge.ca/wp-content/uploads/missing-avatar.jpg\" />"+
+        console.log("In"); 
+        var msg =   "<div class=\"row ChatMessage\">"+
+                        "<div class=\"col-md-2\">"+
+                            "<img class=\"ResponsiveChatImage\" src=\"https://www.medicinelodge.ca/wp-content/uploads/missing-avatar.jpg\" />"+
+                        "</div>"+
+                        "<div class=\"col-md-10\">"+
+                            "<div class=\"row\">"+
+                                "<p>"+ 
+                                    "<span class=\"ChatUserName\">"+name+"</span>,"+ date
+                                +"</p>"+
                             "</div>"+
-                            "<div class=\"col-md-10\">"+
-                                "<div class=\"row\">"+
-                                    "<p>"+ 
-                                        "<span class=\"ChatUserName\">"+OutgoingChatHubData.SenderName+"</span>,"+ date+""+
-                                    "</p>"+
-                                "</div>"+
-                                "<div class=\"row ChatMessageContent\">"+
-                                    "<p class=\"AlignText\">"+
-                                    OutgoingChatHubData.Message
-                                    +"</p>"+
-                                "</div>"+
+                            "<div class=\"row ChatMessageContent\">"+
+                                "<p class=\"AlignText\">"+
+                                incomingChatHubData.Message
+                                +"</p>"+
                             "</div>"+
-                        "</div>";
-        $("ChatArea").append(control).scrollTop($("ChatArea").prop('scrollHeight'));
+                        "</div>"+
+                    "</div>";
+        console.log(msg);
+        console.log("Adding");
+        $("#ChatArea").append(msg).scrollTop($("#ChatArea").prop('scrollHeight'));
+        console.log("Suppose to be added");
         //setTimeout(
         //    function () {
 
         //    }, time);
     }
     else
-        SetRoomNewMessage(OutgoingChatHubData.ActiveRoom);
+        SetRoomNewMessage(incomingChatHubData.ActiveRoom);
 
 });
 
@@ -126,9 +131,11 @@ function SendChatRoomMessage() {
             "ProjectId" : ActiveUser.ProjectId,
             "Message" : text
         };
-        console.log("Sending");
-        $("#ChatArea").append(control).scrollTop($("ChatArea").prop('scrollHeight'));
-        chatConnectionBuilder.invoke("Send", JSON.stringify(OutgoingChatHubData)).catch(x => console.log(x.toString()));
+        console.log(OutgoingChatHubData);
+        var sendingResult =  JSON.stringify(OutgoingChatHubData);
+        console.log(sendingResult);
+        $("#ChatArea").append(control).scrollTop($("#ChatArea").prop('scrollHeight'));
+        chatConnectionBuilder.invoke("IncomingMessage",sendingResult).catch(x => console.log(x.toString()));
         $("#InputChat").val('');
     }
 }

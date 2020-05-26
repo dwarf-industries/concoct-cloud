@@ -23,6 +23,10 @@ namespace Platform.ViewComponents
             
             ViewData["TransferId"] = request.Id;
             ViewData["ProjectId"] = request.ProjectId;
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                ViewData["ChatMessages"] = context.GetCannelMessages(request.Id);
+            }
             return View();
         }
     }

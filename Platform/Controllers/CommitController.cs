@@ -14,9 +14,10 @@ namespace RokonoControl.Controllers
         RokonoControlContext Context;
         IConfiguration Configuration;
 
-        public CommitController(RokonoControlContext context)
+        public CommitController(RokonoControlContext context, IConfiguration config)
         {
             Context = context;
+            Configuration = config;
         }
         public IActionResult Index(int projectId)
         {

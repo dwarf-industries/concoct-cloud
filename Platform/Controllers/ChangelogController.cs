@@ -11,11 +11,13 @@ namespace Platform.Controllers
 {
     public class ChangelogController : Controller
     {
-        RokonoControlContext Context; 
-        IConfiguration Configuration;
-        public ChangelogController(RokonoControlContext context)
+        RokonoControlContext Context {get; set;}
+        IConfiguration Config { get; set;}
+
+        public ChangelogController(RokonoControlContext context,IConfiguration currentConfig)
         {
             Context = context;
+            Config = currentConfig;
         }
         public IActionResult ViewChangelogs(int projectId)
         {
@@ -23,7 +25,7 @@ namespace Platform.Controllers
 
             var id = currentUser.Claims.ElementAt(1);
             var currentId = int.Parse(id.Value);
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new DatabaseController(Context,Config))
             {            
 
                 ViewData["ProjectId"] = projectId;
@@ -37,7 +39,7 @@ namespace Platform.Controllers
         public List<Changelogs> GetPublicChangelogs([FromBody] IncomingApiAuthenicationRequest request)
         {
             var result = new List<Changelogs>();
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new DatabaseController(Context,Config))
             {
                 var autherizeReqiest = context.CheckApiCallCredentials(request);
                 if(context.CheckProjectAuthorizedFeature(autherizeReqiest, request.FeatureRequest))
@@ -51,7 +53,7 @@ namespace Platform.Controllers
             var currentUser = this.User;
             var id = currentUser.Claims.ElementAt(1);
             var currentId = int.Parse(id.Value);
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new DatabaseController(Context,Config))
             {            
 
                 ViewData["ProjectId"] = projectId;
@@ -76,7 +78,7 @@ namespace Platform.Controllers
         public JsonResult ConfirmChangelog([FromBody] IncomingGenerateChangelog changelog)
         {
 
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new DatabaseController(Context,Config))
             {
                 context.AssociatedChangelogItems(changelog);
             }
@@ -87,7 +89,7 @@ namespace Platform.Controllers
         public JsonResult EditChangelog([FromBody] ChangelogEditRequest changelog)
         {
 
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new DatabaseController(Context,Config))
             {
                 context.EditChangelog(changelog);
             }

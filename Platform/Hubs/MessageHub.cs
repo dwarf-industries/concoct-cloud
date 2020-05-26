@@ -1,44 +1,52 @@
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Platform.Models;
+using Rokono_Control;
+using Rokono_Control.DatabaseHandlers;
+using Rokono_Control.Models;
+
 namespace Platform.Hubs
 {
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.SignalR;
-    using Microsoft.Extensions.Configuration;
-    using Newtonsoft.Json;
-    using Platform.Models;
-    using Rokono_Control;
-    using Rokono_Control.DatabaseHandlers;
-    using Rokono_Control.Models;
-
-    public class ChatHub : Hub
+    public class MessageHub : Hub
     {
         RokonoControlContext DatabaseContext;
         IConfiguration Configuration;
 
-        public ChatHub(RokonoControlContext context, IConfiguration config)
+        public MessageHub(RokonoControlContext dbContext, IConfiguration config)
         {
-            DatabaseContext = context;
+            DatabaseContext = dbContext;
             Configuration = config;
         }
 
-        [Authorize(Roles = "User")]
-        public  Task Send(string incomingData)
+       [Authorize(Roles = "User")]
+       [HubMethodName("IncomingMessage")]
+        public  Task NewChatChannelMessage(string incomingData)
         {
-            if(string.IsNullOrEmpty(incomingData))
-                return null;
+            //  if(string.IsNullOrEmpty(incomingData))
+            //     return null;
 
             var messageData = JsonConvert.DeserializeObject<IncomingChatMessage>(incomingData);
+          
             var user = Context.User;
             if (user != null)
             {
                 var username = user.Claims.FirstOrDefault();// Call the broadcastMessage method to update clients.
-                using(var context =new DatabaseController(DatabaseContext,Configuration))
+                using(var dbContext = new DatabaseController(DatabaseContext,Configuration))
                 {
-                    messageData.SenderName = context.AddChatRoomMessage(messageData, int.Parse(user.Claims.ElementAt(1).Value));
+                    messageData.SenderName = dbContext.AddChatRoomMessage(messageData,int.Parse(user.Claims.ElementAt(1).Value));
                 }
-                return Clients.Others.SendAsync("ReciveMessage", messageData);
+
+                return  Clients.Others.SendAsync("ReciveMessage", JsonConvert.SerializeObject( new IncomingChatMessage{
+                    ActiveRoom = messageData.ActiveRoom,
+                    Message = messageData.Message,
+                    ProjectId = messageData.ProjectId,
+                    SenderName = messageData.SenderName
+                }));
             }
             return null;
         }

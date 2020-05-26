@@ -77,14 +77,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=192.168.1.3;Database=RokonoControl;User ID=Kristifor;Password='::@Drakon87Katil';");
-            }
-        }
+       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -368,10 +361,10 @@ namespace Rokono_Control.Models
 
             modelBuilder.Entity<AssociatedUserChatNotifications>(entity =>
             {
-                entity.HasOne(d => d.Chatroom)
+                entity.HasOne(d => d.ChatChannel)
                     .WithMany(p => p.AssociatedUserChatNotifications)
-                    .HasForeignKey(d => d.ChatroomId)
-                    .HasConstraintName("FK__Associate__Chatr__6E565CE8");
+                    .HasForeignKey(d => d.ChatChannelId)
+                    .HasConstraintName("FK__Associate__ChatC__7F80E8EA");
 
                 entity.HasOne(d => d.Project)
                     .WithMany(p => p.AssociatedUserChatNotifications)

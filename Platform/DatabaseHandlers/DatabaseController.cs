@@ -32,6 +32,21 @@ namespace Rokono_Control.DatabaseHandlers
             return projectKey;
         }
 
+        internal int GetDefaultProjectChannel(int projectId)
+        {
+            return Context.ChatRooms.Include(x => x.ChatChannels)
+                                    .FirstOrDefault(x => x.ProjectId == projectId).ChatChannels
+                                    .FirstOrDefault().Id;
+        }
+
+        internal List<PublicMessages> GetCannelMessages(int id)
+        {
+            return Context.AssociatedChatChannelMessages.Include(x => x.PublicMessage)
+                                                        .Where(x => x.ChatChannelId == id)
+                                                        .Select(x => x.PublicMessage)
+                                                        .ToList();
+        }
+
         internal List<OutgoingChatItem> GetChatChannels(int id)
         {
             // var i = 1;
@@ -72,17 +87,17 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal string AddChatRoomMessage(IncomingChatMessage messageData, int sender)
         {
-            var chatRoom = Context.ChatRooms.FirstOrDefault(x=> x.Id == messageData.ActiveRoom);
+            var chatRoom = Context.ChatChannels.FirstOrDefault(x=> x.Id == messageData.ActiveRoom);
             var projectUsers = Context.AssociatedProjectMembers.Where(x=>x.ProjectId == messageData.ProjectId).ToList();
             if(chatRoom == null)
                 return string.Empty;
             projectUsers.ForEach(x=>{
-                if(!Context.AssociatedUserChatNotifications.Any(y=>y.ChatroomId == messageData.ActiveRoom && y.ProjectId == x.ProjectId) && x.UserAccountId != sender)
+                if(!Context.AssociatedUserChatNotifications.Any(y=>y.ChatChannelId == messageData.ActiveRoom && y.ProjectId == x.ProjectId) && x.UserAccountId != sender)
                 {
                     Context.AssociatedUserChatNotifications.Add(new AssociatedUserChatNotifications{
-                        ChatroomId = chatRoom.Id,
+                        ChatChannelId = chatRoom.Id,
                         ProjectId = messageData.ProjectId,
-                        UserId = x.Id
+                        UserId = x.UserAccountId
                     });
                     Context.SaveChanges();
                 }

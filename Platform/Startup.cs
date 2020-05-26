@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Platform.Hubs;
 using Rokono_Control.Models;
 using RokonoControl;
 
@@ -71,14 +72,13 @@ namespace Rokono_Control
             app.UseStaticFiles();
           
 
-            // app.UseSignalR(x => x.MapHub<ChatHub>("/ChatHub"));
-            app.UseRouting();
+             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();          
 
             app.UseEndpoints(endpoint =>
             {
-                endpoint.MapHub<ChatHub>("/ChatHub");
+                endpoint.MapHub<MessageHub>("/messageHub");
                 endpoint.MapRazorPages();
                 endpoint.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 

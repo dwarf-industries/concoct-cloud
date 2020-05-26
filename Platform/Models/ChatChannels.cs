@@ -8,6 +8,7 @@ namespace Rokono_Control.Models
         public ChatChannels()
         {
             AssociatedChatChannelMessages = new HashSet<AssociatedChatChannelMessages>();
+            AssociatedUserChatNotifications = new HashSet<AssociatedUserChatNotifications>();
         }
 
         public int Id { get; set; }
@@ -18,5 +19,6 @@ namespace Rokono_Control.Models
         public virtual ChatChannelTypes ChannelTypeNavigation { get; set; }
         public virtual ChatRooms ChatRoomNavigation { get; set; }
         public virtual ICollection<AssociatedChatChannelMessages> AssociatedChatChannelMessages { get; set; }
+        public virtual ICollection<AssociatedUserChatNotifications> AssociatedUserChatNotifications { get; set; }
     }
 }

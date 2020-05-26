@@ -1,6 +1,7 @@
 @{
     var id = ViewData["TransferId"] as int?;
     var ProjectId = ViewData["ProjectId"] as int?;
+    var ChannelMessages = ViewData["ChatMessages"] as List<PublicMessages>;
 }
 <link href="~/css/ViewComponents/ChatWindow/Index.css" rel="stylesheet">
 
@@ -12,23 +13,27 @@
             <div class="e-card-content">
                 <div class="ChatArea" id="ChatArea">
                     
-                    <div class="row ChatMessage">
-                        <div class="col-md-2">
-                            <img class="ResponsiveChatImage" src="https://www.medicinelodge.ca/wp-content/uploads/missing-avatar.jpg" />
-                        </div>
-                        <div class="col-md-10">
-                            <div class="row">
-                                <p> 
-                                    <span class="ChatUserName">Kristifor</span>, 11.5.2020
-                                </p>
+                    @foreach (var message in ChannelMessages)
+                    {
+                        <div class="row ChatMessage">
+                            <div class="col-md-2">
+                                <img class="ResponsiveChatImage" src="https://www.medicinelodge.ca/wp-content/uploads/missing-avatar.jpg" />
                             </div>
-                             <div class="row ChatMessageContent">
-                                <p  class="AlignText">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                                </p>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <p> 
+                                        <span class="ChatUserName">@message.SenderName</span>, 11.5.2020
+                                    </p>
+                                </div>
+                                <div class="row ChatMessageContent">
+                                    <p  class="AlignText">
+                                        @message.MessageContent
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
+           
         
                 </div>
             </div>

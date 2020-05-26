@@ -34,7 +34,7 @@ namespace Rokono_Control
             System.Console.WriteLine(current);
             CreateWebHostBuilder(args).Build().Run();
         }
-
+        
         private static Config CreateFile(string v)
         {
             var configuration = new Config

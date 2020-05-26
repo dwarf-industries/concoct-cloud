@@ -5,6 +5,7 @@ namespace Rokono_Control.Controllers
     using System.Linq;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
     using Platform.DataHandlers;
     using Platform.Models;
     using Rokono_Control.DatabaseHandlers;
@@ -20,9 +21,37 @@ namespace Rokono_Control.Controllers
             Context = context;
             Configuration = config;
         }
+        private void TestMethod()
+        {
+          
+
+            var messageData = new IncomingChatMessage{
+                ActiveRoom = 19,
+                Message = "test message",
+                ProjectId = 5012,
+            };
+            var currentUser = this.User;
+            if (currentUser != null)
+            {
+                var username = currentUser.Claims.FirstOrDefault();// Call the broadcastMessage method to update clients.
+                using(var context = new DatabaseController(Context,Configuration))
+                {
+                    messageData.SenderName = context.AddChatRoomMessage(messageData, int.Parse(currentUser.Claims.ElementAt(1).Value));
+                }
+
+                // return Clients.Others.SendAsync("ReciveMessage", JsonConvert.SerializeObject( new IncomingChatMessage{
+                //     ActiveRoom = messageData.ActiveRoom,
+                //     Message = messageData.Message,
+                //     ProjectId = messageData.ProjectId,
+                //     SenderName = messageData.SenderName
+                // }));
+            }
+        }
+
         #region PageRenders
         public IActionResult Index()
         {
+            TestMethod();
             var currentUser = this.User;
             var id = currentUser.Claims.ElementAt(1);
             using (var context = new DatabaseController(Context,Configuration))

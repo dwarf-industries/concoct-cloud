@@ -71,7 +71,7 @@
         <div class="row" id="MainChatContent">
             @await Component.InvokeAsync("ChatWIndow", new IncomingIdRequest{
                 ProjectId = @ProjectId.Value,
-                Id = 1
+                Id = @ActiveRoom.Value
             })
         </div>
     </div>
@@ -107,7 +107,8 @@
 var ActiveUser=
 {
     "Name" : "@Username",
-    "ActiveRoom" : @ActiveRoom
+    "ActiveRoom" : @ActiveRoom,
+    "ProjectId" : @ProjectId
 };
 var SelectedCategoryId;
 var InputNewChatRoom = new ej.inputs.TextBox({

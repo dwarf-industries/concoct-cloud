@@ -27,7 +27,7 @@ namespace Platform.ViewComponents
                 var currentUser = context.GetUserAccount(Id);
                 ViewData["Username"] = currentUser.Email;
                 ViewData["ProjectId"] = projectId;
-                ViewData["GetDefaultActiveRoom"] = 1;
+                ViewData["GetDefaultActiveRoom"] = context.GetDefaultProjectChannel(projectId); 
 
             }
             return View();
