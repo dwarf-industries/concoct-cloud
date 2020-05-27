@@ -70,6 +70,12 @@ namespace Platform.Controllers
         [HttpGet]
         public IActionResult GetChatRoom(int id, int projectId) 
         {
+            var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var userId = int.Parse(user.Value);
+            using(var context = new  DatabaseController(Context,Configuration))
+            {
+                context.UserChatChannelRead(userId, projectId, id);
+            }
             return ViewComponent("ChatWIndow", new IncomingIdRequest{
                 Id = id,
                 ProjectId = projectId

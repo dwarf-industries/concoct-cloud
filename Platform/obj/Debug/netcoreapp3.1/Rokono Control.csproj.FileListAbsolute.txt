@@ -1,11 +1,3 @@
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.csprojAssemblyReference.cache
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/staticwebassets/Rokono Control.StaticWebAssets.Manifest.cache
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/staticwebassets/Rokono Control.StaticWebAssets.xml
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.MvcApplicationPartsAssemblyInfo.cache
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.RazorAssemblyInfo.cache
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.RazorAssemblyInfo.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.AssemblyInfoInputs.cache
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.AssemblyInfo.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/appsettings.Development.json
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/asd.json
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/ddd.json
@@ -126,6 +118,14 @@
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.csprojAssemblyReference.cache
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/staticwebassets/Rokono Control.StaticWebAssets.Manifest.cache
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/staticwebassets/Rokono Control.StaticWebAssets.xml
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.MvcApplicationPartsAssemblyInfo.cache
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.RazorAssemblyInfo.cache
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.RazorAssemblyInfo.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.AssemblyInfoInputs.cache
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.AssemblyInfo.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.TagHelpers.input.cache
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.TagHelpers.output.cache
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.RazorCoreGenerate.cache

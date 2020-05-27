@@ -27,13 +27,12 @@ function resetChat() {
 }
 
 
-chatConnectionBuilder.on("ReciveMessage", (name, data) => {
+chatConnectionBuilder.on("ReciveMessage", (data) => {
 
     var control = "";
     var date = formatAMPM(new Date());
     // console.log(data);
     //TODO change chat message handler
-    console.log(""+name);
     var incomingChatHubData = JSON.parse(data);
      
     console.log(incomingChatHubData);

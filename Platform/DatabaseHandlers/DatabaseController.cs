@@ -78,6 +78,17 @@ namespace Rokono_Control.DatabaseHandlers
             return result;
         }
 
+        internal void UserChatChannelRead(int userId, int projectId, int channel)
+        {
+            var chatChanelNotifications = Context.AssociatedUserChatNotifications.FirstOrDefault(x=>x.UserId == userId
+                                                                                           && x.ProjectId == projectId
+                                                                                           && x.ChatChannelId == channel);
+            if(chatChanelNotifications == null)
+                return;
+            Context.AssociatedUserChatNotifications.Remove(chatChanelNotifications);
+            Context.SaveChanges();
+        }
+
         internal List<AssociatedUserChatNotifications> GetChatNotifications(int id, int userId)
         {
             return Context.AssociatedUserChatNotifications
@@ -92,7 +103,7 @@ namespace Rokono_Control.DatabaseHandlers
             if(chatRoom == null)
                 return string.Empty;
             projectUsers.ForEach(x=>{
-                if(!Context.AssociatedUserChatNotifications.Any(y=>y.ChatChannelId == messageData.ActiveRoom && y.ProjectId == x.ProjectId) && x.UserAccountId != sender)
+                if(Context.AssociatedUserChatNotifications.FirstOrDefault(y=>y.ChatChannelId == messageData.ActiveRoom && y.ProjectId == x.ProjectId && y.UserId == x.UserAccountId) == null)
                 {
                     Context.AssociatedUserChatNotifications.Add(new AssociatedUserChatNotifications{
                         ChatChannelId = chatRoom.Id,
@@ -100,7 +111,7 @@ namespace Rokono_Control.DatabaseHandlers
                         UserId = x.UserAccountId
                     });
                     Context.SaveChanges();
-                }
+                 }
             });
             var email = Context.UserAccounts.FirstOrDefault(x=>x.Id == sender).Email;
             var message = Context.PublicMessages.Add(new PublicMessages{

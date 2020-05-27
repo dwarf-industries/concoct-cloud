@@ -134,7 +134,8 @@ $( document ).ready(function() {
         dataType: "json",
         success: function (response) {
             response.forEach(x=>{
-                SetRoomNewMessage(x.chatroomId);
+                console.log(x);
+                SetRoomNewMessage(x.chatChannelId);
             });
         },
         error: function (xhr, status, error) {
