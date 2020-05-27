@@ -1,6 +1,6 @@
 @{
     var channelRights = ViewData["UserAdministrativeRights"] as bool?;   
-    var InputName = Guid.NewGuid().ToString(); 
+    var InputName = $"ChatInputSession{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}{DateTime.Now.Millisecond}"; 
     var UserId = ViewData["UserId"] as int?;
 }
 
