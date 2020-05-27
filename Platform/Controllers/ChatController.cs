@@ -24,9 +24,11 @@ namespace Platform.Controllers
         public List<OutgoingChatItem> GetChatChannels([FromBody] IncomingIdRequest request)
         {
             var result = new List<OutgoingChatItem>();
+            var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var id = int.Parse(user.Value);
             using(var context = new DatabaseController(Context, Configuration))
             {
-                result = context.GetChatChannels(request.Id);
+                result = context.GetChatChannels(request.Id,id);
             }
             return result;
         }
@@ -35,10 +37,12 @@ namespace Platform.Controllers
         public List<OutgoingChatItem> AddNewCategory([FromBody] IncomingIdRequest request)
         {
             var result = new  List<OutgoingChatItem>();
+            var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var id = int.Parse(user.Value);
             using(var context = new DatabaseController(Context, Configuration))
             {
                 context.AddNewChatChannel(request);
-                result = context.GetChatChannels(request.Id);
+                result = context.GetChatChannels(request.Id,id);
             }
             return result;
         }
@@ -47,10 +51,26 @@ namespace Platform.Controllers
         public List<OutgoingChatItem> AddNewChatRoom([FromBody] IncomingIdRequest request)
         {
             var result = new  List<OutgoingChatItem>();
+            var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var id = int.Parse(user.Value);
             using(var context = new DatabaseController(Context, Configuration))
             {
                 context.AddNewChatRoom(request);
-                result = context.GetChatChannels(request.WorkItemType);
+                result = context.GetChatChannels(request.WorkItemType,id);
+            }
+            return result;
+        }
+
+        
+        [HttpPost]
+        public ChatRoomRights AssignUserTag([FromBody] IncomingIdRequest request)
+        {
+            var result = default(ChatRoomRights);
+            var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var id = int.Parse(user.Value);
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                result = context.AssignUserTag(request.Id, request.ProjectId, id);
             }
             return result;
         }
@@ -90,5 +110,11 @@ namespace Platform.Controllers
                 ProjectId = projectId
             });
         }
+        [HttpGet]
+        public IActionResult InvokeChatNavigation(int projectId) 
+        {
+            return ViewComponent("ChatNavigation", projectId);
+        }
+        
     }
 }

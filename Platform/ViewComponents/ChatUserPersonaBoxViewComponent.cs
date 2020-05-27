@@ -28,6 +28,8 @@ namespace Platform.ViewComponents
                 var rights = context.GetUserRights(request.Id, request.ProjectId);
                 if(rights != null)
                     ViewData["UserAdministrativeRights"] = rights.ChatChannelsRule == 1 ? true :false;
+
+                ViewData["UserRights"] = context.GetUserChatRights(Id, request.ProjectId);
                 ViewData["UserId"] = request.Id;
             }
             return View();

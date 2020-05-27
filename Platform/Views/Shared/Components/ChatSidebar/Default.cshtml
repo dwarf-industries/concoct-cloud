@@ -3,6 +3,7 @@
     var ProjectId = ViewData["ProjectId"] as int?;
     var Username =  ViewData["Username"] as string;
     var ActiveRoom = ViewData["GetDefaultActiveRoom"] as int?;
+    var ProjectChatRights = ViewData["ProjectChatRights"] as List<ChatRoomRights>;
 }
 
 
@@ -30,7 +31,7 @@
             <div class="row SideBarRow" style="text-align: center;">
                 @await Component.InvokeAsync("SelectProject", @ProjectId)
             </div>
-            <div class="row SideBarRow">
+            <div class="row SideBarRow" id="ChatNavigationHolder">
                 @await Component.InvokeAsync("ChatNavigation", @ProjectId)
             </div>
 
@@ -100,6 +101,19 @@
 
 </div>
 
+<div id="ChatAssignUserRights">
+    <div class="row" style="padding: 15px;">
+        @foreach (var right in ProjectChatRights)
+        {
+            <span class="ChipTag" onclick="AssignUserTag(@right.Id)">@right.RightName </span>
+        }
+    </div>
+    <div class="row InlineFlex">
+        <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="CloseChatAssignRights()">Close</button>
+     </div>
+
+</div>
+
 
 
 <script>
@@ -150,7 +164,7 @@ var ChatAddNewRoomModal;
 
 ChatAddNewRoomModal = new ej.popups.Dialog({
     width: '600px',
-    header: 'Name your new category',
+    header: 'Name your new room',
     isModal: true,
     animationSettings: { effect: 'None' },
     visible: false,
@@ -159,6 +173,23 @@ ChatAddNewRoomModal = new ej.popups.Dialog({
 ChatAddNewRoomModal.appendTo('#ChatAddNewRoomModal');
 
 ChatAddNewRoomModal.hide();
+
+
+
+var ChatAssignUserRights;
+
+
+ChatAssignUserRights = new ej.popups.Dialog({
+    width: '600px',
+    header: 'Assign User Right',
+    isModal: true,
+    animationSettings: { effect: 'None' },
+    visible: false,
+ 
+});
+ChatAssignUserRights.appendTo('#ChatAssignUserRights');
+
+ChatAssignUserRights.hide();
 
 // Dialog will be closed, while clicking on overlay
 function onChange(args) {
@@ -202,6 +233,17 @@ function CloseNewChatRoomModal()
 {
         ChatAddNewRoomModal.hide();
 }
+
+
+function OpenChatAssignRights(){
+    ChatAssignUserRights.show();
+}
+function CloseChatAssignRights()
+{
+    ChatAssignUserRights.hide();
+
+}
+
 
 function SaveNewChatCategory()
 {
@@ -264,7 +306,32 @@ function SaveNewChatRoom()
     else
         ShowAlert("Input field Channel Name must contain a value!!!");
 }
+function AssignUserTag(Id)
+{
+     var messagesDto = {
+         "ProjectId": @ProjectId,
+         "Id": Id
+    }
 
+    $.ajax({
+            type: 'POST',
+            url: '/Chat/AssignUserTag',
+            data: JSON.stringify(messagesDto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            
+            success: function (response) {
+                CloseChatAssignRights();
+                $("#ActiveTags").append("<span class=\"ChipTag\">"+response.rightName+"<span onclick=\"DeletingTag("+response.id+")\" class=\"ChipCloseBtn\" ></span></span>");
+                $("#ChatNavigationHolder").html("");
+                $("#ChatNavigationHolder").load("/Chat/InvokeChatNavigation?projectId=@ProjectId")
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+    });
+    
+}
 function SetRoomNewMessage(id)
 {
     $( "#ChatChannel_"+id ).addClass("NewMessage");

@@ -32,11 +32,44 @@ namespace Rokono_Control.DatabaseHandlers
             return projectKey;
         }
 
+        internal List<ChatRoomRights> GetUserChatRights(int id, int projectId)
+        {
+            return Context.AssociatedUserChatRights.Include(x => x.Right)
+                                                    .Where(x => x.UserId == id && x.ProjectId == projectId)
+                                                    .Select(x=>x.Right)
+                                                    .ToList();
+        }
+
+        internal List<ChatRoomRights> GetProjectChatRights(int projectId)
+        {
+            var result = new  List<ChatRoomRights>();
+            var AllRights = Context.AssociatedChatRoomRights.Include(x => x.Right)
+                                                   .Where(x => x.Right.PojectId == projectId)
+                                                   .Select(x => x.Right)
+                                                   .ToList();
+            AllRights.ForEach(x=>{
+                if(!result.Any(y=>y.Id == x.Id))
+                    result.Add(x);
+            });
+            return result;
+        }
+
         internal int GetDefaultProjectChannel(int projectId)
         {
             return Context.ChatRooms.Include(x => x.ChatChannels)
                                     .FirstOrDefault(x => x.ProjectId == projectId).ChatChannels
                                     .FirstOrDefault().Id;
+        }
+
+        internal ChatRoomRights AssignUserTag(int tagId, int projectId, int userId)
+        {
+            Context.AssociatedUserChatRights.Add(new AssociatedUserChatRights{
+                ProjectId = projectId,
+                UserId = userId,
+                RightId = tagId
+            });
+            Context.SaveChanges();
+            return Context.ChatRoomRights.FirstOrDefault(x=>x.PojectId == projectId && x.Id == tagId);
         }
 
         internal List<PublicMessages> GetCannelMessages(int id)
@@ -47,22 +80,26 @@ namespace Rokono_Control.DatabaseHandlers
                                                         .ToList();
         }
 
-        internal List<OutgoingChatItem> GetChatChannels(int id)
+        internal List<OutgoingChatItem> GetChatChannels(int id, int userId)
         {
             // var i = 1;
             var result = new List<OutgoingChatItem>();
-            Context.ChatRooms.Include(x=>x.ChatChannels).Where(x=>x.ProjectId == id).ToList().ForEach(x=>{
+            Context.AssociatedChatRoomRights
+            .Include(x=>x.ChatRoom)
+            .ThenInclude(ChatRoom => ChatRoom.ChatChannels)
+            .Where(x=>x.ChatRoom.ProjectId == id && x.Right.AssociatedUserChatRights.Any(y=>y.ProjectId == id && y.UserId == userId))
+            .ToList().ForEach(x=>{
                 var cItem = new OutgoingChatItem
                 {     
                     InternalId = x.Id,
                     // NodeId = i++,
-                    NodeText = x.RoomName,
+                    NodeText = x.ChatRoom.RoomName,
                     IconCss = "icon-th icon",
                     Link = "",
                     ChannelType = 0,
                     IsParent = true,
                     ParentId = x.Id,
-                    NodeChild = x.ChatChannels.Select(y=> new OutgoingChatItemChild{
+                    NodeChild = x.ChatRoom.ChatChannels.Select(y=> new OutgoingChatItemChild{
                         InternalId = y.Id,
                         // NodeId = i++,
                         NodeText = y.ChannelName,

@@ -20,6 +20,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedBoardWorkItems> AssociatedBoardWorkItems { get; set; }
         public virtual DbSet<AssociatedBranchCommits> AssociatedBranchCommits { get; set; }
         public virtual DbSet<AssociatedChatChannelMessages> AssociatedChatChannelMessages { get; set; }
+        public virtual DbSet<AssociatedChatRoomRights> AssociatedChatRoomRights { get; set; }
         public virtual DbSet<AssociatedCommitFiles> AssociatedCommitFiles { get; set; }
         public virtual DbSet<AssociatedProjectApiKeys> AssociatedProjectApiKeys { get; set; }
         public virtual DbSet<AssociatedProjectBoards> AssociatedProjectBoards { get; set; }
@@ -34,6 +35,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedProjectPublicMessages> AssociatedProjectPublicMessages { get; set; }
         public virtual DbSet<AssociatedRepositoryBranches> AssociatedRepositoryBranches { get; set; }
         public virtual DbSet<AssociatedUserChatNotifications> AssociatedUserChatNotifications { get; set; }
+        public virtual DbSet<AssociatedUserChatRights> AssociatedUserChatRights { get; set; }
         public virtual DbSet<AssociatedUserNotifications> AssociatedUserNotifications { get; set; }
         public virtual DbSet<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
         public virtual DbSet<AssociatedWorkItemFiles> AssociatedWorkItemFiles { get; set; }
@@ -45,6 +47,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<Changelogs> Changelogs { get; set; }
         public virtual DbSet<ChatChannelTypes> ChatChannelTypes { get; set; }
         public virtual DbSet<ChatChannels> ChatChannels { get; set; }
+        public virtual DbSet<ChatRoomRights> ChatRoomRights { get; set; }
         public virtual DbSet<ChatRooms> ChatRooms { get; set; }
         public virtual DbSet<Commits> Commits { get; set; }
         public virtual DbSet<DocumentationArea> DocumentationArea { get; set; }
@@ -77,7 +80,14 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
 
-       
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=192.168.1.3;Database=RokonoControl;User ID=Kristifor;Password='::@Drakon87Katil';");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -153,6 +163,21 @@ namespace Rokono_Control.Models
                     .WithMany(p => p.AssociatedChatChannelMessages)
                     .HasForeignKey(d => d.PublicMessageId)
                     .HasConstraintName("FK__Associate__Publi__4C0144E4");
+            });
+
+            modelBuilder.Entity<AssociatedChatRoomRights>(entity =>
+            {
+                entity.HasOne(d => d.ChatRoom)
+                    .WithMany(p => p.AssociatedChatRoomRights)
+                    .HasForeignKey(d => d.ChatRoomId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Associate__ChatR__062DE679");
+
+                entity.HasOne(d => d.Right)
+                    .WithMany(p => p.AssociatedChatRoomRights)
+                    .HasForeignKey(d => d.RightId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Associate__Right__0539C240");
             });
 
             modelBuilder.Entity<AssociatedCommitFiles>(entity =>
@@ -377,6 +402,24 @@ namespace Rokono_Control.Models
                     .HasConstraintName("FK__Associate__UserI__6F4A8121");
             });
 
+            modelBuilder.Entity<AssociatedUserChatRights>(entity =>
+            {
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.AssociatedUserChatRights)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK__Associate__Proje__0FB750B3");
+
+                entity.HasOne(d => d.Right)
+                    .WithMany(p => p.AssociatedUserChatRights)
+                    .HasForeignKey(d => d.RightId)
+                    .HasConstraintName("FK__Associate__Right__0EC32C7A");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AssociatedUserChatRights)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK__Associate__UserI__0DCF0841");
+            });
+
             modelBuilder.Entity<AssociatedUserNotifications>(entity =>
             {
                 entity.HasOne(d => d.Notification)
@@ -508,6 +551,18 @@ namespace Rokono_Control.Models
                     .WithMany(p => p.ChatChannels)
                     .HasForeignKey(d => d.ChatRoom)
                     .HasConstraintName("FK__ChatChann__ChatR__53A266AC");
+            });
+
+            modelBuilder.Entity<ChatRoomRights>(entity =>
+            {
+                entity.Property(e => e.RightName)
+                    .IsRequired()
+                    .HasMaxLength(300);
+
+                entity.HasOne(d => d.Poject)
+                    .WithMany(p => p.ChatRoomRights)
+                    .HasForeignKey(d => d.PojectId)
+                    .HasConstraintName("FK__ChatRoomR__Pojec__025D5595");
             });
 
             modelBuilder.Entity<ChatRooms>(entity =>

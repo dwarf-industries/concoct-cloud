@@ -2,6 +2,7 @@
     var channelRights = ViewData["UserAdministrativeRights"] as bool?;   
     var InputName = $"ChatInputSession{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}{DateTime.Now.Millisecond}"; 
     var UserId = ViewData["UserId"] as int?;
+    var UserRights = ViewData["UserRights"] as List<ChatRoomRights>;
 }
 
 <style>
@@ -45,25 +46,14 @@
     <input id="@InputName"  style="margin: 5px;"/>
 </div>
 <div class="row" style="text-align: center;">
-    <span class="AddNewRoleTag">New Role</span>
+    <span class="AddNewRoleTag" onclick="OpenChatAssignRights()">New Role</span>
 </div>
-<div class="row" style="padding: 15px;">
-    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
-    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
-    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
-    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
-    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
-    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
-    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
-    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
-    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
-    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
-    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
-    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
-    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
-    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
-    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
-    <span class="ChipTag">Owner <span onclick="DeletingTag(1)" class="ChipCloseBtn" ></span></span>
+<div class="row" style="padding: 15px;" id="ActiveTags">
+    @foreach (var right in UserRights)
+    {
+        <span class="ChipTag">@right.RightName <span onclick="DeletingTag(@right.Id)" class="ChipCloseBtn" ></span></span>
+    }
+     
 
 </div>
 <div class="row">
