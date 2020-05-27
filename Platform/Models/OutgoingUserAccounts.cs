@@ -10,6 +10,6 @@ namespace Rokono_Control.Models
         public int IterationOptions { get; set; }
         public int ViewWorkItems { get; set; }
         public int ScheduleManagement { get; set; }
-
+        public bool Online { get; set; }
     }
 }

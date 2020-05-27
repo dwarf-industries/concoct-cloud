@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Platform.Models;
@@ -70,7 +71,9 @@ namespace Platform.Controllers
             var id = int.Parse(user.Value);
             using(var context = new DatabaseController(Context, Configuration))
             {
-                result = context.AssignUserTag(request.Id, request.ProjectId, id);
+                result = context.AssignUserTag(request.Id, request.ProjectId, request.UserId);
+
+                
             }
             return result;
         }
@@ -85,6 +88,18 @@ namespace Platform.Controllers
                 result = context.GetChatNotifications(request.Id, id);
             }
             return result;
+        }
+
+        [HttpPost]
+        public OkResult DeleteUserTag([FromBody] IncomingIdRequest request)
+        {
+             var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var id = int.Parse(user.Value);
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                context.RemoveUserTag(request.Id, request.UserId, request.ProjectId);
+            }
+            return Ok();
         }
 
         [HttpGet]
@@ -114,6 +129,12 @@ namespace Platform.Controllers
         public IActionResult InvokeChatNavigation(int projectId) 
         {
             return ViewComponent("ChatNavigation", projectId);
+        }
+
+        [HttpGet]
+        public IActionResult InvokeChatUserListUpdate(int projectId) 
+        {
+            return ViewComponent("UserList", projectId);
         }
         
     }

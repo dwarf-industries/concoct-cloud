@@ -60,24 +60,8 @@
         <!-- Basic Card Layout  -->
         <div tabindex="0" class="e-UserList"   style="height: 93.6vh;" id="ChatCard" >
             <div class="e-card-content">
-                <div class="UserList">
-                   <div class="row UserListRow" id="Email" >
-                       <div class="row">
-                            <div class="col-md-2">
-                                    <img class="ResponsiveUserListImage" src="https://www.medicinelodge.ca/wp-content/uploads/missing-avatar.jpg" />
-                            </div>
-                            <div class="col-md-6" style="font-size: 22px; padding-top:2%">
-                                <span class="HoverActivatioName" onclick="OpenUserModal()">Kristifor</span>
-                            </div>
-                            <div class="col-md-2" style="font-size: 16px; padding-top:2%">
-                                Online
-                            </div>
-                       </div>
-                       <div id="UserInputControl1" style="margin: 15px;">
-                           <hr/>
-                       
-                        </div>
-                   </div>
+                <div class="UserList" id="UserList">
+                    @await Component.InvokeAsync("UserList", @ProjectId)
                 </div>
             </div>
         </div>
@@ -93,11 +77,13 @@ var InputChat = new ej.inputs.TextBox({
 });
 InputChat.appendTo('#InputChat');
 var LastContent;
-function OpenUserModal()
+function OpenUserModal(id)
 {
-    LastContent = "#UserInputControl1";
+    ActiveQueryUser = id;
     $(LastContent).html("");
-    $("#UserInputControl1").load("/Chat/GetUserDirectMessageControl?projectId=@ProjectId&&id="+2);
+    $("#UserInputControl_"+id).load("/Chat/GetUserDirectMessageControl?projectId=@ProjectId&&id="+id);
+    LastContent = "#UserInputControl_"+id;
+
 }
 
 

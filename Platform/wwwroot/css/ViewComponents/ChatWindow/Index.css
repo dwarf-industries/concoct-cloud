@@ -211,6 +211,7 @@
 
  .UserList{
   height: 93vh;
+  overflow-x: -moz-hidden-unscrollable;
 
  }
  .UserListRow{
@@ -229,7 +230,9 @@
      color: red;
  }
 
- 
+ .HoverActivatioName{
+    word-wrap: break-word;
+ }
      
  .HoverActivatioName:hover{
      cursor: pointer;

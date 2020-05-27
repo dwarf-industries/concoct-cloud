@@ -81,6 +81,8 @@ namespace Platform.Hubs
                 Id = Context.ConnectionId,
                 Name = name
             });
+
+            Clients.Others.SendAsync("UserConnected");
             return base.OnConnectedAsync();
         }
         public override Task OnDisconnectedAsync(Exception exception)
@@ -90,6 +92,8 @@ namespace Platform.Hubs
             var  member = Program.Members.FirstOrDefault(x=>x.Id == Context.ConnectionId);
             Program.Members.Remove(member);
             // ChatHandlerPackets.UpdateConnectedList();
+            Clients.Others.SendAsync("UserDisconnected");
+
             return null;
         }  
     }

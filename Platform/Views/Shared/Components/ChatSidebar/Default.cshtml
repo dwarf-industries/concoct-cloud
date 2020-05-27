@@ -122,8 +122,9 @@ var ActiveUser=
 {
     "Name" : "@Username",
     "ActiveRoom" : @ActiveRoom,
-    "ProjectId" : @ProjectId
+    "ProjectId" : @ProjectId,
 };
+var ActiveQueryUser;
 var SelectedCategoryId;
 var InputNewChatRoom = new ej.inputs.TextBox({
     placeholder: 'Channel name',
@@ -235,8 +236,9 @@ function CloseNewChatRoomModal()
 }
 
 
-function OpenChatAssignRights(){
+function OpenChatAssignRights(id){
     ChatAssignUserRights.show();
+    ActiveQueryUser =id;
 }
 function CloseChatAssignRights()
 {
@@ -310,7 +312,8 @@ function AssignUserTag(Id)
 {
      var messagesDto = {
          "ProjectId": @ProjectId,
-         "Id": Id
+         "Id": Id,
+         "UserId": ActiveQueryUser
     }
 
     $.ajax({
@@ -323,8 +326,25 @@ function AssignUserTag(Id)
             success: function (response) {
                 CloseChatAssignRights();
                 $("#ActiveTags").append("<span class=\"ChipTag\">"+response.rightName+"<span onclick=\"DeletingTag("+response.id+")\" class=\"ChipCloseBtn\" ></span></span>");
-                $("#ChatNavigationHolder").html("");
-                $("#ChatNavigationHolder").load("/Chat/InvokeChatNavigation?projectId=@ProjectId")
+ 
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+    });
+    var dto = {
+        "Id": @ProjectId,
+     }
+
+    $.ajax({
+            type: 'POST',
+            url: '/Chat/GetChatChannels',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            
+            success: function (response) {
+               InitializeChatItems(response);
             },
             error: function (xhr, status, error) {
                 console.log(error);

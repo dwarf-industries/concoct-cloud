@@ -1,0 +1,31 @@
+@{
+    var Users = ViewData["UserList"] as List<OutgoingUserAccounts>;
+}
+
+@foreach (var user in Users)
+{
+    <div class="row UserListRow" id="Email" >        
+        <div class="row">
+            <div class="col-md-2">
+                    <img class="ResponsiveUserListImage" src="https://www.medicinelodge.ca/wp-content/uploads/missing-avatar.jpg" />
+            </div>
+            <div class="col-md-6" style="font-size: 22px; padding-top:2%">
+                <span class="HoverActivatioName" onclick="OpenUserModal(@user.AccountId)">@user.Name</span>
+            </div>
+            <div class="col-md-2" style="font-size: 16px; padding-top:2%" id="UserStatus_@user.AccountId">
+                @if(@user.Online)
+                {
+                    @:"Online"
+                }
+                else
+                { 
+                   @: "Offline"
+                }
+            </div>
+        </div>
+        <hr/>
+        <div id="UserInputControl_@user.AccountId" style="margin: 15px;">
+        
+        </div>
+    </div>
+}

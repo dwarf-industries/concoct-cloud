@@ -21,8 +21,9 @@ namespace Platform.ViewComponents
         public IViewComponentResult Invoke(int projectId)
         {
             
-            // var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            // var Id = int.Parse(user.Value);
+            var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var Id = int.Parse(user.Value);
+            ViewData["User"] = Id;
             return View();
         }
     }

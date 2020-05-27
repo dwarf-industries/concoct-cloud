@@ -3,6 +3,7 @@
     var InputName = $"ChatInputSession{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}{DateTime.Now.Millisecond}"; 
     var UserId = ViewData["UserId"] as int?;
     var UserRights = ViewData["UserRights"] as List<ChatRoomRights>;
+    var ProjectId = ViewData["ProjectId"] as int?;
 }
 
 <style>
@@ -46,12 +47,12 @@
     <input id="@InputName"  style="margin: 5px;"/>
 </div>
 <div class="row" style="text-align: center;">
-    <span class="AddNewRoleTag" onclick="OpenChatAssignRights()">New Role</span>
+    <span class="AddNewRoleTag" onclick="OpenChatAssignRights(@UserId)">New Role</span>
 </div>
 <div class="row" style="padding: 15px;" id="ActiveTags">
     @foreach (var right in UserRights)
     {
-        <span class="ChipTag">@right.RightName <span onclick="DeletingTag(@right.Id)" class="ChipCloseBtn" ></span></span>
+        <span class="ChipTag" id="Tag_@right.Id">@right.RightName <span onclick="DeletingTag(@right.Id)" class="ChipCloseBtn" ></span></span>
     }
      
 
@@ -69,9 +70,51 @@ UserControlChatInput.appendTo('#@InputName');
 
 @* new ej.buttons.ChipList({ chips: window.chipsData.avatarData, enableDelete: true }, '#chip-avatar'); *@
 
-function DeletingTag(id)
+function DeletingTag(currentTag)
 {
-    console.log(id);
+    console.log(currentTag);
+    $("#Tag_"+currentTag).html("");
+     var messagesDto = {
+        "Id": currentTag,
+        "UserId" : ActiveQueryUser,
+        "ProjectId" : @ProjectId
+    }
+
+    $.ajax({
+            type: 'POST',
+            url: '/Chat/DeleteUserTag',
+            data: JSON.stringify(messagesDto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            
+            success: function (response) {
+                 
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+    });
+
+
+    var dto = {
+        "Id": @ProjectId,
+     }
+
+    $.ajax({
+            type: 'POST',
+            url: '/Chat/GetChatChannels',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            
+            success: function (response) {
+               InitializeChatItems(response);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+    });
+    CloseChatUserPreview();
 }
 </script>
 

@@ -1,6 +1,7 @@
 @{
     var ProjectId = ViewData["ProjectId"] as int?;
     var defaultIteration = ViewData["DefaultIteration"] as int?;
+    var CurrentUser = ViewData["User"];
 }
 
 <style>
@@ -112,7 +113,7 @@
                     <span onclick="AddNewChannelModal(${internalId})" class="TreeNewItem"></span>
                 </div>
             </div>
-        </div>  
+        </div>   
     ${else}
         <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId})">
             <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>

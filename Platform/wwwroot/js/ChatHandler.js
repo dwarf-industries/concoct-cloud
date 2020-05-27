@@ -73,7 +73,22 @@ chatConnectionBuilder.on("ReciveMessage", (data) => {
 });
 
 
+chatConnectionBuilder.on("UserConnected", () => {
+      
+    $("#UserList").load("/Chat/InvokeChatUserListUpdate?projectId="+ActiveUser.ProjectId);
 
+    
+});
+
+
+chatConnectionBuilder.on("UserDisconnected", () => {
+      
+    $("#UserList").load("/Chat/InvokeChatUserListUpdate?projectId="+ActiveUser.ProjectId);
+
+    
+});
+ 
+ 
 chatConnectionBuilder.on("ReciveNotification", (data) => {
     console.log(data);
     var getData = JSON.parse(data);

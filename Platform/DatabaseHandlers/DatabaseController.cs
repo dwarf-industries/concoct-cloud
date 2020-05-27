@@ -115,6 +115,15 @@ namespace Rokono_Control.DatabaseHandlers
             return result;
         }
 
+        internal void RemoveUserTag(int tagId, int userId, int projectId)
+        {
+            var right = Context.AssociatedUserChatRights.FirstOrDefault(x=>x.UserId == userId
+                                                                           && x.RightId == tagId
+                                                                           && x.ProjectId == projectId);
+            Context.AssociatedUserChatRights.Remove(right);
+            Context.SaveChanges();
+        }
+
         internal void UserChatChannelRead(int userId, int projectId, int channel)
         {
             var chatChanelNotifications = Context.AssociatedUserChatNotifications.FirstOrDefault(x=>x.UserId == userId
