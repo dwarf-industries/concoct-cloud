@@ -80,7 +80,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
 
-       
+ 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -548,6 +548,10 @@ namespace Rokono_Control.Models
 
             modelBuilder.Entity<ChatRoomRights>(entity =>
             {
+                entity.Property(e => e.Background).HasMaxLength(500);
+
+                entity.Property(e => e.Foreground).HasMaxLength(500);
+
                 entity.Property(e => e.RightName)
                     .IsRequired()
                     .HasMaxLength(300);

@@ -54,7 +54,7 @@
                             <span class="HeadPhones"></span>
                         </div>
                         <div class="col-md-2">
-                            <span class="SettingsIcon"></span>
+                            <span class="SettingsIcon" onclick="OpenProjectChatSettingsPage(@ProjectId)"></span>
                         </div>
                     </div>
                 </div>
@@ -253,6 +253,8 @@ function SaveNewChatCategory()
         "Id": @ProjectId,
         "Phase" : $("#InputNewChatCategory").val()
     }
+    console.log(messagesDto);
+    console.log($("#InputNewChatCategory").val());
     if($("#InputNewChatCategory").val())
     {
 
@@ -338,7 +340,7 @@ function AssignUserTag(Id)
 
     $.ajax({
             type: 'POST',
-            url: '/Chat/GetChatChannels',
+            url: '/Chat/GetChatChannelsNavigation',
             data: JSON.stringify(dto),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -355,6 +357,12 @@ function AssignUserTag(Id)
 function SetRoomNewMessage(id)
 {
     $( "#ChatChannel_"+id ).addClass("NewMessage");
+}
+
+function OpenProjectChatSettingsPage(id)
+{
+    $("#ChatElement").html("");
+    $("#ChatElement").load("/Chat/GetChatSettings?id="+id);
 }
 </script>
 <script src="~/lib/@@aspnet/signalr/dist/browser/signalr.js"></script>

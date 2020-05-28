@@ -1,0 +1,84 @@
+
+@{
+    var ChatRoomId = ViewData["ChatRoomId"] as int?;
+    var projectId =  ViewData["projectId"] as int?;
+
+}
+
+<style>
+    .ChatRoomTagHover:hover{
+        cursor: pointer;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
+    }
+</style>
+
+<div class="control-section" style="height: 86vh;">
+    <div class="content-wrapper">
+        <div class="row">
+            <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;text-align: center; " onclick="ChatRoomTagListAddNew()">Save</button>
+        </div>
+        <div class="row">
+            <div id="ChatRoomTagList">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script id="ChatRoomTagListGridRowTemplate" type="text/x-template">
+    <tr>
+        <td>
+            <div style="background-color:${background}; color:${foreground}; " onclick="CatRoomTagSelected(${id})" class="ChatRoomTagHover" >
+                <p style="text-align:center;">${rightName}</p>
+            </div>
+        </td>
+    </tr>
+</script>
+<script>
+
+    var SelectedRoom;
+    var dto = {
+        "Id": @ChatRoomId,
+     }
+
+    $.ajax({
+            type: 'POST',
+            url: '/Chat/GetChatRoomRights',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            
+            success: function (response) {
+               ChatRoomTagList(response);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+    });
+    function ChatRoomTagList(data)
+    {
+        console.log(data);
+        var ChatRoomTagList = new ej.grids.Grid({
+            dataSource: data,
+            allowSelection: true,
+            rowTemplate: '#ChatRoomTagListGridRowTemplate',
+            columns: [
+                { field: 'rightName', headerText: 'Chat Room Tags', width: 120, textAlign: 'Right' },
+            ]
+        });
+        ChatRoomTagList.appendTo('#ChatRoomTagList');
+    }
+
+    function ChatRoomTagListAddNew()
+    {
+        $("#TagSettingProperties").load('/Chat/GetTagProperties?id='+SelectedRoom+'&&projectId='+@projectId+'&&option=2&&chatRoom='+@ChatRoomId);
+    }
+
+    function CatRoomTagSelected(args)
+    {
+        console.log(args);
+        SelectedRoom = args;
+        $("#TagSettingProperties").load('/Chat/GetTagProperties?id='+SelectedRoom+'&&projectId='+@projectId+'&&option=1&&chatRoom='+@ChatRoomId);
+    }
+</script>

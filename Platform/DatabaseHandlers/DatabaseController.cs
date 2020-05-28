@@ -32,6 +32,38 @@ namespace Rokono_Control.DatabaseHandlers
             return projectKey;
         }
 
+        internal ChatRoomRights GetChatRightById(int tagId)
+        {
+            return Context.ChatRoomRights.FirstOrDefault(x=>x.Id == tagId);
+        }
+
+        internal int GetDefaultProjectChatRoom(int projectId)
+        {
+            var defaultRoom = Context.ChatRooms.FirstOrDefault(x=>x.ProjectId == projectId);
+            if(defaultRoom == null)
+                return 0;
+
+            return defaultRoom.Id;
+        }
+
+        internal List<ChatRooms> GetAllChatChannels(int id)
+        {
+            return Context.AssociatedChatRoomRights.Include(x => x.ChatRoom)
+                                                   .Where(x => x.ChatRoom.ProjectId == id)
+                                                   .Select(x => x.ChatRoom)
+                                                   .Distinct()
+                                                   .ToList();
+        }
+
+        internal List<ChatRoomRights> GetChatRoomRights(int id)
+        {
+            return Context.AssociatedChatRoomRights.Include(x => x.Right)
+                                                   .Where(x => x.ChatRoomId == id)
+                                                   .Select(x => x.Right)
+                                                   .Distinct()
+                                                   .ToList();
+        }
+
         internal List<ChatRoomRights> GetUserChatRights(int id, int projectId)
         {
             return Context.AssociatedUserChatRights.Include(x => x.Right)
@@ -88,17 +120,19 @@ namespace Rokono_Control.DatabaseHandlers
             .Include(x=>x.ChatRoom)
             .ThenInclude(ChatRoom => ChatRoom.ChatChannels)
             .Where(x=>x.ChatRoom.ProjectId == id && x.Right.AssociatedUserChatRights.Any(y=>y.ProjectId == id && y.UserId == userId))
+            .Select(x=>x)
+            .Distinct()
             .ToList().ForEach(x=>{
                 var cItem = new OutgoingChatItem
                 {     
-                    InternalId = x.Id,
+                    InternalId = x.ChatRoomId,
                     // NodeId = i++,
                     NodeText = x.ChatRoom.RoomName,
                     IconCss = "icon-th icon",
                     Link = "",
                     ChannelType = 0,
                     IsParent = true,
-                    ParentId = x.Id,
+                    ParentId = x.ChatRoomId,
                     NodeChild = x.ChatRoom.ChatChannels.Select(y=> new OutgoingChatItemChild{
                         InternalId = y.Id,
                         // NodeId = i++,
@@ -106,13 +140,42 @@ namespace Rokono_Control.DatabaseHandlers
                         ChannelType = y.ChannelType.Value,
                         IconCss = "icon-circle-thin icon",
                         Link = "",
-                        ParentId = x.Id
+                        ParentId = x.ChatRoomId
                     }).ToList()
                 };
-                
-                result.Add(cItem);
+             
+                    result.Add(cItem);
             });
             return result;
+        }
+
+        internal void InserTag(IncomingChatRoomRights request)
+        {
+            request.Id = 0;
+            var chatRoom = Context.ChatRoomRights.Add(new ChatRoomRights{
+                RightName = request.RightName,
+                Background = request.Background,
+                Foreground = request.Foreground,
+                PojectId = request.ProjectId
+            });
+            Context.SaveChanges();
+
+            Context.AssociatedChatRoomRights.Add(new AssociatedChatRoomRights{
+                    RightId = chatRoom.Entity.Id,
+                    ChatRoomId = request.ChatRoomId
+            });
+            Context.SaveChanges();
+        }
+
+        internal void UpdateTag(IncomingChatRoomRights request)
+        {
+            var tag = Context.ChatRoomRights.FirstOrDefault(x=>x.Id == request.Id);
+            tag.Foreground = request.Foreground;
+            tag.Background = request.Background;
+            tag.RightName = request.RightName;
+            Context.Attach(tag);
+            Context.Update(tag);
+            Context.SaveChanges();
         }
 
         internal void RemoveUserTag(int tagId, int userId, int projectId)
@@ -188,9 +251,15 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal void AddNewChatChannel(IncomingIdRequest request)
         {
-            Context.ChatRooms.Add(new ChatRooms{
+            var chatRoom = Context.ChatRooms.Add(new ChatRooms{
                 ProjectId = request.Id,
                 RoomName = request.Phase
+            });
+            Context.SaveChanges();
+            var ownerRight = Context.ChatRoomRights.FirstOrDefault(x=>x.PojectId == request.Id);  
+            Context.AssociatedChatRoomRights.Add(new AssociatedChatRoomRights{
+                ChatRoomId = chatRoom.Entity.Id,
+                RightId = ownerRight.Id
             });
             Context.SaveChanges();
         }

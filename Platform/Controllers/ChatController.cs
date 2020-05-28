@@ -20,20 +20,44 @@ namespace Platform.Controllers
             Configuration = config;
         }
 
-
+        
         [HttpPost]
-        public List<OutgoingChatItem> GetChatChannels([FromBody] IncomingIdRequest request)
+        public List<ChatRoomRights> GetChatRoomRights([FromBody] IncomingIdRequest request)
+        {
+            var result = new List<ChatRoomRights>();
+            var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var id = int.Parse(user.Value);
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                result = context.GetChatRoomRights(request.Id);
+            }
+            return result;
+        }
+        
+        [HttpPost]
+        public List<ChatRooms> GetChatChannels([FromBody] IncomingIdRequest request)
+        {
+            var result = new List<ChatRooms>();
+            var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var id = int.Parse(user.Value);
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                result = context.GetAllChatChannels(request.Id);
+            }
+            return result;
+        }
+        [HttpPost]
+        public List<OutgoingChatItem> GetChatChannelsNavigation([FromBody] IncomingIdRequest request)
         {
             var result = new List<OutgoingChatItem>();
             var user =  Request.HttpContext.User.Claims.ElementAt(1);
             var id = int.Parse(user.Value);
             using(var context = new DatabaseController(Context, Configuration))
             {
-                result = context.GetChatChannels(request.Id,id);
+                result = context.GetChatChannels(request.Id, id);
             }
             return result;
-        }
-
+    }
         [HttpPost]
         public List<OutgoingChatItem> AddNewCategory([FromBody] IncomingIdRequest request)
         {
@@ -91,7 +115,7 @@ namespace Platform.Controllers
         }
 
         [HttpPost]
-        public OkResult DeleteUserTag([FromBody] IncomingIdRequest request)
+        public OutgoingJsonData DeleteUserTag([FromBody] IncomingIdRequest request)
         {
              var user =  Request.HttpContext.User.Claims.ElementAt(1);
             var id = int.Parse(user.Value);
@@ -99,9 +123,32 @@ namespace Platform.Controllers
             {
                 context.RemoveUserTag(request.Id, request.UserId, request.ProjectId);
             }
-            return Ok();
+            return new OutgoingJsonData{ Data = "Ok"};
         }
 
+        [HttpPost]
+        public OutgoingJsonData TagUpdate([FromBody] IncomingChatRoomRights request)
+        {
+             var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var id = int.Parse(user.Value);
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                
+                context.UpdateTag(request);
+            }
+            return new OutgoingJsonData{ Data = "Ok"};
+        }
+        [HttpPost]
+        public OutgoingJsonData TagSave([FromBody] IncomingChatRoomRights request)
+        {
+             var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var id = int.Parse(user.Value);
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                context.InserTag(request);
+            }
+            return new OutgoingJsonData{ Data = "Ok"};
+        }
         [HttpGet]
         public IActionResult GetChatRoom(int id, int projectId) 
         {
@@ -136,6 +183,40 @@ namespace Platform.Controllers
         {
             return ViewComponent("UserList", projectId);
         }
+        [HttpGet]
+        public IActionResult GetChatSettings(int id, int chatRoom) 
+        {
+            return ViewComponent("ChatSettings", new IncomingIdRequest{
+                ProjectId =id,
+                Id = chatRoom
+            });
+        }
+
+        [HttpGet]
+        public IActionResult GetChatRoomSettings(int id, int chatRoom) 
+        {
+            return ViewComponent("ChatRoomSetting", new IncomingIdRequest{
+                ProjectId =id,
+                Id = chatRoom
+            });
+        }
+
         
+        
+        [HttpGet]
+        public IActionResult GetTagProperties(int id, int projectId, int option, int chatRoom) 
+        {
+            return ViewComponent("GetTagProperties", new IncomingIdRequest{
+                Id = id,
+                ProjectId = projectId,
+                WorkItemType = option,
+                UserId = chatRoom
+            });
+        }
+         [HttpGet]
+        public IActionResult LoadChatControl(int projectId) 
+        {
+            return ViewComponent("ChatSidebar", projectId);
+        }
     }
 }

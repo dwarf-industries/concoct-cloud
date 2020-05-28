@@ -1,0 +1,135 @@
+@{
+    var Tag = ViewData["Tag"]  as ChatRoomRights;
+    var CallingOption = ViewData["FormOption"] as int?;
+    var ChatRoom = ViewData["ChatRoom"] as int?;
+    var ProjectId = ViewData["ProjectId"] as int?;
+}
+
+<style>
+.ChipTag{
+    border-radius: 15px;
+    padding: 4px;
+  }
+ .ChipTag:hover{
+    border-radius: 15px;
+    padding: 4px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
+ }
+
+</style>
+<div class="row">
+    <input id="TagNameInput" onkeyup="TagNameInputUpdated()" />
+</div>
+<div class="row">
+    <div id="picker" class="col-md-6">
+        <h4 style="text-align: center;">Foreground Color</h4>
+        <input id="Fp" type="color">
+    </div>
+    <div id="picker" class="col-md-6">
+        <h4 style="text-align: center;">Background Color</h4>
+        <input id="Bp" type="color">
+    </div>
+</div>
+<div class="row" style="text-align: center;">
+    <h4>Preview</h4>
+    @if(Tag != null) 
+    {
+        <span class="ChipTag"  style="background-color: @Tag.Background; color:@Tag.Foreground" id="Tag"> @Tag.RightName <span class="ChipCloseBtn" ></span></span>
+    }
+    else
+    {
+        <span class="ChipTag"  style="background-color: red; color:white" id="Tag"> Example Tag <span class="ChipCloseBtn" ></span></span>
+    }
+</div>
+
+<div class="row" style="display: block ruby; padding:2%;"> 
+    <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;text-align: center; " onclick="SaveTagItemChanges()">Save</button>
+    <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;text-align: center;" onclick="CancelTagItemChanges()">Cancel</button>
+</div>
+
+<script>
+
+    var method;
+    var Foreground;
+    var Background;
+    var Option = "@CallingOption";
+    if(Option === "1")
+    {
+        method = "TagUpdate";
+    }   
+    else
+    {
+        method = "TagSave";
+    }
+    var TagNameInput = new ej.inputs.TextBox({
+        placeholder: "Name your badge",
+        floatLabelType: 'Auto'
+    });
+    TagNameInput.appendTo('#TagNameInput');
+
+    var defaultObj = new ej.inputs.ColorPicker({
+        mode: 'Picker',
+        modeSwitcher: false,
+        inline: true,
+        showButtons: false,
+        change: ChangeFp
+    });
+    defaultObj.appendTo('#Fp');
+
+    var Bp = new ej.inputs.ColorPicker({
+        mode: 'Picker',
+        modeSwitcher: false,
+        inline: true,
+        showButtons: false,
+        change: ChangeBp
+    });
+    Bp.appendTo('#Bp');
+
+    function SaveTagItemChanges()
+    {
+        var dto = {
+            "Id": @Tag.Id,
+            "Foreground" : Foreground,
+            "Background" : Background,
+            "RightName" : $("#TagNameInput").val(),
+            "ProjectId" : @ProjectId,
+            "ChatRoomId" : @ChatRoom
+        }
+
+        $.ajax({
+                type: 'POST',
+                url: '/Chat/'+method,
+                data: JSON.stringify(dto),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                
+                success: function (response) {
+                    $("#LoadedChatRoomSetting").html("");
+                    $("#LoadedChatRoomSetting").load("/Chat/GetChatRoomSettings?chatRoom="+@ChatRoom+"&&id="+@ProjectId);
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+        });
+    }    
+
+    function CancelTagItemChanges()
+    {
+        $("#TagSettingProperties").html("");
+    }
+
+    function ChangeFp(args)
+    {
+        Foreground = args.value;
+        $('#Tag').css('color', args.value);
+    }
+    function ChangeBp(args)
+    {
+        Background = args.value;
+        $('#Tag').css('background-color', args.value);
+    }
+    function TagNameInputUpdated()
+    {
+        $("#Tag").html($("#TagNameInput").val());
+    }
+</script>

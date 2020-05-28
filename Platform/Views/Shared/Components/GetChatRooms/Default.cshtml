@@ -1,0 +1,52 @@
+
+@{
+    var ProjectId = ViewData["ProjectId"] as int?;
+}
+<div class="control-section" style="height: 86vh;">
+    <div class="content-wrapper">
+        <div id="ChatRoomsSettingGrid">
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+
+    var dto = {
+        "Id": @ProjectId,
+     }
+
+    $.ajax({
+            type: 'POST',
+            url: '/Chat/GetChatChannels',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            
+            success: function (response) {
+               InitializeChatRoomSettingGrid(response);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+    });
+    function InitializeChatRoomSettingGrid(data)
+    {
+        var ChatRoomsSettingGrid = new ej.grids.Grid({
+            dataSource: data,
+            rowSelected: CatRoomEditTagSelected,
+            columns: [
+                { field: 'roomName', headerText: 'Char Room Name', width: 120, textAlign: 'Right' },
+            ]
+        });
+        ChatRoomsSettingGrid.appendTo('#ChatRoomsSettingGrid');
+    }
+
+    function CatRoomEditTagSelected(args)
+    {
+        console.log(args.data.id);
+        $("#LoadedChatRoomSetting").load("/Chat/GetChatRoomSettings?chatRoom="+args.data.id+"&&id="+@ProjectId);
+
+     }
+</script>

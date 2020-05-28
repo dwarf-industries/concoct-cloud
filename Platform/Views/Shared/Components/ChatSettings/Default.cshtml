@@ -1,0 +1,38 @@
+@{
+    var ProjectId = ViewData["ProjectId"] as int?;
+    var User = ViewData["User"] as int?;
+    var DefaultChatRoom = ViewData["DefaultChatRoom"] as int?;
+}
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            @await Component.InvokeAsync("GetChatRooms", @ProjectId)
+
+        </div>
+        <div class="col-md-4" id="LoadedChatRoomSetting">
+            @await Component.InvokeAsync("ChatRoomSetting", new IncomingIdRequest{
+                Id = 0,
+                ProjectId = @ProjectId.Value
+
+            })
+
+        </div>
+        <div class="col-md-4" id="TagSettingProperties">
+            @* @await Component.InvokeAsync("RoleSettings", @ProjectId) *@
+        </div>
+    </div>
+    <div class="row">
+        <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="CloseChatSettings(@ProjectId)">Close Chat Settings</button>
+    </div>
+</div>
+
+<script>
+    function CloseChatSettings(id)
+    {
+        $("#ChatElement").html("");
+        $("#ChatElement").load("/Chat/LoadChatControl?projectId="+id);
+    }
+</script>

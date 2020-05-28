@@ -14,6 +14,8 @@ namespace Rokono_Control.Models
         public int Id { get; set; }
         public string RightName { get; set; }
         public int? PojectId { get; set; }
+        public string Background { get; set; }
+        public string Foreground { get; set; }
 
         public virtual Projects Poject { get; set; }
         public virtual ICollection<AssociatedChatRoomRights> AssociatedChatRoomRights { get; set; }
