@@ -29,6 +29,7 @@ namespace Platform.ViewComponents
                 ViewData["ProjectId"] = projectId;
                 ViewData["GetDefaultActiveRoom"] = context.GetDefaultProjectChannel(projectId); 
                 ViewData["ProjectChatRights"] = context.GetProjectChatRights(projectId);
+                ViewData["GetChatRights"] = context.GetUserRights(Id,projectId);
             }
             return View();
         }

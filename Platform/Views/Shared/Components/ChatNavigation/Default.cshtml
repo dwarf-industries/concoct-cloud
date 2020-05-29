@@ -2,6 +2,8 @@
     var ProjectId = ViewData["ProjectId"] as int?;
     var defaultIteration = ViewData["DefaultIteration"] as int?;
     var CurrentUser = ViewData["User"];
+    var UserRights = ViewData["GetChatRights"]as UserRights;
+
 }
 
 <style>
@@ -99,7 +101,8 @@
 </div>
 
 
-
+@if(@UserRights.ChatChannelsRule == 1)
+{
 <script id="chatRowTemplate" type="text/x-template" >
 <tr>
     <td>
@@ -122,7 +125,30 @@
     </td>
 </tr>
 </script>
-
+}
+else
+{
+<script id="chatRowTemplate" type="text/x-template" >
+<tr>
+    <td>
+     ${if(isParent)}
+        <div class="nodetextHeading">
+            <div class="row" style="padding:5px; margin:0;" >
+                <div class="col-md-12">
+                    <span class="CategoryIcon"></span><span class="ChatTreeMainText">${nodeText}</span>
+                </div>
+                
+            </div>
+        </div>   
+    ${else}
+        <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId})">
+            <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>
+        </div>
+    ${/if}
+    </td>
+</tr>
+</script>
+}
 
 <script>
 

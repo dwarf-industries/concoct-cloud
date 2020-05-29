@@ -4,6 +4,7 @@
     var UserId = ViewData["UserId"] as int?;
     var UserRights = ViewData["UserRights"] as List<ChatRoomRights>;
     var ProjectId = ViewData["ProjectId"] as int?;
+    var AdministrativeRights = ViewData["ProjectRight"] as UserRights;
 }
 
 <style>
@@ -46,13 +47,23 @@
 <div class="row">
     <input id="@InputName"  style="margin: 5px;"/>
 </div>
+@if(AdministrativeRights.ChatChannelsRule == 1)
+{
 <div class="row" style="text-align: center;">
     <span class="AddNewRoleTag" onclick="OpenChatAssignRights(@UserId)">New Role</span>
 </div>
+}
 <div class="row" style="padding: 15px;" id="ActiveTags">
     @foreach (var right in UserRights)
     {
-        <span class="ChipTag" id="Tag_@right.Id">@right.RightName <span onclick="DeletingTag(@right.Id)" class="ChipCloseBtn" ></span></span>
+        @if(AdministrativeRights.ChatChannelsRule == 1)
+        {
+            <span class="ChipTag" id="Tag_@right.Id">@right.RightName <span onclick="DeletingTag(@right.Id)" class="ChipCloseBtn" ></span></span>
+        }
+        else
+        {
+            <span class="ChipTag" id="Tag_@right.Id">@right.RightName</span>
+        }
     }
      
 

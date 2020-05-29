@@ -25,10 +25,8 @@ namespace Platform.ViewComponents
             var Id = int.Parse(user.Value);
             using(var context = new DatabaseController(Context,Configuration))
             {
-                var rights = context.GetUserRights(request.Id, request.ProjectId);
-                if(rights != null)
-                    ViewData["UserAdministrativeRights"] = rights.ChatChannelsRule == 1 ? true :false;
-
+                var rights = context.GetUserRights(Id, request.ProjectId);
+                ViewData["ProjectRight"] = rights;
                 ViewData["ProjectId"] = request.ProjectId;
                 ViewData["UserRights"] = context.GetUserChatRights(request.Id, request.ProjectId);
                 ViewData["UserId"] = request.Id;

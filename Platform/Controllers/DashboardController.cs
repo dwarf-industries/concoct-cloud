@@ -3,6 +3,11 @@ namespace Rokono_Control.Controllers
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
@@ -16,6 +21,7 @@ namespace Rokono_Control.Controllers
     {
         RokonoControlContext Context;
         IConfiguration Configuration;
+
         public DashboardController(RokonoControlContext context, IConfiguration config)
         {
             Context = context;
@@ -183,15 +189,20 @@ namespace Rokono_Control.Controllers
         }
 
 
-        public IActionResult ProjectDashboard(int id)
+        public async Task<IActionResult> ProjectDashboardAsync(int id)
         {
             var currentUser = this.User;
             var currentUserId = currentUser.Claims.ElementAt(1);
             using (var context = new DatabaseController(Context,Configuration))
             {
+                await RemovePastProjectClaimsAsync();
+
                 var project = context.GetProjectData(id);
                 var initials = project.ProjectName.ToUpper().Substring(0, 2);
                 var currentId = int.Parse(currentUserId.Value);
+                var userRight = context.GetUserRights(currentId, id);
+
+                await UpdateUserRightClaiimsAsync(userRight, project.ProjectTitle);
 
                 ViewData["Project"] = project;
                 ViewData["ProjectMembers"] = context.GetProjectMembers(id);
@@ -202,11 +213,60 @@ namespace Rokono_Control.Controllers
                 ViewData["WorkItemsActive"] = context.GetWorkItemCountByType(id, 2);
                 ViewData["WorkItemsTesting"] = context.GetWorkItemCountByType(id, 3);
                 ViewData["WorkItemsCompleated"] = context.GetWorkItemCountByType(id, 4);
-                 
 
             }
-           
+
             return View();
+        }
+
+        private async Task  UpdateUserRightClaiimsAsync(UserRights userRight, string projectName)
+        {
+            var principal = HttpContext.User;
+            var list = new List<Claim>();
+            if (userRight.ChatChannelsRule == 1)
+                list.Add(new Claim(ClaimTypes.Role, "ChatAdministrator"));
+            if (userRight.ManageIterations == 1)
+                list.Add(new Claim(ClaimTypes.Role, "IterationManager"));
+            if (userRight.ManageUserdays == 1)
+                list.Add(new Claim(ClaimTypes.Role, "UserDays"));
+            if (userRight.UpdateUserRights == 1)
+                list.Add(new Claim(ClaimTypes.Role, "UpdateUserRights"));
+            list.ForEach(x=>{
+                principal.Identities.FirstOrDefault().AddClaim(x);
+            });
+            var authProperties = new AuthenticationProperties
+                {
+                    AllowRefresh = true,
+                    ExpiresUtc = DateTimeOffset.Now.AddDays(1),
+                    IsPersistent = true,
+                };
+
+            await HttpContext.SignOutAsync();
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
+         }  
+
+        private async Task RemovePastProjectClaimsAsync()
+        {
+            var identity = this.User.Identity as ClaimsIdentity;
+            var principal =this.User;
+            if (identity.TryRemoveClaim(identity.Claims.FirstOrDefault(x => x.Value == "ChatAdministrator")))
+                principal.Claims.ToList().Remove(identity.Claims.FirstOrDefault(x => x.Value == "ChatAdministrator"));
+            if (identity.TryRemoveClaim(identity.Claims.FirstOrDefault(x => x.Value == "IterationManager")))
+                principal.Claims.ToList().Remove(identity.Claims.FirstOrDefault(x => x.Value == "IterationManager"));
+            if (identity.TryRemoveClaim(identity.Claims.FirstOrDefault(x => x.Value == "UserDays")))
+                principal.Claims.ToList().Remove(identity.Claims.FirstOrDefault(x => x.Value == "UserDays"));
+            if (identity.TryRemoveClaim(identity.Claims.FirstOrDefault(x => x.Value == "UpdateUserRights")))
+                principal.Claims.ToList().Remove(identity.Claims.FirstOrDefault(x => x.Value == "UpdateUserRights"));
+
+             var authProperties = new AuthenticationProperties
+                {
+                    AllowRefresh = true,
+                    ExpiresUtc = DateTimeOffset.Now.AddDays(1),
+                    IsPersistent = true,
+                };
+
+            await HttpContext.SignOutAsync();
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
         }
 
         public IActionResult WorkItems(int projectId, int boardId)

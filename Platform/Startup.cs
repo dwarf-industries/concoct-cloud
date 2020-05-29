@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Platform.DataHandlers;
 using Platform.Hubs;
 using Rokono_Control.Models;
 using RokonoControl;
@@ -72,10 +73,9 @@ namespace Rokono_Control
             app.UseStaticFiles();
           
 
-             app.UseRouting();
+            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();          
-
             app.UseEndpoints(endpoint =>
             {
                 endpoint.MapHub<MessageHub>("/messageHub");

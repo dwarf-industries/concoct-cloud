@@ -4,6 +4,7 @@
     var Username =  ViewData["Username"] as string;
     var ActiveRoom = ViewData["GetDefaultActiveRoom"] as int?;
     var ProjectChatRights = ViewData["ProjectChatRights"] as List<ChatRoomRights>;
+    var UserRights = ViewData["GetChatRights"]as UserRights;
 }
 
 
@@ -25,9 +26,12 @@
 <aside id="sidebar-chatview" style="overflow-x:hidden;">
     <div class="main-menu" style="position: relative;">
         <div class="table-content" style="padding:0;height: 86vh;max-height: 86vh;">
-            <div class="row">
-                   <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="OpenNewCategoryModal()" id="OpenNewCategoryModal">Add new Category</button>
-            </div>
+            @if(@UserRights.ChatChannelsRule == 1)
+            {
+                <div class="row">
+                    <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="OpenNewCategoryModal()" id="OpenNewCategoryModal">Add new Category</button>
+                </div>
+            }
             <div class="row SideBarRow" style="text-align: center;">
                 @await Component.InvokeAsync("SelectProject", @ProjectId)
             </div>
@@ -53,9 +57,12 @@
                         <div class="col-md-2">
                             <span class="HeadPhones"></span>
                         </div>
-                        <div class="col-md-2">
-                            <span class="SettingsIcon" onclick="OpenProjectChatSettingsPage(@ProjectId)"></span>
-                        </div>
+                        @if(@UserRights.ChatChannelsRule == 1)
+                        {
+                            <div class="col-md-2">
+                                <span class="SettingsIcon" onclick="OpenProjectChatSettingsPage(@ProjectId)"></span>
+                            </div>
+                        }
                     </div>
                 </div>
 
@@ -315,7 +322,8 @@ function AssignUserTag(Id)
      var messagesDto = {
          "ProjectId": @ProjectId,
          "Id": Id,
-         "UserId": ActiveQueryUser
+         "UserId": ActiveQueryUser,
+         "__RequestVerificationToken" :gettoken()
     }
 
     $.ajax({
@@ -336,6 +344,8 @@ function AssignUserTag(Id)
     });
     var dto = {
         "Id": @ProjectId,
+        "__RequestVerificationToken" :gettoken()
+
      }
 
     $.ajax({

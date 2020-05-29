@@ -17,8 +17,7 @@
     
 </head>
 <body>
- 
-    <div class="stackblitz-container material">
+     <div class="stackblitz-container material">
         <div class="control-section">
 
             <!-- sample level element  -->
@@ -98,7 +97,7 @@
     </div>
 
 <script>
-  
+
     var IsOpen = 0;
     
     var data;
@@ -151,6 +150,12 @@
         }
         IsOpen = val;
     }
+
+    function gettoken() {
+        var token = '@Html.AntiForgeryToken()';
+        token = $(token).val();
+        return token;
+   }
 </script>
 
 </body>

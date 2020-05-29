@@ -1337,7 +1337,11 @@ namespace Rokono_Control.DatabaseHandlers
                           .LastOrDefault();
             if(rights != null)
                 return rights.Rights;
-
+            rights =  Context.AssociatedProjectMemberRights
+                        .Include(x=>x.Rights)
+                        .FirstOrDefault(x=>x.ProjectId == projectId && x.UserAccountId == id);
+             if(rights != null)
+                return rights.Rights;
             return null;
         }
 

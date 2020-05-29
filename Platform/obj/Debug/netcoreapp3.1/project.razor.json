@@ -18016,6 +18016,104 @@
       },
       {
         "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__ChatRoomSettingViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:chat-room-setting",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "request",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "request",
+            "TypeName": "Rokono_Control.Models.IncomingIdRequest",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "request"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__ChatRoomSettingViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "ChatRoomSetting"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__ChatSettingsViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:chat-settings",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "request",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "request",
+            "TypeName": "Rokono_Control.Models.IncomingIdRequest",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "request"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__ChatSettingsViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "ChatSettings"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
         "Name": "__Generated__ChatSidebarViewComponentTagHelper",
         "AssemblyName": "Rokono Control",
         "Documentation": null,
@@ -18159,6 +18257,104 @@
           "Runtime.Name": "ITagHelper",
           "Common.TypeName": "__Generated__ChatWIndowViewComponentTagHelper",
           "MVC.ViewComponent.Name": "ChatWIndow"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__GetChatRoomsViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:get-chat-rooms",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "project-id",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "project-id",
+            "TypeName": "System.Int32",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "projectId"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__GetChatRoomsViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "GetChatRooms"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__GetTagPropertiesViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:get-tag-properties",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "request",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "request",
+            "TypeName": "Rokono_Control.Models.IncomingIdRequest",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "request"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__GetTagPropertiesViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "GetTagProperties"
         }
       },
       {
@@ -18894,202 +19090,6 @@
           "Runtime.Name": "ITagHelper",
           "Common.TypeName": "__Generated__UserSettingsViewComponentTagHelper",
           "MVC.ViewComponent.Name": "UserSettings"
-        }
-      },
-      {
-        "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__ChatSettingsViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "Documentation": null,
-        "TagOutputHint": null,
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:chat-settings",
-            "ParentTag": null,
-            "TagStructure": 0,
-            "Attributes": [
-              {
-                "Name": "request",
-                "NameComparison": 0,
-                "Value": null,
-                "ValueComparison": 0,
-                "Diagnostics": [],
-                "Metadata": {}
-              }
-            ],
-            "Diagnostics": []
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "request",
-            "TypeName": "Rokono_Control.Models.IncomingIdRequest",
-            "IsEnum": false,
-            "IndexerNamePrefix": null,
-            "IndexerTypeName": null,
-            "Documentation": null,
-            "Diagnostics": [],
-            "Metadata": {
-              "Common.PropertyName": "request"
-            },
-            "BoundAttributeParameters": []
-          }
-        ],
-        "AllowedChildTags": [],
-        "Diagnostics": [],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__ChatSettingsViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "ChatSettings"
-        }
-      },
-      {
-        "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__GetChatRoomsViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "Documentation": null,
-        "TagOutputHint": null,
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:get-chat-rooms",
-            "ParentTag": null,
-            "TagStructure": 0,
-            "Attributes": [
-              {
-                "Name": "project-id",
-                "NameComparison": 0,
-                "Value": null,
-                "ValueComparison": 0,
-                "Diagnostics": [],
-                "Metadata": {}
-              }
-            ],
-            "Diagnostics": []
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "project-id",
-            "TypeName": "System.Int32",
-            "IsEnum": false,
-            "IndexerNamePrefix": null,
-            "IndexerTypeName": null,
-            "Documentation": null,
-            "Diagnostics": [],
-            "Metadata": {
-              "Common.PropertyName": "projectId"
-            },
-            "BoundAttributeParameters": []
-          }
-        ],
-        "AllowedChildTags": [],
-        "Diagnostics": [],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__GetChatRoomsViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "GetChatRooms"
-        }
-      },
-      {
-        "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__ChatRoomSettingViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "Documentation": null,
-        "TagOutputHint": null,
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:chat-room-setting",
-            "ParentTag": null,
-            "TagStructure": 0,
-            "Attributes": [
-              {
-                "Name": "request",
-                "NameComparison": 0,
-                "Value": null,
-                "ValueComparison": 0,
-                "Diagnostics": [],
-                "Metadata": {}
-              }
-            ],
-            "Diagnostics": []
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "request",
-            "TypeName": "Rokono_Control.Models.IncomingIdRequest",
-            "IsEnum": false,
-            "IndexerNamePrefix": null,
-            "IndexerTypeName": null,
-            "Documentation": null,
-            "Diagnostics": [],
-            "Metadata": {
-              "Common.PropertyName": "request"
-            },
-            "BoundAttributeParameters": []
-          }
-        ],
-        "AllowedChildTags": [],
-        "Diagnostics": [],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__ChatRoomSettingViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "ChatRoomSetting"
-        }
-      },
-      {
-        "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__GetTagPropertiesViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "Documentation": null,
-        "TagOutputHint": null,
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:get-tag-properties",
-            "ParentTag": null,
-            "TagStructure": 0,
-            "Attributes": [
-              {
-                "Name": "request",
-                "NameComparison": 0,
-                "Value": null,
-                "ValueComparison": 0,
-                "Diagnostics": [],
-                "Metadata": {}
-              }
-            ],
-            "Diagnostics": []
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "request",
-            "TypeName": "Rokono_Control.Models.IncomingIdRequest",
-            "IsEnum": false,
-            "IndexerNamePrefix": null,
-            "IndexerTypeName": null,
-            "Documentation": null,
-            "Diagnostics": [],
-            "Metadata": {
-              "Common.PropertyName": "request"
-            },
-            "BoundAttributeParameters": []
-          }
-        ],
-        "AllowedChildTags": [],
-        "Diagnostics": [],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__GetTagPropertiesViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "GetTagProperties"
         }
       },
       {

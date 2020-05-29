@@ -82,13 +82,12 @@ namespace Rokono_Control.Controllers
                 if (result != null)
                 {
                     jsonrResult = Json("Success");
-
-
                     var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
                     identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, result.Email));
                     identity.AddClaim(new Claim(ClaimTypes.Actor, result.Id.ToString()));
                     identity.AddClaim(new Claim(ClaimTypes.Email, result.ProjectRights.Value.ToString()));
                     identity.AddClaim(new Claim(ClaimTypes.Role, "User"));
+
 
                     // identity.AddClaim(new Claim(ClaimTypes.Name,  result.FirstName));
                     // identity.AddClaim(new Claim(ClaimTypes.Role, "User"));
