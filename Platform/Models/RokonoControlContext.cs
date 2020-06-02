@@ -22,6 +22,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedChatChannelMessages> AssociatedChatChannelMessages { get; set; }
         public virtual DbSet<AssociatedChatRoomRights> AssociatedChatRoomRights { get; set; }
         public virtual DbSet<AssociatedCommitFiles> AssociatedCommitFiles { get; set; }
+        public virtual DbSet<AssociatedDocumentationCategoryPage> AssociatedDocumentationCategoryPage { get; set; }
         public virtual DbSet<AssociatedProjectApiKeys> AssociatedProjectApiKeys { get; set; }
         public virtual DbSet<AssociatedProjectBoards> AssociatedProjectBoards { get; set; }
         public virtual DbSet<AssociatedProjectBuilds> AssociatedProjectBuilds { get; set; }
@@ -50,8 +51,9 @@ namespace Rokono_Control.Models
         public virtual DbSet<ChatRoomRights> ChatRoomRights { get; set; }
         public virtual DbSet<ChatRooms> ChatRooms { get; set; }
         public virtual DbSet<Commits> Commits { get; set; }
-        public virtual DbSet<DocumentationArea> DocumentationArea { get; set; }
+        public virtual DbSet<Documentation> Documentation { get; set; }
         public virtual DbSet<DocumentationCategory> DocumentationCategory { get; set; }
+        public virtual DbSet<DocumentationCategoryField> DocumentationCategoryField { get; set; }
         public virtual DbSet<Efforts> Efforts { get; set; }
         public virtual DbSet<FileTypes> FileTypes { get; set; }
         public virtual DbSet<Files> Files { get; set; }
@@ -80,7 +82,14 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
 
- 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=192.168.0.101;Database=RokonoControl;User ID=Kristifor;Password='::@Drakon87Katil';");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -186,6 +195,14 @@ namespace Rokono_Control.Models
                     .WithMany(p => p.AssociatedCommitFiles)
                     .HasForeignKey(d => d.FileId)
                     .HasConstraintName("FK__Associate__FileI__73852659");
+            });
+
+            modelBuilder.Entity<AssociatedDocumentationCategoryPage>(entity =>
+            {
+                entity.HasOne(d => d.CategoryFieldNavigation)
+                    .WithMany(p => p.AssociatedDocumentationCategoryPage)
+                    .HasForeignKey(d => d.CategoryField)
+                    .HasConstraintName("FK__Associate__Categ__1C1D2798");
             });
 
             modelBuilder.Entity<AssociatedProjectApiKeys>(entity =>
@@ -579,30 +596,32 @@ namespace Rokono_Control.Models
                 entity.Property(e => e.DateOfCommit).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<DocumentationArea>(entity =>
+            modelBuilder.Entity<Documentation>(entity =>
             {
-                entity.Property(e => e.AreaName)
-                    .IsRequired()
-                    .HasMaxLength(555)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.DocumentationArea)
-                    .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__Documenta__Categ__5D2BD0E6");
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.Documentation)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK__Documenta__Proje__1940BAED");
             });
 
             modelBuilder.Entity<DocumentationCategory>(entity =>
             {
-                entity.Property(e => e.CategoryName)
-                    .IsRequired()
-                    .HasMaxLength(555)
-                    .IsUnicode(false);
+                entity.Property(e => e.CategoryName).HasMaxLength(300);
 
-                entity.HasOne(d => d.Project)
+                entity.HasOne(d => d.Documentation)
                     .WithMany(p => p.DocumentationCategory)
-                    .HasForeignKey(d => d.ProjectId)
-                    .HasConstraintName("FK__Documenta__Proje__5C37ACAD");
+                    .HasForeignKey(d => d.DocumentationId)
+                    .HasConstraintName("FK__Documenta__Docum__1A34DF26");
+            });
+
+            modelBuilder.Entity<DocumentationCategoryField>(entity =>
+            {
+                entity.Property(e => e.PageName).HasMaxLength(300);
+
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.DocumentationCategoryField)
+                    .HasForeignKey(d => d.CategoryId)
+                    .HasConstraintName("FK__Documenta__Categ__1B29035F");
             });
 
             modelBuilder.Entity<Efforts>(entity =>

@@ -1,0 +1,93 @@
+@{
+    var ProjectId = ViewData["ProjectId"] as int?;
+}
+
+<style>
+    #DocumentationAddNewCategory{
+        max-height:175px !important; 
+    }
+    .InlineFlex {
+        display: inline-flex;
+        width: 100%;
+        margin: 0;
+    }
+</style>
+
+<div class="row">
+    <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="OpenNewCategoryModal()" id="OpenNewCategoryModal">Add new Category</button>
+</div>
+<div id="DocumentationAddNewCategory"  >
+    <div class="row">
+            <input id="InputNewChatCategory" />
+    </div>
+    <div class="row InlineFlex">
+        <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="SaveNewChatCategory()">Submit</button>
+        <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="CloseNewCategoryModal()">Cancel</button>
+    </div>
+
+</div>
+
+
+<script>
+//end of Sidebar initialization
+var DocumentationAddNewCategoryModal;
+
+
+DocumentationAddNewCategoryModal = new ej.popups.Dialog({
+    width: '600px',
+    height: '175px',
+    header: 'Name your new category',
+    isModal: true,
+    animationSettings: { effect: 'None' },
+    visible: false
+});
+DocumentationAddNewCategoryModal.appendTo('#DocumentationAddNewCategory');
+
+DocumentationAddNewCategoryModal.hide();
+var InputNewChatCategory = new ej.inputs.TextBox({
+    placeholder: 'Category Name',
+    floatLabelType: 'Auto'
+});
+InputNewChatCategory.appendTo('#InputNewChatCategory');
+function OpenNewCategoryModal(){
+    DocumentationAddNewCategoryModal.show();
+}
+function CloseNewCategoryModal()
+{
+    DocumentationAddNewCategoryModal.hide();
+
+}
+
+
+function SaveNewChatCategory()
+{
+    var messagesDto = {
+        "Id": @ProjectId,
+        "Phase" : $("#InputNewChatCategory").val()
+    }
+    console.log(messagesDto);
+    console.log($("#InputNewChatCategory").val());
+    if($("#InputNewChatCategory").val())
+    {
+
+        $.ajax({
+                type: 'POST',
+                url: '/Documentation/AddNewCategory',
+                data: JSON.stringify(messagesDto),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                
+                success: function (response) {
+                    InitializeChatItems(response);
+                    CloseNewCategoryModal();
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+        });
+    }
+    else
+        ShowAlert("Input field Category Name must contain a value!!!");
+
+}
+</script>

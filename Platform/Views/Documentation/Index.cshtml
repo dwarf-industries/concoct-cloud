@@ -1,0 +1,23 @@
+@{
+    Layout = "~/Views/Shared/_LayoutDocumentation.cshtml";
+}
+<div class="row">
+    <div class="col-md-9" id="BreadCrumbHolder">
+        
+    </div>
+    <div class="col-md-3">
+        <input id="InputSeatchDocumentation"  style="margin: 5px;"/>
+    </div>
+</div>
+<div class="row" id="DocumentationPageControl">
+
+</div>
+
+
+<script>
+var InputSeatchDocumentation = new ej.inputs.TextBox({
+    placeholder: "What's on your mind",
+    floatLabelType: 'Auto'
+});
+InputSeatchDocumentation.appendTo('#InputSeatchDocumentation');
+</script>

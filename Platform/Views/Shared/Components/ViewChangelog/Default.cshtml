@@ -1,0 +1,8 @@
+@{
+    var changelogData = ViewData["ChangelogDetails"] as Changelogs;
+}
+
+<div class="container">
+    @Html.Raw(changelogData.LogDetails);
+</div>
+

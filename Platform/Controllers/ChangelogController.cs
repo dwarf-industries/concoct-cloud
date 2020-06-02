@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Platform.DataHandlers;
@@ -36,13 +38,14 @@ namespace Platform.Controllers
         }
 
         [HttpPost]
+        [EnableCors("ApiPolicy")]
         public List<Changelogs> GetPublicChangelogs([FromBody] IncomingApiAuthenicationRequest request)
         {
             var result = new List<Changelogs>();
             using(var context = new DatabaseController(Context,Config))
             {
                 var autherizeReqiest = context.CheckApiCallCredentials(request);
-                if(context.CheckProjectAuthorizedFeature(autherizeReqiest, request.FeatureRequest))
+                if(autherizeReqiest != 0)
                     result = context.GetProjectChangelogs(autherizeReqiest);
             }
             return result;
@@ -95,6 +98,10 @@ namespace Platform.Controllers
             }
             return Json(new object());
         }
-        
+        [HttpGet]
+        public IActionResult GetChangelogById(int changelogId) 
+        {
+            return ViewComponent("ViewChangelog", changelogId);
+        }
     }
 }

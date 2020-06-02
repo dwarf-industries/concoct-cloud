@@ -32,6 +32,38 @@ namespace Rokono_Control.DatabaseHandlers
             return projectKey;
         }
 
+        internal List<OutgoingChatItem> GetDocumentationNavigation(int id)
+        {
+            var result = new List<OutgoingChatItem>();
+            Context.DocumentationCategory
+            .Include(x=>x.DocumentationCategoryField)
+            .Select(x=>x)
+            .Distinct()
+            .ToList().ForEach(x=>{
+                var cItem = new OutgoingChatItem
+                {     
+                    InternalId = x.DocumentationId.Value,
+                    // NodeId = i++,
+                    NodeText = x.CategoryName,
+                    IconCss = "icon-th icon",
+                    Link = "",
+                    ChannelType = 0,
+                    IsParent = true,
+                    ParentId = x.DocumentationId.Value,
+                    NodeChild = x.DocumentationCategoryField.Select(y=> new OutgoingChatItemChild{
+                        InternalId = y.Id,
+                        // NodeId = i++,
+                        NodeText = y.PageName,
+                        IconCss = "icon-circle-thin icon",
+                        Link = "",
+                        ParentId = x.DocumentationId.Value
+                    }).ToList()
+                };
+                result.Add(cItem);
+            });
+            return result;
+        }
+
         internal ChatRoomRights GetChatRightById(int tagId)
         {
             return Context.ChatRoomRights.FirstOrDefault(x=>x.Id == tagId);
@@ -448,7 +480,7 @@ namespace Rokono_Control.DatabaseHandlers
         internal int CheckApiCallCredentials(IncomingApiAuthenicationRequest request)
         {
             var checkEnabledFeature = Context.AssociatedProjectApiKeys.Include(x => x.Key)
-                                                                      .FirstOrDefault(x=>x.Key.SecretKey == request.PrivateSecret
+                                                                      .FirstOrDefault(x=>x.ApiSecret == request.PrivateSecret
                                                                                     && x.Key.FeatureName == request.FeatureRequest);
             if(checkEnabledFeature != null)
                 return checkEnabledFeature.ProjectId.Value;

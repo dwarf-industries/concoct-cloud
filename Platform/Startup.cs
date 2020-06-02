@@ -28,6 +28,7 @@ namespace Rokono_Control
 
         public IConfiguration Configuration;
 
+ 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -37,14 +38,16 @@ namespace Rokono_Control
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
+            services.AddCors(o => o.AddPolicy("ApiPolicy", builder =>
             {
-                builder
+                builder.AllowAnyOrigin()
                     .AllowAnyMethod()
-                    .AllowAnyHeader();
+                    .AllowAnyHeader()
+                    .WithOrigins("*")
+                    .AllowAnyOrigin();
             }));
             services.AddDbContext<RokonoControlContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("RokonoControlContext"))
+                options.UseSqlServer("Server=84.54.185.144;Database=RokonoControl;User ID=RGSOC;Password='EmkV3*eRjVbZ0!KpKlDHX';")
             );
             services.AddRazorPages();
             services.AddSignalR();
@@ -67,8 +70,6 @@ namespace Rokono_Control
             });
 
 
-            app.UseCors("CorsPolicy");
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
           
@@ -83,6 +84,8 @@ namespace Rokono_Control
                 endpoint.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 
             });
+            app.UseCors("ApiPolicy");
+
        }
     }
 }

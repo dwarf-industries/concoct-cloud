@@ -157,6 +157,7 @@
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ProjectDashboard.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/ProjectDetails.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Dashboard/WorkItems.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Documentation/Index.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Home/Error.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Home/Index.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Home/Privacy.cshtml.g.cs
@@ -169,6 +170,7 @@
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ChatSidebar/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ChatUserPersonaBox/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ChatWIndow/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Documentation/DocumentationNavigation/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/GetChatRooms/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/GetTagProperties/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/LoadedProjects/Default.cshtml.g.cs
@@ -186,10 +188,12 @@
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/SelectProject/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/UserList/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/UserSettings/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ViewChangelog/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Error.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_CookieConsentPartial.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutDashboard.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutDocumentation.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutProjects.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/_ViewImports.cshtml.g.cs
@@ -200,3 +204,4 @@
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.csproj.CopyComplete
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.dll
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.pdb
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Documentation/DocumentationCategory/Default.cshtml.g.cs

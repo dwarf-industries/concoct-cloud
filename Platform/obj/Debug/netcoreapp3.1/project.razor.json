@@ -19093,6 +19093,153 @@
         }
       },
       {
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__ViewChangelogViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:view-changelog",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "change-log-id",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "change-log-id",
+            "TypeName": "System.Int32",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "changeLogId"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__ViewChangelogViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "ViewChangelog"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__DocumentationNavigationViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:documentation-navigation",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "id",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "id",
+            "TypeName": "System.Int32",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "id"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__DocumentationNavigationViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "DocumentationNavigation"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__DocumentationCategoryViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:documentation-category",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "id",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "id",
+            "TypeName": "System.Int32",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "id"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__DocumentationCategoryViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "DocumentationCategory"
+        }
+      },
+      {
         "Kind": "Components.Bind",
         "Name": "Bind",
         "AssemblyName": "Microsoft.AspNetCore.Components",
@@ -21746,6 +21893,16 @@
   "RootNamespace": "Rokono_Control",
   "Documents": [
     {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/ViewChangelog/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\ViewChangelog\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Documentation/Index.cshtml",
+      "TargetPath": "Views\\Documentation\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Boards/ProjectBacklog.cshtml",
       "TargetPath": "Views\\Boards\\ProjectBacklog.cshtml",
       "FileKind": "mvc"
@@ -21821,6 +21978,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/_LayoutDocumentation.cshtml",
+      "TargetPath": "Views\\Shared\\_LayoutDocumentation.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Dashboard/ManageAccounts.cshtml",
       "TargetPath": "Views\\Dashboard\\ManageAccounts.cshtml",
       "FileKind": "mvc"
@@ -21843,6 +22005,11 @@
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/OutboundDetails/RelatedProject.cshtml",
       "TargetPath": "Views\\OutboundDetails\\RelatedProject.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Documentation/DocumentationNavigation/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Documentation\\DocumentationNavigation\\Default.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -22018,6 +22185,11 @@
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Commit/Index.cshtml",
       "TargetPath": "Views\\Commit\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Documentation/DocumentationCategory/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Documentation\\DocumentationCategory\\Default.cshtml",
       "FileKind": "mvc"
     },
     {

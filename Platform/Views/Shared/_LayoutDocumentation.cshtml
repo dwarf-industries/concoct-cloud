@@ -1,0 +1,106 @@
+@{
+    var ProjectId = ViewData["ProjectId"] as int?;
+}
+
+<!doctype html>
+<html>
+<head>
+<link href="~/css/Shared/_LayoutDashboard.css" rel="stylesheet" />
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
+    <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    
+</head>
+<body>
+    <style>
+    .SideBarRow{
+        text-align: center;
+        width: 100%;
+        padding: 2%;
+        margin: 0;
+    }
+    #main-text .sidebar-content{
+        padding:0px;
+    }
+    </style>
+     <div class="stackblitz-container material">
+        <div class="control-section">
+
+            <!-- sample level element  -->
+            <div id="wrapper">
+
+                <!--header-section  declaration -->
+                <div class="main-header" id="header-section">
+                    <ul class="header-list">
+                        <li class="float-left header-style icon-menu" id="hamburger"></li>
+                        <li class="float-left header-style nav-pane">
+                            <b>Rokono Control</b>
+                        </li>
+                     
+                        <li class="header-style float-right support border-left" ><b>Return</b></li>
+                        <li class="header-style float-right support border-left" style="margin:0;"><input id="InputSearchTop"  /></li>
+                    </ul>
+                </div>
+                <!-- end of header-section -->
+                <div id="PlatformElement" >
+                    <!-- sidebar element declaration -->
+                    <aside id="sidebar-documentation" style="overflow-x:hidden;">
+                        <div class="main-menu">
+                            <div class="table-content" style="padding:0;">
+                                    @await Component.InvokeAsync("DocumentationCategory", @ProjectId)
+
+                                <div class="row">   
+                                    @await Component.InvokeAsync("DocumentationNavigation", @ProjectId)
+                                </div>
+
+                            </div>
+                        </div>
+                    </aside>
+
+                    <div class="main-content" id="main-text" style="min-height: 94vh;">
+                        <div class="sidebar-content">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+           
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <script>
+
+    var documentationMenu= new ej.navigations.Sidebar({
+        width: '290px',
+        target: '#main-text',
+        mediaQuery: '(min-width: 600px)',
+    });
+    documentationMenu.appendTo('#sidebar-documentation');
+    //end of Sidebar initialization
+
+    // Toggle the Sidebar
+    document.getElementById('hamburger').addEventListener('click', function () {
+        documentationMenu.toggle();
+    });
+    // open new tab
+    var InputSearchTop = new ej.inputs.TextBox({
+            placeholder: "What's on your mind",
+            floatLabelType: 'Auto'
+    });
+    InputSearchTop.appendTo('#InputSearchTop');
+         // Sidebar Initialization
+  
+    </script>
+
+</body>
+</html>
+
+
+

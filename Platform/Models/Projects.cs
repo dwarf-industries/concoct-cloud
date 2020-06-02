@@ -26,7 +26,7 @@ namespace Rokono_Control.Models
             Branches = new HashSet<Branches>();
             ChatRoomRights = new HashSet<ChatRoomRights>();
             ChatRooms = new HashSet<ChatRooms>();
-            DocumentationCategory = new HashSet<DocumentationCategory>();
+            Documentation = new HashSet<Documentation>();
         }
 
         public int Id { get; set; }
@@ -63,6 +63,6 @@ namespace Rokono_Control.Models
         public virtual ICollection<Branches> Branches { get; set; }
         public virtual ICollection<ChatRoomRights> ChatRoomRights { get; set; }
         public virtual ICollection<ChatRooms> ChatRooms { get; set; }
-        public virtual ICollection<DocumentationCategory> DocumentationCategory { get; set; }
+        public virtual ICollection<Documentation> Documentation { get; set; }
     }
 }

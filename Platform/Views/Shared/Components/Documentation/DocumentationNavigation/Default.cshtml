@@ -1,0 +1,238 @@
+@{
+    var ProjectId = ViewData["ProjectId"] as int?;
+    var defaultIteration = ViewData["DefaultIteration"] as int?;
+    var CurrentUser = ViewData["User"];
+    var UserRights = ViewData["GetChatRights"]as UserRights;
+
+}
+
+<style>
+    .ChatChannelIcon:before{
+        content:'\e99a';
+        font-family: e-icons;
+        padding:3px;
+        font-size: 13px;
+    }
+    .TreeNewItem:before{
+        padding:3px;
+        content:'\e7f9';
+        font-family: e-icons;
+        font-size: 13px;
+    }
+    .CategoryIcon:before{
+        padding:3px;
+        content:'\e714';
+        font-family: e-icons;
+        font-size: 13px;
+    }
+    .CategoryIcon:hover{
+        color:rgb(230, 50, 111);
+    }
+    .TreeNewItem:hover{
+        color:rgb(230, 50, 111);
+    }
+    .ChatChannelIcon:hover{
+        color:rgb(230, 50, 111);
+        
+    }
+    #documentation-treeview .e-list-parent .e-ul
+    {
+        padding: 0;
+        margin:  0;
+    } 
+    #documentation-treeview .e-text-content
+    {
+        padding: 0;
+    }
+
+    #documentation-treeview  .e-text-content
+    {
+        text-align: initial;
+    }
+    #documentation-treeview .e-list-text
+    {
+        width: 80%;
+    }
+    #documentation-treeview  .e-gridheader
+    {
+        height:0px;
+        display: none;
+    }
+
+     #documentation-treeview .e-treecell
+     {
+         width: 100%;
+     }
+    .nodetext{
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        padding: 2%;
+        font-size: 16px;
+        text-align: left;
+        padding-left: 5px;
+        cursor: pointer;
+    }
+    .nodetext:hover{
+        background-color: #fff;
+        border-color: #000;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
+    }
+    .nodetextHeading{
+        cursor: pointer;
+    }
+     .nodetextHeading:hover{
+        background-color: #fff;
+        border-color: #000;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
+    }
+    .nodetextHeading
+    {
+        ont-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        padding: 2%;
+        font-size: 18px;
+        text-align: left;
+    }
+</style>
+<div class="row" style="margin:0;">
+    <div id="DocumentationTreeViewHolder">
+        @* <ul id="documentation-treeview" style="margin: 0; padding: 0;">
+        </ul> *@
+                <div id="documentation-treeview"></div>
+    </div>
+</div>
+
+@* 
+@if(@UserRights.ChatChannelsRule == 1)
+{ *@
+<script id="chatRowTemplate" type="text/x-template" >
+<tr>
+    <td>
+     ${if(isParent)}
+        <div class="nodetextHeading">
+            <div class="row" style="padding:5px; margin:0;" >
+                <div class="col-md-9">
+                    <span class="CategoryIcon"></span><span class="ChatTreeMainText">${nodeText}</span>
+                </div>
+                <div class="col-md-2"   >
+                    <span onclick="AddNewChannelModal(${internalId})" class="TreeNewItem"></span>
+                </div>
+            </div>
+        </div>   
+    ${else}
+        <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId})">
+            <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>
+        </div>
+    ${/if}
+    </td>
+</tr>
+</script>
+@* }
+else
+{ *@
+@* <script id="chatRowTemplate" type="text/x-template" >
+<tr>
+    <td>
+     ${if(isParent)}
+        <div class="nodetextHeading">
+            <div class="row" style="padding:5px; margin:0;" >
+                <div class="col-md-12">
+                    <span class="CategoryIcon"></span><span class="ChatTreeMainText">${nodeText}</span>
+                </div>
+                
+            </div>
+        </div>   
+    ${else}
+        <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId})">
+            <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>
+        </div>
+    ${/if}
+    </td>
+</tr>
+</script> *@
+@* } *@
+
+<script>
+var DocumentationNavigation;
+$( document ).ready(function() {
+    var dtoNotifications = {
+        "ProjectId":@ProjectId,
+         
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/Documentation/GetNavigation',
+        data: JSON.stringify(dtoNotifications),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            InitializeChatItems(response);
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    }); 
+});
+    @* var chatMenuGridObj;
+    
+    
+    var dto = {
+        "Id":@ProjectId,
+         
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/Chat/GetChatChannelsNavigation',
+        data: JSON.stringify(dto),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            InitializeChatItems(response);
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    }); *@
+
+    var URL = location.href.replace(location.search, '');
+    
+     
+    function InitializeChatItems(incomingData)
+    {
+        $("#DocumentationTreeViewHolder").html("");
+        $("#DocumentationTreeViewHolder").html("<div id=\"documentation-treeview\"></div>");
+ 
+        console.log(incomingData);
+
+        DocumentationNavigation= new ej.treegrid.TreeGrid({
+            dataSource: incomingData,
+            childMapping: 'nodeChild',
+            treeColumnIndex: 0,
+            rowTemplate:'#chatRowTemplate',
+            allowPaging: false,
+            rowHeight: 83,
+            columns: [
+                { field: 'nodeText',  width: 220 },
+              
+            ]
+        });
+        DocumentationNavigation.appendTo('#documentation-treeview');
+    }
+     
+    function OpenChannel(id)
+    {
+        $( "#ChatChannel_"+id ).removeClass("NewMessage");
+        ActiveUser.ActiveRoom = id;
+        console.log("in");
+        console.log(id);
+        $("#MainChatContent").load('/Chat/GetChatRoom?id='+id+'&&projectId=@ProjectId');
+         @* $.ajax({
+            type: 'GET',
+            url: '/Chat/GetChatRoom?id='+id,
+            success: function (response) {
+                
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        }); *@
+    }
+</script>

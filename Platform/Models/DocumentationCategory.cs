@@ -7,14 +7,14 @@ namespace Rokono_Control.Models
     {
         public DocumentationCategory()
         {
-            DocumentationArea = new HashSet<DocumentationArea>();
+            DocumentationCategoryField = new HashSet<DocumentationCategoryField>();
         }
 
         public int Id { get; set; }
         public string CategoryName { get; set; }
-        public int? ProjectId { get; set; }
+        public int? DocumentationId { get; set; }
 
-        public virtual Projects Project { get; set; }
-        public virtual ICollection<DocumentationArea> DocumentationArea { get; set; }
+        public virtual Documentation Documentation { get; set; }
+        public virtual ICollection<DocumentationCategoryField> DocumentationCategoryField { get; set; }
     }
 }
