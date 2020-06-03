@@ -78,6 +78,15 @@ namespace Platform.Controllers
         {
             return context.GetDocumentationNavigation(request.ProjectId);
         }
+        [HttpGet]
+        [Authorize (Roles = "ChatAdministrator")]
+//        [ValidateAntiForgeryToken]
+        public IActionResult GetPageModal(int id) 
+        {
+            return ViewComponent("DocumentationPageHandler", new IncomingIdRequest{
+                 Id = id
+            });
+         }
 
     }
 }

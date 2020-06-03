@@ -31,6 +31,21 @@ namespace Rokono_Control.DatabaseHandlers
             
             return projectKey;
         }
+        internal List<AssociatedDocumentationCategoryPage> GetDocumentationPages(IncomingIdRequest request)
+        {
+            return Context.AssociatedDocumentationCategoryPage.Include(x => x.CategoryFieldNavigation)
+                                                       .ThenInclude(CategoryFieldNavigation => CategoryFieldNavigation.Category)
+                                                       .ThenInclude(Category => Category.Documentation)
+                                                       .Where(x=>x.CategoryFieldNavigation.Category.Documentation.ProjectId 
+                                                       == request.ProjectId)
+                                                       .ToList();
+        }
+        internal AssociatedDocumentationCategoryPage GetDocumentationPage(int id)
+        {
+            return Context.AssociatedDocumentationCategoryPage 
+                                                       .FirstOrDefault(x=>x.Id == id);
+            
+        }
 
         internal List<OutgoingChatItem> GetDocumentationNavigation(int id)
         {

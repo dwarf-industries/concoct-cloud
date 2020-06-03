@@ -18310,6 +18310,104 @@
       },
       {
         "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__DocumentationPageViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:documentation-page",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "request",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "request",
+            "TypeName": "Rokono_Control.Models.IncomingIdRequest",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "request"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__DocumentationPageViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "DocumentationPage"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__DocumentationPageHandlerViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:documentation-page-handler",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "request",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "request",
+            "TypeName": "Rokono_Control.Models.IncomingIdRequest",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "request"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__DocumentationPageHandlerViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "DocumentationPageHandler"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
         "Name": "__Generated__DocumentationNavigationViewComponentTagHelper",
         "AssemblyName": "Rokono Control",
         "Documentation": null,
@@ -22038,6 +22136,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Documentation/DocumentationPageHandler/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Documentation\\DocumentationPageHandler\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/UserList/Default.cshtml",
       "TargetPath": "Views\\Shared\\Components\\UserList\\Default.cshtml",
       "FileKind": "mvc"
@@ -22215,6 +22318,11 @@
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Dashboard/AddNewWorkItem.cshtml",
       "TargetPath": "Views\\Dashboard\\AddNewWorkItem.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Documentation/DocumentationPage/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Documentation\\DocumentationPage\\Default.cshtml",
       "FileKind": "mvc"
     },
     {

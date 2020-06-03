@@ -1,0 +1,113 @@
+
+
+
+<style>
+   
+    #SaveDocumentationPage_title{
+        text-align: center;
+        width: 100%;
+    }
+    .e-upload {
+        width: 100%;
+        position: relative;
+        margin-top: 15px;
+        float: none;
+    }
+    .e-upload .e-upload-actions {
+        float: none;
+        text-align: right;
+    }
+    .control_wrapper .e-upload .e-upload-drag-hover {
+        margin: 0;
+    }
+</style>
+
+<div id="SaveDocumentationPage"  >
+    <div class="container-fluid">
+        <div class="row">
+            <input id="InputPageDataTitle" />
+        </div>
+         <div class="row">
+            <div class="control_wrapper">
+                <!-- Initialize Uploader -->
+                <input type='file' id='fileupload' name='UploadFiles'/>
+            </div>
+        </div>
+        <div class="row">
+            <div style="min-height: 51vh;" id="InputPageData" class="form-control"></div>
+        </div>
+        <div class="row InlineFlex">
+            <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="SaveDocumentationPage()">Submit</button>
+            <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="CloseDocumentationPage()">Cancel</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+var activeFiles = [];
+var InputPageData;
+var InputPageDataTitle = new ej.inputs.TextBox({
+    placeholder: 'The title of the current page item',
+    floatLabelType: 'Auto'
+});
+InputPageDataTitle.appendTo('#InputPageDataTitle');
+InputPageData = new Quill('#InputPageData', {
+        theme: 'snow'
+    });
+var method;
+ 
+var SaveDocumentationPageModal;
+SaveDocumentationPageModal = new ej.popups.Dialog({
+    width: '100%',
+    height: '100%',
+    header: 'Enter the page details',
+    isModal: true,
+    animationSettings: { effect: 'None' },
+    visible: false
+});
+SaveDocumentationPageModal.appendTo('#SaveDocumentationPage');
+SaveDocumentationPageModal.show();
+var dropElement = document.getElementsByClassName('control-fluid')[0];
+
+var uploadObj = new ej.inputs.Uploader({
+    asyncSettings: {
+        saveUrl: '/Uploader/Save',
+        removeUrl: '/Uploader/Remove',
+
+    },
+    removing: onFileRemove,
+    dropArea: dropElement,
+    selected: ItemSelected
+
+});
+uploadObj.appendTo('#fileupload');
+function ItemSelected(args) {
+    console.log(args);
+    selectedImage = window.location.origin+"/Files/Uploads/"+args.filesData[0].rawFile.name;
+    var length = InputPageData.getLength();
+    console.log(length);
+    activeFiles.push({
+        "FileName":args.filesData[0].rawFile.name,
+        "Line" : length+1
+    });
+    InputPageData.insertEmbed(length+1, 'image', selectedImage);
+
+}
+var Delta;
+
+function onFileRemove(args) {
+ 
+    
+    console.log(args);
+    args.postRawFile = false;
+}
+
+ 
+function CloseDocumentationPage()
+{
+    SaveDocumentationPageModal.hide();
+
+}
+ 
+</script>
