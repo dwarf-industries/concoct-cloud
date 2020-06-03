@@ -59,10 +59,10 @@
         display: none;
     }
 
-     #documentation-treeview .e-treecell
-     {
-         width: 100%;
-     }
+    #documentation-treeview .e-treecell
+    {
+        width: 100%;
+    }
     .nodetext{
         font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
         padding: 2%;
@@ -91,6 +91,10 @@
         font-size: 18px;
         text-align: left;
     }
+    .e-icons .e-treegridexpand
+    {
+        display: block;
+    }
 </style>
 <div class="row" style="margin:0;">
     <div id="DocumentationTreeViewHolder">
@@ -103,23 +107,23 @@
 @* 
 @if(@UserRights.ChatChannelsRule == 1)
 { *@
-<script id="chatRowTemplate" type="text/x-template" >
-<tr>
+<script id="DocumentationGridRow" type="text/x-template" >
+<tr id="ChatChannelRow_${isParent}_${internalId}" >
     <td>
      ${if(isParent)}
-        <div class="nodetextHeading">
+        <div class="nodetextHeading"  onclick="Expand(${internalId})">
             <div class="row" style="padding:5px; margin:0;" >
                 <div class="col-md-9">
                     <span class="CategoryIcon"></span><span class="ChatTreeMainText">${nodeText}</span>
                 </div>
                 <div class="col-md-2"   >
-                    <span onclick="AddNewChannelModal(${internalId})" class="TreeNewItem"></span>
+                    <span onclick="AddNewCategoryField(2,${internalId})" class="TreeNewItem"></span>
                 </div>
             </div>
         </div>   
     ${else}
         <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId})">
-            <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>
+            <span class="ChatChannelIcon" style="padding-left:20px;"></span> <span class="ChatTreeMainText" >${nodeText}</span>
         </div>
     ${/if}
     </td>
@@ -151,6 +155,7 @@ else
 @* } *@
 
 <script>
+var LastDataSource;
 var DocumentationNavigation;
 $( document ).ready(function() {
     var dtoNotifications = {
@@ -201,12 +206,13 @@ $( document ).ready(function() {
         $("#DocumentationTreeViewHolder").html("<div id=\"documentation-treeview\"></div>");
  
         console.log(incomingData);
-
-        DocumentationNavigation= new ej.treegrid.TreeGrid({
+        LastDataSource = incomingData;
+        DocumentationNavigation = new ej.treegrid.TreeGrid({
             dataSource: incomingData,
             childMapping: 'nodeChild',
             treeColumnIndex: 0,
-            rowTemplate:'#chatRowTemplate',
+            rowSelected :Expand,
+            rowTemplate:'#DocumentationGridRow',
             allowPaging: false,
             rowHeight: 83,
             columns: [
@@ -234,5 +240,43 @@ $( document ).ready(function() {
                 console.log(error);
             }
         }); *@
+    }
+    function Expand(args)
+    {
+        console.log(LastDataSource);
+        LastDataSource.forEach(x=>{
+            var expand =false;
+            if(x.internalId === args && x.isExpand === 1)
+            {
+                x.isExpand = 0;
+                expand = false;
+            }
+            else
+            {
+                x.isExpand = 1;
+                expand = true;
+            }
+            
+            x.nodeChild.forEach(y=>{
+                if(y.parentId === args)
+                {
+                    if(expand)
+                    {
+                        console.log(args);
+                        console.log(y.parentId);
+                        console.log(y.internalId);
+                        $("#ChatChannelRow_undefined_"+y.internalId).show();
+                    }
+                    else
+                    {
+                        console.log(args);
+                        console.log(y.parentId);
+                        console.log(y.internalId);
+                        $("#ChatChannelRow_undefined_"+y.internalId).hide();
+                    }
+                }
+           });
+        });
+        @* DocumentationNavigation.collapseRow(id); *@
     }
 </script>

@@ -38,13 +38,11 @@ namespace Rokono_Control
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddCors(o => o.AddPolicy("ApiPolicy", builder =>
+            services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
             {
-                builder.AllowAnyOrigin()
+                builder
                     .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .WithOrigins("*")
-                    .AllowAnyOrigin();
+                    .AllowAnyHeader();
             }));
             services.AddDbContext<RokonoControlContext>(options =>
                 options.UseSqlServer("Server=84.54.185.144;Database=RokonoControl;User ID=RGSOC;Password='EmkV3*eRjVbZ0!KpKlDHX';")
@@ -72,7 +70,8 @@ namespace Rokono_Control
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-          
+            app.UseCors("ApiPolicy");
+
 
             app.UseRouting();
             app.UseAuthentication();
@@ -84,7 +83,6 @@ namespace Rokono_Control
                 endpoint.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 
             });
-            app.UseCors("ApiPolicy");
 
        }
     }

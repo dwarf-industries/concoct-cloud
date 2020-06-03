@@ -67,7 +67,7 @@ namespace Platform.Controllers
                 result = context.GetChatChannels(request.Id, id);
             }
             return result;
-    }
+        }
         [HttpPost]
         [Authorize (Roles = "ChatAdministrator")]
 //        [ValidateAntiForgeryToken]

@@ -38,30 +38,50 @@ namespace Rokono_Control.DatabaseHandlers
             Context.DocumentationCategory
             .Include(x=>x.DocumentationCategoryField)
             .Select(x=>x)
-            .Distinct()
             .ToList().ForEach(x=>{
                 var cItem = new OutgoingChatItem
                 {     
-                    InternalId = x.DocumentationId.Value,
+                    InternalId = x.Id,
                     // NodeId = i++,
                     NodeText = x.CategoryName,
                     IconCss = "icon-th icon",
                     Link = "",
                     ChannelType = 0,
                     IsParent = true,
-                    ParentId = x.DocumentationId.Value,
+                    ParentId = x.Id,
+                    IsExand = 1,
                     NodeChild = x.DocumentationCategoryField.Select(y=> new OutgoingChatItemChild{
                         InternalId = y.Id,
                         // NodeId = i++,
                         NodeText = y.PageName,
                         IconCss = "icon-circle-thin icon",
                         Link = "",
-                        ParentId = x.DocumentationId.Value
+                        ParentId = y.CategoryId.Value
                     }).ToList()
                 };
                 result.Add(cItem);
             });
             return result;
+        }
+
+        internal void AddNewDocumentationCategory(IncomingIdRequest request)
+        {
+            var getDocumentation = Context.Documentation.FirstOrDefault(x=> x.ProjectId == request.ProjectId);
+            Context.DocumentationCategory.Add(new DocumentationCategory{
+                CategoryName = request.Phase,
+                DocumentationId = getDocumentation.Id,
+            });
+            Context.SaveChanges();
+        }
+
+        internal void AddNewDocumentationCategoryField(IncomingIdRequest request)
+        {
+            var getCategory = Context.DocumentationCategory.FirstOrDefault(x=>x.Id == request.Id);
+            Context.DocumentationCategoryField.Add(new DocumentationCategoryField{
+                CategoryId = getCategory.Id,
+                PageName = request.Phase
+            });
+            Context.SaveChanges();
         }
 
         internal ChatRoomRights GetChatRightById(int tagId)

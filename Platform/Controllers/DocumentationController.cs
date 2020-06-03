@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Platform.Models;
@@ -34,9 +35,49 @@ namespace Platform.Controllers
             var id = int.Parse(user.Value);
             using(var context = new DatabaseController(Context, Configuration))
             {
-                result = context.GetDocumentationNavigation(request.ProjectId);
+                result = GetNavigation(request, context);
             }
             return result;
         }
+
+        [HttpPost]
+        [Authorize (Roles = "ChatAdministrator")]
+//        [ValidateAntiForgeryToken]
+        public List<OutgoingChatItem> AddNewCategory([FromBody] IncomingIdRequest request)
+        {
+          
+            var result = new  List<OutgoingChatItem>();
+            var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var id = int.Parse(user.Value);
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                context.AddNewDocumentationCategory(request);
+                result = GetNavigation(request, context);
+            }
+            return result;
+        }
+
+
+        [HttpPost]
+        [Authorize (Roles = "ChatAdministrator")]
+//        [ValidateAntiForgeryToken]
+        public List<OutgoingChatItem> AddNewCategoryField([FromBody] IncomingIdRequest request)
+        {
+          
+            var result = new  List<OutgoingChatItem>();
+            var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var id = int.Parse(user.Value);
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                context.AddNewDocumentationCategoryField(request);
+                result = GetNavigation(request, context);
+            }
+            return result;
+        }
+        private static List<OutgoingChatItem> GetNavigation(IncomingIdRequest request, DatabaseController context)
+        {
+            return context.GetDocumentationNavigation(request.ProjectId);
+        }
+
     }
 }

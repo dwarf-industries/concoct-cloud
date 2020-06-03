@@ -14,25 +14,26 @@
 </style>
 
 <div class="row">
-    <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="OpenNewCategoryModal()" id="OpenNewCategoryModal">Add new Category</button>
+    <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="OpenNewCategoryModal(1)" id="OpenNewCategoryModal">Add new Category</button>
 </div>
 <div id="DocumentationAddNewCategory"  >
     <div class="row">
             <input id="InputNewChatCategory" />
     </div>
     <div class="row InlineFlex">
-        <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="SaveNewChatCategory()">Submit</button>
+        <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="SaveNewCategory()">Submit</button>
         <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="CloseNewCategoryModal()">Cancel</button>
     </div>
 
 </div>
 
+ 
 
 <script>
 //end of Sidebar initialization
 var DocumentationAddNewCategoryModal;
-
-
+var Modal;
+var CategoryId;
 DocumentationAddNewCategoryModal = new ej.popups.Dialog({
     width: '600px',
     height: '175px',
@@ -49,7 +50,8 @@ var InputNewChatCategory = new ej.inputs.TextBox({
     floatLabelType: 'Auto'
 });
 InputNewChatCategory.appendTo('#InputNewChatCategory');
-function OpenNewCategoryModal(){
+function OpenNewCategoryModal(id){
+    Modal = 1;
     DocumentationAddNewCategoryModal.show();
 }
 function CloseNewCategoryModal()
@@ -57,13 +59,25 @@ function CloseNewCategoryModal()
     DocumentationAddNewCategoryModal.hide();
 
 }
-
-
-function SaveNewChatCategory()
+function AddNewCategoryField(modal, internalId)
 {
+    Modal = modal;
+    CategoryId = internalId;
+    DocumentationAddNewCategoryModal.show();
+}
+
+
+function SaveNewCategory(id)
+{
+    var method;
+    if(Modal === 1)
+        method = "AddNewCategory";
+    else
+        method = "AddNewCategoryField";
     var messagesDto = {
-        "Id": @ProjectId,
-        "Phase" : $("#InputNewChatCategory").val()
+        "ProjectId": @ProjectId,
+        "Phase" : $("#InputNewChatCategory").val(),
+        "Id" : CategoryId
     }
     console.log(messagesDto);
     console.log($("#InputNewChatCategory").val());
@@ -72,7 +86,7 @@ function SaveNewChatCategory()
 
         $.ajax({
                 type: 'POST',
-                url: '/Documentation/AddNewCategory',
+                url: '/Documentation/'+method,
                 data: JSON.stringify(messagesDto),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
