@@ -225,21 +225,10 @@ $( document ).ready(function() {
      
     function OpenChannel(id)
     {
-        $( "#ChatChannel_"+id ).removeClass("NewMessage");
-        ActiveUser.ActiveRoom = id;
-        console.log("in");
-        console.log(id);
-        $("#MainChatContent").load('/Chat/GetChatRoom?id='+id+'&&projectId=@ProjectId');
-         @* $.ajax({
-            type: 'GET',
-            url: '/Chat/GetChatRoom?id='+id,
-            success: function (response) {
-                
-            },
-            error: function (xhr, status, error) {
-                console.log(error);
-            }
-        }); *@
+        
+        $("#DocumentationPageControl").html("");
+        $("#DocumentationPageControl").load('/Documentation/DocumentationPage?id='+id+'&&projectId=@ProjectId');
+        
     }
     function Expand(args)
     {

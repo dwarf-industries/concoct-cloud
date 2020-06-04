@@ -12,7 +12,8 @@
 </div>
 <div class="row" id="DocumentationPageControl">
     @await Component.InvokeAsync("DocumentationPage", new IncomingIdRequest{
-         ProjectId = @ProjectId.Value
+         ProjectId = @ProjectId.Value,
+         Id = 0
     })
 </div>
 

@@ -1,4 +1,8 @@
-
+@{
+    var CategoryFieldId = ViewData["CategoryField"] as int?;
+    var PageData = ViewData["PageData"] as AssociatedDocumentationCategoryPage;
+    var ModalType = ViewData["Modal"]  as int?;
+}
 
 
 <style>
@@ -37,7 +41,7 @@
             <div style="min-height: 51vh;" id="InputPageData" class="form-control"></div>
         </div>
         <div class="row InlineFlex">
-            <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="SaveDocumentationPage()">Submit</button>
+            <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="SubmitDocumentationPage()">Submit</button>
             <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="CloseDocumentationPage()">Cancel</button>
         </div>
     </div>
@@ -45,16 +49,34 @@
 </div>
 
 <script>
+var Modal = "@ModalType";
 var activeFiles = [];
 var InputPageData;
 var InputPageDataTitle = new ej.inputs.TextBox({
     placeholder: 'The title of the current page item',
-    floatLabelType: 'Auto'
+    floatLabelType: 'Auto',
 });
+@if(PageData != null)
+{
+  @:  InputPageDataTitle.value = @PageData.Title
+}
 InputPageDataTitle.appendTo('#InputPageDataTitle');
-InputPageData = new Quill('#InputPageData', {
-        theme: 'snow'
-    });
+@if(PageData != null)
+{
+@:    InputPageData = new Quill('#InputPageData', {
+@:            theme: 'snow',
+@:            value : @PageData.Content
+@:    });
+}
+
+@if(PageData == null)
+{
+@:    InputPageData = new Quill('#InputPageData', {
+@:            theme: 'snow',
+@:    });
+}
+
+
 var method;
  
 var SaveDocumentationPageModal;
@@ -97,8 +119,6 @@ function ItemSelected(args) {
 var Delta;
 
 function onFileRemove(args) {
- 
-    
     console.log(args);
     args.postRawFile = false;
 }
@@ -108,6 +128,49 @@ function CloseDocumentationPage()
 {
     SaveDocumentationPageModal.hide();
 
+}
+
+function SubmitDocumentationPage()
+{
+    var method;
+    var messagesDto = {
+        "Id" : 0,
+        "Title" : $("#InputPageDataTitle").val(),
+        "CategoryField" : @CategoryFieldId,
+        "Content" :  $("#InputPageData").children()[0].innerHTML
+    }
+    @if(PageData == null)
+    {
+    @:    method = "AddNewPage";
+    }
+    @if(PageData != null)
+    {
+    @:   messagesDto.Id = @PageData.Id;
+    @:   method = "EditPage";
+    }
+    
+    console.log(messagesDto);
+    console.log($("#InputPageDataTitle").val());
+    if($("#InputPageDataTitle").val())
+    {
+
+        $.ajax({
+                type: 'POST',
+                url: '/Documentation/'+method,
+                data: JSON.stringify(messagesDto),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                
+                success: function (response) {
+//                    CloseNewCategoryModal();
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+        });
+    }
+    else
+        ShowAlert("Input field Title Name must contain a value!!!");
 }
  
 </script>

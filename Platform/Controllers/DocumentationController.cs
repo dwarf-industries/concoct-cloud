@@ -74,17 +74,61 @@ namespace Platform.Controllers
             }
             return result;
         }
+
+        [HttpPost]
+        [Authorize (Roles = "ChatAdministrator")]
+//        [ValidateAntiForgeryToken]
+        public List<OutgoingChatItem> AddNewPage([FromBody] AssociatedDocumentationCategoryPage request)
+        {
+          
+            var result = new  List<OutgoingChatItem>();
+            var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var id = int.Parse(user.Value);
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                context.AddNewDocumentationpage(request);
+            }
+            return result;
+        }
+        [HttpPost]
+        [Authorize (Roles = "ChatAdministrator")]
+//        [ValidateAntiForgeryToken]
+        public List<OutgoingChatItem> EditPage([FromBody] AssociatedDocumentationCategoryPage request)
+        {
+          
+            var result = new  List<OutgoingChatItem>();
+            var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var id = int.Parse(user.Value);
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                context.UpdateDocumentationPage(request);
+            }
+            return result;
+        }
+
         private static List<OutgoingChatItem> GetNavigation(IncomingIdRequest request, DatabaseController context)
         {
             return context.GetDocumentationNavigation(request.ProjectId);
         }
+        
         [HttpGet]
         [Authorize (Roles = "ChatAdministrator")]
 //        [ValidateAntiForgeryToken]
-        public IActionResult GetPageModal(int id) 
+        public IActionResult DocumentationPage(int id, int projectId) 
+        {
+            return ViewComponent("DocumentationPage", new IncomingIdRequest{
+                Id = id,
+                ProjectId = projectId
+            });
+         }
+        [HttpGet]
+        [Authorize (Roles = "ChatAdministrator")]
+//        [ValidateAntiForgeryToken]
+        public IActionResult GetPageModal(int id, int category) 
         {
             return ViewComponent("DocumentationPageHandler", new IncomingIdRequest{
-                 Id = id
+                 Id = id,
+                 UserId = category
             });
          }
 

@@ -31,13 +31,24 @@ namespace Rokono_Control.DatabaseHandlers
             
             return projectKey;
         }
+
+        internal int GetDocumentationDefaultCategory(int projectId)
+        {
+            var result = Context.DocumentationCategoryField.Include(x => x.Category)
+                                                     .ThenInclude(Category => Category.Documentation)
+                                                     .FirstOrDefault(x=>x.Category.Documentation.ProjectId == projectId);
+            if(result != null)
+                return result.Id;
+            return 0;
+        }
+
         internal List<AssociatedDocumentationCategoryPage> GetDocumentationPages(IncomingIdRequest request)
         {
             return Context.AssociatedDocumentationCategoryPage.Include(x => x.CategoryFieldNavigation)
                                                        .ThenInclude(CategoryFieldNavigation => CategoryFieldNavigation.Category)
                                                        .ThenInclude(Category => Category.Documentation)
                                                        .Where(x=>x.CategoryFieldNavigation.Category.Documentation.ProjectId 
-                                                       == request.ProjectId)
+                                                       == request.ProjectId && x.CategoryField == request.Id)
                                                        .ToList();
         }
         internal AssociatedDocumentationCategoryPage GetDocumentationPage(int id)
@@ -79,6 +90,12 @@ namespace Rokono_Control.DatabaseHandlers
             return result;
         }
 
+        internal void AddNewDocumentationpage(AssociatedDocumentationCategoryPage request)
+        {
+            Context.AssociatedDocumentationCategoryPage.Add(request);
+            Context.SaveChanges();
+        }
+
         internal void AddNewDocumentationCategory(IncomingIdRequest request)
         {
             var getDocumentation = Context.Documentation.FirstOrDefault(x=> x.ProjectId == request.ProjectId);
@@ -86,6 +103,16 @@ namespace Rokono_Control.DatabaseHandlers
                 CategoryName = request.Phase,
                 DocumentationId = getDocumentation.Id,
             });
+            Context.SaveChanges();
+        }
+
+        internal void UpdateDocumentationPage(AssociatedDocumentationCategoryPage request)
+        {
+            var getItem = Context.AssociatedDocumentationCategoryPage.FirstOrDefault(x=>x.Id == request.Id);
+            getItem.Title = request.Title;
+            getItem.Content = request.Content;
+            Context.Attach(getItem);
+            Context.Update(getItem);
             Context.SaveChanges();
         }
 

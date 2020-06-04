@@ -1,0 +1,12 @@
+@{
+    var Page = ViewData["PageData"] as AssociatedDocumentationCategoryPage;
+}
+<style>
+    .breadcrum{
+        padding: 2%;
+    }
+</style>
+
+<div class="breadcrum">
+    <a href="/Documentation"><span></span></a>/<a href="/Documentation/">@Page.CategoryFieldNavigation.Category</a>
+</div>

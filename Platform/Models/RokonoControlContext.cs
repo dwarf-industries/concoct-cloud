@@ -192,6 +192,8 @@ namespace Rokono_Control.Models
 
             modelBuilder.Entity<AssociatedDocumentationCategoryPage>(entity =>
             {
+                entity.Property(e => e.Title).HasMaxLength(400);
+
                 entity.HasOne(d => d.CategoryFieldNavigation)
                     .WithMany(p => p.AssociatedDocumentationCategoryPage)
                     .HasForeignKey(d => d.CategoryField)

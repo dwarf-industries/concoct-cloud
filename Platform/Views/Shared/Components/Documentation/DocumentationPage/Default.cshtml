@@ -1,7 +1,16 @@
 @{
     var PagesData = ViewData["PageData"] as  List<AssociatedDocumentationCategoryPage>;
-}
+    var Category = ViewData["CategoryId"] as int?;
 
+}
+<style>
+    #DocumentationPageControl img{
+        width: 100%;
+    }
+    #DocumentationPageControl .row{
+        padding: 20px;
+    }
+</style>
 <div class="row">
     <div class="col-md-9">
         @foreach (var page in PagesData)
@@ -22,7 +31,12 @@
 
     </div>
     <div class="col-md-3">
-
+        @foreach (var quickLink in PagesData)
+        {
+            <div class="row">
+                <a href="#" > @quickLink.Title</a>
+            </div>
+        }
     </div>
 </div>
 <div id="NewPageModalHodler">
@@ -37,7 +51,17 @@
     function OpenNewPageModal()
     {
         $("#NewPageModalHodler").html("");
-        $("#NewPageModalHodler").load("/Documentation/GetPageModal?id=0")
+        $("#NewPageModalHodler").load("/Documentation/GetPageModal?id=0&&category=@Category")
+        .ajaxSuccess(x => {
+            console.log("Success")
+        });
+        
+    }
+
+    function OpenEdutPageModal(id)
+    {
+        $("#NewPageModalHodler").html("");
+        $("#NewPageModalHodler").load("/Documentation/GetPageModal?id="+id+"&&category=@Category")
         .ajaxSuccess(x => {
             console.log("Success")
         });
