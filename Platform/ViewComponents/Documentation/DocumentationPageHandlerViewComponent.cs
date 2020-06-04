@@ -20,6 +20,7 @@ namespace Platform.ViewComponents.Documentation
         }
         public IViewComponentResult Invoke(IncomingIdRequest request)
         {
+            ViewData["ProjectId"] = request.ProjectId;
             ViewData["CategoryField"] = request.UserId;
             if(request.Id == 0)
             {

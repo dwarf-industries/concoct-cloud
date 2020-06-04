@@ -106,6 +106,15 @@ namespace Rokono_Control.DatabaseHandlers
             Context.SaveChanges();
         }
 
+        internal void DeleteDocumentationPage(int id)
+        {
+            var current = Context.AssociatedDocumentationCategoryPage.FirstOrDefault(x=>x.Id == id);
+            if(current == null)
+                return;
+            Context.AssociatedDocumentationCategoryPage.Remove(current);
+            Context.SaveChanges();
+        }
+
         internal void UpdateDocumentationPage(AssociatedDocumentationCategoryPage request)
         {
             var getItem = Context.AssociatedDocumentationCategoryPage.FirstOrDefault(x=>x.Id == request.Id);

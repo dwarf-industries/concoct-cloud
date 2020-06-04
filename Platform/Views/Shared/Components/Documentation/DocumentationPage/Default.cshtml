@@ -1,7 +1,7 @@
 @{
     var PagesData = ViewData["PageData"] as  List<AssociatedDocumentationCategoryPage>;
     var Category = ViewData["CategoryId"] as int?;
-
+    var ProjectId = ViewData["ProjectId"] as int?;
 }
 <style>
     #DocumentationPageControl img{
@@ -10,31 +10,44 @@
     #DocumentationPageControl .row{
         padding: 20px;
     }
+    .DocumentationMaxHeight{
+        max-height: 83vh;
+        overflow-y: auto;
+    }
+
+    .DocumentationMaxHeight html {
+    scroll-behavior: smooth;
+    }
 </style>
 <div class="row">
-    <div class="col-md-9">
-        @foreach (var page in PagesData)
+    <div class="col-md-9 DocumentationMaxHeight">
+        @foreach (var currentPage in PagesData)
         {
-            <div class="DocumentationSection" id="Page_page.Id">
-                <span>Close</span>
+            <div class="DocumentationSection" id="Current_@currentPage.Id" >
+                <div class="row" style="display: block ruby;">
+                    <hr/>
+                        <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="OpenEditPageModal(@currentPage.Id)">Edit page</button>
+                        <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="DeletePage(@currentPage.Id)">Delete page</button>
+                    <hr/>
+                </div>
                 <div class="DocumentationBody">
-                    @Html.Raw(page.Content)
+                    @Html.Raw(currentPage.Content)
                 </div>
             </div>
         }
         
         <div class="row">
             <hr/>
-                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="OpenNewPageModal(1)">Add new page</button>
+                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="OpenNewPageModal(0)">Add new page</button>
             <hr/>
         </div>
 
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 DocumentationMaxHeight">
         @foreach (var quickLink in PagesData)
         {
             <div class="row">
-                <a href="#" > @quickLink.Title</a>
+                <a href="#Current_@quickLink.Id" > @quickLink.Title</a>
             </div>
         }
     </div>
@@ -51,20 +64,46 @@
     function OpenNewPageModal()
     {
         $("#NewPageModalHodler").html("");
-        $("#NewPageModalHodler").load("/Documentation/GetPageModal?id=0&&category=@Category")
+        $("#NewPageModalHodler").load("/Documentation/GetPageModal?id=0&&category=@Category&&projectId=@ProjectId")
         .ajaxSuccess(x => {
             console.log("Success")
         });
         
     }
 
-    function OpenEdutPageModal(id)
+    function OpenEditPageModal(id)
     {
+        console.log(id);
         $("#NewPageModalHodler").html("");
-        $("#NewPageModalHodler").load("/Documentation/GetPageModal?id="+id+"&&category=@Category")
+        $("#NewPageModalHodler").load("/Documentation/GetPageModal?id="+id+"&&category=@Category&&projectId=@ProjectId")
         .ajaxSuccess(x => {
             console.log("Success")
         });
         
     }
+    function DeletePage(id)
+    {
+        $("#DocumentationPageControl").html("");
+
+        var data = {
+            "Id": id
+            
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/Documentation/DeletePage',
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                $("#DocumentationPageControl").load('/Documentation/DocumentationPage?id='+@Category+'&&projectId=@ProjectId');
+
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        }); 
+     
+    }
+  
 </script>

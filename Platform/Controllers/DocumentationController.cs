@@ -110,7 +110,21 @@ namespace Platform.Controllers
         {
             return context.GetDocumentationNavigation(request.ProjectId);
         }
-        
+        [HttpPost]
+        [Authorize (Roles = "ChatAdministrator")]
+//        [ValidateAntiForgeryToken]
+        public List<OutgoingChatItem> DeletePage([FromBody] IncomingIdRequest request)
+        {
+          
+            var result = new  List<OutgoingChatItem>();
+            var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var id = int.Parse(user.Value);
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                context.DeleteDocumentationPage(request.Id);
+            }
+            return result;
+        }
         [HttpGet]
         [Authorize (Roles = "ChatAdministrator")]
 //        [ValidateAntiForgeryToken]
@@ -124,11 +138,12 @@ namespace Platform.Controllers
         [HttpGet]
         [Authorize (Roles = "ChatAdministrator")]
 //        [ValidateAntiForgeryToken]
-        public IActionResult GetPageModal(int id, int category) 
+        public IActionResult GetPageModal(int id, int category, int projectId) 
         {
             return ViewComponent("DocumentationPageHandler", new IncomingIdRequest{
                  Id = id,
-                 UserId = category
+                 UserId = category,
+                 ProjectId = projectId
             });
          }
 
