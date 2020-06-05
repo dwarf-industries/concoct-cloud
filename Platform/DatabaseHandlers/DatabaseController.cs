@@ -32,6 +32,14 @@ namespace Rokono_Control.DatabaseHandlers
             return projectKey;
         }
 
+        internal string GetDocumentationCategoryName(int id)
+        {
+            var result = Context.DocumentationCategoryField.FirstOrDefault(x=>x.Id == id);
+            if(result != null)
+                return result.PageName;
+            return string.Empty;
+        }
+
         internal int GetDocumentationDefaultCategory(int projectId)
         {
             var result = Context.DocumentationCategoryField.Include(x => x.Category)
@@ -41,6 +49,18 @@ namespace Rokono_Control.DatabaseHandlers
                 return result.Id;
             return 0;
         }
+
+        internal string GetDocumentationDefaultCategoryName(int projectId)
+        {
+             var result = Context.DocumentationCategoryField.Include(x => x.Category)
+                                                     .ThenInclude(Category => Category.Documentation)
+                                                     .FirstOrDefault(x=>x.Category.Documentation.ProjectId == projectId);
+            if(result != null)
+                return result.PageName;
+            return string.Empty;
+        }
+
+        
 
         internal List<AssociatedDocumentationCategoryPage> GetDocumentationPages(IncomingIdRequest request)
         {

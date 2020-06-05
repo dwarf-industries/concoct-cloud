@@ -1,12 +1,28 @@
 @{
-    var Page = ViewData["PageData"] as AssociatedDocumentationCategoryPage;
+    var Page = ViewData["PageData"] as string;
 }
 <style>
     .breadcrum{
         padding: 2%;
     }
+    .SideLink{
+
+        font-size: 18px;
+        color: #797979;
+    }
+    .SideLink:hover{
+        cursor: pointer;
+        color:#e3165b;
+    }
 </style>
 
 <div class="breadcrum">
-    <a href="/Documentation"><span></span></a>/<a href="/Documentation/">@Page.CategoryFieldNavigation.Category</a>
+    @if(!string.IsNullOrEmpty(Page))
+    {
+        <a href="#" class="SideLink"><span></span>/</a> <a href="#" class="SideLink">@Page</a>
+    }
+    else
+    {
+        <a href="#" class="SideLink"><span></span>/</a>
+    }
 </div>

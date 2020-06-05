@@ -2,6 +2,7 @@
     var PagesData = ViewData["PageData"] as  List<AssociatedDocumentationCategoryPage>;
     var Category = ViewData["CategoryId"] as int?;
     var ProjectId = ViewData["ProjectId"] as int?;
+    var UserRights = ViewData["UserRights"] as UserRights;
 }
 <style>
     #DocumentationPageControl img{
@@ -18,37 +19,64 @@
     .DocumentationMaxHeight html {
     scroll-behavior: smooth;
     }
+    .SideLinkHolder{
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+
+        border-bottom: #e3165b 2px solid;
+    }
+    .SideLink{
+
+        font-size: 18px;
+        color: #797979;
+    }
+    .SideLink:hover{
+        cursor: pointer;
+        color:#e3165b;
+    }
 </style>
 <div class="row">
     <div class="col-md-9 DocumentationMaxHeight">
-        @foreach (var currentPage in PagesData)
+        @if(PagesData != null)
         {
-            <div class="DocumentationSection" id="Current_@currentPage.Id" >
-                <div class="row" style="display: block ruby;">
-                    <hr/>
-                        <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="OpenEditPageModal(@currentPage.Id)">Edit page</button>
-                        <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="DeletePage(@currentPage.Id)">Delete page</button>
-                    <hr/>
+            @foreach (var currentPage in PagesData)
+            {
+                <div class="DocumentationSection" id="Current_@currentPage.Id" >
+                    @if(UserRights.Documentation == 1)
+                    {
+                        <div class="row" style="display: block ruby;">
+                            <hr/>
+                                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="OpenEditPageModal(@currentPage.Id)">Edit page</button>
+                                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="DeletePage(@currentPage.Id)">Delete page</button>
+                            <hr/>
+                        </div>
+                    }
+                    <div class="DocumentationBody">
+                        @Html.Raw(currentPage.Content)
+                    </div>
                 </div>
-                <div class="DocumentationBody">
-                    @Html.Raw(currentPage.Content)
-                </div>
-            </div>
+            }        
         }
-        
-        <div class="row">
-            <hr/>
-                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="OpenNewPageModal(0)">Add new page</button>
-            <hr/>
-        </div>
-
-    </div>
-    <div class="col-md-3 DocumentationMaxHeight">
-        @foreach (var quickLink in PagesData)
+        @if(UserRights.Documentation == 1)
         {
             <div class="row">
-                <a href="#Current_@quickLink.Id" > @quickLink.Title</a>
+                <hr/>
+                    <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="OpenNewPageModal(0)">Add new page</button>
+                <hr/>
             </div>
+        }
+    </div>
+    <div class="col-md-3 DocumentationMaxHeight">
+        @if(PagesData != null)
+        {
+            @foreach (var quickLink in PagesData)
+            {
+                <div class="row SideLinkHolder">
+                    <a href="#Current_@quickLink.Id"  class="SideLink"> @quickLink.Title</a>
+                </div>
+            }
         }
     </div>
 </div>

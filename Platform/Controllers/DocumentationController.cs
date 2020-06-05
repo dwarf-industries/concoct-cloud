@@ -24,6 +24,12 @@ namespace Platform.Controllers
         public IActionResult Index(int Id)
         {
             ViewData["ProjectId"] = Id;
+            var user =  Request.HttpContext.User.Claims.ElementAt(1);
+            var currentUser = int.Parse(user.Value);
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                ViewData["UserRights"] = context.GetUserRights(currentUser,Id);
+            }
             return View();
         }
 
@@ -144,6 +150,14 @@ namespace Platform.Controllers
                  Id = id,
                  UserId = category,
                  ProjectId = projectId
+            });
+        }
+        [HttpGet]
+         public IActionResult GetBreadcrum(int id, int projectId) 
+        {
+            return ViewComponent("DocumentationBreadcrum", new IncomingIdRequest{
+                Id = id,
+                ProjectId = projectId
             });
          }
 

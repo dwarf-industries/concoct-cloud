@@ -2,7 +2,7 @@
     var ProjectId = ViewData["ProjectId"] as int?;
     var defaultIteration = ViewData["DefaultIteration"] as int?;
     var CurrentUser = ViewData["User"];
-    var UserRights = ViewData["GetChatRights"]as UserRights;
+    var UserRights = ViewData["UserRights"]as UserRights;
 
 }
 
@@ -105,9 +105,9 @@
     </div>
 </div>
 
-@* 
-@if(@UserRights.ChatChannelsRule == 1)
-{ *@
+
+@if(UserRights.Documentation == 1)
+{
 <script id="DocumentationGridRow" type="text/x-template" >
 <tr id="ChatChannelRow_${isParent}_${internalId}" >
     <td>
@@ -130,30 +130,29 @@
     </td>
 </tr>
 </script>
-@* }
+}
 else
-{ *@
-@* <script id="chatRowTemplate" type="text/x-template" >
-<tr>
+{
+ <script id="DocumentationGridRow" type="text/x-template" >
+<tr id="ChatChannelRow_${isParent}_${internalId}" >
     <td>
      ${if(isParent)}
-        <div class="nodetextHeading">
+        <div class="nodetextHeading"  onclick="Expand(${internalId})">
             <div class="row" style="padding:5px; margin:0;" >
                 <div class="col-md-12">
                     <span class="CategoryIcon"></span><span class="ChatTreeMainText">${nodeText}</span>
                 </div>
-                
             </div>
         </div>   
     ${else}
         <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId})">
-            <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>
+            <span class="ChatChannelIcon" style="padding-left:20px;"></span> <span class="ChatTreeMainText" >${nodeText}</span>
         </div>
     ${/if}
     </td>
 </tr>
-</script> *@
-@* } *@
+</script>
+}
 
 <script>
 var LastDataSource;
@@ -226,9 +225,11 @@ $( document ).ready(function() {
      
     function OpenChannel(id)
     {
-        
+        $("#BreadCrumbHolder").html("");
         $("#DocumentationPageControl").html("");
         $("#DocumentationPageControl").load('/Documentation/DocumentationPage?id='+id+'&&projectId=@ProjectId');
+        $("#BreadCrumbHolder").load("/Documentation/GetBreadcrum?id="+id+"&&projectId=@ProjectId");
+
         
     }
     function Expand(args)

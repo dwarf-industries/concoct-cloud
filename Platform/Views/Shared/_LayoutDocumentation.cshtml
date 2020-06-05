@@ -1,5 +1,6 @@
 @{
     var ProjectId = ViewData["ProjectId"] as int?;
+    var UserRights = ViewData["UserRights"] as UserRights;
 }
 
 <!doctype html>
@@ -50,8 +51,10 @@
                     <aside id="sidebar-documentation" style="overflow-x:hidden;">
                         <div class="main-menu">
                             <div class="table-content" style="padding:0;">
+                                @if(UserRights.Documentation == 1)
+                                {
                                     @await Component.InvokeAsync("DocumentationCategory", @ProjectId)
-
+                                }
                                 <div class="row">   
                                     @await Component.InvokeAsync("DocumentationNavigation", @ProjectId)
                                 </div>

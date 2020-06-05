@@ -17,6 +17,7 @@ namespace Rokono_Control.Models
         public short ManageIterations { get; set; }
         public short ManageUserdays { get; set; }
         public short ViewOtherPeoplesWork { get; set; }
+        public int? Documentation { get; set; }
 
         public virtual ICollection<AssociatedProjectMemberRights> AssociatedProjectMemberRights { get; set; }
     }

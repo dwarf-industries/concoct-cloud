@@ -1,10 +1,14 @@
 @{
     Layout = "~/Views/Shared/_LayoutDocumentation.cshtml";
     var ProjectId = ViewData["ProjectId"] as int?;
+    var Rights = ViewData["UserRights"] as UserRights;
 }
 <div class="row">
     <div class="col-md-9" id="BreadCrumbHolder">
-        
+        @await Component.InvokeAsync("DocumentationBreadcrum", new IncomingIdRequest{
+            ProjectId = @ProjectId.Value,
+            Id = 0
+        })
     </div>
     <div class="col-md-3">
         <input id="InputSeatchDocumentation"  style="margin: 5px;"/>

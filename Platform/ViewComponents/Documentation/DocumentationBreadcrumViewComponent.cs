@@ -7,8 +7,7 @@ namespace Platform.ViewComponents.Documentation
     using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
 
-        [ViewComponent(Name = "DocumentationBreadcrum")]
-
+    [ViewComponent(Name = "DocumentationBreadcrum")]
     public class DocumentationBreadcrumViewComponent : ViewComponent
     {
         private readonly RokonoControlContext Context;
@@ -24,9 +23,17 @@ namespace Platform.ViewComponents.Documentation
             ViewData["ProjectId"] = request.ProjectId;
             using(var context = new DatabaseController(Context, Configuration))
             {
-                ViewData["PageData"] = context.GetDocumentationPage(request.Id); 
+                if(request.Id != 0)
+                    ViewData["PageData"] = context.GetDocumentationCategoryName(request.Id);
+                else
+                {
+                    var defaultCategory = context.GetDocumentationDefaultCategory(request.ProjectId);
+                    ViewData["PageData"] =  context.GetDocumentationDefaultCategoryName(request.ProjectId); 
+                }
+                
+
             }
-            return View("/Views/Shared/Components/Documentation/DocumentationPage/Default.cshtml");
+            return View("/Views/Shared/Components/Documentation/DocumentationBreadcrum/Default.cshtml");
         }
     }
 }
