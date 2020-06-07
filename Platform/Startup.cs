@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Platform.DataHandlers;
+using Platform.DataHandlers.Interfaces;
 using Platform.Hubs;
 using Rokono_Control.Models;
 using RokonoControl;
@@ -49,9 +50,10 @@ namespace Rokono_Control
             );
             services.AddRazorPages();
             services.AddSignalR();
-             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie();
-
+            services.AddScoped<IAutherizationManager, AutherizationManager>();
+            services.AddHttpContextAccessor();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );

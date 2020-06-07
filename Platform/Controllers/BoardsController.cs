@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Platform.DataHandlers;
+using Platform.DataHandlers.Interfaces;
 using Platform.Models;
 using Rokono_Control;
 using Rokono_Control.DatabaseHandlers;
@@ -18,17 +20,20 @@ namespace RokonoControl.Controllers
         RokonoControlContext Context;
         IConfiguration Configuration;
 
-        public BoardsController(RokonoControlContext context, IConfiguration config)
+        AutherizationManager AutherizationManager {get; set;}
+        private int UserId {get; set;}
+
+
+        public BoardsController(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager,IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;
+            AutherizationManager = (AutherizationManager) autherizationManager;
+            UserId = AutherizationManager.GetCurrentUser(UserId,httpContextAccessor.HttpContext.Request);
         }
 
         public IActionResult Index(int projectId)
         {
-            var currentUser = this.User;
-            var id = currentUser.Claims.ElementAt(1);
-
             using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["ProjectId"] = projectId;
@@ -40,13 +45,10 @@ namespace RokonoControl.Controllers
 
         public IActionResult ProjectBacklog(int projectId, int workItemType)
         {
-            var currentUser = this.User;
-            var id = currentUser.Claims.ElementAt(1);
-
+ 
             using (var context = new DatabaseController(Context,Configuration))
             {
-                ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
-
+                ViewData["Projects"] = context.GetUserProjects(UserId);
                 ViewData["ProjectId"] = projectId;
                 ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
                 ViewData["ProjectName"] = context.GetProjectName(projectId);
@@ -59,12 +61,10 @@ namespace RokonoControl.Controllers
         }
         public IActionResult SprintBacklogs(int projectId, int boardId)
         {
-            var currentUser = this.User;
-            var id = currentUser.Claims.ElementAt(1);
-
+ 
             using (var context = new DatabaseController(Context,Configuration))
             {
-                ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
+                ViewData["Projects"] = context.GetUserProjects(UserId);
                 ViewData["ProjectId"] = projectId;
                 ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
                 ViewData["ProjectName"] = context.GetProjectName(projectId);
@@ -75,9 +75,7 @@ namespace RokonoControl.Controllers
 
         public IActionResult Sprints(int projectId, int iteration, int person)
         {
-            var currentUser = this.User;
-            var id = currentUser.Claims.ElementAt(1);
-
+ 
             using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["ProjectId"] = projectId;
@@ -85,7 +83,7 @@ namespace RokonoControl.Controllers
                 ViewData["ProjectName"] = context.GetProjectName(projectId);
                 ViewData["Iteration"] = iteration;
                 ViewData["Person"] = person;
-                ViewData["GetUserViewRights"] = context.CheckUserViewWorkitemRights(int.Parse(id.Value), projectId);
+                ViewData["GetUserViewRights"] = context.CheckUserViewWorkitemRights(UserId, projectId);
 
             }
             return View();
@@ -150,9 +148,8 @@ namespace RokonoControl.Controllers
             using (var context = new DatabaseController(Context,Configuration))
             {
                 var dataResult = new List<UserAccounts>();
-                var currentUser = this.User;
-                var email = currentUser.Claims.ElementAt(2).Value;
-                var userRights = context.GetUserAccounts(int.Parse(email));
+  
+                var userRights = AutherizationManager.ValidateUserRights(request.ProjectId, UserId,context);
                 if (userRights != null)
                 {
                     result.Add(new OutgoingIterationModel
@@ -188,9 +185,7 @@ namespace RokonoControl.Controllers
             var result = new List<BindingCards>();
             using (var context = new DatabaseController(Context,Configuration))
             {
-                var currentUser = this.User;
-                var email = currentUser.Claims.ElementAt(2).Value;
-                var userRights = context.GetUserAccounts(int.Parse(email));
+                var userRights = context.GetUserAccounts(UserId);
                 if (userRights != null)
                     result = context.GetProjectSprints(dataRequest, userRights.ProjectRights == 1 ? true : false, userRights.Id);
             }

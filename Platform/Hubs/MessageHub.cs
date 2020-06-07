@@ -2,9 +2,12 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Platform.DataHandlers;
+using Platform.DataHandlers.Interfaces;
 using Platform.Models;
 using Rokono_Control;
 using Rokono_Control.DatabaseHandlers;
@@ -16,11 +19,15 @@ namespace Platform.Hubs
     {
         RokonoControlContext DatabaseContext;
         IConfiguration Configuration;
-
-        public MessageHub(RokonoControlContext dbContext, IConfiguration config)
+        private  AutherizationManager AutherizationManager;
+        private int UserId;
+ 
+        public MessageHub(RokonoControlContext dbContext, IConfiguration config,IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             DatabaseContext = dbContext;
             Configuration = config;
+            AutherizationManager = (AutherizationManager)autherizationManager;
+            UserId = AutherizationManager.GetCurrentUser(UserId,httpContextAccessor.HttpContext.Request);
         }
 
        [Authorize(Roles = "User")]
@@ -38,7 +45,7 @@ namespace Platform.Hubs
                 var username = user.Claims.FirstOrDefault();// Call the broadcastMessage method to update clients.
                 using(var dbContext = new DatabaseController(DatabaseContext,Configuration))
                 {
-                    messageData.SenderName = dbContext.AddChatRoomMessage(messageData,int.Parse(user.Claims.ElementAt(1).Value));
+                    messageData.SenderName = dbContext.AddChatRoomMessage(messageData,UserId);
                 }
 
                 return  Clients.Others.SendAsync("ReciveMessage", JsonConvert.SerializeObject( new IncomingChatMessage{
@@ -57,20 +64,15 @@ namespace Platform.Hubs
         }
         [Authorize(Roles = "User")]
         public Task NotificationRecived()
-        {
-          var user = Context.User;
-            if (user != null)
+        {  
+           
+            var res = string.Empty;
+            using(var context = new DatabaseController(DatabaseContext,Configuration))
             {
-                 var res = string.Empty;
-                var userId = user.Claims.ElementAt(1);// Call the broadcastMessage method to update clients.
-                using(var context = new DatabaseController(DatabaseContext,Configuration))
-                {
-                    var notifications = context.GetNewNotifications(int.Parse(userId.Value));
-                    res = JsonConvert.SerializeObject(notifications);
-                }
-                return Clients.Caller.SendAsync("ReciveNotification", res);
+                var notifications = context.GetNewNotifications(UserId);
+                res = JsonConvert.SerializeObject(notifications);
             }
-            return null;
+            return Clients.Caller.SendAsync("ReciveNotification", res);
         }
         public override Task OnConnectedAsync()
         {

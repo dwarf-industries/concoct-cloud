@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Platform.DataHandlers;
+using Platform.DataHandlers.Interfaces;
 using Platform.Models;
 using Rokono_Control.DatabaseHandlers;
 using Rokono_Control.Models;
@@ -13,23 +16,26 @@ namespace Platform.Controllers
 
         RokonoControlContext Context;
         IConfiguration Configuration;
-
-        public NotificationController(RokonoControlContext context, IConfiguration config)
+        private  AutherizationManager AutherizationManager;
+        private int UserId;
+        public NotificationController(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;
+            AutherizationManager = (AutherizationManager)autherizationManager;
+            UserId = AutherizationManager.GetCurrentUser(UserId,httpContextAccessor.HttpContext.Request);
         }
-        
+
+
 
         [HttpPost]
         public JsonResult GenerateBacklogReport([FromBody] IncomingEmailReportRequest request)
         {
-            var currentUser = this.User;
-            var id = int.Parse(currentUser.Claims.ElementAt(1).Value);
+ 
             var account = default(UserAccounts);
             using(var context = new DatabaseController(Context, Configuration))
             {
-                account = context.GetUserAccount(id);
+                account = context.GetUserAccount(UserId);
                 var getBacklogWorkItems = context.BackgroundWorkItems(request.Items);
                 using(var notificationManager = new DataHandlers.NotificationHandler(Configuration))
                 {
@@ -42,11 +48,10 @@ namespace Platform.Controllers
         [HttpPost]
         public OutgoingJsonData AddNewNote([FromBody] IncomingNoteRequest note)
         {
-            var currentUser = this.User;
-            var id = int.Parse(currentUser.Claims.ElementAt(1).Value);
+ 
             using(var context = new DatabaseController(Context, Configuration))
             {
-                 context.AddNewUserNote(note, id);
+                 context.AddNewUserNote(note, UserId);
             }
 
             return new OutgoingJsonData { Data = ""};
@@ -55,11 +60,10 @@ namespace Platform.Controllers
         [HttpPost]
         public OutgoingJsonData NotificationRead([FromBody] IncomingIdRequest request)
         {
-            var currentUser = this.User;
-            var id = int.Parse(currentUser.Claims.ElementAt(1).Value);
+ 
             using(var context = new DatabaseController(Context,Configuration))
             {
-                context.NotificationRead(request.Id, id);
+                context.NotificationRead(request.Id, UserId);
             }
             return new OutgoingJsonData{};
         }
@@ -67,8 +71,7 @@ namespace Platform.Controllers
         [HttpPost]
         public OutgoingJsonData ChangeNotePosition([FromBody] IncomingNoteRequest note)
         {
-            var currentUser = this.User;
-            var id = int.Parse(currentUser.Claims.ElementAt(1).Value);
+ 
             using(var context = new DatabaseController(Context, Configuration))
             {
                  context.ChangeNotePosition(note);
@@ -79,8 +82,7 @@ namespace Platform.Controllers
         [HttpPost]
         public OutgoingJsonData DeleteNote([FromBody] IncomingNoteRequest note)
         {
-            var currentUser = this.User;
-            var id = int.Parse(currentUser.Claims.ElementAt(1).Value);
+      
             using(var context = new DatabaseController(Context, Configuration))
             {
                  context.DeleteNote(note);
@@ -91,8 +93,7 @@ namespace Platform.Controllers
         [HttpPost]
         public OutgoingJsonData EditNote([FromBody] IncomingNoteRequest note)
         {
-            var currentUser = this.User;
-            var id = int.Parse(currentUser.Claims.ElementAt(1).Value);
+ 
             using(var context = new DatabaseController(Context, Configuration))
             {
                  context.EditNote(note);
@@ -105,11 +106,10 @@ namespace Platform.Controllers
         public List<Notifications> GetUserNotifications([FromBody] IncomingNoteRequest note)
         {
             var result = new List<Notifications>();
-            var currentUser = this.User;
-            var id = int.Parse(currentUser.Claims.ElementAt(1).Value);
+ 
             using(var context = new DatabaseController(Context, Configuration))
             {
-                result = context.GetAllUserNotifications(id, note.ProjectId);
+                result = context.GetAllUserNotifications(UserId, note.ProjectId);
             }
 
             return result;

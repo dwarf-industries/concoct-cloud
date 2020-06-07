@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Platform.DataHandlers;
+using Platform.DataHandlers.Interfaces;
 using Platform.Models;
 using Rokono_Control.DatabaseHandlers;
 using Rokono_Control.Models;
@@ -13,22 +16,24 @@ namespace Platform.Controllers
     {
         RokonoControlContext Context;
         IConfiguration Configuration;
-
-        public DocumentationController(RokonoControlContext context, IConfiguration config)
+        private  AutherizationManager AutherizationManager;
+        private int UserId;
+        public DocumentationController(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;
+            AutherizationManager = (AutherizationManager)autherizationManager;
+            UserId = AutherizationManager.GetCurrentUser(UserId,httpContextAccessor.HttpContext.Request);
         }
 
 
         public IActionResult Index(int Id)
         {
             ViewData["ProjectId"] = Id;
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var currentUser = int.Parse(user.Value);
+ 
             using(var context = new DatabaseController(Context,Configuration))
             {
-                ViewData["UserRights"] = context.GetUserRights(currentUser,Id);
+                ViewData["UserRights"] = context.GetUserRights(UserId,Id);
             }
             return View();
         }
@@ -37,8 +42,7 @@ namespace Platform.Controllers
         public List<OutgoingChatItem> GetNavigation([FromBody] IncomingIdRequest request)
         {
             var result = new List<OutgoingChatItem>();
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var id = int.Parse(user.Value);
+ 
             using(var context = new DatabaseController(Context, Configuration))
             {
                 result = GetNavigation(request, context);
@@ -53,8 +57,7 @@ namespace Platform.Controllers
         {
           
             var result = new  List<OutgoingChatItem>();
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var id = int.Parse(user.Value);
+ 
             using(var context = new DatabaseController(Context, Configuration))
             {
                 context.AddNewDocumentationCategory(request);
@@ -71,8 +74,7 @@ namespace Platform.Controllers
         {
           
             var result = new  List<OutgoingChatItem>();
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var id = int.Parse(user.Value);
+ 
             using(var context = new DatabaseController(Context, Configuration))
             {
                 context.AddNewDocumentationCategoryField(request);
@@ -88,8 +90,7 @@ namespace Platform.Controllers
         {
           
             var result = new  List<OutgoingChatItem>();
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var id = int.Parse(user.Value);
+ 
             using(var context = new DatabaseController(Context, Configuration))
             {
                 context.AddNewDocumentationpage(request);
@@ -103,8 +104,7 @@ namespace Platform.Controllers
         {
           
             var result = new  List<OutgoingChatItem>();
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var id = int.Parse(user.Value);
+ 
             using(var context = new DatabaseController(Context, Configuration))
             {
                 context.UpdateDocumentationPage(request);
@@ -123,8 +123,7 @@ namespace Platform.Controllers
         {
           
             var result = new  List<OutgoingChatItem>();
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var id = int.Parse(user.Value);
+ 
             using(var context = new DatabaseController(Context, Configuration))
             {
                 context.DeleteDocumentationPage(request.Id);

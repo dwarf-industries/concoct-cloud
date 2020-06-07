@@ -27,11 +27,7 @@ namespace Rokono_Control.Controllers
 
         public IActionResult ManageProjectMemebers(int projectId)
         {
-            var currentUser = this.User;
-            var currentUserId = currentUser.Claims.ElementAt(1);
             ViewData["ProjectId"] = projectId;
- 
-          
             return View();
         }
         [HttpGet]

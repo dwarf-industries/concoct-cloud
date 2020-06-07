@@ -1,26 +1,27 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Platform.DataHandlers;
-using Platform.Models;
-using Rokono_Control.DatabaseHandlers;
-using Rokono_Control.Models;
-
 namespace Platform.Controllers
 {
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Platform.DataHandlers;
+    using Platform.DataHandlers.Interfaces;
+    using Platform.Models;
+    using Rokono_Control.DatabaseHandlers;
+    using Rokono_Control.Models;
     public class ChatController : Controller
     {
         RokonoControlContext Context;
         IConfiguration Configuration;
-
-        public ChatController(RokonoControlContext context, IConfiguration config)
+        AutherizationManager AutherizationManager;
+        public int UserId;
+        public ChatController(RokonoControlContext context, IConfiguration config,IAutherizationManager autherizationManager,IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;
+            AutherizationManager = (AutherizationManager)autherizationManager;
+            UserId = AutherizationManager.GetCurrentUser(UserId,httpContextAccessor.HttpContext.Request);
         }
 
         
@@ -30,8 +31,7 @@ namespace Platform.Controllers
         public List<ChatRoomRights> GetChatRoomRights([FromBody] IncomingIdRequest request)
         {
             var result = new List<ChatRoomRights>();
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var id = int.Parse(user.Value);
+     
             using(var context = new DatabaseController(Context, Configuration))
             {
                 result = context.GetChatRoomRights(request.Id);
@@ -46,8 +46,6 @@ namespace Platform.Controllers
         {
        
             var result = new List<ChatRooms>();
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var id = int.Parse(user.Value);
             using(var context = new DatabaseController(Context, Configuration))
             {
                 result = context.GetAllChatChannels(request.Id);
@@ -60,11 +58,10 @@ namespace Platform.Controllers
         public List<OutgoingChatItem> GetChatChannelsNavigation([FromBody] IncomingIdRequest request)
         {
             var result = new List<OutgoingChatItem>();
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var id = int.Parse(user.Value);
+    
             using(var context = new DatabaseController(Context, Configuration))
             {
-                result = context.GetChatChannels(request.Id, id);
+                result = context.GetChatChannels(request.Id, UserId);
             }
             return result;
         }
@@ -75,12 +72,11 @@ namespace Platform.Controllers
         {
           
             var result = new  List<OutgoingChatItem>();
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var id = int.Parse(user.Value);
+ 
             using(var context = new DatabaseController(Context, Configuration))
             {
                 context.AddNewChatChannel(request);
-                result = context.GetChatChannels(request.Id,id);
+                result = context.GetChatChannels(request.Id,UserId);
             }
             return result;
         }
@@ -93,12 +89,11 @@ namespace Platform.Controllers
         {
             
             var result = new  List<OutgoingChatItem>();
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var id = int.Parse(user.Value);
+ 
             using(var context = new DatabaseController(Context, Configuration))
             {
                 context.AddNewChatRoom(request);
-                result = context.GetChatChannels(request.WorkItemType,id);
+                result = context.GetChatChannels(request.WorkItemType,UserId);
             }
             return result;
         }
@@ -111,8 +106,6 @@ namespace Platform.Controllers
         {
           
             var result = default(ChatRoomRights);
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var id = int.Parse(user.Value);
             using(var context = new DatabaseController(Context, Configuration))
             {
                 result = context.AssignUserTag(request.Id, request.ProjectId, request.UserId);
@@ -127,11 +120,10 @@ namespace Platform.Controllers
         public List<AssociatedUserChatNotifications> GetChannelNotifications([FromBody] IncomingIdRequest request)
         {
             var result = new  List<AssociatedUserChatNotifications>();
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var id = int.Parse(user.Value);
+ 
             using(var context = new DatabaseController(Context, Configuration))
             {
-                result = context.GetChatNotifications(request.Id, id);
+                result = context.GetChatNotifications(request.Id, UserId);
             }
             return result;
         }
@@ -142,8 +134,7 @@ namespace Platform.Controllers
         public OutgoingJsonData DeleteUserTag([FromBody] IncomingIdRequest request)
         {
           
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var id = int.Parse(user.Value);
+ 
             using(var context = new DatabaseController(Context, Configuration))
             {
                 context.RemoveUserTag(request.Id, request.UserId, request.ProjectId);
@@ -155,10 +146,8 @@ namespace Platform.Controllers
         [Authorize (Roles = "ChatAdministrator")]
 //        [ValidateAntiForgeryToken]
         public OutgoingJsonData TagUpdate([FromBody] IncomingChatRoomRights request)
-        {
-            
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var id = int.Parse(user.Value);
+        {           
+ 
             using(var context = new DatabaseController(Context, Configuration))
             {
                 
@@ -171,10 +160,6 @@ namespace Platform.Controllers
 //        [ValidateAntiForgeryToken]
         public OutgoingJsonData TagSave([FromBody] IncomingChatRoomRights request)
         {
-        
-
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var id = int.Parse(user.Value);
             using(var context = new DatabaseController(Context, Configuration))
             {
                 context.InserTag(request);
@@ -186,11 +171,9 @@ namespace Platform.Controllers
 //        [ValidateAntiForgeryToken]
         public IActionResult GetChatRoom(int id, int projectId) 
         {
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var userId = int.Parse(user.Value);
             using(var context = new  DatabaseController(Context,Configuration))
             {
-                context.UserChatChannelRead(userId, projectId, id);
+                context.UserChatChannelRead(UserId, projectId, id);
             }
             return ViewComponent("ChatWIndow", new IncomingIdRequest{
                 Id = id,

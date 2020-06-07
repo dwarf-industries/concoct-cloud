@@ -39,8 +39,7 @@ namespace Platform.Controllers
         [HttpPost]
         public OutgoingJsonData EnableProjectFeature([FromBody] IncomignFeatureRequest request)
         {
-            var currentUser = this.User;
-            var id = int.Parse(currentUser.Claims.ElementAt(1).Value);
+         
             using(var context = new DatabaseController(Context,Configuration))
             {
                 // if()

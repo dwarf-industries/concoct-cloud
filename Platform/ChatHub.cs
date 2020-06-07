@@ -1,9 +1,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Platform.DataHandlers;
+using Platform.DataHandlers.Interfaces;
 using Rokono_Control.DatabaseHandlers;
 using Rokono_Control.Models;
 
@@ -13,10 +16,16 @@ namespace RokonoControl
     {
         RokonoControlContext RokonoContext;
         IConfiguration Configuration;
-        public ChatHub(RokonoControlContext context, IConfiguration config)
+
+        public AutherizationManager AutherizationManager { get; }
+        public int UserId { get; }
+
+        public ChatHub(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager,IHttpContextAccessor httpContextAccessor)
         {
             RokonoContext = context;
             Configuration = config;
+            AutherizationManager = (AutherizationManager) autherizationManager;
+            UserId = AutherizationManager.GetCurrentUser(UserId,httpContextAccessor.HttpContext.Request);
         }
 
 
@@ -40,11 +49,11 @@ namespace RokonoControl
           var user = Context.User;
             if (user != null)
             {
-                 var res = string.Empty;
-                var userId = user.Claims.ElementAt(1);// Call the broadcastMessage method to update clients.
+                var res = string.Empty;
+            
                 using(var context = new DatabaseController(RokonoContext,Configuration))
                 {
-                    var notifications = context.GetNewNotifications(userId.Value);
+                    var notifications = context.GetNewNotifications(UserId);
                     res = JsonConvert.SerializeObject(notifications);
                 }
                 return Clients.Caller.SendAsync("ReciveNotification", res);

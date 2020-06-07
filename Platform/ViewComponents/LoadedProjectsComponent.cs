@@ -1,30 +1,34 @@
 namespace Platform.ViewComponents
 {
     using System.Linq;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Platform.DataHandlers;
+    using Platform.DataHandlers.Interfaces;
     using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
 
     public class LoadedProjectsViewComponent : ViewComponent
     {
-         private readonly RokonoControlContext Context;
-         private readonly IConfiguration Configuration;
-
-        public LoadedProjectsViewComponent(RokonoControlContext context, IConfiguration config)
+        private readonly RokonoControlContext Context;
+        private readonly IConfiguration Configuration;
+        private  AutherizationManager AutherizationManager;
+        private int UserId;
+ 
+        public LoadedProjectsViewComponent(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;
+            AutherizationManager = (AutherizationManager)autherizationManager;
+            UserId = AutherizationManager.GetCurrentUser(UserId,httpContextAccessor.HttpContext.Request);
         }
 
         public IViewComponentResult Invoke(int projectId)
         {
-            
-            var user =  Request.HttpContext.User.Claims.ElementAt(1);
-            var Id = int.Parse(user.Value);
             using(var context = new DatabaseController(Context,Configuration))
             {
-                var projects =  context.GetUserProjects(Id);
+                var projects =  context.GetUserProjects(UserId);
                 var current = projects.FirstOrDefault(x=>x.Id == projectId);
                 ViewData["Projects"] = projects;
                 ViewData["SelectedIndex"] = projects.IndexOf(current);

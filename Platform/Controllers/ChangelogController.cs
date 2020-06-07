@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Platform.DataHandlers;
+using Platform.DataHandlers.Interfaces;
 using Platform.Models;
 using Rokono_Control.DatabaseHandlers;
 using Rokono_Control.Models;
@@ -15,23 +17,26 @@ namespace Platform.Controllers
     {
         RokonoControlContext Context {get; set;}
         IConfiguration Config { get; set;}
-
-        public ChangelogController(RokonoControlContext context,IConfiguration currentConfig)
+        AutherizationManager AutherizationManager {get; set;}
+        private int UserId {get; set;}
+        public ChangelogController(RokonoControlContext context,IConfiguration currentConfig, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Config = currentConfig;
+            AutherizationManager = (AutherizationManager) autherizationManager;
+            UserId = AutherizationManager.GetCurrentUser(UserId,httpContextAccessor.HttpContext.Request);
+
+            
         }
         public IActionResult ViewChangelogs(int projectId)
         {
             var currentUser = this.User;
-
-            var id = currentUser.Claims.ElementAt(1);
-            var currentId = int.Parse(id.Value);
+    
             using(var context = new DatabaseController(Context,Config))
             {            
 
                 ViewData["ProjectId"] = projectId;
-                ViewData["Name"] = context.GetUsername(currentId);
+                ViewData["Name"] = context.GetUsername(UserId);
                 ViewData["Changelogs"] = context.GetProjectChangelogs(projectId);
             }
             return View();
@@ -53,14 +58,12 @@ namespace Platform.Controllers
 
         public IActionResult EditChangelog(int projectId,int changelog)
         {
-            var currentUser = this.User;
-            var id = currentUser.Claims.ElementAt(1);
-            var currentId = int.Parse(id.Value);
+ 
             using(var context = new DatabaseController(Context,Config))
             {            
 
                 ViewData["ProjectId"] = projectId;
-                ViewData["Name"] = context.GetUsername(currentId);
+                ViewData["Name"] = context.GetUsername(UserId);
                 ViewData["Changelog"] = context.GetSpecificChangelog(changelog);
             }
             return View();

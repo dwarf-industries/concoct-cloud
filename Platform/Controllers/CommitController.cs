@@ -2,8 +2,11 @@ namespace RokonoControl.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Platform.DataHandlers;
+    using Platform.DataHandlers.Interfaces;
     using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
     using RokonoControl.Models;
@@ -13,21 +16,23 @@ namespace RokonoControl.Controllers
 
         RokonoControlContext Context;
         IConfiguration Configuration;
-
-        public CommitController(RokonoControlContext context, IConfiguration config)
+        AutherizationManager AutherizationManager;
+        private int UserId;
+ 
+        public CommitController(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;
+            AutherizationManager = (AutherizationManager)autherizationManager;
+            UserId = AutherizationManager.GetCurrentUser(UserId,httpContextAccessor.HttpContext.Request);
         }
         public IActionResult Index(int projectId)
         {
-            var currentUser = this.User;
-            var id = currentUser.Claims.ElementAt(1);
+     
 
             using (var context = new DatabaseController(Context,Configuration))
             {
-                ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
-
+                ViewData["Projects"] = context.GetUserProjects(UserId);
                 ViewData["Relationships"] = context.GetProjectRelationships();
                 ViewData["Branches"] = context.GetBranchesForProject(projectId);
                 ViewData["DefaultIteration"] = context.GetProjectDefautIteration(projectId);
@@ -39,9 +44,7 @@ namespace RokonoControl.Controllers
 
         public IActionResult CommitData(string commitId, int projectId, int branchId)
         {
-            var currentUser = this.User;
-            var id = currentUser.Claims.ElementAt(1);
-
+    
             ViewData["CommitKey"] = commitId;
             ViewData["BranchId"] = branchId;
             ViewData["ProjectId"] = projectId;
@@ -50,14 +53,13 @@ namespace RokonoControl.Controllers
         }
         public IActionResult Files(int projectId)
         {
-            var currentUser = this.User;
-            var id = currentUser.Claims.ElementAt(1);
+ 
 
 
             ViewData["ProjectId"] = projectId;
             using (var context = new DatabaseController(Context,Configuration))
             {
-                ViewData["Projects"] = context.GetUserProjects(int.Parse(id.Value));
+                ViewData["Projects"] = context.GetUserProjects(UserId);
 
                 ViewData["Relationships"] = context.GetProjectRelationships();
                 var bindingBranches = context.GetProjectBranches(projectId);
