@@ -1,6 +1,7 @@
 namespace Platform.ViewComponents.Documentation
 {
     using System.Linq;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Platform.DataHandlers;
@@ -16,12 +17,12 @@ namespace Platform.ViewComponents.Documentation
         AutherizationManager AutherizationManager;
         int UserId;
 
-        public DocumentationPageViewComponent(RokonoControlContext context, IConfiguration configuration, IAutherizationManager autherizationManager)
+        public DocumentationPageViewComponent(RokonoControlContext context, IConfiguration configuration, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = configuration;
             AutherizationManager = (AutherizationManager)autherizationManager;
-            UserId = AutherizationManager.GetCurrentUser(UserId,Request);
+            UserId = AutherizationManager.GetCurrentUser(UserId,httpContextAccessor.HttpContext.Request);
         }
         public IViewComponentResult Invoke(IncomingIdRequest request)
         {

@@ -130,6 +130,32 @@ namespace Platform.Controllers
             }
             return result;
         }
+        [HttpPost]
+        [Authorize (Roles = "ChatAdministrator")]
+//        [ValidateAntiForgeryToken]
+        public List<OutgoingChatItem> DeleteCategoryField([FromBody] IncomingIdRequest request)
+        {
+            var result = new  List<OutgoingChatItem>();
+ 
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                context.DeleteCategoryField(request.Id);
+            }
+            return result;
+        }
+        [HttpPost]
+        [Authorize (Roles = "ChatAdministrator")]
+//        [ValidateAntiForgeryToken]
+        public List<OutgoingChatItem> DeleteCategory([FromBody] IncomingIdRequest request)
+        {
+            var result = new  List<OutgoingChatItem>();
+ 
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                context.DeleteCategory(request.Id);
+            }
+            return result;
+        }
         [HttpGet]
         [Authorize (Roles = "ChatAdministrator")]
 //        [ValidateAntiForgeryToken]

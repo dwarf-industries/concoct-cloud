@@ -116,6 +116,30 @@ namespace Rokono_Control.DatabaseHandlers
             Context.SaveChanges();
         }
 
+        internal void DeleteCategoryField(int id)
+        {
+            var category = Context.DocumentationCategoryField.FirstOrDefault(x=>x.Id == id);
+            var categoryPages = Context.AssociatedDocumentationCategoryPage.Where(x => x.CategoryField == category.Id)
+                                                                           .ToList();
+            Context.AssociatedDocumentationCategoryPage.RemoveRange(categoryPages);
+            Context.DocumentationCategoryField.Remove(category);
+            Context.SaveChanges();       }
+
+        internal void DeleteCategory(int id)
+        {
+            var category = Context.DocumentationCategory.FirstOrDefault(x=>x.Id == id);
+            
+            var categoryFields = Context.DocumentationCategoryField.Where(x=>x.CategoryId == id).ToList();
+            categoryFields.ForEach(x=>{
+                var categoryField = x;
+                var categoryPages = Context.AssociatedDocumentationCategoryPage.Where(x => x.CategoryField == categoryField.Id).ToList();
+                Context.AssociatedDocumentationCategoryPage.RemoveRange(categoryPages);
+                Context.DocumentationCategoryField.Remove(categoryField);
+            });
+            Context.DocumentationCategory.Remove(category);
+            Context.SaveChanges();
+        }
+
         internal void AddNewDocumentationCategory(IncomingIdRequest request)
         {
             var getDocumentation = Context.Documentation.FirstOrDefault(x=> x.ProjectId == request.ProjectId);

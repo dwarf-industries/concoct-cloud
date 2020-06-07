@@ -7,6 +7,13 @@
 }
 
 <style>
+    
+    .DocumentationRemoveIcon:before{
+        content:'\e7fc';
+        font-family: e-icons;
+        padding:3px;
+        font-size: 13px;
+    }
     .ChatChannelIcon:before{
         content:'\e99a';
         font-family: e-icons;
@@ -30,6 +37,10 @@
     }
     .TreeNewItem:hover{
         color:rgb(230, 50, 111);
+    }
+    .DocumentationRemoveIcon:hover{
+        color:rgb(230, 50, 111);
+        cursor: pointer;
     }
     .ChatChannelIcon:hover{
         color:rgb(230, 50, 111);
@@ -112,19 +123,28 @@
 <tr id="ChatChannelRow_${isParent}_${internalId}" >
     <td>
      ${if(isParent)}
-        <div class="nodetextHeading"  onclick="Expand(${internalId})">
+        <div class="nodetextHeading" id="rowCat_${internalId}"  onclick="Expand(${internalId})">
             <div class="row" style="padding:5px; margin:0;" >
                 <div class="col-md-9">
                     <span class="CategoryIcon"></span><span class="ChatTreeMainText">${nodeText}</span>
                 </div>
-                <div class="col-md-2"   >
+                <div class="col-md-2" style="display: contents;">
                     <span onclick="AddNewCategoryField(2,${internalId})" class="TreeNewItem"></span>
+                    <span onclick="DeleteDocCategory(${internalId})" class="DocumentationRemoveIcon"></span>
+
                 </div>
             </div>
         </div>   
     ${else}
         <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId})">
-            <span class="ChatChannelIcon" style="padding-left:20px;"></span> <span class="ChatTreeMainText" >${nodeText}</span>
+            <div class="row">
+                <div class="col-md-9">
+                    <span class="ChatChannelIcon" style="padding-left:20px;"></span> <span class="ChatTreeMainText" >${nodeText}</span>
+                </div>
+                <div class="col-md-2"   >
+                    <span onclick="DeleteCategoryField(${internalId})" class="DocumentationRemoveIcon"></span>
+                </div>
+            </div>
         </div>
     ${/if}
     </td>
@@ -176,27 +196,52 @@ $( document ).ready(function() {
         }
     }); 
 });
-    @* var chatMenuGridObj;
-    
-    
-    var dto = {
-        "Id":@ProjectId,
-         
-    }
-    $.ajax({
-        type: 'POST',
-        url: '/Chat/GetChatChannelsNavigation',
-        data: JSON.stringify(dto),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (response) {
-            InitializeChatItems(response);
-        },
-        error: function (xhr, status, error) {
-            console.log(error);
-        }
-    }); *@
+ 
+    function DeleteCategoryField(id)
+    {
+        console.log(id);
+        $("#ChatChannelRow_undefined_"+id).hide();
+        var dto = 
+        {
+            "Id":id
+        }   
+        $.ajax({
+            type: 'POST',
+            url: '/Documentation/DeleteCategoryField',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
 
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        }); 
+    }
+
+    function DeleteDocCategory(id)
+    {
+        Expand(id);
+        $("#ChatChannelRow_true_"+id).hide();
+        var dto = 
+        {
+            "Id":id
+        }   
+        $.ajax({
+            type: 'POST',
+            url: '/Documentation/DeleteCategory',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        }); 
+    }
     var URL = location.href.replace(location.search, '');
     
      
@@ -234,7 +279,6 @@ $( document ).ready(function() {
     }
     function Expand(args)
     {
-        console.log(LastDataSource);
         LastDataSource.forEach(x=>{
             var expand =false;
             if(x.internalId === args && x.isExpand === 1)
@@ -253,16 +297,12 @@ $( document ).ready(function() {
                 {
                     if(expand)
                     {
-                        console.log(args);
-                        console.log(y.parentId);
-                        console.log(y.internalId);
+                        
                         $("#ChatChannelRow_undefined_"+y.internalId).show();
                     }
                     else
                     {
-                        console.log(args);
-                        console.log(y.parentId);
-                        console.log(y.internalId);
+                      
                         $("#ChatChannelRow_undefined_"+y.internalId).hide();
                     }
                 }
