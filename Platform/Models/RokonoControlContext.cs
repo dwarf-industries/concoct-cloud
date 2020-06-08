@@ -20,6 +20,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedBoardWorkItems> AssociatedBoardWorkItems { get; set; }
         public virtual DbSet<AssociatedBranchCommits> AssociatedBranchCommits { get; set; }
         public virtual DbSet<AssociatedChatChannelMessages> AssociatedChatChannelMessages { get; set; }
+        public virtual DbSet<AssociatedChatPersonalMessages> AssociatedChatPersonalMessages { get; set; }
         public virtual DbSet<AssociatedChatRoomRights> AssociatedChatRoomRights { get; set; }
         public virtual DbSet<AssociatedCommitFiles> AssociatedCommitFiles { get; set; }
         public virtual DbSet<AssociatedDocumentationCategoryPage> AssociatedDocumentationCategoryPage { get; set; }
@@ -81,8 +82,6 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemSeverities> WorkItemSeverities { get; set; }
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
-
-      
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -158,6 +157,29 @@ namespace Rokono_Control.Models
                     .WithMany(p => p.AssociatedChatChannelMessages)
                     .HasForeignKey(d => d.PublicMessageId)
                     .HasConstraintName("FK__Associate__Publi__4C0144E4");
+            });
+
+            modelBuilder.Entity<AssociatedChatPersonalMessages>(entity =>
+            {
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.AssociatedChatPersonalMessages)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK__Associate__Proje__1EF99443");
+
+                entity.HasOne(d => d.PublicMessage)
+                    .WithMany(p => p.AssociatedChatPersonalMessages)
+                    .HasForeignKey(d => d.PublicMessageId)
+                    .HasConstraintName("FK__Associate__Publi__1FEDB87C");
+
+                entity.HasOne(d => d.Reciver)
+                    .WithMany(p => p.AssociatedChatPersonalMessagesReciver)
+                    .HasForeignKey(d => d.ReciverId)
+                    .HasConstraintName("FK__Associate__Reciv__21D600EE");
+
+                entity.HasOne(d => d.Sender)
+                    .WithMany(p => p.AssociatedChatPersonalMessagesSender)
+                    .HasForeignKey(d => d.SenderId)
+                    .HasConstraintName("FK__Associate__Sende__20E1DCB5");
             });
 
             modelBuilder.Entity<AssociatedChatRoomRights>(entity =>

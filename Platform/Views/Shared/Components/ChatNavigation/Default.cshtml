@@ -117,8 +117,12 @@
                 </div>
             </div>
         </div>   
+     ${else if(isPersonal)}
+        <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId},1)">
+            <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>
+        </div>
     ${else}
-        <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId})">
+        <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId},0)">
             <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>
         </div>
     ${/if}
@@ -140,8 +144,12 @@ else
                 
             </div>
         </div>   
+     ${else if(isPersonal)}
+        <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId},1)">
+            <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>
+        </div>
     ${else}
-        <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId})">
+        <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId}, 0)">
             <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>
         </div>
     ${/if}
@@ -221,13 +229,13 @@ $( document ).ready(function() {
         chatMenuGridObj.appendTo('#chat-treeview');
     }
      
-    function OpenChannel(id)
+    function OpenChannel(id, isPersonal)
     {
         $( "#ChatChannel_"+id ).removeClass("NewMessage");
         ActiveUser.ActiveRoom = id;
         console.log("in");
         console.log(id);
-        $("#MainChatContent").load('/Chat/GetChatRoom?id='+id+'&&projectId=@ProjectId');
+        $("#MainChatContent").load('/Chat/GetChatRoom?id='+id+'&&projectId='+@ProjectId+'&&isPersonal='+isPersonal);
          @* $.ajax({
             type: 'GET',
             url: '/Chat/GetChatRoom?id='+id,

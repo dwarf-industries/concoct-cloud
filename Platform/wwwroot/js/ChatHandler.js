@@ -102,20 +102,21 @@ chatConnectionBuilder.on("ReciveNotification", (data) => {
 
 
 });
- 
-chatConnectionBuilder.start().catch(x => console.log(x.toString()));
-$("#InputChat").on("keydown", function(e) {
-    if (e.which == 13) {
-        SendChatRoomMessage();
-    }
+  
+chatConnectionBuilder.on("ReciveNewNotification", (data) => {
+    console.log(data);
+    var getData = JSON.parse(data);
+    ShowNotification(getData);
 });
+chatConnectionBuilder.start().catch(x => console.log(x.toString()));
+
 
 $('body > div > div > div:nth-child(2) > span').click(function() {
     $("#InputChat").trigger({ type: 'keydown', which: 13, keyCode: 13 });
 })
 
 
-function SendChatRoomMessage() {
+function SendChatRoomMessage(IsPersonal, ReciverId) {
     var text = $("#InputChat").val();
     if (text !== "") {
         var date = formatAMPM(new Date());
@@ -143,7 +144,9 @@ function SendChatRoomMessage() {
         var OutgoingChatHubData = {
             "ActiveRoom" : ActiveUser.ActiveRoom,
             "ProjectId" : ActiveUser.ProjectId,
-            "Message" : text
+            "Message" : text,
+            "IsPersonal" : IsPersonal,
+            "ReciverId" : ReciverId
         };
         console.log(OutgoingChatHubData);
         var sendingResult =  JSON.stringify(OutgoingChatHubData);

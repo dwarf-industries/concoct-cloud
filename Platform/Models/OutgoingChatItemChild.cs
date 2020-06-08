@@ -10,5 +10,6 @@ namespace Platform.Models
         public string Link { get; set; }
         public int ChannelType { get; set; }
         public int ParentId {get; set;}
+        public bool IsPersonal { get; set; }
     }
 }

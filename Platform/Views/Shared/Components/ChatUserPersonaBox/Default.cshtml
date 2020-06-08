@@ -45,7 +45,7 @@
 </style>
 
 <div class="row">
-    <input id="@InputName"  style="margin: 5px;"/>
+    <input id="@InputName" onkeyup="UserKeyPressed()" style="margin: 5px;"/>
 </div>
 @if(AdministrativeRights.ChatChannelsRule == 1)
 {
@@ -126,6 +126,38 @@ function DeletingTag(currentTag)
             }
     });
     CloseChatUserPreview();
+}
+
+function UserKeyPressed(args)
+{
+     // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13)
+    {
+        
+        // Cancel the default action, if needed
+        console.log("enter pressed");
+        var dto = 
+        {
+            "ProjectId": @ProjectId,
+            "Message" :$("#@InputName").val(),
+            "ReciverId" : @UserId
+        }
+
+        $.ajax({
+                type: 'POST',
+                url: '/Chat/NewPersonalMessage',
+                data: JSON.stringify(dto),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                
+                success: function (response) {
+                    $(@InputName).val("");
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+        });
+    }
 }
 </script>
 

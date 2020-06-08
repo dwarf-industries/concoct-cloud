@@ -74,6 +74,16 @@ namespace Platform.Hubs
             }
             return Clients.Caller.SendAsync("ReciveNotification", res);
         }
+        
+       public static void SendNewNotification(IHubContext<MessageHub> hubContext, HubMappedMembers reciverData, Notifications notification)
+       {
+           notification.AssociatedProjectNotifications = null;
+           notification.AssociatedUserNotifications = null;
+            hubContext.Clients
+                      .Client(reciverData.Id)
+                      .SendAsync("ReciveNewNotification",
+                      JsonConvert.SerializeObject(notification));
+       }
         public override Task OnConnectedAsync()
         {
             

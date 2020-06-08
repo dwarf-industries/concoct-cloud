@@ -8,6 +8,7 @@ namespace Rokono_Control.Models
         public PublicMessages()
         {
             AssociatedChatChannelMessages = new HashSet<AssociatedChatChannelMessages>();
+            AssociatedChatPersonalMessages = new HashSet<AssociatedChatPersonalMessages>();
             AssociatedProjectFeedback = new HashSet<AssociatedProjectFeedback>();
             AssociatedProjectPublicDiscussions = new HashSet<AssociatedProjectPublicDiscussions>();
         }
@@ -20,6 +21,7 @@ namespace Rokono_Control.Models
         public int? SenderId { get; set; }
 
         public virtual ICollection<AssociatedChatChannelMessages> AssociatedChatChannelMessages { get; set; }
+        public virtual ICollection<AssociatedChatPersonalMessages> AssociatedChatPersonalMessages { get; set; }
         public virtual ICollection<AssociatedProjectFeedback> AssociatedProjectFeedback { get; set; }
         public virtual ICollection<AssociatedProjectPublicDiscussions> AssociatedProjectPublicDiscussions { get; set; }
     }

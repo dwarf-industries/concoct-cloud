@@ -41,7 +41,7 @@
                             <b>Rokono Control</b>
                         </li>
                      
-                        <li class="header-style float-right support border-left" ><b>Return</b></li>
+                        <li class="header-style float-right support border-left" onclick="ReturnToCaller()"><b>Return</b></li>
                         <li class="header-style float-right support border-left" style="margin:0;"><input id="InputSearchTop"  /></li>
                     </ul>
                 </div>
@@ -99,7 +99,10 @@
     });
     InputSearchTop.appendTo('#InputSearchTop');
          // Sidebar Initialization
-  
+    function ReturnToCaller()
+    {
+        window.location=document.referrer;
+    }
     </script>
 
 </body>

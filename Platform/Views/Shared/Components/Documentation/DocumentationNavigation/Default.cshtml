@@ -97,7 +97,7 @@
     }
     .nodetextHeading
     {
-        ont-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
         padding: 2%;
         font-size: 18px;
         text-align: left;
@@ -119,59 +119,59 @@
 
 @if(UserRights.Documentation == 1)
 {
-<script id="DocumentationGridRow" type="text/x-template" >
-<tr id="ChatChannelRow_${isParent}_${internalId}" >
-    <td>
-     ${if(isParent)}
-        <div class="nodetextHeading" id="rowCat_${internalId}"  onclick="Expand(${internalId})">
-            <div class="row" style="padding:5px; margin:0;" >
-                <div class="col-md-9">
-                    <span class="CategoryIcon"></span><span class="ChatTreeMainText">${nodeText}</span>
-                </div>
-                <div class="col-md-2" style="display: contents;">
-                    <span onclick="AddNewCategoryField(2,${internalId})" class="TreeNewItem"></span>
-                    <span onclick="DeleteDocCategory(${internalId})" class="DocumentationRemoveIcon"></span>
+    <script id="DocumentationGridRow" type="text/x-template" >
+        <tr id="ChatChannelRow_${isParent}_${internalId}" >
+            <td>
+            ${if(isParent)}
+                <div class="nodetextHeading" id="rowCat_${internalId}"  onclick="Expand(${internalId})">
+                    <div class="row" style="padding:5px; margin:0;" >
+                        <div class="col-md-9">
+                            <span class="CategoryIcon"></span><span class="ChatTreeMainText">${nodeText}</span>
+                        </div>
+                        <div class="col-md-2" style="display: contents;">
+                            <span onclick="AddNewCategoryField(2,${internalId})" class="TreeNewItem"></span>
+                            <span onclick="DeleteDocCategory(${internalId})" class="DocumentationRemoveIcon"></span>
 
+                        </div>
+                    </div>
+                </div>   
+            ${else}
+                <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId})">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <span class="ChatChannelIcon" style="padding-left:20px;"></span> <span class="ChatTreeMainText" >${nodeText}</span>
+                        </div>
+                        <div class="col-md-2"   >
+                            <span onclick="DeleteCategoryField(${internalId})" class="DocumentationRemoveIcon"></span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>   
-    ${else}
-        <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId})">
-            <div class="row">
-                <div class="col-md-9">
-                    <span class="ChatChannelIcon" style="padding-left:20px;"></span> <span class="ChatTreeMainText" >${nodeText}</span>
-                </div>
-                <div class="col-md-2"   >
-                    <span onclick="DeleteCategoryField(${internalId})" class="DocumentationRemoveIcon"></span>
-                </div>
-            </div>
-        </div>
-    ${/if}
-    </td>
-</tr>
-</script>
+            ${/if}
+            </td>
+        </tr>
+    </script>
 }
 else
 {
- <script id="DocumentationGridRow" type="text/x-template" >
-<tr id="ChatChannelRow_${isParent}_${internalId}" >
-    <td>
-     ${if(isParent)}
-        <div class="nodetextHeading"  onclick="Expand(${internalId})">
-            <div class="row" style="padding:5px; margin:0;" >
-                <div class="col-md-12">
-                    <span class="CategoryIcon"></span><span class="ChatTreeMainText">${nodeText}</span>
+    <script id="DocumentationGridRow" type="text/x-template" >
+        <tr id="ChatChannelRow_${isParent}_${internalId}" >
+            <td>
+            ${if(isParent)}
+                <div class="nodetextHeading"  onclick="Expand(${internalId})">
+                    <div class="row" style="padding:5px; margin:0;" >
+                        <div class="col-md-12">
+                            <span class="CategoryIcon"></span><span class="ChatTreeMainText">${nodeText}</span>
+                        </div>
+                    </div>
+                </div>   
+            ${else}
+                <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId})">
+                    <span class="ChatChannelIcon" style="padding-left:20px;"></span> <span class="ChatTreeMainText" >${nodeText}</span>
                 </div>
-            </div>
-        </div>   
-    ${else}
-        <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId})">
-            <span class="ChatChannelIcon" style="padding-left:20px;"></span> <span class="ChatTreeMainText" >${nodeText}</span>
-        </div>
-    ${/if}
-    </td>
-</tr>
-</script>
+            ${/if}
+            </td>
+        </tr>
+    </script>
 }
 
 <script>
@@ -179,7 +179,7 @@ var LastDataSource;
 var DocumentationNavigation;
 $( document ).ready(function() {
     var dtoNotifications = {
-        "ProjectId":@ProjectId,
+        "ProjectId": @ProjectId,
          
     }
     $.ajax({

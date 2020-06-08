@@ -8,6 +8,8 @@ namespace Rokono_Control.Models
         public UserAccounts()
         {
             AssociatedAccountNotes = new HashSet<AssociatedAccountNotes>();
+            AssociatedChatPersonalMessagesReciver = new HashSet<AssociatedChatPersonalMessages>();
+            AssociatedChatPersonalMessagesSender = new HashSet<AssociatedChatPersonalMessages>();
             AssociatedProjectMemberRights = new HashSet<AssociatedProjectMemberRights>();
             AssociatedProjectMembers = new HashSet<AssociatedProjectMembers>();
             AssociatedProjectNotifications = new HashSet<AssociatedProjectNotifications>();
@@ -29,6 +31,8 @@ namespace Rokono_Control.Models
         public string Salt { get; set; }
 
         public virtual ICollection<AssociatedAccountNotes> AssociatedAccountNotes { get; set; }
+        public virtual ICollection<AssociatedChatPersonalMessages> AssociatedChatPersonalMessagesReciver { get; set; }
+        public virtual ICollection<AssociatedChatPersonalMessages> AssociatedChatPersonalMessagesSender { get; set; }
         public virtual ICollection<AssociatedProjectMemberRights> AssociatedProjectMemberRights { get; set; }
         public virtual ICollection<AssociatedProjectMembers> AssociatedProjectMembers { get; set; }
         public virtual ICollection<AssociatedProjectNotifications> AssociatedProjectNotifications { get; set; }

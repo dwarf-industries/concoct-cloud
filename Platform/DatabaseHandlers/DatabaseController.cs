@@ -12,6 +12,7 @@ namespace Rokono_Control.DatabaseHandlers
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
     using Platform.DataHandlers;
+    using Platform.Hubs;
     using Platform.Models;
     using Rokono_Control.DataHandlers;
     using Rokono_Control.Models;
@@ -150,6 +151,40 @@ namespace Rokono_Control.DatabaseHandlers
             Context.SaveChanges();
         }
 
+        internal Tuple<Notifications, string> NewChatPersonalMessage(IncomingChatMessage request, int userId)
+        {
+            var reciverName = Context.UserAccounts.FirstOrDefault(x=>x.Id == request.ReciverId).Email;
+            var senderName = Context.UserAccounts.FirstOrDefault(x=>x.Id == userId).Email;
+            var publicMessage = Context.PublicMessages.Add(new PublicMessages{
+                IsNew = 1,
+                SenderId = userId,
+                DateOfMessage = DateTime.Now,
+                MessageContent = request.Message,
+                SenderName = senderName
+            });
+            Context.SaveChanges();
+            Context.AssociatedChatPersonalMessages.Add(new AssociatedChatPersonalMessages{
+                ProjectId = request.ProjectId,
+                ReciverId = request.ReciverId,
+                SenderId = userId,
+                PublicMessageId = publicMessage.Entity.Id 
+            });
+            Context.SaveChanges();
+            var notification = Context.Notifications.Add(new Notifications{
+                DateOfMessage = DateTime.Now,
+                Content = $"{senderName} has sent you a personal message",
+                NotificationType = 1
+            });
+            Context.SaveChanges();
+            Context.AssociatedUserNotifications.Add(new AssociatedUserNotifications{
+                UserId = request.ReciverId,
+                NewNotification = 1,
+                NotificationId = notification.Entity.Id
+            });
+            Context.SaveChanges();
+            return new Tuple<Notifications, string>(notification.Entity, reciverName);
+        }
+
         internal void DeleteDocumentationPage(int id)
         {
             var current = Context.AssociatedDocumentationCategoryPage.FirstOrDefault(x=>x.Id == id);
@@ -251,27 +286,45 @@ namespace Rokono_Control.DatabaseHandlers
             return Context.ChatRoomRights.FirstOrDefault(x=>x.PojectId == projectId && x.Id == tagId);
         }
 
-        internal List<PublicMessages> GetCannelMessages(int id)
+        internal List<PublicMessages> GetCannelMessages(int id, int isPersonal, int userId)
         {
-            return Context.AssociatedChatChannelMessages.Include(x => x.PublicMessage)
+            if(isPersonal == 0)
+                return Context.AssociatedChatChannelMessages.Include(x => x.PublicMessage)
                                                         .Where(x => x.ChatChannelId == id)
                                                         .Select(x => x.PublicMessage)
                                                         .ToList();
+            else
+            {
+                var sender = Context.AssociatedChatPersonalMessages.Include(x=>x.PublicMessage)
+                                                            .Where(x=>x.SenderId == id && x.ReciverId == userId)
+                                                            .Select(x=>x.PublicMessage)
+                                                            .ToList();
+                var reciver = Context.AssociatedChatPersonalMessages.Include(x=>x.PublicMessage)
+                                                            .Where(x=>x.SenderId == userId && x.ReciverId == id)
+                                                            .Select(x=>x.PublicMessage)
+                                                            .ToList();
+                var result = new List<PublicMessages>();
+                result.AddRange(sender);
+                result.AddRange(reciver);
+                return result.OrderBy(x=>x.DateOfMessage).ToList();
+            }
         }
 
         internal List<OutgoingChatItem> GetChatChannels(int id, int userId)
         {
             // var i = 1;
             var result = new List<OutgoingChatItem>();
+            result = GetPersonalMessageNavigation(userId, result);
             Context.AssociatedChatRoomRights
-            .Include(x=>x.ChatRoom)
+            .Include(x => x.ChatRoom)
             .ThenInclude(ChatRoom => ChatRoom.ChatChannels)
-            .Where(x=>x.ChatRoom.ProjectId == id && x.Right.AssociatedUserChatRights.Any(y=>y.ProjectId == id && y.UserId == userId))
-            .Select(x=>x)
+            .Where(x => x.ChatRoom.ProjectId == id && x.Right.AssociatedUserChatRights.Any(y => y.ProjectId == id && y.UserId == userId))
+            .Select(x => x)
             .Distinct()
-            .ToList().ForEach(x=>{
+            .ToList().ForEach(x =>
+            {
                 var cItem = new OutgoingChatItem
-                {     
+                {
                     InternalId = x.ChatRoomId,
                     // NodeId = i++,
                     NodeText = x.ChatRoom.RoomName,
@@ -280,19 +333,62 @@ namespace Rokono_Control.DatabaseHandlers
                     ChannelType = 0,
                     IsParent = true,
                     ParentId = x.ChatRoomId,
-                    NodeChild = x.ChatRoom.ChatChannels.Select(y=> new OutgoingChatItemChild{
+                    NodeChild = x.ChatRoom.ChatChannels.Select(y => new OutgoingChatItemChild
+                    {
                         InternalId = y.Id,
                         // NodeId = i++,
                         NodeText = y.ChannelName,
                         ChannelType = y.ChannelType.Value,
                         IconCss = "icon-circle-thin icon",
                         Link = "",
+                        IsPersonal = false,
                         ParentId = x.ChatRoomId
                     }).ToList()
                 };
-             
-                    result.Add(cItem);
+
+                result.Add(cItem);
             });
+
+            return result;
+        }
+
+        private List<OutgoingChatItem> GetPersonalMessageNavigation(int userId, List<OutgoingChatItem> result)
+        {
+            var personalMesages = Context.AssociatedChatPersonalMessages.Include(x => x.Sender)
+                                                                      .Where(x => x.ReciverId == userId)
+                                                                      .Select(x => new
+                                                                      {
+                                                                          Email = x.Sender.Email,
+                                                                          Id = x.Sender.Id
+                                                                      })
+                                                                      .Distinct()
+                                                                      .ToList();
+            var pMessageCategory = new OutgoingChatItem
+            {
+                InternalId = -1,
+                IconCss = "icon-th icon",
+                ChannelType = 0,
+                NodeText = "Personal Messages",
+                IsParent = true,
+                ParentId = -1,
+                Link = "",
+                NodeChild = new List<OutgoingChatItemChild>()
+            };
+            personalMesages.ForEach(x =>
+            {
+                pMessageCategory.NodeChild.Add(new OutgoingChatItemChild
+                {
+                    InternalId = x.Id,
+                    // NodeId = i++,
+                    NodeText = x.Email,
+                    ChannelType = 0,
+                    IconCss = "icon-circle-thin icon",
+                    Link = "",
+                    IsPersonal = true,
+                    ParentId = -1
+                });
+            });
+            result.Add(pMessageCategory);
             return result;
         }
 
@@ -355,20 +451,40 @@ namespace Rokono_Control.DatabaseHandlers
         internal string AddChatRoomMessage(IncomingChatMessage messageData, int sender)
         {
             var chatRoom = Context.ChatChannels.FirstOrDefault(x=> x.Id == messageData.ActiveRoom);
-            var projectUsers = Context.AssociatedProjectMembers.Where(x=>x.ProjectId == messageData.ProjectId).ToList();
-            if(chatRoom == null)
+            if(chatRoom == null && messageData.IsPersonal == 0)
                 return string.Empty;
-            projectUsers.ForEach(x=>{
-                if(Context.AssociatedUserChatNotifications.FirstOrDefault(y=>y.ChatChannelId == messageData.ActiveRoom && y.ProjectId == x.ProjectId && y.UserId == x.UserAccountId) == null)
-                {
-                    Context.AssociatedUserChatNotifications.Add(new AssociatedUserChatNotifications{
-                        ChatChannelId = chatRoom.Id,
-                        ProjectId = messageData.ProjectId,
-                        UserId = x.UserAccountId
-                    });
-                    Context.SaveChanges();
-                 }
-            });
+            
+            if(messageData.IsPersonal == 0)
+            {
+                var projectUsers = Context.AssociatedProjectMembers.Where(x=>x.ProjectId == messageData.ProjectId).ToList();
+                projectUsers.ForEach(x=>{
+                    if(Context.AssociatedUserChatNotifications.FirstOrDefault(y=>y.ChatChannelId == messageData.ActiveRoom && y.ProjectId == x.ProjectId && y.UserId == x.UserAccountId) == null)
+                    {
+                        Context.AssociatedUserChatNotifications.Add(new AssociatedUserChatNotifications{
+                            ChatChannelId = chatRoom.Id,
+                            ProjectId = messageData.ProjectId,
+                            UserId = x.UserAccountId
+                        });
+                        Context.SaveChanges();
+                    }
+                });
+            }
+            else
+            {
+                var senderName = Context.UserAccounts.FirstOrDefault(x=>x.Id == sender).Email;
+                var notification = Context.Notifications.Add(new Notifications{
+                    Content = $"{senderName} has sent you a new message.",
+                    NotificationType = 1,
+                    DateOfMessage = DateTime.Now,
+                });
+                Context.SaveChanges();
+                Context.AssociatedUserNotifications.Add(new AssociatedUserNotifications{
+                    NewNotification = 1,
+                    UserId = messageData.ReciverId,
+                    NotificationId = notification.Entity.Id
+                });
+                Context.SaveChanges();
+            }
             var email = Context.UserAccounts.FirstOrDefault(x=>x.Id == sender).Email;
             var message = Context.PublicMessages.Add(new PublicMessages{
                 IsNew = 1,
@@ -378,10 +494,18 @@ namespace Rokono_Control.DatabaseHandlers
                 SenderName = email
             });
             Context.SaveChanges();
-            Context.AssociatedChatChannelMessages.Add(new AssociatedChatChannelMessages{
-                ChatChannelId = messageData.ActiveRoom,
-                PublicMessageId = message.Entity.Id,
-            });
+            if(messageData.IsPersonal == 0)
+                Context.AssociatedChatChannelMessages.Add(new AssociatedChatChannelMessages{
+                    ChatChannelId = messageData.ActiveRoom,
+                    PublicMessageId = message.Entity.Id,
+                });
+            else
+                Context.AssociatedChatPersonalMessages.Add(new AssociatedChatPersonalMessages{
+                    ProjectId = messageData.ProjectId,
+                    PublicMessageId = message.Entity.Id,
+                    SenderId = sender,
+                    ReciverId = messageData.ReciverId,                    
+                });
             Context.SaveChanges();
             return email;
         }

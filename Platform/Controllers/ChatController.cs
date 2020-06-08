@@ -1,13 +1,18 @@
 namespace Platform.Controllers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.SignalR;
     using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
     using Platform.DataHandlers;
     using Platform.DataHandlers.Interfaces;
+    using Platform.Hubs;
     using Platform.Models;
+    using Rokono_Control;
     using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
     public class ChatController : Controller
@@ -16,12 +21,18 @@ namespace Platform.Controllers
         IConfiguration Configuration;
         AutherizationManager AutherizationManager;
         public int UserId;
-        public ChatController(RokonoControlContext context, IConfiguration config,IAutherizationManager autherizationManager,IHttpContextAccessor httpContextAccessor)
+        private IHubContext<MessageHub> HubContext { get; set; }
+        public ChatController(RokonoControlContext context,
+                              IConfiguration config,
+                              IAutherizationManager autherizationManager,
+                              IHttpContextAccessor httpContextAccessor,
+                              IHubContext<MessageHub> hubContext )
         {
             Context = context;
             Configuration = config;
             AutherizationManager = (AutherizationManager)autherizationManager;
             UserId = AutherizationManager.GetCurrentUser(UserId,httpContextAccessor.HttpContext.Request);
+            HubContext = hubContext;
         }
 
         
@@ -166,10 +177,23 @@ namespace Platform.Controllers
             }
             return new OutgoingJsonData{ Data = "Ok"};
         }
+        [HttpPost]
+        [Authorize (Roles = "User")]
+//        [ValidateAntiForgeryToken]
+        public OutgoingJsonData NewPersonalMessage([FromBody] IncomingChatMessage request)
+        {
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+               var values = context.NewChatPersonalMessage(request,UserId);
+               var reciverData = Program.Members.FirstOrDefault(x=>x.Name == values.Item2);
+               MessageHub.SendNewNotification(HubContext, reciverData, values.Item1);
+            }
+            return new OutgoingJsonData{ Data = "Ok"};
+        }
         [HttpGet]
         [Authorize (Roles = "User")]
 //        [ValidateAntiForgeryToken]
-        public IActionResult GetChatRoom(int id, int projectId) 
+        public IActionResult GetChatRoom(int id, int projectId, int isPersonal) 
         {
             using(var context = new  DatabaseController(Context,Configuration))
             {
@@ -177,7 +201,8 @@ namespace Platform.Controllers
             }
             return ViewComponent("ChatWIndow", new IncomingIdRequest{
                 Id = id,
-                ProjectId = projectId
+                ProjectId = projectId,
+                UserId = isPersonal
             });
         }
 
