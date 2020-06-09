@@ -1,7 +1,6 @@
 
 namespace Platform.ViewComponents
 {
-    using System.Linq;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Rokono_Control.Models;

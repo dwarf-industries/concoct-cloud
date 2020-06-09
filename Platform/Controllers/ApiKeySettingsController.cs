@@ -1,13 +1,11 @@
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Platform.Models;
-using Rokono_Control.DatabaseHandlers;
-using Rokono_Control.Models;
-
 namespace Platform.Controllers
 {
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Platform.DatabaseHandlers.Contexts;
+    using Platform.Models;
+    using Rokono_Control.Models;
     public class ApiKeySettingsController : Controller
     {
         RokonoControlContext Context;
@@ -29,7 +27,7 @@ namespace Platform.Controllers
         public List<ApiKeys> GetProjectFeatures(int projectId)
         {
             var result = new List<ApiKeys>();
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new ApiKeysContext(Context,Configuration))
             {
                  result = context.GetProjectApiKeys(projectId);
             }
@@ -40,7 +38,7 @@ namespace Platform.Controllers
         public OutgoingJsonData EnableProjectFeature([FromBody] IncomignFeatureRequest request)
         {
          
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new ApiKeysContext(Context,Configuration))
             {
                 // if()
                 //TODO Implement user right check
@@ -51,31 +49,12 @@ namespace Platform.Controllers
         }
 
         
-        [HttpPost]
-        public List<PublicMessages> GetAllPublicMessages([FromBody] IncomingIdRequest request)
-        {
-            var result = new List<PublicMessages>();
-            using(var context = new DatabaseController(Context,Configuration))
-            {   
-                result = context.GetAllPublicMessagesForProject(request.Id,0);
-            }
-            return result;
-        }
-        [HttpPost]
-        public List<PublicMessages> GetPublicMessages([FromBody] IncomingIdRequest request)
-        {
-            var result = new List<PublicMessages>();
-            using(var context = new DatabaseController(Context,Configuration))
-            {   
-                result = context.GetAllPublicMessagesForProject(request.Id,1);
-            }
-            return result;
-        }
+  
         [HttpPost]
         public List<PublicMessages> GetAllFeedback([FromBody] IncomingIdRequest request)
         {
             var result = new List<PublicMessages>();
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new ApiKeysContext(Context,Configuration))
             {   
                 result = context.GetAllFeedback(request.Id);
             }

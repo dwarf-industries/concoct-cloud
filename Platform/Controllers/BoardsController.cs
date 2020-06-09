@@ -1,20 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Platform.DataHandlers;
-using Platform.DataHandlers.Interfaces;
-using Platform.Models;
-using Rokono_Control;
-using Rokono_Control.DatabaseHandlers;
-using Rokono_Control.Models;
-using RokonoControl.Models;
-
 namespace RokonoControl.Controllers
 {
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Platform.DatabaseHandlers.Contexts;
+    using Platform.DataHandlers;
+    using Platform.DataHandlers.Interfaces;
+    using Platform.Models;
+    using Rokono_Control.DatabaseHandlers;
+    using Rokono_Control.Models;
+    using RokonoControl.Models;
+
     public class BoardsController : Controller
     {
         RokonoControlContext Context;
@@ -37,26 +34,29 @@ namespace RokonoControl.Controllers
             using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["ProjectId"] = projectId;
-                ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
                 ViewData["ProjectName"] = context.GetProjectName(projectId);
             }
+            using(var context = new WorkItemsContext(Context,Configuration))
+                ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
+
             return View();
         }
 
         public IActionResult ProjectBacklog(int projectId, int workItemType)
         {
- 
+            using(var context = new WorkItemsContext(Context,Configuration))
+            {
+                ViewData["GetSelectedWorkItem"] = context.GetWorkItemName(workItemType);
+                ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
+            }
             using (var context = new DatabaseController(Context,Configuration))
             {
-                ViewData["Projects"] = context.GetUserProjects(UserId);
                 ViewData["ProjectId"] = projectId;
-                ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
                 ViewData["ProjectName"] = context.GetProjectName(projectId);
                 ViewData["WorkItemType"] = workItemType;
-                ViewData["GetSelectedWorkItem"] = context.GetWorkItemName(workItemType);
-
-
             }
+            using(var context = new UsersContext(Context,Configuration))
+                ViewData["Projects"] = context.GetUserProjects(UserId);
             return View();
         }
         public IActionResult SprintBacklogs(int projectId, int boardId)
@@ -64,12 +64,13 @@ namespace RokonoControl.Controllers
  
             using (var context = new DatabaseController(Context,Configuration))
             {
-                ViewData["Projects"] = context.GetUserProjects(UserId);
                 ViewData["ProjectId"] = projectId;
-                ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
                 ViewData["ProjectName"] = context.GetProjectName(projectId);
-
             }
+            using(var context = new WorkItemsContext(Context,Configuration))
+                ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
+            using(var context = new UsersContext(Context,Configuration))
+                ViewData["Projects"] = context.GetUserProjects(UserId);
             return View();
         }
 
@@ -79,26 +80,29 @@ namespace RokonoControl.Controllers
             using (var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["ProjectId"] = projectId;
-                ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
                 ViewData["ProjectName"] = context.GetProjectName(projectId);
                 ViewData["Iteration"] = iteration;
                 ViewData["Person"] = person;
-                ViewData["GetUserViewRights"] = context.CheckUserViewWorkitemRights(UserId, projectId);
 
             }
+            using(var context = new UsersContext(Context,Configuration))
+                ViewData["GetUserViewRights"] = context.CheckUserViewWorkitemRights(UserId, projectId);
+
+            using(var context = new WorkItemsContext(Context,Configuration))
+                ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
             return View();
         }
 
         public IActionResult PublicBoard(int projectId, int iteration, int person)
         {
-           var viewRights = default(bool);
+            var viewRights = default(bool);
+            using(var context = new OutboundDetailsContext(Context,Configuration))
+                viewRights = context.GetPublicBoardRights(projectId);
             using (var context = new DatabaseController(Context,Configuration))
             {
-                viewRights = context.GetPublicBoardRights(projectId);
                 if(viewRights)
                 {
                     ViewData["ProjectId"] = projectId;
-                    ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
                     ViewData["ProjectName"] = context.GetProjectName(projectId);
                     ViewData["Iteration"] = iteration;
                     ViewData["Person"] = person;
@@ -106,6 +110,8 @@ namespace RokonoControl.Controllers
                 }
 
             }
+            using(var context = new WorkItemsContext(Context,Configuration))
+                ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
             var view =  viewRights ? View() : View("~/Views/Home/Error.cshtml");
             return view;
         }
@@ -115,7 +121,7 @@ namespace RokonoControl.Controllers
         public List<BindingCards> GetWorkItems(int projectId, int workItemType)
         {
             var result = new List<BindingCards>();
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new WorkItemsContext(Context,Configuration))
             {
                 result = context.GetProjectCards(projectId, workItemType);
             }
@@ -125,7 +131,7 @@ namespace RokonoControl.Controllers
         public List<OutgoingIterationModel> GetIterations([FromBody] IncomingIterationRequest request)
         {
             var result = new List<OutgoingIterationModel>();
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new WorkItemsContext(Context,Configuration))
             {
                 var dataResult = context.GetProjectIterations(request.ProjectId);
                 dataResult.ForEach(x =>
@@ -145,7 +151,7 @@ namespace RokonoControl.Controllers
         public List<OutgoingIterationModel> GetPersons([FromBody] IncomingIterationRequest request)
         {
             var result = new List<OutgoingIterationModel>();
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new UsersContext(Context,Configuration))
             {
                 var dataResult = new List<UserAccounts>();
   
@@ -164,7 +170,7 @@ namespace RokonoControl.Controllers
                         IconCss = "e-ddb-icons e-settings",
                         Url = $"/Boards/Sprints?projectId={request.ProjectId}&&workItemType=7&&iteration={request.Iteration}&&person={userRights.Id}"
                     });
-                    dataResult = context.GetProjectPerons(request.ProjectId);
+                    dataResult = context.GetProjectPersons(request.ProjectId);
                 }
                 dataResult.ForEach(x =>
                 {
@@ -181,11 +187,13 @@ namespace RokonoControl.Controllers
 
         [HttpPost]
         public List<BindingCards> GetSprints([FromBody] IncomingSprintRequest dataRequest)
-        {
+        {   
             var result = new List<BindingCards>();
-            using (var context = new DatabaseController(Context,Configuration))
+            var userRights = default(UserAccounts);
+            using(var context = new UsersContext(Context, Configuration))
+                userRights = context.GetUserAccounts(UserId);
+            using (var context = new WorkItemsContext(Context,Configuration))
             {
-                var userRights = context.GetUserAccounts(UserId);
                 if (userRights != null)
                     result = context.GetProjectSprints(dataRequest, userRights.ProjectRights == 1 ? true : false, userRights.Id);
             }
@@ -196,7 +204,7 @@ namespace RokonoControl.Controllers
         public List<BindingCards> GetSprintsPublic([FromBody] IncomingSprintRequest dataRequest)
         {
             var result = new List<BindingCards>();
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new WorkItemsContext(Context,Configuration))
             {
              
                 result = context.GetProjectSprints(dataRequest, true, 0);
@@ -206,7 +214,7 @@ namespace RokonoControl.Controllers
         [HttpPost]
         public bool ChangeWorkItemBoard([FromBody] IncomingCardRequest card)
         {
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new WorkItemsContext(Context,Configuration))
             {
                 context.ChangeWorkItemBoard(card);
             }
@@ -216,15 +224,21 @@ namespace RokonoControl.Controllers
         [HttpPost]
         public bool ChangeCardOwner([FromBody] IncomingCardOwnerRequest card)
         {
-            using (var context = new DatabaseController(Context,Configuration))
+            var getUserByName =  default(UserAccounts);
+            var workItem = default(WorkItem);
+            using(var context = new WorkItemsContext(Context,Configuration))
             {
                 context.ChangeCardOwner(card);
                 var getId = card.CardId.Split(" ");
                 var parse = int.Parse(getId[1]);
-                var workItem = context.GetWorkItemById(parse);
-                var getUserByName = context.GetUserAccountByName(card.Name);
-                context.AddNewUserNotification(1,workItem,getUserByName.Id);
+                workItem = context.GetWorkItemById(parse);
             }
+            using(var context = new UsersContext(Context,Configuration))
+                getUserByName = context.GetUserAccountByName(card.Name);
+            using (var context = new NotificationContext(Context,Configuration))
+                context.AddNewUserNotification(1,workItem,getUserByName.Id);
+            
+           
             return true;
         }
 
@@ -232,7 +246,7 @@ namespace RokonoControl.Controllers
         public OutgoingJsonData MakeBoardPublic([FromBody] IncomingPublicBoardRequest request)
         {
             var result = string.Empty;
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new WorkItemsContext(Context,Configuration))
             {
                 var domain = Request.Host.Host;
 
@@ -246,7 +260,7 @@ namespace RokonoControl.Controllers
         {
             var result = default(OutboundBackupModel);
             var text  = string.Empty;
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new WorkItemsContext(Context,Configuration))
             {
                 result = context.BackUpSpecificProject(request.ProjectId);
              
@@ -264,7 +278,7 @@ namespace RokonoControl.Controllers
         [HttpPost]
         public OutgoingJsonData ImportWorkItems([FromBody] OutgoingJsonData data)
         {
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new WorkItemsContext(Context,Configuration))
             {
                 context.ImportExistingProject(data.Data);
             }

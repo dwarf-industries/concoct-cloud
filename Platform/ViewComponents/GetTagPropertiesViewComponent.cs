@@ -2,14 +2,12 @@
 
 namespace Platform.ViewComponents
 {
-
-    using System.Linq;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Platform.DatabaseHandlers.Contexts;
     using Platform.DataHandlers;
     using Platform.DataHandlers.Interfaces;
-    using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
     public class GetTagPropertiesViewComponent : ViewComponent
     {
@@ -31,7 +29,7 @@ namespace Platform.ViewComponents
             ViewData["ProjectId"] = request.ProjectId;
             ViewData["ChatRoom"] = request.UserId;
             ViewData["FormOption"] = request.WorkItemType;
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new ChatContext(Context,Configuration))
             {
                 ViewData["Tag"] = context.GetChatRightById(request.Id);
             }

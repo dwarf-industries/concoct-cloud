@@ -1,10 +1,8 @@
-
-
-namespace Platform.ViewComponents.Documentation 
+namespace Platform.ViewComponents.Documentation
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
-    using Rokono_Control.DatabaseHandlers;
+    using Platform.DatabaseHandlers.Contexts;
     using Rokono_Control.Models;
 
     [ViewComponent(Name = "DocumentationBreadcrum")]
@@ -21,7 +19,7 @@ namespace Platform.ViewComponents.Documentation
         public IViewComponentResult Invoke(IncomingIdRequest request)
         {
             ViewData["ProjectId"] = request.ProjectId;
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new DocumentationContext(Context, Configuration))
             {
                 if(request.Id != 0)
                     ViewData["PageData"] = context.GetDocumentationCategoryName(request.Id);

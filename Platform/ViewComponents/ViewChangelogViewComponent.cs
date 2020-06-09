@@ -1,12 +1,10 @@
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Rokono_Control.DatabaseHandlers;
-using Rokono_Control.Models;
-
 namespace Platform.ViewComponents
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Platform.DatabaseHandlers.Contexts;
+    using Rokono_Control.Models;
+
     public class ViewChangelogViewComponent : ViewComponent
     {
         private readonly RokonoControlContext Context;
@@ -20,10 +18,8 @@ namespace Platform.ViewComponents
 
         public IViewComponentResult Invoke(int changeLogId)
         {
-            using(var context = new DatabaseController(Context,Configuration))
-            {
+            using(var context = new ChangelogContext(Context,Configuration))
                 ViewData["ChangelogDetails"] = context.GetSpecificChangelog(changeLogId);
-            }
             return View();
         }
     }

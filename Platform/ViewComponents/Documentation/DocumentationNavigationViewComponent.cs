@@ -1,14 +1,11 @@
-
-
 namespace Platform.ViewComponents
 {
-    using System.Linq;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Platform.DatabaseHandlers.Contexts;
     using Platform.DataHandlers;
     using Platform.DataHandlers.Interfaces;
-    using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
 
     [ViewComponent(Name = "DocumentationNavigation")]
@@ -29,8 +26,8 @@ namespace Platform.ViewComponents
         public IViewComponentResult Invoke(int id)
         {
             ViewData["ProjectId"] = id;
- 
-            using(var context = new DatabaseController(Context,Configuration))
+
+            using(var context = new UsersContext(Context,Configuration))
             {
                 ViewData["UserRights"] = context.GetUserRights(UserId,id);
             }

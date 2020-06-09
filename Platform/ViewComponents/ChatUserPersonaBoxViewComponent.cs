@@ -1,13 +1,12 @@
 
 namespace Platform.ViewComponents
 {
-    using System.Linq;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Platform.DatabaseHandlers.Contexts;
     using Platform.DataHandlers;
     using Platform.DataHandlers.Interfaces;
-    using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
 
     public class ChatUserPersonaBoxViewComponent : ViewComponent
@@ -16,7 +15,7 @@ namespace Platform.ViewComponents
         private readonly IConfiguration Configuration;
         private  AutherizationManager AutherizationManager;
         private int UserId;
- 
+        private UserRights Rights;
         public ChatUserPersonaBoxViewComponent(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
@@ -27,10 +26,14 @@ namespace Platform.ViewComponents
 
         public IViewComponentResult Invoke(IncomingIdRequest request)
         {
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new UsersContext(Context,Configuration))
             {
-                var rights = context.GetUserRights(UserId, request.ProjectId);
-                ViewData["ProjectRight"] = rights;
+                ViewData["GetChatRights"] = context.GetUserRights(UserId,request.ProjectId);
+                Rights = context.GetUserRights(UserId, request.ProjectId);
+            }
+            using(var context = new ChatContext(Context,Configuration))
+            {
+                ViewData["ProjectRight"] = Rights;
                 ViewData["ProjectId"] = request.ProjectId;
                 ViewData["UserRights"] = context.GetUserChatRights(request.Id, request.ProjectId);
                 ViewData["UserId"] = request.Id;

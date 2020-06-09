@@ -1,16 +1,15 @@
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Platform.DataHandlers;
-using Platform.DataHandlers.Interfaces;
-using Platform.Models;
-using Rokono_Control.DatabaseHandlers;
-using Rokono_Control.Models;
-
 namespace Platform.Controllers
 {
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Platform.DatabaseHandlers.Contexts;
+    using Platform.DataHandlers;
+    using Platform.DataHandlers.Interfaces;
+    using Platform.Models;
+    using Rokono_Control.DatabaseHandlers;
+    using Rokono_Control.Models;
     public class NotificationController :Controller
     {
 
@@ -33,9 +32,11 @@ namespace Platform.Controllers
         {
  
             var account = default(UserAccounts);
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new UsersContext(Context,Configuration))
+                    account = context.GetUserAccount(UserId);
+
+            using(var context = new WorkItemsContext(Context, Configuration))
             {
-                account = context.GetUserAccount(UserId);
                 var getBacklogWorkItems = context.BackgroundWorkItems(request.Items);
                 using(var notificationManager = new DataHandlers.NotificationHandler(Configuration))
                 {
@@ -49,7 +50,7 @@ namespace Platform.Controllers
         public OutgoingJsonData AddNewNote([FromBody] IncomingNoteRequest note)
         {
  
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new NotesContext(Context, Configuration))
             {
                  context.AddNewUserNote(note, UserId);
             }
@@ -61,7 +62,7 @@ namespace Platform.Controllers
         public OutgoingJsonData NotificationRead([FromBody] IncomingIdRequest request)
         {
  
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new NotificationContext(Context,Configuration))
             {
                 context.NotificationRead(request.Id, UserId);
             }
@@ -72,7 +73,7 @@ namespace Platform.Controllers
         public OutgoingJsonData ChangeNotePosition([FromBody] IncomingNoteRequest note)
         {
  
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new NotesContext(Context, Configuration))
             {
                  context.ChangeNotePosition(note);
             }
@@ -83,7 +84,7 @@ namespace Platform.Controllers
         public OutgoingJsonData DeleteNote([FromBody] IncomingNoteRequest note)
         {
       
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new NotesContext(Context, Configuration))
             {
                  context.DeleteNote(note);
             }
@@ -94,7 +95,7 @@ namespace Platform.Controllers
         public OutgoingJsonData EditNote([FromBody] IncomingNoteRequest note)
         {
  
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new NotesContext(Context, Configuration))
             {
                  context.EditNote(note);
             }
@@ -107,7 +108,7 @@ namespace Platform.Controllers
         {
             var result = new List<Notifications>();
  
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new NotificationContext(Context, Configuration))
             {
                 result = context.GetAllUserNotifications(UserId, note.ProjectId);
             }

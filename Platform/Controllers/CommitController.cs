@@ -5,6 +5,7 @@ namespace RokonoControl.Controllers
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Platform.DatabaseHandlers.Contexts;
     using Platform.DataHandlers;
     using Platform.DataHandlers.Interfaces;
     using Rokono_Control.DatabaseHandlers;
@@ -28,16 +29,15 @@ namespace RokonoControl.Controllers
         }
         public IActionResult Index(int projectId)
         {
-     
-
-            using (var context = new DatabaseController(Context,Configuration))
+            using(var context = new WorkItemsContext(Context,Configuration))
             {
-                ViewData["Projects"] = context.GetUserProjects(UserId);
                 ViewData["Relationships"] = context.GetProjectRelationships();
-                ViewData["Branches"] = context.GetBranchesForProject(projectId);
                 ViewData["DefaultIteration"] = context.GetProjectDefautIteration(projectId);
-
             }
+            using (var context = new DatabaseController(Context,Configuration))
+                ViewData["Branches"] = context.GetBranchesForProject(projectId);
+            using(var context = new UsersContext(Context,Configuration))
+                ViewData["Projects"] = context.GetUserProjects(UserId);
             return View();
         }
 
@@ -53,26 +53,25 @@ namespace RokonoControl.Controllers
         }
         public IActionResult Files(int projectId)
         {
- 
-
-
             ViewData["ProjectId"] = projectId;
+            using(var context = new WorkItemsContext(Context,Configuration))
+                ViewData["Relationships"] = context.GetProjectRelationships();
             using (var context = new DatabaseController(Context,Configuration))
             {
-                ViewData["Projects"] = context.GetUserProjects(UserId);
-
-                ViewData["Relationships"] = context.GetProjectRelationships();
                 var bindingBranches = context.GetProjectBranches(projectId);
                 if (bindingBranches != null)
                 {
                     ViewData["BranchId"] = bindingBranches.FirstOrDefault(x => x.BranchName == "master").Id;
                     ViewData["Branches"] = bindingBranches;
-                    ViewData["DefaultIteration"] = context.GetProjectDefautIteration(projectId);
 
                 }
                 else
                     return View(new ClientErrorData { Title = "Invalid data result, please supply proper Project Id or contact your system administrator." });
             }
+            using(var context = new WorkItemsContext(Context,Configuration))
+                ViewData["DefaultIteration"] = context.GetProjectDefautIteration(projectId);
+            using(var context = new UsersContext(Context,Configuration))
+                ViewData["Projects"] = context.GetUserProjects(UserId);
             return View();
 
         }

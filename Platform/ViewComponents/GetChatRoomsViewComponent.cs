@@ -1,6 +1,5 @@
 namespace Platform.ViewComponents
 {
-    using System.Linq;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;

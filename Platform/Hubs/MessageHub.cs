@@ -1,20 +1,20 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Platform.DataHandlers;
-using Platform.DataHandlers.Interfaces;
-using Platform.Models;
-using Rokono_Control;
-using Rokono_Control.DatabaseHandlers;
-using Rokono_Control.Models;
-
 namespace Platform.Hubs
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.SignalR;
+    using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
+    using Platform.DatabaseHandlers.Contexts;
+    using Platform.DataHandlers;
+    using Platform.DataHandlers.Interfaces;
+    using Platform.Models;
+    using Rokono_Control;
+    using Rokono_Control.DatabaseHandlers;
+    using Rokono_Control.Models;
     public class MessageHub : Hub
     {
         RokonoControlContext DatabaseContext;
@@ -43,7 +43,7 @@ namespace Platform.Hubs
             if (user != null)
             {
                 var username = user.Claims.FirstOrDefault();// Call the broadcastMessage method to update clients.
-                using(var dbContext = new DatabaseController(DatabaseContext,Configuration))
+                using(var dbContext = new ChatContext(DatabaseContext,Configuration))
                 {
                     messageData.SenderName = dbContext.AddChatRoomMessage(messageData,UserId);
                 }
@@ -67,7 +67,7 @@ namespace Platform.Hubs
         {  
            
             var res = string.Empty;
-            using(var context = new DatabaseController(DatabaseContext,Configuration))
+            using(var context = new NotificationContext(DatabaseContext,Configuration))
             {
                 var notifications = context.GetNewNotifications(UserId);
                 res = JsonConvert.SerializeObject(notifications);

@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace Platform.ViewComponents.Documentation
 {
+    using Microsoft.AspNetCore.Mvc;
+
     [ViewComponent(Name = "DocumentationCategory")]
     public class DocumentationCategoryViewComponent : ViewComponent
     {

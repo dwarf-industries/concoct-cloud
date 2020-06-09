@@ -1,17 +1,15 @@
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Platform.DataHandlers;
-using Platform.DataHandlers.Interfaces;
-using Platform.Models;
-using Rokono_Control.DatabaseHandlers;
-using Rokono_Control.Models;
-
 namespace Platform.Controllers
 {
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Platform.DatabaseHandlers.Contexts;
+    using Platform.DataHandlers;
+    using Platform.DataHandlers.Interfaces;
+    using Platform.Models;
+    using Rokono_Control.Models;
     public class DocumentationController : Controller
     {
         RokonoControlContext Context;
@@ -31,10 +29,9 @@ namespace Platform.Controllers
         {
             ViewData["ProjectId"] = Id;
  
-            using(var context = new DatabaseController(Context,Configuration))
-            {
+            using(var context = new UsersContext(Context,Configuration))
                 ViewData["UserRights"] = context.GetUserRights(UserId,Id);
-            }
+            
             return View();
         }
 
@@ -43,7 +40,7 @@ namespace Platform.Controllers
         {
             var result = new List<OutgoingChatItem>();
  
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new DocumentationContext(Context, Configuration))
             {
                 result = GetNavigation(request, context);
             }
@@ -58,7 +55,7 @@ namespace Platform.Controllers
           
             var result = new  List<OutgoingChatItem>();
  
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new DocumentationContext(Context, Configuration))
             {
                 context.AddNewDocumentationCategory(request);
                 result = GetNavigation(request, context);
@@ -75,7 +72,7 @@ namespace Platform.Controllers
           
             var result = new  List<OutgoingChatItem>();
  
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new DocumentationContext(Context, Configuration))
             {
                 context.AddNewDocumentationCategoryField(request);
                 result = GetNavigation(request, context);
@@ -91,7 +88,7 @@ namespace Platform.Controllers
           
             var result = new  List<OutgoingChatItem>();
  
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new DocumentationContext(Context, Configuration))
             {
                 context.AddNewDocumentationpage(request);
             }
@@ -105,14 +102,14 @@ namespace Platform.Controllers
           
             var result = new  List<OutgoingChatItem>();
  
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new DocumentationContext(Context, Configuration))
             {
                 context.UpdateDocumentationPage(request);
             }
             return result;
         }
 
-        private static List<OutgoingChatItem> GetNavigation(IncomingIdRequest request, DatabaseController context)
+        private static List<OutgoingChatItem> GetNavigation(IncomingIdRequest request, DocumentationContext context)
         {
             return context.GetDocumentationNavigation(request.ProjectId);
         }
@@ -124,7 +121,7 @@ namespace Platform.Controllers
           
             var result = new  List<OutgoingChatItem>();
  
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new DocumentationContext(Context, Configuration))
             {
                 context.DeleteDocumentationPage(request.Id);
             }
@@ -137,7 +134,7 @@ namespace Platform.Controllers
         {
             var result = new  List<OutgoingChatItem>();
  
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new DocumentationContext(Context, Configuration))
             {
                 context.DeleteCategoryField(request.Id);
             }
@@ -150,7 +147,7 @@ namespace Platform.Controllers
         {
             var result = new  List<OutgoingChatItem>();
  
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new DocumentationContext(Context, Configuration))
             {
                 context.DeleteCategory(request.Id);
             }

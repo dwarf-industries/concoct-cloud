@@ -10,7 +10,7 @@ namespace Rokono_Control.Controllers
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
-    using Newtonsoft.Json;
+    using Platform.DatabaseHandlers.Contexts;
     using Platform.DataHandlers;
     using Platform.DataHandlers.Interfaces;
     using Platform.Models;
@@ -39,7 +39,7 @@ namespace Rokono_Control.Controllers
         {
             
           
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new UsersContext(Context,Configuration))
             {
                 
                 ViewData["Projects"] = context.GetUserProjects(UserId);
@@ -53,7 +53,7 @@ namespace Rokono_Control.Controllers
         {
          
 
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new UsersContext(Context,Configuration))
             {
                 ViewData["User"] = context.GetUsername(UserId);
             }
@@ -64,15 +64,16 @@ namespace Rokono_Control.Controllers
  
 
 
+            using(var context = new WorkItemsContext(Context,Configuration))
+                ViewData["Iterations"] = context.GetProjectIterations(projectId);
 
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new WorkItemsContext(Context,Configuration))
             {
                 var workItemBytitle = context.GetWorkItemByTitle(title);
                 if(workItemBytitle != null && parentId == 0)
                     parentId = workItemBytitle.Id;
                 ViewData["Priorities"] = context.GetProjectPriorities(projectId);
                 ViewData["Areas"] = context.GetProjectAreas(projectId);
-                ViewData["Iterations"] = context.GetProjectIterations(projectId);
                 ViewData["Severities"] = context.GetProjectSeverities(projectId);
                 ViewData["Activities"] = context.GetProjectActivities(projectId);
                 ViewData["Reasons"] = context.GetProjectReasons(projectId);
@@ -82,18 +83,22 @@ namespace Rokono_Control.Controllers
                 ViewData["WorkItemType"] = workItemType;
                 ViewData["ProjectId"] = projectId;
                 ViewData["ParentId"] = parentId;
-                ViewData["Projects"] = context.GetUserProjects(UserId);
                 ViewData["ReturnPath"] = returnUrl;
-
             }
+            using(var context = new UsersContext(Context,Configuration))
+                ViewData["Projects"] = context.GetUserProjects(UserId);
+            
             return View();
         }
 
         public IActionResult EditWorkItem(int projectId, int workItem, string returnUrl)
         {
-            using (var context = new DatabaseController(Context,Configuration))
+            var defaultUserAccount = default(UserAccounts);
+            using(var context = new UsersContext(Context,Configuration))
+                defaultUserAccount = context.GetDefaultAccount();
+
+            using (var context = new WorkItemsContext(Context,Configuration))
             {
-                var defaultUserAccount = context.GetDefaultAccount();
 
                 var workItemData = context.GetWorkItem(workItem, projectId);
                 workItemData.DueDate = workItemData.DueDate.HasValue ? workItemData.DueDate.Value : new System.DateTime();
@@ -103,13 +108,14 @@ namespace Rokono_Control.Controllers
                 var currentWorkItem = workItemData;
                 ViewData["Priorities"] = context.GetProjectPriorities(projectId);
                 ViewData["Areas"] = context.GetProjectAreas(projectId);
-                ViewData["Iterations"] = context.GetProjectIterations(projectId);
                 ViewData["Severities"] = context.GetProjectSeverities(projectId);
                 ViewData["Activities"] = context.GetProjectActivities(projectId);
                 ViewData["Reasons"] = context.GetProjectReasons(projectId);
                 ViewData["Builds"] = context.GetProjectBuilds(projectId);
                 ViewData["ValueAreas"] = context.GetProjectValueAreas(projectId);
                 ViewData["Risks"] = context.GetProjectRisks(projectId);
+                ViewData["Iterations"] = context.GetProjectIterations(projectId);
+
                 ViewData["WorkItemType"] = currentWorkItem.WorkItemTypeId;
                 ViewData["WorkItemData"] = currentWorkItem;
                 ViewData["ProjectId"] = projectId;
@@ -122,7 +128,7 @@ namespace Rokono_Control.Controllers
 
         public IActionResult ManageAccounts(int id)
         {
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new UsersContext(Context,Configuration))
             {
 
                 ViewData["UserAccounts"] = context.GetUserAccounts();
@@ -143,60 +149,59 @@ namespace Rokono_Control.Controllers
 
             using (var context = new DatabaseController(Context,Configuration))
             {
-                ViewData["Projects"] = context.GetUserProjects(UserId);
-
-
                 ViewData["UserAccount"] = context.GetSpecificUserEdit(id);
                 ViewData["UserId"] = id;
                 ViewData["ProjectId"] = projectId;
+            }
+            using(var context = new UsersContext(Context,Configuration))
+            {
+                ViewData["Projects"] = context.GetUserProjects(UserId);
                 ViewData["UserRight"] = context.GetUserRights(id, projectId);
+
             }
             return View();
         }
         public IActionResult AddNewAccount()
         {
- 
-
-            using (var context = new DatabaseController(Context,Configuration))
-            {
+            using (var context = new WorkItemsContext(Context,Configuration))
+                ViewData["Relationships"] = context.GetProjectRelationships();
+            using(var context = new UsersContext(Context,Configuration))
                 ViewData["Projects"] = context.GetUserProjects(UserId);
 
-
-                ViewData["Relationships"] = context.GetProjectRelationships();
-
-
-            }
             return View();
         }
         public IActionResult AssignAccountProjects(int id)
         { 
             using (var context = new DatabaseController(Context,Configuration))
             {
-
                 ViewData["UserAccount"] = context.GetSpecificUserEdit(id);
                 ViewData["UserId"] = id;
+            }
+            using(var context = new UsersContext(Context,Configuration))
                 ViewData["Projects"] = context.GetUserProjects(UserId);
 
-            }
             return View();
         }
 
 
         public async Task<IActionResult> ProjectDashboardAsync(int id)
         {
-            using (var context = new DatabaseController(Context,Configuration))
+            var project = default(Projects);
+            using(var context = new DatabaseController(Context, Configuration))
+                project = context.GetProjectData(id);
+
+            using(var context = new UsersContext(Context,Configuration))
             {
-                await RemovePastProjectClaimsAsync();
-
-                var project = context.GetProjectData(id);
-                var initials = project.ProjectName.ToUpper().Substring(0, 2);
-                
-                var userRight = AutherizationManager.ValidateUserRights(id,UserId,context);
-
-                await UpdateUserRightClaiimsAsync(userRight, project.ProjectTitle);
-
-                ViewData["Project"] = project;
                 ViewData["ProjectMembers"] = context.GetProjectMembers(id);
+                await RemovePastProjectClaimsAsync();
+                var userRight = AutherizationManager.ValidateUserRights(id,UserId,context);
+                await UpdateUserRightClaiimsAsync(userRight, project.ProjectTitle);
+            }
+      
+            using (var context = new WorkItemsContext(Context,Configuration))
+            {
+                var initials = project.ProjectName.ToUpper().Substring(0, 2);
+                ViewData["Project"] = project;
                 ViewData["ProjectId"] = id;
                 ViewData["Initials"] = initials;
                 ViewData["WorkItemsCreated"] = context.GetCreatedWorkItemCount(id);
@@ -265,12 +270,12 @@ namespace Rokono_Control.Controllers
  
             using (var context = new DatabaseController(Context,Configuration))
             {
-
-    
-                 ViewData["ProjectId"] = projectId;
-                ViewData["Name"] = context.GetUsername(UserId);
+                ViewData["ProjectId"] = projectId;
                 ViewData["BoardId"] = boardId;
             }
+            using(var context = new UsersContext(Context,Configuration))
+                ViewData["Name"] = context.GetUsername(UserId);
+
             return View();
         }
         public IActionResult ChangelogGenerator(int projectId)
@@ -282,25 +287,12 @@ namespace Rokono_Control.Controllers
         #endregion
 
         #region AjaxRequests
-        [HttpGet]
-        public List<OutgoingWorkItemSimple> UnassociatedChangelogItems(int projectId)
-        {
-            var result = new List<OutgoingWorkItemSimple>();
-            using(var context = new DatabaseController(Context, Configuration))
-            {
-                result = context.GetEmptyChangelogWorktItems(projectId).Select(y=> new OutgoingWorkItemSimple{
-                    Id = y.Id,
-                    Name = string.IsNullOrEmpty(y.Title) ? "" : y.Title ,
-                    WorkItemTypeName = y.WorkItemType == null ? "" : y.WorkItemType.TypeName
-                }).ToList();
-            }
-            return result;
-        }
+     
         [HttpGet]
         public List<WorkItemRelations> GetWorkItemRelations()
         {
             var relationships = new List<WorkItemRelations>();
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new WorkItemsContext(Context,Configuration))
                 relationships = context.GetProjectRelationships();
             return relationships;
         }
@@ -308,7 +300,7 @@ namespace Rokono_Control.Controllers
         public OutgoingBoundRelations GetAllWorkItemRelations(int workItemId, int projectId)
         {
             var result = default(OutgoingBoundRelations);
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new WorkItemsContext(Context,Configuration))
             {
                 result = context.GetAllWorkItemRelations(workItemId, projectId);
             }
@@ -318,7 +310,7 @@ namespace Rokono_Control.Controllers
         public List<OutgoingBindingWorkItem> GetAllWorkItems(int projectId)
         {
             var result = new List<OutgoingBindingWorkItem>();
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new WorkItemsContext(Context,Configuration))
             {
                 result = context.GetAllWorkItems(projectId);
             }
@@ -351,7 +343,7 @@ namespace Rokono_Control.Controllers
         public List<AssociatedWorkItemMessages> GetWorkItemDiscussions([FromBody] IncomingWorkItem request)
         {
             var result = new List<AssociatedWorkItemMessages>();
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new WorkItemsContext(Context,Configuration))
             {
                 result = context.GetWorkItemDiscussions(request.ProjectId, request.WorkItemId);
             }
@@ -362,12 +354,14 @@ namespace Rokono_Control.Controllers
         {
             var result = default(AssociatedWorkItemMessages);
  
-            using(var context =new DatabaseController(Context,Configuration))
+            using(var context =new WorkItemsContext(Context,Configuration))
             {
                 result = context.AddNewWorkItemMessage(request, UserId);
                 result.Message.AssociatedWorkItemMessages = null;
-                result.Message.Sender = context.GetUserAccount(result.Message.SenderId);
             }
+            using(var context = new UsersContext(Context,Configuration))
+                result.Message.Sender = context.GetUserAccount(result.Message.SenderId);
+
             return result;
         }
         //GetWorkItemDiscussions
@@ -392,7 +386,7 @@ namespace Rokono_Control.Controllers
             var result = new OutgoingJsonData { Data = ""};
 
  
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new WorkItemsContext(Context,Configuration))
             {
                 result = context.AddNewWorkItem(currentItem,UserId);
             }
@@ -402,7 +396,7 @@ namespace Rokono_Control.Controllers
         public bool UpdateWorkItem([FromBody] IncomingWorkItem currentItem)
         {
             var result = default(bool);
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new WorkItemsContext(Context,Configuration))
             {
                 result = context.UpdateWorkItem(currentItem);
             }
@@ -412,7 +406,7 @@ namespace Rokono_Control.Controllers
         public List<BindingUserAccount> GetUserAccounts([FromBody] IncomingIdRequest IncomingIdRequest)
         {
             var result = new List<BindingUserAccount>();
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new UsersContext(Context,Configuration))
             {
                 result = context.GetProjectMembers(IncomingIdRequest.Id);
             }
@@ -437,9 +431,12 @@ namespace Rokono_Control.Controllers
 
             var result = new OutgoingValidWorkItem();
             var currentItem = default(WorkItem);
-            using (var context = new DatabaseController(Context,Configuration))
+            var defaultUserAccount = default(UserAccounts);
+            using(var context = new UsersContext(Context,Configuration))
+                 defaultUserAccount = context.GetDefaultAccount();
+
+            using (var context = new WorkItemsContext(Context,Configuration))
             {
-                var defaultUserAccount = context.GetDefaultAccount();
                 result.WorkItem = new List<WorkItem>();
                 if (!incomingRequest.LinkedItems.Any(x => x.WorkItemId == incomingRequest.WorkItemId) && incomingRequest.RelationType != "1")
                 {
@@ -485,7 +482,7 @@ namespace Rokono_Control.Controllers
         [HttpPost]
         public bool AssociatedWorkItemRelation([FromBody] IncomingWorkItemRelation incomingRelation)
         {
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new WorkItemsContext(Context,Configuration))
             {
                 context.AssociatedRelation(incomingRelation);
             }
@@ -506,12 +503,11 @@ namespace Rokono_Control.Controllers
         public bool AddNewProject([FromBody] IncomingProject currentProject)
         {
             var result = default(bool);
-            using (var context = new DatabaseController(Context,Configuration))
-            {
-   
+            using(var context = new UsersContext(Context,Configuration))
                 currentProject.Users.Add(context.GetOutgoingUserAccount(UserId));
+            using (var context = new DatabaseController(Context,Configuration))
                 result = context.AddNewProject(currentProject, UserId);
-            }
+            
             return result;
         }
 

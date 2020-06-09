@@ -1,4 +1,5 @@
 using System.Linq;
+using Platform.DatabaseHandlers.Contexts;
 using Platform.DataHandlers.Interfaces;
 using Rokono_Control.DatabaseHandlers;
 using Rokono_Control.Models;
@@ -8,7 +9,7 @@ namespace Platform.DataHandlers
     public class AutherizationManager : IAutherizationManager
     {
         
-        public  UserRights ValidateUserRights(int projectId, int currentUser, DatabaseController context)
+        public  UserRights ValidateUserRights(int projectId, int currentUser, UsersContext context)
         {
             if (currentUser != default(int))
                 return context.GetUserRights(currentUser, projectId);

@@ -2,11 +2,10 @@ namespace Rokono_Control.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Platform.DatabaseHandlers.Contexts;
     using Platform.Models;
-    using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
 
     public class BacklogsController : Controller
@@ -37,7 +36,7 @@ namespace Rokono_Control.Controllers
         {
 
             var result = new List<OutgoingWorkItem>();
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new WorkItemsContext(Context,Configuration))
             {
                 var data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType);
                 if(IncomingIdRequest.Phase != "!")
@@ -68,7 +67,7 @@ namespace Rokono_Control.Controllers
         {
 
             var result = new List<OutgoingWorkItem>();
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new WorkItemsContext(Context,Configuration))
             {
                 var data = context.GetPublicBugReports(IncomingIdRequest.Id);
            
@@ -100,7 +99,7 @@ namespace Rokono_Control.Controllers
         {
 
             var result = default(WorkItem);
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new WorkItemsContext(Context,Configuration))
             {
                 result = context.GetPublicBugReport(IncomingIdRequest.Id);
             }
@@ -113,7 +112,7 @@ namespace Rokono_Control.Controllers
         {
 
             var result = new List<OutgoingWorkItem>();
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new WorkItemsContext(Context,Configuration))
             {
                 var data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType);
                 var bData = data.Select(x => x.WorkItem).ToList();
@@ -140,7 +139,7 @@ namespace Rokono_Control.Controllers
         [HttpPost]
         public OutgoingJsonData ItemsRemoved([FromBody] IncomingWorkItemRecycle Items)
         {
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new WorkItemsContext(Context,Configuration))
             {
                 context.RemoveWorkItems(Items.Items);
             }
@@ -150,7 +149,7 @@ namespace Rokono_Control.Controllers
         [HttpPost]
         public OutgoingJsonData MakeWorkItemPrivate([FromBody] IncomingIdRequest request)
         {
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new WorkItemsContext(Context,Configuration))
             {
                 context.MakeWorkItemPrivate(request.Id,0);
             }
@@ -159,7 +158,7 @@ namespace Rokono_Control.Controllers
         [HttpPost]
         public OutgoingJsonData MakeWorkItemPublic([FromBody] IncomingIdRequest request)
         {
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new WorkItemsContext(Context,Configuration))
             {
                 context.MakeWorkItemPrivate(request.Id,1);
             }
@@ -170,7 +169,7 @@ namespace Rokono_Control.Controllers
         {
 
             var result = new List<OutgoingWorkItem>();
-            using (var context = new DatabaseController(Context,Configuration))
+            using (var context = new WorkItemsContext(Context,Configuration))
             {
                 var data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType);
                 var bData = data.Select(x => x.WorkItem).ToList();
@@ -205,11 +204,4 @@ namespace Rokono_Control.Controllers
     }
 }
 
-
-
-//Select(z=> new OutgoingWorkItem{
-//                   Id = z.Id,
-//                   Title =z.WorkItem.Title,
-//                   Description = z.WorkItem.Description,
-//                   AssignedTo = z.WorkItem.AssignedAccountNavigation == null? "" : z.WorkItem.AssignedAccountNavigation.Email,
-//               })
+ 

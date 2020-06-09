@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Rokono_Control.DatabaseHandlers;
-using Rokono_Control.Models;
-using RokonoControl.Models;
-
-namespace Rokono_Control.Controllers
+﻿namespace Rokono_Control.Controllers
 {
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Platform.DatabaseHandlers.Contexts;
+    using Rokono_Control.Models;
+    using RokonoControl.Models;
+
     public class AccountsController : Controller
     {
         RokonoControlContext Context;
@@ -34,7 +31,7 @@ namespace Rokono_Control.Controllers
         public  List<OutgoingUserAccounts> GetProjectUsers(int projectId)
         {
             var outgoingUserList = new List<OutgoingUserAccounts>();
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new UsersContext(Context,Configuration))
             {
                 outgoingUserList = context.GetProjectUsers(projectId);
             }
@@ -43,7 +40,7 @@ namespace Rokono_Control.Controllers
         [HttpPost]
         public JsonResult AssociateNewUserAccount([FromBody] IncomingProjectAccount projectAccount)
         {
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new UsersContext(Context,Configuration))
             {
                 context.AddProjectInvitation(projectAccount);
             }
@@ -55,7 +52,7 @@ namespace Rokono_Control.Controllers
         [HttpPost] 
         public JsonResult AssociateMembers([FromBody] IncomingExistingProjectMembers accounts)
         {
-            using(var context  = new DatabaseController(Context,Configuration))
+            using(var context  = new UsersContext(Context,Configuration))
             {
                 context.AssociatedProjectExistingMembers(accounts);
             }
@@ -68,7 +65,7 @@ namespace Rokono_Control.Controllers
         [HttpPost] 
         public JsonResult DeleteProjectAccount([FromBody] IncomingProjectAccount accounts)
         {
-            using(var context  = new DatabaseController(Context,Configuration))
+            using(var context  = new UsersContext(Context,Configuration))
             {
                 context.DeleteAccountFromProject(accounts);
             }

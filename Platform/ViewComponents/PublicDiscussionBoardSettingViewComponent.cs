@@ -3,9 +3,9 @@ namespace Platform.ViewComponents
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
-    using Rokono_Control.DatabaseHandlers;
+    using Platform.DatabaseHandlers.Contexts;
     using Rokono_Control.Models;
-    
+
     public class PublicDiscussionBoardSettingViewComponent : ViewComponent
     {
         private readonly RokonoControlContext Context;
@@ -19,10 +19,11 @@ namespace Platform.ViewComponents
 
         public IViewComponentResult Invoke(int projectId)
         {
-            using(var context = new DatabaseController(Context, Configuration))
-            {
+            using(var context = new OutboundDetailsContext(Context,Configuration))
                 ViewData["RuleValuePublicMessage"] = context.GetProjectActiveRule(projectId,"PublicMessage");
 
+            using(var context = new ApiKeysContext(Context, Configuration))
+            {
                 var result = context.GetProjectApiKey(projectId, "PublicMessage");
                 ViewData["ProjectKeyPublicMessage"] = result;
                 if(result == null)

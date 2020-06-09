@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Platform.DatabaseHandlers.Contexts;
 using Platform.DataHandlers;
 using Platform.DataHandlers.Interfaces;
 using Rokono_Control.DatabaseHandlers;
@@ -51,7 +52,7 @@ namespace RokonoControl
             {
                 var res = string.Empty;
             
-                using(var context = new DatabaseController(RokonoContext,Configuration))
+                using(var context = new NotificationContext(RokonoContext,Configuration))
                 {
                     var notifications = context.GetNewNotifications(UserId);
                     res = JsonConvert.SerializeObject(notifications);

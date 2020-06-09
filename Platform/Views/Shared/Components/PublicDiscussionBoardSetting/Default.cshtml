@@ -79,7 +79,7 @@
     }
     $.ajax({
         type: 'POST',
-        url: '/ApiKeySettings/GetAllPublicMessages',
+        url: '/Chat/GetAllPublicMessages',
         data: JSON.stringify(messagesDto),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -100,7 +100,7 @@
         }
         $.ajax({
             type: 'POST',
-            url: '/ApiKeySettings/GetPublicMessages',
+            url: '/Chat/GetPublicMessages',
             data: JSON.stringify(messagesDto),
             contentType: "application/json; charset=utf-8",
             dataType: "json",

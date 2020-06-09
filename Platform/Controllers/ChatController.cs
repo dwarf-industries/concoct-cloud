@@ -7,13 +7,12 @@ namespace Platform.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.SignalR;
     using Microsoft.Extensions.Configuration;
-    using Newtonsoft.Json;
+    using Platform.DatabaseHandlers.Contexts;
     using Platform.DataHandlers;
     using Platform.DataHandlers.Interfaces;
     using Platform.Hubs;
     using Platform.Models;
     using Rokono_Control;
-    using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
     public class ChatController : Controller
     {
@@ -43,7 +42,7 @@ namespace Platform.Controllers
         {
             var result = new List<ChatRoomRights>();
      
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new ChatContext(Context, Configuration))
             {
                 result = context.GetChatRoomRights(request.Id);
             }
@@ -57,7 +56,7 @@ namespace Platform.Controllers
         {
        
             var result = new List<ChatRooms>();
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new ChatContext(Context, Configuration))
             {
                 result = context.GetAllChatChannels(request.Id);
             }
@@ -70,7 +69,7 @@ namespace Platform.Controllers
         {
             var result = new List<OutgoingChatItem>();
     
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new ChatContext(Context, Configuration))
             {
                 result = context.GetChatChannels(request.Id, UserId);
             }
@@ -84,7 +83,7 @@ namespace Platform.Controllers
           
             var result = new  List<OutgoingChatItem>();
  
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new ChatContext(Context, Configuration))
             {
                 context.AddNewChatChannel(request);
                 result = context.GetChatChannels(request.Id,UserId);
@@ -101,7 +100,7 @@ namespace Platform.Controllers
             
             var result = new  List<OutgoingChatItem>();
  
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new ChatContext(Context, Configuration))
             {
                 context.AddNewChatRoom(request);
                 result = context.GetChatChannels(request.WorkItemType,UserId);
@@ -117,7 +116,7 @@ namespace Platform.Controllers
         {
           
             var result = default(ChatRoomRights);
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new ChatContext(Context, Configuration))
             {
                 result = context.AssignUserTag(request.Id, request.ProjectId, request.UserId);
 
@@ -132,7 +131,7 @@ namespace Platform.Controllers
         {
             var result = new  List<AssociatedUserChatNotifications>();
  
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new ChatContext(Context, Configuration))
             {
                 result = context.GetChatNotifications(request.Id, UserId);
             }
@@ -146,7 +145,7 @@ namespace Platform.Controllers
         {
           
  
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new ChatContext(Context, Configuration))
             {
                 context.RemoveUserTag(request.Id, request.UserId, request.ProjectId);
             }
@@ -159,7 +158,7 @@ namespace Platform.Controllers
         public OutgoingJsonData TagUpdate([FromBody] IncomingChatRoomRights request)
         {           
  
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new ChatContext(Context, Configuration))
             {
                 
                 context.UpdateTag(request);
@@ -171,7 +170,7 @@ namespace Platform.Controllers
 //        [ValidateAntiForgeryToken]
         public OutgoingJsonData TagSave([FromBody] IncomingChatRoomRights request)
         {
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new ChatContext(Context, Configuration))
             {
                 context.InserTag(request);
             }
@@ -182,7 +181,7 @@ namespace Platform.Controllers
 //        [ValidateAntiForgeryToken]
         public OutgoingJsonData NewPersonalMessage([FromBody] IncomingChatMessage request)
         {
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new ChatContext(Context, Configuration))
             {
                var values = context.NewChatPersonalMessage(request,UserId);
                var reciverData = Program.Members.FirstOrDefault(x=>x.Name == values.Item2);
@@ -190,12 +189,32 @@ namespace Platform.Controllers
             }
             return new OutgoingJsonData{ Data = "Ok"};
         }
+        [HttpPost]
+        public List<PublicMessages> GetAllPublicMessages([FromBody] IncomingIdRequest request)
+        {
+            var result = new List<PublicMessages>();
+            using(var context = new ChatContext(Context,Configuration))
+            {   
+                result = context.GetAllPublicMessagesForProject(request.Id,0);
+            }
+            return result;
+        }
+        [HttpPost]
+        public List<PublicMessages> GetPublicMessages([FromBody] IncomingIdRequest request)
+        {
+            var result = new List<PublicMessages>();
+            using(var context = new ChatContext(Context,Configuration))
+            {   
+                result = context.GetAllPublicMessagesForProject(request.Id,1);
+            }
+            return result;
+        }
         [HttpGet]
         [Authorize (Roles = "User")]
 //        [ValidateAntiForgeryToken]
         public IActionResult GetChatRoom(int id, int projectId, int isPersonal) 
         {
-            using(var context = new  DatabaseController(Context,Configuration))
+            using(var context = new  ChatContext(Context,Configuration))
             {
                 context.UserChatChannelRead(UserId, projectId, id);
             }

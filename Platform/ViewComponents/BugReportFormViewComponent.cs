@@ -1,5 +1,3 @@
-
-
 namespace Platform.ViewComponents
 {
     using Microsoft.AspNetCore.Mvc;

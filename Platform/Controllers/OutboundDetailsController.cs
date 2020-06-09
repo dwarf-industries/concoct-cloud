@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Platform.Models;
-using Rokono_Control.DatabaseHandlers;
-using Rokono_Control.Models;
 
 namespace Platform.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Platform.DatabaseHandlers.Contexts;
+    using Platform.Models;
+    using Rokono_Control.DatabaseHandlers;
+    using Rokono_Control.Models;
+
     public class OutboundDetailsController : Controller
     {
         RokonoControlContext Context;
@@ -23,10 +25,12 @@ namespace Platform.Controllers
         {
             using(var context = new DatabaseController(Context,Configuration))
             {
-                ViewData["EnabledFeatures"] = context.GetProjectOutboundFeatures(projectId);
                 ViewData["ProjectName"] = context.GetProjectName(projectId);
                 ViewData["ProjectId"] = projectId;
             }
+            using(var context = new OutboundDetailsContext(Context,Configuration))
+                ViewData["EnabledFeatures"] = context.GetProjectOutboundFeatures(projectId);
+
             return View();
         }
         
@@ -34,7 +38,7 @@ namespace Platform.Controllers
         public List<PublicMessages> GetPublicDiscussions([FromBody] IncomingIdRequest request)
         {
             var result = new List<PublicMessages>();
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new ChatContext(Context,Configuration))
             {
                 result = context.GetAllPublicMessagesForProject(request.Id,0);
             }
@@ -44,7 +48,7 @@ namespace Platform.Controllers
         public PublicMessages AddNewPublicMessage([FromBody] IncomingPublicMessage message)
         {
             var result = new PublicMessages();
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new ChatContext(Context,Configuration))
             {
                 result = context.AddNewPublicMessage(message);
             }
@@ -55,7 +59,7 @@ namespace Platform.Controllers
         public PublicMessages LeaveFeedback([FromBody] IncomingPublicMessage message)
         {
             var result = new PublicMessages();
-            using(var context = new DatabaseController(Context,Configuration))
+            using(var context = new OutboundDetailsContext(Context,Configuration))
             {
                 result = context.AddNewFeedback(message);
             }
@@ -66,7 +70,7 @@ namespace Platform.Controllers
         public OutgoingJsonData AddNewBugReport([FromBody] IncomingNewBugReport report)
         {
             var result = new OutgoingJsonData();
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new OutboundDetailsContext(Context, Configuration))
             {
                 var title = $"{Guid.NewGuid()}";
                 context.AddNewBugReport(report, title);

@@ -3,7 +3,7 @@ namespace Platform.ViewComponents.Documentation
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
-    using Rokono_Control.DatabaseHandlers;
+    using Platform.DatabaseHandlers.Contexts;
     using Rokono_Control.Models;
 
     [ViewComponent(Name = "DocumentationPageHandler")]
@@ -27,7 +27,7 @@ namespace Platform.ViewComponents.Documentation
                 ViewData["Modal"] = 1;
                 return View("/Views/Shared/Components/Documentation/DocumentationPageHandler/Default.cshtml");
             }
-            using(var context = new DatabaseController(Context, Configuration))
+            using(var context = new DocumentationContext(Context, Configuration))
             {
                 ViewData["PageData"] = context.GetDocumentationPage(request.Id); 
             }
