@@ -3,6 +3,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using RCServerCli.DatabaseHandlers;
 using RCServerCli.DataHandlers;
+using RCServerCli.Models;
 
 namespace RCServerCli
 {
@@ -10,10 +11,11 @@ namespace RCServerCli
     { 
         
         static void Main(string[] args)
-        {
+        {         
+            System.Console.WriteLine("Attention before using any of the tool commands make sure that you setup your configuration using -Init");
             Console.WriteLine("Welcome to Rokono Control admin pannel, please type --help to view the full list of commands.");
             System.Console.WriteLine("If you're running a desktop enviroment there is a GUI client available that has the same functionality as this tool.");
-            System.Console.WriteLine("RCAP is a tool intended to be user on the server, please refrain from giving access to people that don't know what they are doing as this may damage your existing projects!!!");
+            System.Console.WriteLine("RCAP is a tool intended to be used on the server, please refrain from giving access to people that don't know what they are doing as this may damage your existing projects!!!");
             var userId = default(int);
             var projectId = default(int);
             var isValid = false;
@@ -22,20 +24,156 @@ namespace RCServerCli
             {
                 switch(args[i])
                 {
-                  
-                    case "Create Account":
-                        Console.Write("Username: ");
-                        var user = Console.ReadLine();
-                        System.Console.WriteLine("");
-                        System.Console.Write("Password: ");
-                        var password = Console.ReadLine();
-                        System.Console.WriteLine("");
-                        System.Console.Write("Administrator yes/no");
-                        var isAdmin = Console.ReadLine() == "yes" ? true :false;
-                        using(var context = new DatabaseController())
+                    case "-Init":
+                        System.Console.WriteLine("Username");
+                        var dbUsername = Console.ReadLine();
+                        System.Console.WriteLine("Password");
+                        var dbPassword = Console.ReadLine();
+                        System.Console.WriteLine("Database IP");
+                        var dbIp = Console.ReadLine();
+                        System.Console.WriteLine("Database name");
+                        var dbName = Console.ReadLine();
+                        ConfigManager.SetupConfig(new ProjectConfig{
+                            Password = dbPassword,
+                            TableName = dbName,
+                            UserName = dbUsername,
+                            Ip = dbIp
+                        });
+                        System.Console.WriteLine("Configuration created");
+                    break;
+                    case "-AUP":
+                        userId = default(int);
+                        isValid = int.TryParse(args[i + 1].ToString(), out userId);
+                        isValid = int.TryParse(args[i + 2].ToString(), out projectId);
+                        
+                        if(isValid)
                         {
-                            context.CreateUser(user,password,isAdmin);
+                           
+                            System.Console.WriteLine("Setup user rights.");
+                            System.Console.WriteLine("Project wide rights:");
+                            var answer = string.Empty;
+                            var j = 1;
+                            var rights = new UserRights{
+                                Documentation = 0,
+                                ChatChannelsRule = 0,
+                                ManageIterations = 0,
+                                ManageUserdays = 0,
+                                UpdateUserRights = 0,
+                                ViewOtherPeoplesWork = 0,
+                                WorkItemRule = 0
+                            };
+                            var prev = default(int);
+                            start:
+                            switch(j)
+                            {
+                                case 1:
+                                    System.Console.WriteLine("Allow to manage work items? yes/no?");
+                                    prev = j;
+                                    answer = Console.ReadLine();
+                                    j = CheckUserInput(answer, j);
+                                    System.Console.WriteLine(j);
+                                    if(j == prev)
+                                    {
+                                        System.Console.WriteLine("Please answer with yes or no");
+                                        goto start; 
+                                    }
+                                    else if(answer.ToLower()  == "yes")  
+                                        rights.WorkItemRule = 1;
+                                    goto start;                                
+                                break;
+                                case 2:
+                                    System.Console.WriteLine("Allow to manage chat channels? yes/no?");
+                                    prev = j;
+                                    answer = Console.ReadLine();
+                                    j = CheckUserInput(answer, j);
+                                    if(j == prev)
+                                    {
+                                        System.Console.WriteLine("Please answer with yes or no");
+                                        goto start; 
+                                    }
+                                    else if(answer.ToLower()  == "yes")    
+                                        rights.ChatChannelsRule = 1;
+                                    goto start;                                
+                                break;
+                                case 3:
+                                    System.Console.WriteLine("Allow to manage user rights? yes/no?");
+                                    prev = j;
+                                    answer = Console.ReadLine();
+                                    j = CheckUserInput(answer, j);
+                                    if(j == prev)
+                                    {
+                                        System.Console.WriteLine("Please answer with yes or no");
+                                        goto start; 
+                                    }
+                                    else if(answer.ToLower()  == "yes")     
+                                        rights.UpdateUserRights = 1;
+                                    goto start;                                
+                                break;
+                                case 4:
+                                    System.Console.WriteLine("Allow to manage Iterations? yes/no?");
+                                    prev = j;
+                                    answer = Console.ReadLine();
+                                    j = CheckUserInput(answer, j);
+                                    if(j == prev)
+                                    {
+                                        System.Console.WriteLine("Please answer with yes or no");
+                                        goto start; 
+                                    }
+                                    else if(answer.ToLower()  == "yes")     
+                                        rights.ManageIterations = 1;
+                                    goto start;                                
+                                break;
+                                case 5:
+                                    System.Console.WriteLine("Allow to manage user work days? yes/no?");
+                                    prev = j;
+                                    answer = Console.ReadLine();
+                                    j = CheckUserInput(answer, j);
+                                    if(j == prev)
+                                    {
+                                        System.Console.WriteLine("Please answer with yes or no");
+                                        goto start; 
+                                    }
+                                    else if(answer.ToLower()  == "yes")      
+                                        rights.ManageUserdays = 1;
+                                    goto start;                                
+                                break;
+                                case 6:
+                                    System.Console.WriteLine("Allow to manage view other peoples work? yes/no?");
+                                    prev = j;
+                                    answer = Console.ReadLine();
+                                    j = CheckUserInput(answer, j);
+                                    if(j == prev)
+                                    {
+                                        System.Console.WriteLine("Please answer with yes or no");
+                                        goto start; 
+                                    }
+                                    else if(answer.ToLower() == "yes")     
+                                        rights.ViewOtherPeoplesWork = 1;
+                                    goto start;                                
+                                break;
+                                case 7:
+                                    System.Console.WriteLine("Allow to manage documentation? yes/no?");
+                                    prev = j;
+                                    answer = Console.ReadLine();
+                                    j = CheckUserInput(answer, j);
+                                    if(j == prev)
+                                    {
+                                        System.Console.WriteLine("Please answer with yes or no");
+                                        goto start; 
+                                    }
+                                    else if(answer.ToLower() == "yes")     
+                                        rights.ViewOtherPeoplesWork = 1;
+                                    goto start;                                
+                                break;
+                            }
+
+                            using (var context = new DatabaseController())
+                            {
+                                context.AddUserToProject(userId,projectId, rights);
+                            }
                         }
+                        else
+                            System.Console.WriteLine("Miss matching argument after List Project User, expected INT Id");
                     break;
                     case "-LP":
                         using(var context = new DatabaseController())
@@ -160,16 +298,51 @@ namespace RCServerCli
 
                         }
                     break;
+                    case "-RU":
+                        System.Console.WriteLine("First Name");
+                        var firstName = Console.ReadLine();
+                        System.Console.WriteLine("Last Name");
+                        var lastName = Console.ReadLine();
+                        System.Console.WriteLine("Please add a username for your account prefferably the same as your git username.");
+                        var username = Console.ReadLine();
+                        System.Console.WriteLine("Please add a email for your account:");
+                        var email = Console.ReadLine();
+                        System.Console.WriteLine("Please choose a password or leave blank to get one generated for you.");
+                        var accountPassword = Console.ReadLine();
+                        System.Console.Write("Administrator yes/no");
+                        var isAdmin = Console.ReadLine() == "yes" ? true :false;
+
+                       
+                        using(var context = new DatabaseController())
+                        {
+                            context.CreateUser(firstName,lastName,username,email,accountPassword,isAdmin, null);
+                        }
+                    break;
                     case "--Help":
                         ShowHelpMenu();
                         break;
                 }  
             }
-        }   
+        }
+
+        private static int CheckUserInput(string answer, int position)
+        {
+            var normalize = answer.ToLower();
+            switch(normalize)
+            {
+                case "yes":
+                    return position+1;
+                case "No":
+                    return position+1;
+                default:
+                    return position;
+            }
+        }
 
         private static void ShowHelpMenu()
         {
-            System.Console.WriteLine("Create Account- takes 3 parameters, username, password and admin status. It will prompt to input the parameters 1 by one, it is advised to keep only one administrator account");
+            System.Console.WriteLine("-AUP [user, projectId]: takes two arguments, usage -AUP 1 1. Assigns a user to a given project.");
+            System.Console.WriteLine("-RU: Registers a user in the system.");
             System.Console.WriteLine("-LP:  Lists all projects created in the server instance, returns a table of projectId, Project Name, Project member count");
             System.Console.WriteLine("-LPU: Lists all projects assigned to a user");
             System.Console.WriteLine("-LPRU: Lists all user assigned rights for a given project, takes as input userId and projectId");

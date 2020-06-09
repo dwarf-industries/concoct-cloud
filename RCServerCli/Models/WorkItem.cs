@@ -8,6 +8,9 @@ namespace RCServerCli.Models
         public WorkItem()
         {
             AssociatedBoardWorkItems = new HashSet<AssociatedBoardWorkItems>();
+            AssociatedWorkItemChangelogs = new HashSet<AssociatedWorkItemChangelogs>();
+            AssociatedWorkItemFiles = new HashSet<AssociatedWorkItemFiles>();
+            AssociatedWorkItemMessages = new HashSet<AssociatedWorkItemMessages>();
             AssociatedWrorkItemChildrenWorkItem = new HashSet<AssociatedWrorkItemChildren>();
             AssociatedWrorkItemChildrenWorkItemChild = new HashSet<AssociatedWrorkItemChildren>();
         }
@@ -50,6 +53,7 @@ namespace RCServerCli.Models
         public DateTime? DueDate { get; set; }
         public string StoryPoints { get; set; }
         public string AcceptanceCriteria { get; set; }
+        public int? IsPublic { get; set; }
 
         public virtual WorkItemActivity ActivityNavigation { get; set; }
         public virtual WorkItemAreas Area { get; set; }
@@ -64,6 +68,9 @@ namespace RCServerCli.Models
         public virtual ValueAreas ValueArea { get; set; }
         public virtual WorkItemTypes WorkItemType { get; set; }
         public virtual ICollection<AssociatedBoardWorkItems> AssociatedBoardWorkItems { get; set; }
+        public virtual ICollection<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
+        public virtual ICollection<AssociatedWorkItemFiles> AssociatedWorkItemFiles { get; set; }
+        public virtual ICollection<AssociatedWorkItemMessages> AssociatedWorkItemMessages { get; set; }
         public virtual ICollection<AssociatedWrorkItemChildren> AssociatedWrorkItemChildrenWorkItem { get; set; }
         public virtual ICollection<AssociatedWrorkItemChildren> AssociatedWrorkItemChildrenWorkItemChild { get; set; }
     }

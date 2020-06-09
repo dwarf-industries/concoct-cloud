@@ -18,13 +18,13 @@ namespace RCServerCli.DatabaseHandlers
             Context = new RokonoControlContext();
         }
 
-        internal void CreateUser(string user, string password, bool isAdmin)
+        internal void CreateUser(string firstName,string lastName, string username,string email,string accountPassword, bool isAdmin, UserRights rights)
         {
             var account = Context.UserAccounts.Add(new UserAccounts
             {
-                Email = user,               
-                FirstName = "user.FirstName",
-                LastName = "user.LastName",
+                Email = email,               
+                FirstName = firstName,
+                LastName = lastName,
                 ProjectRights = isAdmin ? 1 : 0,
                 CreationDate = DateTime.Now
             });
@@ -38,21 +38,57 @@ namespace RCServerCli.DatabaseHandlers
 
             // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
             string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
+                password: accountPassword,
                 salt: salt,
                 prf: KeyDerivationPrf.HMACSHA1,
                 iterationCount: 10000,
                 numBytesRequested: 256 / 8));
             account.Entity.Salt = Convert.ToBase64String(salt);
             account.Entity.Password = hashed;
+            System.Console.WriteLine($"Password hash: {hashed}");
             Context.SaveChanges();
+            System.Console.WriteLine($"Generated user ID: {account.Entity.Id}");
+                                    
         }
+
+        internal void AddUserToProject(int userId, int projectId, UserRights rights)
+        {
+            var getRights = Context.UserRights.FirstOrDefault(x=>x.ChatChannelsRule == rights.ChatChannelsRule
+                                                                 && x.Documentation == rights.Documentation
+                                                                 && x.ManageIterations == rights.ManageIterations
+                                                                 && x.ManageUserdays == rights.ManageUserdays
+                                                                 && x.UpdateUserRights == rights.UpdateUserRights
+                                                                 && x.ViewOtherPeoplesWork == rights.ViewOtherPeoplesWork
+                                                                 && x.WorkItemRule == rights.WorkItemRule);
+            if(getRights == null)
+            {
+                getRights  = Context.UserRights.Add(rights).Entity;
+                Context.SaveChanges();
+
+            }
+            Context.AssociatedProjectMemberRights.Add(new AssociatedProjectMemberRights{
+                ProjectId = projectId,
+                UserAccountId = userId,
+                RightsId = getRights.Id 
+            });
+            Context.SaveChanges();
+            var projectRepository = Context.Projects.FirstOrDefault(x=>x.Id == projectId);
+
+            Context.AssociatedProjectMembers.Add(new AssociatedProjectMembers{
+                ProjectId = projectId,
+                RepositoryId = projectRepository.RepositoryId,
+                UserAccountId = userId,
+            });
+            Context.SaveChanges();
+            System.Console.WriteLine($"User has been assgined to project {projectRepository.ProjectName}");
+        }
+
         internal void ListAllProjects()
         {
             var projects = Context.Projects.ToList();
             Console.WriteLine(projects.ToStringTable(new[] { "ID", "Project Name", "Members Count" },
                                                      a => a.Id,
-                                                     a => a.ProjectTitle,
+                                                     a => a.ProjectName,
                                                      a => a.AssociatedProjectMembers.Count));
         }
 
@@ -66,7 +102,7 @@ namespace RCServerCli.DatabaseHandlers
             System.Console.WriteLine("Projects:");
             Console.WriteLine(userProjects.ToStringTable(new[] { "ID", "Project Name", "Members Count" },
                                                       a => a.Id,
-                                                      a => a.ProjectTitle,
+                                                      a => a.ProjectName,
                                                       a => a.AssociatedProjectMembers.Count));
         }
 

@@ -13,6 +13,7 @@ namespace RCServerCli.Models
 
         public int Id { get; set; }
         public string IterationName { get; set; }
+        public int? IsActive { get; set; }
 
         public virtual ICollection<AssociatedProjectIterations> AssociatedProjectIterations { get; set; }
         public virtual ICollection<WorkItem> WorkItem { get; set; }

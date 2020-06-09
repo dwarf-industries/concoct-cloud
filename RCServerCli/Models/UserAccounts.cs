@@ -7,9 +7,17 @@ namespace RCServerCli.Models
     {
         public UserAccounts()
         {
+            AssociatedAccountNotes = new HashSet<AssociatedAccountNotes>();
+            AssociatedChatPersonalMessagesReciver = new HashSet<AssociatedChatPersonalMessages>();
+            AssociatedChatPersonalMessagesSender = new HashSet<AssociatedChatPersonalMessages>();
             AssociatedProjectMemberRights = new HashSet<AssociatedProjectMemberRights>();
             AssociatedProjectMembers = new HashSet<AssociatedProjectMembers>();
+            AssociatedProjectNotifications = new HashSet<AssociatedProjectNotifications>();
+            AssociatedUserChatNotifications = new HashSet<AssociatedUserChatNotifications>();
+            AssociatedUserChatRights = new HashSet<AssociatedUserChatRights>();
+            AssociatedUserNotifications = new HashSet<AssociatedUserNotifications>();
             WorkItem = new HashSet<WorkItem>();
+            WorkItemMessage = new HashSet<WorkItemMessage>();
         }
 
         public int Id { get; set; }
@@ -22,8 +30,16 @@ namespace RCServerCli.Models
         public string GitUsername { get; set; }
         public string Salt { get; set; }
 
+        public virtual ICollection<AssociatedAccountNotes> AssociatedAccountNotes { get; set; }
+        public virtual ICollection<AssociatedChatPersonalMessages> AssociatedChatPersonalMessagesReciver { get; set; }
+        public virtual ICollection<AssociatedChatPersonalMessages> AssociatedChatPersonalMessagesSender { get; set; }
         public virtual ICollection<AssociatedProjectMemberRights> AssociatedProjectMemberRights { get; set; }
         public virtual ICollection<AssociatedProjectMembers> AssociatedProjectMembers { get; set; }
+        public virtual ICollection<AssociatedProjectNotifications> AssociatedProjectNotifications { get; set; }
+        public virtual ICollection<AssociatedUserChatNotifications> AssociatedUserChatNotifications { get; set; }
+        public virtual ICollection<AssociatedUserChatRights> AssociatedUserChatRights { get; set; }
+        public virtual ICollection<AssociatedUserNotifications> AssociatedUserNotifications { get; set; }
         public virtual ICollection<WorkItem> WorkItem { get; set; }
+        public virtual ICollection<WorkItemMessage> WorkItemMessage { get; set; }
     }
 }
