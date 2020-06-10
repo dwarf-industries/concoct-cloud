@@ -162,35 +162,32 @@
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Home/Index.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Home/Privacy.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/OutboundDetails/RelatedProject.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/BugReportForm/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/BugReportFormSettings/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ChatNavigation/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ChatRoomSetting/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ChatSettings/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ChatSidebar/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ChatUserPersonaBox/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ChatWIndow/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ChatComponents/ChatNavigation/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ChatComponents/ChatRoomSetting/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ChatComponents/ChatSettings/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ChatComponents/ChatSidebar/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ChatComponents/ChatUserPersonaBox/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ChatComponents/ChatWIndow/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ChatComponents/GetChatRooms/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ChatComponents/GetTagProperties/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ChatComponents/UserList/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Documentation/DocumentationBreadcrum/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Documentation/DocumentationCategory/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Documentation/DocumentationNavigation/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Documentation/DocumentationPage/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Documentation/DocumentationPageHandler/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/GetChatRooms/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/GetTagProperties/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/LoadedProjects/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ManagementRights/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ModuleDisabledWarning/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/NavigationMenu/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Notes/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/NotificationPanel/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/PublicDiscussionBoardSetting/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/PublicDisscussionBoard/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/PublicFeedback/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/PublicFeedbackSettings/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/OutboundComponents/BugReportForm/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/OutboundComponents/PublicDisscussionBoard/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/OutboundComponents/PublicFeedback/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/RelateWorkItem/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/SearchBox/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/SelectProject/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/UserList/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/UserSettings/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ViewChangelog/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Error.cshtml.g.cs
@@ -208,3 +205,6 @@
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.csproj.CopyComplete
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.dll
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.pdb
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/OutboundDetailsSettings/PublicDiscussionBoardSetting/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/OutboundDetailsSettings/PublicFeedbackSettings/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/OutboundDetailsSettings/BugReportFormSettings/Default.cshtml.g.cs

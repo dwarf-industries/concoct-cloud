@@ -39,10 +39,21 @@ namespace Platform.DatabaseHandlers.Contexts
         internal void NotificationRead(int id, int id1)
         {
             var notification = Context.AssociatedProjectNotifications.FirstOrDefault(x=>x.NotificationId == id && x.UserAccountId == id1);
-            notification.NewNotification = 0;
-            Context.Attach(notification);
-            Context.Update(notification);
-            Context.SaveChanges();
+            if(notification != null)
+            {
+                notification.NewNotification = 0;
+                Context.Attach(notification);
+                Context.Update(notification);
+                Context.SaveChanges();
+            }
+            var personalMessage =  Context.AssociatedUserNotifications.FirstOrDefault(x => x.NotificationId == id && x.UserId == id1);
+            if(personalMessage != null)
+            {
+                personalMessage.NewNotification = 0;
+                Context.Attach(personalMessage);
+                Context.Update(personalMessage);
+                Context.SaveChanges();
+            }
         }
         internal void AddNewUserNotification(int v, WorkItem getWorKItemByName, int userId)
         {

@@ -8,7 +8,6 @@ var selectedChildren = [];
     "LinkedItems" : 0
 }
 
-console.log(id);
 var dto = {
     "id": id,
     "Phase": "!"

@@ -647,11 +647,8 @@
     
     </div>
 </div>
-</div>
-@await Component.InvokeAsync("RelateWorkItem", new IncomingIdRequest{
-    Id = @WorkItemData.Id,
-    WorkItemType = @projectId.Value
-})
+</div> 
+
 
         <!-- end of main-content -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
@@ -663,8 +660,9 @@
 </script>
 
 <script>
- 
+    var wItemId;
     var chatGrid;
+    var id;
 
     var BackBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     BackBtn.appendTo('#BackBtn');
@@ -965,7 +963,7 @@
             dataType: "json",
             success: function (response) {
                 console.log(response);
-                GenerateUmlData(response.umlData);
+                @* GenerateUmlData(response.umlData); *@
                 response.workItems.forEach(function(element) {
                     console.log(element.workItem.id);
                     AddAssocuatedItem(element.workItem.id);
@@ -1212,6 +1210,10 @@
     }
 
 </script>
+@await Component.InvokeAsync("RelateWorkItem", new IncomingIdRequest{
+    Id = @WorkItemData.Id,
+    WorkItemType = @projectId.Value
+})
 <style>
     #listview-def,
     #listview-grp {
