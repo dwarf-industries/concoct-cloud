@@ -13,7 +13,7 @@ namespace Platform.DataHandlers
 
         public static string GetImageType(string path)
         {
-            string headerCode = GetHeaderInfo(path).ToUpper();
+            string headerCode = GetHeaderInfo($"wwwroot/Files/Uploads/{path}").ToUpper();
 
             if (headerCode.StartsWith("FFD8FFE0"))
             {

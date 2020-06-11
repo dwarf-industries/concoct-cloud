@@ -14,6 +14,9 @@
 <link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
 
 <style>
+    #main-text{
+        height: 90vh;
+    }
     .fa-bug:before{
         font-family: "e-icons" !important;
         content: '\e191';
@@ -279,10 +282,10 @@
             enableHover: false,
             allowPaging: true,
             pageSettings: { pageSize: 20 },
-            height:'750px',
+            height:'650px',
             columns: [
-                { type: "checkbox", field: "", allowFiltering: false, allowSorting: false, width: '60' },
-                { field: 'workItemType.TypeName', headerText: 'Type', width: 60,customAttributes: {class: "workItemIcon"}, textAlign: 'Right' },
+                { type: "checkbox", field: "", allowFiltering: false, allowSorting: false, width: '20' , textAlign: 'center'},
+                { field: 'workItemType.TypeName', headerText: 'Type', width: '10',customAttributes: {class: "workItemIcon"}, textAlign: 'center' },
                 { field: 'title', headerText: 'Title', width: 125 },
                 { field: 'description', headerText: 'Description', width: 180 },
                 { field: 'assignedTo', headerText: 'AssignedTo', width: 110 },

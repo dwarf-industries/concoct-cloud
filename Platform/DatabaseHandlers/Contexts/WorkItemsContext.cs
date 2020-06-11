@@ -98,6 +98,15 @@ namespace Platform.DatabaseHandlers.Contexts
 
             return null;
         }
+
+        internal List<SystemFiles> GetWorkItemFiles(int workItem)
+        {
+            return Context.AssociatedWorkItemFiles.Include(x => x.File)
+                                                  .Where(x => x.WorkItemId == workItem)
+                                                  .Select(x=>x.File)
+                                                  .ToList();
+        }
+
         internal bool IsNotParent(int parentId)
         {
             return Context.WorkItem.Any(x=>x.ParentId == parentId);

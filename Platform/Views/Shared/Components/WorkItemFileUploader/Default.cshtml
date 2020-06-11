@@ -1,0 +1,108 @@
+<style>
+      .e-upload {
+        width: 100%;
+        position: relative;
+        margin-top: 15px;
+        float: none;
+    }
+    .e-upload .e-upload-actions {
+        float: none;
+        text-align: right;
+    }
+    .control_wrapper .e-upload .e-upload-drag-hover {
+        margin: 0;
+    }
+</style>
+
+<div class="row">
+    <div class="control_wrapper">
+        <!-- Initialize Uploader -->
+        <input type='file' id='fileupload' name='UploadFiles'/>
+    </div>
+</div>
+
+<script>
+    var dropElement = document.getElementsByClassName('control-fluid')[0];
+    
+    var uploadObj = new ej.inputs.Uploader({
+        asyncSettings: {
+            saveUrl: '/Uploader/Save',
+            removeUrl: '/Uploader/Remove',
+
+        },
+        removing: onFileRemove,
+        dropArea: dropElement,
+        selected: ItemSelected
+
+    });
+    uploadObj.appendTo('#fileupload');
+    function ItemSelected(args) {
+        console.log(args);
+        selectedFiles.push(args);
+
+        $("#FileHolder").html("");
+        
+        var bindingData = AddItems(selectedFiles);     
+        console.log(bindingData);
+        $("#FileHolder").append(bindingData);
+    }
+    function onFileRemove(args) {
+
+        args.postRawFile = false;
+        var files = [];
+        selectedFiles.forEach(x=>{
+            if(args.filesData[0].rawFile.name === x.filesData[0].rawFile.name)
+            {
+                 
+            }   
+            else
+            {
+                files.push(x);
+            }
+
+        });
+        selectedFiles = files;
+        var currentData = AddItems(selectedFiles);
+        $("#FileHolder").html(currentData);
+
+    }
+
+    function AddItems(files)
+    {
+        selectedFilesTransfer = [];
+        var local = "";
+        files.forEach(args =>{
+            selectedFilesTransfer.push(args.filesData[0].rawFile.name);
+            if(args.filesData[0].rawFile.type === "image/png" || args.filesData[0].rawFile.type === "jpg" || args.filesData[0].rawFile.type === "image/gif" )
+            {
+                local += "<div class=\"col-md-4\" id=\"Img_"+args.filesData[0].rawFile.name+"\">"+
+                                    "<div class=\"row\">"+
+                                        "<img src=\"/Files/Uploads/"+args.filesData[0].rawFile.name+"\" style=\"width: -moz-available;\" />"+
+                                    "</div>"+
+                                    "<p style=\"text-align: center;word-wrap: break-word;\">"+args.filesData[0].rawFile.name+"</p>"+
+                                    "<div class=\"row\" style=\"text-align: center;\">"+
+                                        "<button  class=\"btn btn-primary e-control e-btn e-lib e-outline e-primary\">"+
+                                            "Download"+
+                                        "</button>"+
+                                    "</div>"+
+                                "</div>";
+            }
+            else
+            {
+                local += "<div class=\"col-md-4\" id=\"Img_"+args.filesData[0].rawFile.name+"\">"+
+                                    "<div class=\"row\" style=\"text-align:center;\">"+
+                                        "<span class=\"FileIcon\"></span>"+
+                                    "</div>"+
+                                    "<p style=\"text-align: center; word-wrap: break-word;\">"+args.filesData[0].rawFile.name+"</p>"+
+                                    "<div class=\"row\" style=\"text-align: center;\">"+
+                                        "<button  class=\"btn btn-primary e-control e-btn e-lib e-outline e-primary\">"+
+                                            "Download"+
+                                        "</button>"+
+                                    "</div>"+
+                                "</div>";              
+                
+            }
+        });
+        return local;
+    }
+</script>

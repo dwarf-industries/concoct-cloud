@@ -171,11 +171,40 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                     NotificationId = notification.Entity.Id,
                     ProjectId = currentItem.ProjectId,
                     NewNotification = 1,
-                    UserAccountId = x.Id
+                    UserAccountId = x.UserAccountId
                 });
                 Context.SaveChanges();
             });
-            
+            var prevList = Context.AssociatedWorkItemFiles.Where(x=>x.WorkItemId == dbVersion.Id).ToList();
+            Context.RemoveRange(prevList);
+            Context.SaveChanges();
+            currentItem.SelectedFiles.ForEach(x=>{
+                var fileId = default(int);
+                if(Context.SystemFiles.FirstOrDefault(y=>y.FileLocation == x) == null)
+                {
+                    var fileType = FileProcessor.GetImageType(x);
+
+                    var files = Context.SystemFiles.Add(new SystemFiles{
+                        DateOfMessage = DateTime.Now,
+                        FileLocation =  x,
+                        FileType = fileType == "" ? 2 : 1,
+                        SenderName  = "System" 
+                    });
+                    fileId = files.Entity.Id;
+                    Context.SaveChanges();
+                }
+                else
+                {
+                    var file = Context.SystemFiles.FirstOrDefault(y=>y.FileLocation == x);
+                    fileId = file.Id;
+                }
+
+                Context.AssociatedWorkItemFiles.Add(new AssociatedWorkItemFiles{
+                        FileId = fileId,
+                        WorkItemId = dbVersion.Id
+                });
+                Context.SaveChanges();
+            });
             return true;
         }
 
@@ -373,7 +402,24 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 });
                 Context.SaveChanges();
             });
-            
+            currentItem.SelectedFiles.ForEach(x=>{
+                var fileType = FileProcessor.GetImageType(x);
+
+                var files = Context.SystemFiles.Add(new SystemFiles{
+                    DateOfMessage = DateTime.Now,
+                    FileLocation =  x,
+                    FileType = fileType == "" ? 2 : 1,
+                    SenderName = "System"
+                });
+
+                Context.SaveChanges();
+                Context.AssociatedWorkItemFiles.Add(new AssociatedWorkItemFiles{
+                        FileId = files.Entity.Id,
+                        WorkItemId = item.Entity.Id
+                });
+                Context.SaveChanges();
+            });
+
             return true;
         }
     }

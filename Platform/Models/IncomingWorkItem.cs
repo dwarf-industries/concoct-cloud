@@ -46,6 +46,7 @@ namespace Rokono_Control.Models
         //Shared
         public List<LinkedItems> SelectedChildren  { get; set; }
         public int ParentId { get; set; }
+        public List<string> SelectedFiles { get; set; }
   
 
     }

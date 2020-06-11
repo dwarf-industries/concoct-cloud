@@ -7,6 +7,7 @@ namespace Rokono_Control.Controllers
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
@@ -115,7 +116,7 @@ namespace Rokono_Control.Controllers
                 ViewData["ValueAreas"] = context.GetProjectValueAreas(projectId);
                 ViewData["Risks"] = context.GetProjectRisks(projectId);
                 ViewData["Iterations"] = context.GetProjectIterations(projectId);
-
+                ViewData["WorkItemFiles"] = context.GetWorkItemFiles(workItem);
                 ViewData["WorkItemType"] = currentWorkItem.WorkItemTypeId;
                 ViewData["WorkItemData"] = currentWorkItem;
                 ViewData["ProjectId"] = projectId;
@@ -511,6 +512,13 @@ namespace Rokono_Control.Controllers
             return result;
         }
 
+        [HttpGet]
+        [Authorize (Roles = "User")]
+//        [ValidateAntiForgeryToken]
+        public IActionResult GetWorkItemFileUpload() 
+        {
+            return ViewComponent("WorkItemFileUploader");
+        }
         #endregion
     }
 }

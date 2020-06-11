@@ -3,6 +3,7 @@
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
     var result = ViewData["Projects"] as List<Projects>;
     var userName =  ViewData["Name"] as string;
+    var WorkItemFiles = ViewData["WorkItemFiles"] as  List<SystemFiles>;
     var priorities = ViewData["Priorities"]  as List<WorkItemPriorities>; 
     var areas = ViewData["Areas"] as List<WorkItemAreas>;
     var iterations = ViewData["Iterations"] as List<WorkItemIterations>;
@@ -26,10 +27,30 @@
     var cValueArea = @WorkItemData.ValueAreaId.HasValue != true  ? "0" : @WorkItemData.ValueAreaId.Value.ToString();
     var cRisk = @WorkItemData.RiskId.HasValue != true  ? "0" : @WorkItemData.RiskId.Value.ToString();
     var ReturnPath = ViewData["ReturnPath"] as string;
-
 }
 <link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
-
+<style>
+    .e-input-picture:before {
+        content: '\e30d';
+        font-family: e-icons;
+    }
+    
+    .e-input-calendar:before {
+        content:'\e901';
+        font-family: e-icons;
+        font-size: 13px;
+    }
+    .FileIcon:before {
+        content: '\ec2a';
+        font-family: e-icons;
+        font-size: 107px;
+    }
+    .UploadHolder{
+        min-height: 400px;
+        max-height: 500px;
+        overflow-y: auto;
+    }
+</style>
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <!-- Main Quill library -->
 <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
@@ -633,7 +654,48 @@
 
                 </div>
                 <div id="tab3_content" style="display: none; min-height:53vh;">
-                        
+                    <div id="FileUploaderHolder">
+
+                    </div>
+                    
+                    <div class="row UploadHolder" id="FileHolder">
+
+                        @foreach(var currentfile in @WorkItemFiles)
+                        {
+                            if(currentfile.FileType == 1)
+                            {
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <img src="~/Files/Uploads/@currentfile.FileLocation" style="width: -moz-available;" />
+                                    </div>
+                                    <p style="text-align: center;">@currentfile.FileLocation</p>
+                                    <div class="row" style="text-align: center;">
+                                        <button  class="btn btn-primary e-control e-btn e-lib e-outline e-primary">
+                                            Download
+                                        </button>
+                                    </div>
+                                </div>
+
+                      
+                            }
+                            else
+                            {
+                                <div class="col-md-4">
+                                    <div class="row" style="text-align: center;">
+                                        <span class="FileIcon"></span>
+                                    </div>
+                                    <p style="text-align: center;">@currentfile.FileLocation</p>
+                                    <div class="row" style="text-align: center;">
+                                        <button  class="btn btn-primary e-control e-btn e-lib e-outline e-primary">
+                                            Download
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                        }
+    
+                    </div>
+
                 </div>
             </div>
             <div class="row text-center" style="margin-left:40%; margin-right:40%;">
@@ -663,9 +725,40 @@
     var wItemId;
     var chatGrid;
     var id;
+    var selectedFiles = [];
+    var selectedFilesTransfer = [];
 
+    @foreach(var currentfile in @WorkItemFiles)
+    {   
+        if(@currentfile.FileType == 1)
+        {
+            @: var current =  {
+            @:         "filesData" :  [{
+            @:             "rawFile" : {
+            @:                "type" : "image/png",
+            @:                "name" : "@currentfile.FileLocation"
+            @:             }
+            @:         }]
+            @:     }
+        }
+        else
+        {
+            @: var current =  {
+            @:         "filesData" :  [{
+            @:             "rawFile" : {
+            @:                "type" : "file",
+            @:                "name" : "@currentfile.FileLocation"
+            @:             }
+            @:         }]
+            @:     }
+        }
+        @: selectedFiles.push(current)
+        @: selectedFilesTransfer.push("@currentfile.FileLocation")
+    }
     var BackBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     BackBtn.appendTo('#BackBtn');
+    $("#FileUploaderHolder").load("/Dashboard/GetWorkItemFileUpload");
+
     var acceptWItemChange = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     acceptWItemChange.appendTo('#AcceptWItemChange');
 
@@ -688,7 +781,6 @@
     relationBtn.appendTo('#relationBtn');
     var OpenRelationDiagram = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     OpenRelationDiagram.appendTo('#OpenRelationDiagram');
-
 
     //Render initialized ListView component
     listObj.appendTo('#listview-def');
@@ -1093,8 +1185,9 @@
             "DueDate" : dueDateVal,
             "Rank" :$("#Rank").val() ,
             "StoryPoints" : $("#StoryPoints").val(),
-            "SelectedChildren" : selectedChildren
-        }
+            "SelectedChildren" : selectedChildren,
+            "SelectedFiles": selectedFilesTransfer
+        } 
         if($("#Description").val() !== undefined)
             dto.Description = $("#Description").children()[0].innerHTML;
         if($("#AcceptanceCriteria").val() !== undefined)
