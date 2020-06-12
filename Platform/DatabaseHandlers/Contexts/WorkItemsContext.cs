@@ -99,6 +99,22 @@ namespace Platform.DatabaseHandlers.Contexts
             return null;
         }
 
+        internal void CloseIteration(int projectId, int iteration, int newIteration)
+        {
+            var workItems = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem)
+                                            .Where(x => x.WorkItem.Iteration == iteration && x.Board.BoardType != 4)
+                                            .Select(x=>x.WorkItem)
+                                            .ToList();
+            workItems.ForEach(x=>{
+                var item = x;
+                item.Iteration = newIteration;
+                Context.Attach(item);
+                Context.Update(item);
+                Context.SaveChanges(); 
+            });
+
+        }
+
         internal List<SystemFiles> GetWorkItemFiles(int workItem)
         {
             return Context.AssociatedWorkItemFiles.Include(x => x.File)

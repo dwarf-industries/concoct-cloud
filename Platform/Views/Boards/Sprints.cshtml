@@ -47,6 +47,8 @@
                 <button id="backlogBtn" onclick="CallUrl('/Boards/ProjectBacklog?projectId='+@ProjectId+'&&workItemType=7')">View as backlog</button>
                 <button id="capacityBtn" onclick="CallUrl()">Capacity</button>
                 <button id="analitycsBtn" onclick="CallUrl()">Analitycs</button>
+                <button id="CloseIteration" onclick="ChangeIteration()">Close Iteration</button>
+
             </div>
             <div class="col-md-3">
 
@@ -108,6 +110,15 @@
         </div>
     </div>
 
+    <div id="dialogIterations">
+        <div id="IterationContent">
+            
+        </div>
+        <div  class="row">
+            <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="CloseIterationModal()">Cancel</button>
+        </div>
+
+    </div>
 
         </div>
     
@@ -144,7 +155,8 @@
         capacityBtn.appendTo('#capacityBtn');
         var analitycsBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
         analitycsBtn.appendTo('#analitycsBtn');
-
+        var CloseIteration = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+        CloseIteration.appendTo('#CloseIteration');
 
         var assignBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
         assignBtn.appendTo('#assignBtn');
@@ -160,7 +172,18 @@
         issueBtn.appendTo('#issueBtn');
         var bugBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
         bugBtn.appendTo('#bugBtn');
-        
+          
+        var dialogIterations = new ej.popups.Dialog({
+                width: '90vh',
+                header: 'Attention, closing the active Iteration will move all work items that arent closed to the next iteration pleaes check your planning boards for items that havent been cloed',
+                isModal: true,
+                animationSettings: { effect: 'None' },
+                visible: false,
+                open: dialogOpenIterations,
+                close: dialogCloseIterations
+            });
+        dialogIterations.appendTo('#dialogIterations');
+
 
         ej.base.enableRipple(true);
         var selectedChanging;
@@ -595,9 +618,14 @@
     {
  
     }
+    function ChangeIteration()
+    {
+        dialogIterations.show();
+        $("#IterationContent").load("/Boards/GetIterationChanger?projectId=@ProjectId");
+        @* /Boards/CloseIteration?projectId=@ProjectId&&iteration=@Iteration *@
+    }
 
-
-     function NewTask(){
+    function NewTask(){
         window.location.href = "/Dashboard/AddNewWorkItem?projectId=@ProjectId&workItemType="+3+"&boardId=0&parentId=0&&returnUrl="+window.location.href+"&title="+workItemName;
     }
     function NewIssue(){
@@ -605,6 +633,21 @@
     }
     function NewBug(){
         window.location.href = "/Dashboard/AddNewWorkItem?projectId=@ProjectId&workItemType="+1+"&boardId=0&parentId=0&&returnUrl="+window.location.href+"&title="+workItemName;
+    }
+
+    function dialogOpenIterations()
+    {
+        document.getElementById('dialogIterations').style.display = 'block';
+    }
+
+    function dialogCloseIterations()
+    {
+        document.getElementById('dialogIterations').style.display = 'none';
+    }
+
+    function CloseIterationModal()
+    {
+        dialogIterations.hide();
     }
 </script>
 

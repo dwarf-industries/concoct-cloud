@@ -1,0 +1,153 @@
+
+@{
+    var ProjectId = ViewData["ProjectId"] as int?;
+    var Iterations =  ViewData["ProjectIterations"] as List<WorkItemIterations>;
+}
+<style>
+    #main-text{
+        height: 90vh;
+    }
+    .fa-bug:before{
+        font-family: "e-icons" !important;
+        content: '\e191';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .fa-cog:before{
+        font-family: "e-icons" !important;
+        content: '\e679';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .fa-tasks:before{
+        font-family: "e-icons" !important;
+        content: '\e728';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .fa-vial:before{
+        font-family: "e-icons" !important;
+        content: '\e664';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .fa-crown:before{
+        font-family: "e-icons" !important;
+        content: '\e824';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .fa-exclamation-triangle:before{
+        font-family: "e-icons" !important;
+        content: '\e74c';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .fa-user-circle:before{
+        font-family: "e-icons" !important;
+        content: '\e193';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+
+</style>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="control-section" style="height:77vh;">
+            <div class="content-wrapper">
+                <div id="IterationWorkItems"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6" style="height: 650px;">
+        @foreach (var iteration in @Iterations)
+        {
+            <div class="row">
+                <p style="padding:2%;"> @iteration.IterationName </p>
+                <hr/>
+                @if(@iteration.IsActive == 1)
+                {
+                    <p>
+                        Active Iteration
+                    </p>
+                }
+            </div>
+        }
+    
+      
+
+    </div>
+</div>
+
+
+<script>
+
+    var dto = {
+        "id": @ProjectId,
+        "WorkItemType":0,
+        "Phase" : ""
+    }
+    $.ajax({
+            type: 'POST',
+            url: '/Backlogs/GetWorkItems',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                InitiliazeIterationItemGrid(response);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+    });
+    function InitiliazeIterationItemGrid(data )
+    {
+        console.log(data);
+
+
+        var IterationWorkItems = new ej.treegrid.TreeGrid({
+            dataSource: data,
+            allowSelection: true,
+            allowFiltering: true,
+            allowSorting: true,
+            toolbar: ['Search'],
+ 
+            enableVirtualization: true,
+            filterSettings: { type: 'Menu' },
+            queryCellInfo: customiseCell,
+            selectionSettings: { persistSelection: true, type: "Multiple" },
+            enableHover: false,
+            allowPaging: true,
+            pageSettings: { pageSize: 20 },
+            height:'450px',
+            columns: [
+                { type: "checkbox", field: "", allowFiltering: false, allowSorting: false, width: '20' , textAlign: 'center'},
+                { field: 'workItemType.TypeName', headerText: 'Type', width: '10',customAttributes: {class: "workItemIcon"}, textAlign: 'center' },
+                { field: 'title', headerText: 'Title', width: 125 },
+                { field: 'description', headerText: 'Description', width: 180 },
+                { field: 'assignedTo', headerText: 'AssignedTo', width: 110 },
+            ]
+        });
+
+        IterationWorkItems.appendTo('#IterationWorkItems');
+        ShowContent();
+
+
+    }
+
+    function customiseCell(args) {
+        console.log(args);
+        if (args.column.headerText === 'Type' ){
+            args.cell.setAttribute('class', args.data.workItemIcon);
+        } 
+    }
+    
+</script>

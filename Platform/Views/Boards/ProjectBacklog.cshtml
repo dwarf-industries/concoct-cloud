@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="control-section" style="height:97vh;">
+                            <div class="control-section" style="height:82vh;">
                                 <div class="content-wrapper">
                                     <div id="TreeGrid"></div>
                                 </div>
@@ -314,7 +314,7 @@
             rowSelecting : GetCurrentRow,
             childMapping: 'subtasks',
             toolbar: ['Search'],
-            height: '80vh',
+            height: '70vh',
             recordDoubleClick: EditWorkItem,
             filterSettings: { type: 'Menu' },
             treeColumnIndex: 1,
@@ -323,14 +323,14 @@
             pageSettings: { pageCount: 2 },
             columns: [
                 {
-                    headerText: 'Manage Records', width: 130,
+                    headerText: ' ', width: 20,
                     commands: [{ type: 'Edit', buttonOption: { iconCss: ' e-icons e-edit', cssClass: 'e-flat', click:onClick } },
                    ]
                 },
-                { field: 'WorkItemType.TypeName', headerText: 'Title', width: 60 },
+                { field: 'WorkItemType.TypeName', headerText: ' ', width: 20 },
                 { field: 'title', headerText: 'Title', width: 125 },
                 { field: 'description', headerText: 'Description', width: 180 },
-                { field: 'assignedAccountNavigation.Email', headerText: 'AssignedTo', width: 110 },
+                { field: 'assignedAccountNavigation.Email', headerText: 'Assigned To', width: 110 },
             ]
         });
 

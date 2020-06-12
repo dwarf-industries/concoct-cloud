@@ -1,6 +1,7 @@
 namespace RokonoControl.Controllers
 {
     using System.Collections.Generic;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
@@ -116,6 +117,26 @@ namespace RokonoControl.Controllers
             return view;
         }
 
+        [HttpGet]
+        [Authorize (Roles = "ChatAdministrator")]
+         public IActionResult GetIterationChanger(int id, int projectId) 
+        {
+            return ViewComponent("IterationManager", new IncomingIdRequest{
+                Id = id,
+                ProjectId = projectId
+            });
+         }
+
+        [HttpGet]
+        [Authorize (Roles = "ChatAdministrator")]
+        public void CloseIteration(int projectId, int iteration, int newIteration)
+        {
+            var result = new List<BindingCards>();
+            using (var context = new WorkItemsContext(Context,Configuration))
+            {
+                context.CloseIteration(projectId,iteration, newIteration);
+            }
+        }
 
         [HttpGet]
         public List<BindingCards> GetWorkItems(int projectId, int workItemType)
