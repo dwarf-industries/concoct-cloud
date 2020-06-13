@@ -119,22 +119,21 @@ namespace RokonoControl.Controllers
 
         [HttpGet]
         [Authorize (Roles = "ChatAdministrator")]
-         public IActionResult GetIterationChanger(int id, int projectId) 
+         public IActionResult GetIterationChanger(int projectId) 
         {
             return ViewComponent("IterationManager", new IncomingIdRequest{
-                Id = id,
                 ProjectId = projectId
             });
          }
 
-        [HttpGet]
+        [HttpPost]
         [Authorize (Roles = "ChatAdministrator")]
-        public void CloseIteration(int projectId, int iteration, int newIteration)
+        public void CloseIteration([FromBody] IncomingIdRequest request)
         {
             var result = new List<BindingCards>();
             using (var context = new WorkItemsContext(Context,Configuration))
             {
-                context.CloseIteration(projectId,iteration, newIteration);
+                context.CloseIteration(request.ProjectId,request.WorkItemType, request.Id);
             }
         }
 

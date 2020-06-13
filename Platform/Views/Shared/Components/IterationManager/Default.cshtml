@@ -2,6 +2,7 @@
 @{
     var ProjectId = ViewData["ProjectId"] as int?;
     var Iterations =  ViewData["ProjectIterations"] as List<WorkItemIterations>;
+    var CurrentIteration =   ViewData["CurrentIteration"] as int?;
 }
 <style>
     #main-text{
@@ -56,7 +57,65 @@
         width: 30px;
         height: 30px;
     }
+    .IterationRow{
+        cursor: pointer;
+        font-size: 13;
+        border: 2px solid #e3165b;
+        border-radius: 5px;
+        color: #000;
+        opacity: 0.87;
+        font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont";
 
+    }
+    .IterationRow:hover{
+        background-color: #e3165b;
+        color: white;
+        opacity: 0.87;
+        border: 2px solid white;
+        border-radius: 5px;
+        font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont";
+    }
+    
+    .ActiveIteration{
+        background-color: #e3165b;
+        color: white;
+        opacity: 0.87;
+        font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont";
+        text-align: center;
+        margin: 0;
+
+    }
+    .ActiveIteration:hover{
+        background-color: white; 
+        color: #e3165b;
+        opacity: 0.87;
+        font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont";
+        text-align: center;
+        margin: 0;
+        
+    }
+
+    .alert {
+  padding: 20px;
+  height: 20px;
+  background-color: #e3165b;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
 </style>
 
 <div class="row">
@@ -70,12 +129,18 @@
     <div class="col-md-6" style="height: 650px;">
         @foreach (var iteration in @Iterations)
         {
-            <div class="row">
+            <div class="row IterationRow" onclick="ChangeIterationSelected(@iteration.Id)">
                 <p style="padding:2%;"> @iteration.IterationName </p>
                 <hr/>
                 @if(@iteration.IsActive == 1)
                 {
-                    <p>
+                    <p class="ActiveIteration" id="Active_@iteration.Id">
+                        Active Iteration
+                    </p>
+                }
+                else
+                {
+                    <p class="ActiveIteration" hidden id="Active_@iteration.Id">
                         Active Iteration
                     </p>
                 }
@@ -85,11 +150,19 @@
       
 
     </div>
+  
 </div>
-
+  <div class="row" id="AlertBox">
+        <div class="alert" >
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <strong>Danger!</strong> You're a bout to move all work items that haven't been marked a compleate to the next iteration!!!
+        </div>
+    </div>
 
 <script>
-
+    var activeElement = @CurrentIteration;
+    var SelectedNewIteration;
+    $("#AlertBox").hide();
     var dto = {
         "id": @ProjectId,
         "WorkItemType":0,
@@ -108,6 +181,42 @@
                 console.log(error);
             }
     });
+    function ChangeIterationSelected(id)
+    {
+        $("#AlertBox").show();
+        $("#Rowbtn").hide();
+        $("#Rowbtns").show();
+        $("#Active_"+activeElement).hide();
+        activeElement = id;
+        $("#Active_"+id).show();
+
+    }
+
+    function SaveNewIterationSettings()
+    {
+        ChangeIterationRequest(SelectedNewIteration);
+    }
+    function ChangeIterationRequest(id)
+    {
+         var dto = {
+            "id":id,
+            "ProjectId": @ProjectId,
+            "WorkItemType": @CurrentIteration
+        }
+        $.ajax({
+                type: 'POST',
+                url: '/Boards/CloseIteration',
+                data: JSON.stringify(dto),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    location.reload(); 
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+        });
+    }
     function InitiliazeIterationItemGrid(data )
     {
         console.log(data);

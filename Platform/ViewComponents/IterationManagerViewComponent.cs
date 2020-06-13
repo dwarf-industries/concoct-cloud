@@ -21,9 +21,10 @@ namespace Platform.ViewComponents
         {
             
             ViewData["ProjectId"] = request.ProjectId;
-            ViewData["CurrentIteration"] = request.Id;
+           
             using(var context = new WorkItemsContext(Context,Configuration))
             {
+                ViewData["CurrentIteration"] = context.GetProjectDefautIteration(request.ProjectId);
                 ViewData["ProjectIterations"] = context.GetProjectIterations(request.ProjectId); 
             }
             return View();
