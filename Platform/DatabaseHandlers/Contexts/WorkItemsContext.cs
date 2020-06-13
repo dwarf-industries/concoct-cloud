@@ -112,7 +112,16 @@ namespace Platform.DatabaseHandlers.Contexts
                 Context.Update(item);
                 Context.SaveChanges(); 
             });
-
+            var oldIteration = Context.WorkItemIterations.FirstOrDefault(x=>x.Id == iteration);
+            oldIteration.IsActive = 0;
+            Context.Attach(oldIteration);
+            Context.Update(oldIteration);
+            Context.SaveChanges();
+            var activeIteration = Context.WorkItemIterations.FirstOrDefault(x => x.Id == newIteration);
+            activeIteration.IsActive = 1;
+            Context.Attach(activeIteration);
+            Context.Update(activeIteration);
+            Context.SaveChanges(); 
         }
 
         internal List<SystemFiles> GetWorkItemFiles(int workItem)
@@ -190,7 +199,7 @@ namespace Platform.DatabaseHandlers.Contexts
 
         internal int GetProjectDefautIteration(int id)
         {
-            return Context.AssociatedProjectIterations.FirstOrDefault(x => x.ProjectId == id).IterationId;
+            return Context.AssociatedProjectIterations.FirstOrDefault(x => x.ProjectId == id && x.Iteration.IsActive == 1).IterationId;
         }
 
         internal void ChangeWorkItemBoard(IncomingCardRequest card)

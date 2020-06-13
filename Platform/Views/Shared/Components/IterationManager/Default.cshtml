@@ -189,6 +189,7 @@
         $("#Active_"+activeElement).hide();
         activeElement = id;
         $("#Active_"+id).show();
+        SelectedNewIteration = id;
 
     }
 
@@ -199,7 +200,7 @@
     function ChangeIterationRequest(id)
     {
          var dto = {
-            "id":id,
+            "Id":id,
             "ProjectId": @ProjectId,
             "WorkItemType": @CurrentIteration
         }
