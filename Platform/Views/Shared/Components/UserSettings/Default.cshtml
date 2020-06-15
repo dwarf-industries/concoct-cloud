@@ -1,6 +1,7 @@
 @{
     var Notifications = ViewData["Notifications"] as List<Notifications>;
     var Account = ViewData["UserAccount"] as UserAccounts;
+    var ProjectId = ViewData["ProjectId"] as int?;
 }
 
 
@@ -80,8 +81,7 @@
                 </div>
                 <div>
                     <div class="badge-block">
-                        <div class="user-profile icons"></div>
-                        <!-- Notification Badge -->
+                        <div class="user-profile icons" onclick="CallUrl('/Accounts/GetUserProfile?projectId=@ProjectId')"></div>
                     </div>
                 </div>
                 

@@ -6,6 +6,7 @@
     var WorkItemType = ViewData["WorkItemType"] as int?;
     var WorkItemTypeName = ViewData["GetSelectedWorkItem"] as string;
     var returnUrl = ViewData["ReturnUrl"] as string;
+    var currentIteration = ViewData["CurrentIteration"] as int?;
 }
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <!-- Main Quill library -->
@@ -16,6 +17,10 @@
 <style>
     .e-gridcontent{
         max-height: 80vh;
+    }
+    .e-grid .e-gridcontent{
+        max-height: 68vh;
+        overflow: auto;
     }
 </style>
 
@@ -43,6 +48,12 @@
 
                             </div>
                             <div class="col-md-4">
+                                @await Component.InvokeAsync("IterationDropdown", new IncomingIdRequest{
+
+                                    ProjectId = @result.Value,
+                                    Id = @currentIteration.Value,
+                                    Phase = "Boards/ProjectBacklog"
+                                })
                                 <button id="WorkItemTypeBtnFilter" class="btn btn-primary">@WorkItemTypeName</button>
                             </div>
                         </div>
@@ -119,7 +130,8 @@
         
           var dto = {
             "id": id,
-            "WorkItemType": @WorkItemType
+            "WorkItemType": @WorkItemType,
+            "ProjectId" :@currentIteration
         }
         console.log(dto);
         $.ajax({
@@ -249,18 +261,18 @@
         {
             text: 'Epic',
             iconCss: 'e-ddb-icons e-dashboard',
-            url:" /Boards/ProjectBacklog?projectId="+ProjectId+"&workItemType="+5+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
+            url:" /Boards/ProjectBacklog?projectId="+ProjectId+"&workItemType="+5+"&iteration=@currentIteration&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
         },
         {
             text: 'Feature',
             iconCss: 'e-ddb-icons e-dashboard',
           
-            url:" /Boards/ProjectBacklog?projectId="+ProjectId+"&workItemType="+2+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
+            url:" /Boards/ProjectBacklog?projectId="+ProjectId+"&workItemType="+2+"&iteration=@currentIteration&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
         },
         {
             text: 'User Story',
             iconCss: 'e-ddb-icons e-notifications',
-            url:" /Boards/ProjectBacklog?projectId="+ProjectId+"&workItemType="+7+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
+            url:" /Boards/ProjectBacklog?projectId="+ProjectId+"&workItemType="+7+"&iteration=@currentIteration&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
 
         },
        

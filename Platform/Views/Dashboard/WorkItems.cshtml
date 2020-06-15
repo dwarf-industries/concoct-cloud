@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
     var result = ViewData["ProjectId"] as int?;
     var BoardId = ViewData["BoardId"] as int?;
+    var CurrentIteration = ViewData["CurrentIteration"] as int?;
  }
 
 <link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
@@ -19,13 +20,7 @@
 </style>
 
 <!-- end of sidebar element -->
-<<<<<<< HEAD:Platform/Views/Dashboard/WorkItems.cshtml
       
-=======
-        <!-- main-content declaration -->
-        <div class="main-content" id="main-text" style="height: 94vh;">
-            <div class="sidebar-content">
->>>>>>> changing the UI interface to use only controls due to copyright issues with the last template as it can't be redustributed under MIT, adding base logic for linking work items. Removing a bug causing work items to be duplicated. Upgrading the kahaban board to v2 syncfusion:Views/Dashboard/WorkItems.cshtml
 <div class="row" style="margin:0px;">
 <div class="col-md-12">
   <div class="main-card mb-3 card">
@@ -53,12 +48,7 @@
     </div>
 </div>
 </div>
-<<<<<<< HEAD:Platform/Views/Dashboard/WorkItems.cshtml
  
-=======
-   </div>
-        </div>
->>>>>>> changing the UI interface to use only controls due to copyright issues with the last template as it can't be redustributed under MIT, adding base logic for linking work items. Removing a bug causing work items to be duplicated. Upgrading the kahaban board to v2 syncfusion:Views/Dashboard/WorkItems.cshtml
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -82,7 +72,8 @@
         
           var dto = {
             "id": id,
-            "WorkItemType":5
+            "WorkItemType":5,
+            "ProjectId" : @CurrentIteration
         }
         console.log(dto);
         $.ajax({

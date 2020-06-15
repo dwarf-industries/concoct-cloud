@@ -4,7 +4,9 @@
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
     var result = ViewData["ProjectId"] as int?;
     var BoardId = ViewData["BoardId"] as int?;
+    var CurrentIteration = ViewData["Iteration"] as int?;
     var Phase  = ViewData["Phase"] as string;
+    
 }
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
@@ -94,7 +96,11 @@
                                     <button id="ImportWorkItemBtn" onclick="ImportNewWorkItems()"></i>Import Work Items</button>
                                     <button id="ExportWorkItemBtn">Export Work Items</button>
                                     <button Id="RecycleBtn" onclick="DeleteWorkItems()">Recycle Work Items</button>
-
+                                     @await Component.InvokeAsync("IterationDropdown", new IncomingIdRequest{
+                                        ProjectId = @result.Value,
+                                        Id = @CurrentIteration.Value,
+                                        Phase = "Backlogs/Index"
+                                    })
 
 
 
@@ -157,7 +163,8 @@
           var dto = {
             "id": id,
             "WorkItemType":0,
-            "Phase" : "@Phase"
+            "Phase" : "@Phase",
+            "ProjectId" : @CurrentIteration
         }
         console.log(dto);
         $.ajax({

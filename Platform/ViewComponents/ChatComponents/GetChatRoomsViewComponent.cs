@@ -7,6 +7,7 @@ namespace Platform.ViewComponents
     using Platform.DataHandlers.Interfaces;
     using Rokono_Control.Models;
 
+    [ViewComponent(Name = "GetChatRooms")]
     public class GetChatRoomsViewComponent : ViewComponent
     {
         private readonly RokonoControlContext Context;
@@ -24,7 +25,7 @@ namespace Platform.ViewComponents
         public IViewComponentResult Invoke(int projectId)
         {           
             ViewData["projectId"] = projectId;
-            return View();
+            return View("/Views/Shared/Components/ChatComponents/GetChatRooms/Default.cshtml");
         }
     }
 }

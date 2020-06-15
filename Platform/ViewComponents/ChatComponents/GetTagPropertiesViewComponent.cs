@@ -9,6 +9,8 @@ namespace Platform.ViewComponents
     using Platform.DataHandlers;
     using Platform.DataHandlers.Interfaces;
     using Rokono_Control.Models;
+
+    [ViewComponent(Name = "GetTagProperties")]
     public class GetTagPropertiesViewComponent : ViewComponent
     {
         private readonly RokonoControlContext Context;
@@ -33,7 +35,7 @@ namespace Platform.ViewComponents
             {
                 ViewData["Tag"] = context.GetChatRightById(request.Id);
             }
-            return View();
+            return View("/Views/Shared/Components/ChatComponents/GetTagProperties/Default.cshtml");
         }
     }
 }

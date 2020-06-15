@@ -102,6 +102,7 @@ namespace Platform.DatabaseHandlers.Contexts
 
         internal int GetDefaultProjectChannel(int projectId)
         {
+            
             return Context.ChatRooms.Include(x => x.ChatChannels)
                                     .FirstOrDefault(x => x.ProjectId == projectId).ChatChannels
                                     .FirstOrDefault().Id;

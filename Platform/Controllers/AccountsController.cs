@@ -1,9 +1,12 @@
 ﻿namespace Rokono_Control.Controllers
 {
     using System.Collections.Generic;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Platform.DatabaseHandlers.Contexts;
+    using Platform.DataHandlers;
+    using Platform.DataHandlers.Interfaces;
     using Rokono_Control.Models;
     using RokonoControl.Models;
 
@@ -11,17 +14,30 @@
     {
         RokonoControlContext Context;
         IConfiguration Configuration;
+        AutherizationManager AutherizationManager {get; set;}
+        private int UserId {get; set;}
 
-        public AccountsController(RokonoControlContext context, IConfiguration config)
+        public AccountsController(RokonoControlContext context, IConfiguration config,  IAutherizationManager autherizationManager,IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;
+            AutherizationManager = (AutherizationManager) autherizationManager;
+            UserId = AutherizationManager.GetCurrentUser(UserId,httpContextAccessor.HttpContext.Request);
         }
         public IActionResult Index()
         {
             return View();
         }
-
+        public IActionResult GetUserProfile(int projectId)
+        {
+            ViewData["ProjectId"] = projectId;
+            using(var context = new UsersContext(Context, Configuration))
+            {
+                ViewData["UserData"] = context.GetUserAccount(UserId);
+                ViewData["UserRights"] = AutherizationManager.ValidateUserRights(projectId,UserId,context);
+            }
+            return View();
+        }
         public IActionResult ManageProjectMemebers(int projectId)
         {
             ViewData["ProjectId"] = projectId;

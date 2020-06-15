@@ -10,7 +10,8 @@ var selectedChildren = [];
 
 var dto = {
     "id": id,
-    "Phase": "!"
+    "Phase": "!",
+    "ProjectId" : CurrentIteration
 }
 $.ajax({
         type: 'POST',

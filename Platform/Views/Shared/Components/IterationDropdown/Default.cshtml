@@ -1,0 +1,63 @@
+
+@{
+    var ProjectId = ViewData["ProjectId"] as int?;
+    var Iteration = ViewData["CurrentIteration"] as WorkItemIterations;
+    var Calling = ViewData["Calling"] as string;
+}
+
+<button type="button" id="Iterations" class="btn btn-primary"> <span id="ActiveIName"> @Iteration.IterationName </span></button>
+
+<script> 
+var iterationDTO = {
+    "Iteration": @Iteration.Id,
+    "ProjectId":@ProjectId,
+    "IsPublic": false,
+    "Calling" : "@Calling"
+}
+
+$.ajax({
+    type: 'POST',
+    url: '/Boards/GetIterations',
+    data: JSON.stringify(iterationDTO),
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function(response) {
+        var Iterations = new ej.splitbuttons.DropDownButton({ items: response, iconCss: 'e-ddb-icons e-profile',cssClass: 'e-outline', select:WorkItemListClicked });
+        Iterations.appendTo('#Iterations');
+    },
+    error: function(xhr, status, error) {
+        console.log(error);
+    }
+});
+
+
+function WorkItemListClicked(args)
+{
+    console.log(args);
+    $("#ActiveIName").html(args);
+    @*var incomingSprintDTO =
+    {
+        "ProjectId": @ProjectId,
+        "WorkItemTypeId":7,
+        "IterationId":  $("#Iterations :selected").val(),
+        "PersonId": @Person,
+        
+    }
+
+
+
+        $.ajax({
+        type: 'POST',
+        url: '/Boards/GetSprints',
+        data: JSON.stringify(incomingSprintDTO),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(response) {
+            GenerateKaban(response);
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });*@
+}
+</script>

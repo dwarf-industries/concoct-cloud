@@ -39,7 +39,8 @@ namespace Rokono_Control.Controllers
         public IActionResult Index()
         {
             
-          
+            using(var context = new WorkItemsContext(Context,Configuration))
+                ViewData["CurrentIteration"] = context.GetProjectDefautIteration(5012);
             using (var context = new UsersContext(Context,Configuration))
             {
                 
@@ -461,7 +462,7 @@ namespace Rokono_Control.Controllers
                     result.Last = currentItem;
                     result.Valid = true;
                     result.WorkItem.Add(context.GetWorkItemClean(incomingRequest.WorkItemId, incomingRequest.ProjectId));
-                    result.WorkItemTypeId = int.Parse(incomingRequest.RelationType);
+                    result.WorkItemTypeId = incomingRequest.RelationType != null ? int.Parse(incomingRequest.RelationType) : 0;
                     result.WorkItemId = incomingRequest.WorkItemId;
                     result.RelationshipId = incomingRequest.RelationType;
                 }

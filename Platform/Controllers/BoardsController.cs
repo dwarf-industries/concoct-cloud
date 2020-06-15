@@ -43,8 +43,9 @@ namespace RokonoControl.Controllers
             return View();
         }
 
-        public IActionResult ProjectBacklog(int projectId, int workItemType)
+        public IActionResult ProjectBacklog(int projectId, int workItemType,int iteration)
         {
+            ViewData["CurrentIteration"] =  iteration;
             using(var context = new WorkItemsContext(Context,Configuration))
             {
                 ViewData["GetSelectedWorkItem"] = context.GetWorkItemName(workItemType);
@@ -55,6 +56,7 @@ namespace RokonoControl.Controllers
                 ViewData["ProjectId"] = projectId;
                 ViewData["ProjectName"] = context.GetProjectName(projectId);
                 ViewData["WorkItemType"] = workItemType;
+             
             }
             using(var context = new UsersContext(Context,Configuration))
                 ViewData["Projects"] = context.GetUserProjects(UserId);
@@ -156,12 +158,17 @@ namespace RokonoControl.Controllers
                 var dataResult = context.GetProjectIterations(request.ProjectId);
                 dataResult.ForEach(x =>
                 {
-                    var boardName = request.IsPublic ? "PublicBoard" : "Sprints";
+
+                    var boardName = string.Empty;
+                    if(request.Calling == "Sprints")
+                        boardName = request.IsPublic ? "Boards/PublicBoard" : "Boards/Sprints";
+                    else
+                        boardName = request.Calling;
                     result.Add(new OutgoingIterationModel
                     {
                         Text = x.IterationName,
                         IconCss = "e-ddb-icons e-settings",
-                        Url = $"/Boards/{boardName}?projectId={request.ProjectId}&&workItemType=7&&iteration={x.Id}&&person=0"
+                        Url = $"/{boardName}?projectId={request.ProjectId}&&workItemType=7&&iteration={x.Id}&&person=0"
                     });
                 });
             }

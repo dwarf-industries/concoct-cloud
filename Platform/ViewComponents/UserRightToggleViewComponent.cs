@@ -8,15 +8,14 @@ namespace Platform.ViewComponents
     using Platform.DataHandlers.Interfaces;
     using Rokono_Control.Models;
 
-    public class UserSettingsViewComponent : ViewComponent
+    public class UserRightToggleViewComponent : ViewComponent
     {
-        
         private readonly RokonoControlContext Context;
         private readonly IConfiguration Configuration;
         private  AutherizationManager AutherizationManager;
         private int UserId;
  
-        public UserSettingsViewComponent(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
+        public UserRightToggleViewComponent(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;
@@ -24,13 +23,9 @@ namespace Platform.ViewComponents
             UserId = AutherizationManager.GetCurrentUser(UserId,httpContextAccessor.HttpContext.Request);
         }
 
-        public IViewComponentResult Invoke(int projectId)
+        public IViewComponentResult Invoke(IncomingIdRequest request)
         {
-            ViewData["ProjectId"] = projectId;
-            using(var context = new UsersContext(Context,Configuration))
-                ViewData["UserData"] = context.GetUserAccount(UserId);
-            using(var context = new NotificationContext(Context,Configuration))
-                ViewData["Notifications"] = context.GetAllUserNotifications(UserId, projectId);
+            ViewData["ControlName"] = request.Phase;
             return View();
         }
     }

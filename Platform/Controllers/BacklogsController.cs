@@ -19,7 +19,7 @@ namespace Rokono_Control.Controllers
             Configuration = config;
         }
 
-        public IActionResult Index(int projectId, int boardId, string phase)
+        public IActionResult Index(int projectId, int boardId, string phase, int iteration)
         {           
             ViewData["ProjectId"] = projectId;
             ViewData["BoardId"] = boardId;
@@ -27,6 +27,9 @@ namespace Rokono_Control.Controllers
                 ViewData["Phase"] = "!";
             else
                 ViewData["Phase"] = phase;
+
+            ViewData["Iteration"] = iteration;
+           
             return View();
         }
       
@@ -38,7 +41,7 @@ namespace Rokono_Control.Controllers
             var result = new List<OutgoingWorkItem>();
             using (var context = new WorkItemsContext(Context,Configuration))
             {
-                var data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType);
+                var data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType, IncomingIdRequest.ProjectId);
                 if(IncomingIdRequest.Phase != "!")
                     data = data.Where(x=>x.WorkItem.Title.Contains(IncomingIdRequest.Phase)).ToList();
                 var bData = data.Select(x => x.WorkItem).ToList();
@@ -114,7 +117,7 @@ namespace Rokono_Control.Controllers
             var result = new List<OutgoingWorkItem>();
             using (var context = new WorkItemsContext(Context,Configuration))
             {
-                var data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType);
+                var data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType, IncomingIdRequest.ProjectId);
                 var bData = data.Select(x => x.WorkItem).ToList();
                 bData.ForEach(x =>
                 {
@@ -171,7 +174,7 @@ namespace Rokono_Control.Controllers
             var result = new List<OutgoingWorkItem>();
             using (var context = new WorkItemsContext(Context,Configuration))
             {
-                var data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType);
+                var data = context.GetProjectWorkItems(IncomingIdRequest.Id, IncomingIdRequest.WorkItemType, IncomingIdRequest.ProjectId);
                 var bData = data.Select(x => x.WorkItem).ToList();
                 bData.ForEach(x =>
                 {

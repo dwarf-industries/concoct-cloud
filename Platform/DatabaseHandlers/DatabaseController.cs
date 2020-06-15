@@ -626,18 +626,20 @@ namespace Rokono_Control.DatabaseHandlers
                         BoardId = boardBacklog.Entity.Id
                     });
                     Context.SaveChanges();
-
+                    var first = default(int);
                     currentProject.Iterations.ForEach(x =>
                     {
                         var iteration = x;
+                        iteration.IsActive = first == 0 ? 1 : 0; 
                         var currentIteration = Context.WorkItemIterations.Add(iteration);
                         Context.SaveChanges();
                         Context.AssociatedProjectIterations.Add(new AssociatedProjectIterations
                         {
                             ProjectId = project.Entity.Id,
-                            IterationId = currentIteration.Entity.Id
+                            IterationId = currentIteration.Entity.Id,
                         });
                         Context.SaveChanges();
+                        first++;
                     });
                     currentProject.Users.ForEach(x =>
                     {

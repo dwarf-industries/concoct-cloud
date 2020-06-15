@@ -1,13 +1,13 @@
 @{
     ViewData["Title"] = "Board";
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
-    var ProjectId = ViewData["ProjectId"];
+    var ProjectId = ViewData["ProjectId"] as int?;
     var WorkItemTypes = ViewData["WorkItemTypes"] as List<WorkItemTypes>;
     var ProjectName = ViewData["ProjectName"] as string;
     var Iteration = ViewData["Iteration"] as int?;
     var Person = ViewData["Person"] as int?;
     var ViewRights = ViewData["GetUserViewRights"] as int?;
-}
+ }
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -54,7 +54,14 @@
 
             </div>
             <div class="col-md-4">
-                <button type="button" id="Iterations" class="btn btn-primary">Active Iteration</button>
+
+                @await Component.InvokeAsync("IterationDropdown", new IncomingIdRequest{
+
+                    ProjectId = @ProjectId.Value,
+                    Id = @Iteration.Value,
+                    Phase = "Sprints"
+                })
+
                 <button type="button" id="Persons" class="btn btn-primary">Persons</button>
                 <div>
                     <label for="publicCheck" style="padding: 10px 70px 10px 0">Public</label>
@@ -268,26 +275,7 @@
                     console.log(error);
                 }
             });
-            var iterationDTO = {
-                "Iteration": @Iteration,
-                "ProjectId":@ProjectId,
-                "IsPublic": false
-            }
-
-            $.ajax({
-                type: 'POST',
-                url: '/Boards/GetIterations',
-                data: JSON.stringify(iterationDTO),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(response) {
-                    var Iterations = new ej.splitbuttons.DropDownButton({ items: response, iconCss: 'e-ddb-icons e-profile',cssClass: 'e-outline', select:WorkItemListClicked });
-                    Iterations.appendTo('#Iterations');
-                },
-                error: function(xhr, status, error) {
-                    console.log(error);
-                }
-            });
+     
             $.ajax({
                 type: 'POST',
                 url: '/Boards/GetPersons',
@@ -414,34 +402,7 @@
             }
 
          }
-         function WorkItemListClicked(args)
-         {
-             console.log(args);
-            @*var incomingSprintDTO =
-            {
-                "ProjectId": @ProjectId,
-                "WorkItemTypeId":7,
-                "IterationId":  $("#Iterations :selected").val(),
-                "PersonId": @Person,
-                
-            }
-
-
-
-             $.ajax({
-                type: 'POST',
-                url: '/Boards/GetSprints',
-                data: JSON.stringify(incomingSprintDTO),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(response) {
-                    GenerateKaban(response);
-                },
-                error: function(xhr, status, error) {
-                    console.log(error);
-                }
-            });*@
-         }
+       
 
          function PersonClicked(args) {
              console.log(args);

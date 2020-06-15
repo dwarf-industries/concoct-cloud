@@ -27,7 +27,12 @@ namespace Platform.DatabaseHandlers.Contexts
 
         internal List<WorkItemTypes> GetAllWorkItemTypes() => Context.WorkItemTypes.ToList();
 
-        internal List<AssociatedBoardWorkItems> GetProjectWorkItems(int id, int parentType)
+        internal WorkItemIterations GetProjectIteration(int id)
+        {
+            return Context.WorkItemIterations.FirstOrDefault(x => x.Id == id);
+        }
+
+        internal List<AssociatedBoardWorkItems> GetProjectWorkItems(int id, int parentType , int iteration)
         {
             var items = new List<AssociatedBoardWorkItems>();
             if (parentType == 0)
@@ -44,7 +49,7 @@ namespace Platform.DatabaseHandlers.Contexts
                                        .Include(x => x.WorkItem)
                                        .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItem)
                                        .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.RelationTypeNavigation)
-                                       .Where(x => x.ProjectId == id)
+                                       .Where(x => x.ProjectId == id && x.WorkItem.Iteration == iteration)
                                        .ToList();
             }
             else
@@ -61,7 +66,7 @@ namespace Platform.DatabaseHandlers.Contexts
                                                        .Include(x => x.WorkItem)
                                                        .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItem)
                                                        .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.RelationTypeNavigation)
-                                                       .Where(x => x.ProjectId == id && x.WorkItem.WorkItemTypeId == parentType)
+                                                       .Where(x => x.ProjectId == id && x.WorkItem.WorkItemTypeId == parentType && x.WorkItem.Iteration == iteration)
                                                        .ToList();
             }
              return items;

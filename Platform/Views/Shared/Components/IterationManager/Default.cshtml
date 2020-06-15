@@ -166,7 +166,8 @@
     var dto = {
         "id": @ProjectId,
         "WorkItemType":0,
-        "Phase" : ""
+        "Phase" : "",
+        "ProjectId": @CurrentIteration
     }
     $.ajax({
             type: 'POST',

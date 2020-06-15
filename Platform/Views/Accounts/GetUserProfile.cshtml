@@ -1,0 +1,186 @@
+
+@{
+    ViewData["Title"] = "User Account Settings";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var projectId = ViewData["ProjectId"] as int?;
+    var UserRights = ViewData["UserRights"] as UserRights;
+}
+<style>
+      .e-upload {
+        width: 100%;
+        position: relative;
+        margin-top: 15px;
+        float: none;
+    }
+    .e-upload .e-upload-actions {
+        float: none;
+        text-align: right;
+    }
+    .control_wrapper .e-upload .e-upload-drag-hover {
+        margin: 0;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+             <img id="UserImage" src="https://softsmart.co.za/wp-content/uploads/2018/06/image-not-found-1038x576.jpg" style="width:100%; height: 400px;"/>           
+        </div>
+        <div class="row">
+            <div class="control_wrapper">
+                <input type='file' id='fileupload' name='UploadFiles'/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                    <input id="userFName" />
+            </div>
+            <div class="col-md-6">
+                    <input id="userLName" />
+            </div>
+        </div>
+          <div class="row">
+            <div class="col-md-6">
+                    <input id="userFGit" />
+            </div>
+            <div class="col-md-6">
+                    <input id="userFEmail" />
+            </div>
+        </div>
+      
+        <div class="row">
+            <div class="col-md-4">
+                <input id="userFOldPass" />
+            </div>
+            <div class="col-md-4">
+                <input id="userNewPass" />
+            </div>
+            <div class="col-md-4">
+                <input id="userConfirm" />
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                @await Component.InvokeAsync("UserRightToggle", new IncomingIdRequest{
+                    Id = @UserRights.ChatChannelsRule,
+                    Phase = "ChatChannelsRule"
+                })
+            </div>
+            <div class="col-md-6">
+                @await Component.InvokeAsync("UserRightToggle",  new IncomingIdRequest{
+                    Id = @UserRights.Documentation.Value,
+                    Phase = "Documentation"
+                })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                @await Component.InvokeAsync("UserRightToggle", new IncomingIdRequest{
+                    Id = @UserRights.ManageIterations,
+                    Phase = "ManageIterations"
+                })
+            </div>
+            <div class="col-md-6">
+                @await Component.InvokeAsync("UserRightToggle", new IncomingIdRequest{
+                    Id = @UserRights.ManageUserdays,
+                    Phase = "ManageUserdays"
+                })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                @await Component.InvokeAsync("UserRightToggle",new IncomingIdRequest{
+                    Id = @UserRights.UpdateUserRights,
+                    Phase = "UpdateUserRights"
+                })
+            </div>
+            <div class="col-md-6">
+                @await Component.InvokeAsync("UserRightToggle",new IncomingIdRequest{
+                    Id = @UserRights.ViewOtherPeoplesWork,
+                    Phase = "ViewOtherPeoplesWork"
+                })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                @await Component.InvokeAsync("UserRightToggle",new IncomingIdRequest{
+                    Id = @UserRights.WorkItemRule,
+                    Phase = "WorkItemRule"
+                })
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    var dropElement = document.getElementsByClassName('control-fluid')[0];
+    
+    var uploadObj = new ej.inputs.Uploader({
+        asyncSettings: {
+            saveUrl: '/Uploader/Save',
+            removeUrl: '/Uploader/Remove',
+
+        },
+        removing: onFileRemove,
+        dropArea: dropElement,
+        selected: ItemSelected
+
+    });
+    uploadObj.appendTo('#fileupload');
+    var userFName = new ej.inputs.TextBox({
+        placeholder: 'First Name',
+        floatLabelType: 'Auto'
+    });
+    userFName.appendTo('#userFName');
+    var userLName = new ej.inputs.TextBox({
+        placeholder: 'Last Name',
+        floatLabelType: 'Auto'
+    });
+    userLName.appendTo('#userLName');
+
+    var userFGit = new ej.inputs.TextBox({
+        placeholder: 'Git Username',
+        floatLabelType: 'Auto'
+    });
+    userFGit.appendTo('#userFGit');
+
+    var userFEmail = new ej.inputs.TextBox({
+        placeholder: 'Email address',
+        floatLabelType: 'Auto'
+    });
+    userFEmail.appendTo('#userFEmail');
+
+    var userFOldPass = new ej.inputs.TextBox({
+        placeholder: 'Current Password',
+        floatLabelType: 'Auto'
+    });
+    userFOldPass.appendTo('#userFOldPass');
+
+    var userNewPass = new ej.inputs.TextBox({
+        placeholder: 'New Password',
+        floatLabelType: 'Auto'
+    });
+
+    userNewPass.appendTo('#userNewPass');
+
+    var userConfirm = new ej.inputs.TextBox({
+        placeholder: 'Confirm Password',
+        floatLabelType: 'Auto'
+    });
+    userConfirm.appendTo('#userConfirm');
+
+
+    function ItemSelected(args) {
+        console.log(args);
+        document.getElementById('UserImage').src=window.location.origin + "/Files/Uploads/"+ args.filesData[0].rawFile.name;
+    }
+    function onFileRemove(args) {
+        document.getElementById('UserImage').src="https://softsmart.co.za/wp-content/uploads/2018/06/image-not-found-1038x576.jpg";
+
+    }
+
+</script>

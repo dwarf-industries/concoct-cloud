@@ -1,0 +1,15 @@
+@{
+    var ControlName = ViewData["ControlName"] as string;
+ }
+
+ <div>
+    <label for="@ControlName" style="padding:2%; min-width:303px;"> Add/Edit @ControlName</label>
+    <input id="@ControlName" type="checkbox" />
+</div>
+<script>
+
+    var someRight;
+    someRight = new ejs.buttons.Switch({ checked: true });
+    someRight.appendTo('#@ControlName');
+</script>
+ 

@@ -15,12 +15,16 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
             var dbVersion = Context.WorkItem.FirstOrDefault(x=>x.Id == currentItem.WorkItemId);
             Context.Attach(dbVersion);
             var relationshipId = default(int);
-            currentItem.SelectedChildren.ForEach(x=>{
-                var relId = int.Parse(x.RelationShipId);
-                var getItem = Context.WorkItemRelations.FirstOrDefault(y=>y.Id == relId);
-                if(getItem.RelationName == "Parent")
-                    relationshipId = getItem.Id;
-            });
+            if( currentItem.SelectedChildren != null)
+                currentItem.SelectedChildren.ForEach(x=>{
+                    if(x.RelationShipId != null)
+                    {
+                        var relId = int.Parse(x.RelationShipId);
+                        var getItem = Context.WorkItemRelations.FirstOrDefault(y=>y.Id == relId);
+                        if(getItem.RelationName == "Parent")
+                            relationshipId = getItem.Id;
+                    }
+                });
             if(currentItem.FoundInBuild == null)
                 currentItem.FoundInBuild = "0";
             if(currentItem.ResolvedInBuild == null)
@@ -134,26 +138,29 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
             Context.SaveChanges();
 
             currentItem.SelectedChildren.ForEach(x=>{
-                var relId = int.Parse(x.RelationShipId);
+                if(x.RelationShipId != null)
+                {
+                    var relId = int.Parse(x.RelationShipId);
 
-                var getItem = Context.WorkItemRelations.FirstOrDefault(y=>y.Id ==relId);
-                if(getItem.RelationName != "Parent")
-                {
-                    Context.AssociatedWrorkItemChildren.Add(new AssociatedWrorkItemChildren{
-                        WorkItemChildId = x.WorkItemId,
-                        WorkItemId = currentItem.WorkItemId,
-                        RelationType = relId
-                    });
-                    Context.SaveChanges();
-                }
-                else
-                {
-                    var dbItem = Context.WorkItem.FirstOrDefault(y=>y.Id == x.WorkItemId);
-                    dbItem.ParentId = currentItem.WorkItemId;
-                    Context.Attach(dbItem);
-                    Context.Update(dbItem);
-                    Context.SaveChanges();
-                        
+                    var getItem = Context.WorkItemRelations.FirstOrDefault(y=>y.Id ==relId);
+                    if(getItem.RelationName != "Parent")
+                    {
+                        Context.AssociatedWrorkItemChildren.Add(new AssociatedWrorkItemChildren{
+                            WorkItemChildId = x.WorkItemId,
+                            WorkItemId = currentItem.WorkItemId,
+                            RelationType = relId
+                        });
+                        Context.SaveChanges();
+                    }
+                    else
+                    {
+                        var dbItem = Context.WorkItem.FirstOrDefault(y=>y.Id == x.WorkItemId);
+                        dbItem.ParentId = currentItem.WorkItemId;
+                        Context.Attach(dbItem);
+                        Context.Update(dbItem);
+                        Context.SaveChanges();
+                            
+                    }
                 }
             });
             var notification = Context.Notifications.Add(new Notifications{
@@ -178,33 +185,34 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
             var prevList = Context.AssociatedWorkItemFiles.Where(x=>x.WorkItemId == dbVersion.Id).ToList();
             Context.RemoveRange(prevList);
             Context.SaveChanges();
-            currentItem.SelectedFiles.ForEach(x=>{
-                var fileId = default(int);
-                if(Context.SystemFiles.FirstOrDefault(y=>y.FileLocation == x) == null)
-                {
-                    var fileType = FileProcessor.GetImageType(x);
+            if(currentItem.SelectedFiles  != null)
+                currentItem.SelectedFiles.ForEach(x=>{
+                    var fileId = default(int);
+                    if(Context.SystemFiles.FirstOrDefault(y=>y.FileLocation == x) == null)
+                    {
+                        var fileType = FileProcessor.GetImageType(x);
 
-                    var files = Context.SystemFiles.Add(new SystemFiles{
-                        DateOfMessage = DateTime.Now,
-                        FileLocation =  x,
-                        FileType = fileType == "" ? 2 : 1,
-                        SenderName  = "System" 
+                        var files = Context.SystemFiles.Add(new SystemFiles{
+                            DateOfMessage = DateTime.Now,
+                            FileLocation =  x,
+                            FileType = fileType == "" ? 2 : 1,
+                            SenderName  = "System" 
+                        });
+                        fileId = files.Entity.Id;
+                        Context.SaveChanges();
+                    }
+                    else
+                    {
+                        var file = Context.SystemFiles.FirstOrDefault(y=>y.FileLocation == x);
+                        fileId = file.Id;
+                    }
+
+                    Context.AssociatedWorkItemFiles.Add(new AssociatedWorkItemFiles{
+                            FileId = fileId,
+                            WorkItemId = dbVersion.Id
                     });
-                    fileId = files.Entity.Id;
                     Context.SaveChanges();
-                }
-                else
-                {
-                    var file = Context.SystemFiles.FirstOrDefault(y=>y.FileLocation == x);
-                    fileId = file.Id;
-                }
-
-                Context.AssociatedWorkItemFiles.Add(new AssociatedWorkItemFiles{
-                        FileId = fileId,
-                        WorkItemId = dbVersion.Id
                 });
-                Context.SaveChanges();
-            });
             return true;
         }
 
@@ -402,23 +410,24 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 });
                 Context.SaveChanges();
             });
-            currentItem.SelectedFiles.ForEach(x=>{
-                var fileType = FileProcessor.GetImageType(x);
+            if(currentItem.SelectedFiles != null)
+                currentItem.SelectedFiles.ForEach(x=>{
+                    var fileType = FileProcessor.GetImageType(x);
 
-                var files = Context.SystemFiles.Add(new SystemFiles{
-                    DateOfMessage = DateTime.Now,
-                    FileLocation =  x,
-                    FileType = fileType == "" ? 2 : 1,
-                    SenderName = "System"
-                });
+                    var files = Context.SystemFiles.Add(new SystemFiles{
+                        DateOfMessage = DateTime.Now,
+                        FileLocation =  x,
+                        FileType = fileType == "" ? 2 : 1,
+                        SenderName = "System"
+                    });
 
-                Context.SaveChanges();
-                Context.AssociatedWorkItemFiles.Add(new AssociatedWorkItemFiles{
-                        FileId = files.Entity.Id,
-                        WorkItemId = item.Entity.Id
+                    Context.SaveChanges();
+                    Context.AssociatedWorkItemFiles.Add(new AssociatedWorkItemFiles{
+                            FileId = files.Entity.Id,
+                            WorkItemId = item.Entity.Id
+                    });
+                    Context.SaveChanges();
                 });
-                Context.SaveChanges();
-            });
 
             return true;
         }
