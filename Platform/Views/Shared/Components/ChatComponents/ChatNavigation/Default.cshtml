@@ -7,6 +7,17 @@
 }
 
 <style>
+    
+
+    .CategoryRemove:before{
+        padding:3px;
+        content:'\e7a7';
+        font-family: e-icons;
+        font-size: 13px;
+    }
+    .CategoryIcon:hover{
+        color:rgb(230, 50, 111);
+    }
     .ChatChannelIcon:before{
         content:'\e99a';
         font-family: e-icons;
@@ -112,19 +123,36 @@
                 <div class="col-md-9">
                     <span class="CategoryIcon"></span><span class="ChatTreeMainText">${nodeText}</span>
                 </div>
-                <div class="col-md-2"   >
+                <div class="col-md-2" style="display:flex;" >
                     <span onclick="AddNewChannelModal(${internalId})" class="TreeNewItem"></span>
+                    <span onclick="RemoveCategory(${internalId})" class="CategoryRemove"></span>
+
                 </div>
             </div>
         </div>   
      ${else if(isPersonal)}
-        <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId},1)">
-            <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>
+     <div class="row">
+         <div class="col-md-8">
+            <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId},1)">
+                <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>
+            </div>
         </div>
+        <div class="col-md-4">
+            <span onclick="RemovePersonal(${internalId})" class="CategoryRemove"></span>
+        </div>
+    </div>
     ${else}
-        <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId},0)">
-            <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>
+     <div class="row">
+         <div class="col-md-8">
+            <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId},10)">
+                <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>
+            </div>
         </div>
+        <div class="col-md-4">
+            <span onclick="RemoveRoom(${internalId})" class="CategoryRemove"></span>
+        </div>
+    </div>
+         
     ${/if}
     </td>
 </tr>
@@ -246,5 +274,23 @@ $( document ).ready(function() {
                 console.log(error);
             }
         }); *@
+    }
+
+    function RemoveCategory(id,isPersonal)
+    {
+        $("#MainChatContent").load('/Chat/RemoveCategory?id='+id+'&&projectId='+@ProjectId+'&&isPersonal='+isPersonal);
+        window.location.reload(true);
+    }
+
+    function RemovePersonal(Id)
+    {
+        $("#MainChatContent").load('/Chat/RemovePersonal?id='+id+'&&projectId='+@ProjectId+'&&isPersonal=0');
+        window.location.reload(true);
+    }
+
+    function RemoveRoom(id)
+    {
+        $("#MainChatContent").load('/Chat/RemoveRoom?id='+id+'&&projectId='+@ProjectId+'&&isPersonal=0');
+        window.location.reload(true);
     }
 </script>

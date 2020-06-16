@@ -226,6 +226,57 @@ namespace Platform.Controllers
         }
 
         [HttpGet]
+        [Authorize (Roles = "ChatAdministrator")]
+//        [ValidateAntiForgeryToken]
+        public IActionResult RemoveCategory(int id, int projectId, int isPersonal) 
+        {
+            using(var context = new  ChatContext(Context,Configuration))
+            {
+                context.RemoveChatPersonal(id, UserId);
+                context.UserChatChannelRead(UserId, projectId, id);
+            }
+            return ViewComponent("ChatWIndow", new IncomingIdRequest{
+                Id = id,
+                ProjectId = projectId,
+                UserId = isPersonal
+            });
+        }
+
+        [HttpGet]
+        [Authorize (Roles = "ChatAdministrator")]
+//        [ValidateAntiForgeryToken]
+        public IActionResult RemovePersonal(int id, int projectId, int isPersonal) 
+        {
+            using(var context = new  ChatContext(Context,Configuration))
+            {
+                context.RemoveChatCategory(id);
+                context.UserChatChannelRead(UserId, projectId, id);
+            }
+            return ViewComponent("ChatWIndow", new IncomingIdRequest{
+                Id = id,
+                ProjectId = projectId,
+                UserId = isPersonal
+            });
+        }
+
+        [HttpGet]
+        [Authorize (Roles = "ChatAdministrator")]
+//        [ValidateAntiForgeryToken]
+        public IActionResult RemoveRoom(int id, int projectId, int isPersonal) 
+        {
+            using(var context = new  ChatContext(Context,Configuration))
+            {
+                context.RemoveChatRoom(id);
+                context.UserChatChannelRead(UserId, projectId, id);
+            }
+            return ViewComponent("ChatWIndow", new IncomingIdRequest{
+                Id = id,
+                ProjectId = projectId,
+                UserId = isPersonal
+            });
+        }
+
+        [HttpGet]
         [Authorize (Roles = "User")]
 //        [ValidateAntiForgeryToken]
         public IActionResult GetUserDirectMessageControl(int projectId,int id) 

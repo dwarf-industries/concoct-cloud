@@ -103,9 +103,12 @@ namespace Platform.DatabaseHandlers.Contexts
         internal int GetDefaultProjectChannel(int projectId)
         {
             
-            return Context.ChatRooms.Include(x => x.ChatChannels)
-                                    .FirstOrDefault(x => x.ProjectId == projectId).ChatChannels
-                                    .FirstOrDefault().Id;
+            var projectRooms = Context.ChatRooms.Include(x => x.ChatChannels)
+                                    .FirstOrDefault(x => x.ProjectId == projectId);
+
+            if(projectRooms != null && projectRooms.ChatChannels.FirstOrDefault() != null)
+               return projectRooms.ChatChannels.FirstOrDefault().Id;
+            return 0;
         }
 
         internal ChatRoomRights GetChatRightById(int tagId)
@@ -199,6 +202,48 @@ namespace Platform.DatabaseHandlers.Contexts
             Context.SaveChanges();
             return message.Entity;
         }
+
+        internal void RemoveChatPersonal(int id, int userId)
+        {
+            var personal = Context.AssociatedChatPersonalMessages.Where(x => x.SenderId == userId && x.ReciverId == id)
+                .ToList();
+            Context.RemoveRange(personal);
+            Context.SaveChanges();
+        }
+
+        internal void RemoveChatCategory(int id)
+        {
+            var chatChannels = Context.ChatChannels.Where(x=>x.ChatRoom == id).ToList();
+            chatChannels.ForEach(x=>{
+                var associatedMessage = Context.AssociatedChatChannelMessages.Where(y=>y.ChatChannelId == x.Id).ToList();
+                Context.RemoveRange(associatedMessage);
+                var notifications = Context.AssociatedUserChatNotifications.Where(y=>y.ChatChannelId == x.Id).ToList();
+                Context.RemoveRange(notifications);
+                Context.SaveChanges();                  
+            });
+            Context.RemoveRange(chatChannels);
+            Context.SaveChanges();
+            var AssociatedChatRoomRights = Context.AssociatedChatRoomRights.Where(x=>x.ChatRoomId == id).ToList();
+            Context.RemoveRange(AssociatedChatRoomRights);
+            Context.SaveChanges();
+            var category = Context.ChatRooms.FirstOrDefault(x=>x.Id == id);
+            Context.Remove(category);    
+            Context.SaveChanges();
+
+        }
+
+        internal void RemoveChatRoom(int id)
+        {
+            var chatChannels = Context.ChatChannels.FirstOrDefault(x=>x.Id == id);
+            var associatedMessage = Context.AssociatedChatChannelMessages.Where(y=>y.ChatChannelId == chatChannels.Id).ToList();
+            Context.RemoveRange(associatedMessage);
+            var notifications = Context.AssociatedUserChatNotifications.Where(y=>y.ChatChannelId == chatChannels.Id).ToList();
+            Context.RemoveRange(notifications);
+            Context.SaveChanges();         
+            Context.Remove(chatChannels);
+            Context.SaveChanges();
+        }
+
         internal List<PublicMessages> GetAllPublicMessagesForProject(int id, int v)
         {
             if(v == 1)
