@@ -17,6 +17,7 @@ namespace Rokono_Control.Models
 
         public virtual DbSet<ApiKeys> ApiKeys { get; set; }
         public virtual DbSet<AssociatedAccountNotes> AssociatedAccountNotes { get; set; }
+        public virtual DbSet<AssociatedAccountProjectNotificationRights> AssociatedAccountProjectNotificationRights { get; set; }
         public virtual DbSet<AssociatedBoardWorkItems> AssociatedBoardWorkItems { get; set; }
         public virtual DbSet<AssociatedBranchCommits> AssociatedBranchCommits { get; set; }
         public virtual DbSet<AssociatedChatChannelMessages> AssociatedChatChannelMessages { get; set; }
@@ -58,6 +59,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<Efforts> Efforts { get; set; }
         public virtual DbSet<FileTypes> FileTypes { get; set; }
         public virtual DbSet<Files> Files { get; set; }
+        public virtual DbSet<NotificationRights> NotificationRights { get; set; }
         public virtual DbSet<NotificationTypes> NotificationTypes { get; set; }
         public virtual DbSet<Notifications> Notifications { get; set; }
         public virtual DbSet<Projects> Projects { get; set; }
@@ -109,6 +111,24 @@ namespace Rokono_Control.Models
                     .HasForeignKey(d => d.UserAccountId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Associate__UserA__075714DC");
+            });
+
+            modelBuilder.Entity<AssociatedAccountProjectNotificationRights>(entity =>
+            {
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.AssociatedAccountProjectNotificationRights)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK__Associate__Proje__269AB60B");
+
+                entity.HasOne(d => d.Right)
+                    .WithMany(p => p.AssociatedAccountProjectNotificationRights)
+                    .HasForeignKey(d => d.RightId)
+                    .HasConstraintName("FK__Associate__Right__2882FE7D");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AssociatedAccountProjectNotificationRights)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK__Associate__UserI__278EDA44");
             });
 
             modelBuilder.Entity<AssociatedBoardWorkItems>(entity =>
@@ -656,6 +676,25 @@ namespace Rokono_Control.Models
             modelBuilder.Entity<Files>(entity =>
             {
                 entity.Property(e => e.DateOfFile).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<NotificationRights>(entity =>
+            {
+                entity.Property(e => e.BugReportNenabled).HasColumnName("BugReportNEnabled");
+
+                entity.Property(e => e.ChanegelogNenabled).HasColumnName("ChanegelogNEnabled");
+
+                entity.Property(e => e.ChatChannelNenabled).HasColumnName("ChatChannelNEnabled");
+
+                entity.Property(e => e.CreateWorkItemNenabled).HasColumnName("CreateWorkItemNEnabled");
+
+                entity.Property(e => e.FeedbackNenabled).HasColumnName("FeedbackNEnabled");
+
+                entity.Property(e => e.PersonalMessageNenabled).HasColumnName("PersonalMessageNEnabled");
+
+                entity.Property(e => e.PublicDiscussionMnenabled).HasColumnName("PublicDiscussionMNEnabled");
+
+                entity.Property(e => e.UpdateWorkItemNenabled).HasColumnName("UpdateWorkItemNEnabled");
             });
 
             modelBuilder.Entity<NotificationTypes>(entity =>

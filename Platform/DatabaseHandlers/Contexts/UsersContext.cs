@@ -45,6 +45,43 @@ namespace Platform.DatabaseHandlers.Contexts
             };
         }
 
+        internal NotificationRights GetProectNotificationSetting(string phase, int projectId, int userId)
+        {
+            var result = new NotificationRights();
+            var right = Context.AssociatedAccountProjectNotificationRights.Include(x => x.Right)
+                                                    .FirstOrDefault(x=>x.ProjectId == projectId && x.UserId == userId);
+            if(right == null)
+                result = AddNewUserNotificationSetting(projectId, userId);
+
+            result = right.Right;
+            return result;
+        }
+
+        internal NotificationRights AddNewUserNotificationSetting(int projectId, int userId)
+        {
+            NotificationRights right = Context.NotificationRights.Add(new NotificationRights
+            {
+                BugReportNenabled = 0,
+                ChanegelogNenabled = 0,
+                ChatChannelNenabled = 0,
+                CreateWorkItemNenabled = 0,
+                FeedbackNenabled = 0,
+                PersonalMessageNenabled = 0,
+                PublicDiscussionMnenabled = 0,
+                UpdateWorkItemNenabled = 0
+
+            }).Entity;
+            Context.SaveChanges();
+            Context.AssociatedAccountProjectNotificationRights.Add(new AssociatedAccountProjectNotificationRights
+            {
+                ProjectId = projectId,
+                RightId = right.Id,
+                UserId = userId
+            });
+            Context.SaveChanges();
+            return right;
+        }
+
         internal int CheckUserViewWorkitemRights(int userId, int projectId)
         {
             return Context.AssociatedProjectMemberRights.Include(x => x.Rights)
@@ -65,6 +102,55 @@ namespace Platform.DatabaseHandlers.Contexts
             })
             .ToList();
         }
+
+        internal void UpdateUserNotificationRight(int userId, int projectId, int id, string phase)
+        {
+            var right = Context.AssociatedAccountProjectNotificationRights.Include(x => x.Right)
+                                                    .FirstOrDefault(x=>x.ProjectId == projectId && x.UserId == userId);
+            if(right == null)
+                AddNewUserNotificationSetting(projectId, userId);
+            else
+            {
+               var current = UpdateNotificationRightValue(right.Right,phase, id);
+               Context.Attach(current);
+               Context.Update(current);
+               Context.SaveChanges();
+            }
+            
+        }
+
+        private NotificationRights UpdateNotificationRightValue(NotificationRights right, string phase, int id)
+        {
+            switch(phase)
+            {
+                case "PersonalMessage":
+                    right.PersonalMessageNenabled = id;
+                break;
+                case "NewWorkItem":
+                    right.CreateWorkItemNenabled = id;
+                break;
+                case "UpdatedWorkItem": 
+                    right.UpdateWorkItemNenabled = id;
+                break;
+                case "PublicFeedback":
+                    right.FeedbackNenabled = id;
+                break;
+                case "PublicBugreport":
+                    right.BugReportNenabled = id;
+                break;
+                case "PublicDiscussion":
+                    right.PublicDiscussionMnenabled = id;
+                break;
+                case "ChatChannelMessage":
+                    right.ChatChannelNenabled = id;
+                break;
+                case "ChangelogGenerated":
+                    right.ChanegelogNenabled = id;
+                break;
+            }
+            return right;
+        }
+
         internal List<UserAccounts> GetProjectPersons(int projectId)
         {
             return Context.AssociatedProjectMembers.Include(x => x.UserAccount).Where(x => x.ProjectId

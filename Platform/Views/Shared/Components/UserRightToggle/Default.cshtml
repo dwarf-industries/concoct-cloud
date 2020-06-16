@@ -1,15 +1,64 @@
 @{
     var ControlName = ViewData["ControlName"] as string;
- }
+    var IsEnabled =   ViewData["IsEnabled"] as int?; 
+    var ProjectId = ViewData["ProjectId"] as int?;
+    var IsFeatureEnabled = ViewData["Enabled"] as int?;
+}
 
  <div>
-    <label for="@ControlName" style="padding:2%; min-width:303px;"> Add/Edit @ControlName</label>
-    <input id="@ControlName" type="checkbox" />
+    <label for="@ControlName" style="padding:2%; min-width:303px;"> Enable/Disables @ControlName</label>
+    @if(IsEnabled == 1)
+    {
+        <input id="@ControlName" type="checkbox" onchange="CheckChanged('@ControlName')"  />
+    }
+    else
+    {
+        <input id="@ControlName" type="checkbox" onchange="CheckChanged('@ControlName')" disabled />
+    }
 </div>
 <script>
-
     var someRight;
-    someRight = new ejs.buttons.Switch({ checked: true });
+    @if(IsFeatureEnabled == 1)
+    {
+     @:   var active = true;
+    }
+    else{
+      @:  var active = false;
+    }
+    
+    someRight = new ejs.buttons.Switch({ checked: active });
     someRight.appendTo('#@ControlName');
+
+    function CheckChanged(args)
+    {
+        var arg = args;
+        console.log($("#"+args).is(':checked'));
+        if(active)
+            active = 0;
+        else
+            active = 1;
+        
+        var dto = {
+            "projectId" : @ProjectId,
+            "Phase" : args,
+            "Id" : active    
+        }
+      
+        console.log(dto);
+        $.ajax({
+            type: 'POST',
+            url: '/Accounts/ChangeNotificationRight',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+             
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+       
+    }
 </script>
  

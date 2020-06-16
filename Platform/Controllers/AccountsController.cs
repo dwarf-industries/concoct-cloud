@@ -77,13 +77,24 @@
             });
         }
 
-
         [HttpPost] 
         public JsonResult DeleteProjectAccount([FromBody] IncomingProjectAccount accounts)
         {
             using(var context  = new UsersContext(Context,Configuration))
             {
                 context.DeleteAccountFromProject(accounts);
+            }
+            return  Json(new IncomingExistingProjectMembers {
+
+            });
+        }
+
+        [HttpPost] 
+        public JsonResult ChangeNotificationRight([FromBody] IncomingIdRequest request)
+        {
+            using(var context  = new UsersContext(Context,Configuration))
+            {
+                context.UpdateUserNotificationRight(UserId, request.ProjectId, request.Id, request.Phase);   
             }
             return  Json(new IncomingExistingProjectMembers {
 

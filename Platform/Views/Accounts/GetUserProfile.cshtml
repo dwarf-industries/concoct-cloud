@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
     var projectId = ViewData["ProjectId"] as int?;
     var UserRights = ViewData["UserRights"] as UserRights;
+    var UserData = ViewData["UserData"] as UserAccounts;
 }
 <style>
       .e-upload {
@@ -18,6 +19,9 @@
     }
     .control_wrapper .e-upload .e-upload-drag-hover {
         margin: 0;
+    }
+    .row{
+        padding: 1%;
     }
 </style>
 
@@ -61,17 +65,24 @@
         </div>
     </div>
     <div class="col-md-6">
+        <div class="row" style="text-align: center;">
+            <h3>User Rights</h3>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 @await Component.InvokeAsync("UserRightToggle", new IncomingIdRequest{
                     Id = @UserRights.ChatChannelsRule,
-                    Phase = "ChatChannelsRule"
+                    Phase = "ChatChannelsRule",
+                    ProjectId = @projectId.Value,
+                    WorkItemType = 0
                 })
             </div>
             <div class="col-md-6">
                 @await Component.InvokeAsync("UserRightToggle",  new IncomingIdRequest{
                     Id = @UserRights.Documentation.Value,
-                    Phase = "Documentation"
+                    Phase = "Documentation",
+                    ProjectId = @projectId.Value,
+                    WorkItemType = 0
                 })
             </div>
         </div>
@@ -79,13 +90,17 @@
             <div class="col-md-6">
                 @await Component.InvokeAsync("UserRightToggle", new IncomingIdRequest{
                     Id = @UserRights.ManageIterations,
-                    Phase = "ManageIterations"
+                    Phase = "ManageIterations",
+                    ProjectId = @projectId.Value,
+                    WorkItemType = 0
                 })
             </div>
             <div class="col-md-6">
                 @await Component.InvokeAsync("UserRightToggle", new IncomingIdRequest{
                     Id = @UserRights.ManageUserdays,
-                    Phase = "ManageUserdays"
+                    Phase = "ManageUserdays",
+                    ProjectId = @projectId.Value,
+                    WorkItemType = 0
                 })
             </div>
         </div>
@@ -93,13 +108,17 @@
             <div class="col-md-6">
                 @await Component.InvokeAsync("UserRightToggle",new IncomingIdRequest{
                     Id = @UserRights.UpdateUserRights,
-                    Phase = "UpdateUserRights"
+                    Phase = "UpdateUserRights",
+                    ProjectId = @projectId.Value,
+                    WorkItemType = 0
                 })
             </div>
             <div class="col-md-6">
                 @await Component.InvokeAsync("UserRightToggle",new IncomingIdRequest{
                     Id = @UserRights.ViewOtherPeoplesWork,
-                    Phase = "ViewOtherPeoplesWork"
+                    Phase = "ViewOtherPeoplesWork",
+                    ProjectId = @projectId.Value,
+                    WorkItemType = 0
                 })
             </div>
         </div>
@@ -107,16 +126,105 @@
             <div class="col-md-6">
                 @await Component.InvokeAsync("UserRightToggle",new IncomingIdRequest{
                     Id = @UserRights.WorkItemRule,
-                    Phase = "WorkItemRule"
+                    Phase = "WorkItemRule",
+                    ProjectId = @projectId.Value,
+                    WorkItemType = 0
+                })
+            </div>
+        </div>
+        <hr/>
+        <div class="row" style="text-align: center;">
+            <h3>Notification Settings</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                @await Component.InvokeAsync("UserRightToggle",new IncomingIdRequest{
+                    Id = @UserRights.UpdateUserRights,
+                    Phase = "PersonalMessage",
+                    ProjectId = @projectId.Value,
+                    WorkItemType = 1
+                })
+            </div>
+            <div class="col-md-6">
+                @await Component.InvokeAsync("UserRightToggle",new IncomingIdRequest{
+                    Id = @UserRights.ViewOtherPeoplesWork,
+                    Phase = "NewWorkItem",
+                    ProjectId = @projectId.Value,
+                    WorkItemType = 1
+                })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                @await Component.InvokeAsync("UserRightToggle",new IncomingIdRequest{
+                    Id = @UserRights.UpdateUserRights,
+                    Phase = "UpdatedWorkItem",
+                    ProjectId = @projectId.Value,
+                    WorkItemType = 1
+                })
+            </div>
+            <div class="col-md-6">
+                @await Component.InvokeAsync("UserRightToggle",new IncomingIdRequest{
+                    Id = @UserRights.ViewOtherPeoplesWork,
+                    Phase = "PublicFeedback",
+                    ProjectId = @projectId.Value,
+                    WorkItemType = 1
+                })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                @await Component.InvokeAsync("UserRightToggle",new IncomingIdRequest{
+                    Id = @UserRights.UpdateUserRights,
+                    Phase = "PublicBugreport",
+                    ProjectId = @projectId.Value,
+                    WorkItemType = 1
+                })
+            </div>
+            <div class="col-md-6">
+                @await Component.InvokeAsync("UserRightToggle",new IncomingIdRequest{
+                    Id = @UserRights.ViewOtherPeoplesWork,
+                    Phase = "PublicDiscussion",
+                    ProjectId = @projectId.Value,
+                    WorkItemType = 1
+                })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                @await Component.InvokeAsync("UserRightToggle",new IncomingIdRequest{
+                    Id = @UserRights.UpdateUserRights,
+                    Phase = "ChatChannelMessage",
+                    ProjectId = @projectId.Value,
+                    WorkItemType = 1
+                })
+            </div>
+            <div class="col-md-6">
+                @await Component.InvokeAsync("UserRightToggle",new IncomingIdRequest{
+                    Id = @UserRights.ViewOtherPeoplesWork,
+                    Phase = "ChangelogGenerated",
+                    ProjectId = @projectId.Value,
+                    WorkItemType = 1
                 })
             </div>
         </div>
     </div>
 </div>
+<div class="row" style="display: ruby;">
+        <button  class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="SaveUserSettings()">
+            Save Changes
+        </button>
+        <button  class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="ReturnBack()">
+            Cancel Changes
+        </button>
 
+</div>
 
 <script>
-
+    var CurrentUserImage;
     var dropElement = document.getElementsByClassName('control-fluid')[0];
     
     var uploadObj = new ej.inputs.Uploader({
@@ -133,23 +241,27 @@
     uploadObj.appendTo('#fileupload');
     var userFName = new ej.inputs.TextBox({
         placeholder: 'First Name',
+        value: "@UserData.FirstName",
         floatLabelType: 'Auto'
     });
     userFName.appendTo('#userFName');
     var userLName = new ej.inputs.TextBox({
         placeholder: 'Last Name',
+        value: "@UserData.LastName",
         floatLabelType: 'Auto'
     });
     userLName.appendTo('#userLName');
 
     var userFGit = new ej.inputs.TextBox({
         placeholder: 'Git Username',
+        value : "@UserData.GitUsername",
         floatLabelType: 'Auto'
     });
     userFGit.appendTo('#userFGit');
 
     var userFEmail = new ej.inputs.TextBox({
         placeholder: 'Email address',
+        value: "@UserData.Email",
         floatLabelType: 'Auto'
     });
     userFEmail.appendTo('#userFEmail');
@@ -176,11 +288,96 @@
 
     function ItemSelected(args) {
         console.log(args);
+        CurrentUserImage = args.filesData[0].rawFile.name;
         document.getElementById('UserImage').src=window.location.origin + "/Files/Uploads/"+ args.filesData[0].rawFile.name;
     }
     function onFileRemove(args) {
         document.getElementById('UserImage').src="https://softsmart.co.za/wp-content/uploads/2018/06/image-not-found-1038x576.jpg";
 
     }
+     iewWorkItems = 0;
 
+        
+
+    function SaveUserSettings()
+    {
+        var dto = {
+            "projectId" : @projectId,
+            "FirstName" :$("#userFName").val(),
+            "LastName" :$("#userLName").val(),
+            "GitName" : $("#userFGit").val(),
+            "Email" : $("#userFEmail").val(),
+            "OldPassword" : $("#userFOldPass").val(),
+            "NewPassword" : $("#userNewPass").val(),
+            "SelectedImage" : CurrentUserImage
+        }
+        if(ValidateInputs())
+        {
+            console.log(dto);
+            $.ajax({
+                type: 'POST',
+                url: '/Changelog/ConfirmChangelog',
+                data: JSON.stringify(dto),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    alert("Changelog generated!!!");
+                    window.location.href = "/Changelog/ViewChangelogs?projectId=@projectId";
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        }
+        else
+            ShowAlert("Error with some of your inputs!!!");
+    }
+
+
+    function ValidateInputs()
+    {
+        if($("#userFName").val())
+        {}
+        else
+        {
+            ShowAlert("Error, user first name can't be empty!");
+            return false;
+        }
+
+        if($("#userLName").val())
+        {}
+        else
+        {
+            ShowAlert("Error, user last name can't be empty!");
+            return false;
+        }
+
+        if($("#userFGit").val())
+        {}
+        else
+        {
+            ShowAlert("Error, git username can't be empty!");
+            return false;
+        }
+        if($("#userFOldPass").val())
+        {}
+        else
+        {
+            ShowAlert("Error, old password can't be empty!");
+            return false;
+        }
+        
+        if($("#userNewPass").val() === $("#userConfirm").val())
+        {}
+        else
+        {
+            ShowAlert("Error, new passowrd and confirm password should match!!!");
+            return false;
+        }
+        return true;
+    }
+    function ReturnBack()
+    {
+        window.location=document.referrer;
+    }
 </script>

@@ -8,6 +8,7 @@ namespace Rokono_Control.Models
         public Projects()
         {
             AssociatedAccountNotes = new HashSet<AssociatedAccountNotes>();
+            AssociatedAccountProjectNotificationRights = new HashSet<AssociatedAccountProjectNotificationRights>();
             AssociatedBoardWorkItems = new HashSet<AssociatedBoardWorkItems>();
             AssociatedChatPersonalMessages = new HashSet<AssociatedChatPersonalMessages>();
             AssociatedProjectApiKeys = new HashSet<AssociatedProjectApiKeys>();
@@ -46,6 +47,7 @@ namespace Rokono_Control.Models
 
         public virtual Repository Repository { get; set; }
         public virtual ICollection<AssociatedAccountNotes> AssociatedAccountNotes { get; set; }
+        public virtual ICollection<AssociatedAccountProjectNotificationRights> AssociatedAccountProjectNotificationRights { get; set; }
         public virtual ICollection<AssociatedBoardWorkItems> AssociatedBoardWorkItems { get; set; }
         public virtual ICollection<AssociatedChatPersonalMessages> AssociatedChatPersonalMessages { get; set; }
         public virtual ICollection<AssociatedProjectApiKeys> AssociatedProjectApiKeys { get; set; }
