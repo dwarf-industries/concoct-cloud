@@ -1,6 +1,6 @@
 @{
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
-
+    var UserDashboard  =  ViewData["SavedWidgets"] as UserDashboards;
 }
 
 <link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
@@ -8,57 +8,47 @@
   
 <div class="control-section">
     <div style="padding:5px;text-align: right;">
-        <button id="add" class="e-btn e-info">Add Panel</button>
+        <button   class="btn btn-primary e-control e-btn e-lib e-outline e-primary"  onclick="OpenWidgetModal()" >Add Widget</button>
     </div>
+    
     <div id="defaultLayout">
-        <div id="one" class="e-panel" data-row="0" data-col="0" data-sizeX="1" data-sizeY="1">
-            <span id="close" class="e-template-icon e-clear-icon"></span>
-            <div class="e-panel-container">
-                <div class="text-align">0</div>
-            </div>
-        </div>
-        <div id="two" class="e-panel" data-row="1" data-col="0" data-sizeX="1" data-sizeY="2">
-            <span id="close" class="e-template-icon e-clear-icon"></span>
-            <div class="e-panel-container">
-                <div class="text-align">1</div>
-            </div>
-        </div>
-        <div id="three" class="e-panel" data-row="0" data-col="1" data-sizeX="2" data-sizeY="2">
-            <span id="close" class="e-template-icon e-clear-icon"></span>
-            <div class="e-panel-container">
-                <div class="text-align">2</div>
-            </div>
-        </div>
-        <div id="four" class="e-panel" data-row="2" data-col="1" data-sizeX="1" data-sizeY="1">
-            <span id="close" class="e-template-icon e-clear-icon"></span>
-            <div class="e-panel-container">
-                <div class="text-align">3</div>
-            </div>
-        </div>
-        <div id="five" class="e-panel" data-row="2" data-col="2" data-sizeX="2" data-sizeY="1">
-            <span id="close" class="e-template-icon e-clear-icon"></span>
-            <div class="e-panel-container">
-                <div class="text-align">4</div>
-            </div>
-        </div>
-        <div id="six" class="e-panel" data-row="0" data-col="3" data-sizeX="1" data-sizeY="1">
-            <span id="close" class="e-template-icon e-clear-icon"></span>
-            <div class="e-panel-container">
-                <div class="text-align">5</div>
-            </div>
-        </div>
-        <div id="seven" class="e-panel" data-row="1" data-col="3" data-sizeX="1" data-sizeY="1">
-            <span id="close" class="e-template-icon e-clear-icon"></span>
-            <div class="e-panel-container">
-                <div class="text-align">6</div>
-            </div>
-        </div>
-        <div id="eight" class="e-panel" data-row="0" data-col="4" data-sizeX="1" data-sizeY="3">
-            <span id="close" class="e-template-icon e-clear-icon"></span>
-            <div class="e-panel-container">
-                <div class="text-align">7</div>
-            </div>
-        </div>
+        @if(@UserDashboard != null)
+        {
+            @if(@UserDashboard.UserDashboardItem != null)
+            {
+                @foreach (var widget in @UserDashboard.UserDashboardItem)
+                {
+                    <div id="@widget.ItemName" class="e-panel" data-row="@widget.DataRow" data-col="@widget.DataCol" data-sizeX="@widget.DataSizeX" data-sizeY="@widget.DataSizeY">
+                        <span id="close" class="e-template-icon e-clear-icon"></span>
+                        <div class="e-panel-container">
+                            if(@widget.AssociatedUserDashboardItemComponent != null)
+                            {
+                                @foreach (var widgetBuildingBlock in @widget.AssociatedUserDashboardItemComponent)
+                                {
+                                    if(@widgetBuildingBlock.ItemComponentNavigation.ColumnNumber  != default(int))
+                                    {
+                                        <div class="col-md-@widgetBuildingBlock.ItemComponentNavigation.ColumnNumber">
+                                        
+                                            if(@widgetBuildingBlock.ItemComponentNavigation.IsRow.Value == 1)
+                                            {
+                                                <div class="row">
+                                                    @await Component.InvokeAsync("@widgetBuildingBlock.ComponentName")
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @await Component.InvokeAsync("@widgetBuildingBlock.ComponentName")
+                                            }
+                                        </div>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>   
+                }
+            }
+        }
+  
     </div>
     <div id="headerTemplate">
         <span id="close" class="e-template-icon e-clear-icon"></span>
@@ -79,12 +69,23 @@
 
 </div>
 
- 
+   <div id="dialogIterations">
+        <div id="ModalContent">
+            
+        </div>
+        <div  class="row">
+            <div id="Rowbtn">
+                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="CloseModal()">Cancel</button>
+            </div>
+            <div id="Rowbtns" style="display: ruby;">
+                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="SaveNewIterationSettings()">Confirm</button>
+                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="CloseModal()">Cancel</button>
 
-         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
- <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
+            </div>
+        </div>
+
+    </div>
+
 <style>
     #defaultLayout {
         padding: 10px;
@@ -137,7 +138,17 @@
 </style>
 
 <script>
-
+$("#Rowbtns").hide();
+  var dialogIterations = new ej.popups.Dialog({
+                width: '90vh',
+                header: 'Pick an item from the grid or construct you own widget',
+                isModal: true,
+                animationSettings: { effect: 'None' },
+                visible: false,
+                open: dialogOpen,
+                close: dialogClose
+            });
+        dialogIterations.appendTo('#dialogIterations');
 
  var dashboard = new ej.layouts.DashboardLayout({
         cellSpacing: [10, 10],
@@ -147,7 +158,9 @@
 dashboard.appendTo('#defaultLayout');
 var dashboardObject = document.getElementById('defaultLayout').ej2_instances[0];
 var count = 8;
-document.getElementById('add').onclick = function (e) {
+
+function AddNewDashboardPanel(generatedId)
+{
     var panel = [{
         'id': count.toString() + '_layout', 'sizeX': 1, 'sizeY': 1, 'row': 0, 'col': 0,
         content: '<span id="close" class="e-template-icon e-clear-icon"></span><div class="text-align">' + count.toString() + '</div>'
@@ -156,7 +169,8 @@ document.getElementById('add').onclick = function (e) {
     var closeIcon = document.getElementById(count.toString() + '_layout').querySelector('.e-clear-icon');
     closeIcon.addEventListener('click', onCloseIconHandler);
     count = count + 1;
-};
+}
+
 function onCloseIconHandler(event) {
     if (event.target.offsetParent) {
         dashboardObject.removePanel(event.target.offsetParent.id);
@@ -167,4 +181,30 @@ var closeElement = document.querySelectorAll('.e-clear-icon');
 for (var i = 0; i < closeElement.length; i++) {
     closeElement[i].addEventListener('click', onCloseIconHandler);
 }
+
+
+
+    function dialogOpen()
+    {
+        document.getElementById('dialogIterations').style.display = 'block';
+    }
+
+    function dialogClose()
+    {
+        document.getElementById('dialogIterations').style.display = 'none';
+    }
+
+    function CloseModal()
+    {
+        $("#Rowbtns").hide();
+        $("#Rowbtn").show();
+        dialogIterations.hide();
+    }
+
+    function OpenWidgetModal()
+    {
+        dialogIterations.show();
+        $("#ModalContent").load("/Accounts/GetWidgets");
+    }
+
 </script>

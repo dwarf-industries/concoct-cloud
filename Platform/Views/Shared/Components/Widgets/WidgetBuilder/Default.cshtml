@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-md-2">
+        <div class="control-section">
+            <div class="content-wrapper">
+                <div id="ControlListGrid" style="width: auto;height: 87vh;overflow-y: scroll;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+
+    </div>
+    <div class="col-md-2">
+
+    </div>
+</div>
+
+
+<script>
+
+
+   
+    $.ajax({
+        type: 'GET',
+        url: '/Accounts/GetWidgetComponents',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        
+        success: function (response) {
+            console.log(response);
+            InitializeControlList(response);
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    });
+    function InitializeControlList(data)
+    {
+        var ControlListGrid = new ej.grids.Grid({
+            dataSource: data,
+            rowSelected : ControlSelected,
+            columns: [
+                { field: 'controlName', headerText: 'Control Name', width: 120, textAlign: 'Right' },
+               
+            ]
+        });
+        ControlListGrid.appendTo('#ControlListGrid');
+    }
+
+    function ControlSelected(args)
+    {
+        console.log(args);
+        AddNewDashboardPanel("test");
+
+    }
+</script>

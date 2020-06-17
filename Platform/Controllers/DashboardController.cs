@@ -140,9 +140,13 @@ namespace Rokono_Control.Controllers
             return View();
         }
 
-        public IActionResult ProjectDetails()
+        public IActionResult ProjectDetails(int projectId)
         {
-            
+            ViewData["ProjectId"] = projectId;
+            using(var context = new UsersContext(Context,Configuration))
+            {
+                ViewData["SavedWidgets"] = context.GetUserWidgets(UserId,projectId);
+            }
             return View();
         }
 

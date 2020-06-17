@@ -7,6 +7,7 @@
     using Platform.DatabaseHandlers.Contexts;
     using Platform.DataHandlers;
     using Platform.DataHandlers.Interfaces;
+    using Platform.Models;
     using Rokono_Control.Models;
     using RokonoControl.Models;
 
@@ -53,6 +54,85 @@
             }
             return  outgoingUserList;
         }
+
+
+        [HttpGet]
+        public  IActionResult GetWidgets()
+        {
+            
+            return ViewComponent("WidgetBuilder");
+        }
+        [HttpGet]
+        public  List<OutgoingBindingControl> GetWidgetComponents(int projectId)
+        {
+            return  new List<OutgoingBindingControl>{
+                new OutgoingBindingControl{
+                    ControlName = "Map"
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Grid"
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Commit Board"
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Map Heat"
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Project Members"
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Big Data Map"
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Bubble Chart"
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Intensity Chart"
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Basic Line Chart"
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Spline"
+                },
+                new OutgoingBindingControl{
+                    ControlName = "100% Stacked Line"
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Area"
+                },
+                     new OutgoingBindingControl{
+                    ControlName = "Spline Area"
+                },
+                     new OutgoingBindingControl{
+                    ControlName = "Bar Column"
+                },
+                     new OutgoingBindingControl{
+                    ControlName = "Rounded Column"
+                },
+                     new OutgoingBindingControl{
+                    ControlName = "Pie with Legend"
+                },
+                     new OutgoingBindingControl{
+                    ControlName = "Pyramid"
+                },
+                     new OutgoingBindingControl{
+                    ControlName = "Category Axis"
+                },
+                     new OutgoingBindingControl{
+                    ControlName = "Logarithmic Scale"
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Network Diagram"
+                },
+                new OutgoingBindingControl{
+                    ControlName = "UML Diagram"
+                },
+            };
+        }
+
+        
         [HttpPost]
         public JsonResult AssociateNewUserAccount([FromBody] IncomingProjectAccount projectAccount)
         {

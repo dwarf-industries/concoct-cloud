@@ -39,6 +39,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedRepositoryBranches> AssociatedRepositoryBranches { get; set; }
         public virtual DbSet<AssociatedUserChatNotifications> AssociatedUserChatNotifications { get; set; }
         public virtual DbSet<AssociatedUserChatRights> AssociatedUserChatRights { get; set; }
+        public virtual DbSet<AssociatedUserDashboardItemComponent> AssociatedUserDashboardItemComponent { get; set; }
         public virtual DbSet<AssociatedUserNotifications> AssociatedUserNotifications { get; set; }
         public virtual DbSet<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
         public virtual DbSet<AssociatedWorkItemFiles> AssociatedWorkItemFiles { get; set; }
@@ -69,6 +70,9 @@ namespace Rokono_Control.Models
         public virtual DbSet<Risks> Risks { get; set; }
         public virtual DbSet<SystemFiles> SystemFiles { get; set; }
         public virtual DbSet<UserAccounts> UserAccounts { get; set; }
+        public virtual DbSet<UserDashboardItem> UserDashboardItem { get; set; }
+        public virtual DbSet<UserDashboardItemComponent> UserDashboardItemComponent { get; set; }
+        public virtual DbSet<UserDashboards> UserDashboards { get; set; }
         public virtual DbSet<UserNotes> UserNotes { get; set; }
         public virtual DbSet<UserRights> UserRights { get; set; }
         public virtual DbSet<ValueAreas> ValueAreas { get; set; }
@@ -467,6 +471,19 @@ namespace Rokono_Control.Models
                     .HasConstraintName("FK__Associate__UserI__0DCF0841");
             });
 
+            modelBuilder.Entity<AssociatedUserDashboardItemComponent>(entity =>
+            {
+                entity.HasOne(d => d.ItemNavigation)
+                    .WithMany(p => p.AssociatedUserDashboardItemComponent)
+                    .HasForeignKey(d => d.Item)
+                    .HasConstraintName("FK__Associated__Item__36D11DD4");
+
+                entity.HasOne(d => d.ItemComponentNavigation)
+                    .WithMany(p => p.AssociatedUserDashboardItemComponent)
+                    .HasForeignKey(d => d.ItemComponent)
+                    .HasConstraintName("FK__Associate__ItemC__37C5420D");
+            });
+
             modelBuilder.Entity<AssociatedUserNotifications>(entity =>
             {
                 entity.HasOne(d => d.Notification)
@@ -784,6 +801,31 @@ namespace Rokono_Control.Models
                 entity.Property(e => e.LastName).HasMaxLength(400);
 
                 entity.Property(e => e.Password).IsRequired();
+            });
+
+            modelBuilder.Entity<UserDashboardItem>(entity =>
+            {
+                entity.Property(e => e.ItemName).HasMaxLength(200);
+
+                entity.HasOne(d => d.UserDashboardNavigation)
+                    .WithMany(p => p.UserDashboardItem)
+                    .HasForeignKey(d => d.UserDashboard)
+                    .HasConstraintName("FK__UserDashb__UserD__35DCF99B");
+            });
+
+            modelBuilder.Entity<UserDashboardItemComponent>(entity =>
+            {
+                entity.Property(e => e.ComponentName).HasMaxLength(200);
+            });
+
+            modelBuilder.Entity<UserDashboards>(entity =>
+            {
+                entity.Property(e => e.DateOfDashboard).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.UserDashboards)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK__UserDashb__Proje__34E8D562");
             });
 
             modelBuilder.Entity<UserNotes>(entity =>

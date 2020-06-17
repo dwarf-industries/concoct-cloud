@@ -174,6 +174,15 @@ namespace Platform.DatabaseHandlers.Contexts
                 return rights.Rights;
             return null;
         }
+
+        internal UserDashboards GetUserWidgets(int userId, int projectId)
+        {
+            return Context.UserDashboards.Include(x => x.UserDashboardItem)
+                                         .ThenInclude(UserDashboardItem => UserDashboardItem.AssociatedUserDashboardItemComponent)
+                                         .ThenInclude(AssociatedUserDashboardItemComponent => AssociatedUserDashboardItemComponent.ItemComponentNavigation)
+                                         .FirstOrDefault(x=>x.ProjectId == projectId && x.UserId == userId);
+        }
+
         internal UserAccounts GetUserAccountByName(string name)
         {
             return Context.UserAccounts.FirstOrDefault(x=>x.Email == name);
