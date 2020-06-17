@@ -19535,31 +19535,6 @@
       },
       {
         "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__WorkItemFileUploaderViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "Documentation": null,
-        "TagOutputHint": null,
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:work-item-file-uploader",
-            "ParentTag": null,
-            "TagStructure": 0,
-            "Attributes": [],
-            "Diagnostics": []
-          }
-        ],
-        "BoundAttributes": [],
-        "AllowedChildTags": [],
-        "Diagnostics": [],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__WorkItemFileUploaderViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "WorkItemFileUploader"
-        }
-      },
-      {
-        "Kind": "MVC.ViewComponent",
         "Name": "__Generated__WidgetBuilderViewComponentTagHelper",
         "AssemblyName": "Rokono Control",
         "Documentation": null,
@@ -19581,6 +19556,31 @@
           "Runtime.Name": "ITagHelper",
           "Common.TypeName": "__Generated__WidgetBuilderViewComponentTagHelper",
           "MVC.ViewComponent.Name": "WidgetBuilder"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__WorkItemFileUploaderViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:work-item-file-uploader",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__WorkItemFileUploaderViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "WorkItemFileUploader"
         }
       },
       {

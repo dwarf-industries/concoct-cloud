@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [RokonoControl]    Script Date: 5/25/2020 4:29:56 PM ******/
+/****** Object:  Database [RokonoControl]    Script Date: 6/17/2020 2:40:18 PM ******/
 CREATE DATABASE [RokonoControl]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -79,14 +79,14 @@ ALTER DATABASE [RokonoControl] SET QUERY_STORE = OFF
 GO
 USE [RokonoControl]
 GO
-/****** Object:  User [RGSOC]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  User [RGSOC]    Script Date: 6/17/2020 2:40:18 PM ******/
 CREATE USER [RGSOC] FOR LOGIN [RGSOC] WITH DEFAULT_SCHEMA=[dbo]
 GO
 ALTER ROLE [db_datareader] ADD MEMBER [RGSOC]
 GO
 ALTER ROLE [db_datawriter] ADD MEMBER [RGSOC]
 GO
-/****** Object:  Table [dbo].[ApiKeys]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[ApiKeys]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -101,7 +101,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedAccountNotes]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedAccountNotes]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -117,7 +117,23 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedBoardWorkItems]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedAccountProjectNotificationRights]    Script Date: 6/17/2020 2:40:19 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AssociatedAccountProjectNotificationRights](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ProjectId] [int] NULL,
+	[UserId] [int] NULL,
+	[RightId] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AssociatedBoardWorkItems]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -133,7 +149,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedBranchCommits]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedBranchCommits]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -148,7 +164,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedChatChannelMessages]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedChatChannelMessages]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -163,7 +179,39 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedCommitFiles]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedChatPersonalMessages]    Script Date: 6/17/2020 2:40:19 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AssociatedChatPersonalMessages](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ProjectId] [int] NULL,
+	[PublicMessageId] [int] NULL,
+	[SenderId] [int] NULL,
+	[ReciverId] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AssociatedChatRoomRights]    Script Date: 6/17/2020 2:40:19 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AssociatedChatRoomRights](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ChatRoomId] [int] NOT NULL,
+	[RightId] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AssociatedCommitFiles]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -179,7 +227,23 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedProjectApiKeys]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedDocumentationCategoryPage]    Script Date: 6/17/2020 2:40:19 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AssociatedDocumentationCategoryPage](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Content] [nvarchar](max) NULL,
+	[CategoryField] [int] NULL,
+	[Title] [nvarchar](400) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AssociatedProjectApiKeys]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -195,7 +259,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedProjectBoards]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedProjectBoards]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -211,7 +275,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedProjectBuilds]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedProjectBuilds]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -227,7 +291,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedProjectChangelogs]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedProjectChangelogs]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -244,7 +308,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedProjectFeedback]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedProjectFeedback]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -260,7 +324,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedProjectIterations]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedProjectIterations]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -269,13 +333,14 @@ CREATE TABLE [dbo].[AssociatedProjectIterations](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[ProjectId] [int] NOT NULL,
 	[IterationId] [int] NOT NULL,
+	[ActiveIteration] [int] NULL,
  CONSTRAINT [PK_AssociatedProjectIterations] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedProjectMemberRights]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedProjectMemberRights]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -291,7 +356,7 @@ CREATE TABLE [dbo].[AssociatedProjectMemberRights](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedProjectMembers]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedProjectMembers]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -307,7 +372,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedProjectNotifications]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedProjectNotifications]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -324,7 +389,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedProjectPublicDiscussions]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedProjectPublicDiscussions]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -339,7 +404,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedProjectPublicMessages]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedProjectPublicMessages]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -354,7 +419,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedRepositoryBranches]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedRepositoryBranches]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -369,7 +434,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedUserChatNotifications]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedUserChatNotifications]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -377,7 +442,23 @@ GO
 CREATE TABLE [dbo].[AssociatedUserChatNotifications](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[UserId] [int] NULL,
-	[ChatroomId] [int] NULL,
+	[ProjectId] [int] NULL,
+	[ChatChannelId] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AssociatedUserChatRights]    Script Date: 6/17/2020 2:40:19 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AssociatedUserChatRights](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [int] NULL,
+	[RightId] [int] NULL,
 	[ProjectId] [int] NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -385,7 +466,22 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedUserNotifications]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedUserDashboardItemComponent]    Script Date: 6/17/2020 2:40:19 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AssociatedUserDashboardItemComponent](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Item] [int] NULL,
+	[ItemComponent] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AssociatedUserNotifications]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -401,7 +497,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedWorkItemChangelogs]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedWorkItemChangelogs]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -417,7 +513,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedWorkItemFiles]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedWorkItemFiles]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -432,7 +528,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedWorkItemMessages]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedWorkItemMessages]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -447,7 +543,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssociatedWrorkItemChildren]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[AssociatedWrorkItemChildren]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -463,7 +559,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Boards]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[Boards]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -479,7 +575,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Branches]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[Branches]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -495,7 +591,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Builds]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[Builds]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -514,7 +610,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Changelogs]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[Changelogs]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -529,7 +625,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ChatChannels]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[ChatChannels]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -545,7 +641,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ChatChannelTypes]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[ChatChannelTypes]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -559,7 +655,24 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ChatRooms]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[ChatRoomRights]    Script Date: 6/17/2020 2:40:19 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ChatRoomRights](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[RightName] [nvarchar](300) NOT NULL,
+	[PojectId] [int] NULL,
+	[Background] [nvarchar](500) NULL,
+	[Foreground] [nvarchar](500) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ChatRooms]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -574,7 +687,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Commits]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[Commits]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -591,30 +704,13 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[DocumentationArea]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[Documentation]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[DocumentationArea](
+CREATE TABLE [dbo].[Documentation](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[AreaName] [varchar](555) NOT NULL,
-	[AreaContent] [nvarchar](max) NULL,
-	[CategoryId] [int] NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[DocumentationCategory]    Script Date: 5/25/2020 4:29:57 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[DocumentationCategory](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[CategoryName] [varchar](555) NOT NULL,
 	[ProjectId] [int] NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -622,7 +718,37 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Efforts]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[DocumentationCategory]    Script Date: 6/17/2020 2:40:19 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DocumentationCategory](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[CategoryName] [nvarchar](300) NULL,
+	[DocumentationId] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DocumentationCategoryField]    Script Date: 6/17/2020 2:40:19 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DocumentationCategoryField](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PageName] [nvarchar](300) NULL,
+	[CategoryId] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Efforts]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -636,7 +762,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Files]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[Files]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -653,7 +779,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[FileTypes]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[FileTypes]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -667,7 +793,28 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Notifications]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[NotificationRights]    Script Date: 6/17/2020 2:40:19 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[NotificationRights](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PersonalMessageNEnabled] [int] NULL,
+	[ChatChannelNEnabled] [int] NULL,
+	[UpdateWorkItemNEnabled] [int] NULL,
+	[CreateWorkItemNEnabled] [int] NULL,
+	[PublicDiscussionMNEnabled] [int] NULL,
+	[FeedbackNEnabled] [int] NULL,
+	[BugReportNEnabled] [int] NULL,
+	[ChanegelogNEnabled] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Notifications]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -684,7 +831,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[NotificationTypes]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[NotificationTypes]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -699,7 +846,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Projects]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[Projects]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -724,7 +871,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PublicMessage]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[PublicMessage]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -742,7 +889,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PublicMessages]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[PublicMessages]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -760,7 +907,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Repository]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[Repository]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -774,7 +921,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Risks]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[Risks]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -788,7 +935,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[SystemFiles]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[SystemFiles]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -805,7 +952,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserAccounts]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[UserAccounts]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -826,7 +973,60 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserNotes]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[UserDashboardItem]    Script Date: 6/17/2020 2:40:19 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UserDashboardItem](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ItemName] [nvarchar](200) NULL,
+	[DataRow] [int] NULL,
+	[DataCol] [int] NULL,
+	[DataSizeY] [int] NULL,
+	[DataSizeX] [int] NULL,
+	[UserDashboard] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[UserDashboardItemComponent]    Script Date: 6/17/2020 2:40:19 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UserDashboardItemComponent](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ComponentName] [nvarchar](200) NULL,
+	[IsRow] [int] NULL,
+	[ColumnNumber] [int] NULL,
+	[ComponentInternalName] [nvarchar](max) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[UserDashboards]    Script Date: 6/17/2020 2:40:19 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UserDashboards](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[DashboardName] [nvarchar](max) NULL,
+	[UserId] [int] NULL,
+	[DateOfDashboard] [datetime] NULL,
+	[ProjectId] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[UserNotes]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -845,7 +1045,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserRights]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[UserRights]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -858,13 +1058,14 @@ CREATE TABLE [dbo].[UserRights](
 	[ManageIterations] [smallint] NOT NULL,
 	[ManageUserdays] [smallint] NOT NULL,
 	[ViewOtherPeoplesWork] [smallint] NOT NULL,
+	[Documentation] [int] NULL,
  CONSTRAINT [PK_UserRights] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ValueAreas]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[ValueAreas]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -878,7 +1079,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WorkItem]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[WorkItem]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -929,7 +1130,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WorkItemActivity]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[WorkItemActivity]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -943,7 +1144,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WorkItemAreas]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[WorkItemAreas]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -957,7 +1158,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WorkItemIterations]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[WorkItemIterations]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -972,7 +1173,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WorkItemMessage]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[WorkItemMessage]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -988,7 +1189,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WorkItemPriorities]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[WorkItemPriorities]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1002,7 +1203,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WorkItemRealtionshipType]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[WorkItemRealtionshipType]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1016,7 +1217,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WorkItemReasons]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[WorkItemReasons]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1030,7 +1231,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WorkItemRelations]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[WorkItemRelations]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1044,7 +1245,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WorkItemSeverities]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[WorkItemSeverities]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1058,7 +1259,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WorkItemStates]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[WorkItemStates]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1072,7 +1273,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[WorkItemTypes]    Script Date: 5/25/2020 4:29:57 PM ******/
+/****** Object:  Table [dbo].[WorkItemTypes]    Script Date: 6/17/2020 2:40:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1096,6 +1297,15 @@ GO
 ALTER TABLE [dbo].[AssociatedAccountNotes]  WITH CHECK ADD FOREIGN KEY([UserAccountId])
 REFERENCES [dbo].[UserAccounts] ([Id])
 GO
+ALTER TABLE [dbo].[AssociatedAccountProjectNotificationRights]  WITH CHECK ADD FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Projects] ([Id])
+GO
+ALTER TABLE [dbo].[AssociatedAccountProjectNotificationRights]  WITH CHECK ADD FOREIGN KEY([RightId])
+REFERENCES [dbo].[NotificationRights] ([Id])
+GO
+ALTER TABLE [dbo].[AssociatedAccountProjectNotificationRights]  WITH CHECK ADD FOREIGN KEY([UserId])
+REFERENCES [dbo].[UserAccounts] ([Id])
+GO
 ALTER TABLE [dbo].[AssociatedBoardWorkItems]  WITH CHECK ADD FOREIGN KEY([BoardId])
 REFERENCES [dbo].[Boards] ([Id])
 GO
@@ -1117,11 +1327,32 @@ GO
 ALTER TABLE [dbo].[AssociatedChatChannelMessages]  WITH CHECK ADD FOREIGN KEY([PublicMessageId])
 REFERENCES [dbo].[PublicMessages] ([Id])
 GO
+ALTER TABLE [dbo].[AssociatedChatPersonalMessages]  WITH CHECK ADD FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Projects] ([Id])
+GO
+ALTER TABLE [dbo].[AssociatedChatPersonalMessages]  WITH CHECK ADD FOREIGN KEY([PublicMessageId])
+REFERENCES [dbo].[PublicMessages] ([Id])
+GO
+ALTER TABLE [dbo].[AssociatedChatPersonalMessages]  WITH CHECK ADD FOREIGN KEY([ReciverId])
+REFERENCES [dbo].[UserAccounts] ([Id])
+GO
+ALTER TABLE [dbo].[AssociatedChatPersonalMessages]  WITH CHECK ADD FOREIGN KEY([SenderId])
+REFERENCES [dbo].[UserAccounts] ([Id])
+GO
+ALTER TABLE [dbo].[AssociatedChatRoomRights]  WITH CHECK ADD FOREIGN KEY([ChatRoomId])
+REFERENCES [dbo].[ChatRooms] ([Id])
+GO
+ALTER TABLE [dbo].[AssociatedChatRoomRights]  WITH CHECK ADD FOREIGN KEY([RightId])
+REFERENCES [dbo].[ChatRoomRights] ([Id])
+GO
 ALTER TABLE [dbo].[AssociatedCommitFiles]  WITH CHECK ADD FOREIGN KEY([CommitId])
 REFERENCES [dbo].[Commits] ([Id])
 GO
 ALTER TABLE [dbo].[AssociatedCommitFiles]  WITH CHECK ADD FOREIGN KEY([FileId])
 REFERENCES [dbo].[Files] ([Id])
+GO
+ALTER TABLE [dbo].[AssociatedDocumentationCategoryPage]  WITH CHECK ADD FOREIGN KEY([CategoryField])
+REFERENCES [dbo].[DocumentationCategoryField] ([Id])
 GO
 ALTER TABLE [dbo].[AssociatedProjectApiKeys]  WITH CHECK ADD FOREIGN KEY([KeyId])
 REFERENCES [dbo].[ApiKeys] ([Id])
@@ -1217,14 +1448,29 @@ GO
 ALTER TABLE [dbo].[AssociatedRepositoryBranches]  WITH CHECK ADD FOREIGN KEY([RepositoryId])
 REFERENCES [dbo].[Repository] ([Id])
 GO
-ALTER TABLE [dbo].[AssociatedUserChatNotifications]  WITH CHECK ADD FOREIGN KEY([ChatroomId])
-REFERENCES [dbo].[ChatRooms] ([Id])
+ALTER TABLE [dbo].[AssociatedUserChatNotifications]  WITH CHECK ADD FOREIGN KEY([ChatChannelId])
+REFERENCES [dbo].[ChatChannels] ([Id])
 GO
 ALTER TABLE [dbo].[AssociatedUserChatNotifications]  WITH CHECK ADD FOREIGN KEY([ProjectId])
 REFERENCES [dbo].[Projects] ([Id])
 GO
 ALTER TABLE [dbo].[AssociatedUserChatNotifications]  WITH CHECK ADD FOREIGN KEY([UserId])
 REFERENCES [dbo].[UserAccounts] ([Id])
+GO
+ALTER TABLE [dbo].[AssociatedUserChatRights]  WITH CHECK ADD FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Projects] ([Id])
+GO
+ALTER TABLE [dbo].[AssociatedUserChatRights]  WITH CHECK ADD FOREIGN KEY([RightId])
+REFERENCES [dbo].[ChatRoomRights] ([Id])
+GO
+ALTER TABLE [dbo].[AssociatedUserChatRights]  WITH CHECK ADD FOREIGN KEY([UserId])
+REFERENCES [dbo].[UserAccounts] ([Id])
+GO
+ALTER TABLE [dbo].[AssociatedUserDashboardItemComponent]  WITH CHECK ADD FOREIGN KEY([ItemComponent])
+REFERENCES [dbo].[UserDashboardItemComponent] ([Id])
+GO
+ALTER TABLE [dbo].[AssociatedUserDashboardItemComponent]  WITH CHECK ADD FOREIGN KEY([Item])
+REFERENCES [dbo].[UserDashboardItem] ([Id])
 GO
 ALTER TABLE [dbo].[AssociatedUserNotifications]  WITH CHECK ADD FOREIGN KEY([NotificationId])
 REFERENCES [dbo].[Notifications] ([Id])
@@ -1271,14 +1517,20 @@ GO
 ALTER TABLE [dbo].[ChatChannels]  WITH CHECK ADD FOREIGN KEY([ChatRoom])
 REFERENCES [dbo].[ChatRooms] ([Id])
 GO
+ALTER TABLE [dbo].[ChatRoomRights]  WITH CHECK ADD FOREIGN KEY([PojectId])
+REFERENCES [dbo].[Projects] ([Id])
+GO
 ALTER TABLE [dbo].[ChatRooms]  WITH CHECK ADD FOREIGN KEY([ProjectId])
 REFERENCES [dbo].[Projects] ([Id])
 GO
-ALTER TABLE [dbo].[DocumentationArea]  WITH CHECK ADD FOREIGN KEY([CategoryId])
-REFERENCES [dbo].[DocumentationCategory] ([Id])
-GO
-ALTER TABLE [dbo].[DocumentationCategory]  WITH CHECK ADD FOREIGN KEY([ProjectId])
+ALTER TABLE [dbo].[Documentation]  WITH CHECK ADD FOREIGN KEY([ProjectId])
 REFERENCES [dbo].[Projects] ([Id])
+GO
+ALTER TABLE [dbo].[DocumentationCategory]  WITH CHECK ADD FOREIGN KEY([DocumentationId])
+REFERENCES [dbo].[Documentation] ([Id])
+GO
+ALTER TABLE [dbo].[DocumentationCategoryField]  WITH CHECK ADD FOREIGN KEY([CategoryId])
+REFERENCES [dbo].[DocumentationCategory] ([Id])
 GO
 ALTER TABLE [dbo].[Notifications]  WITH CHECK ADD FOREIGN KEY([NotificationType])
 REFERENCES [dbo].[NotificationTypes] ([Id])
@@ -1288,6 +1540,12 @@ REFERENCES [dbo].[Repository] ([Id])
 GO
 ALTER TABLE [dbo].[SystemFiles]  WITH CHECK ADD FOREIGN KEY([FileType])
 REFERENCES [dbo].[FileTypes] ([Id])
+GO
+ALTER TABLE [dbo].[UserDashboardItem]  WITH CHECK ADD FOREIGN KEY([UserDashboard])
+REFERENCES [dbo].[UserDashboards] ([Id])
+GO
+ALTER TABLE [dbo].[UserDashboards]  WITH CHECK ADD FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Projects] ([Id])
 GO
 ALTER TABLE [dbo].[WorkItem]  WITH CHECK ADD FOREIGN KEY([Activity])
 REFERENCES [dbo].[WorkItemActivity] ([Id])
