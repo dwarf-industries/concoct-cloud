@@ -2,6 +2,7 @@ namespace Platform.ViewComponents
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Platform.DatabaseHandlers.Contexts;
     using Rokono_Control.Models;
 
     public class SearchBoxViewComponent : ViewComponent
@@ -18,7 +19,10 @@ namespace Platform.ViewComponents
         public IViewComponentResult Invoke(int projectId)
         {
             
-           
+            using(var context = new WorkItemsContext(Context, Configuration))
+            {
+                ViewData["CurrentIteration"] = context.GetProjectDefautIteration(projectId);
+            }
             return View();
         }
     }
