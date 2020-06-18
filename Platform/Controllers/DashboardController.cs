@@ -85,6 +85,7 @@ namespace Rokono_Control.Controllers
                 ViewData["WorkItemType"] = workItemType;
                 ViewData["ProjectId"] = projectId;
                 ViewData["ParentId"] = parentId;
+                ViewData["ActiveIteration"] = context.GetProjectDefautIteration(projectId);
                 ViewData["ReturnPath"] = returnUrl;
             }
             using(var context = new UsersContext(Context,Configuration))

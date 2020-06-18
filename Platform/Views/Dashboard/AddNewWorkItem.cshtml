@@ -17,6 +17,8 @@
     var WorkItemType = ViewData["WorkItemType"] as int?;
     var ParentId = ViewData["ParentId"] as int?;
     var ReturnPath = ViewData["ReturnPath"] as string;
+    var cIteration = ViewData["ActiveIteration"] as int?;
+    var IteratioName = iterations.FirstOrDefault(x=>x.IsActive == 1).Id;
 }
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <!-- Main Quill library -->
@@ -831,6 +833,8 @@
 
             // set the placeholder to DropDownList input element
             placeholder: 'Iteration',
+            value: "@IteratioName",
+
             // set the height of the popup element
             popupHeight: '200px',
             index: 0,
