@@ -1,0 +1,39 @@
+@{
+    var projectId = ViewData["ProjectId"] as int?;
+    var phase = ViewData["Phase"] as string;
+}
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class=" form-group" style="width:100%">
+            <input name="RowWidth" id="RowWidth" placeholder="Row Width"  style="width:100%" class="form-control-sm"/>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class=" form-group" style="width:100%">
+            <input name="RowHeight" id="RowHeight" placeholder="Row height"  style="width:100%" class="form-control-sm"/>
+        </div>
+    </div>
+</div>
+<div class="row">
+    @await Component.InvokeAsync("QueryBuilder", new IncomingIdRequest{
+        ProjectId = @projectId.Value,
+        Phase = @phase
+    })
+</div>
+
+<script>
+var RowWidth = new ej.inputs.TextBox({
+placeholder: 'Row Height',
+floatLabelType: 'Auto'
+});
+RowWidth.appendTo('#RowHeight');
+var RowWidth = new ej.inputs.TextBox({
+placeholder: 'Row Width',
+floatLabelType: 'Auto'
+});
+RowWidth.appendTo('#RowWidth');
+
+
+</script>

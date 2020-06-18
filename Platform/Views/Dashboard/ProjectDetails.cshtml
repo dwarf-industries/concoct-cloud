@@ -1,6 +1,7 @@
 @{
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
     var UserDashboard  =  ViewData["SavedWidgets"] as UserDashboards;
+    var ProjectId = ViewData["ProjectId"] as int?;
 }
 
 <link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
@@ -204,7 +205,7 @@ for (var i = 0; i < closeElement.length; i++) {
     function OpenWidgetModal()
     {
         dialogIterations.show();
-        $("#ModalContent").load("/Accounts/GetWidgets");
+        $("#ModalContent").load("/Accounts/GetWidgets?projectId=@ProjectId");
     }
 
 </script>

@@ -1,3 +1,7 @@
+@{
+    var ProjectId = ViewData["ProjectId"] as int?;
+}
+
 <div class="row">
     <div class="col-md-2">
         <div class="control-section">
@@ -7,17 +11,17 @@
             </div>
         </div>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-8" id="BindingControl">
 
     </div>
-    <div class="col-md-2">
-
+    <div class="col-md-2" id="DataBinder">
+        
     </div>
 </div>
 
 
 <script>
-
+    
 
    
     $.ajax({
@@ -50,7 +54,7 @@
     function ControlSelected(args)
     {
         console.log(args);
-        AddNewDashboardPanel("test");
-
+        $("#BindingControl").load("/Widget/LoadWidget?phase="+args.data.controlName);
+        $("#DataBinder").load("/Widget/GetBindingOptions?projectId=@ProjectId&&phase="+args.data.controlName);
     }
 </script>
