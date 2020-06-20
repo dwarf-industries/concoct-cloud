@@ -1,9 +1,12 @@
 namespace Platform.Controllers {
+    using System.Collections.Generic;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Platform.DataHandlers;
     using Platform.DataHandlers.Interfaces;
+    using Platform.Models;
+    using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
 
     public class WidgetController : Controller {
@@ -38,7 +41,19 @@ namespace Platform.Controllers {
             return ViewComponent("MapLabels", new IncomingIdRequest{
                  Phase = phase
             });
-         }
+        }
+        
 
+
+        [HttpPost]
+        public List<BindingQueryProperty> GetQueryProperties([FromBody] IncomingIdRequest request)
+        {
+            var result = new List<BindingQueryProperty>();
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                result = context.GetTableProperties(request.Phase);
+            }
+            return result;
+        }
     }
 }

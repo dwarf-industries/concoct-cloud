@@ -4,6 +4,7 @@ namespace Rokono_Control.DatabaseHandlers
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Security.Cryptography;
     using System.Text;
     using System.Threading.Tasks;
@@ -24,26 +25,121 @@ namespace Rokono_Control.DatabaseHandlers
     {
         RokonoControlContext Context;
         IConfiguration Configuration;
-        private int I { get; set; }
+        public DatabaseController(int i, int internalId) 
+        {
+            this.I = i;
+                this.InternalId = internalId;
+               
+        }
+                private int I { get; set; }
         private int InternalId { get; set; }
         public DatabaseController(RokonoControlContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;
         }
-        public DatabaseController(int i, int internalId) 
-        {
-            this.I = i;
-            this.InternalId = internalId;
-        }
-
 
         internal List<Repository> GetAllRepositories()
         {
             return Context.Repository.Include(x => x.Projects).ToList();
         }
 
-      
+        internal List<string> GetTables()
+        {
+            var tableNames = new List<string>();
+
+            using (var connection = Context.Database.GetDbConnection())
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "SELECT Distinct TABLE_NAME FROM information_schema.TABLES";
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                tableNames.Add(reader.GetString(0));
+                            }
+                        }
+                        reader.Close();
+                    }
+                }
+                connection.Close();
+            }
+            return tableNames;
+        }
+
+        internal List<BindingQueryProperty> GetTableProperties(string phase)
+        {
+            var found = default(bool);
+            var result = new List<BindingQueryProperty>();
+            foreach (var entityType in Context.Model.GetEntityTypes())
+            {
+                if(found)
+                    return result;
+                if(entityType.Name.Contains(phase))
+                {
+                    found = true;
+                    foreach (var propertyType in entityType.GetProperties())
+                    {
+                        var fieldName = propertyType.GetColumnName();
+                        var fieldType =propertyType.GetColumnType();
+                        result.Add(new BindingQueryProperty{
+                            Label = fieldName,
+                            Field = fieldName,
+                            Type =  GetPropertyBindingType(fieldType),
+                            Format = GetPropertyFormat(fieldType),
+                            Values = GetPropertyDefaultvalue(fieldType)
+                        });
+                    }
+                }
+            }
+            return result;
+        }
+
+        private string[] GetPropertyDefaultvalue(string fieldType)
+        {
+            if(fieldType == "boolean")
+                return new string[2]{"True", "False"};
+
+            return null;
+                
+        }
+
+        private string GetPropertyFormat(string fieldType)
+        {
+            if(fieldType == "DateTime")
+                return "dd/MM/yyyy";
+
+            return string.Empty;
+        }
+
+        private string GetPropertyBindingType(string getColumnType)
+        {
+            var result = string.Empty;
+            switch(getColumnType)
+            {
+                case "int":
+                    result = "number";
+                break;
+                case "string":
+                    result = "string";
+                break;
+                case "datetime":
+                    result = "date";
+                break;
+                case "boolean":
+                    result = "boolean";
+                break;
+                default:
+                    result = "string";
+                break;
+            }   
+            return result;
+        }
+
         internal object GetProjectName(int projectId)
         {
             return Context.Projects.FirstOrDefault(x => x.Id == projectId).ProjectName;
@@ -168,6 +264,32 @@ namespace Rokono_Control.DatabaseHandlers
 
             return item.SubChild;
         }
+        internal List<T> GetUserQueryData<T>(int userId, int queryId)  where T:new()
+        {
+            var currentResult = new List<T>();
+            var queryData = Context.UserQueries.FirstOrDefault(x=>x.Id == queryId && x.UserId == userId);
+            using (var command = Context.Database.GetDbConnection().CreateCommand())
+            {
+                command.CommandText = queryData.QueryData;
+                Context.Database.OpenConnection();
+                var t = new T();
+                using (var result = command.ExecuteReader())
+                {
+                    if(result.HasRows)
+                    {
+                        for(var i = 0; i < result.FieldCount; i++)
+                        {
+                            Type type = t.GetType();
+                            PropertyInfo prop = type.GetProperty(result.GetName(i));
+                            prop.SetValue(t, Convert.ChangeType(result.GetValue(i), prop.PropertyType), null);
+                            currentResult.Add(t);
+                        }
+                    }
+                }
+            }
+            return currentResult;
+        }
+        
 
         internal List<Branches> GetBranchesForProject(int projectId)
         {

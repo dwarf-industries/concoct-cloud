@@ -28,7 +28,10 @@ namespace Platform.ViewComponents
 
         public IViewComponentResult Invoke(IncomingIdRequest request)
         {
-            
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                ViewData["TablesData"] = context.GetTables();
+            }
             return View();
         }
     }

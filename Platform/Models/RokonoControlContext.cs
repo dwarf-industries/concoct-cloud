@@ -74,6 +74,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<UserDashboardItemComponent> UserDashboardItemComponent { get; set; }
         public virtual DbSet<UserDashboards> UserDashboards { get; set; }
         public virtual DbSet<UserNotes> UserNotes { get; set; }
+        public virtual DbSet<UserQueries> UserQueries { get; set; }
         public virtual DbSet<UserRights> UserRights { get; set; }
         public virtual DbSet<ValueAreas> ValueAreas { get; set; }
         public virtual DbSet<WorkItem> WorkItem { get; set; }
@@ -88,6 +89,15 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemSeverities> WorkItemSeverities { get; set; }
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=192.168.0.100;Database=RokonoControl;User ID=Kristifor;Password=';;y=yDXkd1';");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -839,6 +849,16 @@ namespace Rokono_Control.Models
                 entity.Property(e => e.NoteForeground)
                     .IsRequired()
                     .HasMaxLength(200);
+            });
+
+            modelBuilder.Entity<UserQueries>(entity =>
+            {
+                entity.Property(e => e.DateOfQuery).HasColumnType("datetime");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserQueries)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK__UserQueri__UserI__4CC05EF3");
             });
 
             modelBuilder.Entity<ValueAreas>(entity =>
