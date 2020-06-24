@@ -38,12 +38,24 @@ namespace Platform.Controllers {
 
         public IActionResult LoadWidget(string phase) 
         {
-            return ViewComponent("MapLabels", new IncomingIdRequest{
+            return ViewComponent(GetControlName(phase), new IncomingIdRequest{
                  Phase = phase
             });
         }
-        
-
+        private string GetControlName(string control)
+        {
+            var result = string.Empty;
+            switch(control)
+            {
+                case "Map":
+                    result = "MapLabels";
+                break;
+                case "Grid":
+                    result = "GridControl";
+                break;
+            }
+            return result;
+        }
 
         [HttpPost]
         public List<BindingQueryProperty> GetQueryProperties([FromBody] IncomingIdRequest request)
@@ -52,6 +64,28 @@ namespace Platform.Controllers {
             using(var context = new DatabaseController(Context,Configuration))
             {
                 result = context.GetTableProperties(request.Phase);
+            }
+            return result;
+        }
+
+        [HttpPost]
+        public List<object> GetQueryDataById([FromBody] IncomingIdRequest request)
+        {
+            var result = new List<object>();
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                result = context.GetUserQueryData<object>(UserId,request.Id);
+            }
+            return result;
+        }
+
+        [HttpPost]
+        public int GetQueryData([FromBody] IncomingWidgetCreatorRequest request)
+        {
+            var result = default(int);
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                result = context.AddUserQuery(request, UserId);
             }
             return result;
         }

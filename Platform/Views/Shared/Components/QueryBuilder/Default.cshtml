@@ -1,6 +1,7 @@
 
 @{
     var Tables = ViewData["TablesData"]  as List<string>;
+    var ProjectId = ViewData["ProjectId"] as int?;
 }
 
 <style>
@@ -18,7 +19,9 @@
 	.highcontrast textarea#ruleContent {
 	  background-color: #000;
 	}
-    
+    #querybuilder{
+        overflow-x: hidden;
+    }
     #querybuilder .e-group-header{
         padding-left: 14%;
     }
@@ -34,11 +37,15 @@
 </div>
 <div class="row" style="padding: 0; margin: 0;">
     <div class="control-section" id="QueryHolder">
-        <div id="querybuilder" class="row" style="width: 100%; !important">
+        <div id="querybuilder" class="row" style="width:100%;height: 67vh;overflow-x: hidden;">
         </div>
     </div>
 </div>
-
+<div class="row">
+    <button  style="width: auto; margin-left: 30%" onclick="AddComponent()" class="btn btn-primary e-control e-btn e-lib e-outline e-primary">
+        Add Component
+    </button>
+</div>
 <script>
     var elem;
     var dropDownObj;
@@ -46,7 +53,10 @@
     var ticksSlider;
     var element;
     var qryBldrObj;
-
+    var Current; 
+    var TableName;
+    var LastRule;
+    var RowEnabled;
     var tablesBox = new ej.dropdowns.ComboBox({
         popupHeight: '230px',
         index: 0,
@@ -60,9 +70,12 @@
     {
         console.log(id);
         GetFilterData(id.itemData.value);
+        Current = Control;
     }
     function GetFilterData(current)
     {
+
+        TableName = current;
         var dto = {
             "phase": current
         }
@@ -99,22 +112,71 @@
        
         var qryBldrObj = new ej.querybuilder.QueryBuilder({
             width: '100%',
+            height: '67vh',
             columns: data,
             ruleChange: RuleChanged,
             created: createdControl
         });
         qryBldrObj.appendTo('#querybuilder');
-    
+        document.getElementById("#querybuilder").style.property = "overflow-x:hidden;";
+
     }
     function RuleChanged(args)
     {
-        console.log(args);
+        LastRule = args.rule;
     }
 
     function createdControl() {
         if (ej.base.Browser.isDevice) {
             qryBldrObj.summaryView = true;
         }
+    }
+
+    function AddComponent()
+    {
+        var currentDataSet;
+        var last = Components[Components.length - 1];
+
+        var local = {
+            "ControlName":Current,
+            "TableName" : TableName,
+            "rule":LastRule,
+            "NewRow":RowEnabled,
+            "Column":$("#RowWidth").val(),
+            "BindingRow":$("#RowHeight").val(),
+            "Index" : Components.length
+        };
+        
+        $.ajax({
+            type: 'POST',
+            url: '/Widget/GetQueryData',
+            data: JSON.stringify(local),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+ 
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+        Components.push(local);
+        console.log(local);
+        if(local.NewRow == 1)
+        {
+            console.log("In");
+            currentDataSet += "<div class='row' id='Row_"+(Components.length)+"'> <div id='Binding_"+local.ControlName+"' class='col-md-"+local.Column+"'> </div></div>";
+            $("#BindingControl").append(currentDataSet);
+        }
+        else
+        {
+            console.log("Out");
+            $("#Row_"+local.BindingRow).append("<div id='Binding_"+local.ControlName+"' class='col-md-"+local.Column+"'> </div>");
+        }
+
+        @* $("#") *@
+        $("#Binding_"+local.ControlName).load("/Widget/LoadWidget?phase="+Current);
+        $("#DataBinder").load("/Widget/GetBindingOptions?projectId=@ProjectId&&phase="+Current);
     }
 
 </script>

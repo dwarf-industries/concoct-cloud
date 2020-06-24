@@ -1,0 +1,41 @@
+@{
+    var QueryId = ViewData["QueryId"] as int?;
+}
+
+
+<div class="control-section">
+    <div class="content-wrapper">
+        <div id="GridControl">
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+
+    var dto = {
+        "Id" : @QueryId
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/Widget/GetQueryData',
+        data: JSON.stringify(dto),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            InitalizeGridControl(response);
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    });
+    function InitalizeGridControl(data)
+    {
+        var GridControl = new ej.grids.Grid({
+            dataSource: data
+        });
+        GridControl.appendTo('#GridControl');
+    }
+</script>

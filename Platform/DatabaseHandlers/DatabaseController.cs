@@ -1,6 +1,7 @@
 namespace Rokono_Control.DatabaseHandlers
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -13,6 +14,7 @@ namespace Rokono_Control.DatabaseHandlers
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
     using Platform.DataHandlers;
     using Platform.Hubs;
     using Platform.Models;
@@ -95,6 +97,107 @@ namespace Rokono_Control.DatabaseHandlers
                         });
                     }
                 }
+            }
+            return result;
+        }
+
+        internal int AddUserQuery(IncomingWidgetCreatorRequest request, int userId)
+        {
+            var query =string.Empty;
+            query = $"select * from {request.TableName} where ";
+            request.rule.Rules.ForEach(x=>{
+                query +=  $"{x.field} {GetOperator(x.Operator.ToLower())} "; 
+                var data = IsList(x.value);
+                if(data.Count > 0)
+                {
+                    var i = 0;
+                    data.ForEach(y=>{
+                        if(i == 0)
+                            query += $"{y}";
+                        else
+                            query += $" and {y}";
+                        i++;
+                    });
+                }
+                else
+                    query += $"({x.value})";
+            });
+            var queryData = Context.UserQueries.Add(new UserQueries{
+                QueryData = query,
+                QueryName = request.ControlName,
+                UserId = userId,
+                DateOfQuery = DateTime.Now
+            });
+            Context.SaveChanges();
+            return queryData.Entity.Id;
+        }
+        public List<string> IsList(object o)
+        {
+            var result  = new List<string>();
+            var local = o.ToString().ToList();
+            local.ForEach(x=>{
+                if(Char.IsDigit(x))
+                    result.Add(x.ToString());
+            });
+           
+            return result;
+        }
+        private string GetOperator(string current)
+        {
+            var result = string.Empty;
+            switch(current)
+            {
+                case "equal":
+                    result = "=";
+                break;
+                case "notequal":
+                    result = "!=";
+                break;
+                case "greaterthanorequal":
+                    result = ">=";
+                break;
+                case "lessthanorequal":
+                    result = "<=";
+                break;
+                case "greaterthan":
+                    result = ">";
+                break;
+                case "lessthan":
+                    result = "<";
+                break;
+                case "notbetween":
+                    result = "Not Between";
+                break;
+                case "between":
+                    result = "Between";
+                break;
+                case "in":
+                    result = "IN";
+                break;
+                case "notin":
+                    result = "NOT IN";
+                break;
+                case "isnull":
+                    result = "Is Null";
+                break;
+                case "isnotnull":
+                    result = "Is Not Null";
+                break;
+                case "isempty":
+                    result = "Is Null";
+                break;
+                case "isnotempty":
+                    result = "Is Not Null";
+                break;
+                case "startswith":
+                    result = "LIKE";
+                break;
+                case "endswith":
+                    result = "LIKE";
+                break;
+                case "contains":
+                    result = "CONTAINS";
+                break;
             }
             return result;
         }

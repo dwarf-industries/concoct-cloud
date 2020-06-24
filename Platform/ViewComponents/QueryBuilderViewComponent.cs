@@ -28,6 +28,7 @@ namespace Platform.ViewComponents
 
         public IViewComponentResult Invoke(IncomingIdRequest request)
         {
+            ViewData["ProjectId"] = request.ProjectId;
             using(var context = new DatabaseController(Context,Configuration))
             {
                 ViewData["TablesData"] = context.GetTables();

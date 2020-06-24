@@ -21,9 +21,10 @@
 
 
 <script>
-    
 
-   
+
+    var Components = [];
+    var Control;
     $.ajax({
         type: 'GET',
         url: '/Accounts/GetWidgetComponents',
@@ -54,7 +55,8 @@
     function ControlSelected(args)
     {
         console.log(args);
-        $("#BindingControl").load("/Widget/LoadWidget?phase="+args.data.controlName);
-        $("#DataBinder").load("/Widget/GetBindingOptions?projectId=@ProjectId&&phase="+args.data.controlName);
+        Control = args.data.controlName;
+        @* $("#BindingControl").load("/Widget/LoadWidget?phase="+Control); *@
+        $("#DataBinder").load("/Widget/GetBindingOptions?projectId=@ProjectId&&phase="+Control);
     }
 </script>

@@ -22484,6 +22484,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Widgets/GridControl/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Widgets\\GridControl\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/_LayoutDocumentation.cshtml",
       "TargetPath": "Views\\Shared\\_LayoutDocumentation.cshtml",
       "FileKind": "mvc"
