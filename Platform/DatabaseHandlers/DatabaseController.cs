@@ -3,6 +3,7 @@ namespace Rokono_Control.DatabaseHandlers
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Data;
     using System.IO;
     using System.Linq;
     using System.Reflection;
@@ -134,12 +135,14 @@ namespace Rokono_Control.DatabaseHandlers
         public List<string> IsList(object o)
         {
             var result  = new List<string>();
-            var local = o.ToString().ToList();
-            local.ForEach(x=>{
-                if(Char.IsDigit(x))
-                    result.Add(x.ToString());
-            });
-           
+            if(o.ToString().Contains('[') || o.ToString().Contains(']'))
+            {
+                var local = o.ToString().ToList();
+                local.ForEach(x=>{
+                    if(Char.IsDigit(x))
+                        result.Add(x.ToString());
+                });
+            }
             return result;
         }
         private string GetOperator(string current)
@@ -367,30 +370,40 @@ namespace Rokono_Control.DatabaseHandlers
 
             return item.SubChild;
         }
-        internal List<T> GetUserQueryData<T>(int userId, int queryId)  where T:new()
+        internal DataTable GetUserQueryData(int userId, int queryId)
         {
-            var currentResult = new List<T>();
+            var table = new DataTable();
             var queryData = Context.UserQueries.FirstOrDefault(x=>x.Id == queryId && x.UserId == userId);
             using (var command = Context.Database.GetDbConnection().CreateCommand())
             {
                 command.CommandText = queryData.QueryData;
                 Context.Database.OpenConnection();
-                var t = new T();
+                 // Use the NewRow method to create a DataRow with
+              
                 using (var result = command.ExecuteReader())
                 {
                     if(result.HasRows)
                     {
-                        for(var i = 0; i < result.FieldCount; i++)
+                        while(result.Read())
                         {
-                            Type type = t.GetType();
-                            PropertyInfo prop = type.GetProperty(result.GetName(i));
-                            prop.SetValue(t, Convert.ChangeType(result.GetValue(i), prop.PropertyType), null);
-                            currentResult.Add(t);
+                            var row = table.NewRow();
+                            for(var i = 0; i < result.FieldCount; i++)
+                            {
+                                var column = result.GetName(i);
+                                var value = result.GetValue(i);
+                                // Set values in the columns:
+                                if(!table.Columns.Contains(column))
+                                    table.Columns.Add(new DataColumn{
+                                        ColumnName = column
+                                    });
+                                row[column] = value;
+                            }
+                            table.Rows.Add(row);
                         }
                     }
                 }
             }
-            return currentResult;
+            return table;
         }
         
 

@@ -3,20 +3,13 @@
 }
 
 <div class="row">
-    <div class="col-md-2">
         <div class="control-section">
-            <div class="content-wrapper">
-                <div id="ControlListGrid" style="width: auto;height: 87vh;overflow-y: scroll;">
-                </div>
+        <div class="content-wrapper">
+            <div id="ControlListGrid" style="width: auto;height: 87vh;overflow-y: scroll;">
             </div>
         </div>
-    </div>
-    <div class="col-md-8" id="BindingControl" style="height: 87vh;overflow-y: scroll;">
-
-    </div>
-    <div class="col-md-2" id="DataBinder" style="height: 87vh;overflow-y: scroll; padding: 0; overflow-x: hidden;">
-        
-    </div>
+     </div>
+   
 </div>
 
 
@@ -54,9 +47,6 @@
 
     function ControlSelected(args)
     {
-        console.log(args);
-        Control = args.data.controlName;
-        @* $("#BindingControl").load("/Widget/LoadWidget?phase="+Control); *@
-        $("#DataBinder").load("/Widget/GetBindingOptions?projectId=@ProjectId&&phase="+Control);
+      
     }
 </script>

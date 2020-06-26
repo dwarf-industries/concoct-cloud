@@ -67,67 +67,121 @@
         {
             return  new List<OutgoingBindingControl>{
                 new OutgoingBindingControl{
-                    ControlName = "Map"
+                    ControlName = "Assigned To Me",
+                    Description = "Allows team members to quickly view and manage work assigned to them."
                 },
                 new OutgoingBindingControl{
-                    ControlName = "Grid"
+                    ControlName = "Build History",
+                    Description = "Allows team members to quickly view and manage work assigned to them."
                 },
                 new OutgoingBindingControl{
-                    ControlName = "Commit Board"
+                    ControlName = "Burndown",
+                    Description = "Displays burndown across multiple teams and multiple sprints. Create a release burndown or bug burndown."
                 },
                 new OutgoingBindingControl{
-                    ControlName = "Map Heat"
+                    ControlName = "Burnup",
+                    Description = "Displays burnup across multiple teams and multiple sprints. Create a release burnup or bug burnup."
                 },
                 new OutgoingBindingControl{
-                    ControlName = "Project Members"
+                    ControlName = "Chart for Test Plans",
+                    Description = "Create charts for test case authoring and test case execution status for test plans and test suites"
                 },
                 new OutgoingBindingControl{
-                    ControlName = "Big Data Map"
+                    ControlName = "Chart For Work Items",
+                    Description = "Visualize work items like bugs, user stories, and features using shared work item queries."
                 },
                 new OutgoingBindingControl{
-                    ControlName = "Bubble Chart"
+                    ControlName = "Tile",
+                    Description = "Displays the number of recent changes in a code repository."
                 },
                 new OutgoingBindingControl{
-                    ControlName = "Intensity Chart"
+                    ControlName = "Cumulative Flow Diagram (CFD)",
+                    Description = "Visualize the flow of work and identify bottlenecks in the software development process."
                 },
                 new OutgoingBindingControl{
-                    ControlName = "Basic Line Chart"
+                    ControlName = "Cycle Time",
+                    Description = "Visualize and analyze your team's cycle time using a control chart."
                 },
                 new OutgoingBindingControl{
-                    ControlName = "Spline"
+                    ControlName = "Deployment status",
+                    Description = "Shows the deployment and test status of a branch across the stages in your release pipelines."
                 },
                 new OutgoingBindingControl{
-                    ControlName = "100% Stacked Line"
+                    ControlName = "Embedded Webpage",
+                    Description = "Embed an external webpage on your dashboard within an iframe."
                 },
                 new OutgoingBindingControl{
-                    ControlName = "Area"
+                    ControlName = "Lead Time",
+                    Description = "Visualize and analyze your team's lead time using a control chart."
                 },
                      new OutgoingBindingControl{
-                    ControlName = "Spline Area"
+                    ControlName = "Markdown",
+                    Description = "Enables custom text, links, images, and more using Markdown syntax."
                 },
                      new OutgoingBindingControl{
-                    ControlName = "Bar Column"
+                    ControlName = "New Work Item",
+                    Description = "Enables quick creation of new work items directly from the dashboard."
                 },
                      new OutgoingBindingControl{
-                    ControlName = "Rounded Column"
-                },
-                     new OutgoingBindingControl{
-                    ControlName = "Pie with Legend"
-                },
-                     new OutgoingBindingControl{
-                    ControlName = "Pyramid"
-                },
-                     new OutgoingBindingControl{
-                    ControlName = "Category Axis"
-                },
-                     new OutgoingBindingControl{
-                    ControlName = "Logarithmic Scale"
+                    ControlName = "Other Links",
+                    Description = "Adds a quick link to Feedback Client. Admins can configure iterations and work areas."
                 },
                 new OutgoingBindingControl{
-                    ControlName = "Network Diagram"
+                    ControlName = "Pull Requests",
+                    Description = "Check on the status of your pull requests."
                 },
                 new OutgoingBindingControl{
-                    ControlName = "UML Diagram"
+                    ControlName = "Query Results",
+                    Description = "Displays the result from a query"
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Query Tile",
+                    Description = "Displays the total number of results for a query."
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Release Pipeline Overview",
+                    Description = "Shows the status of stages in a release pipeline."
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Requirements quality",
+                    Description = "Shows the quality of requirement(s) associated to automated tests."
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Sprint Burndown",
+                    Description = "Displays a burndown chart for the work of a team in a single iteration."
+                },
+
+                new OutgoingBindingControl{
+                    ControlName = "Sprint Capacity",
+                    Description = "Displays a visual overview of the current sprint capacity and highlights if the team is under or over capacity."
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Team Members",
+                    Description = "Displays the number of team members and enables quick add and remove of team members from the dashboard."
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Test Results Trend",
+                    Description = "Displays the trend of test results for a build or release pipeline with metrics such as pass rate, test duration and count."
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Test Results Trend (Advanced)",
+                    Description = "Displays the trend of test results for build or release pipelines with metrics such as pass rate, test duration and count."
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Velocity",
+                    Description = "Displays your team velocity. Shows what your team delivered as compared to plan."
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Welcome",
+                    Description = "Provides quick links to different parts of the product and reference documentation."
+                },
+                new OutgoingBindingControl{
+                    ControlName = "Work Links",
+                    Description = "Adds quick shortcuts to different parts of the product to manage your work."
+                },
+                new OutgoingBindingControl{
+                    ControlName = "XAML Build History",
+                    Description = "Shows the build history of a selected build pipeline."
                 },
             };
         }

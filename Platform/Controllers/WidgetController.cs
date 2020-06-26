@@ -1,5 +1,6 @@
 namespace Platform.Controllers {
     using System.Collections.Generic;
+    using System.Data;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
@@ -36,10 +37,22 @@ namespace Platform.Controllers {
         }
         [HttpGet]
 
-        public IActionResult LoadWidget(string phase) 
+        public IActionResult LoadWidget(string phase, int queryId, int projectId) 
         {
             return ViewComponent(GetControlName(phase), new IncomingIdRequest{
-                 Phase = phase
+                 Phase = phase,
+                 UserId = queryId,
+                 ProjectId = projectId
+            });
+        }
+
+        [HttpGet]
+        public IActionResult LoadQueryBinder(int projectId, string control, string field ) 
+        {
+            return ViewComponent("QueryBuilder", new IncomingIdRequest{
+                __RequestVerificationToken  = control,
+                Phase = field,
+                ProjectId = projectId
             });
         }
         private string GetControlName(string control)
@@ -47,11 +60,11 @@ namespace Platform.Controllers {
             var result = string.Empty;
             switch(control)
             {
-                case "Map":
-                    result = "MapLabels";
+                case "AssignedToMe":
+                    result = "AssignedToMe";
                 break;
-                case "Grid":
-                    result = "GridControl";
+                case "BuildHistory":
+                    result = "BuildHistory";
                 break;
             }
             return result;
@@ -69,12 +82,12 @@ namespace Platform.Controllers {
         }
 
         [HttpPost]
-        public List<object> GetQueryDataById([FromBody] IncomingIdRequest request)
+        public DataTable GetQueryDataById([FromBody] IncomingIdRequest request)
         {
-            var result = new List<object>();
+            var result = new DataTable();
             using(var context = new DatabaseController(Context,Configuration))
             {
-                result = context.GetUserQueryData<object>(UserId,request.Id);
+                result = context.GetUserQueryData(UserId,request.Id);
             }
             return result;
         }

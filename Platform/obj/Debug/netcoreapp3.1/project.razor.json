@@ -19584,80 +19584,6 @@
       },
       {
         "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__DataBinderViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "Documentation": null,
-        "TagOutputHint": null,
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:data-binder",
-            "ParentTag": null,
-            "TagStructure": 0,
-            "Attributes": [
-              {
-                "Name": "project-id",
-                "NameComparison": 0,
-                "Value": null,
-                "ValueComparison": 0,
-                "Diagnostics": [],
-                "Metadata": {}
-              }
-            ],
-            "Diagnostics": []
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "project-id",
-            "TypeName": "System.Int32",
-            "IsEnum": false,
-            "IndexerNamePrefix": null,
-            "IndexerTypeName": null,
-            "Documentation": null,
-            "Diagnostics": [],
-            "Metadata": {
-              "Common.PropertyName": "projectId"
-            },
-            "BoundAttributeParameters": []
-          }
-        ],
-        "AllowedChildTags": [],
-        "Diagnostics": [],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__DataBinderViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "DataBinder"
-        }
-      },
-      {
-        "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__MapLabelsViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "Documentation": null,
-        "TagOutputHint": null,
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:map-labels",
-            "ParentTag": null,
-            "TagStructure": 0,
-            "Attributes": [],
-            "Diagnostics": []
-          }
-        ],
-        "BoundAttributes": [],
-        "AllowedChildTags": [],
-        "Diagnostics": [],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__MapLabelsViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "MapLabels"
-        }
-      },
-      {
-        "Kind": "MVC.ViewComponent",
         "Name": "__Generated__WidgetBuilderViewComponentTagHelper",
         "AssemblyName": "Rokono Control",
         "Documentation": null,
@@ -22419,11 +22345,6 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Widgets/DataBinder/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\Widgets\\DataBinder\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/LoadedProjects/Default.cshtml",
       "TargetPath": "Views\\Shared\\Components\\LoadedProjects\\Default.cshtml",
       "FileKind": "mvc"
@@ -22481,11 +22402,6 @@
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/ChatComponents/ChatRoomSetting/Default.cshtml",
       "TargetPath": "Views\\Shared\\Components\\ChatComponents\\ChatRoomSetting\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Widgets/GridControl/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\Widgets\\GridControl\\Default.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -22731,11 +22647,6 @@
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/OutboundDetailsSettings/BugReportFormSettings/Default.cshtml",
       "TargetPath": "Views\\Shared\\Components\\OutboundDetailsSettings\\BugReportFormSettings\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Widgets/MapLabels/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\Widgets\\MapLabels\\Default.cshtml",
       "FileKind": "mvc"
     },
     {
