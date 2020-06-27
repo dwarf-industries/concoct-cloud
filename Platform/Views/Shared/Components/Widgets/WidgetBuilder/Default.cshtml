@@ -2,6 +2,88 @@
     var ProjectId = ViewData["ProjectId"] as int?;
 }
 
+<style>
+    .TopGridContainer{
+        color: inherit;
+        display: table-row;
+        outline: none;
+        text-decoration: none;
+        transition: background 80ms linear;
+    }
+  
+
+    .bolt-list-cell:last-child {
+        border-right: 1px solid transparent;
+    }
+    .bolt-list-cell:first-child {
+        border-left: 1px solid transparent;
+    }
+    .bolt-list-cell {
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+        color: inherit;
+        display: table-cell;
+        overflow: hidden;
+        padding: 0;
+        position: relative;
+        text-align: left;
+        text-decoration: none;
+         
+    }
+
+    .bolt-list-cell {
+        color: inherit;
+        text-align: left;
+     }
+    .dashboards-widget-inline-catalog .widget-catalog-entry{
+        min-height: 120px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .flex-row {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .dashboards-widget-inline-catalog .widget-catalog-entry .widget-catalog-image{
+        border: 1px solid;
+        border-top-color: currentcolor;
+        border-right-color: currentcolor;
+        border-bottom-color: currentcolor;
+        border-left-color: currentcolor;
+        border-color: rgba(218,218,218,1);
+        border-color: rgba(var(--palette-neutral-10,218, 218, 218),1);
+    }
+    .bolt-list-cell {
+        color: inherit;
+        text-align: left;
+     }
+  .bolt-list.bolt-list {
+    border-collapse: separate;
+}
+
+.dashboards-widget-inline-catalog .widget-catalog-entry .widget-details .widget-description{
+    word-wrap: break-word;
+    white-space: normal;
+    overflow: hidden;
+}
+
+.dashboards-widget-inline-catalog .widget-catalog-entry .widget-details .widget-description{
+    width: 56px;
+}
+.widget-details{
+    width: 46vh;
+}
+
+#ControlListGrid .e-columnheader{
+    display: none;
+}
+ 
+</style>
+
 <div class="row">
         <div class="control-section">
         <div class="content-wrapper">
@@ -11,7 +93,28 @@
      </div>
    
 </div>
-
+<script id="widgetsTemplate" type="text/x-template">
+  <tr   class="widget-row bolt-list-row first-row">
+      <td class="bolt-list-cell" data-column-index="0">
+          <div class="bolt-list-cell-content flex-row">
+              <div draggable="true">
+                  <div class="widget-catalog-entry flex flex-noshrink flex-column">
+                      <div class="flex-row">
+                          <div class="widget-catalog-image bolt-image-wrapper" style="width: 100px; height: 100px;">
+                            <img alt="" class="bolt-image flex-noshrink contain" src="https://kristifor.visualstudio.com/_static/Widgets/CatalogIcons/assignedToMe.png"></div>
+                            <div class="widget-details">
+                                <div class="widget-name-container">
+                                    <div class="widget-name fontSizeL text-ellipsis">${controlName} </div>
+                                </div>
+                            <div class="widget-description fontSizeM text-ellipsis"> <p style="word-wrap:break-word;" >${description}</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+  </tr>
+</script>
 
 <script>
 
@@ -36,10 +139,12 @@
     {
         var ControlListGrid = new ej.grids.Grid({
             dataSource: data,
+            rowTemplate: '#widgetsTemplate',
             rowSelected : ControlSelected,
             columns: [
                 { field: 'controlName', headerText: 'Control Name', width: 120, textAlign: 'Right' },
-               
+                { field: 'description', headerText: 'Description', width: 120, textAlign: 'Right' },
+ 
             ]
         });
         ControlListGrid.appendTo('#ControlListGrid');
@@ -47,6 +152,7 @@
 
     function ControlSelected(args)
     {
-      
+        console.log(args);
+        AddNewDashboardPanel(1);
     }
 </script>

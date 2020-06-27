@@ -22430,6 +22430,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Widgets/AssignedItems/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Widgets\\AssignedItems\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Notes/Default.cshtml",
       "TargetPath": "Views\\Shared\\Components\\Notes\\Default.cshtml",
       "FileKind": "mvc"
