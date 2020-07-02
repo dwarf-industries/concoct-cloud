@@ -19596,7 +19596,7 @@
             "TagStructure": 0,
             "Attributes": [
               {
-                "Name": "project-id",
+                "Name": "request",
                 "NameComparison": 0,
                 "Value": null,
                 "ValueComparison": 0,
@@ -19610,15 +19610,15 @@
         "BoundAttributes": [
           {
             "Kind": "MVC.ViewComponent",
-            "Name": "project-id",
-            "TypeName": "System.Int32",
+            "Name": "request",
+            "TypeName": "Rokono_Control.Models.IncomingIdRequest",
             "IsEnum": false,
             "IndexerNamePrefix": null,
             "IndexerTypeName": null,
             "Documentation": null,
             "Diagnostics": [],
             "Metadata": {
-              "Common.PropertyName": "projectId"
+              "Common.PropertyName": "request"
             },
             "BoundAttributeParameters": []
           }
@@ -19629,6 +19629,55 @@
           "Runtime.Name": "ITagHelper",
           "Common.TypeName": "__Generated__WidgetBuilderViewComponentTagHelper",
           "MVC.ViewComponent.Name": "WidgetBuilder"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__AssignedItemsViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:assigned-items",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "request",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "request",
+            "TypeName": "Rokono_Control.Models.IncomingIdRequest",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "request"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__AssignedItemsViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "AssignedItems"
         }
       },
       {

@@ -1,5 +1,6 @@
 @{
     var ProjectId = ViewData["ProjectId"] as int?;
+    var DashboardId = ViewData["DashboardId"] as int?;
 }
 
 <style>
@@ -81,6 +82,17 @@
 #ControlListGrid .e-columnheader{
     display: none;
 }
+
+.bolt-list-cell:hover{
+    background-color: rgb(248, 248, 248);
+}
+
+
+.bolt-list-cell:active{
+    background-color: #1c86c8;
+    color:white;
+}
+ 
  
 </style>
 
@@ -94,20 +106,18 @@
    
 </div>
 <script id="widgetsTemplate" type="text/x-template">
-  <tr   class="widget-row bolt-list-row first-row">
-      <td class="bolt-list-cell" data-column-index="0">
+  <tr   class="widget-row bolt-list-row first-row" >
+      <td class="bolt-list-cell" data-column-index="0" onclick="ControlSelected(${id})">
           <div class="bolt-list-cell-content flex-row">
-              <div draggable="true">
-                  <div class="widget-catalog-entry flex flex-noshrink flex-column">
-                      <div class="flex-row">
-                          <div class="widget-catalog-image bolt-image-wrapper" style="width: 100px; height: 100px;">
-                            <img alt="" class="bolt-image flex-noshrink contain" src="https://kristifor.visualstudio.com/_static/Widgets/CatalogIcons/assignedToMe.png"></div>
-                            <div class="widget-details">
-                                <div class="widget-name-container">
-                                    <div class="widget-name fontSizeL text-ellipsis">${controlName} </div>
-                                </div>
-                            <div class="widget-description fontSizeM text-ellipsis"> <p style="word-wrap:break-word;" >${description}</p></div>
-                        </div>
+                <div class="widget-catalog-entry flex flex-noshrink flex-column">
+                    <div class="flex-row">
+                        <div class="widget-catalog-image bolt-image-wrapper" style="width: 100px; height: 100px;">
+                        <img alt="" class="bolt-image flex-noshrink contain" src="https://kristifor.visualstudio.com/_static/Widgets/CatalogIcons/assignedToMe.png"></div>
+                        <div class="widget-details">
+                            <div class="widget-name-container">
+                                <div class="widget-name fontSizeL text-ellipsis">${controlName} </div>
+                            </div>
+                        <div class="widget-description fontSizeM text-ellipsis"> <p style="word-wrap:break-word;" >${controlDescription}</p></div>
                     </div>
                 </div>
             </div>
@@ -123,12 +133,11 @@
     var Control;
     $.ajax({
         type: 'GET',
-        url: '/Accounts/GetWidgetComponents',
+        url: '/Accounts/GetWidgetComponents?projectId=@ProjectId',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         
         success: function (response) {
-            console.log(response);
             InitializeControlList(response);
         },
         error: function (xhr, status, error) {
@@ -140,7 +149,6 @@
         var ControlListGrid = new ej.grids.Grid({
             dataSource: data,
             rowTemplate: '#widgetsTemplate',
-            rowSelected : ControlSelected,
             columns: [
                 { field: 'controlName', headerText: 'Control Name', width: 120, textAlign: 'Right' },
                 { field: 'description', headerText: 'Description', width: 120, textAlign: 'Right' },
@@ -152,7 +160,26 @@
 
     function ControlSelected(args)
     {
-        console.log(args);
-        AddNewDashboardPanel(1);
+
+        var dto = {
+            "ProjectId": @ProjectId,
+            "Id": @DashboardId,
+            "WorkItemType" : args
+        }
+        console.log(dto);
+        $.ajax({
+            type: 'POST',
+            url: '/Widget/AppendWidget',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                AddNewDashboardPanel(response.associatedUserDashboardPremade[0].id, response.id);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
     }
 </script>

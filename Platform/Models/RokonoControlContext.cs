@@ -40,6 +40,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedUserChatNotifications> AssociatedUserChatNotifications { get; set; }
         public virtual DbSet<AssociatedUserChatRights> AssociatedUserChatRights { get; set; }
         public virtual DbSet<AssociatedUserDashboardItemComponent> AssociatedUserDashboardItemComponent { get; set; }
+        public virtual DbSet<AssociatedUserDashboardPremade> AssociatedUserDashboardPremade { get; set; }
         public virtual DbSet<AssociatedUserNotifications> AssociatedUserNotifications { get; set; }
         public virtual DbSet<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
         public virtual DbSet<AssociatedWorkItemFiles> AssociatedWorkItemFiles { get; set; }
@@ -63,12 +64,15 @@ namespace Rokono_Control.Models
         public virtual DbSet<NotificationRights> NotificationRights { get; set; }
         public virtual DbSet<NotificationTypes> NotificationTypes { get; set; }
         public virtual DbSet<Notifications> Notifications { get; set; }
+        public virtual DbSet<PremadeWidgets> PremadeWidgets { get; set; }
         public virtual DbSet<Projects> Projects { get; set; }
         public virtual DbSet<PublicMessage> PublicMessage { get; set; }
         public virtual DbSet<PublicMessages> PublicMessages { get; set; }
         public virtual DbSet<Repository> Repository { get; set; }
         public virtual DbSet<Risks> Risks { get; set; }
         public virtual DbSet<SystemFiles> SystemFiles { get; set; }
+        public virtual DbSet<TeamDashboards> TeamDashboards { get; set; }
+        public virtual DbSet<Teams> Teams { get; set; }
         public virtual DbSet<UserAccounts> UserAccounts { get; set; }
         public virtual DbSet<UserDashboardItem> UserDashboardItem { get; set; }
         public virtual DbSet<UserDashboardItemComponent> UserDashboardItemComponent { get; set; }
@@ -90,14 +94,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=192.168.0.100;Database=RokonoControl;User ID=Kristifor;Password=';;y=yDXkd1';");
-            }
-        }
+     
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -494,6 +491,19 @@ namespace Rokono_Control.Models
                     .HasConstraintName("FK__Associate__ItemC__37C5420D");
             });
 
+            modelBuilder.Entity<AssociatedUserDashboardPremade>(entity =>
+            {
+                entity.HasOne(d => d.PremadeWidget)
+                    .WithMany(p => p.AssociatedUserDashboardPremade)
+                    .HasForeignKey(d => d.PremadeWidgetId)
+                    .HasConstraintName("FK__Associate__Prema__68687968");
+
+                entity.HasOne(d => d.UserDashboardNavigation)
+                    .WithMany(p => p.AssociatedUserDashboardPremade)
+                    .HasForeignKey(d => d.UserDashboard)
+                    .HasConstraintName("FK__Associate__UserD__6774552F");
+            });
+
             modelBuilder.Entity<AssociatedUserNotifications>(entity =>
             {
                 entity.HasOne(d => d.Notification)
@@ -743,6 +753,15 @@ namespace Rokono_Control.Models
                     .HasConstraintName("FK__Notificat__Notif__1975C517");
             });
 
+            modelBuilder.Entity<PremadeWidgets>(entity =>
+            {
+                entity.Property(e => e.ControlDescription).HasMaxLength(500);
+
+                entity.Property(e => e.ControlName).HasMaxLength(200);
+
+                entity.Property(e => e.ViewComponentName).HasMaxLength(200);
+            });
+
             modelBuilder.Entity<Projects>(entity =>
             {
                 entity.Property(e => e.CreationDate).HasColumnType("datetime");
@@ -800,6 +819,21 @@ namespace Rokono_Control.Models
                     .HasConstraintName("FK__SystemFil__FileT__45544755");
             });
 
+            modelBuilder.Entity<TeamDashboards>(entity =>
+            {
+                entity.Property(e => e.DateOfCreation).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Team)
+                    .WithMany(p => p.TeamDashboards)
+                    .HasForeignKey(d => d.TeamId)
+                    .HasConstraintName("FK__TeamDashb__TeamI__61BB7BD9");
+            });
+
+            modelBuilder.Entity<Teams>(entity =>
+            {
+                entity.Property(e => e.DateOfCreation).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<UserAccounts>(entity =>
             {
                 entity.Property(e => e.CreationDate).HasColumnType("datetime");
@@ -836,6 +870,11 @@ namespace Rokono_Control.Models
                     .WithMany(p => p.UserDashboards)
                     .HasForeignKey(d => d.ProjectId)
                     .HasConstraintName("FK__UserDashb__Proje__34E8D562");
+
+                entity.HasOne(d => d.TeamDashboardNavigation)
+                    .WithMany(p => p.UserDashboards)
+                    .HasForeignKey(d => d.TeamDashboard)
+                    .HasConstraintName("FK__UserDashb__TeamD__62AFA012");
             });
 
             modelBuilder.Entity<UserNotes>(entity =>

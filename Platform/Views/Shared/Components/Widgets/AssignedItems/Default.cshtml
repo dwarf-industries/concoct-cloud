@@ -1,0 +1,136 @@
+@{
+    var ProjectId = ViewData["ProjectId"] as int?;
+    
+}
+
+<style>
+    #main-text{
+        height: 90vh;
+    }
+    .fa-bug:before{
+        font-family: "e-icons" !important;
+        content: '\e191';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .fa-cog:before{
+        font-family: "e-icons" !important;
+        content: '\e679';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .fa-tasks:before{
+        font-family: "e-icons" !important;
+        content: '\e728';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .fa-vial:before{
+        font-family: "e-icons" !important;
+        content: '\e664';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .fa-crown:before{
+        font-family: "e-icons" !important;
+        content: '\e824';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .fa-exclamation-triangle:before{
+        font-family: "e-icons" !important;
+        content: '\e74c';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    }
+    .fa-user-circle:before{
+        font-family: "e-icons" !important;
+        content: '\e193';
+        color: #1f818c;
+        width: 30px;
+        height: 30px;
+    } 
+    #AssignedGridHolder .content-wrapper{
+        
+        height: 100%;
+        position: absolute;
+   
+    }
+</style>
+<div class="row" id="AssignedGridHolder">
+   <div class="control-section" style="height:100%;">
+        <div class="content-wrapper">
+            <div id="AssignedGrid"></div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+        var dto = {
+            "ProjectId": @ProjectId,
+            "Phase" : "!"
+        }
+        console.log(dto);
+        $.ajax({
+            type: 'POST',
+            url: '/Backlogs/GetUserWorkItems',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                InitializeAssignedGrid(response);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    function InitializeAssignedGrid(data )
+    {
+        console.log(data);
+
+
+        var AssignedGrid = new ej.treegrid.TreeGrid({
+            dataSource: data,
+            allowSelection: true,
+            allowFiltering: true,
+            allowSorting: true,
+            toolbar: ['Search'],
+            recordDoubleClick: EditWorkItem,
+            enableVirtualization: true,
+            filterSettings: { type: 'Menu' },
+            queryCellInfo: customiseCell,
+            enableHover: false,
+            height:'100%',
+            columns: [
+                { field: 'workItemType.TypeName', headerText: 'Type', width: '10',customAttributes: {class: "workItemIcon"}, textAlign: 'center' },
+                { field: 'title', headerText: 'Title', width: 125 },
+                { field: 'description', headerText: 'Description' },
+            ]
+        });
+
+        AssignedGrid.appendTo('#AssignedGrid');
+        ShowContent();
+
+
+    }
+    function EditWorkItem(args)
+    {
+        console.log(args);
+        window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.rowData.id+"&returnUrl="+window.location.href;
+    }
+
+    function customiseCell(args) {
+        if (args.column.headerText === 'Type' ){
+            args.cell.setAttribute('class', args.data.workItemIcon);
+        } 
+    }
+    
+</script>

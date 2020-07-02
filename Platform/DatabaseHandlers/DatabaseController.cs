@@ -1,27 +1,16 @@
 namespace Rokono_Control.DatabaseHandlers
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Data;
     using System.IO;
     using System.Linq;
-    using System.Reflection;
-    using System.Security.Cryptography;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
-    using Platform.DataHandlers;
-    using Platform.Hubs;
     using Platform.Models;
     using Rokono_Control.DataHandlers;
     using Rokono_Control.Models;
-    using RokonoControl.DatabaseHandlers.WorkItemHandlers;
     using RokonoControl.Models;
 
     public class DatabaseController : IDisposable
@@ -34,7 +23,7 @@ namespace Rokono_Control.DatabaseHandlers
                 this.InternalId = internalId;
                
         }
-                private int I { get; set; }
+        private int I { get; set; }
         private int InternalId { get; set; }
         public DatabaseController(RokonoControlContext context, IConfiguration config)
         {
@@ -74,6 +63,8 @@ namespace Rokono_Control.DatabaseHandlers
             return tableNames;
         }
 
+        internal string GetPremadeName(int id) => Context.PremadeWidgets.FirstOrDefault(x => x.Id == id).ViewComponentName;
+
         internal List<BindingQueryProperty> GetTableProperties(string phase)
         {
             var found = default(bool);
@@ -100,6 +91,36 @@ namespace Rokono_Control.DatabaseHandlers
                 }
             }
             return result;
+        }
+
+        internal List<PremadeWidgets> GetPremadeWidgets()
+        {
+            return Context.PremadeWidgets.ToList();
+        }
+
+        internal void UpdateWidgetResized(IncomingIdRequest request)
+        {
+            var associationVal = int.Parse(request.__RequestVerificationToken.Replace("layout_",""));
+            var values = request.Phase.Split(",");
+            var association = Context.AssociatedUserDashboardPremade.FirstOrDefault(x=>x.Id == associationVal);
+            association.DataCol = int.Parse(values[0]);
+            association.DataRow = int.Parse(values[1]);
+            association.DataSizeX = int.Parse(values[2]);
+            association.DataSizeY = int.Parse(values[3]);
+            Context.Attach(association);
+            Context.Update(association);
+            Context.SaveChanges();
+        }
+
+        internal PremadeWidgets SaveWidgetToBoard(IncomingIdRequest request)
+        {
+            Context.AssociatedUserDashboardPremade.Add(new AssociatedUserDashboardPremade{
+                UserDashboard = request.Id,
+                PremadeWidgetId  = request.WorkItemType,
+
+            });
+            Context.SaveChanges();
+            return Context.PremadeWidgets.FirstOrDefault(x=>x.Id == request.WorkItemType);
         }
 
         internal int AddUserQuery(IncomingWidgetCreatorRequest request, int userId)

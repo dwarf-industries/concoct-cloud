@@ -31,6 +31,7 @@ namespace Rokono_Control.Models
         public int? ProjectRights { get; set; }
         public string GitUsername { get; set; }
         public string Salt { get; set; }
+        public int? TeamId { get; set; }
 
         public virtual ICollection<AssociatedAccountNotes> AssociatedAccountNotes { get; set; }
         public virtual ICollection<AssociatedAccountProjectNotificationRights> AssociatedAccountProjectNotificationRights { get; set; }

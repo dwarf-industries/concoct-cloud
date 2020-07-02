@@ -35,6 +35,7 @@ namespace Platform.ViewComponents
             {
                 ViewData["Name"] = context.GetUsername(UserId);
                 ViewData["Projects"] = context.GetUserProjects(UserId);
+                ViewData["DefaultDashboard"] = context.GetUserDefaultDashboard(UserId, projectId);
             }
             return View();
         }

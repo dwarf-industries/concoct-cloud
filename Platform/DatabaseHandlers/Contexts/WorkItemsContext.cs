@@ -72,6 +72,31 @@ namespace Platform.DatabaseHandlers.Contexts
              return items;
         }
 
+
+        internal List<AssociatedBoardWorkItems> GetUserWorkItems(int id, int userId)
+        {
+            var items = new List<AssociatedBoardWorkItems>();
+      
+            items = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem)
+                                    .ThenInclude(WorkItem => WorkItem.WorkItemType)
+                                    .Include(x => x.WorkItem)
+                                    .ThenInclude(WorkItem => WorkItem.State)
+                                    .Include(x => x.WorkItem)
+                                    .ThenInclude(WorkItem => WorkItem.AssignedAccountNavigation)
+                                    .Include(x => x.WorkItem)
+                                    .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItem)
+                                    .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.WorkItemChild)
+                                    .Include(x => x.WorkItem)
+                                    .ThenInclude(WorkItem => WorkItem.AssociatedWrorkItemChildrenWorkItem)
+                                    .ThenInclude(AssociatedWrorkItemChildrenWorkItem => AssociatedWrorkItemChildrenWorkItem.RelationTypeNavigation)
+                                    .Where(x => x.ProjectId == id && x.WorkItem.AssignedAccount == userId)
+                                    .ToList();
+          
+            
+            return items;
+        }
+
+
         internal List<AssociatedBoardWorkItems> GetPublicBugReports(int id)
         {
             var  items = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem)

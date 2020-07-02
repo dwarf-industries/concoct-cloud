@@ -7,6 +7,7 @@ namespace Rokono_Control.Models
     {
         public UserDashboards()
         {
+            AssociatedUserDashboardPremade = new HashSet<AssociatedUserDashboardPremade>();
             UserDashboardItem = new HashSet<UserDashboardItem>();
         }
 
@@ -15,8 +16,11 @@ namespace Rokono_Control.Models
         public int? UserId { get; set; }
         public DateTime? DateOfDashboard { get; set; }
         public int? ProjectId { get; set; }
+        public int? TeamDashboard { get; set; }
 
         public virtual Projects Project { get; set; }
+        public virtual TeamDashboards TeamDashboardNavigation { get; set; }
+        public virtual ICollection<AssociatedUserDashboardPremade> AssociatedUserDashboardPremade { get; set; }
         public virtual ICollection<UserDashboardItem> UserDashboardItem { get; set; }
     }
 }

@@ -2,6 +2,9 @@
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
     var UserDashboard  =  ViewData["SavedWidgets"] as UserDashboards;
     var ProjectId = ViewData["ProjectId"] as int?;
+    var DashboardId = ViewData["DashboardId"] as int?; 
+    var PremadeDashboardWidgets =  ViewData["PremadeWidgets"] as  List<AssociatedUserDashboardPremade> ;
+
 }
 
 <link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
@@ -47,6 +50,22 @@
                         </div>
                     </div>   
                 }
+            }
+        }
+        @if(PremadeDashboardWidgets != null)
+        {
+            @foreach (var widgetAssociation in @PremadeDashboardWidgets)
+            {
+                 <div id="layout_@widgetAssociation.Id" class="e-panel" data-row="@widgetAssociation.DataRow" data-col="@widgetAssociation.DataCol" data-sizeX="@widgetAssociation.DataSizeX" data-sizeY="@widgetAssociation.DataSizeY">
+                    <span id="close" class="e-template-icon e-clear-icon"></span>
+                    <div class="e-panel-container">
+                        @await Component.InvokeAsync(@widgetAssociation.PremadeWidget.ViewComponentName, new IncomingIdRequest{
+                            ProjectId = @ProjectId.Value,
+                            Id = @DashboardId.Value,
+                            Phase= "123"
+                        })
+                    </div>
+                </div>   
             }
         }
   
@@ -155,21 +174,25 @@ $("#Rowbtns").hide();
         cellSpacing: [10, 10],
         columns: 5,
         allowResizing: true,
+        change: DashboardChanged,
+        resize: DashboardResized,
+
     });
 dashboard.appendTo('#defaultLayout');
 var dashboardObject = document.getElementById('defaultLayout').ej2_instances[0];
 var count = 8;
 
-function AddNewDashboardPanel(generatedId)
+function AddNewDashboardPanel(generatedId, Id)
 {
     var panel = [{
-        'id': count.toString() + '_layout', 'sizeX': 1, 'sizeY': 1, 'row': 0, 'col': 0,
-        content: '<span id="close" class="e-template-icon e-clear-icon"></span><div class="text-align">' + count.toString() + '</div>'
+        'id':'layout_'+generatedId , 'sizeX': 1, 'sizeY': 1, 'row': 0, 'col': 0,
+        content: '<span id="close" class="e-template-icon e-clear-icon"></span><div class="text-align">' + generatedId + '</div>'
     }];
     dashboardObject.addPanel(panel[0]);
-    var closeIcon = document.getElementById(count.toString() + '_layout').querySelector('.e-clear-icon');
+    @* var closeIcon = document.getElementById(generatedId + '_layout').querySelector('.e-clear-icon');
     closeIcon.addEventListener('click', onCloseIconHandler);
-    count = count + 1;
+     count = count + 1; *@
+    $('#layout_'+generatedId+'_body' ).load("/Widget/LoadWidget?id="+Id+"&&queryId=0&&projectId=@ProjectId&&height="+$("#"+ generatedId + "_layout").height());
 }
 
 function onCloseIconHandler(event) {
@@ -201,11 +224,102 @@ for (var i = 0; i < closeElement.length; i++) {
         $("#Rowbtn").show();
         dialogIterations.hide();
     }
-
+    
     function OpenWidgetModal()
     {
         dialogIterations.show();
-        $("#ModalContent").load("/Accounts/GetWidgets?projectId=@ProjectId");
+        $("#ModalContent").load("/Accounts/GetWidgets?projectId=@ProjectId&&Dashboard=@DashboardId");
     }
+    function DashboardResized(args)
+    {
+        var phase = "";
+        phase += args.element.attributes["data-col"].nodeValue+",";
+        phase += args.element.attributes["data-row"].nodeValue+",";
+        phase += args.element.attributes["data-sizex"].nodeValue+",";
+        phase += args.element.attributes["data-sizey"].nodeValue;
 
+
+        console.log(args);
+          var dto = {
+            "__RequestVerificationToken": args.element.attributes["id"].nodeValue,
+            "Phase" : phase
+        }
+        console.log(dto);
+        $.ajax({
+            type: 'POST',
+            url: '/Widget/WidgetResized',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                AddNewDashboardPanel(response.associatedUserDashboardPremade[0].id, response.id);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+    function DashboardChanged(args)
+    {
+        var phase = "";
+ 
+        args.changedPanels.forEach(x=>{
+            phase +=  x.properties.col+",";
+            phase += x.properties.row+",";
+            phase += x.properties.sizeX+",";
+            phase += x.properties.sizeY;
+
+            console.log(args);
+            var dto = {
+                "__RequestVerificationToken": x.id,
+                "Phase" : phase
+            }
+            console.log(dto);
+            $.ajax({
+                type: 'POST',
+                url: '/Widget/WidgetResized',
+                data: JSON.stringify(dto),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    AddNewDashboardPanel(response.associatedUserDashboardPremade[0].id, response.id);
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        })
+
+        args.addedPanels.forEach(x=>{
+            phase +=  x.properties.col+",";
+            phase += x.properties.row+",";
+            phase += x.properties.sizeX+",";
+            phase += x.properties.sizeY;
+
+            console.log(args);
+            var dto = {
+                "__RequestVerificationToken": x.id,
+                "Phase" : phase
+            }
+            console.log(dto);
+            $.ajax({
+                type: 'POST',
+                url: '/Widget/WidgetResized',
+                data: JSON.stringify(dto),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    AddNewDashboardPanel(response.associatedUserDashboardPremade[0].id, response.id);
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        })
+
+    
+    }
 </script>

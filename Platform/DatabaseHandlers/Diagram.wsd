@@ -58,6 +58,11 @@ class AssociatedProjectPublicMessages
     MessageId int |  | NO
     ProjectId int |  | NO
 }
+class Documentation
+{
+    Id int |  | NO
+    ProjectId int |  | YES
+}
 class Notifications
 {
     Id int |  | NO
@@ -65,6 +70,12 @@ class Notifications
     WorkItemRelationid int |  | YES
     DateOfMessage datetime |  | YES
     NotificationType int |  | YES
+}
+class DocumentationCategory
+{
+    Id int |  | NO
+    CategoryName nvarchar |  | YES
+    DocumentationId int |  | YES
 }
 class NotificationTypes
 {
@@ -77,6 +88,12 @@ class Risks
     Id int |  | NO
     RiskName nvarchar |  | YES
 }
+class DocumentationCategoryField
+{
+    Id int |  | NO
+    PageName nvarchar |  | YES
+    CategoryId int |  | YES
+}
 class AssociatedProjectNotifications
 {
     Id int |  | NO
@@ -84,6 +101,13 @@ class AssociatedProjectNotifications
     ProjectId int |  | NO
     NewNotification int |  | YES
     UserAccountId int |  | YES
+}
+class AssociatedDocumentationCategoryPage
+{
+    Id int |  | NO
+    Content nvarchar |  | YES
+    CategoryField int |  | YES
+    Title nvarchar |  | YES
 }
 class Efforts
 {
@@ -109,6 +133,14 @@ class AssociatedWrorkItemChildren
     WorkItemChildId int |  | YES
     RelationType int |  | YES
 }
+class AssociatedChatPersonalMessages
+{
+    Id int |  | NO
+    ProjectId int |  | YES
+    PublicMessageId int |  | YES
+    SenderId int |  | YES
+    ReciverId int |  | YES
+}
 class PublicMessages
 {
     Id int |  | NO
@@ -117,6 +149,25 @@ class PublicMessages
     DateOfMessage datetime |  | YES
     IsNew int |  | YES
     SenderId int |  | YES
+}
+class NotificationRights
+{
+    Id int |  | NO
+    PersonalMessageNEnabled int |  | YES
+    ChatChannelNEnabled int |  | YES
+    UpdateWorkItemNEnabled int |  | YES
+    CreateWorkItemNEnabled int |  | YES
+    PublicDiscussionMNEnabled int |  | YES
+    FeedbackNEnabled int |  | YES
+    BugReportNEnabled int |  | YES
+    ChanegelogNEnabled int |  | YES
+}
+class AssociatedAccountProjectNotificationRights
+{
+    Id int |  | NO
+    ProjectId int |  | YES
+    UserId int |  | YES
+    RightId int |  | YES
 }
 class AssociatedProjectPublicDiscussions
 {
@@ -139,6 +190,15 @@ class Branches
     DateOfCreation datetime |  | YES
     BranchName nvarchar |  | YES
 }
+class UserDashboards
+{
+    Id int |  | NO
+    DashboardName nvarchar |  | YES
+    UserId int |  | YES
+    DateOfDashboard datetime |  | YES
+    ProjectId int |  | YES
+    TeamDashboard int |  | YES
+}
 class SystemFiles
 {
     Id int |  | NO
@@ -153,6 +213,16 @@ class AssociatedBranchCommits
     CommitId int |  | NO
     BranchId int |  | NO
 }
+class UserDashboardItem
+{
+    Id int |  | NO
+    ItemName nvarchar |  | YES
+    DataRow int |  | YES
+    DataCol int |  | YES
+    DataSizeY int |  | YES
+    DataSizeX int |  | YES
+    UserDashboard int |  | YES
+}
 class AssociatedWorkItemFiles
 {
     Id int |  | NO
@@ -163,6 +233,20 @@ class WorkItemRealtionshipType
 {
     Id int |  | NO
     Name nvarchar |  | NO
+}
+class UserDashboardItemComponent
+{
+    Id int |  | NO
+    ComponentName nvarchar |  | YES
+    IsRow int |  | YES
+    ColumnNumber int |  | YES
+    ComponentInternalName nvarchar |  | YES
+}
+class AssociatedUserDashboardItemComponent
+{
+    Id int |  | NO
+    Item int |  | YES
+    ItemComponent int |  | YES
 }
 class AssociatedProjectFeedback
 {
@@ -182,6 +266,7 @@ class UserAccounts
     ProjectRights int |  | YES
     GitUsername nvarchar |  | YES
     Salt nvarchar |  | YES
+    TeamId int |  | YES
 }
 class AssociatedRepositoryBranches
 {
@@ -315,6 +400,7 @@ class AssociatedProjectIterations
     Id int |  | NO
     ProjectId int |  | NO
     IterationId int |  | NO
+    ActiveIteration int |  | YES
 }
 class AssociatedCommitFiles
 {
@@ -322,6 +408,14 @@ class AssociatedCommitFiles
     FileId int |  | YES
     CommitId int |  | YES
     DateOfCommit datetime |  | YES
+}
+class UserQueries
+{
+    Id int |  | NO
+    QueryName nvarchar |  | YES
+    UserId int |  | YES
+    QueryData nvarchar |  | YES
+    DateOfQuery datetime |  | YES
 }
 class Boards
 {
@@ -339,6 +433,7 @@ class UserRights
     ManageIterations smallint |  | NO
     ManageUserdays smallint |  | NO
     ViewOtherPeoplesWork smallint |  | NO
+    Documentation int |  | YES
 }
 class AssociatedBoardWorkItems
 {
@@ -367,28 +462,42 @@ class AssociatedProjectMembers
     ProjectId int |  | NO
     RepositoryId int |  | NO
 }
-class DocumentationCategory
-{
-    Id int |  | NO
-    CategoryName varchar |  | NO
-    ProjectId int |  | YES
-}
 class WorkItemStates
 {
     Id int |  | NO
     StateName nvarchar |  | YES
 }
-class DocumentationArea
-{
-    Id int |  | NO
-    AreaName varchar |  | NO
-    AreaContent nvarchar |  | YES
-    CategoryId int |  | YES
-}
 class WorkItemAreas
 {
     ID int |  | NO
     AreaName nvarchar |  | NO
+}
+class Teams
+{
+    Id int |  | NO
+    TeamName nvarchar |  | YES
+    ProjectId int |  | YES
+    DateOfCreation datetime |  | YES
+}
+class TeamDashboards
+{
+    Id int |  | NO
+    DashboardName nvarchar |  | YES
+    TeamId int |  | YES
+    DateOfCreation datetime |  | YES
+}
+class PremadeWidgets
+{
+    Id int |  | NO
+    ControlName nvarchar |  | YES
+    ViewComponentName nvarchar |  | YES
+    ControlDescription nvarchar |  | YES
+}
+class AssociatedUserDashboardPremade
+{
+    Id int |  | NO
+    UserDashboard int |  | YES
+    PremadeWidgetId int |  | YES
 }
 class Changelogs
 {
@@ -482,6 +591,9 @@ class WorkItemRelations
 AssociatedAccountNotes "1" *-- "many" UserNotes
 AssociatedAccountNotes "1" *-- "many" UserAccounts
 AssociatedAccountNotes "1" *-- "many" Projects
+AssociatedAccountProjectNotificationRights "1" *-- "many" Projects
+AssociatedAccountProjectNotificationRights "1" *-- "many" UserAccounts
+AssociatedAccountProjectNotificationRights "1" *-- "many" NotificationRights
 AssociatedBoardWorkItems "1" *-- "many" Boards
 AssociatedBoardWorkItems "1" *-- "many" WorkItem
 AssociatedBoardWorkItems "1" *-- "many" Projects
@@ -489,10 +601,15 @@ AssociatedBranchCommits "1" *-- "many" Commits
 AssociatedBranchCommits "1" *-- "many" Branches
 AssociatedChatChannelMessages "1" *-- "many" PublicMessages
 AssociatedChatChannelMessages "1" *-- "many" ChatChannels
+AssociatedChatPersonalMessages "1" *-- "many" Projects
+AssociatedChatPersonalMessages "1" *-- "many" PublicMessages
+AssociatedChatPersonalMessages "1" *-- "many" UserAccounts
+AssociatedChatPersonalMessages "1" *-- "many" UserAccounts
 AssociatedChatRoomRights "1" *-- "many" ChatRooms
 AssociatedChatRoomRights "1" *-- "many" ChatRoomRights
 AssociatedCommitFiles "1" *-- "many" Files
 AssociatedCommitFiles "1" *-- "many" Commits
+AssociatedDocumentationCategoryPage "1" *-- "many" DocumentationCategoryField
 AssociatedProjectApiKeys "1" *-- "many" Projects
 AssociatedProjectApiKeys "1" *-- "many" ApiKeys
 AssociatedProjectBoards "1" *-- "many" Boards
@@ -527,6 +644,10 @@ AssociatedUserChatNotifications "1" *-- "many" ChatChannels
 AssociatedUserChatRights "1" *-- "many" UserAccounts
 AssociatedUserChatRights "1" *-- "many" ChatRoomRights
 AssociatedUserChatRights "1" *-- "many" Projects
+AssociatedUserDashboardItemComponent "1" *-- "many" UserDashboardItem
+AssociatedUserDashboardItemComponent "1" *-- "many" UserDashboardItemComponent
+AssociatedUserDashboardPremade "1" *-- "many" UserDashboards
+AssociatedUserDashboardPremade "1" *-- "many" PremadeWidgets
 AssociatedUserNotifications "1" *-- "many" Notifications
 AssociatedUserNotifications "1" *-- "many" UserAccounts
 AssociatedWorkItemChangelogs "1" *-- "many" Changelogs
@@ -544,11 +665,17 @@ ChatChannels "1" *-- "many" ChatChannelTypes
 ChatChannels "1" *-- "many" ChatRooms
 ChatRoomRights "1" *-- "many" Projects
 ChatRooms "1" *-- "many" Projects
-DocumentationArea "1" *-- "many" DocumentationCategory
-DocumentationCategory "1" *-- "many" Projects
+Documentation "1" *-- "many" Projects
+DocumentationCategory "1" *-- "many" Documentation
+DocumentationCategoryField "1" *-- "many" DocumentationCategory
 Notifications "1" *-- "many" NotificationTypes
 Projects "1" *-- "many" Repository
 SystemFiles "1" *-- "many" FileTypes
+TeamDashboards "1" *-- "many" Teams
+UserDashboardItem "1" *-- "many" UserDashboards
+UserDashboards "1" *-- "many" Projects
+UserDashboards "1" *-- "many" TeamDashboards
+UserQueries "1" *-- "many" UserAccounts
 WorkItem "1" *-- "many" WorkItemTypes
 WorkItem "1" *-- "many" UserAccounts
 WorkItem "1" *-- "many" WorkItemStates

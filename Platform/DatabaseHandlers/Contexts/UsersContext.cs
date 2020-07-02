@@ -57,6 +57,26 @@ namespace Platform.DatabaseHandlers.Contexts
             return result;
         }
 
+        internal int GetUserDefaultDashboard(int userId, int projectId)
+        {
+            var dashboard = Context.UserDashboards.FirstOrDefault(x=>x.UserId == userId);
+            if(dashboard == null)
+                return GenerateDefaultDashboard(userId, projectId);
+            return dashboard.Id;
+        }
+
+        private int GenerateDefaultDashboard(int userId, int projectId)
+        {
+            var dashboard = Context.UserDashboards.Add(new UserDashboards{
+                DashboardName = "Default Dashboard",
+                DateOfDashboard = DateTime.Now,
+                ProjectId = projectId,
+                UserId = userId
+            });
+            Context.SaveChanges();
+            return dashboard.Entity.Id;
+        }
+
         internal NotificationRights AddNewUserNotificationSetting(int projectId, int userId)
         {
             NotificationRights right = Context.NotificationRights.Add(new NotificationRights
@@ -175,12 +195,19 @@ namespace Platform.DatabaseHandlers.Contexts
             return null;
         }
 
-        internal UserDashboards GetUserWidgets(int userId, int projectId)
+        internal List<AssociatedUserDashboardPremade> GetUserPremadeWidgets(int dashboard)
+        {
+            return Context.AssociatedUserDashboardPremade.Include(x => x.PremadeWidget)
+                                                         .Where(x => x.UserDashboard == dashboard)
+                                                         .ToList();
+        }
+
+        internal UserDashboards GetUserWidgets(int userId, int projectId,int dashboard)
         {
             return Context.UserDashboards.Include(x => x.UserDashboardItem)
                                          .ThenInclude(UserDashboardItem => UserDashboardItem.AssociatedUserDashboardItemComponent)
                                          .ThenInclude(AssociatedUserDashboardItemComponent => AssociatedUserDashboardItemComponent.ItemComponentNavigation)
-                                         .FirstOrDefault(x=>x.ProjectId == projectId && x.UserId == userId);
+                                         .FirstOrDefault(x=>x.ProjectId == projectId && x.Id == dashboard && x.UserId == userId);
         }
 
         internal UserAccounts GetUserAccountByName(string name)

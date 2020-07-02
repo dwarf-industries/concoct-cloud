@@ -37,12 +37,16 @@ namespace Platform.Controllers {
         }
         [HttpGet]
 
-        public IActionResult LoadWidget(string phase, int queryId, int projectId) 
+        public IActionResult LoadWidget(int id, int queryId, int projectId, string height) 
         {
-            return ViewComponent(GetControlName(phase), new IncomingIdRequest{
-                 Phase = phase,
+            var bindingControl = string.Empty;
+            using(var context = new DatabaseController(Context,Configuration))
+                bindingControl = context.GetPremadeName(id);
+            return ViewComponent(bindingControl, new IncomingIdRequest{
+                 Id = id,
                  UserId = queryId,
-                 ProjectId = projectId
+                 ProjectId = projectId,
+                 Phase = height
             });
         }
 
@@ -55,20 +59,7 @@ namespace Platform.Controllers {
                 ProjectId = projectId
             });
         }
-        private string GetControlName(string control)
-        {
-            var result = string.Empty;
-            switch(control)
-            {
-                case "AssignedToMe":
-                    result = "AssignedToMe";
-                break;
-                case "BuildHistory":
-                    result = "BuildHistory";
-                break;
-            }
-            return result;
-        }
+    
 
         [HttpPost]
         public List<BindingQueryProperty> GetQueryProperties([FromBody] IncomingIdRequest request)
@@ -80,7 +71,28 @@ namespace Platform.Controllers {
             }
             return result;
         }
+        [HttpPost]
+        public PremadeWidgets AppendWidget([FromBody] IncomingIdRequest request)
+        {
+            var result = new PremadeWidgets();
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                result = context.SaveWidgetToBoard(request);
+            }
+            return result;
+        }
 
+        [HttpPost]
+        public OkResult WidgetResized([FromBody] IncomingIdRequest request)
+        {
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                context.UpdateWidgetResized(request);
+            }
+            return Ok();
+         }
+
+        
         [HttpPost]
         public DataTable GetQueryDataById([FromBody] IncomingIdRequest request)
         {

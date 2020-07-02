@@ -2,21 +2,28 @@ namespace Rokono_Control.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Platform.DatabaseHandlers.Contexts;
+    using Platform.DataHandlers;
+    using Platform.DataHandlers.Interfaces;
     using Platform.Models;
     using Rokono_Control.Models;
 
     public class BacklogsController : Controller
     {
-        RokonoControlContext Context;
+       RokonoControlContext Context;
         IConfiguration Configuration;
 
-        public BacklogsController(RokonoControlContext context, IConfiguration config)
+        AutherizationManager AutherizationManager {get; set;}
+        private int UserId {get; set;}
+        public BacklogsController(RokonoControlContext context, IConfiguration config,   IAutherizationManager autherizationManager,IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;
+            AutherizationManager = (AutherizationManager) autherizationManager;
+            UserId = AutherizationManager.GetCurrentUser(UserId,httpContextAccessor.HttpContext.Request);
         }
 
         public IActionResult Index(int projectId, int boardId, string phase, int iteration)
@@ -65,6 +72,38 @@ namespace Rokono_Control.Controllers
             return result;
         }
 
+        [HttpPost]
+        public List<OutgoingWorkItem> GetUserWorkItems([FromBody] IncomingIdRequest IncomingIdRequest)
+        {
+
+            var result = new List<OutgoingWorkItem>();
+            using (var context = new WorkItemsContext(Context,Configuration))
+            {
+                var data = context.GetUserWorkItems(IncomingIdRequest.ProjectId, UserId);
+                if(IncomingIdRequest.Phase != "!")
+                    data = data.Where(x=>x.WorkItem.Title.Contains(IncomingIdRequest.Phase)).ToList();
+                var bData = data.Select(x => x.WorkItem).ToList();
+                bData.ForEach(x =>
+                {
+            
+                        result.Add(new OutgoingWorkItem
+                        {
+                            Id = x.Id,
+                            WorkItemIcon = x.WorkItemType.Icon,
+                            Title = x.Title,
+                            Description = x.Description,
+                            AssignedTo = x.AssignedAccountNavigation == null ? "" : x.AssignedAccountNavigation.Email,
+                            //    subtasks = new List<OutgoingWorkItem>()
+                        });
+                  
+                });
+                // result = GetChildren(data,result);
+            }
+
+            return result;
+        }
+
+        
         [HttpPost]
         public List<OutgoingWorkItem> GetPublicBugReports([FromBody] IncomingIdRequest IncomingIdRequest)
         {
