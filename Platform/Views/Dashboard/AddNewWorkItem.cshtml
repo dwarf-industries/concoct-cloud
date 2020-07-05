@@ -666,7 +666,14 @@
         enableRtl: true
     });
     inputobj2.appendTo('#workItemInputObj');
-     
+    
+    var title = new ej.inputs.TextBox({
+        placeholder: 'Work Item Title',
+        floatLabelType: 'Auto',
+        enableRtl: true
+    });
+    title.appendTo('#Title');
+
     function OpenModal()
     {
         console.log("Open modal");

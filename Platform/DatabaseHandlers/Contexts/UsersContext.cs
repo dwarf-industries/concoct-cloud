@@ -30,6 +30,13 @@ namespace Platform.DatabaseHandlers.Contexts
         {
             return Context.UserAccounts.FirstOrDefault(x=>x.Id == id);
         }
+
+        internal List<Teams> GetPojectTeams(int projectId)
+        {
+            return Context.Teams.Where(x => x.ProjectId == projectId)
+                                .ToList();
+        }
+
         internal OutgoingUserAccounts GetOutgoingUserAccount(int v)
         {
             var account = Context.UserAccounts.FirstOrDefault(x => x.Id == v);

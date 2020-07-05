@@ -15,7 +15,7 @@
         <button   class="btn btn-primary e-control e-btn e-lib e-outline e-primary"  onclick="OpenWidgetModal()" >Add Widget</button>
     </div>
     
-    <div id="defaultLayout">
+    <div id="defaultLayout" style="overflow: auto;">
         @if(@UserDashboard != null)
         {
             @if(@UserDashboard.UserDashboardItem != null)
@@ -75,19 +75,7 @@
     </div>
     <div id="content"></div>
 </div>
-<div id="action-description">
-    <p>
-        The following sample demonstrates the default functionalities of the DashboardLayout component. Click the <code>Add Panel</code> button to add panels dynamically to the dashboard layout.
-    </p>
-</div>
-
-<div id="description">
-    <p>
-        The DashboardLayout component provides the capability to arrange, <a href="https://ej2.syncfusion.com/javascript/documentation/api/dashboard-layout#allowresizing" target="_blank">resize</a> and 
-        reorder the panels within the dashboard layout.
-    </p>
-
-</div>
+ 
 
    <div id="dialogIterations" style="margin-left: 70%;">
         <div id="ModalContent">
@@ -174,6 +162,7 @@ $("#Rowbtns").hide();
         cellSpacing: [10, 10],
         columns: 5,
         allowResizing: true,
+        height: "85vh",
         change: DashboardChanged,
         resize: DashboardResized,
 
@@ -192,6 +181,7 @@ function AddNewDashboardPanel(generatedId, Id)
     @* var closeIcon = document.getElementById(generatedId + '_layout').querySelector('.e-clear-icon');
     closeIcon.addEventListener('click', onCloseIconHandler);
      count = count + 1; *@
+
     $('#layout_'+generatedId+'_body' ).load("/Widget/LoadWidget?id="+Id+"&&queryId=0&&projectId=@ProjectId&&height="+$("#"+ generatedId + "_layout").height());
 }
 

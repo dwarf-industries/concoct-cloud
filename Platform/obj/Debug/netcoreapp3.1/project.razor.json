@@ -19584,6 +19584,55 @@
       },
       {
         "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__AssignedItemsViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:assigned-items",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "request",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "request",
+            "TypeName": "Rokono_Control.Models.IncomingIdRequest",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "request"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__AssignedItemsViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "AssignedItems"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
         "Name": "__Generated__WidgetBuilderViewComponentTagHelper",
         "AssemblyName": "Rokono Control",
         "Documentation": null,
@@ -19633,14 +19682,14 @@
       },
       {
         "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__AssignedItemsViewComponentTagHelper",
+        "Name": "__Generated__BurdownChartViewComponentTagHelper",
         "AssemblyName": "Rokono Control",
         "Documentation": null,
         "TagOutputHint": null,
         "CaseSensitive": false,
         "TagMatchingRules": [
           {
-            "TagName": "vc:assigned-items",
+            "TagName": "vc:burdown-chart",
             "ParentTag": null,
             "TagStructure": 0,
             "Attributes": [
@@ -19676,8 +19725,57 @@
         "Diagnostics": [],
         "Metadata": {
           "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__AssignedItemsViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "AssignedItems"
+          "Common.TypeName": "__Generated__BurdownChartViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "BurdownChart"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__BurdownChartSettingsViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:burdown-chart-settings",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "request",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "request",
+            "TypeName": "Rokono_Control.Models.IncomingIdRequest",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "request"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__BurdownChartSettingsViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "BurdownChartSettings"
         }
       },
       {
@@ -22379,6 +22477,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Widgets/BurndownChartSettings/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Widgets\\BurndownChartSettings\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/_ViewStart.cshtml",
       "TargetPath": "Views\\_ViewStart.cshtml",
       "FileKind": "mvc"
@@ -22571,6 +22674,11 @@
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/UserRightToggle/Default.cshtml",
       "TargetPath": "Views\\Shared\\Components\\UserRightToggle\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Widgets/BurdownChart/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Widgets\\BurdownChart\\Default.cshtml",
       "FileKind": "mvc"
     },
     {

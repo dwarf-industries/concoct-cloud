@@ -103,10 +103,10 @@ namespace Rokono_Control.DatabaseHandlers
             var associationVal = int.Parse(request.__RequestVerificationToken.Replace("layout_",""));
             var values = request.Phase.Split(",");
             var association = Context.AssociatedUserDashboardPremade.FirstOrDefault(x=>x.Id == associationVal);
-            association.DataCol = int.Parse(values[0]);
-            association.DataRow = int.Parse(values[1]);
-            association.DataSizeX = int.Parse(values[2]);
-            association.DataSizeY = int.Parse(values[3]);
+             association.DataCol = int.Parse(values[0] == "NaN" ? "0" : values[0]);
+            association.DataRow = int.Parse(values[1] == "NaN" ? "0" : values[1]);
+            association.DataSizeX = int.Parse(values[2] == "NaN" ? "0" : values[2]);
+            association.DataSizeY = int.Parse(values[3] == "NaN" ? "0" : values[3]);
             Context.Attach(association);
             Context.Update(association);
             Context.SaveChanges();

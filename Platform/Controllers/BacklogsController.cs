@@ -80,7 +80,7 @@ namespace Rokono_Control.Controllers
             using (var context = new WorkItemsContext(Context,Configuration))
             {
                 var data = context.GetUserWorkItems(IncomingIdRequest.ProjectId, UserId);
-                if(IncomingIdRequest.Phase != "!")
+                if(IncomingIdRequest.Phase != "!" && IncomingIdRequest.Phase != null)
                     data = data.Where(x=>x.WorkItem.Title.Contains(IncomingIdRequest.Phase)).ToList();
                 var bData = data.Select(x => x.WorkItem).ToList();
                 bData.ForEach(x =>

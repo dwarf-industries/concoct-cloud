@@ -94,7 +94,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
 
-     
+      
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -758,6 +758,8 @@ namespace Rokono_Control.Models
                 entity.Property(e => e.ControlDescription).HasMaxLength(500);
 
                 entity.Property(e => e.ControlName).HasMaxLength(200);
+
+                entity.Property(e => e.Settings).HasMaxLength(600);
 
                 entity.Property(e => e.ViewComponentName).HasMaxLength(200);
             });

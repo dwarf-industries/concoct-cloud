@@ -1,0 +1,113 @@
+@{
+    var  ProjectId = ViewData["ProjectId"] as int?;
+    var Type = ViewData["BurdownType"] as int?;
+    var WorkItemItem = ViewData["WorkItemType"] as int?;
+    var StartDate = ViewData["StartDate"] as DateTime?;
+    var EndDate = ViewData["EndDate"] as DateTime?;
+    var title = ViewData["Title"] as string;
+    
+}
+
+
+
+
+<div class="control-section">
+    <div id="series-container" align="center"></div>
+    
+</div>
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+<script>
+@* 
+        var dto = {
+            "ProjectId": @ProjectId,
+        }
+        console.log(dto);
+        $.ajax({
+            type: 'POST',
+            url: '/Backlogs/GetUserWorkItems',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                InitilizeBurdownChart(response);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        }); *@
+InitilizeBurdownChart();
+function InitilizeBurdownChart()
+{
+
+     var chart = new ej.charts.Chart({
+        //Initializing Primary X Axis
+        primaryXAxis: {
+            title: 'Years',
+            interval: 1,
+            labelIntersectAction: 'Rotate45',
+            valueType: 'Category',
+            majorGridLines: { width: 0 }, minorGridLines: { width: 0 },
+            majorTickLines: { width: 0 }, minorTickLines: { width: 0 },
+            lineStyle: { width: 0 },
+        },
+        //Initializing Primary Y Axis
+        primaryYAxis: {
+            title: 'Growth',
+            minimum: -3,
+            maximum: 3,
+            interval: 1,
+            lineStyle: { width: 0 },
+            majorTickLines: { width: 0 }, majorGridLines: { width: 1 },
+            minorGridLines: { width: 1 }, minorTickLines: { width: 0 },
+            labelFormat: '{value}B',
+        },
+        chartArea: {
+            border: {
+                width: 0
+            }
+        },
+        //Initializing Chart Series
+        series: [
+            {
+                type: 'StackingColumn',
+                dataSource: [
+                    { x: '2007', y: 1 }, { x: '2008', y: 0.25 },
+                    { x: '2009', y: 0.1 }, { x: '2010', y: 1 },
+                    { x: '2011', y: 0.1 }, { x: '2012', y: -0.25 },
+                    { x: '2013', y: 0.25 }, { x: '2014', y: 0.6 }
+                ],
+                xName: 'x', yName: 'y', name: 'Private Consumption',
+            },{
+                type: 'Line',
+                dataSource: [
+                    { x: '2007', y: 2 }, { x: '2008', y: 0.1 },
+                    { x: '2009', y: -2.7 }, { x: '2010', y: 1.8 },
+                    { x: '2011', y: 2 }, { x: '2012', y: 0.4 },
+                    { x: '2013', y: 0.9 }, { x: '2014', y: 0.4 }
+                ],
+                xName: 'x', yName: 'y', name: 'GDP',
+                width: 2,
+                marker: {
+                    visible: true,
+                    width: 10,
+                    height: 10
+                },
+            }
+        ],
+        width: ej.base.Browser.isDevice ? '100%' : '60%',
+        //Initializing Chart Title
+        title: 'Annual Growth GDP in France',
+        //Initializing Tooltip
+        tooltip: {
+            enable: true
+        },
+
+    });
+    chart.appendTo('#series-container');
+
+}
+</script>

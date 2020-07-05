@@ -49,7 +49,18 @@ namespace Platform.Controllers {
                  Phase = height
             });
         }
+        [HttpGet]
 
+        public IActionResult LoadControlSettings(int id, int projectId) 
+        {
+            var bindingControl = string.Empty;
+            using(var context = new DatabaseController(Context,Configuration))
+                bindingControl = context.GetPremadeName(id);
+            return ViewComponent($"{bindingControl}Settings", new IncomingIdRequest{
+                 Id = id,
+                 ProjectId = projectId
+            });
+        }
         [HttpGet]
         public IActionResult LoadQueryBinder(int projectId, string control, string field ) 
         {

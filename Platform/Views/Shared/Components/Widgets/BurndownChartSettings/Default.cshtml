@@ -1,0 +1,166 @@
+@{
+    var Teams = ViewData["Teams"] as List<Teams>;
+    var WorkItemTypes = ViewData["WorkItemTypes"] as List<WorkItemTypes>;
+    var CountWItems = ViewData["CountWItems"] as List<Platform.Models.OutgoingBindingCollection>;
+    var BurndownOn = ViewData["BurndownOn"] as List<Platform.Models.OutgoingBindingCollection>;
+    var SumWItems = ViewData["SumWItems"] as List<Platform.Models.OutgoingBindingCollection>;
+    var Backlogs = ViewData["Backlog"]  as List<Platform.Models.OutgoingBindingCollection>;
+ }
+
+<style>
+    #dialogIterations{
+        height:98vh;
+    }
+</style>
+
+<div class="controlContainer">
+    <div class="row">
+        <input type="text" id='ChartTitle' />
+
+    </div>
+    <div class="row">
+             <select class="form-control-sm form-control" id="Teams">
+                @foreach(var team in @Teams)
+                {
+                    <option value="@team.Id">@team.TeamName</option>
+                }
+            </select>
+        </div>
+    </div>
+     <div class="row">
+            <input id="radio1" type="radio">
+             <select class="form-control-sm form-control" id="Backlog">
+                @foreach(var backlog in @Backlogs)
+                {
+                    <option value="@backlog.Id">@backlog.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row">
+            <input id="radio2" type="radio">
+             <select class="form-control-sm form-control" id="WorkItemTypes">
+                @foreach(var workItemType in @WorkItemTypes)
+                {
+                    <option value="@workItemType.Id">@workItemType.TypeName</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <select class="form-control-sm form-control" id="BurndownOn">
+                @foreach(var burndownOn in @BurndownOn)
+                {
+                    <option value="@burndownOn.Id">@burndownOn.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2" style="text-align: center;font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont";font-weight: bolder;">
+            Of
+        </div>
+        <div class="col-md-7">
+            <div id="CountWorkItems">
+                <select class="form-control-sm form-control" id="CountWItems">
+                    @foreach(var countWItems in @CountWItems)
+                    {
+                        <option value="@countWItems.Id">@countWItems.Name</option>
+                    }
+                </select>
+            </div>
+           <div id="SumWorkItems">
+                <select class="form-control-sm form-control" id="SumWItems">
+                    @foreach(var sumWItem in @SumWItems)
+                    {
+                        <option value="@sumWItem.Id">@sumWItem.Name</option>
+                    }
+                </select>
+           </div>
+        </div>
+    </div>
+<script>
+    $("#SumWorkItems").hide();
+     var ChartTitle = new ej.inputs.TextBox({
+        placeholder: 'Chart Title',
+        floatLabelType: 'Auto',
+        enableRtl: true
+    });
+    ChartTitle.appendTo('#ChartTitle');
+    var Teams = new ej.dropdowns.DropDownList({
+
+        // set the placeholder to DropDownList input element
+        placeholder: 'Teams',
+        // set the height of the popup element
+        popupHeight: '200px',
+        index: 0,
+        
+    });
+    Teams.appendTo('#Teams');
+
+    var Backlog = new ej.dropdowns.DropDownList({
+
+        // set the placeholder to DropDownList input element
+        placeholder: 'Backlog',
+        // set the height of the popup element
+        popupHeight: '200px',
+        index: 0,
+        
+    });
+    Backlog.appendTo('#Backlog');
+
+
+ var BurndownOn = new ej.dropdowns.DropDownList({
+
+        // set the placeholder to DropDownList input element
+        placeholder: 'Burndown',
+        // set the height of the popup element
+        popupHeight: '200px',
+        index: 0,
+        
+    });
+    BurndownOn.appendTo('#BurndownOn');
+
+    var WorkItemTypes = new ej.dropdowns.DropDownList({
+
+        // set the placeholder to DropDownList input element
+        placeholder: 'Work Item Types',
+        // set the height of the popup element
+        popupHeight: '200px',
+        index: 0,
+        
+    });
+    WorkItemTypes.appendTo('#WorkItemTypes');
+
+    var CountWItems = new ej.dropdowns.DropDownList({
+
+        // set the placeholder to DropDownList input element
+        placeholder: 'Work Item Types',
+        // set the height of the popup element
+        popupHeight: '200px',
+        index: 0,
+        
+    });
+    CountWItems.appendTo('#CountWItems');
+
+
+    var SumWItems = new ej.dropdowns.DropDownList({
+
+        // set the placeholder to DropDownList input element
+        placeholder: 'Work Item Types',
+        // set the height of the popup element
+        popupHeight: '200px',
+        index: 0,
+        
+    });
+    SumWItems.appendTo('#SumWItems');
+
+
+    
+
+    var radioButton = new ej.buttons.RadioButton({ label: 'Backlog', name: 'Backlog', value: '1', checked: true });
+    radioButton.appendTo('#radio1');
+
+    radioButton = new ej.buttons.RadioButton({ label: 'Work Item Type', name: 'Work Item Type', value: '2' });
+    radioButton.appendTo('#radio2');
+
+</script>

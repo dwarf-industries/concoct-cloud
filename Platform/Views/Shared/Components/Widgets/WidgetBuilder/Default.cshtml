@@ -96,7 +96,7 @@
  
 </style>
 
-<div class="row">
+<div class="row" id="SelectControl">
         <div class="control-section">
         <div class="content-wrapper">
             <div id="ControlListGrid" style="width: auto;height: 87vh;overflow-y: scroll;">
@@ -105,9 +105,12 @@
      </div>
    
 </div>
+<div class="row" id="ControlSettings">
+
+</div>
 <script id="widgetsTemplate" type="text/x-template">
   <tr   class="widget-row bolt-list-row first-row" >
-      <td class="bolt-list-cell" data-column-index="0" onclick="ControlSelected(${id})">
+      <td class="bolt-list-cell" data-column-index="0" onclick="ControlSelected(${id},${customSettings})">
           <div class="bolt-list-cell-content flex-row">
                 <div class="widget-catalog-entry flex flex-noshrink flex-column">
                     <div class="flex-row">
@@ -127,8 +130,8 @@
 </script>
 
 <script>
-
-
+    var Phase;
+    var argument;
     var Components = [];
     var Control;
     $.ajax({
@@ -158,28 +161,42 @@
         ControlListGrid.appendTo('#ControlListGrid');
     }
 
-    function ControlSelected(args)
+    function ControlSelected(args, customSettings)
     {
-
-        var dto = {
-            "ProjectId": @ProjectId,
-            "Id": @DashboardId,
-            "WorkItemType" : args
+        argument = args;
+        console.log(argument);
+        if(customSettings == 0)
+        {
+            SaveControlChanges();
         }
-        console.log(dto);
-        $.ajax({
-            type: 'POST',
-            url: '/Widget/AppendWidget',
-            data: JSON.stringify(dto),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-                console.log(response);
-                AddNewDashboardPanel(response.associatedUserDashboardPremade[0].id, response.id);
-            },
-            error: function (xhr, status, error) {
-                console.log(error);
+        else
+        {
+            $("#ModalContent").load("/Widget/LoadControlSettings?id="+argument+"&&projectId=@ProjectId");
+         }
+    }
+
+    function SaveControlChanges()
+    {
+           var dto = {
+                "ProjectId": @ProjectId,
+                "Id": @DashboardId,
+                "WorkItemType" : argument,
+                "Phase" : Phase
             }
-        });
+            console.log(dto);
+            $.ajax({
+                type: 'POST',
+                url: '/Widget/AppendWidget',
+                data: JSON.stringify(dto),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    AddNewDashboardPanel(response.associatedUserDashboardPremade[0].id, response.id);
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
     }
 </script>

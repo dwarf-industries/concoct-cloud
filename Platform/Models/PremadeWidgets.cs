@@ -14,6 +14,8 @@ namespace Rokono_Control.Models
         public string ControlName { get; set; }
         public string ViewComponentName { get; set; }
         public string ControlDescription { get; set; }
+        public string Settings { get; set; }
+        public int? CustomSettings { get; set; }
 
         public virtual ICollection<AssociatedUserDashboardPremade> AssociatedUserDashboardPremade { get; set; }
     }

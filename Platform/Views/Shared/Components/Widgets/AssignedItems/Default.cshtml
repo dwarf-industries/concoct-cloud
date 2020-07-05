@@ -1,6 +1,6 @@
 @{
     var ProjectId = ViewData["ProjectId"] as int?;
-    
+    var customId  = Guid.NewGuid().ToString().Replace("-","").ToString();
 }
 
 <style>
@@ -66,7 +66,7 @@
 <div class="row" id="AssignedGridHolder">
    <div class="control-section" style="height:100%;">
         <div class="content-wrapper">
-            <div id="AssignedGrid"></div>
+            <div id="@customId"></div>
         </div>
     </div>
 </div>
@@ -116,7 +116,7 @@
             ]
         });
 
-        AssignedGrid.appendTo('#AssignedGrid');
+        AssignedGrid.appendTo('#@customId');
         ShowContent();
 
 
