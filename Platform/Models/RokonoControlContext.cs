@@ -94,8 +94,6 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
 
-      
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ApiKeys>(entity =>
@@ -493,6 +491,8 @@ namespace Rokono_Control.Models
 
             modelBuilder.Entity<AssociatedUserDashboardPremade>(entity =>
             {
+                entity.Property(e => e.CustomSettings).HasMaxLength(600);
+
                 entity.HasOne(d => d.PremadeWidget)
                     .WithMany(p => p.AssociatedUserDashboardPremade)
                     .HasForeignKey(d => d.PremadeWidgetId)

@@ -9,7 +9,49 @@
 
 <link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
   <!-- end of sidebar element -->
-  
+  <script>
+
+    function InitializeAssignedGrid(data, assignedId,height)
+    {
+        console.log(data);
+        console.log(assignedId);
+
+        new ej.treegrid.TreeGrid({
+            dataSource: data,
+            allowSelection: true,
+            allowFiltering: true,
+            allowSorting: true,
+            toolbar: ['Search'],
+            recordDoubleClick: EditWorkItem,
+            enableVirtualization: true,
+            filterSettings: { type: 'Menu' },
+            queryCellInfo: customiseCell,
+            enableHover: false,
+            height:$("#layout_"+height).height(),
+            columns: [
+                { field: 'workItemType.TypeName', headerText: 'Type', width: '10',customAttributes: {class: "workItemIcon"}, textAlign: 'center' },
+                { field: 'title', headerText: 'Title', width: 125 },
+                { field: 'description', headerText: 'Description' },
+            ]
+        }).appendTo('#'+assignedId);
+        console.log($("#layout_"+height).height());
+
+         @* ShowContent(); *@
+
+
+    }
+    function EditWorkItem(args)
+    {
+        console.log(args);
+        window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.rowData.id+"&returnUrl="+window.location.href;
+    }
+
+    function customiseCell(args) {
+        if (args.column.headerText === 'Type' ){
+            args.cell.setAttribute('class', args.data.workItemIcon);
+        } 
+    }
+  </script>
 <div class="control-section">
     <div style="padding:5px;text-align: right;">
         <button   class="btn btn-primary e-control e-btn e-lib e-outline e-primary"  onclick="OpenWidgetModal()" >Add Widget</button>
@@ -56,13 +98,15 @@
         {
             @foreach (var widgetAssociation in @PremadeDashboardWidgets)
             {
+                 
                  <div id="layout_@widgetAssociation.Id" class="e-panel" data-row="@widgetAssociation.DataRow" data-col="@widgetAssociation.DataCol" data-sizeX="@widgetAssociation.DataSizeX" data-sizeY="@widgetAssociation.DataSizeY">
                     <span id="close" class="e-template-icon e-clear-icon"></span>
                     <div class="e-panel-container">
                         @await Component.InvokeAsync(@widgetAssociation.PremadeWidget.ViewComponentName, new IncomingIdRequest{
                             ProjectId = @ProjectId.Value,
                             Id = @DashboardId.Value,
-                            Phase= "123"
+                            WorkItemType = @widgetAssociation.Id,
+                            Phase= @widgetAssociation.PremadeWidget.AssociatedUserDashboardPremade.FirstOrDefault().CustomSettings
                         })
                     </div>
                 </div>   
@@ -243,7 +287,6 @@ for (var i = 0; i < closeElement.length; i++) {
             dataType: "json",
             success: function (response) {
                 console.log(response);
-                AddNewDashboardPanel(response.associatedUserDashboardPremade[0].id, response.id);
             },
             error: function (xhr, status, error) {
                 console.log(error);
@@ -274,8 +317,7 @@ for (var i = 0; i < closeElement.length; i++) {
                 dataType: "json",
                 success: function (response) {
                     console.log(response);
-                    AddNewDashboardPanel(response.associatedUserDashboardPremade[0].id, response.id);
-                },
+                 },
                 error: function (xhr, status, error) {
                     console.log(error);
                 }
@@ -302,7 +344,6 @@ for (var i = 0; i < closeElement.length; i++) {
                 dataType: "json",
                 success: function (response) {
                     console.log(response);
-                    AddNewDashboardPanel(response.associatedUserDashboardPremade[0].id, response.id);
                 },
                 error: function (xhr, status, error) {
                     console.log(error);
@@ -312,4 +353,6 @@ for (var i = 0; i < closeElement.length; i++) {
 
     
     }
+
+
 </script>

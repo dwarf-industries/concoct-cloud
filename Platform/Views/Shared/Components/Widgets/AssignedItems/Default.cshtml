@@ -1,12 +1,14 @@
 @{
+    var chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+    var random = new  System.Random();
     var ProjectId = ViewData["ProjectId"] as int?;
-    var customId  = Guid.NewGuid().ToString().Replace("-","").ToString();
+    var assignedLetter =chars[random.Next(chars.Length-1)];
+    var assignedId  =  $"AssignedItems_{assignedLetter}";
+    var ContainerId = ViewData["ContainerId"] as int?;
 }
 
 <style>
-    #main-text{
-        height: 90vh;
-    }
+   
     .fa-bug:before{
         font-family: "e-icons" !important;
         content: '\e191';
@@ -56,21 +58,18 @@
         width: 30px;
         height: 30px;
     } 
-    #AssignedGridHolder .content-wrapper{
-        
-        height: 100%;
-        position: absolute;
-   
+    .e-virtualtrack{
+        height: 75vh;
+        width: 100%;
     }
+  
 </style>
-<div class="row" id="AssignedGridHolder">
-   <div class="control-section" style="height:100%;">
-        <div class="content-wrapper">
-            <div id="@customId"></div>
-        </div>
+
+ <div class="control-section" style="height:100%;">
+    <div class="content-wrapper">
+        <div id="@assignedId"></div>
     </div>
 </div>
-
 
 <script>
 
@@ -86,51 +85,12 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                InitializeAssignedGrid(response);
+                console.log("In");
+                InitializeAssignedGrid(response,'@assignedId',@ContainerId);
             },
             error: function (xhr, status, error) {
                 console.log(error);
             }
         });
-    function InitializeAssignedGrid(data )
-    {
-        console.log(data);
-
-
-        var AssignedGrid = new ej.treegrid.TreeGrid({
-            dataSource: data,
-            allowSelection: true,
-            allowFiltering: true,
-            allowSorting: true,
-            toolbar: ['Search'],
-            recordDoubleClick: EditWorkItem,
-            enableVirtualization: true,
-            filterSettings: { type: 'Menu' },
-            queryCellInfo: customiseCell,
-            enableHover: false,
-            height:'100%',
-            columns: [
-                { field: 'workItemType.TypeName', headerText: 'Type', width: '10',customAttributes: {class: "workItemIcon"}, textAlign: 'center' },
-                { field: 'title', headerText: 'Title', width: 125 },
-                { field: 'description', headerText: 'Description' },
-            ]
-        });
-
-        AssignedGrid.appendTo('#@customId');
-        ShowContent();
-
-
-    }
-    function EditWorkItem(args)
-    {
-        console.log(args);
-        window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.rowData.id+"&returnUrl="+window.location.href;
-    }
-
-    function customiseCell(args) {
-        if (args.column.headerText === 'Type' ){
-            args.cell.setAttribute('class', args.data.workItemIcon);
-        } 
-    }
     
 </script>

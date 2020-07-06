@@ -2,6 +2,8 @@ namespace Platform.ViewComponents.Widgets
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
+    using Platform.Models;
     using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
 
@@ -21,7 +23,8 @@ namespace Platform.ViewComponents.Widgets
         {
             ViewData["ProjectId"] = request.ProjectId;
             ViewData["DashboardId"] = request.Id;
-
+            ViewData["ContainerId"] = request.WorkItemType;
+         
             return View("/Views/Shared/Components/Widgets/WidgetBuilder/Default.cshtml");
         }
     }

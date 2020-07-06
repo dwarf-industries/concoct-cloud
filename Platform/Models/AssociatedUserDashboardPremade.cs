@@ -12,6 +12,7 @@ namespace Rokono_Control.Models
         public int? DataCol { get; set; }
         public int? DataSizeX { get; set; }
         public int? DataSizeY { get; set; }
+        public string CustomSettings { get; set; }
 
         public virtual PremadeWidgets PremadeWidget { get; set; }
         public virtual UserDashboards UserDashboardNavigation { get; set; }

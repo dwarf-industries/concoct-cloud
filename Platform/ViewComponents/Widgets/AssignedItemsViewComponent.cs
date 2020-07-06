@@ -22,7 +22,7 @@ namespace Platform.ViewComponents.Widgets
             ViewData["ProjectId"] = request.ProjectId;
             ViewData["DashboardId"] = request.Id;
             ViewData["Height"] = request.Phase;
-
+            ViewData["ContainerId"] = request.WorkItemType;
             return View("/Views/Shared/Components/Widgets/AssignedItems/Default.cshtml");
         }
     }

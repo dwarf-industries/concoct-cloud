@@ -19633,55 +19633,6 @@
       },
       {
         "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__WidgetBuilderViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "Documentation": null,
-        "TagOutputHint": null,
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:widget-builder",
-            "ParentTag": null,
-            "TagStructure": 0,
-            "Attributes": [
-              {
-                "Name": "request",
-                "NameComparison": 0,
-                "Value": null,
-                "ValueComparison": 0,
-                "Diagnostics": [],
-                "Metadata": {}
-              }
-            ],
-            "Diagnostics": []
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "request",
-            "TypeName": "Rokono_Control.Models.IncomingIdRequest",
-            "IsEnum": false,
-            "IndexerNamePrefix": null,
-            "IndexerTypeName": null,
-            "Documentation": null,
-            "Diagnostics": [],
-            "Metadata": {
-              "Common.PropertyName": "request"
-            },
-            "BoundAttributeParameters": []
-          }
-        ],
-        "AllowedChildTags": [],
-        "Diagnostics": [],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__WidgetBuilderViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "WidgetBuilder"
-        }
-      },
-      {
-        "Kind": "MVC.ViewComponent",
         "Name": "__Generated__BurdownChartViewComponentTagHelper",
         "AssemblyName": "Rokono Control",
         "Documentation": null,
@@ -19776,6 +19727,55 @@
           "Runtime.Name": "ITagHelper",
           "Common.TypeName": "__Generated__BurdownChartSettingsViewComponentTagHelper",
           "MVC.ViewComponent.Name": "BurdownChartSettings"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__WidgetBuilderViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:widget-builder",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "request",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "request",
+            "TypeName": "Rokono_Control.Models.IncomingIdRequest",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "request"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__WidgetBuilderViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "WidgetBuilder"
         }
       },
       {

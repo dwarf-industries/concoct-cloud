@@ -46,7 +46,7 @@ namespace Rokono_Control
                     .AllowAnyHeader();
             }));
             services.AddDbContext<RokonoControlContext>(options =>
-                options.UseSqlServer("Server=84.54.185.144;Database=RokonoControl;User ID=RGSOC;Password='EmkV3*eRjVbZ0!KpKlDHX';")
+                options.UseSqlServer("Server=192.168.0.100;Database=RokonoControl;User ID=RGSOC;Password='EmkV3*eRjVbZ0!KpKlDHX';")
             );
             services.AddRazorPages();
             services.AddSignalR();

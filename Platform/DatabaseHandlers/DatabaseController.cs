@@ -153,6 +153,19 @@ namespace Rokono_Control.DatabaseHandlers
             Context.SaveChanges();
             return queryData.Entity.Id;
         }
+
+        internal PremadeWidgets SaveBurndownChart(IncomingIdRequest request, int userId)
+        {
+             Context.AssociatedUserDashboardPremade.Add(new AssociatedUserDashboardPremade{
+                UserDashboard = request.Id,
+                PremadeWidgetId  = request.WorkItemType,
+                CustomSettings  = request.Phase
+            });
+            Context.SaveChanges();
+            return Context.PremadeWidgets.FirstOrDefault(x=>x.Id == request.WorkItemType);
+ 
+        }
+
         public List<string> IsList(object o)
         {
             var result  = new List<string>();

@@ -188,7 +188,7 @@ class WorkItem
 {
     Id int |  | NO
     WorkItemTypeId int |  | YES
-    Title nvarchar |  | YES
+    ' Title nvarchar |  | YES
     AssignedAccount int |  | YES
     StateId int |  | YES
     AreaId int |  | YES

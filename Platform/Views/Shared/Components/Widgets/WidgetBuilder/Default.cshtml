@@ -171,32 +171,32 @@
         }
         else
         {
-            $("#ModalContent").load("/Widget/LoadControlSettings?id="+argument+"&&projectId=@ProjectId");
+            $("#ModalContent").load("/Widget/LoadControlSettings?id="+argument+"&&projectId=@ProjectId&&dashboard=@DashboardId");
          }
     }
 
     function SaveControlChanges()
     {
-           var dto = {
-                "ProjectId": @ProjectId,
-                "Id": @DashboardId,
-                "WorkItemType" : argument,
-                "Phase" : Phase
+        var dto = {
+            "ProjectId": @ProjectId,
+            "Id": @DashboardId,
+            "WorkItemType" : argument,
+            "Phase" : Phase
+        }
+        console.log(dto);
+        $.ajax({
+            type: 'POST',
+            url: '/Widget/AppendWidget',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                AddNewDashboardPanel(response.associatedUserDashboardPremade[0].id, response.id);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
             }
-            console.log(dto);
-            $.ajax({
-                type: 'POST',
-                url: '/Widget/AppendWidget',
-                data: JSON.stringify(dto),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    console.log(response);
-                    AddNewDashboardPanel(response.associatedUserDashboardPremade[0].id, response.id);
-                },
-                error: function (xhr, status, error) {
-                    console.log(error);
-                }
-            });
+        });
     }
 </script>

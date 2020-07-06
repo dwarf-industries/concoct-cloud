@@ -1,0 +1,11 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500");
+@keyframes e-input-ripple {
+  100% {
+    opacity: 0;
+    transform: scale(4);
+  }
+}
+
+.e-control .e-js [class^='e-'], .e-control .e-js [class*=' e-'] {
+  box-sizing: content-box;
+}

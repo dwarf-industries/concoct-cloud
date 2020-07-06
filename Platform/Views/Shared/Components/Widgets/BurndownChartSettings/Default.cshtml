@@ -5,11 +5,19 @@
     var BurndownOn = ViewData["BurndownOn"] as List<Platform.Models.OutgoingBindingCollection>;
     var SumWItems = ViewData["SumWItems"] as List<Platform.Models.OutgoingBindingCollection>;
     var Backlogs = ViewData["Backlog"]  as List<Platform.Models.OutgoingBindingCollection>;
+    var ProjectId = ViewData["ProjectId"] as int?;
+    var ViewComponentId = ViewData["ViewComponentId"] as int?;
+    var Dashboard = ViewData["Dashboard"] as int?;
  }
 
 <style>
     #dialogIterations{
         height:98vh;
+    }
+
+    .controlContainer .row{
+        padding-top:4%;
+        padding-bottom: 4%;
     }
 </style>
 
@@ -27,24 +35,26 @@
             </select>
         </div>
     </div>
-     <div class="row">
-            <input id="radio1" type="radio">
-             <select class="form-control-sm form-control" id="Backlog">
-                @foreach(var backlog in @Backlogs)
-                {
-                    <option value="@backlog.Id">@backlog.Name</option>
-                }
-            </select>
+    <div class="radio-control">
+        <div class="row">
+                <input id="radio1" type="radio" onclick="ChangeBurndownDataType(1)">
+                <select class="form-control-sm form-control" id="Backlog">
+                    @foreach(var backlog in @Backlogs)
+                    {
+                        <option value="@backlog.Id">@backlog.Name</option>
+                    }
+                </select>
+            </div>
         </div>
-    </div>
-    <div class="row">
-            <input id="radio2" type="radio">
-             <select class="form-control-sm form-control" id="WorkItemTypes">
-                @foreach(var workItemType in @WorkItemTypes)
-                {
-                    <option value="@workItemType.Id">@workItemType.TypeName</option>
-                }
-            </select>
+        <div class="row">
+                <input id="radio2" type="radio" onclick="ChangeBurndownDataType(2)">
+                <select class="form-control-sm form-control" id="WorkItemTypes">
+                    @foreach(var workItemType in @WorkItemTypes)
+                    {
+                        <option value="@workItemType.Id">@workItemType.TypeName</option>
+                    }
+                </select>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -78,10 +88,18 @@
            </div>
         </div>
     </div>
+    <div class="row">
+        <button   class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;"  onclick="SaveBurndownChartSettings()" >Add Widget</button>
+    </div>
 <script>
+    var BacklogBindingType;
+    var BacklogSelectedType = 0;
+    var WorkItemTypeSelected = 0;
+    var CountWItemSelected = 0;
+    var SumWItemSelected = 0;
     $("#SumWorkItems").hide();
      var ChartTitle = new ej.inputs.TextBox({
-        placeholder: 'Chart Title',
+        placeholder: 'Burndown Chart',
         floatLabelType: 'Auto',
         enableRtl: true
     });
@@ -101,35 +119,38 @@
 
         // set the placeholder to DropDownList input element
         placeholder: 'Backlog',
+        change: BacklogTypeChanged,
         // set the height of the popup element
         popupHeight: '200px',
         index: 0,
         
     });
     Backlog.appendTo('#Backlog');
-
-
- var BurndownOn = new ej.dropdowns.DropDownList({
-
-        // set the placeholder to DropDownList input element
-        placeholder: 'Burndown',
-        // set the height of the popup element
-        popupHeight: '200px',
-        index: 0,
-        
-    });
-    BurndownOn.appendTo('#BurndownOn');
-
+   
     var WorkItemTypes = new ej.dropdowns.DropDownList({
 
         // set the placeholder to DropDownList input element
         placeholder: 'Work Item Types',
         // set the height of the popup element
         popupHeight: '200px',
+        change: WorkItemTypeChanged,
         index: 0,
+        enabled : false
         
     });
     WorkItemTypes.appendTo('#WorkItemTypes');
+
+    var BurndownOn = new ej.dropdowns.DropDownList({
+
+        // set the placeholder to DropDownList input element
+        placeholder: 'Burndown',
+        // set the height of the popup element
+        popupHeight: '200px',
+        change: BurndownOnChanged,
+        index: 0,
+        
+    });
+    BurndownOn.appendTo('#BurndownOn');
 
     var CountWItems = new ej.dropdowns.DropDownList({
 
@@ -137,6 +158,8 @@
         placeholder: 'Work Item Types',
         // set the height of the popup element
         popupHeight: '200px',
+        change: CountWItemChanged,
+
         index: 0,
         
     });
@@ -149,6 +172,9 @@
         placeholder: 'Work Item Types',
         // set the height of the popup element
         popupHeight: '200px',
+        enabled: false,
+        change: SumWItemChanged,
+
         index: 0,
         
     });
@@ -157,10 +183,101 @@
 
     
 
-    var radioButton = new ej.buttons.RadioButton({ label: 'Backlog', name: 'Backlog', value: '1', checked: true });
+    var radioButton = new ej.buttons.RadioButton({ label: 'Backlog', name: 'Backlog',  value: '1', checked: true });
     radioButton.appendTo('#radio1');
 
-    radioButton = new ej.buttons.RadioButton({ label: 'Work Item Type', name: 'Work Item Type', value: '2' });
-    radioButton.appendTo('#radio2');
+    var radioButton1 = new ej.buttons.RadioButton({ label: 'Work Item Type',name: 'Work Item Type', value: '2' });
+    radioButton1.appendTo('#radio2');
 
+
+
+    function ChangeBurndownDataType(args)
+    {
+        console.log(args);
+        if(args == 1)
+        {
+            WorkItemTypes.enabled = false;
+            Backlog.enabled = true;
+            radioButton.checked = true;
+            radioButton1.checked = false;
+        }
+        else
+        {
+            WorkItemTypes.enabled = true;
+            Backlog.enabled = false;
+            radioButton.checked = false;
+            radioButton1.checked = true;
+        }
+        BacklogBindingType = args;
+    }
+
+
+    function BurndownOnChanged(args)
+    {
+        console.log(args);
+        if(args.value === "1")
+        {
+            CountWItems.enabled = true;
+            SumWItems.enabled = false;
+            $("#CountWorkItems").show();
+            $("#SumWorkItems").hide();
+
+        }
+        else
+        {
+            CountWItems.enabled = false;
+            SumWItems.enabled = true;
+            $("#CountWorkItems").hide();
+            $("#SumWorkItems").show();
+        }
+    }
+    function BacklogTypeChanged(args)
+    {
+        console.log(args);
+        BacklogSelectedType = parseInt(args.value);
+    }
+    function WorkItemTypeChanged(args)
+    {
+        WorkItemTypeSelected = parseInt(args.value);
+    }
+    function CountWItemChanged(args)
+    {
+        CountWItemSelected = parseInt(args.value);
+    }
+
+    function SumWItemChanged(args)
+    {
+        console.log(args);
+        SumWItemSelected = parseInt(args.value);
+    }
+
+    function SaveBurndownChartSettings()
+    {
+        var dto = {
+            "Title" : $("#ChartTitle").val(),
+            "ProjectId": @ProjectId,
+            "Dashboard" : @Dashboard,
+            "ViewComponentId": @ViewComponentId,
+            "BacklogBindingType" : BacklogBindingType,
+            "BacklogSelectedType" : BacklogSelectedType,
+            "WorkItemTypeSelected" : WorkItemTypeSelected,
+            "CountWItemSelected" : CountWItemSelected,
+            "SumWItemSelected" : SumWItemSelected
+        }
+        console.log(dto);
+        $.ajax({
+            type: 'POST',
+            url: '/Widget/AppendBurndownChart',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                AddNewDashboardPanel(response.associatedUserDashboardPremade[0].id, response.id);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
 </script>

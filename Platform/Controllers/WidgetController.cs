@@ -4,6 +4,7 @@ namespace Platform.Controllers {
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
     using Platform.DataHandlers;
     using Platform.DataHandlers.Interfaces;
     using Platform.Models;
@@ -51,14 +52,15 @@ namespace Platform.Controllers {
         }
         [HttpGet]
 
-        public IActionResult LoadControlSettings(int id, int projectId) 
+        public IActionResult LoadControlSettings(int id, int projectId, int dashboard) 
         {
             var bindingControl = string.Empty;
             using(var context = new DatabaseController(Context,Configuration))
                 bindingControl = context.GetPremadeName(id);
             return ViewComponent($"{bindingControl}Settings", new IncomingIdRequest{
                  Id = id,
-                 ProjectId = projectId
+                 ProjectId = projectId,
+                 WorkItemType = dashboard
             });
         }
         [HttpGet]
@@ -94,13 +96,13 @@ namespace Platform.Controllers {
         }
 
         [HttpPost]
-        public OkResult WidgetResized([FromBody] IncomingIdRequest request)
+        public string WidgetResized([FromBody] IncomingIdRequest request)
         {
             using(var context = new DatabaseController(Context,Configuration))
             {
                 context.UpdateWidgetResized(request);
             }
-            return Ok();
+            return "Ok";
          }
 
         
@@ -122,6 +124,40 @@ namespace Platform.Controllers {
             using(var context = new DatabaseController(Context,Configuration))
             {
                 result = context.AddUserQuery(request, UserId);
+            }
+            return result;
+        }
+        [HttpPost]
+        public PremadeWidgets AppendBurndownChart([FromBody] IncomingBurndownChartSetting request)
+        {
+            var result = default(PremadeWidgets);
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                
+                result = context.SaveBurndownChart(new IncomingIdRequest{
+                    WorkItemType = request.ViewComponentId,
+                    ProjectId  = request.ProjectId,
+                    Id = request.Dashboard,
+                    Phase = JsonConvert.SerializeObject(request)
+                }, UserId);
+            }
+            return result;
+        }
+        
+
+        [HttpPost]
+        public PremadeWidgets GetBurndownChart([FromBody] IncomingBurndownChartSetting request)
+        {
+            var result = default(PremadeWidgets);
+            using(var context = new DatabaseController(Context,Configuration))
+            {
+                
+                result = context.SaveBurndownChart(new IncomingIdRequest{
+                    WorkItemType = request.ViewComponentId,
+                    ProjectId  = request.ProjectId,
+                    Id = request.Dashboard,
+                    Phase = JsonConvert.SerializeObject(request)
+                }, UserId);
             }
             return result;
         }

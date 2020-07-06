@@ -23,6 +23,8 @@ namespace Platform.ViewComponents.Widgets
         public IViewComponentResult Invoke(IncomingIdRequest request)
         {
             ViewData["ProjectId"] = request.ProjectId;
+            ViewData["ViewComponentId"] = request.Id;
+            ViewData["Dashboard"] = request.WorkItemType;
             using (var context = new UsersContext(Context, Configuration))
             {
                 ViewData["Teams"] = context.GetPojectTeams(request.ProjectId);
