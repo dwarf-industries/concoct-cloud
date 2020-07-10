@@ -1,3 +1,5 @@
+using System;
+
 namespace Platform.Models
 {
     public class IncomingBurndownChartSetting
@@ -6,10 +8,12 @@ namespace Platform.Models
         public int Dashboard { get; set; }
         public int ViewComponentId { get; set; }
         public string Title { get; set; }
+        public int BurndownOnSelect { get; set; }
         public int BacklogBindingType { get; set; }
         public int BacklogSelectedType { get; set; }
         public int WorkItemTypeSelected { get; set; }
         public int CountWItemSelected { get; set; }
         public int SumWItemSelected { get; set; }
+        public DateTime StartDate { get; set; }
     }
 }

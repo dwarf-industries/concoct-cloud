@@ -5,6 +5,7 @@ namespace Platform.Controllers {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
+    using Platform.DatabaseHandlers.Contexts;
     using Platform.DataHandlers;
     using Platform.DataHandlers.Interfaces;
     using Platform.Models;
@@ -158,6 +159,18 @@ namespace Platform.Controllers {
                     Id = request.Dashboard,
                     Phase = JsonConvert.SerializeObject(request)
                 }, UserId);
+            }
+            return result;
+        }
+
+        [HttpPost]
+        public object GetBurndownChartData([FromBody] IncomingBurndownChartSetting request)
+        {
+            var result = default(object);
+            using(var context = new WidgetContext(Context,Configuration))
+            {
+                
+                result = context.GetBurndownChartData(request);
             }
             return result;
         }

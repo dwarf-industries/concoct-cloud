@@ -93,6 +93,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemSeverities> WorkItemSeverities { get; set; }
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
+ 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

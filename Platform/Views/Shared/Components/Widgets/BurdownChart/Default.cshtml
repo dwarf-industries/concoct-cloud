@@ -19,32 +19,42 @@
     }
 </style>
 <script>
-@* 
+
 var dto = {
-    "ProjectId": @ProjectId,
+    "Title" :  '@BindingData.Title',
+    "ProjectId": @BindingData.ProjectId,
+    "Dashboard" : @BindingData.Dashboard,
+    "ViewComponentId": @BindingData.ViewComponentId,
+    "BacklogBindingType" : '@BindingData.BacklogBindingType',
+    "BacklogSelectedType" : '@BindingData.BacklogSelectedType',
+    "WorkItemTypeSelected" : '@BindingData.WorkItemTypeSelected',
+    "CountWItemSelected" : '@BindingData.CountWItemSelected',
+    "SumWItemSelected" : '@BindingData.SumWItemSelected',
+    "BurndownOnSelect" : '@BindingData.BurndownOnSelect'
 }
 console.log(dto);
 $.ajax({
     type: 'POST',
-    url: '/Backlogs/GetUserWorkItems',
+    url: '/Widget/GetBurndownChartData',
     data: JSON.stringify(dto),
     contentType: "application/json; charset=utf-8",
     dataType: "json",
     success: function (response) {
+        console.log(response);
         InitilizeBurdownChart(response);
     },
     error: function (xhr, status, error) {
         console.log(error);
     }
-}); *@
-InitilizeBurdownChart();
-function InitilizeBurdownChart()
+}); 
+@* InitilizeBurdownChart(); *@
+function InitilizeBurdownChart(data)
 {
 
      var customId = new ej.charts.Chart({
         //Initializing Primary X Axis
         primaryXAxis: {
-            title: 'Weeks',
+            title: 'by dates',
             interval: 1,
             labelIntersectAction: 'Rotate45',
             valueType: 'Category',
@@ -54,7 +64,7 @@ function InitilizeBurdownChart()
         },
         //Initializing Primary Y Axis
         primaryYAxis: {
-            title: 'Growth',
+            title: 'burndown',
             minimum: -3,
             maximum: 3,
             interval: 1,
@@ -72,21 +82,11 @@ function InitilizeBurdownChart()
         series: [
             {
                 type: 'StackingColumn',
-                dataSource: [
-                    { x: '2007', y: 1 }, { x: '2008', y: 0.25 },
-                    { x: '2009', y: 0.1 }, { x: '2010', y: 1 },
-                    { x: '2011', y: 0.1 }, { x: '2012', y: -0.25 },
-                    { x: '2013', y: 0.25 }, { x: '2014', y: 0.6 }
-                ],
+                dataSource: data,
                 xName: 'x', yName: 'y', name: 'Private Consumption',
             },{
                 type: 'Line',
-                dataSource: [
-                    { x: '2007', y: 2 }, { x: '2008', y: 0.1 },
-                    { x: '2009', y: -2.7 }, { x: '2010', y: 1.8 },
-                    { x: '2011', y: 2 }, { x: '2012', y: 0.4 },
-                    { x: '2013', y: 0.9 }, { x: '2014', y: 0.4 }
-                ],
+                dataSource: data,
                 xName: 'x', yName: 'y', name: 'Burndown rate',
                 width: 2,
                 marker: {

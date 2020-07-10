@@ -52,6 +52,11 @@ namespace Platform.DatabaseHandlers.Contexts
             };
         }
 
+        internal List<UserQueries> GetSharedQueries(int projectId)
+        {
+            return Context.UserQueries.Where(x=>x.IsShared == 1 && x.ProjectId == projectId).ToList();
+        }
+
         internal NotificationRights GetProectNotificationSetting(string phase, int projectId, int userId)
         {
             var result = new NotificationRights();

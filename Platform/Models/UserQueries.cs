@@ -10,6 +10,8 @@ namespace Rokono_Control.Models
         public int? UserId { get; set; }
         public string QueryData { get; set; }
         public DateTime? DateOfQuery { get; set; }
+        public int? IsShared { get; set; }
+        public int? ProjectId { get; set; }
 
         public virtual UserAccounts User { get; set; }
     }

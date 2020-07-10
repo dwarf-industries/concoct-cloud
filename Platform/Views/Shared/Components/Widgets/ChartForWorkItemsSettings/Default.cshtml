@@ -1,10 +1,10 @@
 @{
-    var Teams = ViewData["Teams"] as List<Teams>;
-    var WorkItemTypes = ViewData["WorkItemTypes"] as List<WorkItemTypes>;
+    var Queries = ViewData["UserQueries"] as List<UserQueries>;
     var CountWItems = ViewData["CountWItems"] as List<Platform.Models.OutgoingBindingCollection>;
     var BurndownOn = ViewData["BurndownOn"] as List<Platform.Models.OutgoingBindingCollection>;
     var SumWItems = ViewData["SumWItems"] as List<Platform.Models.OutgoingBindingCollection>;
     var Backlogs = ViewData["Backlog"]  as List<Platform.Models.OutgoingBindingCollection>;
+    var GroupBy = ViewData["GroupBy"] as List<Platform.Models.OutgoingBindingCollection>;
     var ProjectId = ViewData["ProjectId"] as int?;
     var ViewComponentId = ViewData["ViewComponentId"] as int?;
     var Dashboard = ViewData["Dashboard"] as int?;
@@ -24,39 +24,32 @@
 <div class="controlContainer">
     <div class="row">
         <input type="text" id='ChartTitle' />
-
+    </div>
+     <div class="row">
+        <h4>Saved Queries</h2>
     </div>
     <div class="row">
-             <select class="form-control-sm form-control" id="Teams">
-                @foreach(var team in @Teams)
+             <select class="form-control-sm form-control" id="Queries">
+                @foreach(var query in @Queries)
                 {
-                    <option value="@team.Id">@team.TeamName</option>
+                    <option value="@query.Id">@query.QueryName</option>
                 }
             </select>
         </div>
     </div>
-    <div class="radio-control">
-        <div class="row">
-                <input id="radio1" type="radio" onclick="ChangeBurndownDataType(1)">
-                <select class="form-control-sm form-control" id="Backlog">
-                    @foreach(var backlog in @Backlogs)
-                    {
-                        <option value="@backlog.Id">@backlog.Name</option>
-                    }
-                </select>
-            </div>
-        </div>
-        <div class="row">
-                <input id="radio2" type="radio" onclick="ChangeBurndownDataType(2)">
-                <select class="form-control-sm form-control" id="WorkItemTypes">
-                    @foreach(var workItemType in @WorkItemTypes)
-                    {
-                        <option value="@workItemType.Id">@workItemType.TypeName</option>
-                    }
-                </select>
-            </div>
+    <div class="row">
+        <h4>Group by</h2>
+    </div>
+     <div class="row">
+             <select class="form-control-sm form-control" id="GroupRule">
+                @foreach(var group in @GroupBy)
+                {
+                    <option value="@group.Id">@group.Name</option>
+                }
+            </select>
         </div>
     </div>
+  
     <div class="row">
         <div class="col-md-3">
             <select class="form-control-sm form-control" id="BurndownOn">
@@ -67,7 +60,7 @@
             </select>
         </div>
         <div class="col-md-2" style="text-align: center;font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont";font-weight: bolder;">
-            Of
+          <h5>Of</h5>
         </div>
         <div class="col-md-7">
             <div id="CountWorkItems">
@@ -92,56 +85,45 @@
         <button   class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;"  onclick="SaveBurndownChartSettings()" >Add Widget</button>
     </div>
 <script>
-    var BacklogBindingType = 1;
+    var QuerySelected;
     var BurndownOnSelect = 1; 
-
-    var BacklogSelectedType = 0;
+    var GroupRuleSelected = 1;
     var WorkItemTypeSelected = 0;
     var CountWItemSelected = 0;
     var SumWItemSelected = 0;
     $("#SumWorkItems").hide();
-     var ChartTitle = new ej.inputs.TextBox({
-        placeholder: 'Burndown Chart',
+    var ChartTitle = new ej.inputs.TextBox({
+        placeholder: 'Pie Chart',
         floatLabelType: 'Auto',
         enableRtl: true
     });
     ChartTitle.appendTo('#ChartTitle');
-    var Teams = new ej.dropdowns.DropDownList({
+  
+    var Queries = new ej.dropdowns.DropDownList({
 
         // set the placeholder to DropDownList input element
-        placeholder: 'Teams',
+        placeholder: 'Select Query',
+        change: QueriesChanged,
         // set the height of the popup element
         popupHeight: '200px',
         index: 0,
         
     });
-    Teams.appendTo('#Teams');
+    Queries.appendTo('#Queries');
 
-    var Backlog = new ej.dropdowns.DropDownList({
+    var GroupRule = new ej.dropdowns.DropDownList({
 
         // set the placeholder to DropDownList input element
-        placeholder: 'Backlog',
-        change: BacklogTypeChanged,
+        placeholder: 'Select Group Rule',
+        change: GroupRuleChanged,
         // set the height of the popup element
         popupHeight: '200px',
         index: 0,
         
     });
-    Backlog.appendTo('#Backlog');
+    GroupRule.appendTo('#GroupRule');
    
-    var WorkItemTypes = new ej.dropdowns.DropDownList({
-
-        // set the placeholder to DropDownList input element
-        placeholder: 'Work Item Types',
-        // set the height of the popup element
-        popupHeight: '200px',
-        change: WorkItemTypeChanged,
-        index: 0,
-        enabled : false
-        
-    });
-    WorkItemTypes.appendTo('#WorkItemTypes');
-
+    
     var BurndownOn = new ej.dropdowns.DropDownList({
 
         // set the placeholder to DropDownList input element
@@ -182,38 +164,6 @@
     });
     SumWItems.appendTo('#SumWItems');
 
-
-    
-
-    var radioButton = new ej.buttons.RadioButton({ label: 'Backlog', name: 'Backlog',  value: '1', checked: true });
-    radioButton.appendTo('#radio1');
-
-    var radioButton1 = new ej.buttons.RadioButton({ label: 'Work Item Type',name: 'Work Item Type', value: '2' });
-    radioButton1.appendTo('#radio2');
-
-
-
-    function ChangeBurndownDataType(args)
-    {
-        console.log(args);
-        if(args == 1)
-        {
-            WorkItemTypes.enabled = false;
-            Backlog.enabled = true;
-            radioButton.checked = true;
-            radioButton1.checked = false;
-        }
-        else
-        {
-            WorkItemTypes.enabled = true;
-            Backlog.enabled = false;
-            radioButton.checked = false;
-            radioButton1.checked = true;
-        }
-        BacklogBindingType = args;
-    }
-
-
     function BurndownOnChanged(args)
     {
         console.log(args);
@@ -237,10 +187,10 @@
 
         }
     }
-    function BacklogTypeChanged(args)
+    function QueriesChangedChanged(args)
     {
         console.log(args);
-        BacklogSelectedType = parseInt(args.value);
+        QuerySelected = parseInt(args.value);
     }
     function WorkItemTypeChanged(args)
     {
@@ -256,6 +206,14 @@
         console.log(args);
         SumWItemSelected = parseInt(args.value);
     }
+    function QueriesChanged(args)
+    {
+        QuerySelected = parseInt(args.value);
+    }
+    function GroupRuleChanged(args)
+    {
+        GroupRuleSelected = parseInt(args.value);
+    }
 
     function SaveBurndownChartSettings()
     {
@@ -264,9 +222,7 @@
             "ProjectId": @ProjectId,
             "Dashboard" : @Dashboard,
             "ViewComponentId": @ViewComponentId,
-            "BacklogBindingType" : BacklogBindingType,
-            "BacklogSelectedType" : BacklogSelectedType,
-            "WorkItemTypeSelected" : WorkItemTypeSelected,
+            "QueryId" : QuerySelected,
             "CountWItemSelected" : CountWItemSelected,
             "SumWItemSelected" : SumWItemSelected,
             "BurndownOnSelect" : BurndownOnSelect

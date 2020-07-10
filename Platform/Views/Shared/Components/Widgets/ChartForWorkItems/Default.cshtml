@@ -1,0 +1,87 @@
+@{
+    var  ProjectId = ViewData["ProjectId"] as int?;
+    var BindingData = ViewData["ChartBindingData"] as Platform.Models.IncomingBurndownChartSetting;
+    var chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+    var random = new System.Random();
+    var assignedLetter =chars[random.Next(chars.Length-1)];
+    var pieChartId  =  $"AssignedChart_{assignedLetter}";
+}
+
+
+
+
+<div class="control-section">
+    <div id="@pieChartId" align="center"></div>
+</div>
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+<script>
+@* 
+var dto = {
+    "Title" : $("#ChartTitle").val(),
+    "ProjectId": @ProjectId,
+    "Dashboard" : @Dashboard,
+    "ViewComponentId": @ViewComponentId,
+    "QueryId" : QuerySelected,
+    "CountWItemSelected" : CountWItemSelected,
+    "SumWItemSelected" : SumWItemSelected,
+    "BurndownOnSelect" : BurndownOnSelect
+}
+console.log(dto);
+$.ajax({
+    type: 'POST',
+    url: '/Widget/GetPieChartData',
+    data: JSON.stringify(dto),
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function (response) {
+        console.log(response);
+        InitializeChartForWorkItems(response);
+    },
+    error: function (xhr, status, error) {
+        console.log(error);
+    }
+});  *@
+@* InitilizeBurdownChart(); *@
+
+function InitializeChartForWorkItems()
+{
+
+     var customId =  new ej.charts.AccumulationChart({
+        enableSmartLabels: true,
+        //Initializing Series
+        series: [
+            {
+                dataSource: [
+                    { x: 'Argentina', y: 505370, r: '100' },
+                    { x: 'Belgium', y: 551500, r: '118.7' },
+                    { x: 'Cuba', y: 312685, r: '124.6' },
+                    { x: 'Dominican Republic', y: 350000, r: '137.5' },
+                    { x: 'Egypt', y: 301000, r: '150.8' },
+                    { x: 'Kazakhstan', y: 300000, r: '155.5' },
+                    { x: 'Somalia', y: 357022, r: '160.6' }
+                ],
+                xName: 'x',
+                yName: 'y',
+                radius: 'r',
+                innerRadius: '20%',
+                dataLabel: {
+                    visible: true, position: 'Outside', name: 'x'
+                },
+            }
+        ],
+        //Initializing Legend
+        legendSettings: {
+            visible: true
+        },
+        enableAnimation: true,
+        tooltip: { enable: true, format: '${point.x} : <b>${point.y}</b>' },
+
+    });
+    customId.appendTo('#@pieChartId');
+
+}
+</script>
