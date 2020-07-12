@@ -28,7 +28,16 @@ namespace Platform.Controllers {
             return View ();
         }
 
-
+        public IActionResult Queries(int projectId)
+        {
+            ViewData["ProjectId"] = projectId;
+            return View();
+        }
+          public IActionResult NewQuery(int projectId)
+        {
+            ViewData["ProjectId"] = projectId;
+            return View();
+        }
         [HttpGet]
         public IActionResult GetBindingOptions(int projectId, string phase) 
         {

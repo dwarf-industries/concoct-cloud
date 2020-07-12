@@ -1,6 +1,7 @@
 
 @{
     var ProjectId = ViewData["ProjectId"] as int?;
+
 }
 
 <style>
@@ -85,21 +86,21 @@
         bindingColumnSelect.appendTo('#TableColumns');
         $("#ColumnHolder").show();
     }
-
+ALTER TABLE table_name 
+ALTER COLUMN column_name new_data_type(size);
     function InitQueryFilter(data)
     {
-
-    $("#QueryHolder").html("<div id=\"querybuilder\" class=\"row\" style=\" width:100%;\"></div>");
-    var columnData = [
-            { field: 'EmployeeID', label: 'Employee ID', type: 'number' },
-            { field: 'FirstName', label: 'First Name', type: 'string' },
-            { field: 'TitleOfCourtesy', label: 'Title Of Courtesy', type: 'boolean', values: ['Mr.', 'Mrs.'] },
-            { field: 'Title', label: 'Title', type: 'string' },
-            { field: 'HireDate', label: 'Hire Date', type: 'date', format: 'dd/MM/yyyy' },
-            { field: 'Country', label: 'Country', type: 'string' },
-            { field: 'City', label: 'City', type: 'string' }
+        $("#QueryHolder").html("<div id=\"querybuilder\" class=\"row\" style=\" width:100%;\"></div>");
+        var columnData = [
+                { field: 'EmployeeID', label: 'Employee ID', type: 'number' },
+                { field: 'FirstName', label: 'First Name', type: 'string' },
+                { field: 'TitleOfCourtesy', label: 'Title Of Courtesy', type: 'boolean', values: ['Mr.', 'Mrs.'] },
+                { field: 'Title', label: 'Title', type: 'string' },
+                { field: 'HireDate', label: 'Hire Date', type: 'date', format: 'dd/MM/yyyy' },
+                { field: 'Country', label: 'Country', type: 'string' },
+                { field: 'City', label: 'City', type: 'string' }
         ];
-       
+
         var qryBldrObj = new ej.querybuilder.QueryBuilder({
             width: '100%',
             height: '67vh',
@@ -152,9 +153,5 @@
         });
       
     }   
-    function DropBindingdownChanged(args)
-    {
-        console.log(args);
-    }
-
+ 
 </script>

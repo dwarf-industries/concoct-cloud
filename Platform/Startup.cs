@@ -1,39 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Platform.DataHandlers;
-using Platform.DataHandlers.Interfaces;
-using Platform.Hubs;
-using Rokono_Control.Models;
-using RokonoControl;
-
-namespace Rokono_Control
+﻿namespace Rokono_Control
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.HttpsPolicy;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Newtonsoft.Json;
+    using Platform.DataHandlers;
+    using Platform.DataHandlers.Interfaces;
+    using Platform.Hubs;
+    using Rokono_Control.Models;
+    using RokonoControl;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
+        public StartupConfig StartConfiguration {get; set;}
         public IConfiguration Configuration;
 
  
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-          services.Configure<CookiePolicyOptions>(options =>
+            var fileData = File.ReadAllText("appsettings.Development.json");
+            StartConfiguration = JsonConvert.DeserializeObject<StartupConfig>(fileData);
+            services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
@@ -46,7 +49,7 @@ namespace Rokono_Control
                     .AllowAnyHeader();
             }));
             services.AddDbContext<RokonoControlContext>(options =>
-                options.UseSqlServer("Server=192.168.0.101;Database=RokonoControl;User ID=RGSOC;Password='EmkV3*eRjVbZ0!KpKlDHX';")
+                options.UseSqlServer(StartConfiguration.ConnectionStrings.RokonoControlContext)
             );
             services.AddRazorPages();
             services.AddSignalR();

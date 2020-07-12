@@ -22775,6 +22775,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Widget/Queries.cshtml",
+      "TargetPath": "Views\\Widget\\Queries.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Documentation/DocumentationBreadcrum/Default.cshtml",
       "TargetPath": "Views\\Shared\\Components\\Documentation\\DocumentationBreadcrum\\Default.cshtml",
       "FileKind": "mvc"
@@ -22922,6 +22927,11 @@
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/ChatComponents/ChatSettings/Default.cshtml",
       "TargetPath": "Views\\Shared\\Components\\ChatComponents\\ChatSettings\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Widget/NewQuery.cshtml",
+      "TargetPath": "Views\\Widget\\NewQuery.cshtml",
       "FileKind": "mvc"
     },
     {

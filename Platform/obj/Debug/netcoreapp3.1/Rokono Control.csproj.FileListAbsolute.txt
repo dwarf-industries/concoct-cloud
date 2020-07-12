@@ -199,6 +199,10 @@
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/UserSettings/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ViewChangelog/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Widgets/AssignedItems/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Widgets/BurdownChart/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Widgets/BurndownChartSettings/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Widgets/ChartForWorkItems/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Widgets/ChartForWorkItemsSettings/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Widgets/WidgetBuilder/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/WorkItemFileUploader/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Error.cshtml.g.cs
@@ -208,6 +212,8 @@
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutDocumentation.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutProjects.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Widget/NewQuery.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Widget/Queries.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/_ViewImports.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/_ViewStart.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.RazorTargetAssemblyInfo.cache
@@ -216,7 +222,3 @@
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.csproj.CopyComplete
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.dll
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.pdb
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Widgets/BurdownChart/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Widgets/BurndownChartSettings/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Widgets/ChartForWorkItems/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Widgets/ChartForWorkItemsSettings/Default.cshtml.g.cs
