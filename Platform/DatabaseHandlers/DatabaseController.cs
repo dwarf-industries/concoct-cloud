@@ -73,13 +73,14 @@ namespace Rokono_Control.DatabaseHandlers
             {
                 if(found)
                     return result;
-                if(entityType.Name.Contains(phase))
+                if(entityType.Name.Equals($"Rokono_Control.Models.{phase}"))
                 {
                     found = true;
                     foreach (var propertyType in entityType.GetProperties())
                     {
                         var fieldName = propertyType.GetColumnName();
                         var fieldType =propertyType.GetColumnType();
+                    
                         result.Add(new BindingQueryProperty{
                             Label = fieldName,
                             Field = fieldName,

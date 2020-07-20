@@ -149,6 +149,35 @@ namespace RokonoControl.Controllers
             }
             return result;
         }
+        [HttpGet]
+        public List<WorkItemTypes> GetWorkItemTypes()
+        {
+            var result = new List<WorkItemTypes>();
+            using (var context = new WorkItemsContext(Context,Configuration))
+            {
+                result = context.GetAllWorkItemTypes();
+            }
+            return result;
+        }
+        [HttpGet]
+        public List<WorkItemStates> GetWorkItemStates()
+        {
+            var result = new List<WorkItemStates>();
+            using (var context = new WorkItemsContext(Context,Configuration))
+            {
+                result = context.GetWorkItemStates();
+            }
+            return result;
+        }
+        [HttpGet]
+        public List<WorkItemIterations> GetProjectIterations(int projectId)
+        {
+            var result = new List<WorkItemIterations>();
+            using (var context = new WorkItemsContext(Context,Configuration))
+                result = context.GetProjectIterations(projectId);
+                 
+            return result;
+        }
         [HttpPost]
         public List<OutgoingIterationModel> GetIterations([FromBody] IncomingIterationRequest request)
         {

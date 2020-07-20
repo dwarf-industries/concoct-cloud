@@ -116,6 +116,9 @@ namespace Platform.DatabaseHandlers.Contexts
 
             return items;
         }
+
+        internal List<WorkItemStates> GetWorkItemStates() => Context.WorkItemStates.ToList();
+
         internal WorkItem GetPublicBugReport(int id)
         {
             var  item = Context.WorkItem

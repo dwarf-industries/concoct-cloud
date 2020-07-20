@@ -527,6 +527,32 @@ namespace Rokono_Control.Controllers
         {
             return ViewComponent("WorkItemFileUploader");
         }
+
+        [HttpGet]
+        public List<WorkItemAreas> GetWorkItemValueAreas() 
+        {
+            var result = new List<WorkItemAreas>();
+            using(var context = new WorkItemsContext(Context,Configuration))
+                result = context.GetProjectAreas(0);
+            return result;
+        }
+        [HttpGet]
+        public List<WorkItemSeverities> GetWorkItemSeverities() 
+        {
+            var result = new List<WorkItemSeverities>();
+            using(var context = new WorkItemsContext(Context,Configuration))
+                result = context.GetProjectSeverities(0);
+            return result;
+        }
+
+        [HttpGet]
+        public List<WorkItemReasons> GetWorkItemReasons() 
+        {
+            var result = new List<WorkItemReasons>();
+            using(var context = new WorkItemsContext(Context,Configuration))
+                result = context.GetProjectReasons(0);
+            return result;
+        }
         #endregion
     }
 }

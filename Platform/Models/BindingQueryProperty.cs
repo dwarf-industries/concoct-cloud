@@ -7,5 +7,6 @@ namespace Platform.Models
         public string Type { get; set; }
         public string[] Values { get; set; }
         public string Format { get; set; }
+        
     }
 }

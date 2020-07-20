@@ -33,11 +33,11 @@
         </div>
     </div>
 </div>
-<div class="row" id="ColumnHolder" style="padding: 0; margin-left: 9%; margin-right:9%;"> 
+@* <div class="row" id="ColumnHolder" style="padding: 0; margin-left: 9%; margin-right:9%;"> 
     <select id="TableColumns" style="padding: 5%;"> 
          
     </select>
-</div>
+</div> *@
 <div class="row">
     <button  style="width: auto; margin-left: 30%" onclick="AddComponent()" class="btn btn-primary e-control e-btn e-lib e-outline e-primary">
         Add Component
@@ -47,6 +47,9 @@
     $("#ColumnHolder").hide();
     var elem;
     var dropDownObj;
+    var dropDownObjWType;
+    var dropDownObjWArea;
+    var dropDownObjWSeverity;
     var boxObj;
     var ticksSlider;
     var element;
@@ -55,17 +58,549 @@
     var TableName;
     var LastRule;
     var RowEnabled;
-   
+    var filter = [
+    {
+        field: 'Id',
+        label: 'Id',
+        type: 'number'
+    },
+    {
+        field: 'AssignedAccount',
+        label: 'Account',
+        type: 'number',
+        operators: [
+            { key: 'Equal', value: 'equal' },
+            { key: 'Not Equal', value: 'notequal' }
+        ],
+        template: {
+            create: function () {
+                elem = document.createElement('input');
+                elem.setAttribute('type', 'text');
+                return elem;
+            },
+            destroy: function (args) {
+                var dropdown = ej.base.getComponent(document.getElementById(args.elementId), 'dropdownlist');
+                if (dropdown) {
+                    dropdown.destroy();
+                }
+            },
+            write: function (args) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Accounts/GetProjectUsers?projectId=@ProjectId',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (ds) {
+                        console.log(ds);
+                        dropDownObj = new ej.dropdowns.DropDownList({
+                            dataSource: ds,
+                            value: args.values ? args.values.accountId : ds[0].accountId,
+                            fields: { text: 'name' },
+                            change: function (e) {
+                                console.log(e);
+                                qryBldrObj.notifyChange(e.itemData.accountId, e.element);
+                            }
+                        });
+                        dropDownObj.appendTo('#' + args.elements.id);
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            
+                
+
+               
+            }
+        }
+    },
+    {
+        field: 'WorkItemTypeId',
+        label: 'Work Item Type',
+        type: 'number',
+        operators: [
+            { key: 'Equal', value: 'equal' },
+            { key: 'Not Equal', value: 'notequal' }
+        ],
+        template: {
+            create: function () {
+                elem = document.createElement('input');
+                elem.setAttribute('type', 'text');
+                return elem;
+            },
+            destroy: function (args) {
+                var dropdown = ej.base.getComponent(document.getElementById(args.elementId), 'dropdownlist');
+                if (dropdown) {
+                    dropdown.destroy();
+                }
+            },
+            write: function (args) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Boards/GetWorkItemTypes',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (ds) {
+                        console.log(ds);
+                        dropDownObjWType = new ej.dropdowns.DropDownList({
+                            dataSource: ds,
+                            value: args.values ? args.values.id : ds[0].id,
+                            fields: { text: 'typeName' },
+                            change: function (e) {
+                                console.log(e);
+                                qryBldrObj.notifyChange(e.itemData.id, e.element);
+                            }
+                        });
+                        dropDownObjWType.appendTo('#' + args.elements.id);
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            
+                
+
+               
+            }
+        }
+    },
+    {
+        field: 'StateId',
+        label: 'Work Item State',
+        type: 'number',
+        operators: [
+            { key: 'Equal', value: 'equal' },
+            { key: 'Not Equal', value: 'notequal' }
+        ],
+        template: {
+            create: function () {
+                elem = document.createElement('input');
+                elem.setAttribute('type', 'text');
+                return elem;
+            },
+            destroy: function (args) {
+                var dropdown = ej.base.getComponent(document.getElementById(args.elementId), 'dropdownlist');
+                if (dropdown) {
+                    dropdown.destroy();
+                }
+            },
+            write: function (args) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Boards/GetWorkItemStates',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (ds) {
+                        console.log(ds);
+                        dropDownObjWType = new ej.dropdowns.DropDownList({
+                            dataSource: ds,
+                            value: args.values ? args.values.id : ds[0].id,
+                            fields: { text: 'stateName' },
+                            change: function (e) {
+                                console.log(e);
+                                qryBldrObj.notifyChange(e.itemData.id, e.element);
+                            }
+                        });
+                        dropDownObjWType.appendTo('#' + args.elements.id);
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            
+                
+
+               
+            }
+        }
+    },
+    {
+        field: 'Area',
+        label: 'Work Item Area',
+        type: 'number',
+        operators: [
+            { key: 'Equal', value: 'equal' },
+            { key: 'Not Equal', value: 'notequal' }
+        ],
+        template: {
+            create: function () {
+                elem = document.createElement('input');
+                elem.setAttribute('type', 'text');
+                return elem;
+            },
+            destroy: function (args) {
+                var dropdown = ej.base.getComponent(document.getElementById(args.elementId), 'dropdownlist');
+                if (dropdown) {
+                    dropdown.destroy();
+                }
+            },
+            write: function (args) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Dashboard/GetWorkItemValueAreas',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (ds) {
+                        console.log(ds);
+                        dropDownObjWArea = new ej.dropdowns.DropDownList({
+                            dataSource: ds,
+                            value: args.values ? args.values.id : ds[0].id,
+                            fields: { text: 'areaName' },
+                            change: function (e) {
+                                console.log(e);
+                                qryBldrObj.notifyChange(e.itemData.id, e.element);
+                            }
+                        });
+                        dropDownObjWArea.appendTo('#' + args.elements.id);
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            
+                
+
+               
+            }
+        }
+    },
+    {
+        field: 'Severity',
+        label: 'Work Item Severity',
+        type: 'number',
+        operators: [
+            { key: 'Equal', value: 'equal' },
+            { key: 'Not Equal', value: 'notequal' }
+        ],
+        template: {
+            create: function () {
+                elem = document.createElement('input');
+                elem.setAttribute('type', 'text');
+                return elem;
+            },
+            destroy: function (args) {
+                var dropdown = ej.base.getComponent(document.getElementById(args.elementId), 'dropdownlist');
+                if (dropdown) {
+                    dropdown.destroy();
+                }
+            },
+            write: function (args) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Dashboard/GetWorkItemSeverities',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (ds) {
+                        console.log(ds);
+                        dropDownObjWSeverity = new ej.dropdowns.DropDownList({
+                            dataSource: ds,
+                            value: args.values ? args.values.id : ds[0].id,
+                            fields: { text: 'severityName' },
+                            change: function (e) {
+                                console.log(e);
+                                qryBldrObj.notifyChange(e.itemData.id, e.element);
+                            }
+                        });
+                        dropDownObjWSeverity.appendTo('#' + args.elements.id);
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            
+                
+
+               
+            }
+        }
+    },
+    {
+        field: 'ReasonId',
+        label: 'Work Item Reasons',
+        type: 'number',
+        operators: [
+            { key: 'Equal', value: 'equal' },
+            { key: 'Not Equal', value: 'notequal' }
+        ],
+        template: {
+            create: function () {
+                elem = document.createElement('input');
+                elem.setAttribute('type', 'text');
+                return elem;
+            },
+            destroy: function (args) {
+                var dropdown = ej.base.getComponent(document.getElementById(args.elementId), 'dropdownlist');
+                if (dropdown) {
+                    dropdown.destroy();
+                }
+            },
+            write: function (args) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Dashboard/GetWorkItemReasons',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (ds) {
+                        console.log(ds);
+                        dropDownObjWSeverity = new ej.dropdowns.DropDownList({
+                            dataSource: ds,
+                            value: args.values ? args.values.id : ds[0].id,
+                            fields: { text: 'reasonName' },
+                            change: function (e) {
+                                console.log(e);
+                                qryBldrObj.notifyChange(e.itemData.id, e.element);
+                            }
+                        });
+                        dropDownObjWSeverity.appendTo('#' + args.elements.id);
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            
+                
+
+               
+            }
+        }
+    },
+    {
+        field: 'Iteration',
+        label: 'Iteration',
+        type: 'number',
+        operators: [
+            { key: 'Equal', value: 'equal' },
+            { key: 'Not Equal', value: 'notequal' }
+        ],
+        template: {
+            create: function () {
+                elem = document.createElement('input');
+                elem.setAttribute('type', 'text');
+                return elem;
+            },
+            destroy: function (args) {
+                var dropdown = ej.base.getComponent(document.getElementById(args.elementId), 'dropdownlist');
+                if (dropdown) {
+                    dropdown.destroy();
+                }
+            },
+            write: function (args) {
+                $.ajax({
+                    type: 'GET',
+                    url:  '/Boards/GetProjectIterations?projectId=@ProjectId',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (ds) {
+                        console.log(ds);
+                        dropDownObjWSeverity = new ej.dropdowns.DropDownList({
+                            dataSource: ds,
+                            value: args.values ? args.values.id : ds[0].id,
+                            fields: { text: 'iterationName' },
+                            change: function (e) {
+                                console.log(e);
+                                qryBldrObj.notifyChange(e.itemData.id, e.element);
+                            }
+                        });
+                        dropDownObjWSeverity.appendTo('#' + args.elements.id);
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+
+            }
+        }
+    },
+    {
+        field: 'TransactionType',
+        label: 'TransactionType',
+        type: 'string',
+        operators: [{
+            key: 'Equal',
+            value: 'equal'
+        }, {
+            key: 'Not Equal',
+            value: 'notequal'
+        }],
+        template: {
+            create: function () {
+                elem = document.createElement('input');
+                elem.setAttribute('type', 'checkbox');
+                return elem;
+            },
+            destroy: function (args) {
+                ej.base.getComponent(document.getElementById(args.elementId), 'checkbox').destroy();
+            },
+            write: function (args) {
+                var checked = args.values === 'IsExpensive' ? true : false;
+                boxObj = new ej.buttons.CheckBox({
+                    label: 'Is Expensive',
+                    checked: checked,
+                    change: function (e) {
+                        qryBldrObj.notifyChange(e.checked ? 'expensive' : 'income', e.event.target);
+                    }
+                });
+                boxObj.appendTo('#' + args.elements.id);
+            }
+        }
+    },
+    {
+        field: 'Description',
+        label: 'Description',
+        type: 'string'
+    },
+    {
+        field: 'OriginEstimate',
+        label: 'Original Estimate',
+        type: 'number'
+    },
+    {
+        field: 'Remaining',
+        label: 'Remaining',
+        type: 'number'
+    },
+    {
+        field: 'Compleated',
+        label: 'Compleated',
+        type: 'number'
+    },
+    {
+        field: 'TimeCapacity',
+        label: 'TimeCapacity',
+        type: 'number'
+    },
+    {
+        field: 'Effort',
+        label: 'Effort',
+        type: 'number'
+    },
+    {
+        field: 'StoryPoints',
+        label: 'Story Points',
+        type: 'number'
+    },
+    {
+        field: 'StackRank',
+        label: 'Stack Rank',
+        type: 'number'
+    },
+    {
+        field: 'Id',
+        label: 'Id',
+        type: 'number'
+    },
+    {
+        field: 'RiskId',
+        label: 'Risk',
+        type: 'number'
+    },
+    {
+        field: 'Reason',
+        label: 'Reason',
+        type: 'string'
+    },
+    {
+        field: 'ResolvedReason',
+        label: 'Resolved Reason',
+        type: 'string'
+    },
+    {
+        field: 'AcceptanceCriteria',
+        label: 'Acceptance Criteria',
+        type: 'string'
+    },
+    {
+        field: 'SystemInfo',
+        label: 'System Info',
+        type: 'string'
+    },
+    {
+        field: 'StartDate',
+        label: 'Start Date',
+        type: 'date'
+    },
+    {
+        field: 'DueDate',
+        label: 'Due Date',
+        type: 'date'
+    },
+    {
+        field: 'EndDate',
+        label: 'End Date',
+        type: 'date'
+    },
+    {
+        field: 'Amount',
+        label: 'Amount',
+        type: 'number',
+        operators: [
+            { key: 'Equal', value: 'equal' },
+            { key: 'Greater than', value: 'greaterthan' },
+            { key: 'Less than', value: 'lessthan' },
+            { key: 'Less than or equal', value: 'lessthanorequal' },
+            { key: 'Greater than or equal', value: 'greaterthanorequal' },
+            { key: 'Not equal', value: 'notequal' }
+        ],
+        template: {
+            create: function () {
+                elem = document.createElement('div');
+                elem.setAttribute('class', 'ticks_slider');
+                return elem;
+            },
+            destroy: function (args) {
+                ej.base.getComponent(document.getElementById(args.elementId), 'slider').destroy();
+            },
+            write: function (args) {
+                ticksSlider = new ej.inputs.Slider({
+                    value: args.values,
+                    min: 0,
+                    max: 100,
+                    tooltip: { isVisible: true, placement: 'Before', showOn: 'Hover' },
+                    type: 'MinRange',
+                    change: function (e) {
+                        qryBldrObj.notifyChange(e.value, args.elements);
+                    }
+                });
+                ticksSlider.appendTo('#' + args.elements.id);
+            }
+        }
+    }
+    ];
+    InitQueryFilter(filter);
+    @* GetFilterData("WorkItem");
     function GetFilterData(current)
     {
-        console.log(current);
-        InitQueryColumn(current);
-        InitQueryFilter(current);
-        @* TableName = current; *@
-      
-    }
 
-    function InitQueryColumn(data)
+        TableName = current;
+        var dto = {
+            "phase": current
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Widget/GetQueryProperties',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (currentReponse) {
+                console.log(currentReponse);
+                InitQueryFilter(currentReponse);
+
+            },  
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    } *@
+
+    @* function InitQueryColumn(data)
     {
         $("#ColumnHolder").html("");
 
@@ -85,9 +620,8 @@
         });
         bindingColumnSelect.appendTo('#TableColumns');
         $("#ColumnHolder").show();
-    }
-ALTER TABLE table_name 
-ALTER COLUMN column_name new_data_type(size);
+    } *@ 
+ 
     function InitQueryFilter(data)
     {
         $("#QueryHolder").html("<div id=\"querybuilder\" class=\"row\" style=\" width:100%;\"></div>");
@@ -101,7 +635,7 @@ ALTER COLUMN column_name new_data_type(size);
                 { field: 'City', label: 'City', type: 'string' }
         ];
 
-        var qryBldrObj = new ej.querybuilder.QueryBuilder({
+        qryBldrObj = new ej.querybuilder.QueryBuilder({
             width: '100%',
             height: '67vh',
             columns: data,
@@ -114,6 +648,7 @@ ALTER COLUMN column_name new_data_type(size);
     }
     function RuleChanged(args)
     {
+        console.log(args);
         LastRule = args.rule;
     }
 
