@@ -522,3 +522,10 @@
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Rokono Control.csproj.CopyComplete
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Rokono Control.dll
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Rokono Control.pdb
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Razor/Views/Shared/Components/Widgets/ChartForWorkItems/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Razor/Views/Shared/Components/Widgets/ChartForWorkItemsSettings/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Razor/Views/Widget/NewQuery.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Razor/Views/Widget/Queries.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Release/netcoreapp3.1/linux-x64/Renci.SshNet.dll
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Release/netcoreapp3.1/linux-x64/SshNet.Security.Cryptography.dll
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Release/netcoreapp3.1/linux-x64/System.Xml.XPath.XmlDocument.dll

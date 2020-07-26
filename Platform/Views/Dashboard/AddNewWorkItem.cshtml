@@ -15,6 +15,7 @@
     var Risks = ViewData["Risks"] as List<Risks>;
     var projectId = ViewData["ProjectId"] as int?;
     var WorkItemType = ViewData["WorkItemType"] as int?;
+    var WorkItemTypeName = ViewData["WorkItemTypeName"] as string;
     var ParentId = ViewData["ParentId"] as int?;
     var ReturnPath = ViewData["ReturnPath"] as string;
     var cIteration = ViewData["ActiveIteration"] as int?;
@@ -54,9 +55,9 @@
         <div class="main-card mb-1 card">
             <div class="card-body">
                
-                <p>New {NameHere} <i class="fas fa-exclamation-circle"></i> Field 'Title' cannot be empty.</p>
+                <p>New  @WorkItemTypeName <i class="fas fa-exclamation-circle"></i> Field 'Title' cannot be empty.</p>
                 <div class="row">
-                    <div class=" form-group" style="width:100%"><label for="Title" class="">Title</label><input name="Title" id="Title" placeholder="Title"  style="width:100%" class="form-control-sm"></div>
+                    <input name="Title" id="Title" placeholder="Title"  style="width:100%" class="form-control-sm"/>
                 </div>
                 <div  class="row">
                      <input type="text" id='ProjectUsers' />
@@ -663,15 +664,13 @@
     var inputobj2 = new ej.inputs.TextBox({
         placeholder: 'Work item Id',
         floatLabelType: 'Auto',
-        enableRtl: true
-    });
+     });
     inputobj2.appendTo('#workItemInputObj');
     
     var title = new ej.inputs.TextBox({
         placeholder: 'Work Item Title',
         floatLabelType: 'Auto',
-        enableRtl: true
-    });
+     });
     title.appendTo('#Title');
 
     function OpenModal()

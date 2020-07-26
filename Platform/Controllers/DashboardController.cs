@@ -83,6 +83,9 @@ namespace Rokono_Control.Controllers
                 ViewData["ValueAreas"] = context.GetProjectValueAreas(projectId);
                 ViewData["Risks"] = context.GetProjectRisks(projectId);
                 ViewData["WorkItemType"] = workItemType;
+                ViewData["WorkItemTypeName"] = context.GetAllWorkItemTypes()
+                                                      .FirstOrDefault(x=>x.Id == workItemType)
+                                                      .TypeName;
                 ViewData["ProjectId"] = projectId;
                 ViewData["ParentId"] = parentId;
                 ViewData["ActiveIteration"] = context.GetProjectDefautIteration(projectId);
@@ -120,6 +123,9 @@ namespace Rokono_Control.Controllers
                 ViewData["Iterations"] = context.GetProjectIterations(projectId);
                 ViewData["WorkItemFiles"] = context.GetWorkItemFiles(workItem);
                 ViewData["WorkItemType"] = currentWorkItem.WorkItemTypeId;
+                ViewData["WorkItemTypeName"] = context.GetAllWorkItemTypes()
+                                        .FirstOrDefault(x=>x.Id == currentWorkItem.WorkItemTypeId)
+                                        .TypeName;
                 ViewData["WorkItemData"] = currentWorkItem;
                 ViewData["ProjectId"] = projectId;
                 ViewData["ReturnPath"] = returnUrl;
