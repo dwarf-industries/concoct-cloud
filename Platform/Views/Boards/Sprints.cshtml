@@ -355,6 +355,7 @@
 
 
             kanbanObj.appendTo('#Kanban');
+         
             ShowContent();
           }
 
@@ -576,15 +577,17 @@
     }
     function NewWorkItem(btn)
     {
-        console.log(btn.id);
-        workItemName = btn.id;
+        console.log(btn.id.split("|")[0]);
+        
+        workItemName = btn.id.split("|")[0];
+
         dialogNewWI.show();
 
     }
 
     function SwimlineBegin(args)
     {
- 
+        console.log(args);
     }
     function ChangeIteration()
     {
@@ -667,8 +670,9 @@
 </script>
 
 <script id="swimlaneTemplate" type="text/x-jsrender">
-     <div style="width:100%; display:inline-block">
-        <span >${textField}</span>
+    <div style="width:100%; display:inline-block">
+        <span>${textField}</span>
         <button class="e-control e-btn e-lib e-outline e-primary" style="margin-left:10px;" id="${textField}"  onclick='NewWorkItem(this)' ><span class="e-icons plus">New Work Item</span></button>
+
     </div>  
 </script>
