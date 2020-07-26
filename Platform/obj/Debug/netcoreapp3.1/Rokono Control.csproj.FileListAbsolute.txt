@@ -222,3 +222,6 @@
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.csproj.CopyComplete
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.dll
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.pdb
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Renci.SshNet.dll
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/SshNet.Security.Cryptography.dll
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Xml.XPath.XmlDocument.dll

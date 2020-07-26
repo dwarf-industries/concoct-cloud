@@ -48,6 +48,7 @@
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             }));
+            System.Console.WriteLine(StartConfiguration.ConnectionStrings.RokonoControlContext);
             services.AddDbContext<RokonoControlContext>(options =>
                 options.UseSqlServer(StartConfiguration.ConnectionStrings.RokonoControlContext)
             );
