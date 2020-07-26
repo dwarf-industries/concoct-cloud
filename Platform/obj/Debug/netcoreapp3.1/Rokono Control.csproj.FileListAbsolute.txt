@@ -46,6 +46,8 @@
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Newtonsoft.Json.Bson.dll
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/NuGet.Frameworks.dll
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/BouncyCastle.Crypto.dll
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Renci.SshNet.dll
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/SshNet.Security.Cryptography.dll
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Collections.Immutable.dll
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.ComponentModel.Annotations.dll
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Composition.AttributedModel.dll
@@ -58,6 +60,7 @@
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Runtime.Caching.dll
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Security.Cryptography.ProtectedData.dll
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Threading.Channels.dll
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Xml.XPath.XmlDocument.dll
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/cs/Microsoft.CodeAnalysis.resources.dll
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/de/Microsoft.CodeAnalysis.resources.dll
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/es/Microsoft.CodeAnalysis.resources.dll
@@ -212,6 +215,7 @@
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutDocumentation.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutProjects.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Survey/Index.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Widget/NewQuery.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Widget/Queries.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/_ViewImports.cshtml.g.cs
@@ -222,6 +226,3 @@
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.csproj.CopyComplete
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.dll
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.pdb
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/Renci.SshNet.dll
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/SshNet.Security.Cryptography.dll
-/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/bin/Debug/netcoreapp3.1/System.Xml.XPath.XmlDocument.dll

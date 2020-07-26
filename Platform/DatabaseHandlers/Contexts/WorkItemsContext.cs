@@ -373,11 +373,16 @@ namespace Platform.DatabaseHandlers.Contexts
                         AssgignedAccount = sprintTask.AssignedAccountNavigation != null ? sprintTask.AssignedAccountNavigation.GitUsername : "Unassigned"
                     });
                 });
+                var complete = default(float);
+                var remaining = default(float);
                 sprintTasks.ForEach(task =>
                 {
                     var taskBoard = Context.AssociatedBoardWorkItems.Include(z => z.Board)
                                                                     .FirstOrDefault(z => z.WorkItemId == task.WorkItemChildId);
-
+                    if(!string.IsNullOrEmpty(x.Compleated))
+                        complete += float.Parse(x.Compleated);
+                    if(!string.IsNullOrEmpty(x.Remaining))
+                        remaining += float.Parse(x.Remaining);
                     var activeBoard = string.Empty;
                     if (taskBoard == null)
                         activeBoard = "Open";
@@ -393,7 +398,9 @@ namespace Platform.DatabaseHandlers.Contexts
                         Priority = GetCardType(task.WorkItemChild.WorkItemType.TypeName),
                         Type = $"{activeBoard}",
                         Status = activeBoard,
-                        Assignee = x.Title,
+                        Assignee = $"{x.Title} | Complete {complete} | Remaining {remaining}",
+                        Complete = complete.ToString(),
+                        Remaining = remaining.ToString(),
                         AssgignedAccount = task.WorkItemChild.AssignedAccountNavigation != null ? task.WorkItemChild.AssignedAccountNavigation.GitUsername : "Unassigned"
                     });
                 });

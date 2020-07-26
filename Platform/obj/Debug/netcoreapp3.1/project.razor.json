@@ -22835,6 +22835,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Survey/Index.cshtml",
+      "TargetPath": "Views\\Survey\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Home/Error.cshtml",
       "TargetPath": "Views\\Home\\Error.cshtml",
       "FileKind": "mvc"
