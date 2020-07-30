@@ -17,6 +17,7 @@ namespace Rokono_Control.Models
             AssociatedUserChatNotifications = new HashSet<AssociatedUserChatNotifications>();
             AssociatedUserChatRights = new HashSet<AssociatedUserChatRights>();
             AssociatedUserNotifications = new HashSet<AssociatedUserNotifications>();
+            Surveys = new HashSet<Surveys>();
             UserQueries = new HashSet<UserQueries>();
             WorkItem = new HashSet<WorkItem>();
             WorkItemMessage = new HashSet<WorkItemMessage>();
@@ -43,6 +44,7 @@ namespace Rokono_Control.Models
         public virtual ICollection<AssociatedUserChatNotifications> AssociatedUserChatNotifications { get; set; }
         public virtual ICollection<AssociatedUserChatRights> AssociatedUserChatRights { get; set; }
         public virtual ICollection<AssociatedUserNotifications> AssociatedUserNotifications { get; set; }
+        public virtual ICollection<Surveys> Surveys { get; set; }
         public virtual ICollection<UserQueries> UserQueries { get; set; }
         public virtual ICollection<WorkItem> WorkItem { get; set; }
         public virtual ICollection<WorkItemMessage> WorkItemMessage { get; set; }
