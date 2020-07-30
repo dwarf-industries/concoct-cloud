@@ -29,6 +29,7 @@ namespace Rokono_Control.Models
             ChatRoomRights = new HashSet<ChatRoomRights>();
             ChatRooms = new HashSet<ChatRooms>();
             Documentation = new HashSet<Documentation>();
+            Surveys = new HashSet<Surveys>();
             UserDashboards = new HashSet<UserDashboards>();
         }
 
@@ -69,6 +70,7 @@ namespace Rokono_Control.Models
         public virtual ICollection<ChatRoomRights> ChatRoomRights { get; set; }
         public virtual ICollection<ChatRooms> ChatRooms { get; set; }
         public virtual ICollection<Documentation> Documentation { get; set; }
+        public virtual ICollection<Surveys> Surveys { get; set; }
         public virtual ICollection<UserDashboards> UserDashboards { get; set; }
     }
 }

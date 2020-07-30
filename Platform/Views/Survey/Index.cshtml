@@ -4,3 +4,159 @@
     var ProjectId = ViewData["ProjectId"] as int?;
  
  }
+
+  <div class="row">
+
+
+            <div class="col-md-12">
+                <button type="button" id="iconbtn" class="btn btn-primary" onclick="CallUrl('/Survey/CreateNewSurvey?projectId=@ProjectId')">New Survey</button>
+                <button id="ImportWorkItemBtn" onclick="ImportNewWorkItems()"></i>Import Work Items</button>
+                <button id="ExportWorkItemBtn">Export Work Items</button>
+ 
+            </div>
+
+</div>
+<div class="row">
+    <div class="control-section" style="height:87vh;">
+        <div class="content-wrapper">
+            <div id="TreeGrid"></div>
+        </div>
+    </div>
+</div>
+@* @await Component.InvokeAsync("ManagementRights", "UploadBox") *@
+<script>
+     ej.base.enableRipple(true);
+    var button = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    button.appendTo('#iconbtn');
+    var importWorkItemBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    importWorkItemBtn.appendTo('#ImportWorkItemBtn');
+    var exportWorkItemBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    exportWorkItemBtn.appendTo('#ExportWorkItemBtn');
+    var recycleBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    recycleBtn.appendTo('#RecycleBtn');
+    var dto = {
+        "ProjectId" : @ProjectId
+    }
+    console.log(dto);
+    $.ajax({
+        type: 'POST',
+        url: '/Survey/GetProjectSurveys',
+        data: JSON.stringify(dto),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            InitiliazeGrid(response);
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    });
+     function InitiliazeGrid(data )
+    {
+        console.log(data);
+
+
+        var treeGridObj = new ej.treegrid.TreeGrid({
+            dataSource: data,
+            allowSelection: true,
+            allowFiltering: true,
+            allowSorting: true,
+            toolbar: ['Search'],
+            recordDoubleClick: EditWorkItem,
+            rowSelected: RowSelected,
+            rowDeselected: RowDeselected,
+            enableVirtualization: true,
+            filterSettings: { type: 'Menu' },
+            queryCellInfo: customiseCell,
+            selectionSettings: { persistSelection: true, type: "Multiple" },
+            enableHover: false,
+            allowPaging: true,
+            pageSettings: { pageSize: 20 },
+            height:'650px',
+            columns: [
+                { type: "checkbox", field: "", allowFiltering: false, allowSorting: false, width: '20' , textAlign: 'center'},
+                { field: 'surveyTitle', headerText: 'Type', width: '10',customAttributes: {class: "workItemIcon"}, textAlign: 'center' },
+                { field: 'surveyDescription', headerText: 'Title', width: 125 },
+             ]
+        });
+
+        treeGridObj.appendTo('#TreeGrid');
+        ShowContent();
+
+
+    }
+
+    function customiseCell(args) {
+        console.log(args);
+        if (args.column.headerText === 'Type' ){
+            args.cell.setAttribute('class', args.data.workItemIcon);
+        } 
+    }
+    function RowSelected(args)
+    {
+        console.log(args);
+        selectedRows.push(args.data);
+    }
+
+    function RowDeselected(args)
+    {
+        console.log(args.data);
+        var index = selectedRows.indexOf(args.data[0]);
+        if (index > -1) {
+            selectedRows.splice(index, 1);
+        }
+        console.log(selectedRows);
+
+    }
+
+    function EditWorkItem(args)
+    {
+        console.log(args);
+        window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&Id="+args.rowData.id;
+    }
+    function DeleteWorkItems()
+    {
+        console.log(selectedRows);
+        var incomingSprintDTO =
+        {
+            "Items":  selectedRows
+        }
+
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/Backlogs/ItemsRemoved',
+            data: JSON.stringify(incomingSprintDTO),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(response) {
+               window.location.href = window.location;
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+    function ImportItems()
+    {
+        var incomingSprintDTO =
+        {
+            "Data":  $("#exportContent").children()[0].innerHTML
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Boards/ImportWorkItems',
+            data: JSON.stringify(incomingSprintDTO),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(response) {
+        //       window.location.href = window.location;
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+</script>

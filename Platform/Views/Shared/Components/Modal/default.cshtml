@@ -1,0 +1,35 @@
+
+
+<div id="exportDialog">
+     
+</div>
+
+<script>
+var exportDialog;
+
+function ImportNewWorkItems()
+{
+    exportDialog.show();
+}
+exportDialog = new ej.popups.Dialog({
+    width: '600px',
+    header: 'Project Backup',
+    isModal: true,
+    animationSettings: { effect: 'None' },
+    visible: false,
+    open: ExportDialogOpen,
+    close: ExportDialogClose
+});
+exportDialog.appendTo('#exportDialog');
+exportDialog.hide();
+
+
+function ExportDialogOpen()
+{
+    document.getElementById('exportDialog').style.display = 'block';
+}
+function ExportDialogClose()
+{
+    document.getElementById('exportDialog').style.display = 'none';
+}
+</script>
