@@ -31,6 +31,14 @@ namespace Platform.Controllers
             return View();
         }
 
+        public IActionResult CreateNewSurvey(int projectId) 
+        {
+            ViewData["ProjectId"] = projectId;
+            using(var context = new SurveyContext(Context,Config))
+                ViewData["BuildingBlocks"] = context.GetSurveyComponents();
+            return View();
+        }
+
         [HttpPost]
         public async Task<List<Surveys>> GetProjectSurveys([FromBody] IncomingIdRequest request)
         {
@@ -41,6 +49,8 @@ namespace Platform.Controllers
             }
             return result;
         }
+
+
 
         
     }

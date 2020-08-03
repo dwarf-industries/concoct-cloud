@@ -833,6 +833,11 @@ namespace Rokono_Control.Models
                 entity.Property(e => e.RiskName).HasMaxLength(300);
             });
 
+            modelBuilder.Entity<SurveyComponent>(entity =>
+            {
+                entity.Property(e => e.PlatformName).HasMaxLength(200);
+            });
+
             modelBuilder.Entity<SurveyPage>(entity =>
             {
                 entity.Property(e => e.PageName).HasMaxLength(10);

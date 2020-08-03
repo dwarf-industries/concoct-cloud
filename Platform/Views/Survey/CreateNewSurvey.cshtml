@@ -1,0 +1,78 @@
+@{
+    ViewData["Title"] = "Survey Management Panel";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var ProjectId = ViewData["ProjectId"] as int?;
+    var bindingComponents = ViewData["BuildingBlocks"] as List<SurveyComponent>; 
+ }
+
+ <style>
+    .ChipTag{
+    background: red;
+    border-radius: 15px;
+    padding: 4px;
+    color: white;
+ }
+ .ChipTag:hover{
+    cursor: move;
+    background: red;
+    border-radius: 15px;
+    padding: 4px;
+    color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
+ }
+ </style>
+
+
+<div class="row  card-layout">
+    <div class="col-md-12">
+        <!-- Basic Card Layout  -->
+        <div tabindex="0" class="e-card" id="basic_card" >
+            <div class="e-card-header">
+
+            </div>
+            <div class="e-card-content">
+                <div class="row">
+                    @foreach (var component in bindingComponents)
+                    {
+                            <span class="ChipTag" draggable="true" ondragstart="drag(event)"  id="Tag_@component.Id">@component.PlatformName</span>
+
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row card-layout" style="height: 80vh;">
+    <div class="col-md-12">
+        <div tabindex="1" class="e-card" id="basic_card" style="height: 80vh;">
+            <div class="e-card-header">
+
+            </div>
+            <div class="e-card-content" style="height: 100%;"  ondrop="drop(event)" ondragover="allowDrop(event)"style="z-index: 200; position: relative;">
+                 
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+ 
+var draggableId;
+function drag(ev)
+{ 
+    draggableId = ev.originalTarget.attributes.id;
+} 
+
+function drop(args)
+{
+    console.log(draggableId);
+}
+function allowDrop(args)
+{
+    args.preventDefault();
+}
+</script>

@@ -21,6 +21,16 @@ namespace Platform.DataHandlers
         }
 
 
+        internal List<SurveyComponent> GetSurveyComponents()
+        {
+            return Context.SurveyComponent.ToList();
+        }
+
+        internal async Task<List<Surveys>> GetProjectSurveys(int projectId)
+        {
+            return await Task.Run(() => Context.Surveys.Where(x=>x.ProjectId == projectId).ToList());
+        }
+
 
         protected virtual void Dispose(bool disposing)
         {
@@ -49,11 +59,6 @@ namespace Platform.DataHandlers
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
-        }
-
-        internal async Task<List<Surveys>> GetProjectSurveys(int projectId)
-        {
-            return await Task.Run(() => Context.Surveys.Where(x=>x.ProjectId == projectId).ToList());
         }
 
        
