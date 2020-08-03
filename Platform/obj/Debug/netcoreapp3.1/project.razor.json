@@ -18751,6 +18751,55 @@
       },
       {
         "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__ModalViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:modal",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "child-name",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "child-name",
+            "TypeName": "System.String",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "childName"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__ModalViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "Modal"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
         "Name": "__Generated__ModuleDisabledWarningViewComponentTagHelper",
         "AssemblyName": "Rokono Control",
         "Documentation": null,
@@ -19899,55 +19948,6 @@
           "Runtime.Name": "ITagHelper",
           "Common.TypeName": "__Generated__WorkItemFileUploaderViewComponentTagHelper",
           "MVC.ViewComponent.Name": "WorkItemFileUploader"
-        }
-      },
-      {
-        "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__ModalViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "Documentation": null,
-        "TagOutputHint": null,
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:modal",
-            "ParentTag": null,
-            "TagStructure": 0,
-            "Attributes": [
-              {
-                "Name": "child-name",
-                "NameComparison": 0,
-                "Value": null,
-                "ValueComparison": 0,
-                "Diagnostics": [],
-                "Metadata": {}
-              }
-            ],
-            "Diagnostics": []
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "child-name",
-            "TypeName": "System.String",
-            "IsEnum": false,
-            "IndexerNamePrefix": null,
-            "IndexerTypeName": null,
-            "Documentation": null,
-            "Diagnostics": [],
-            "Metadata": {
-              "Common.PropertyName": "childName"
-            },
-            "BoundAttributeParameters": []
-          }
-        ],
-        "AllowedChildTags": [],
-        "Diagnostics": [],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__ModalViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "Modal"
         }
       },
       {
@@ -22914,6 +22914,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Survey/CreateNewSurvey.cshtml",
+      "TargetPath": "Views\\Survey\\CreateNewSurvey.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Boards/Index.cshtml",
       "TargetPath": "Views\\Boards\\Index.cshtml",
       "FileKind": "mvc"
@@ -22951,6 +22956,11 @@
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Commit/Files.cshtml",
       "TargetPath": "Views\\Commit\\Files.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Modal/default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Modal\\default.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -23011,11 +23021,6 @@
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/OutboundComponents/BugReportForm/Default.cshtml",
       "TargetPath": "Views\\Shared\\Components\\OutboundComponents\\BugReportForm\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/ModalComponent/default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\ModalComponent\\default.cshtml",
       "FileKind": "mvc"
     },
     {

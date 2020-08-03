@@ -12,6 +12,7 @@ namespace Rokono_Control.Models
 
         public int Id { get; set; }
         public string ComponentInternalName { get; set; }
+        public string PlatformName { get; set; }
 
         public virtual ICollection<AssociatedPageSurveyComponents> AssociatedPageSurveyComponents { get; set; }
     }
