@@ -229,10 +229,47 @@ namespace Platform.DatabaseHandlers.Contexts
             Context.Update(currentCard);
             Context.SaveChanges();
         }
+        public WorkItemIterations AssignProjectDefaultIterations(int projectId)
+        {
+            var Iterations = new List<WorkItemIterations>{
+                new WorkItemIterations {IterationName = "Iteration 1", IsActive = 1},
+                new WorkItemIterations { IterationName = "Iteration 2", IsActive = 0},
+                new WorkItemIterations { IterationName = "Iteration 3", IsActive = 0}
+            };
+            Iterations.ForEach(x =>
+            {
+                var iteration = x;
+                var currentIteration = Context.WorkItemIterations.Add(iteration);
+                Context.SaveChanges();
+                Context.AssociatedProjectIterations.Add(new AssociatedProjectIterations
+                {
+                    ProjectId = projectId,
+                    IterationId = currentIteration.Entity.Id,
+                });
+                Context.SaveChanges();
+            });
+            return Iterations.FirstOrDefault();
 
+        }
         internal int GetProjectDefautIteration(int id)
         {
-            return Context.AssociatedProjectIterations.FirstOrDefault(x => x.ProjectId == id && x.Iteration.IsActive == 1).IterationId;
+            var iteration = Context.AssociatedProjectIterations.FirstOrDefault(x => x.ProjectId == id && x.Iteration.IsActive == 1);
+            if(iteration != null)
+                return iteration.IterationId;
+            
+            iteration = Context.AssociatedProjectIterations.Include(x=>x.Iteration).FirstOrDefault(x=>x.ProjectId == id);
+            if(iteration != null)
+            {
+                iteration.Iteration.IsActive = 1;
+                Context.Attach(iteration);
+                Context.Update(iteration);
+                Context.SaveChanges();
+            }
+            else
+                iteration = new AssociatedProjectIterations{
+                    Iteration = AssignProjectDefaultIterations(id)
+                };
+            return iteration.IterationId;
         }
 
         internal void ChangeWorkItemBoard(IncomingCardRequest card)
@@ -373,11 +410,16 @@ namespace Platform.DatabaseHandlers.Contexts
                         AssgignedAccount = sprintTask.AssignedAccountNavigation != null ? sprintTask.AssignedAccountNavigation.GitUsername : "Unassigned"
                     });
                 });
+                var complete = default(float);
+                var remaining = default(float);
                 sprintTasks.ForEach(task =>
                 {
                     var taskBoard = Context.AssociatedBoardWorkItems.Include(z => z.Board)
                                                                     .FirstOrDefault(z => z.WorkItemId == task.WorkItemChildId);
-
+                    if(!string.IsNullOrEmpty(x.Compleated))
+                        complete += float.Parse(x.Compleated);
+                    if(!string.IsNullOrEmpty(x.Remaining))
+                        remaining += float.Parse(x.Remaining);
                     var activeBoard = string.Empty;
                     if (taskBoard == null)
                         activeBoard = "Open";
@@ -393,7 +435,9 @@ namespace Platform.DatabaseHandlers.Contexts
                         Priority = GetCardType(task.WorkItemChild.WorkItemType.TypeName),
                         Type = $"{activeBoard}",
                         Status = activeBoard,
-                        Assignee = x.Title,
+                        Assignee = $"{x.Title} | Complete {complete} | Remaining {remaining}",
+                        Complete = complete.ToString(),
+                        Remaining = remaining.ToString(),
                         AssgignedAccount = task.WorkItemChild.AssignedAccountNavigation != null ? task.WorkItemChild.AssignedAccountNavigation.GitUsername : "Unassigned"
                     });
                 });

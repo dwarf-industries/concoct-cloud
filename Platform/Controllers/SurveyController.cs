@@ -1,5 +1,7 @@
 namespace Platform.Controllers
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
@@ -28,6 +30,27 @@ namespace Platform.Controllers
             ViewData["ProjectId"] = projectId;
             return View();
         }
+
+        public IActionResult CreateNewSurvey(int projectId) 
+        {
+            ViewData["ProjectId"] = projectId;
+            using(var context = new SurveyContext(Context,Config))
+                ViewData["BuildingBlocks"] = context.GetSurveyComponents();
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<List<Surveys>> GetProjectSurveys([FromBody] IncomingIdRequest request)
+        {
+            var result = default(List<Surveys>);
+            using(var context = new SurveyContext(Context,Config))
+            {
+                result = await context.GetProjectSurveys(request.ProjectId);                
+            }
+            return result;
+        }
+
+
 
         
     }

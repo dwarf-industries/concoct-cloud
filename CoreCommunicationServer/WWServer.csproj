@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  
+  </PropertyGroup>
+ 
+
+ 
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="SolarCalculator" Version="2.0.4" />
+    <PackageReference Include="srp" Version="1.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Lidgren.Network">
+      <HintPath>Lidgren.Network.MultiTarget.dll</HintPath>
+    </Reference>
+    <Reference Include="StoriesUntoldDataLayer">
+      <HintPath>..\StoriesUntoldDataLayer\bin\Debug\netcoreapp3.0\StoriesUntoldDataLayer.dll</HintPath>
+    </Reference>
+    <Reference Include="TrasnsportLayerDTOs">
+      <HintPath>..\TrasnsportLayerDTOs\bin\Debug\netcoreapp2.1\TrasnsportLayerDTOs.dll</HintPath>
+    </Reference>
+   
+  </ItemGroup>
+
+</Project>

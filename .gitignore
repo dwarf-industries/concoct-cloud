@@ -1,6 +1,7 @@
-/CommitManager/bin
-/CommitManager/obj
-
-
-/Platform/bin/*
-/Platfor/obj/*
+ 
+/CommitManager/bin/
+/CommitManager/obj/
+/Platform/bin/
+/Platform/obj/
+.vscode
+ 

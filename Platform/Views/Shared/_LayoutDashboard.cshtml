@@ -28,7 +28,7 @@
                     <ul class="header-list">
                         <li class="float-left header-style icon-menu" id="hamburger"></li>
                         <li class="float-left header-style nav-pane">
-                            <b>Rokono Control</b>
+                            @await Component.InvokeAsync("GetProjectName", @ProjectId)
                         </li>
 
                         <li class="header-style float-right support border-left" onclick="CallUrl(https://platform.rokonocontrol.com/OutboundDetails/RelatedProject?projectId=5012)"><b>Support</b></li>
@@ -51,9 +51,7 @@
                                 @await Component.InvokeAsync("ManagementRights", @ProjectId)
                                 @await Component.InvokeAsync("UserSettings", @ProjectId)
                                 @await Component.InvokeAsync("LoadedProjects", @ProjectId)
-                                <div class="row" style="background-color:#4fb9fc; margin:0;">
-                                    <img src="~/Logo/logo.png" class="img-responsive" style="width:50%;height:59%; margin-left:25%;" />
-                                </div>
+                                @await Component.InvokeAsync("GetProjectLogo", @ProjectId)
 
                                 @await Component.InvokeAsync("SearchBox", @ProjectId)
 

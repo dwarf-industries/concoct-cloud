@@ -416,6 +416,8 @@ class UserQueries
     UserId int |  | YES
     QueryData nvarchar |  | YES
     DateOfQuery datetime |  | YES
+    IsShared int |  | YES
+    ProjectId int |  | YES
 }
 class Boards
 {
@@ -492,12 +494,19 @@ class PremadeWidgets
     ControlName nvarchar |  | YES
     ViewComponentName nvarchar |  | YES
     ControlDescription nvarchar |  | YES
+    Settings nvarchar |  | YES
+    CustomSettings int |  | YES
 }
 class AssociatedUserDashboardPremade
 {
     Id int |  | NO
     UserDashboard int |  | YES
     PremadeWidgetId int |  | YES
+    DataRow int |  | YES
+    DataCol int |  | YES
+    DataSizeX int |  | YES
+    DataSizeY int |  | YES
+    CustomSettings nvarchar |  | YES
 }
 class Changelogs
 {
@@ -542,16 +551,45 @@ class WorkItemActivity
     Id int |  | NO
     ActivityName nvarchar |  | NO
 }
+class Surveys
+{
+    Id int |  | NO
+    SurveyTitle nvarchar |  | YES
+    SurveyLogo nvarchar |  | YES
+    SurveyDescription nvarchar |  | YES
+    Email nvarchar |  | YES
+    ProjectId int |  | YES
+    CreatedBy int |  | YES
+    CreatedAt datetime |  | YES
+}
 class WorkItemIterations
 {
     Id int |  | NO
     IterationName nvarchar |  | NO
     IsActive int |  | YES
 }
+class SurveyPage
+{
+    Id int |  | NO
+    PageName nvarchar |  | YES
+    SurveyId int |  | YES
+}
 class WorkItemReasons
 {
     Id int |  | NO
     ReasonName nvarchar |  | NO
+}
+class SurveyComponent
+{
+    Id int |  | NO
+    ComponentInternalName nvarchar |  | YES
+}
+class AssociatedPageSurveyComponents
+{
+    Id int |  | NO
+    ComponentId int |  | YES
+    PageId int |  | YES
+    DataSource nvarchar |  | YES
 }
 class Builds
 {
@@ -610,6 +648,8 @@ AssociatedChatRoomRights "1" *-- "many" ChatRoomRights
 AssociatedCommitFiles "1" *-- "many" Files
 AssociatedCommitFiles "1" *-- "many" Commits
 AssociatedDocumentationCategoryPage "1" *-- "many" DocumentationCategoryField
+AssociatedPageSurveyComponents "1" *-- "many" SurveyComponent
+AssociatedPageSurveyComponents "1" *-- "many" SurveyPage
 AssociatedProjectApiKeys "1" *-- "many" Projects
 AssociatedProjectApiKeys "1" *-- "many" ApiKeys
 AssociatedProjectBoards "1" *-- "many" Boards
@@ -670,6 +710,9 @@ DocumentationCategory "1" *-- "many" Documentation
 DocumentationCategoryField "1" *-- "many" DocumentationCategory
 Notifications "1" *-- "many" NotificationTypes
 Projects "1" *-- "many" Repository
+SurveyPage "1" *-- "many" Surveys
+Surveys "1" *-- "many" Projects
+Surveys "1" *-- "many" UserAccounts
 SystemFiles "1" *-- "many" FileTypes
 TeamDashboards "1" *-- "many" Teams
 UserDashboardItem "1" *-- "many" UserDashboards

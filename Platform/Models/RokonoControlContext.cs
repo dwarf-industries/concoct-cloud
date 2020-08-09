@@ -25,6 +25,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedChatRoomRights> AssociatedChatRoomRights { get; set; }
         public virtual DbSet<AssociatedCommitFiles> AssociatedCommitFiles { get; set; }
         public virtual DbSet<AssociatedDocumentationCategoryPage> AssociatedDocumentationCategoryPage { get; set; }
+        public virtual DbSet<AssociatedPageSurveyComponents> AssociatedPageSurveyComponents { get; set; }
         public virtual DbSet<AssociatedProjectApiKeys> AssociatedProjectApiKeys { get; set; }
         public virtual DbSet<AssociatedProjectBoards> AssociatedProjectBoards { get; set; }
         public virtual DbSet<AssociatedProjectBuilds> AssociatedProjectBuilds { get; set; }
@@ -70,6 +71,9 @@ namespace Rokono_Control.Models
         public virtual DbSet<PublicMessages> PublicMessages { get; set; }
         public virtual DbSet<Repository> Repository { get; set; }
         public virtual DbSet<Risks> Risks { get; set; }
+        public virtual DbSet<SurveyComponent> SurveyComponent { get; set; }
+        public virtual DbSet<SurveyPage> SurveyPage { get; set; }
+        public virtual DbSet<Surveys> Surveys { get; set; }
         public virtual DbSet<SystemFiles> SystemFiles { get; set; }
         public virtual DbSet<TeamDashboards> TeamDashboards { get; set; }
         public virtual DbSet<Teams> Teams { get; set; }
@@ -93,7 +97,15 @@ namespace Rokono_Control.Models
         public virtual DbSet<WorkItemSeverities> WorkItemSeverities { get; set; }
         public virtual DbSet<WorkItemStates> WorkItemStates { get; set; }
         public virtual DbSet<WorkItemTypes> WorkItemTypes { get; set; }
- 
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=192.168.0.101;Database=RokonoControl;User ID=Kristifor;Password=';;y=yDXkd1';");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -250,6 +262,19 @@ namespace Rokono_Control.Models
                     .WithMany(p => p.AssociatedDocumentationCategoryPage)
                     .HasForeignKey(d => d.CategoryField)
                     .HasConstraintName("FK__Associate__Categ__1C1D2798");
+            });
+
+            modelBuilder.Entity<AssociatedPageSurveyComponents>(entity =>
+            {
+                entity.HasOne(d => d.Component)
+                    .WithMany(p => p.AssociatedPageSurveyComponents)
+                    .HasForeignKey(d => d.ComponentId)
+                    .HasConstraintName("FK__Associate__Compo__7B7B4DDC");
+
+                entity.HasOne(d => d.Page)
+                    .WithMany(p => p.AssociatedPageSurveyComponents)
+                    .HasForeignKey(d => d.PageId)
+                    .HasConstraintName("FK__Associate__PageI__7C6F7215");
             });
 
             modelBuilder.Entity<AssociatedProjectApiKeys>(entity =>
@@ -806,6 +831,38 @@ namespace Rokono_Control.Models
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.RiskName).HasMaxLength(300);
+            });
+
+            modelBuilder.Entity<SurveyComponent>(entity =>
+            {
+                entity.Property(e => e.PlatformName).HasMaxLength(200);
+            });
+
+            modelBuilder.Entity<SurveyPage>(entity =>
+            {
+                entity.Property(e => e.PageName).HasMaxLength(10);
+
+                entity.HasOne(d => d.Survey)
+                    .WithMany(p => p.SurveyPage)
+                    .HasForeignKey(d => d.SurveyId)
+                    .HasConstraintName("FK__SurveyPag__Surve__7A8729A3");
+            });
+
+            modelBuilder.Entity<Surveys>(entity =>
+            {
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+
+                entity.Property(e => e.Email).HasMaxLength(800);
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.Surveys)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("FK__Surveys__Created__789EE131");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.Surveys)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK__Surveys__Project__7993056A");
             });
 
             modelBuilder.Entity<SystemFiles>(entity =>

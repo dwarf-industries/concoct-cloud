@@ -1,0 +1,61 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/kristifor/Projects/Games/StoriesUnraveled/Server/Slaves/StoriesUnraveledServer/TrasnsportLayerDTOs/TrasnsportLayerDTOs.csproj": {}
+  },
+  "projects": {
+    "/home/kristifor/Projects/Games/StoriesUnraveled/Server/Slaves/StoriesUnraveledServer/TrasnsportLayerDTOs/TrasnsportLayerDTOs.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/kristifor/Projects/Games/StoriesUnraveled/Server/Slaves/StoriesUnraveledServer/TrasnsportLayerDTOs/TrasnsportLayerDTOs.csproj",
+        "projectName": "TrasnsportLayerDTOs",
+        "projectPath": "/home/kristifor/Projects/Games/StoriesUnraveled/Server/Slaves/StoriesUnraveledServer/TrasnsportLayerDTOs/TrasnsportLayerDTOs.csproj",
+        "packagesPath": "/home/kristifor/.nuget/packages/",
+        "outputPath": "/home/kristifor/Projects/Games/StoriesUnraveled/Server/Slaves/StoriesUnraveledServer/TrasnsportLayerDTOs/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/kristifor/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
