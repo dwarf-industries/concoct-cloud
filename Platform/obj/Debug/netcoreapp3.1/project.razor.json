@@ -1,5 +1,5 @@
 {
-  "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Rokono Control.csproj",
+  "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Rokono Control.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "3.0",
@@ -18653,6 +18653,104 @@
       },
       {
         "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__GetProjectLogoViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:get-project-logo",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "id",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "id",
+            "TypeName": "System.Int32",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "id"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__GetProjectLogoViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "GetProjectLogo"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__GetProjectNameViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:get-project-name",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "id",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "id",
+            "TypeName": "System.Int32",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "id"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__GetProjectNameViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "GetProjectName"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
         "Name": "__Generated__LoadedProjectsViewComponentTagHelper",
         "AssemblyName": "Rokono Control",
         "Documentation": null,
@@ -19948,104 +20046,6 @@
           "Runtime.Name": "ITagHelper",
           "Common.TypeName": "__Generated__WorkItemFileUploaderViewComponentTagHelper",
           "MVC.ViewComponent.Name": "WorkItemFileUploader"
-        }
-      },
-      {
-        "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__GetProjectNameViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "Documentation": null,
-        "TagOutputHint": null,
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:get-project-name",
-            "ParentTag": null,
-            "TagStructure": 0,
-            "Attributes": [
-              {
-                "Name": "id",
-                "NameComparison": 0,
-                "Value": null,
-                "ValueComparison": 0,
-                "Diagnostics": [],
-                "Metadata": {}
-              }
-            ],
-            "Diagnostics": []
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "id",
-            "TypeName": "System.Int32",
-            "IsEnum": false,
-            "IndexerNamePrefix": null,
-            "IndexerTypeName": null,
-            "Documentation": null,
-            "Diagnostics": [],
-            "Metadata": {
-              "Common.PropertyName": "id"
-            },
-            "BoundAttributeParameters": []
-          }
-        ],
-        "AllowedChildTags": [],
-        "Diagnostics": [],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__GetProjectNameViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "GetProjectName"
-        }
-      },
-      {
-        "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__GetProjectLogoViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "Documentation": null,
-        "TagOutputHint": null,
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:get-project-logo",
-            "ParentTag": null,
-            "TagStructure": 0,
-            "Attributes": [
-              {
-                "Name": "id",
-                "NameComparison": 0,
-                "Value": null,
-                "ValueComparison": 0,
-                "Diagnostics": [],
-                "Metadata": {}
-              }
-            ],
-            "Diagnostics": []
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "id",
-            "TypeName": "System.Int32",
-            "IsEnum": false,
-            "IndexerNamePrefix": null,
-            "IndexerTypeName": null,
-            "Documentation": null,
-            "Diagnostics": [],
-            "Metadata": {
-              "Common.PropertyName": "id"
-            },
-            "BoundAttributeParameters": []
-          }
-        ],
-        "AllowedChildTags": [],
-        "Diagnostics": [],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__GetProjectLogoViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "GetProjectLogo"
         }
       },
       {
@@ -22702,463 +22702,463 @@
   "RootNamespace": "Rokono_Control",
   "Documents": [
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/ViewChangelog/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\ViewChangelog\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/ChatComponents/GetTagProperties/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\ChatComponents\\GetTagProperties\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Documentation/Index.cshtml",
-      "TargetPath": "Views\\Documentation\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Boards/ProjectBacklog.cshtml",
-      "TargetPath": "Views\\Boards\\ProjectBacklog.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Widgets/BurndownChartSettings/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\Widgets\\BurndownChartSettings\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Widgets/ChartForWorkItemsSettings/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\Widgets\\ChartForWorkItemsSettings\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/_ViewStart.cshtml",
-      "TargetPath": "Views\\_ViewStart.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/SelectProject/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\SelectProject\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Accounts/Administration.cshtml",
-      "TargetPath": "Views\\Accounts\\Administration.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/LoadedProjects/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\LoadedProjects\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/ChatComponents/UserList/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\ChatComponents\\UserList\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/OutboundDetailsSettings/PublicDiscussionBoardSetting/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\OutboundDetailsSettings\\PublicDiscussionBoardSetting\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/OutboundComponents/PublicDisscussionBoard/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\OutboundComponents\\PublicDisscussionBoard\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/RelateWorkItem/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\RelateWorkItem\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Widgets/WidgetBuilder/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\Widgets\\WidgetBuilder\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Backlogs/Index.cshtml",
-      "TargetPath": "Views\\Backlogs\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Boards/SprintBacklogs.cshtml",
-      "TargetPath": "Views\\Boards\\SprintBacklogs.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Dashboard/ProjectDetails.cshtml",
-      "TargetPath": "Views\\Dashboard\\ProjectDetails.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Dashboard/WorkItems.cshtml",
-      "TargetPath": "Views\\Dashboard\\WorkItems.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/_ValidationScriptsPartial.cshtml",
-      "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/ChatComponents/ChatRoomSetting/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\ChatComponents\\ChatRoomSetting\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/_LayoutDocumentation.cshtml",
-      "TargetPath": "Views\\Shared\\_LayoutDocumentation.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Dashboard/ManageAccounts.cshtml",
-      "TargetPath": "Views\\Dashboard\\ManageAccounts.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Widgets/ChartForWorkItems/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\Widgets\\ChartForWorkItems\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Accounts/ManageProjectMemebers.cshtml",
-      "TargetPath": "Views\\Accounts\\ManageProjectMemebers.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/NavigationMenu/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\NavigationMenu\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/IterationDropdown/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\IterationDropdown\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Widgets/AssignedItems/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\Widgets\\AssignedItems\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Notes/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\Notes\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/OutboundDetails/RelatedProject.cshtml",
-      "TargetPath": "Views\\OutboundDetails\\RelatedProject.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Documentation/DocumentationNavigation/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\Documentation\\DocumentationNavigation\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/_CookieConsentPartial.cshtml",
-      "TargetPath": "Views\\Shared\\_CookieConsentPartial.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/OutboundDetailsSettings/PublicFeedbackSettings/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\OutboundDetailsSettings\\PublicFeedbackSettings\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/ApiKeySettings/ProjectApiKeys.cshtml",
-      "TargetPath": "Views\\ApiKeySettings\\ProjectApiKeys.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Error.cshtml",
-      "TargetPath": "Views\\Shared\\Error.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/QueryBuilder/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\QueryBuilder\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Dashboard/AssignAccountProjects.cshtml",
-      "TargetPath": "Views\\Dashboard\\AssignAccountProjects.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Documentation/DocumentationPageHandler/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\Documentation\\DocumentationPageHandler\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Commit/CommitData.cshtml",
-      "TargetPath": "Views\\Commit\\CommitData.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/IterationManager/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\IterationManager\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Home/Privacy.cshtml",
-      "TargetPath": "Views\\Home\\Privacy.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Dashboard/Cmmits.cshtml",
-      "TargetPath": "Views\\Dashboard\\Cmmits.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Dashboard/Project.cshtml",
-      "TargetPath": "Views\\Dashboard\\Project.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Changelog/ViewChangelogs.cshtml",
-      "TargetPath": "Views\\Changelog\\ViewChangelogs.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Widget/Queries.cshtml",
-      "TargetPath": "Views\\Widget\\Queries.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Documentation/DocumentationBreadcrum/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\Documentation\\DocumentationBreadcrum\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/UserRightToggle/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\UserRightToggle\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/LayoutComponents/ProjectSpecific/ProjectName.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\LayoutComponents\\ProjectSpecific\\ProjectName.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Widgets/BurdownChart/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\Widgets\\BurdownChart\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/ChatComponents/ChatUserPersonaBox/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\ChatComponents\\ChatUserPersonaBox\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/UserSettings/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\UserSettings\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/NotificationPanel/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\NotificationPanel\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Dashboard/index.cshtml",
-      "TargetPath": "Views\\Dashboard\\index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/SearchBox/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\SearchBox\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/ChatComponents/ChatNavigation/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\ChatComponents\\ChatNavigation\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/_ViewImports.cshtml",
-      "TargetPath": "Views\\_ViewImports.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/ManagementRights/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\ManagementRights\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Survey/Index.cshtml",
-      "TargetPath": "Views\\Survey\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Home/Error.cshtml",
-      "TargetPath": "Views\\Home\\Error.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Home/Index.cshtml",
-      "TargetPath": "Views\\Home\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Dashboard/ProjectDashboard.cshtml",
-      "TargetPath": "Views\\Dashboard\\ProjectDashboard.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Dashboard/ChangelogGenerator.cshtml",
-      "TargetPath": "Views\\Dashboard\\ChangelogGenerator.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Dashboard/EditWorkItem.cshtml",
-      "TargetPath": "Views\\Dashboard\\EditWorkItem.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Survey/CreateNewSurvey.cshtml",
-      "TargetPath": "Views\\Survey\\CreateNewSurvey.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Boards/Index.cshtml",
-      "TargetPath": "Views\\Boards\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/OutboundComponents/PublicFeedback/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\OutboundComponents\\PublicFeedback\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/_LayoutProjects.cshtml",
-      "TargetPath": "Views\\Shared\\_LayoutProjects.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Boards/Sprints.cshtml",
-      "TargetPath": "Views\\Boards\\Sprints.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Dashboard/AddNewProject.cshtml",
-      "TargetPath": "Views\\Dashboard\\AddNewProject.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/ChatComponents/GetChatRooms/Default.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/ChatComponents/GetChatRooms/Default.cshtml",
       "TargetPath": "Views\\Shared\\Components\\ChatComponents\\GetChatRooms\\Default.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/ChatComponents/ChatSidebar/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\ChatComponents\\ChatSidebar\\Default.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/OutboundDetailsSettings/PublicFeedbackSettings/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\OutboundDetailsSettings\\PublicFeedbackSettings\\Default.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Commit/Files.cshtml",
-      "TargetPath": "Views\\Commit\\Files.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Documentation/DocumentationBreadcrum/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Documentation\\DocumentationBreadcrum\\Default.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Modal/default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\Modal\\default.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/index.cshtml",
+      "TargetPath": "Views\\Dashboard\\index.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/ChatComponents/ChatWIndow/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\ChatComponents\\ChatWIndow\\Default.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Documentation/Index.cshtml",
+      "TargetPath": "Views\\Documentation\\Index.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Commit/Index.cshtml",
-      "TargetPath": "Views\\Commit\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Documentation/DocumentationCategory/Default.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Documentation/DocumentationCategory/Default.cshtml",
       "TargetPath": "Views\\Shared\\Components\\Documentation\\DocumentationCategory\\Default.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Dashboard/EditAccount.cshtml",
-      "TargetPath": "Views\\Dashboard\\EditAccount.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/OutboundDetailsSettings/BugReportFormSettings/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\OutboundDetailsSettings\\BugReportFormSettings\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/ChatComponents/ChatSettings/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\ChatComponents\\ChatSettings\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Widget/NewQuery.cshtml",
-      "TargetPath": "Views\\Widget\\NewQuery.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/WorkItemFileUploader/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\WorkItemFileUploader\\Default.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Changelog/EditChangelog.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Changelog/EditChangelog.cshtml",
       "TargetPath": "Views\\Changelog\\EditChangelog.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Dashboard/AddNewWorkItem.cshtml",
-      "TargetPath": "Views\\Dashboard\\AddNewWorkItem.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/Project.cshtml",
+      "TargetPath": "Views\\Dashboard\\Project.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/Documentation/DocumentationPage/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\Documentation\\DocumentationPage\\Default.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/ChatComponents/ChatUserPersonaBox/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\ChatComponents\\ChatUserPersonaBox\\Default.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/OutboundComponents/BugReportForm/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\OutboundComponents\\BugReportForm\\Default.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Commit/Files.cshtml",
+      "TargetPath": "Views\\Commit\\Files.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/_Layout.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/_LayoutDocumentation.cshtml",
+      "TargetPath": "Views\\Shared\\_LayoutDocumentation.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/OutboundDetailsSettings/PublicDiscussionBoardSetting/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\OutboundDetailsSettings\\PublicDiscussionBoardSetting\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Widgets/BurndownChartSettings/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Widgets\\BurndownChartSettings\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Accounts/ManageProjectMemebers.cshtml",
+      "TargetPath": "Views\\Accounts\\ManageProjectMemebers.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/ModuleDisabledWarning/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\ModuleDisabledWarning\\Default.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/ApiKeySettings/ProjectApiKeys.cshtml",
+      "TargetPath": "Views\\ApiKeySettings\\ProjectApiKeys.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Accounts/GetUserProfile.cshtml",
-      "TargetPath": "Views\\Accounts\\GetUserProfile.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Survey/Index.cshtml",
+      "TargetPath": "Views\\Survey\\Index.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Boards/PublicBoard.cshtml",
-      "TargetPath": "Views\\Boards\\PublicBoard.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/_CookieConsentPartial.cshtml",
+      "TargetPath": "Views\\Shared\\_CookieConsentPartial.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Dashboard/AddNewAccount.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/Cmmits.cshtml",
+      "TargetPath": "Views\\Dashboard\\Cmmits.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/ChatComponents/ChatSettings/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\ChatComponents\\ChatSettings\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Widgets/ChartForWorkItemsSettings/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Widgets\\ChartForWorkItemsSettings\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/ViewChangelog/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\ViewChangelog\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/AddNewAccount.cshtml",
       "TargetPath": "Views\\Dashboard\\AddNewAccount.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/_LayoutDashboard.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Widgets/WidgetBuilder/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Widgets\\WidgetBuilder\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Home/Privacy.cshtml",
+      "TargetPath": "Views\\Home\\Privacy.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/OutboundDetails/RelatedProject.cshtml",
+      "TargetPath": "Views\\OutboundDetails\\RelatedProject.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/WorkItemFileUploader/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\WorkItemFileUploader\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/IterationDropdown/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\IterationDropdown\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Notes/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Notes\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Changelog/ViewChangelogs.cshtml",
+      "TargetPath": "Views\\Changelog\\ViewChangelogs.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Boards/SprintBacklogs.cshtml",
+      "TargetPath": "Views\\Boards\\SprintBacklogs.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Widgets/ChartForWorkItems/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Widgets\\ChartForWorkItems\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Boards/ProjectBacklog.cshtml",
+      "TargetPath": "Views\\Boards\\ProjectBacklog.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/UserRightToggle/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\UserRightToggle\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Boards/Index.cshtml",
+      "TargetPath": "Views\\Boards\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Widget/Queries.cshtml",
+      "TargetPath": "Views\\Widget\\Queries.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Widget/NewQuery.cshtml",
+      "TargetPath": "Views\\Widget\\NewQuery.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/RelateWorkItem/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\RelateWorkItem\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/_ValidationScriptsPartial.cshtml",
+      "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Documentation/DocumentationPageHandler/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Documentation\\DocumentationPageHandler\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/ChatComponents/GetTagProperties/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\ChatComponents\\GetTagProperties\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/NotificationPanel/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\NotificationPanel\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/ChatComponents/ChatWIndow/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\ChatComponents\\ChatWIndow\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Backlogs/Index.cshtml",
+      "TargetPath": "Views\\Backlogs\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/_ViewStart.cshtml",
+      "TargetPath": "Views\\_ViewStart.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Modal/default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Modal\\default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/ProjectDetails.cshtml",
+      "TargetPath": "Views\\Dashboard\\ProjectDetails.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/WorkItems.cshtml",
+      "TargetPath": "Views\\Dashboard\\WorkItems.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Boards/PublicBoard.cshtml",
+      "TargetPath": "Views\\Boards\\PublicBoard.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Documentation/DocumentationPage/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Documentation\\DocumentationPage\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Accounts/Administration.cshtml",
+      "TargetPath": "Views\\Accounts\\Administration.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/SearchBox/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\SearchBox\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Error.cshtml",
+      "TargetPath": "Views\\Shared\\Error.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/ChatComponents/UserList/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\ChatComponents\\UserList\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Boards/Sprints.cshtml",
+      "TargetPath": "Views\\Boards\\Sprints.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/LayoutComponents/ProjectSpecific/ProjectName.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\LayoutComponents\\ProjectSpecific\\ProjectName.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/ProjectDashboard.cshtml",
+      "TargetPath": "Views\\Dashboard\\ProjectDashboard.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Accounts/GetUserProfile.cshtml",
+      "TargetPath": "Views\\Accounts\\GetUserProfile.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/ManagementRights/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\ManagementRights\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/_LayoutProjects.cshtml",
+      "TargetPath": "Views\\Shared\\_LayoutProjects.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Widgets/BurdownChart/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Widgets\\BurdownChart\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/ChangelogGenerator.cshtml",
+      "TargetPath": "Views\\Dashboard\\ChangelogGenerator.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/AssignAccountProjects.cshtml",
+      "TargetPath": "Views\\Dashboard\\AssignAccountProjects.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/EditAccount.cshtml",
+      "TargetPath": "Views\\Dashboard\\EditAccount.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/LoadedProjects/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\LoadedProjects\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/OutboundDetailsSettings/BugReportFormSettings/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\OutboundDetailsSettings\\BugReportFormSettings\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Commit/Index.cshtml",
+      "TargetPath": "Views\\Commit\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/UserSettings/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\UserSettings\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/ChatComponents/ChatSidebar/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\ChatComponents\\ChatSidebar\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/OutboundComponents/PublicFeedback/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\OutboundComponents\\PublicFeedback\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/ChatComponents/ChatNavigation/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\ChatComponents\\ChatNavigation\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Documentation/DocumentationNavigation/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Documentation\\DocumentationNavigation\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/EditWorkItem.cshtml",
+      "TargetPath": "Views\\Dashboard\\EditWorkItem.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Survey/CreateNewSurvey.cshtml",
+      "TargetPath": "Views\\Survey\\CreateNewSurvey.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/AddNewWorkItem.cshtml",
+      "TargetPath": "Views\\Dashboard\\AddNewWorkItem.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/QueryBuilder/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\QueryBuilder\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/ManageAccounts.cshtml",
+      "TargetPath": "Views\\Dashboard\\ManageAccounts.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Dashboard/AddNewProject.cshtml",
+      "TargetPath": "Views\\Dashboard\\AddNewProject.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/NavigationMenu/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\NavigationMenu\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/ModuleDisabledWarning/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\ModuleDisabledWarning\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/IterationManager/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\IterationManager\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/_LayoutDashboard.cshtml",
       "TargetPath": "Views\\Shared\\_LayoutDashboard.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/Views/Shared/Components/LayoutComponents/ProjectSpecific/ProjectImage.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/ChatComponents/ChatRoomSetting/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\ChatComponents\\ChatRoomSetting\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Home/Error.cshtml",
+      "TargetPath": "Views\\Home\\Error.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/OutboundComponents/BugReportForm/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\OutboundComponents\\BugReportForm\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/OutboundComponents/PublicDisscussionBoard/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\OutboundComponents\\PublicDisscussionBoard\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Commit/CommitData.cshtml",
+      "TargetPath": "Views\\Commit\\CommitData.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/LayoutComponents/ProjectSpecific/ProjectImage.cshtml",
       "TargetPath": "Views\\Shared\\Components\\LayoutComponents\\ProjectSpecific\\ProjectImage.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/SelectProject/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\SelectProject\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Home/Index.cshtml",
+      "TargetPath": "Views\\Home\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Widgets/AssignedItems/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Widgets\\AssignedItems\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/_ViewImports.cshtml",
+      "TargetPath": "Views\\_ViewImports.cshtml",
       "FileKind": "mvc"
     }
   ],
