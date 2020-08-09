@@ -228,3 +228,5 @@
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.pdb
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Modal/default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Survey/CreateNewSurvey.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/LayoutComponents/ProjectSpecific/ProjectName.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/LayoutComponents/ProjectSpecific/ProjectImage.cshtml.g.cs
