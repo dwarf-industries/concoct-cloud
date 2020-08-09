@@ -1,1 +1,6 @@
-Models/RokonoControlContext.cs
+/CommitManager/bin
+/CommitManager/obj
+
+
+/Platform/bin/*
+/Platfor/obj/*
