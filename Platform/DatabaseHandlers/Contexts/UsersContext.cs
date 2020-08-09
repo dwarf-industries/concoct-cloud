@@ -236,7 +236,10 @@ namespace Platform.DatabaseHandlers.Contexts
 
         internal UserAccounts GetUserAccounts(int userId)
         {
-            var result = Context.AssociatedProjectMembers.Include(x => x.UserAccount).FirstOrDefault(x => x.UserAccount.Id == userId);
+            var result = Context.AssociatedProjectMembers.Include(x => x.UserAccount)
+                                                         .Include(x => x.UserAccount.AssociatedProjectMemberRights)
+                                                         .ThenInclude(AssociatedProjectMemberRights => AssociatedProjectMemberRights.Rights)
+                                                         .FirstOrDefault(x => x.UserAccount.Id == userId);
             return result != null ? result.UserAccount : null;
         }
 
