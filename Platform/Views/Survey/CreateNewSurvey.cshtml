@@ -31,7 +31,7 @@
 
             </div>
             <div class="e-card-content">
-                <div class="row">
+                <div class="row" style="margin-left:10%;margin-right:10%">
                     @foreach (var component in bindingComponents)
                     {
                             <span class="ChipTag" draggable="true" ondragstart="drag(event)"  id="Tag_@component.Id">@component.PlatformName</span>
@@ -49,8 +49,15 @@
             <div class="e-card-header">
 
             </div>
-            <div class="e-card-content" style="height: 100%;"  ondrop="drop(event)" ondragover="allowDrop(event)"style="z-index: 200; position: relative;">
-                 
+            <div class="e-card-content"  style="height: 100%;margin-left:10%; margin-right:10%;"  ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div class="row">
+                    <div class="col-md-8" id="Content">
+
+                    </div>
+                    <div class="col-md-6" id="Settings">
+                        
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -69,7 +76,11 @@ function drag(ev)
 
 function drop(args)
 {
-    console.log(draggableId);
+    console.log(draggableId.nodeValue);
+
+    $.get("/Survey/GetProjectSurveyElement?element="+draggableId.nodeValue,function(data) {
+        $("#Content").append(data);
+    });
 }
 function allowDrop(args)
 {
