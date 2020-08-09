@@ -46,6 +46,7 @@ namespace Rokono_Control.Models
         public int? AllowPublicBugs { get; set; }
         public int? AllowPublicFeedback { get; set; }
         public int? AllowPublicMessages { get; set; }
+        public string ImageLocation { get; set; }
 
         public virtual Repository Repository { get; set; }
         public virtual ICollection<AssociatedAccountNotes> AssociatedAccountNotes { get; set; }
