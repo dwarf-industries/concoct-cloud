@@ -1,2 +1,5 @@
 /CommitManager/bin
 /CommitManager/obj
+/Platform/Bin/*
+/Platform/Obj/*
+.vscode
