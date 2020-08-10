@@ -23146,8 +23146,8 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Survey/Input/Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\Survey\\Input\\Default.cshtml",
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Survey/SurveyInput/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Survey\\SurveyInput\\Default.cshtml",
       "FileKind": "mvc"
     },
     {
