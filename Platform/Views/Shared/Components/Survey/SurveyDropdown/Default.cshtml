@@ -1,0 +1,35 @@
+@{
+    var id = ViewData["Id"] as string;
+    var ValueAreas = new List<string>{
+        "Item1",
+        "Item2",
+        "Item3"
+        };
+ }
+
+
+<div class="row" style=" margin-left:5%; margin-right:5%;">
+    <select class="form-control-sm form-control" id="@id">
+        @foreach(var va in ValueAreas)
+        {
+            <option value="@va">@va</option>
+        }
+    </select>
+</div>
+
+
+ 
+
+<script>
+    var select;
+    select = new ej.dropdowns.DropDownList({
+
+        // set the placeholder to DropDownList input element
+        placeholder: 'Example label',
+        // set the height of the popup element
+        popupHeight: '200px',
+        index: 0,
+        
+    });
+    select.appendTo('#@id');
+</script>

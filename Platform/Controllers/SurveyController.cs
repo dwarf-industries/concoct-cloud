@@ -59,7 +59,7 @@ namespace Platform.Controllers
                 }));
              
             return await Task.Run(() => ViewComponent("NullComponent", new IncomingIdRequest{
-                
+                 
             }));
         }
         [HttpPost]
