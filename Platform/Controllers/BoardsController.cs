@@ -1,6 +1,7 @@
 namespace RokonoControl.Controllers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -251,7 +252,7 @@ namespace RokonoControl.Controllers
             using (var context = new WorkItemsContext(Context,Configuration))
             {
                 if (userRights != null)
-                    result = context.GetProjectSprints(dataRequest, userRights.ProjectRights == 1 ? true : false, userRights.Id);
+                    result = context.GetProjectSprints(dataRequest, userRights.AssociatedProjectMemberRights.FirstOrDefault().Rights.ViewOtherPeoplesWork == 1 ? true : false, userRights.Id);
             }
             return result;
         }
