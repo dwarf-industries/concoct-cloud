@@ -1,0 +1,73 @@
+@{
+    var id = ViewData["Id"] as string;
+    var questionId = ViewData["QuestionId"] as string;
+   
+ }
+
+
+<div class="row" style=" margin-left:5%; margin-right:5%;">
+    <input name="@questionId" id="@questionId" placeholder="Define your question"  style="width:100%;" class="form-control-sm"/>
+</div>
+
+<div class="row" style=" margin-left:5%; margin-right:5%;margin-top:2%;">
+    <div class="control-section">
+        <div class="content-wrapper">
+            <div id="@id">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" style=" margin-left:5%; margin-right:5%; margin-top:10%">
+    <div class="col-md-6">
+        <button id="submitSurveyComponent" onclick="SaveChanges()" style="width: 100%;">Save</button>
+
+    </div>
+    <div class="col-md-6">
+        <button id="canceltSurveyComponent" onclick="SaveChanges()" style="width: 100%;">Cancel</button>
+
+    </div>
+</div>
+
+ 
+
+<script>
+    
+    var dtSource = [];
+    var element = new ej.inputs.TextBox({
+        floatLabelType: 'Auto',
+ 
+    });
+    element.appendTo('#@questionId');
+
+    var submitSurveyComponent = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    submitSurveyComponent.appendTo('#submitSurveyComponent');
+
+    var canceltSurveyComponent = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    canceltSurveyComponent.appendTo('#canceltSurveyComponent');
+
+    var grid = new ej.grids.Grid({
+        dataSource: dtSource,
+        toolbar: ['Add', 'Edit', 'Delete', 'Update', 'Cancel'],
+        editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true, mode: 'Normal', newRowPosition:'Top' },
+        allowPaging: true,
+        pageSettings: { pageCount: 5 },
+        actionBegin: actionBegin,
+        columns: [
+            { field: 'Name', headerText: 'Value Name' }
+        ]
+    });
+    grid.appendTo('#@id');
+
+
+    function actionBegin(args) {
+        if (args.requestType === 'save') {
+            if (grid.pageSettings.currentPage !== 1 && grid.editSettings.newRowPosition === 'Top') {
+                args.index = (grid.pageSettings.currentPage * grid.pageSettings.pageSize) - grid.pageSettings.pageSize;
+            } else if (grid.editSettings.newRowPosition === 'Bottom') {
+                args.index = (grid.pageSettings.currentPage * grid.pageSettings.pageSize) - 1;
+            }
+        }
+    }
+</script>

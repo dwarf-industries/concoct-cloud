@@ -54,7 +54,7 @@
                     <div class="col-md-8" id="Content">
 
                     </div>
-                    <div class="col-md-6" id="Settings">
+                    <div class="col-md-4" id="Settings">
                         
                     </div>
                 </div>
@@ -80,6 +80,11 @@ function drop(args)
 
     $.get("/Survey/GetProjectSurveyElement?element="+draggableId.nodeValue,function(data) {
         $("#Content").append(data);
+    });
+
+    $.get("/Survey/GetProjectSurveyElementSetting?element="+draggableId.nodeValue,function(data) {
+        $("#Settings").html("");
+        $("#Settings").append(data);
     });
 }
 function allowDrop(args)
