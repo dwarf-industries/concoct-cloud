@@ -46,6 +46,9 @@
                     @Html.Raw(@PageData.Content)
                 }
             </div>
+            <div>
+                <pre id="markdown"></pre>
+            </div>
         </div>
         <div class="row InlineFlex">
             <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="SubmitDocumentationPage()">Submit</button>
@@ -67,9 +70,18 @@ var InputPageDataTitle = new ej.inputs.TextBox({
 {
   @:  InputPageDataTitle.value = "@PageData.Title"
 }
+ 
 InputPageDataTitle.appendTo('#InputPageDataTitle');
 InputPageData = new Quill('#InputPageData', {
         theme: 'snow',
+        modules: {
+        toolbar: [
+          [{ header: [1, 2, false] }],
+          ["bold", "italic", "underline"],
+          [{ 'list' : 'ordered' }, { 'list' : 'bullet' }],
+          ["image", "code-block"]
+        ]
+      }
 }); 
 var method;
  
