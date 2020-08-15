@@ -19584,55 +19584,6 @@
       },
       {
         "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__SurveyDropdownViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "Documentation": null,
-        "TagOutputHint": null,
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:survey-dropdown",
-            "ParentTag": null,
-            "TagStructure": 0,
-            "Attributes": [
-              {
-                "Name": "id",
-                "NameComparison": 0,
-                "Value": null,
-                "ValueComparison": 0,
-                "Diagnostics": [],
-                "Metadata": {}
-              }
-            ],
-            "Diagnostics": []
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "id",
-            "TypeName": "System.Int32",
-            "IsEnum": false,
-            "IndexerNamePrefix": null,
-            "IndexerTypeName": null,
-            "Documentation": null,
-            "Diagnostics": [],
-            "Metadata": {
-              "Common.PropertyName": "id"
-            },
-            "BoundAttributeParameters": []
-          }
-        ],
-        "AllowedChildTags": [],
-        "Diagnostics": [],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__SurveyDropdownViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "SurveyDropdown"
-        }
-      },
-      {
-        "Kind": "MVC.ViewComponent",
         "Name": "__Generated__SurveyDropdownSettingsViewComponentTagHelper",
         "AssemblyName": "Rokono Control",
         "Documentation": null,
@@ -19682,14 +19633,14 @@
       },
       {
         "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__SurveyInputViewComponentTagHelper",
+        "Name": "__Generated__SurveyDropdownViewComponentTagHelper",
         "AssemblyName": "Rokono Control",
         "Documentation": null,
         "TagOutputHint": null,
         "CaseSensitive": false,
         "TagMatchingRules": [
           {
-            "TagName": "vc:survey-input",
+            "TagName": "vc:survey-dropdown",
             "ParentTag": null,
             "TagStructure": 0,
             "Attributes": [
@@ -19725,8 +19676,8 @@
         "Diagnostics": [],
         "Metadata": {
           "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__SurveyInputViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "SurveyInput"
+          "Common.TypeName": "__Generated__SurveyDropdownViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "SurveyDropdown"
         }
       },
       {
@@ -19776,6 +19727,55 @@
           "Runtime.Name": "ITagHelper",
           "Common.TypeName": "__Generated__SurveyInputSettingsViewComponentTagHelper",
           "MVC.ViewComponent.Name": "SurveyInputSettings"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__SurveyInputViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "Documentation": null,
+        "TagOutputHint": null,
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:survey-input",
+            "ParentTag": null,
+            "TagStructure": 0,
+            "Attributes": [
+              {
+                "Name": "id",
+                "NameComparison": 0,
+                "Value": null,
+                "ValueComparison": 0,
+                "Diagnostics": [],
+                "Metadata": {}
+              }
+            ],
+            "Diagnostics": []
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "id",
+            "TypeName": "System.Int32",
+            "IsEnum": false,
+            "IndexerNamePrefix": null,
+            "IndexerTypeName": null,
+            "Documentation": null,
+            "Diagnostics": [],
+            "Metadata": {
+              "Common.PropertyName": "id"
+            },
+            "BoundAttributeParameters": []
+          }
+        ],
+        "AllowedChildTags": [],
+        "Diagnostics": [],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__SurveyInputViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "SurveyInput"
         }
       },
       {
