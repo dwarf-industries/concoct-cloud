@@ -6,9 +6,14 @@
     var ProjectId = ViewData["ProjectId"] as int?;
 }
 
+ 
 
 <style>
-   
+   .ql-snow .ql-editor pre.ql-syntax {
+	background-color: #6a97a8;
+	color: #f8f8f2;
+	overflow: visible;
+    }
     #SaveDocumentationPage_title{
         text-align: center;
         width: 100%;
@@ -46,8 +51,18 @@
                     @Html.Raw(@PageData.Content)
                 }
             </div>
-            <div>
-                <pre id="markdown"></pre>
+            <div class="panel">
+            <div id="snow-container"></div>
+                <div>
+                    <button id="insert-table">Insert Table</button>
+                    <button id="insert-row-above">Insert Row Above</button>
+                    <button id="insert-row-below">Insert Row Below</button>
+                    <button id="insert-column-left">Insert Column Left</button>
+                    <button id="insert-column-right">Insert Column Right</button>
+                    <button id="delete-row">Delete Row</button>
+                    <button id="delete-column">Delete Column</button>
+                    <button id="delete-table">Delete Table</button>
+                </div>
             </div>
         </div>
         <div class="row InlineFlex">
@@ -70,19 +85,29 @@ var InputPageDataTitle = new ej.inputs.TextBox({
 {
   @:  InputPageDataTitle.value = "@PageData.Title"
 }
- 
+
 InputPageDataTitle.appendTo('#InputPageDataTitle');
+
 InputPageData = new Quill('#InputPageData', {
         theme: 'snow',
-        modules: {
-        toolbar: [
-          [{ header: [1, 2, false] }],
-          ["bold", "italic", "underline"],
-          [{ 'list' : 'ordered' }, { 'list' : 'bullet' }],
-          ["image", "code-block"]
-        ]
-      }
+        modules: 
+        {
+            history: {
+                delay: 2000,
+                maxStack: 500,
+                userOnly: true
+            },
+            syntax: true,              // Include syntax module
+            toolbar: 
+            [
+            [{ header: [1, 2, false] }],
+            ["bold", "italic", "underline"],
+            [{ 'list' : 'ordered' }, { 'list' : 'bullet' }],
+            ["image", "code-block"]
+            ]
+        }
 }); 
+ 
 var method;
  
 var SaveDocumentationPageModal;
@@ -179,5 +204,4 @@ function SubmitDocumentationPage()
     else
         ShowAlert("Input field Title Name must contain a value!!!");
 }
- 
 </script>
