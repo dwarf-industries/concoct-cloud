@@ -5,7 +5,7 @@
     var random = Guid.NewGuid().ToString().Split('-').FirstOrDefault().ToString();
     var ProjectId = ViewData["ProjectId"] as int?;
 }
-
+<link href="https://unpkg.com/quill-better-table@1.2.8/dist/quill-better-table.css" rel="stylesheet">
  
 
 <style>
@@ -30,6 +30,19 @@
     }
     .control_wrapper .e-upload .e-upload-drag-hover {
         margin: 0;
+    }
+    button:hover{
+        color: #e6326f;
+    }
+    .ql-Table:before{
+        font-family: "e-icons" !important;
+        content:'\e705';
+        border: none;
+        cursor: pointer;
+        float: left;
+        height: 24px;
+        padding: 3px 5px;
+        width: 28px;
     }
 </style>
 
@@ -92,24 +105,36 @@ InputPageData = new Quill('#InputPageData', {
         theme: 'snow',
         modules: 
         {
+            table: false,  // disable table module
             history: {
                 delay: 2000,
                 maxStack: 500,
                 userOnly: true
             },
+            
             syntax: true,              // Include syntax module
             toolbar: 
             [
             [{ header: [1, 2, false] }],
             ["bold", "italic", "underline"],
             [{ 'list' : 'ordered' }, { 'list' : 'bullet' }],
-            ["image", "code-block"]
+            ["image", "code-block",'Table']
             ]
         }
 }); 
+
  
+
+var customButton =  document.getElementsByClassName('ql-Table')[0];
+customButton.addEventListener('click', function() {
+   console.log("Clicked");
+    const value = `<h1>New content here</h1>`
+    const delta = InputPageData.clipboard.convert(value)
+    var existingDelta = InputPageData.getContents()
+    var combinedDelta = existingDelta.concat(delta);
+    InputPageData.setContents(combinedDelta, 'silent')
+});
 var method;
- 
 var SaveDocumentationPageModal;
 SaveDocumentationPageModal = new ej.popups.Dialog({
     width: '100%',
