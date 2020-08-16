@@ -5,10 +5,15 @@
     var random = Guid.NewGuid().ToString().Split('-').FirstOrDefault().ToString();
     var ProjectId = ViewData["ProjectId"] as int?;
 }
-
+<link href="https://unpkg.com/quill-better-table@1.2.8/dist/quill-better-table.css" rel="stylesheet">
+ 
 
 <style>
-   
+   .ql-snow .ql-editor pre.ql-syntax {
+	background-color: #6a97a8;
+	color: #f8f8f2;
+	overflow: visible;
+    }
     #SaveDocumentationPage_title{
         text-align: center;
         width: 100%;
@@ -25,6 +30,19 @@
     }
     .control_wrapper .e-upload .e-upload-drag-hover {
         margin: 0;
+    }
+    button:hover{
+        color: #e6326f;
+    }
+    .ql-Table:before{
+        font-family: "e-icons" !important;
+        content:'\e705';
+        border: none;
+        cursor: pointer;
+        float: left;
+        height: 24px;
+        padding: 3px 5px;
+        width: 28px;
     }
 </style>
 
@@ -45,6 +63,19 @@
                 {
                     @Html.Raw(@PageData.Content)
                 }
+            </div>
+            <div class="panel">
+            <div id="snow-container"></div>
+                <div>
+                    <button id="insert-table">Insert Table</button>
+                    <button id="insert-row-above">Insert Row Above</button>
+                    <button id="insert-row-below">Insert Row Below</button>
+                    <button id="insert-column-left">Insert Column Left</button>
+                    <button id="insert-column-right">Insert Column Right</button>
+                    <button id="delete-row">Delete Row</button>
+                    <button id="delete-column">Delete Column</button>
+                    <button id="delete-table">Delete Table</button>
+                </div>
             </div>
         </div>
         <div class="row InlineFlex">
@@ -67,12 +98,43 @@ var InputPageDataTitle = new ej.inputs.TextBox({
 {
   @:  InputPageDataTitle.value = "@PageData.Title"
 }
+
 InputPageDataTitle.appendTo('#InputPageDataTitle');
+
 InputPageData = new Quill('#InputPageData', {
         theme: 'snow',
+        modules: 
+        {
+            table: false,  // disable table module
+            history: {
+                delay: 2000,
+                maxStack: 500,
+                userOnly: true
+            },
+            
+            syntax: true,              // Include syntax module
+            toolbar: 
+            [
+            [{ header: [1, 2, false] }],
+            ["bold", "italic", "underline"],
+            [{ 'list' : 'ordered' }, { 'list' : 'bullet' }],
+            ["image", "code-block",'Table']
+            ]
+        }
 }); 
-var method;
+
  
+
+var customButton =  document.getElementsByClassName('ql-Table')[0];
+customButton.addEventListener('click', function() {
+   console.log("Clicked");
+    const value = `<h1>New content here</h1>`
+    const delta = InputPageData.clipboard.convert(value)
+    var existingDelta = InputPageData.getContents()
+    var combinedDelta = existingDelta.concat(delta);
+    InputPageData.setContents(combinedDelta, 'silent')
+});
+var method;
 var SaveDocumentationPageModal;
 SaveDocumentationPageModal = new ej.popups.Dialog({
     width: '100%',
@@ -167,5 +229,4 @@ function SubmitDocumentationPage()
     else
         ShowAlert("Input field Title Name must contain a value!!!");
 }
- 
 </script>

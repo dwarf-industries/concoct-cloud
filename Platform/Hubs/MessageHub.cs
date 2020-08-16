@@ -79,7 +79,8 @@ namespace Platform.Hubs
        {
            notification.AssociatedProjectNotifications = null;
            notification.AssociatedUserNotifications = null;
-            hubContext.Clients
+           if(reciverData != null)
+                hubContext.Clients
                       .Client(reciverData.Id)
                       .SendAsync("ReciveNewNotification",
                       JsonConvert.SerializeObject(notification));
