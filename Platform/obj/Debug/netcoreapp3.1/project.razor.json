@@ -13674,6 +13674,37 @@
       },
       {
         "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__TableBuilderViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:table-builder",
+            "Attributes": [
+              {
+                "Name": "markdown"
+              }
+            ]
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "markdown",
+            "TypeName": "System.String",
+            "Metadata": {
+              "Common.PropertyName": "markdown"
+            }
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__TableBuilderViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "TableBuilder"
+        }
+      },
+      {
+        "Kind": "MVC.ViewComponent",
         "Name": "__Generated__WorkItemFileUploaderViewComponentTagHelper",
         "AssemblyName": "Rokono Control",
         "CaseSensitive": false,
@@ -16025,6 +16056,11 @@
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/NavigationMenu/Default.cshtml",
       "TargetPath": "Views\\Shared\\Components\\NavigationMenu\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Widgets/TableBuilder/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Widgets\\TableBuilder\\Default.cshtml",
       "FileKind": "mvc"
     },
     {
