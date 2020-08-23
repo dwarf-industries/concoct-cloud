@@ -1,0 +1,41 @@
+@{
+  var bindingTable = ViewData["BindingTable"] as Platform.Models.TableBinding;
+  var k  = 1;
+}
+
+<table class="table">
+  
+  <thead>
+    <tr>
+    @foreach(var column in @bindingTable.Columns)
+    {
+        <th scope="col">@column</th>
+    }    
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var rowItem in @bindingTable.Rows)
+    {
+      if(!string.IsNullOrEmpty(rowItem))
+      {
+        if(@k == 1)
+        {
+            @:  <tr>
+            @:  <td>@rowItem</td>
+            k = k + 1;
+        }
+        else if(@k != @bindingTable.Columns.Count)
+        {
+            @:  <td>@rowItem</td>
+            k = k+1;
+        }
+        else if(@k == @bindingTable.Columns.Count)
+        {
+            @:  <td>@rowItem</td>
+            @:  </tr>
+            k = 1;
+        }
+      }
+    }
+  </tbody>
+</table>
