@@ -46,10 +46,10 @@
                 <div class="DocumentationSection" id="Current_@currentPage.Id" >
                     @if(UserRights.Documentation == 1)
                     {
-                        <div class="row" style="display: block ruby;">
+                        <div class="row" style="display:flex;">
                             <hr/>
-                                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="OpenEditPageModal(@currentPage.Id)">Edit page</button>
-                                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="DeletePage(@currentPage.Id)">Delete page</button>
+                                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%; margin:1%;" onclick="OpenEditPageModal(@currentPage.Id)">Edit page</button>
+                                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;margin:1%;" onclick="DeletePage(@currentPage.Id)">Delete page</button>
                             <hr/>
                         </div>
                     }
