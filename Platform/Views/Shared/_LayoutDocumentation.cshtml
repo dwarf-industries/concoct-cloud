@@ -46,7 +46,14 @@
                         </li>
                      
                         <li class="header-style float-right support border-left" onclick="ReturnToCaller()"><b>Return</b></li>
-                        <li class="header-style float-right support border-left" style="margin:0;"><input id="InputSearchTop"  /></li>
+                        <li class="header-style float-right support border-left" style="margin:0;">
+                            <b>
+                                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" id="hideTosat"> Hide All </button>
+                            </b>
+                            <input id="InputSearchTop"  />
+                            
+                        </li>
+                        
                     </ul>
                 </div>
                 <!-- end of header-section -->
@@ -64,6 +71,10 @@
                                 </div>
 
                             </div>
+                            <div id="NotificationGrid" style="display: none;">
+                                @await Component.InvokeAsync("NotificationPanel", @ProjectId)
+                            </div>
+
                         </div>
                     </aside>
 
