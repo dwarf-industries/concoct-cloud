@@ -47,18 +47,14 @@
                     <aside id="sidebar-treeview" style="overflow-x:hidden;">
                         <div class="main-menu">
                             <div class="table-content" style="padding:0;">
-                        
                                 @await Component.InvokeAsync("ManagementRights", @ProjectId)
                                 @await Component.InvokeAsync("UserSettings", @ProjectId)
                                 @await Component.InvokeAsync("LoadedProjects", @ProjectId)
                                 @await Component.InvokeAsync("GetProjectLogo", @ProjectId)
-
                                 @await Component.InvokeAsync("SearchBox", @ProjectId)
-
                                 <div class="row" style="margin:0;">
                                     <p class="main-menu-header">Navigation</p>
                                     <button  type="button" id="NotesBtn" class="btn btn-primary" style="margin-top:2px; width:100%" onclick="ShowNotes()" >Notes</button>
-
                                 </div>
                                 <div id="NavGrid">
                                     @await Component.InvokeAsync("NavigationMenu", @ProjectId)
@@ -68,9 +64,6 @@
                                 </div>
 
                             </div>
-
-
-
                         </div>
                     </aside>
 
