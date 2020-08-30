@@ -1,6 +1,6 @@
 @{
     var UserId = ViewData["UserId"] as int?;
-    var Notifications = ViewData["Notificiations"] as List<Notifications>;
+    var Notifications = ViewData["Notificiations"] as List<Platform.Models.BindingNotification>;
     var ProjectId = ViewData["ProjectId"] as int?;
 }
 
@@ -226,40 +226,43 @@
 
     function InitiliazeNotificationGrid(data)
     {
-
+        var bindingData  = [];
         data.forEach(x=>{
+            debugger
             var currentData;
-            if(x.notificationType === 1)
+            if(x.notification.notificationType === 1)
                currentData = {
                     title: "Personal Message",
-                    content: x.content, 
+                    content: x.notification.content, 
                     cssClass: 'e-toast-info',
                     icon: 'PM'
                 };
-            if(x.notificationType === 2)
+            if(x.notification.notificationType === 2)
                 currentData = {
                     title: "Assigned Item",
-                    content: x.content, 
+                    content: x.notification.content, 
                     cssClass: 'e-toast-success',
                     icon: 'AI'
                 };
 
-            if(x.notificationType === 3)
+            if(x.notification.notificationType === 3)
                  currentData ={
                     title: "Created Work Item",
-                    content: x.content, 
+                    content: x.notification.content, 
                     cssClass: 'e-toast-warning',
                     icon: 'CW'
                 };
-            if(x.notificationType === 4)
+            if(x.notification.notificationType === 4)
                 currentData ={
                     title: "Updated Work Item",
-                    content: x.content, 
+                    content: x.notification.content, 
                     cssClass: 'e-toast-danger',
                     icon: 'UW'
                 };
+            if(x.isRead === 0)
+                toasts.push(currentData);
 
-            toasts.push(currentData);
+            bindingData.push(x.notification);
         });
         console.log(toasts);
         InitializeToast();
@@ -267,7 +270,7 @@
         $("#NotificationGridWrapper").html("");
         $("#NotificationGridWrapper").html("<div id=\"NotificationHolderGrid\"></div>");
         var grid = new ej.grids.Grid({
-            dataSource: data,
+            dataSource: bindingData,
             rowTemplate: '#currentTemplate',
             height: $("#sidebar-treeview").height,
             width: 'auto',
