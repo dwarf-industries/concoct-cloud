@@ -178,6 +178,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                     NotificationId = notification.Entity.Id,
                     ProjectId = currentItem.ProjectId,
                     NewNotification = 1,
+                    IsRead = 0,
                     UserAccountId = x.UserAccountId
                 });
                 Context.SaveChanges();
@@ -406,6 +407,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                     NotificationId = notification.Entity.Id,
                     ProjectId = currentItem.ProjectId,
                     NewNotification = 1,
+                    IsRead = 0,
                     UserAccountId = x.UserAccountId
                 });
                 Context.SaveChanges();
