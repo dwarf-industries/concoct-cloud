@@ -10,6 +10,7 @@ namespace Rokono_Control.Models
         public int ProjectId { get; set; }
         public int? NewNotification { get; set; }
         public int? UserAccountId { get; set; }
+        public int? IsRead { get; set; }
 
         public virtual Notifications Notification { get; set; }
         public virtual Projects Project { get; set; }
