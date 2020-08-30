@@ -156,6 +156,7 @@ namespace Platform.DatabaseHandlers.Contexts
                 Context.SaveChanges();
                 Context.AssociatedUserNotifications.Add(new AssociatedUserNotifications{
                     NewNotification = 1,
+                    IsRead = 0,
                     UserId = messageData.ReciverId,
                     NotificationId = notification.Entity.Id
                 });
@@ -458,6 +459,7 @@ namespace Platform.DatabaseHandlers.Contexts
             Context.AssociatedUserNotifications.Add(new AssociatedUserNotifications{
                 UserId = request.ReciverId,
                 NewNotification = 1,
+                IsRead = 0,
                 NotificationId = notification.Entity.Id
             });
             Context.SaveChanges();
