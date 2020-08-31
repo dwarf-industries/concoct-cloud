@@ -76,7 +76,7 @@
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCors("ApiPolicy");
+            app.UseCors("CorsPolicy");
 
 
             app.UseRouting();

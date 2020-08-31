@@ -13862,38 +13862,6 @@
         }
       },
       {
-        "HashCode": -2113067012,
-        "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__WidgetBuilderViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:widget-builder",
-            "Attributes": [
-              {
-                "Name": "request"
-              }
-            ]
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "request",
-            "TypeName": "Rokono_Control.Models.IncomingIdRequest",
-            "Metadata": {
-              "Common.PropertyName": "request"
-            }
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__WidgetBuilderViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "WidgetBuilder"
-        }
-      },
-      {
         "HashCode": 678397561,
         "Kind": "MVC.ViewComponent",
         "Name": "__Generated__TableBuilderViewComponentTagHelper",
@@ -13923,6 +13891,38 @@
           "Runtime.Name": "ITagHelper",
           "Common.TypeName": "__Generated__TableBuilderViewComponentTagHelper",
           "MVC.ViewComponent.Name": "TableBuilder"
+        }
+      },
+      {
+        "HashCode": -2113067012,
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__WidgetBuilderViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:widget-builder",
+            "Attributes": [
+              {
+                "Name": "request"
+              }
+            ]
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "request",
+            "TypeName": "Rokono_Control.Models.IncomingIdRequest",
+            "Metadata": {
+              "Common.PropertyName": "request"
+            }
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__WidgetBuilderViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "WidgetBuilder"
         }
       },
       {
