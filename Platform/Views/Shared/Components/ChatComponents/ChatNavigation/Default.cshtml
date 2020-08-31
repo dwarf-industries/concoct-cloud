@@ -120,8 +120,8 @@
      ${if(isParent)}
         <div class="nodetextHeading">
             <div class="row" style="padding:5px; margin:0;" >
-                <div class="col-md-9">
-                    <span class="CategoryIcon"></span><span class="ChatTreeMainText">${nodeText}</span>
+                <div class="col-md-9" style="display:flex;">
+                    <span class="CategoryIcon"></span> <span class="ChatTreeMainText"> ${nodeText} </span>
                 </div>
                 <div class="col-md-2" style="display:flex;" >
                     <span onclick="AddNewChannelModal(${internalId})" class="TreeNewItem"></span>
@@ -131,28 +131,33 @@
             </div>
         </div>   
      ${else if(isPersonal)}
-     <div class="row">
-         <div class="col-md-8">
-            <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId},1)">
-                <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>
+    <div class="nodetextHeading">
+        <div class="row" style="margin-left:2%;margin-right:2%;">
+            <div class="col-md-8" style="padding:5px; margin:0;display:flex;" >
+                <div id="ChatChannel_${internalId}" style="display:flex;" onclick="OpenChannel(${internalId},1)">
+                    <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText"> ${nodeText} </span>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding:5px; margin:0;display:flex;" >
+                <span onclick="RemovePersonal(${internalId})" class="CategoryRemove"></span>
             </div>
         </div>
-        <div class="col-md-4">
-            <span onclick="RemovePersonal(${internalId})" class="CategoryRemove"></span>
-        </div>
     </div>
-    ${else}
-     <div class="row">
-         <div class="col-md-8">
-            <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId},10)">
-                <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>
+     ${else}
+    <div class="nodetextHeading">
+        <div class="row" style="margin-left:2%;margin-right:2%;">
+            <div class="col-md-8" style="display:flex;">
+                <div id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId},10)">
+                    <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText"> ${nodeText} </span>
+                </div>
+            </div>
+            <div class="col-md-4" style="display:flex;">
+                <span onclick="RemoveRoom(${internalId})" class="CategoryRemove"></span>
             </div>
         </div>
-        <div class="col-md-4">
-            <span onclick="RemoveRoom(${internalId})" class="CategoryRemove"></span>
-        </div>
     </div>
-         
+    
+          
     ${/if}
     </td>
 </tr>
@@ -165,19 +170,19 @@ else
     <td>
      ${if(isParent)}
         <div class="nodetextHeading">
-            <div class="row" style="padding:5px; margin:0;" >
+            <div class="row nodetext" style="padding:5px; margin:0; display:flex;" >
                 <div class="col-md-12">
-                    <span class="CategoryIcon"></span><span class="ChatTreeMainText">${nodeText}</span>
+                    <span class="CategoryIcon"></span> <span class="ChatTreeMainText"> ${nodeText} </span>
                 </div>
                 
             </div>
         </div>   
      ${else if(isPersonal)}
-        <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId},1)">
+        <div id="ChatChannel_${internalId}" style="display:flex;" onclick="OpenChannel(${internalId},1)">
             <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>
         </div>
     ${else}
-        <div class="nodetext" id="ChatChannel_${internalId}" onclick="OpenChannel(${internalId}, 0)">
+        <div id="ChatChannel_${internalId}" style="display:flex;" onclick="OpenChannel(${internalId}, 0)">
             <span class="ChatChannelIcon"></span> <span class="ChatTreeMainText" >${nodeText}</span>
         </div>
     ${/if}
