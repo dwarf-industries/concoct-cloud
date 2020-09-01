@@ -104,9 +104,9 @@ namespace Platform.Controllers
         }
 
         [HttpPost]
-        public List<Notifications> GetUserNotifications([FromBody] IncomingNoteRequest note)
+        public List<BindingNotification> GetUserNotifications([FromBody] IncomingNoteRequest note)
         {
-            var result = new List<Notifications>();
+            var result = new List<BindingNotification>();
  
             using(var context = new NotificationContext(Context, Configuration))
             {

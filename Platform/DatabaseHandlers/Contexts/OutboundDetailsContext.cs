@@ -166,6 +166,7 @@ namespace Platform.DatabaseHandlers.Contexts
                     NotificationId = notification.Entity.Id,
                     ProjectId = report.ProjectId,
                     NewNotification = 1,
+                    IsRead = 0,
                     UserAccountId = x.UserAccountId
                 });
                 Context.SaveChanges();

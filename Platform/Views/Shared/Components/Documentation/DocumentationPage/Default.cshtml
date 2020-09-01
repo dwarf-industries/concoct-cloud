@@ -46,15 +46,15 @@
                 <div class="DocumentationSection" id="Current_@currentPage.Id" >
                     @if(UserRights.Documentation == 1)
                     {
-                        <div class="row" style="display: block ruby;">
+                        <div class="row" style="display:flex;">
                             <hr/>
-                                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="OpenEditPageModal(@currentPage.Id)">Edit page</button>
-                                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="DeletePage(@currentPage.Id)">Delete page</button>
+                                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%; margin:1%;" onclick="OpenEditPageModal(@currentPage.Id)">Edit page</button>
+                                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;margin:1%;" onclick="DeletePage(@currentPage.Id)">Delete page</button>
                             <hr/>
                         </div>
                     }
                     <div class="DocumentationBody">
-                        @Html.Raw(currentPage.Content)
+                         @Html.Raw(await @GetDocumentationPageContent(currentPage.Content))
                     </div>
                 </div>
             }        
@@ -83,6 +83,77 @@
 <div id="NewPageModalHodler">
  
 </div>
+
+@{
+    async Task<string> GetDocumentationPageContent(string data)
+    {
+        var getTableMarkdowns =  GetStrBetweenTags(data,"#opentable","#closetable");
+        if(string.IsNullOrEmpty(getTableMarkdowns))
+        {
+            return data;
+        }
+        getTableMarkdowns = getTableMarkdowns.Replace("</p>","");
+        getTableMarkdowns = getTableMarkdowns.Replace("<p>","");
+        
+        var result = await Task.Run(() => Component.InvokeAsync("TableBuilder", getTableMarkdowns));
+        
+        var currentResult = ReplaceMarkdown(data,"#opentable","#closetable");
+        var bindingResult = string.Empty;
+        if(currentResult.Item1 == null && currentResult.Item2 == null)
+        {
+            return GetString(result);
+        }
+        else
+        {
+            bindingResult += currentResult.Item1;
+            bindingResult += GetString(result);
+            bindingResult += currentResult.Item2;
+            //System.Console.WriteLine(result.Result);
+        }
+        return bindingResult;
+    }
+    string GetStrBetweenTags(string value, string startTag, string endTag)
+    {
+        if (value.Contains(startTag) && value.Contains(endTag))
+        {
+            int index = value.IndexOf(startTag) + startTag.Length;
+            return value.Substring(index, value.IndexOf(endTag) - index);
+        }
+        
+        return null;
+    }
+    (string, string) ReplaceMarkdown(string value, string startTag, string endTag)
+    {
+        if (value.Contains(startTag) && value.Contains(endTag))
+        {
+            int index = value.IndexOf(startTag);
+            var endIndex =value.IndexOf(endTag);
+            var markdown = string.Empty;
+            if(endIndex >= value.Length)
+               markdown = value.Substring(index, value.Length-1);
+            else
+                markdown = value.Substring(index,value.IndexOf(endTag)+endTag.Length - index);
+
+            value = value.Replace(markdown, "____");
+            var result = value.Split("____");
+            if(result == null)
+            {
+                return (null,null);
+            }
+            return (result[0],result[1]);
+        }
+        
+        return (null,null);
+    }
+    string GetString(Microsoft.AspNetCore.Html.IHtmlContent content)
+    {
+        using (var writer = new System.IO.StringWriter())
+        {        
+            content.WriteTo(writer,System.Text.Encodings.Web.HtmlEncoder.Default);
+            return writer.ToString();
+        } 
+    }   
+}
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <!-- Main Quill library -->
 <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>

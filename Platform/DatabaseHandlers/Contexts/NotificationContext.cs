@@ -5,6 +5,7 @@ namespace Platform.DatabaseHandlers.Contexts
     using System.Linq;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
+    using Platform.Models;
     using Rokono_Control.Models;
     public class NotificationContext : IDisposable
     {
@@ -17,7 +18,7 @@ namespace Platform.DatabaseHandlers.Contexts
             Context = context;
             Configuration = config;
         }
-        internal List<Notifications> GetAllUserNotifications(int accountId, int projectId)
+        internal List<BindingNotification> GetAllUserNotifications(int accountId, int projectId)
         {
             var projectNotifications = Context.AssociatedProjectNotifications.Include(x => x.Notification)
                                                                              .ThenInclude(Notification => Notification.NotificationTypeNavigation)
@@ -27,9 +28,31 @@ namespace Platform.DatabaseHandlers.Contexts
                                                                        .ThenInclude(Notification => Notification.NotificationTypeNavigation)
                                                                        .Where(x => x.UserId == accountId && x.NewNotification == 1)
                                                                        .ToList();
-            var notifications = new List<Notifications>();
-            notifications.AddRange(projectNotifications.Select(x=>x.Notification).ToList());
-            notifications.AddRange(userNotifications.Select(x=>x.Notification).ToList());
+           
+            
+            var notifications = new List<BindingNotification>();
+            notifications.AddRange(projectNotifications.Select(x=>new BindingNotification{
+                Notification =x.Notification,
+                IsRead = x.IsRead.Value
+            }).ToList());
+            notifications.AddRange(userNotifications.Select(x=>new BindingNotification{
+                Notification =x.Notification,
+                IsRead = x.IsRead.Value
+            }).ToList());
+            projectNotifications.ForEach(x=>{
+                var notification = x;
+                notification.IsRead = 1;
+                Context.Attach(notification);
+                Context.Update(notification);
+                Context.SaveChanges();
+            });
+            userNotifications.ForEach(x=>{
+                var notification = x;
+                notification.IsRead = 1;
+                Context.Attach(notification);
+                Context.Update(notification);
+                Context.SaveChanges();
+            });
             return notifications;
         }
         internal object GetNewNotifications(object value)
@@ -42,6 +65,7 @@ namespace Platform.DatabaseHandlers.Contexts
             if(notification != null)
             {
                 notification.NewNotification = 0;
+                notification.IsRead = 1;
                 Context.Attach(notification);
                 Context.Update(notification);
                 Context.SaveChanges();
@@ -50,6 +74,7 @@ namespace Platform.DatabaseHandlers.Contexts
             if(personalMessage != null)
             {
                 personalMessage.NewNotification = 0;
+                personalMessage.IsRead =1;
                 Context.Attach(personalMessage);
                 Context.Update(personalMessage);
                 Context.SaveChanges();
@@ -67,7 +92,8 @@ namespace Platform.DatabaseHandlers.Contexts
             Context.AssociatedUserNotifications.Add(new AssociatedUserNotifications{
                 NotificationId = notification.Entity.Id,
                 UserId =  userId,
-                NewNotification = 2
+                NewNotification = 2,
+                IsRead = 0
             });
             Context.SaveChanges();
         }

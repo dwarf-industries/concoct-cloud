@@ -10,6 +10,10 @@
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
+
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/default.min.css">
+<script src="~/hightlight/highlight.pack.js"></script>
     <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
     <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -42,7 +46,14 @@
                         </li>
                      
                         <li class="header-style float-right support border-left" onclick="ReturnToCaller()"><b>Return</b></li>
-                        <li class="header-style float-right support border-left" style="margin:0;"><input id="InputSearchTop"  /></li>
+                        <li class="header-style float-right support border-left" style="margin:0;">
+                            <b>
+                                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" id="hideTosat"> Hide All </button>
+                            </b>
+                            <input id="InputSearchTop"  />
+                            
+                        </li>
+                        
                     </ul>
                 </div>
                 <!-- end of header-section -->
@@ -60,6 +71,10 @@
                                 </div>
 
                             </div>
+                            <div id="NotificationGrid" style="display: none;">
+                                @await Component.InvokeAsync("NotificationPanel", @ProjectId)
+                            </div>
+
                         </div>
                     </aside>
 

@@ -5,10 +5,15 @@
     var random = Guid.NewGuid().ToString().Split('-').FirstOrDefault().ToString();
     var ProjectId = ViewData["ProjectId"] as int?;
 }
-
+<link href="https://unpkg.com/quill-better-table@1.2.8/dist/quill-better-table.css" rel="stylesheet">
+ 
 
 <style>
-   
+   .ql-snow .ql-editor pre.ql-syntax {
+	background-color: #6a97a8;
+	color: #f8f8f2;
+	overflow: visible;
+    }
     #SaveDocumentationPage_title{
         text-align: center;
         width: 100%;
@@ -26,6 +31,29 @@
     .control_wrapper .e-upload .e-upload-drag-hover {
         margin: 0;
     }
+    button:hover{
+        color: #e6326f;
+    }
+    .ql-Table:before{
+        font-family: "e-icons" !important;
+        content:'\e705';
+        border: none;
+        cursor: pointer;
+        float: left;
+        height: 24px;
+        padding: 3px 5px;
+        width: 28px;
+    }
+    .ql-image-custom:before{
+        font-family: "e-icons" !important;
+        content:'\e776';
+        border: none;
+        cursor: pointer;
+        float: left;
+        height: 24px;
+        padding: 3px 5px;
+        width: 28px;
+    }
 </style>
 
 <div id="SaveDocumentationPage"  >
@@ -33,7 +61,7 @@
         <div class="row">
             <input id="InputPageDataTitle" />
         </div>
-         <div class="row">
+         <div class="row" style="display: none;">
             <div class="control_wrapper">
                 <!-- Initialize Uploader -->
                 <input type='file' id='File_@random' name='UploadFiles'/>
@@ -46,6 +74,7 @@
                     @Html.Raw(@PageData.Content)
                 }
             </div>
+         
         </div>
         <div class="row InlineFlex">
             <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="SubmitDocumentationPage()">Submit</button>
@@ -67,12 +96,57 @@ var InputPageDataTitle = new ej.inputs.TextBox({
 {
   @:  InputPageDataTitle.value = "@PageData.Title"
 }
+
 InputPageDataTitle.appendTo('#InputPageDataTitle');
+
 InputPageData = new Quill('#InputPageData', {
         theme: 'snow',
+        modules: 
+        {
+            table: false,  // disable table module
+            history: {
+                delay: 2000,
+                maxStack: 500,
+                userOnly: true
+            },
+            
+            syntax: true,              // Include syntax module
+            toolbar: 
+            [
+            [{ header: [1, 2, false] }],
+            ["bold", "italic", "underline"],
+            [{ 'list' : 'ordered' }, { 'list' : 'bullet' }],
+            ["image-custom", "code-block",'Table']
+            ]
+        }
 }); 
-var method;
+
  
+var image_custom = document.getElementsByClassName('ql-image-custom')[0];
+image_custom.addEventListener('click', function() {
+   console.log("Clicked");
+  $("#File_@random").click();
+});
+var customButton =  document.getElementsByClassName('ql-Table')[0];
+customButton.addEventListener('click', function() {
+    console.log("Clicked");
+    debugger
+
+
+    var html = InputPageData.root.innerHTML;
+    html += '#opentable';
+    html += '\n';
+    html += '#Example#Example#Example# ';
+    html += '\n';
+    html += '|value|value|value|';
+    html += '\n';
+    html += '#closetable';
+ 
+    var delta = InputPageData.clipboard.convert(html);
+    InputPageData.setContents(delta, 'silent');
+     
+});
+var method;
 var SaveDocumentationPageModal;
 SaveDocumentationPageModal = new ej.popups.Dialog({
     width: '100%',
@@ -120,7 +194,7 @@ function onFileRemove(args) {
  
 function CloseDocumentationPage()
 {
-    $("#DocumentationPageControl").load('/Documentation/DocumentationPage?id='+CategoryFieldId+'&&projectId=@ProjectId');
+    $("#DocumentationPageControl").load('/Documentation/DocumentationPage?id=@CategoryFieldId&&projectId=@ProjectId');
     SaveDocumentationPageModal.hide();
 
 }
@@ -157,6 +231,7 @@ function SubmitDocumentationPage()
                 dataType: "json",
                 
                 success: function (response) {
+                    debugger
                     CloseDocumentationPage();
                 },
                 error: function (xhr, status, error) {
@@ -167,5 +242,4 @@ function SubmitDocumentationPage()
     else
         ShowAlert("Input field Title Name must contain a value!!!");
 }
- 
 </script>

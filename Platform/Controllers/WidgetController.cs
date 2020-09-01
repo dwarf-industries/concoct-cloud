@@ -60,6 +60,10 @@ namespace Platform.Controllers {
                  Phase = height
             });
         }
+
+        [HttpGet]
+        public IActionResult LoadControl(string name) => ViewComponent(name);
+
         [HttpGet]
 
         public IActionResult LoadControlSettings(int id, int projectId, int dashboard) 

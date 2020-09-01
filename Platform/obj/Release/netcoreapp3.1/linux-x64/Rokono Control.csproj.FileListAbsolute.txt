@@ -1065,3 +1065,6 @@
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Rokono Control.csproj.CopyComplete
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Rokono Control.dll
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Rokono Control.pdb
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Razor/Views/Shared/Components/Survey/SurveyDropdown/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Razor/Views/Shared/Components/Survey/SurveyInput/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Release/netcoreapp3.1/linux-x64/Razor/Views/Shared/Components/Widgets/TableBuilder/Default.cshtml.g.cs
