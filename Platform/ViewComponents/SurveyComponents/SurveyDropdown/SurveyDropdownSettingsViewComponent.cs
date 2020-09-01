@@ -17,10 +17,12 @@ namespace Platform.ViewComponents.SurveyComponents.SurveyDropdown
             Context = context;
             Configuration = configuration;
         }
-        public IViewComponentResult Invoke(int id)
+        public IViewComponentResult Invoke(IncomingIdRequest data)
         {
             ViewData["Id"] = IdGenerator.GetRandomId();
             ViewData["QuestionId"] = IdGenerator.GetRandomId();
+            ViewData["PageId"] = data.Id;
+            ViewData["ComponentId"] = data.UserId;
             return View("/Views/Shared/Components/Survey/SurveyDropdown/Settings.cshtml");
         }
     }

@@ -230,6 +230,9 @@
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Survey/CreateNewSurvey.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/LayoutComponents/ProjectSpecific/ProjectName.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RC/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/LayoutComponents/ProjectSpecific/ProjectImage.cshtml.g.cs
+<<<<<<< HEAD
+=======
+>>>>>>> Development/Master
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/appsettings.Development.json
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/asd.json
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/bin/Debug/netcoreapp3.1/ddd.json
@@ -433,6 +436,10 @@
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/RelateWorkItem/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/SearchBox/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/SelectProject/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Survey/SurveyDropdown/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Survey/SurveyDropdown/Settings.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Survey/SurveyInput/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Survey/SurveyInput/Settings.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/UserRightToggle/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/UserSettings/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/ViewChangelog/Default.cshtml.g.cs
@@ -441,6 +448,7 @@
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Widgets/BurndownChartSettings/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Widgets/ChartForWorkItems/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Widgets/ChartForWorkItemsSettings/Default.cshtml.g.cs
+/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Widgets/TableBuilder/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Widgets/WidgetBuilder/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/WorkItemFileUploader/Default.cshtml.g.cs
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Error.cshtml.g.cs
@@ -462,11 +470,3 @@
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.csproj.CopyComplete
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.dll
 /home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Rokono Control.pdb
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Survey/SurveyInput/Default.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Survey/SurveyDropdown/Default.cshtml.g.cs
-<<<<<<< HEAD
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Survey/SurveyDropdown/Settings.cshtml.g.cs
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Survey/SurveyInput/Settings.cshtml.g.cs
-=======
-/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/obj/Debug/netcoreapp3.1/Razor/Views/Shared/Components/Widgets/TableBuilder/Default.cshtml.g.cs
->>>>>>> Development/Master

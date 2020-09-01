@@ -67,7 +67,7 @@
 
 
 <script>
- 
+var ActivePage = 1;
 var draggableId;
 function drag(ev)
 { 
@@ -82,7 +82,7 @@ function drop(args)
         $("#Content").append(data);
     });
 
-    $.get("/Survey/GetProjectSurveyElementSetting?element="+draggableId.nodeValue,function(data) {
+    $.get("/Survey/GetProjectSurveyElementSetting?element="+draggableId.nodeValue+";"+ActivePage,function(data) {
         $("#Settings").html("");
         $("#Settings").append(data);
     });

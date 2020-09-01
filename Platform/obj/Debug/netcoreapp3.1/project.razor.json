@@ -13574,7 +13574,7 @@
         }
       },
       {
-        "HashCode": -405087466,
+        "HashCode": -938816108,
         "Kind": "MVC.ViewComponent",
         "Name": "__Generated__SurveyDropdownSettingsViewComponentTagHelper",
         "AssemblyName": "Rokono Control",
@@ -13584,7 +13584,7 @@
             "TagName": "vc:survey-dropdown-settings",
             "Attributes": [
               {
-                "Name": "id"
+                "Name": "data"
               }
             ]
           }
@@ -13592,10 +13592,10 @@
         "BoundAttributes": [
           {
             "Kind": "MVC.ViewComponent",
-            "Name": "id",
-            "TypeName": "System.Int32",
+            "Name": "data",
+            "TypeName": "Rokono_Control.Models.IncomingIdRequest",
             "Metadata": {
-              "Common.PropertyName": "id"
+              "Common.PropertyName": "data"
             }
           }
         ],
