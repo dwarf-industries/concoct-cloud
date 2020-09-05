@@ -9,6 +9,7 @@ namespace Platform.Controllers
     using Microsoft.Extensions.Configuration;
     using Platform.DataHandlers;
     using Platform.DataHandlers.Interfaces;
+    using Platform.Models;
     using Rokono_Control.Models;
 
     public class SurveyController : Controller
@@ -62,6 +63,36 @@ namespace Platform.Controllers
                  
             }));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetProjectSurveyElementSetting(string element)
+        { 
+            
+            var id = default(int);
+            var currentElement = element.Split(';');
+
+            if(currentElement[0].Contains("_"))
+                int.TryParse(currentElement[0].Split("_")[1], out id);
+            var componentName = string.Empty;
+            var componentId = default(int);
+            using(var context = new SurveyContext(Context,Config))
+            {
+                var component = context.GetSurveyComponents().FirstOrDefault(x=>x.Id == id);
+                componentName = component != null ? component.ComponentInternalName : ""; 
+                componentId = component != null ? component.Id : default(int); 
+            }
+            if(!string.IsNullOrEmpty(componentName))
+                return await Task.Run(() => ViewComponent($"{componentName}Settings", new IncomingIdRequest{
+                    Id = int.Parse(currentElement[1]),
+                    UserId = componentId
+                }));
+             
+            return await Task.Run(() => ViewComponent("NullComponent", new IncomingIdRequest{
+                 
+            }));
+        }
+
+        
         [HttpPost]
         public async Task<List<Surveys>> GetProjectSurveys([FromBody] IncomingIdRequest request)
         {
@@ -73,7 +104,16 @@ namespace Platform.Controllers
             return result;
         }
 
-
+        [HttpPost]
+        public async Task<OutgoingJsonData> SaveSurveyComponent([FromBody] AssociatedPageSurveyComponents request)
+        {
+            
+            using(var context = new SurveyContext(Context,Config))
+            {
+                await Task.Run(() =>  context.SaveSurveyComponent(request));              
+            }
+            return new OutgoingJsonData{ Data = "Success"};
+        }
 
         
     }

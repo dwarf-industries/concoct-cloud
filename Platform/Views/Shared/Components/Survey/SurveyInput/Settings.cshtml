@@ -1,0 +1,15 @@
+@{
+    var id = ViewData["Id"] as string;
+ }
+
+
+<div class="row" style=" margin-left:5%; margin-right:5%;">
+    <input name="@id" id="@id" placeholder="Define your question"  style="width:100%;" class="form-control-sm"/>
+</div>
+
+<script>
+    var element = new ej.inputs.TextBox({
+        floatLabelType: 'Auto',
+     });
+    element.appendTo('#@id');
+</script>
