@@ -20,7 +20,7 @@
     color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
  }
- </style>
+</style>
 
 
 <div class="row  card-layout">
@@ -69,6 +69,7 @@
 <script>
 var ActivePage = 1;
 var draggableId;
+var boundElements = [];
 function drag(ev)
 { 
     draggableId = ev.originalTarget.attributes.id;
@@ -77,18 +78,53 @@ function drag(ev)
 function drop(args)
 {
     console.log(draggableId.nodeValue);
+     
+    $.get("/Survey/GetElementIds?element="+draggableId.nodeValue,function(data) {
+        var bindingItem = {
+            "QuestionId": data.item1,
+            "ElementId":  data.item2,
+            "ParentId":   data.item3
+        }
+        boundElements.push(bindingItem);
+         
+        $.get("/Survey/GetProjectSurveyElement?elements="+draggableId.nodeValue+";"+bindingItem.QuestionId+";"+bindingItem.ElementId+";"+bindingItem.ParentId+";"+"",function(data) {
+            
+            $("#Content").append(data);
+        });
 
-    $.get("/Survey/GetProjectSurveyElement?element="+draggableId.nodeValue,function(data) {
-        $("#Content").append(data);
-    });
 
-    $.get("/Survey/GetProjectSurveyElementSetting?element="+draggableId.nodeValue+";"+ActivePage,function(data) {
-        $("#Settings").html("");
-        $("#Settings").append(data);
+        $.get("/Survey/GetProjectSurveyElementSetting?element="+draggableId.nodeValue+";"+ActivePage+";"+bindingItem.QuestionId+";"+bindingItem.ElementId+";"+bindingItem.ParentId,function(data) {
+            
+            $("#Settings").html("");
+            $("#Settings").append(data);
+        });
     });
 }
+
+function UpdateSurveyItem(data)
+{
+    $("#"+data.ParentId).remove();
+    $("#"+data.QuestionId).remove();
+    
+    $.get("/Survey/GetProjectSurveyElement?elements="+data.NodeValue+";"+data.renderQuestionId+";"+data.renderId+";"+data.ParentId+";"+data.DataSource,function(newComponent) {
+         
+       $("#Content").append(newComponent);
+    });
+}
+
+
+function UpdateComponent(data)
+{
+     
+    $("#Container_"+data.id).html("");
+    $("#ContainerQuestion_"+data.id).html("");
+    $("#ContainerQuestion_"+data.id).html(data.Question);
+    $("#Container_"+data.id).html(data.bindingData);
+}
+
 function allowDrop(args)
 {
     args.preventDefault();
 }
+
 </script>
