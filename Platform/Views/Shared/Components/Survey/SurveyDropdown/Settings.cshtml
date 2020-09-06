@@ -1,21 +1,22 @@
 @{
-    var id = ViewData["Id"] as string;
-    var questionId = ViewData["QuestionId"] as string;
+    var Id = ViewData["Id"] as string;
+    var QuestionId = ViewData["QuestionId"] as string;
+    var RenderQuestionId = ViewData["RenderedQuestionId"] as string;
     var PageId = ViewData["PageId"] as int?;
-    var ComponentId = ViewData["ComponentId"] as int?;
-
-   
+    var ComponentId = ViewData["ComponentId"] as string;
+    var NodeValue = ViewData["NodeValue"] as string;
+    var ParentId = ViewData["ParentId"] as string;
  }
 
 
-<div class="row" style=" margin-left:5%; margin-right:5%;">
-    <input name="@questionId" id="@questionId" placeholder="Define your question"  style="width:100%;" class="form-control-sm"/>
+<div class="row" style="margin-left:5%; margin-right:5%;">
+    <input name="@QuestionId" id="@QuestionId" onchange="TextChanged()" placeholder="Define your question"  style="width:100%;" class="form-control-sm"/>
 </div>
 
-<div class="row" style=" margin-left:5%; margin-right:5%;margin-top:2%;">
+<div class="row" style="margin-left:5%; margin-right:5%;margin-top:2%;">
     <div class="control-section">
         <div class="content-wrapper">
-            <div id="@id">
+            <div id="@Id">
             </div>
         </div>
     </div>
@@ -42,7 +43,7 @@
         floatLabelType: 'Auto',
  
     });
-    element.appendTo('#@questionId');
+    element.appendTo('#@QuestionId');
 
     var submitSurveyComponent = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     submitSurveyComponent.appendTo('#submitSurveyComponent');
@@ -61,7 +62,7 @@
             { field: 'Name', headerText: 'Value Name' }
         ]
     });
-    grid.appendTo('#@id');
+    grid.appendTo('#@Id');
 
 
     function actionBegin(args) 
@@ -78,6 +79,7 @@
             if(contains === false)
             {
                 savingData.push({
+                    Key: savingData.length+1,
                     Value:args.data.Name
                 });
             }
@@ -89,18 +91,37 @@
                         local.push(x);
                     else
                         local.push({
+                            Key:local.length+1,
                             Value:args.data.Name
                         });
                 });
                 savingData = local;
             }
+            var bindingSource = {
+                QuestionId: "@RenderQuestionId",
+                QuestionValue:$("#@QuestionId").val(),
+                renderId: "@ComponentId",
+                ComponentSource: savingData
+            }
+            UpdateSurveyItem({
+                Page: @PageId,
+                NodeValue: "@NodeValue",
+                QuestionText: $("#@QuestionId").val(),
+                renderQuestionId: "@RenderQuestionId",
+                renderId: "@ComponentId",
+                ParentId: "@ParentId",
+                DataSource:JSON.stringify(bindingSource),
+            });
         }
         else if (args.requestType === 'beginEdit')
         {
             editingValue = args.rowData.Name;
         }
     }
-
+    function TextChanged(data)
+    {
+       currentQuestionText = $("#QuestionId").val();
+    }
 
     function CheckContains(value)
     {
@@ -114,14 +135,14 @@
 
     function SaveChangesDropdownSettings()
     {
-         
-          var dto = 
+        var dto = 
         {
-            "ComponentId": id,
-            "DataSource": savingData,
-            "Question": $("#@questionId").val(),
+            "ComponentId": @Id,
+            "DataSource": JSON.stringify(savingData),
+            "Question": $("#@QuestionId").val(),
             "PageId": @PageId,
             "ComponentId": @ComponentId
+
         }
  
         $.ajax({

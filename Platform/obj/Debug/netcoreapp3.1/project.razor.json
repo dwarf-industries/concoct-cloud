@@ -12934,6 +12934,70 @@
         }
       },
       {
+        "HashCode": -1637652673,
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__GetProjectLogoViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:get-project-logo",
+            "Attributes": [
+              {
+                "Name": "id"
+              }
+            ]
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "id",
+            "TypeName": "System.Int32",
+            "Metadata": {
+              "Common.PropertyName": "id"
+            }
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__GetProjectLogoViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "GetProjectLogo"
+        }
+      },
+      {
+        "HashCode": 1091411929,
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__GetProjectNameViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:get-project-name",
+            "Attributes": [
+              {
+                "Name": "id"
+              }
+            ]
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "id",
+            "TypeName": "System.Int32",
+            "Metadata": {
+              "Common.PropertyName": "id"
+            }
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__GetProjectNameViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "GetProjectName"
+        }
+      },
+      {
         "HashCode": -1270562136,
         "Kind": "MVC.ViewComponent",
         "Name": "__Generated__LoadedProjectsViewComponentTagHelper",
@@ -12995,6 +13059,38 @@
           "Runtime.Name": "ITagHelper",
           "Common.TypeName": "__Generated__ManagementRightsViewComponentTagHelper",
           "MVC.ViewComponent.Name": "ManagementRights"
+        }
+      },
+      {
+        "HashCode": 1930860236,
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__ModalViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:modal",
+            "Attributes": [
+              {
+                "Name": "child-name"
+              }
+            ]
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "child-name",
+            "TypeName": "System.String",
+            "Metadata": {
+              "Common.PropertyName": "childName"
+            }
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__ModalViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "Modal"
         }
       },
       {
@@ -13446,40 +13542,7 @@
         }
       },
       {
-<<<<<<< .merge_file_vJFyyq
-        "HashCode": -977232973,
-        "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__SurveyDropdownViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:survey-dropdown",
-            "Attributes": [
-              {
-                "Name": "id"
-              }
-            ]
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "id",
-            "TypeName": "System.Int32",
-            "Metadata": {
-              "Common.PropertyName": "id"
-            }
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__SurveyDropdownViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "SurveyDropdown"
-        }
-      },
-      {
-        "HashCode": -938816108,
+        "HashCode": -470188510,
         "Kind": "MVC.ViewComponent",
         "Name": "__Generated__SurveyDropdownSettingsViewComponentTagHelper",
         "AssemblyName": "Rokono Control",
@@ -13489,7 +13552,7 @@
             "TagName": "vc:survey-dropdown-settings",
             "Attributes": [
               {
-                "Name": "data"
+                "Name": "current"
               }
             ]
           }
@@ -13497,10 +13560,10 @@
         "BoundAttributes": [
           {
             "Kind": "MVC.ViewComponent",
-            "Name": "data",
-            "TypeName": "Rokono_Control.Models.IncomingIdRequest",
+            "Name": "current",
+            "TypeName": "Platform.Models.GenericIdRequest",
             "Metadata": {
-              "Common.PropertyName": "data"
+              "Common.PropertyName": "current"
             }
           }
         ],
@@ -13511,17 +13574,17 @@
         }
       },
       {
-        "HashCode": -1683809090,
+        "HashCode": -1356590610,
         "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__SurveyInputViewComponentTagHelper",
+        "Name": "__Generated__SurveyDropdownViewComponentTagHelper",
         "AssemblyName": "Rokono Control",
         "CaseSensitive": false,
         "TagMatchingRules": [
           {
-            "TagName": "vc:survey-input",
+            "TagName": "vc:survey-dropdown",
             "Attributes": [
               {
-                "Name": "id"
+                "Name": "current"
               }
             ]
           }
@@ -13529,17 +13592,17 @@
         "BoundAttributes": [
           {
             "Kind": "MVC.ViewComponent",
-            "Name": "id",
-            "TypeName": "System.Int32",
+            "Name": "current",
+            "TypeName": "Platform.Models.GenericIdRequest",
             "Metadata": {
-              "Common.PropertyName": "id"
+              "Common.PropertyName": "current"
             }
           }
         ],
         "Metadata": {
           "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__SurveyInputViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "SurveyInput"
+          "Common.TypeName": "__Generated__SurveyDropdownViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "SurveyDropdown"
         }
       },
       {
@@ -13575,8 +13638,38 @@
         }
       },
       {
-=======
->>>>>>> .merge_file_80eXdx
+        "HashCode": -1683809090,
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__SurveyInputViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:survey-input",
+            "Attributes": [
+              {
+                "Name": "id"
+              }
+            ]
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "id",
+            "TypeName": "System.Int32",
+            "Metadata": {
+              "Common.PropertyName": "id"
+            }
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__SurveyInputViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "SurveyInput"
+        }
+      },
+      {
         "HashCode": 606943635,
         "Kind": "MVC.ViewComponent",
         "Name": "__Generated__UserRightToggleViewComponentTagHelper",
@@ -13911,166 +14004,6 @@
           "Runtime.Name": "ITagHelper",
           "Common.TypeName": "__Generated__WorkItemFileUploaderViewComponentTagHelper",
           "MVC.ViewComponent.Name": "WorkItemFileUploader"
-        }
-      },
-      {
-        "HashCode": -1637652673,
-        "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__GetProjectLogoViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:get-project-logo",
-            "Attributes": [
-              {
-                "Name": "id"
-              }
-            ]
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "id",
-            "TypeName": "System.Int32",
-            "Metadata": {
-              "Common.PropertyName": "id"
-            }
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__GetProjectLogoViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "GetProjectLogo"
-        }
-      },
-      {
-        "HashCode": 1091411929,
-        "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__GetProjectNameViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:get-project-name",
-            "Attributes": [
-              {
-                "Name": "id"
-              }
-            ]
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "id",
-            "TypeName": "System.Int32",
-            "Metadata": {
-              "Common.PropertyName": "id"
-            }
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__GetProjectNameViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "GetProjectName"
-        }
-      },
-      {
-        "HashCode": 1930860236,
-        "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__ModalViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:modal",
-            "Attributes": [
-              {
-                "Name": "child-name"
-              }
-            ]
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "child-name",
-            "TypeName": "System.String",
-            "Metadata": {
-              "Common.PropertyName": "childName"
-            }
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__ModalViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "Modal"
-        }
-      },
-      {
-        "HashCode": -977232973,
-        "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__SurveyDropdownViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:survey-dropdown",
-            "Attributes": [
-              {
-                "Name": "id"
-              }
-            ]
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "id",
-            "TypeName": "System.Int32",
-            "Metadata": {
-              "Common.PropertyName": "id"
-            }
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__SurveyDropdownViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "SurveyDropdown"
-        }
-      },
-      {
-        "HashCode": -1683809090,
-        "Kind": "MVC.ViewComponent",
-        "Name": "__Generated__SurveyInputViewComponentTagHelper",
-        "AssemblyName": "Rokono Control",
-        "CaseSensitive": false,
-        "TagMatchingRules": [
-          {
-            "TagName": "vc:survey-input",
-            "Attributes": [
-              {
-                "Name": "id"
-              }
-            ]
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "MVC.ViewComponent",
-            "Name": "id",
-            "TypeName": "System.Int32",
-            "Metadata": {
-              "Common.PropertyName": "id"
-            }
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "ITagHelper",
-          "Common.TypeName": "__Generated__SurveyInputViewComponentTagHelper",
-          "MVC.ViewComponent.Name": "SurveyInput"
         }
       },
       {
