@@ -43,6 +43,7 @@
         floatLabelType: 'Auto',
  
     });
+    var LastBidningSource = [];
     element.appendTo('#@QuestionId');
 
     var submitSurveyComponent = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
@@ -97,21 +98,13 @@
                 });
                 savingData = local;
             }
-            var bindingSource = {
+            LastBidningSource = {
                 QuestionId: "@RenderQuestionId",
                 QuestionValue:$("#@QuestionId").val(),
                 renderId: "@ComponentId",
                 ComponentSource: savingData
             }
-            UpdateSurveyItem({
-                Page: @PageId,
-                NodeValue: "@NodeValue",
-                QuestionText: $("#@QuestionId").val(),
-                renderQuestionId: "@RenderQuestionId",
-                renderId: "@ComponentId",
-                ParentId: "@ParentId",
-                DataSource:JSON.stringify(bindingSource),
-            });
+            UpdatePreview();
         }
         else if (args.requestType === 'beginEdit')
         {
@@ -120,7 +113,27 @@
     }
     function TextChanged(data)
     {
-       currentQuestionText = $("#QuestionId").val();
+        debugger
+        UpdatePreview();
+    }
+
+    function UpdatePreview() {
+         LastBidningSource = {
+            QuestionId: "@RenderQuestionId",
+            QuestionValue:$("#@QuestionId").val(),
+            renderId: "@ComponentId",
+            ComponentSource: savingData
+        }       
+            
+        UpdateSurveyItem({
+            Page: @PageId,
+            NodeValue: "@NodeValue",
+            QuestionText: $("#@QuestionId").val(),
+            renderQuestionId: "@RenderQuestionId",
+            renderId: "@ComponentId",
+            ParentId: "@ParentId",
+            DataSource:JSON.stringify(LastBidningSource),
+        });
     }
 
     function CheckContains(value)
