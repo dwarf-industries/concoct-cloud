@@ -1,0 +1,37 @@
+@{
+    var id = ViewData["Id"] as string;
+    var ComponentId = ViewData["ComponentId"] as string;
+    var QuestionId = ViewData["QuestionId"] as string;
+    var renderId =    ViewData["ComponentId"] as string;
+    var DataSource = ViewData["DataSource"] as  Platform.Models.BindingDynamicSource;
+ }
+
+@if(@DataSource != null)
+{
+//id = ComponentId;
+@:<script>
+    @: RenderComponent();
+
+    @:function RenderComponent()
+    @:{
+        @: $("#ContainerQuestion_@renderId").html("@DataSource.QuestionValue");
+        @: UpdateComponent({
+        @:     Question: "@DataSource.QuestionValue",
+        @:     bindingData : "<textarea></textarea>",
+        @:     id: "@id"
+        @: });
+    @:}
+@:</script>
+ 
+}
+else
+{
+<div class="row" style=" margin-left:5%; margin-right:5%;" id="ContainerQuestion_@id">
+    <p>Example Question Here?</p>
+</div>
+<div class="row" style=" margin-left:5%; margin-right:5%;" id="Container_@id">
+   <textarea></textarea>
+</div>
+}
+ 
+ 

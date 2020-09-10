@@ -1,0 +1,74 @@
+@{
+    var Id = ViewData["Id"] as string;
+    var QuestionId = ViewData["QuestionId"] as string;
+    var RenderQuestionId = ViewData["RenderedQuestionId"] as string;
+    var PageId = ViewData["PageId"] as int?;
+    var ComponentId = ViewData["ComponentId"] as string;
+    var NodeValue = ViewData["NodeValue"] as string;
+    var ParentId = ViewData["ParentId"] as string;
+ }
+
+
+<div class="row" style="margin-left:5%; margin-right:5%;">
+    <input name="@QuestionId" id="@QuestionId" onchange="TextChanged()" placeholder="Define your question"  style="width:100%;" class="form-control-sm"/>
+</div>
+
+ 
+ 
+ 
+
+<script>
+    var savingData = [];
+    var dtSource = [];
+    var editingValue;
+    var element = new ej.inputs.TextBox({
+        floatLabelType: 'Auto',
+ 
+    });
+    var LastBidningSource = [];
+    element.appendTo('#@QuestionId');
+
+    var submitSurveyComponent = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    submitSurveyComponent.appendTo('#submitSurveyComponent');
+
+    var canceltSurveyComponent = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    canceltSurveyComponent.appendTo('#canceltSurveyComponent');
+
+ 
+
+ 
+    function TextChanged(data)
+    {
+        UpdatePreview();
+    }
+
+    function UpdatePreview() {
+         LastBidningSource = {
+            QuestionId: "@RenderQuestionId",
+            QuestionValue:$("#@QuestionId").val(),
+            renderId: "@ComponentId",
+            ComponentSource: savingData
+        }       
+            
+        UpdateSurveyItem({
+            Page: @PageId,
+            NodeValue: "@NodeValue",
+            QuestionText: $("#@QuestionId").val(),
+            renderQuestionId: "@RenderQuestionId",
+            renderId: "@ComponentId",
+            ParentId: "@ParentId",
+            DataSource:JSON.stringify(LastBidningSource),
+        });
+    }
+
+    function CheckContains(value)
+    {
+        var result = false;
+        savingData.forEach(x=>{
+            if(x.Value === value)
+                result = true;        
+        }); 
+        return result;
+    }
+ 
+</script>

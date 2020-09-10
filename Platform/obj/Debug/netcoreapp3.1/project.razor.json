@@ -13670,6 +13670,70 @@
         }
       },
       {
+        "HashCode": 448123491,
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__SurveyOpenQuestionViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:survey-open-question",
+            "Attributes": [
+              {
+                "Name": "current"
+              }
+            ]
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "current",
+            "TypeName": "Platform.Models.GenericIdRequest",
+            "Metadata": {
+              "Common.PropertyName": "current"
+            }
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__SurveyOpenQuestionViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "SurveyOpenQuestion"
+        }
+      },
+      {
+        "HashCode": 2050957708,
+        "Kind": "MVC.ViewComponent",
+        "Name": "__Generated__SurveyOpenQuestionSettingsViewComponentTagHelper",
+        "AssemblyName": "Rokono Control",
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "vc:survey-open-question-settings",
+            "Attributes": [
+              {
+                "Name": "current"
+              }
+            ]
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "MVC.ViewComponent",
+            "Name": "current",
+            "TypeName": "Platform.Models.GenericIdRequest",
+            "Metadata": {
+              "Common.PropertyName": "current"
+            }
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "__Generated__SurveyOpenQuestionSettingsViewComponentTagHelper",
+          "MVC.ViewComponent.Name": "SurveyOpenQuestionSettings"
+        }
+      },
+      {
         "HashCode": 606943635,
         "Kind": "MVC.ViewComponent",
         "Name": "__Generated__UserRightToggleViewComponentTagHelper",
@@ -16162,6 +16226,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Survey/OpenQuestion/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Survey\\OpenQuestion\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Widget/Queries.cshtml",
       "TargetPath": "Views\\Widget\\Queries.cshtml",
       "FileKind": "mvc"
@@ -16444,6 +16513,11 @@
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/SelectProject/Default.cshtml",
       "TargetPath": "Views\\Shared\\Components\\SelectProject\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Survey/OpenQuestion/Settings.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Survey\\OpenQuestion\\Settings.cshtml",
       "FileKind": "mvc"
     },
     {
