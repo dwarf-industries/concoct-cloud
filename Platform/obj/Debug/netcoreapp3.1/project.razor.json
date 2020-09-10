@@ -16162,6 +16162,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Survey/OpenQuestion/Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Survey\\OpenQuestion\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Widget/Queries.cshtml",
       "TargetPath": "Views\\Widget\\Queries.cshtml",
       "FileKind": "mvc"
@@ -16444,6 +16449,11 @@
     {
       "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/SelectProject/Default.cshtml",
       "TargetPath": "Views\\Shared\\Components\\SelectProject\\Default.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/dwarfdevelopment/Projects/GitClones/RokonoControl/Platform/Views/Shared/Components/Survey/OpenQuestion/Settings.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Survey\\OpenQuestion\\Settings.cshtml",
       "FileKind": "mvc"
     },
     {
