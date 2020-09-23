@@ -5,15 +5,18 @@
 
 <style>
     .ChipTag {
-        background: red;
-        border-radius: 15px;
-        padding: 4px;
-        color: white;
+            background: white;
+        padding: 6px;
+        color: red;
+        border-style: solid;
+
+        border-color: red;
+         border-width: 1px;
     }
 
         .ChipTag:hover {
             cursor: move;
-            background: red;
+            background: #1c86c8;
             border-radius: 15px;
             padding: 4px;
             color: white;
@@ -33,10 +36,11 @@
 
             </div>
             <div class="e-card-content">
-                <div class="row" style="margin-left:10%;margin-right:10%">
+                <div class="row" style="        margin-left: 3%;
+        margin-right: 10%">
                     @foreach (var component in bindingComponents)
                     {
-        <span class="ChipTag" draggable="true" ondragstart="drag(event)" id="Tag_@component.Id">@component.PlatformName</span>}
+        <span class="btn btn-primary e-control e-btn e-lib e-outline e-primary" draggable="true" ondragstart="drag(event)" id="Tag_@component.Id">@component.PlatformName</span>}
                 </div>
             </div>
 
