@@ -1,42 +1,46 @@
-@{
-    ViewData["Title"] = "Survey Management Panel";
-    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
-    var ProjectId = ViewData["ProjectId"] as int?;
-    var bindingComponents = ViewData["BuildingBlocks"] as List<SurveyComponent>; 
- }
+@{ ViewData["Title"] = "Survey Management Panel";
+                Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+                var ProjectId = ViewData["ProjectId"] as int?;
+                var bindingComponents = ViewData["BuildingBlocks"] as List<SurveyComponent>; }
 
- <style>
-    .ChipTag{
-    background: red;
-    border-radius: 15px;
-    padding: 4px;
-    color: white;
- }
- .ChipTag:hover{
-    cursor: move;
-    background: red;
-    border-radius: 15px;
-    padding: 4px;
-    color: white;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
- }
- </style>
+<style>
+    .ChipTag {
+            background: white;
+        padding: 6px;
+        color: red;
+        border-style: solid;
+
+        border-color: red;
+         border-width: 1px;
+    }
+
+        .ChipTag:hover {
+            cursor: move;
+            background: #1c86c8;
+            border-radius: 15px;
+            padding: 4px;
+            color: white;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.22);
+        }
+</style>
+
+<!-- Chanbging something in the page.  -->
+
 
 
 <div class="row  card-layout">
     <div class="col-md-12">
         <!-- Basic Card Layout  -->
-        <div tabindex="0" class="e-card" id="basic_card" >
+        <div tabindex="0" class="e-card" id="basic_card">
             <div class="e-card-header">
 
             </div>
             <div class="e-card-content">
-                <div class="row" style="margin-left:10%;margin-right:10%">
+                <div class="row" style="        margin-left: 3%;
+        margin-right: 10%">
                     @foreach (var component in bindingComponents)
                     {
-                            <span class="ChipTag" draggable="true" ondragstart="drag(event)"  id="Tag_@component.Id">@component.PlatformName</span>
-
-                    }
+        <span class="btn btn-primary e-control e-btn e-lib e-outline e-primary" draggable="true" ondragstart="drag(event)" id="Tag_@component.Id">@component.PlatformName</span>}
                 </div>
             </div>
 
@@ -49,13 +53,13 @@
             <div class="e-card-header">
 
             </div>
-            <div class="e-card-content"  style="height: 100%;margin-left:10%; margin-right:10%;"  ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="e-card-content" style="height: 100%;margin-left:10%; margin-right:10%;" ondrop="drop(event)" ondragover="allowDrop(event)">
                 <div class="row">
                     <div class="col-md-8" id="Content">
 
                     </div>
-                    <div class="col-md-6" id="Settings">
-                        
+                    <div class="col-md-4" id="Settings">
+
                     </div>
                 </div>
             </div>
@@ -67,23 +71,60 @@
 
 
 <script>
- 
-var draggableId;
-function drag(ev)
-{ 
-    draggableId = ev.originalTarget.attributes.id;
-} 
+    var ActivePage = 1;
+    var draggableId;
+    var boundElements = [];
+    function drag(ev) {
+        draggableId = ev.originalTarget.attributes.id;
+    }
 
-function drop(args)
-{
-    console.log(draggableId.nodeValue);
+    function drop(args) {
+        console.log(draggableId.nodeValue);
 
-    $.get("/Survey/GetProjectSurveyElement?element="+draggableId.nodeValue,function(data) {
-        $("#Content").append(data);
-    });
-}
-function allowDrop(args)
-{
-    args.preventDefault();
-}
+        $.get("/Survey/GetElementIds?element=" + draggableId.nodeValue, function (data) {
+            var bindingItem = {
+                "QuestionId": data.item1,
+                "ElementId": data.item2,
+                "ParentId": data.item3
+            }
+            boundElements.push(bindingItem);
+
+            $.get("/Survey/GetProjectSurveyElement?elements=" + draggableId.nodeValue + ";" + bindingItem.QuestionId + ";" + bindingItem.ElementId + ";" + bindingItem.ParentId + ";" + "", function (data) {
+
+                $("#Content").append(data);
+            });
+
+
+            $.get("/Survey/GetProjectSurveyElementSetting?element=" + draggableId.nodeValue + ";" + ActivePage + ";" + bindingItem.QuestionId + ";" + bindingItem.ElementId + ";" + bindingItem.ParentId, function (data) {
+
+                $("#Settings").html("");
+                $("#Settings").append(data);
+            });
+        });
+    }
+
+    function UpdateSurveyItem(data) {
+        debugger
+        $("#" + data.ParentId).remove();
+        $("#" + data.QuestionId).remove();
+
+        $.get("/Survey/GetProjectSurveyElement?elements=" + data.NodeValue + ";" + data.renderQuestionId + ";" + data.renderId + ";" + data.ParentId + ";" + data.DataSource, function (newComponent) {
+
+            $("#Content").append(newComponent);
+        });
+    }
+
+
+    function UpdateComponent(data) {
+
+        $("#Container_" + data.id).html("");
+        $("#ContainerQuestion_" + data.id).html("");
+        $("#ContainerQuestion_" + data.id).html(data.Question);
+        $("#Container_" + data.id).html(data.bindingData);
+    }
+
+    function allowDrop(args) {
+        args.preventDefault();
+    }
+
 </script>

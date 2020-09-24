@@ -101,6 +101,7 @@ class AssociatedProjectNotifications
     ProjectId int |  | NO
     NewNotification int |  | YES
     UserAccountId int |  | YES
+    IsRead int |  | YES
 }
 class AssociatedDocumentationCategoryPage
 {
@@ -120,6 +121,7 @@ class AssociatedUserNotifications
     NotificationId int |  | NO
     UserId int |  | NO
     NewNotification int |  | YES
+    IsRead int |  | YES
 }
 class ValueAreas
 {
@@ -350,6 +352,7 @@ class Projects
     AllowPublicBugs int |  | YES
     AllowPublicFeedback int |  | YES
     AllowPublicMessages int |  | YES
+    ImageLocation nvarchar |  | YES
 }
 class FileTypes
 {
@@ -583,6 +586,7 @@ class SurveyComponent
 {
     Id int |  | NO
     ComponentInternalName nvarchar |  | YES
+    PlatformName nvarchar |  | YES
 }
 class AssociatedPageSurveyComponents
 {
@@ -590,6 +594,7 @@ class AssociatedPageSurveyComponents
     ComponentId int |  | YES
     PageId int |  | YES
     DataSource nvarchar |  | YES
+    Question nvarchar |  | YES
 }
 class Builds
 {

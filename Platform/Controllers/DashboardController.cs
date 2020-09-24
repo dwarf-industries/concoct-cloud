@@ -65,7 +65,6 @@ namespace Rokono_Control.Controllers
         {
  
 
-
             using(var context = new WorkItemsContext(Context,Configuration))
                 ViewData["Iterations"] = context.GetProjectIterations(projectId);
 
@@ -90,6 +89,8 @@ namespace Rokono_Control.Controllers
                 ViewData["ParentId"] = parentId;
                 ViewData["ActiveIteration"] = context.GetProjectDefautIteration(projectId);
                 ViewData["ReturnPath"] = returnUrl;
+                ViewData["SystemInfoData"] = Request.Headers["User-Agent"].ToString();
+
             }
             using(var context = new UsersContext(Context,Configuration))
                 ViewData["Projects"] = context.GetUserProjects(UserId);

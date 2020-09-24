@@ -1,0 +1,174 @@
+@{
+    var Id = ViewData["Id"] as string;
+    var QuestionId = ViewData["QuestionId"] as string;
+    var RenderQuestionId = ViewData["RenderedQuestionId"] as string;
+    var PageId = ViewData["PageId"] as int?;
+    var ComponentId = ViewData["ComponentId"] as string;
+    var NodeValue = ViewData["NodeValue"] as string;
+    var ParentId = ViewData["ParentId"] as string;
+ }
+
+
+<div class="row" style="margin-left:5%; margin-right:5%;">
+    <input name="@QuestionId" id="@QuestionId" onchange="TextChanged()" placeholder="Define your question"  style="width:100%;" class="form-control-sm"/>
+</div>
+
+<div class="row" style="margin-left:5%; margin-right:5%;margin-top:2%;">
+    <div class="control-section">
+        <div class="content-wrapper">
+            <div id="@Id">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" style=" margin-left:5%; margin-right:5%; margin-top:10%">
+    <div class="col-md-6">
+        <button id="submitSurveyComponent" onclick="SaveChangesDropdownSettings()" style="width: 100%;">Save</button>
+    </div>
+    <div class="col-md-6">
+        <button id="canceltSurveyComponent" onclick="CancelChanges()" style="width: 100%;">Cancel</button>
+
+    </div>
+</div>
+
+ 
+
+<script>
+    var savingData = [];
+    var dtSource = [];
+    var editingValue;
+    var element = new ej.inputs.TextBox({
+        floatLabelType: 'Auto',
+ 
+    });
+    var LastBidningSource = [];
+    element.appendTo('#@QuestionId');
+
+    var submitSurveyComponent = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    submitSurveyComponent.appendTo('#submitSurveyComponent');
+
+    var canceltSurveyComponent = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    canceltSurveyComponent.appendTo('#canceltSurveyComponent');
+
+    var grid = new ej.grids.Grid({
+        dataSource: dtSource,
+        toolbar: ['Add', 'Edit', 'Delete', 'Update', 'Cancel'],
+        editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true, mode: 'Normal', newRowPosition:'Top' },
+        allowPaging: true,
+        pageSettings: { pageCount: 5 },
+        actionBegin: actionBegin,
+        columns: [
+            { field: 'Name', headerText: 'Value Name' }
+        ]
+    });
+    grid.appendTo('#@Id');
+
+
+    function actionBegin(args) 
+    {
+        
+        if (args.requestType === 'save') {
+            if (grid.pageSettings.currentPage !== 1 && grid.editSettings.newRowPosition === 'Top') {
+                args.index = (grid.pageSettings.currentPage * grid.pageSettings.pageSize) - grid.pageSettings.pageSize;
+            } else if (grid.editSettings.newRowPosition === 'Bottom') {
+                args.index = (grid.pageSettings.currentPage * grid.pageSettings.pageSize) - 1;
+            }
+             
+            var contains = CheckContains(editingValue);
+            if(contains === false)
+            {
+                savingData.push({
+                    Key: savingData.length+1,
+                    Value:args.data.Name
+                });
+            }
+            else
+            {
+                var local = [];
+                savingData.forEach(x=>{
+                    if(x.Value !== editingValue)
+                        local.push(x);
+                    else
+                        local.push({
+                            Key:local.length+1,
+                            Value:args.data.Name
+                        });
+                });
+                savingData = local;
+            }
+            LastBidningSource = {
+                QuestionId: "@RenderQuestionId",
+                QuestionValue:$("#@QuestionId").val(),
+                renderId: "@ComponentId",
+                ComponentSource: savingData
+            }
+            UpdatePreview();
+        }
+        else if (args.requestType === 'beginEdit')
+        {
+            editingValue = args.rowData.Name;
+        }
+    }
+    function TextChanged(data)
+    {
+        UpdatePreview();
+    }
+
+    function UpdatePreview() {
+         LastBidningSource = {
+            QuestionId: "@RenderQuestionId",
+            QuestionValue:$("#@QuestionId").val(),
+            renderId: "@ComponentId",
+            ComponentSource: savingData
+        }       
+            
+        UpdateSurveyItem({
+            Page: @PageId,
+            NodeValue: "@NodeValue",
+            QuestionText: $("#@QuestionId").val(),
+            renderQuestionId: "@RenderQuestionId",
+            renderId: "@ComponentId",
+            ParentId: "@ParentId",
+            DataSource:JSON.stringify(LastBidningSource),
+        });
+    }
+
+    function CheckContains(value)
+    {
+        var result = false;
+        savingData.forEach(x=>{
+            if(x.Value === value)
+                result = true;        
+        }); 
+        return result;
+    }
+
+    function SaveChangesDropdownSettings()
+    {
+        var dto = 
+        {
+            "ComponentId": @Id,
+            "DataSource": JSON.stringify(savingData),
+            "Question": $("#@QuestionId").val(),
+            "PageId": @PageId,
+            "ComponentId": @ComponentId
+
+        }
+ 
+        $.ajax({
+            type: 'POST',
+            url: '/Survey/SaveSurveyComponent',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+</script>

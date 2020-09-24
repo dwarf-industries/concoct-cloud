@@ -4,11 +4,44 @@
         "Item1",
         "Item2",
         "Item3"
-        };
+    };
+    var ComponentId = ViewData["ComponentId"] as string;
+    var QuestionId = ViewData["QuestionId"] as string;
+    var renderId =    ViewData["ComponentId"] as string;
+    var DataSource = ViewData["DataSource"] as  Platform.Models.BindingDynamicSource;
  }
 
+@if(@DataSource != null)
+{
+//id = ComponentId;
+@:<script>
+    @: RenderComponent();
 
-<div class="row" style=" margin-left:5%; margin-right:5%;">
+    @:function RenderComponent()
+    @:{
+        @: var bindingData = "<select class=\"form-control-sm form-control\" id=\"@id\">";
+        @foreach (var source in DataSource.ComponentSource)
+        {
+            @: bindingData += "<option value=\"@source.Key\">@source.Value</option>";
+        }
+        @: bindingData += "</select>";
+  
+        @: $("#ContainerQuestion_@renderId").html("@DataSource.QuestionValue");
+       @: UpdateComponent({
+       @:     Question: "@DataSource.QuestionValue",
+       @:     bindingData : bindingData,
+       @:     id: "@id"
+       @: });
+    @:}
+@:</script>
+ 
+}
+else
+{
+<div class="row" style=" margin-left:5%; margin-right:5%;" id="ContainerQuestion_@id">
+    <p>Example Question Here?</p>
+</div>
+<div class="row" style=" margin-left:5%; margin-right:5%;" id="Container_@id">
     <select class="form-control-sm form-control" id="@id">
         @foreach(var va in ValueAreas)
         {
@@ -16,11 +49,11 @@
         }
     </select>
 </div>
-
-
+}
  
 
 <script>
+
     var select;
     select = new ej.dropdowns.DropDownList({
 

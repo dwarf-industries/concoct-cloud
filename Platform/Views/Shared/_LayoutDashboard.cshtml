@@ -17,7 +17,7 @@
     
 </head>
 <body>
-     <div class="stackblitz-container material">
+    <div class="stackblitz-container material">
         <div class="control-section">
 
             <!-- sample level element  -->
@@ -33,16 +33,16 @@
 
                         <li class="header-style float-right support border-left" onclick="CallUrl(https://platform.rokonocontrol.com/OutboundDetails/RelatedProject?projectId=5012)"><b>Support</b></li>
                         <li class="header-style float-right support border-left" onclick="ChatToggle(1)"><b>Open Chat</b></li>
-                        <li class="header-style float-right support border-left" >
+                        <li class="header-style float-right support border-left">
                             <b>
-                                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" id="hideTosat"> Hide All </button>
+                                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="color: white; border-color:white" id="hideTosat"> Hide All </button>
                             </b>
                         </li>
 
                     </ul>
                 </div>
                 <!-- end of header-section -->
-                <div id="PlatformElement" >
+                <div id="PlatformElement">
                     <!-- sidebar element declaration -->
                     <aside id="sidebar-treeview" style="overflow-x:hidden;">
                         <div class="main-menu">
@@ -54,7 +54,7 @@
                                 @await Component.InvokeAsync("SearchBox", @ProjectId)
                                 <div class="row" style="margin:0;">
                                     <p class="main-menu-header">Navigation</p>
-                                    <button  type="button" id="NotesBtn" class="btn btn-primary" style="margin-top:2px; width:100%" onclick="ShowNotes()" >Notes</button>
+                                    <button type="button" id="NotesBtn" class="btn btn-primary" style="margin-top:2px; width:100%" onclick="ShowNotes()">Notes</button>
                                 </div>
                                 <div id="NavGrid">
                                     @await Component.InvokeAsync("NavigationMenu", @ProjectId)
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="ChatElement" hidden >
+                <div id="ChatElement" hidden>
                     @await Component.InvokeAsync("ChatSidebar", @ProjectId)
 
                 </div>
@@ -87,10 +87,10 @@
 
     </div>
 
-<script>
+    <script>
 
     var IsOpen = 0;
-    
+
     var data;
     // Sidebar Initialization
     var sidebarMenu = new ej.navigations.Sidebar({
@@ -108,8 +108,8 @@
         sidebarChat.toggle();
     });
     // open new tab
-  
-   
+
+
 
     function CallUrl(url)
     {
@@ -147,7 +147,11 @@
         token = $(token).val();
         return token;
    }
-</script>
+    </script>
+    <script src="https://kit.fontawesome.com/a076d05399.js">
+
+    </script>
+
 
 </body>
 </html>

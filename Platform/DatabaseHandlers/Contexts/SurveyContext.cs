@@ -61,6 +61,10 @@ namespace Platform.DataHandlers
             GC.SuppressFinalize(this);
         }
 
-       
+        internal async Task SaveSurveyComponent(AssociatedPageSurveyComponents request)
+        {
+            Context.AssociatedPageSurveyComponents.Add(request);
+            await Context.SaveChangesAsync();
+        }
     }
 }

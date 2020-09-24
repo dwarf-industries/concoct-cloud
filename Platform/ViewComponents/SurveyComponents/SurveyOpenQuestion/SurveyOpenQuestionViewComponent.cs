@@ -1,19 +1,20 @@
-namespace Platform.ViewComponents.SurveyComponents.SurveyDropdown
+
+
+namespace Platform.ViewComponents.SurveyComponents.SurveyOpenQuestion
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
-    using Platform.DataHandlers;
     using Platform.Models;
     using Rokono_Control.Models;
 
-    [ViewComponent(Name = "SurveyDropdown")]
-    public class SurveyDropdownViewComponent: ViewComponent
+    [ViewComponent(Name = "SurveyOpenQuestion")]
+    public class SurveyOpenQuestionViewComponent : ViewComponent
     {
         private readonly RokonoControlContext Context;
         private readonly IConfiguration Configuration;
 
-        public SurveyDropdownViewComponent(RokonoControlContext context, IConfiguration configuration)
+        public SurveyOpenQuestionViewComponent(RokonoControlContext context, IConfiguration configuration)
         {
             Context = context;
             Configuration = configuration;
@@ -28,7 +29,7 @@ namespace Platform.ViewComponents.SurveyComponents.SurveyDropdown
             else
                 ViewData["DataSource"] = null;
 
-            return View("/Views/Shared/Components/Survey/SurveyDropdown/Default.cshtml");
+            return View("/Views/Shared/Components/Survey/OpenQuestion/Default.cshtml");
         }
     }
 }

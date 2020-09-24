@@ -83,18 +83,8 @@
 
             </div>
         </div>
-        <div class="row text-center">
-            <h2>Empty User Stories</h2>
-        </div>
-        <div class="row">
-            <div class="control-section" style="height:97vh;">
-                <div class="content-wrapper">
-                    <div id="TreeGrid"></div>
-                </div>
-            </div>
-        </div>
-
-
+    
+     
     <!-- Modals -->
     <div id="AssignModel">
         <div class="btn-group dropdown-split-primary" style="text-align:center;">
@@ -223,7 +213,6 @@
                 InitliazePUsersGrid(response);
             },
             error: function (xhr, status, error) {
-                console.log(error);
             }
         });
         $(function() {
@@ -272,8 +261,7 @@
                     GenerateKaban(response);
                 },
                 error: function(xhr, status, error) {
-                    console.log(error);
-                }
+                 }
             });
      
             $.ajax({
@@ -287,31 +275,11 @@
                     Persons.appendTo('#Persons');
                 },
                 error: function(xhr, status, error) {
-                    console.log(error);
-                }
+                 }
             });
 
             
-            var dto = {
-                "id": @ProjectId,
-                "WorkItemType":7
-            }
-            console.log(dto);
-            $.ajax({
-                type: 'POST',
-                url: '/Backlogs/GetEmptyStories',
-                data: JSON.stringify(dto),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    InitiliazeGrid(response);
-                },
-                error: function (xhr, status, error) {
-                    console.log(error);
-                }
-            });
-          
-            console.log(dto);
+           
           
 
 
@@ -325,8 +293,7 @@
              $("#KanbanHolder").html();
 
             var data = ej.base.extend([], response, null, true); // To maintain the property changes, extend the object.
-            console.log(data);
-            var kanbanObj = new ej.kanban.Kanban({
+             var kanbanObj = new ej.kanban.Kanban({
                 dataSource: data,
                 dragStop: DragStopped,
                 actionComplete: CardDropCheck,
@@ -362,15 +329,12 @@
        
         function CardSelected(args)
         {
-            console.log(args);
-            console.log("/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId);
-            window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId+"&returnUrl="+window.location.href;
+             window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId+"&returnUrl="+window.location.href;
 
         }
         function CardDropCheck(args)
         {
-            console.log(args);
-            if(args.requestType == "cardChanged" && card)
+             if(args.requestType == "cardChanged" && card)
             {
                 card.Board = args.changedRecords[0].status;
                 ValidateCardChanged();
@@ -378,8 +342,7 @@
         }
         function ValidateCardChanged()
         {
-            console.log("Posting");
-            $.ajax({
+             $.ajax({
                 type: 'POST',
                 url: '/Boards/ChangeWorkItemBoard',
                 data: JSON.stringify(card),
@@ -389,14 +352,12 @@
                     //window.location.href = "/Dashboard/AssignAccountProjects?id="+response;
                 },
                 error: function(xhr, status, error) {
-                    console.log(error);
-                }
+                 }
             });
         }
          function DragStopped(args)
          {
-            console.log(args);
-            card = {
+             card = {
                 "CardId" :args.data[0].innerId,
                 "Board" :args.data[0].status,
                 "ProjectId" : @ProjectId
@@ -406,17 +367,14 @@
        
 
          function PersonClicked(args) {
-             console.log(args);
-         }
+          }
 
         function ChangeOwner(data)
         {
 
             selectedChanging = data;
-            console.log(data);
-        //    selectedChangingId = id;
-            console.log("Changing Owner");
-            dialogObj.show();
+         //    selectedChangingId = id;
+             dialogObj.show();
         }
 
          function CallUrl(url) {
@@ -456,8 +414,7 @@
     }
     function InitliazePUsersGrid(data)
     {
-        console.log(data);
-         var ProjectUsers = new ej.treegrid.TreeGrid({
+          var ProjectUsers = new ej.treegrid.TreeGrid({
             dataSource: data,
             allowSelection: true,
             allowFiltering: true,
@@ -477,51 +434,14 @@
     function UserRowSelected(args)
     {
         selectedRowData = args.data;
-        console.log(args);
-    }
+     }
     function UserSelected(args)
     {
         selectedChanging.textContent = args.rowData.name;
         CancelAssign();
         ChangeCardOwner(selectedChanging.id, args.rowData.name);
     }
-    function InitiliazeGrid()
-    {
-        console.log(data);
-
-
-        var treeGridObj = new ej.treegrid.TreeGrid({
-            dataSource: data,
-            allowSelection: true,
-            allowFiltering: true,
-            allowSorting: true,
-            toolbar: ['Search'],
-            recordDoubleClick: EditWorkItem,
-            enableVirtualization: true,
-            filterSettings: { type: 'Menu' },
-            selectionSettings: { persistSelection: true, type: "Multiple" },
-            enableHover: false,
-            allowPaging: true,
-            pageSettings: { pageSize: 20 },
-            columns: [
-                { type: "checkbox", field: "", allowFiltering: false, allowSorting: false, width: '60' },
-                { field: 'workItemType.TypeName', headerText: 'Type', width: 60 },
-                { field: 'title', headerText: 'Title', width: 125 },
-                { field: 'description', headerText: 'Description', width: 180 },
-                { field: 'assignedAccountNavigation.Email', headerText: 'AssignedTo', width: 110 },
-            ]
-        });
-
-        treeGridObj.appendTo('#TreeGrid');
-
-
-    }
-
-    function EditWorkItem(args)
-    {
-        console.log(args);
-        window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.rowData.id+"&returnUrl="+window.location.href;
-    }
+    
 
     function ChangeCardOwner(id,name)
     {
@@ -541,8 +461,7 @@
                 
             },
             error: function(xhr, status, error) {
-                console.log(error);
-            }
+             }
         });
     }
 
@@ -571,14 +490,12 @@
                 $("#GeneratedLink").html(response.data);
             },
             error: function(xhr, status, error) {
-                console.log(error);
-            }
+             }
         });
     }
     function NewWorkItem(btn)
     {
-        console.log(btn.id.split("|")[0]);
-        
+         
         workItemName = btn.id.split("|")[0];
 
         dialogNewWI.show();
@@ -587,8 +504,7 @@
 
     function SwimlineBegin(args)
     {
-        console.log(args);
-    }
+     }
     function ChangeIteration()
     {
         dialogIterations.show();
