@@ -3,9 +3,9 @@
 
 <link href="social-media-buttons.min.css" rel="stylesheet">
 
-<a href="https://twitter.com/RokonoC" class="ss-btn-twitter">Follow me on Twitter</a>
+<a href="https://twitter.com/RokonoC" class="ss-btn-twitter">Follow us on Twitter</a>
 
-<a href="https://www.facebook.com/Rokono-Control-107429234338967" class="ss-btn-twitter">Follow me on Facebook</a>
+<a href="https://www.facebook.com/Rokono-Control-107429234338967" class="ss-btn-twitter">Follow us on Facebook</a>
 
 
 
