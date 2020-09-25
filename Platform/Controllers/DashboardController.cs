@@ -88,7 +88,7 @@ namespace Rokono_Control.Controllers
                 ViewData["ProjectId"] = projectId;
                 ViewData["ParentId"] = parentId;
                 ViewData["ActiveIteration"] = context.GetProjectDefautIteration(projectId);
-                ViewData["ReturnPath"] = returnUrl;
+                ViewData["ReturnPath"] = 
                 ViewData["SystemInfoData"] = Request.Headers["User-Agent"].ToString();
 
             }
@@ -129,7 +129,7 @@ namespace Rokono_Control.Controllers
                                         .TypeName;
                 ViewData["WorkItemData"] = currentWorkItem;
                 ViewData["ProjectId"] = projectId;
-                ViewData["ReturnPath"] = returnUrl;
+                ViewData["ReturnPath"] = 
 
 
             }
