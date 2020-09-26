@@ -271,6 +271,7 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(response) {
+                    console.log(response);
                     var Persons = new ej.splitbuttons.DropDownButton({ items: response, iconCss: 'e-ddb-icons e-profile',cssClass: 'e-outline', select:PersonClicked });
                     Persons.appendTo('#Persons');
                 },
@@ -366,8 +367,9 @@
          }
        
 
-         function PersonClicked(args) {
-          }
+        function PersonClicked(args) {
+            console.log(args);
+        }
 
         function ChangeOwner(data)
         {
