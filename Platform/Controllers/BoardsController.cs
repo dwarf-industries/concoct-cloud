@@ -252,7 +252,7 @@ namespace RokonoControl.Controllers
             using (var context = new WorkItemsContext(Context,Configuration))
             {
                 if (userRights != null)
-                    result = context.GetProjectSprints(dataRequest, userRights.AssociatedProjectMemberRights.FirstOrDefault().Rights.ViewOtherPeoplesWork == 1 ? true : false, userRights.Id);
+                    result = context.GetProjectSprints(dataRequest, userRights.AssociatedProjectMemberRights.FirstOrDefault().Rights.ViewOtherPeoplesWork == 1 ? true : false, dataRequest.PersonId);
             }
             return result;
         }

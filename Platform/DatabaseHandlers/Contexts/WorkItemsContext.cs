@@ -347,28 +347,36 @@ namespace Platform.DatabaseHandlers.Contexts
             var result = new List<BindingBoard>();
             var Cards = new List<BindingCards>();
             var projectSprints = new List<WorkItem>();
-            if (dataRequest.All == 1 && hasRights)
-                projectSprints = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem).Where(x => x.WorkItem.WorkItemTypeId == 7
+            if (dataRequest.All == 1 && hasRights && dataRequest.PersonId == 0)
+                projectSprints = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem)
+                                                                 .Where(x => x.WorkItem.WorkItemTypeId == 7
                                                                               && x.ProjectId == dataRequest.ProjectId
                                                                               && x.WorkItem.Iteration == dataRequest.IterationId)
-                                                                            .Select(x => x.WorkItem)
-                                                                            .ToList();
+                                                                 .Select(x => x.WorkItem)
+                                                                .ToList();
             else if (dataRequest.PersonId != 0 && hasRights)
             {
-                projectSprints = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem).Where(x => x.WorkItem.WorkItemTypeId == 7
-                                                                            && x.ProjectId == dataRequest.ProjectId
-                                                                            && x.WorkItem.Iteration == dataRequest.IterationId
-                                                                            && x.WorkItem.AssignedAccount == dataRequest.PersonId)
-                                                                           .Select(x => x.WorkItem)
-                                                                           .ToList();
+                var notSprints = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem).Where(item => item.WorkItem.AssignedAccount == userId
+                                                                                                         && item.WorkItem.WorkItemTypeId != 7
+                                                                                                         && item.WorkItem.WorkItemTypeId != 5
+                                                                                                         && item.WorkItem.WorkItemTypeId != 2
+                                                                                                         && item.ProjectId == dataRequest.ProjectId
+                                                                                                         && item.WorkItem.Iteration == dataRequest.IterationId)
+                                                                                                        .Select(item => item.WorkItem.ParentId)
+                                                                                                        .ToList();
+                projectSprints = Context.AssociatedWrorkItemChildren.Include(x=>x.WorkItem)
+                                                                    .Where(x=> notSprints.Any(y=>y == x.WorkItemChildId))
+                                                                    .Select(x=>x.WorkItem)
+                                                                    .ToList();            
             }
             else
-                projectSprints = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem).Where(x => x.WorkItem.WorkItemTypeId == 7
+                projectSprints = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem)
+                                                                 .Where(x => x.WorkItem.WorkItemTypeId == 7
                                                                             && x.ProjectId == dataRequest.ProjectId
                                                                             && x.WorkItem.Iteration == dataRequest.IterationId
                                                                             && x.WorkItem.AssignedAccount == userId)
-                                                                           .Select(x => x.WorkItem)
-                                                                           .ToList();
+                                                                 .Select(x => x.WorkItem)
+                                                                 .ToList();
 
             projectSprints.ForEach(x =>
             {
@@ -381,11 +389,17 @@ namespace Platform.DatabaseHandlers.Contexts
                                                                                  && y.WorkItemChild.WorkItemTypeId != 2
                                                                                  && y.WorkItemChild.WorkItemTypeId != 5)
                                                                      .ToList();
+                if(userId != 1 && userId !=0)
+                    sprintTasks = sprintTasks.Where(x=> x.WorkItemChild.AssignedAccount == userId).ToList();
+                
                 var whereParent = Context.WorkItem.Include(b=>b.AssignedAccountNavigation)
                                                   .Include(b=>b.WorkItemType)
-                                                  .Where(b=>b.ParentId == x.Id  && b.WorkItemTypeId != 7
-                                                                                 && b.WorkItemTypeId != 2
-                                                                                 && b.WorkItemTypeId != 5).ToList();
+                                                  .Where(b=>b.ParentId == x.Id  
+                                                            && b.WorkItemTypeId != 7
+                                                            && b.WorkItemTypeId != 2
+                                                            && b.WorkItemTypeId != 5
+                                                            && b.AssignedAccount == userId)
+                                                   .ToList();
                 whereParent.ForEach(sprintTask => {
                     var taskBoard = Context.AssociatedBoardWorkItems.Include(z => z.Board)
                                                                     .FirstOrDefault(z => z.WorkItemId == sprintTask.Id);
@@ -445,6 +459,11 @@ namespace Platform.DatabaseHandlers.Contexts
             });
 
             return Cards;
+        }
+
+        private bool CheckIfItsParent(List<WorkItem> notSprints, AssociatedBoardWorkItems item)
+        {
+            return notSprints.Distinct().ToList().Any(currentItem => currentItem.ParentId != null && currentItem.ParentId.Value == item.WorkItem.Id);
         }
 
         private string GetCardType(string board)
