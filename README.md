@@ -77,7 +77,7 @@ Please read [CONTRIBUTING.md](https://github.com/KristiforMilchev/RokonoControl/
 For a list of planned features and tasks you can view the project public board at:
 
 
-https://platform.rokonocontrol.com/Boards/PublicBoard?projectId=5012&iteration=1004&person=0
+[Public Taskboard] (https://platform.rokonocontrol.com/Boards/PublicBoard?projectId=5012&iteration=1005&person=0) 
 ## Authors
 
 * **Kristifor Milchev** - *Initial work* - (https://github.com/kristiformilchev)
