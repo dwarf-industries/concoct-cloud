@@ -20,6 +20,9 @@
         width: 100%;
         margin: 0;
     }
+    #NoteEditorText{
+        min-height:33vh;
+    }
 </style>`
 
 <!-- sidebar element declaration -->
@@ -74,7 +77,7 @@
 
 <div class="main-content-chat" id="main-chatwindow" style="min-height: 92.142vh; top: -20px;">
     <div class="sidebar-content">
-        @await Component.InvokeAsync("Notes", @ProjectId)
+        @*@await Component.InvokeAsync("Notes", @ProjectId)*@
 
         <div class="row" id="MainChatContent">
             @await Component.InvokeAsync("ChatWIndow", new IncomingIdRequest{
