@@ -172,7 +172,7 @@
                     
                     <tr>
                         <td style="text-align:justify; max-width:85px;"> ${content} </td>
-                        <td style="text-align:center;"><span onclick="RemoveNotification(${id})" class="CloseBtn"></span></td>
+                        @* <td style="text-align:center;"><span onclick="RemoveNotification(${id})" class="CloseBtn"></span></td> *@
 
                     </tr>
                 </tbody>
@@ -226,6 +226,7 @@
 
     function InitiliazeNotificationGrid(data)
     {
+        
         var bindingData  = [];
         data.forEach(x=>{
             var currentData;
@@ -234,14 +235,16 @@
                     title: "Personal Message",
                     content: x.notification.content, 
                     cssClass: 'e-toast-info',
-                    icon: 'PM'
+                    icon: 'PM',
+                    id:x.notification.id
                 };
             if(x.notification.notificationType === 2)
                 currentData = {
                     title: "Assigned Item",
                     content: x.notification.content, 
                     cssClass: 'e-toast-success',
-                    icon: 'AI'
+                    icon: 'AI',
+                    id:x.notification.id
                 };
 
             if(x.notification.notificationType === 3)
@@ -249,14 +252,16 @@
                     title: "Created Work Item",
                     content: x.notification.content, 
                     cssClass: 'e-toast-warning',
-                    icon: 'CW'
+                    icon: 'CW',
+                    id:x.notification.id
                 };
             if(x.notification.notificationType === 4)
                 currentData ={
                     title: "Updated Work Item",
                     content: x.notification.content, 
                     cssClass: 'e-toast-danger',
-                    icon: 'UW'
+                    icon: 'UW',
+                    id:x.notification.id
                 };
             if(x.isRead === 0)
                 toasts.push(currentData);
@@ -290,7 +295,8 @@
         var newCount = parseInt(countA) -1;
         $("#NotificationCount").html(newCount);
         var dto = {
-            "Id": id
+            "Id": id,
+            "ProjectId":@ProjectId
             
         }
         $.ajax({
@@ -358,6 +364,11 @@
     function onclose (e){
         if (e.toastContainer.childElementCount === 0 ) {
             document.getElementById('hideTosat').style.display = 'none';
+             
+            if(e.options.id !== undefined)
+            {
+                RemoveNotification(e.options.id);
+            }
         }
      }
    

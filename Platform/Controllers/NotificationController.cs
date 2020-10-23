@@ -64,7 +64,7 @@ namespace Platform.Controllers
  
             using(var context = new NotificationContext(Context,Configuration))
             {
-                context.NotificationRead(request.Id, UserId);
+                context.NotificationRead(request.Id, UserId, request.ProjectId);
             }
             return new OutgoingJsonData{};
         }
