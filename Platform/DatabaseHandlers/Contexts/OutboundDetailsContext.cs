@@ -150,7 +150,7 @@ namespace Platform.DatabaseHandlers.Contexts
             }
            
     
-            var currentUser = "Unassigned";
+            var currentUser = "Inbound Bug Report tool";
             
             var notification = Context.Notifications.Add(new Notifications{
                 DateOfMessage = DateTime.Now,

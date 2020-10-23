@@ -220,10 +220,11 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
 
         public static bool AddNewWorkItem (IncomingWorkItem currentItem, RokonoControlContext Context,IConfiguration configuration, int userId)
         {
-                var relationshipId = default(int);
-            currentItem.SelectedChildren.ForEach(x=>{
-                                var relId = int.Parse(x.RelationShipId);
+            var currentUser = "Unassigned";
 
+            var relationshipId = default(int);
+            currentItem.SelectedChildren.ForEach(x=>{
+                var relId = int.Parse(x.RelationShipId);
                 var getItem = Context.WorkItemRelations.FirstOrDefault(y=>y.Id == relId);
                 if(getItem.RelationName == "Parent")
                     relationshipId = getItem.Id;
@@ -236,7 +237,11 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
             var databaseItem = new WorkItem();
             databaseItem.Title = currentItem.Title;
             if(currentItem.AssignedUser != 0)
+            {
+                var userData = Context.UserAccounts.FirstOrDefault(x=>x.Id == currentItem.AssignedUser);
                 databaseItem.AssignedAccount = currentItem.AssignedUser;
+                currentUser = $"{userData.FirstName} {userData.LastName}";
+            }
             if(currentItem.WorktItemType != 0)
                 databaseItem.WorkItemTypeId = currentItem.WorktItemType;
             if(!string.IsNullOrEmpty(currentItem.State))
@@ -390,7 +395,6 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                             
                     }
                 });
-            var currentUser = "Unassigned";
             
             var notification = Context.Notifications.Add(new Notifications{
                 DateOfMessage = DateTime.Now,
