@@ -26,7 +26,8 @@ namespace Platform.DatabaseHandlers.Contexts
                                                                              .ToList();
             var userNotifications = Context.AssociatedUserNotifications.Include(x => x.Notification)
                                                                        .ThenInclude(Notification => Notification.NotificationTypeNavigation)
-                                                                       .Where(x => x.UserId == accountId && x.NewNotification == 1)
+                                                                       .Where(x => x.UserId == accountId
+                                                                                   && x.NewNotification == 1)
                                                                        .ToList();
            
             
@@ -35,33 +36,23 @@ namespace Platform.DatabaseHandlers.Contexts
                 Notification =x.Notification,
                 IsRead = x.IsRead.Value
             }).ToList());
-            notifications.AddRange(userNotifications.Select(x=>new BindingNotification{
+            notifications.AddRange(userNotifications.Where( x => !projectNotifications.Any(y => y.NotificationId == x.NotificationId)).Select(x=>new BindingNotification{
                 Notification =x.Notification,
                 IsRead = x.IsRead.Value
             }).ToList());
-            projectNotifications.ForEach(x=>{
-                var notification = x;
-                notification.IsRead = 1;
-                Context.Attach(notification);
-                Context.Update(notification);
-                Context.SaveChanges();
-            });
-            userNotifications.ForEach(x=>{
-                var notification = x;
-                notification.IsRead = 1;
-                Context.Attach(notification);
-                Context.Update(notification);
-                Context.SaveChanges();
-            });
+ 
             return notifications;
         }
         internal object GetNewNotifications(object value)
         {
             throw new NotImplementedException();
         }
-        internal void NotificationRead(int id, int id1)
+        internal void NotificationRead(int id, int id1, int projectId)
         {
-            var notification = Context.AssociatedProjectNotifications.FirstOrDefault(x=>x.NotificationId == id && x.UserAccountId == id1);
+            var notification = Context.AssociatedProjectNotifications.FirstOrDefault(x=>x.NotificationId == id
+                                                                                        && x.UserAccountId == id1
+                                                                                        && x.ProjectId == projectId
+                                                                                        && x.IsRead != 1);
             if(notification != null)
             {
                 notification.NewNotification = 0;
@@ -70,7 +61,9 @@ namespace Platform.DatabaseHandlers.Contexts
                 Context.Update(notification);
                 Context.SaveChanges();
             }
-            var personalMessage =  Context.AssociatedUserNotifications.FirstOrDefault(x => x.NotificationId == id && x.UserId == id1);
+            var personalMessage =  Context.AssociatedUserNotifications.FirstOrDefault(x => x.NotificationId == id
+                                                                                           && x.UserId == id1
+                                                                                           && x.IsRead != 1);
             if(personalMessage != null)
             {
                 personalMessage.NewNotification = 0;
