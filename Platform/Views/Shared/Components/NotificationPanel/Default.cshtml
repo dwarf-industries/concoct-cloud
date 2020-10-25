@@ -13,6 +13,7 @@
         color: #1f818c;
         width: 30px;
         height: 30px;
+        font-size: 22px;
     }
     .AI:before {
         font-family: "e-icons" !important;
@@ -20,6 +21,7 @@
         color: #1f248c;
         width: 30px;
         height: 30px;
+        font-size: 22px;
     }
     .CW:before {
         font-family: "e-icons" !important;
@@ -27,22 +29,25 @@
         color: #4e8c1f;
         width: 30px;
         height: 30px;
+        font-size: 22px;
     }
     .UW:before {
         font-family: "e-icons" !important;
         content: '\e93c';
         color: #1f8c71;
+        font-size: 22px;
     }
     .CloseBtn:before {
         font-family: "e-icons" !important;
         content: '\ea7f';
         color: #bd1e33;
+        font-size: 20px;
     }
     .CloseBtn:hover {
         font-family: "e-icons" !important;
-        font-size: 20px;
         content: '\ea7f';
         color: #1c86c8;
+        font-size: 20px;
     }
     
     .photo img {
@@ -80,7 +85,6 @@
     
     .details {
         border-width: 1px 0px 0px 0px;
-        padding-left: 18px;
     }
 
     .e-bigger .details {
@@ -100,7 +104,15 @@
     }
     
  
-     
+     .rowHover{
+         border-bottom: 1px solid #ffffff;
+         cursor: pointer;
+     }
+     .rowHover:hover{
+        border-bottom: 1.5px solid #e3165b;
+        transition: border-bottom 1.2s linear;
+        cursor: pointer;
+     }
 
 .e-grid .e-gridheader  {
   background-color: #fff;
@@ -159,7 +171,7 @@
       }
 </style>
 <script id="currentTemplate" type="text/x-template">
-    <tr id="ID_${id}">
+    <tr id="ID_${id}" >
         <td class="photo">
             <span class="${notificationTypeNavigation.icon}">
 
@@ -168,11 +180,11 @@
         <td class="details">
             <table class="CardTable">
                
-                <tbody>
+                <tbody class="rowHover">  
                     
                     <tr>
                         <td style="text-align:justify; max-width:85px;"> ${content} </td>
-                        @* <td style="text-align:center;"><span onclick="RemoveNotification(${id})" class="CloseBtn"></span></td> *@
+                        <td style="text-align:center;"><span onclick="RemoveNotification(${id})" class="CloseBtn"></span></td>
 
                     </tr>
                 </tbody>
