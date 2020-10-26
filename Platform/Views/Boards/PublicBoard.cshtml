@@ -245,6 +245,7 @@ ShowLoader();
                 dataSource: data,
                 keyField: 'status',
                 enableTooltip: true,
+                dialogOpen: dialogOpen,
                 allowDragAndDrop: false,
                 columns: [
                     { headerText: 'To Do', keyField: 'Open', template: '#headerTemplate', allowToggle: true },
@@ -266,7 +267,11 @@ ShowLoader();
 
             kanbanObj.appendTo('#Kanban');
             ShowContent();
-         }
+        }
+
+        function dialogOpen(args) {
+            args.cancel = true;
+        }
       
          function WorkItemListClicked(args)
          {
