@@ -424,22 +424,35 @@ namespace Platform.DatabaseHandlers.Contexts
                         AssgignedAccount = sprintTask.AssignedAccountNavigation != null ? sprintTask.AssignedAccountNavigation.GitUsername : "Unassigned"
                     });
                 });
+
+                if(x.OriginEstitame == string.Empty || x.OriginEstitame == null)
+                    x.OriginEstitame = "0";
+
                 var complete = default(float);
                 var remaining = default(float);
+                var localCards = new List<BindingCards>();
+
                 sprintTasks.ForEach(task =>
                 {
                     var taskBoard = Context.AssociatedBoardWorkItems.Include(z => z.Board)
                                                                     .FirstOrDefault(z => z.WorkItemId == task.WorkItemChildId);
-                    if(!string.IsNullOrEmpty(x.Compleated))
-                        complete += float.Parse(x.Compleated);
-                    if(!string.IsNullOrEmpty(x.Remaining))
-                        remaining += float.Parse(x.Remaining);
+                    if(!string.IsNullOrEmpty(task.WorkItemChild.Compleated) && task.WorkItemChild.Compleated != "0")
+                        complete += float.Parse(task.WorkItemChild.Compleated);
+
+                    if(!string.IsNullOrEmpty(task.WorkItemChild.Remaining) && task.WorkItemChild.Remaining != "0" 
+                        && !string.IsNullOrEmpty(task.WorkItemChild.Compleated) && task.WorkItemChild.Compleated != "0")
+                        remaining +=  (float.Parse(task.WorkItemChild.Remaining) - float.Parse(task.WorkItemChild.Compleated));
+
+                    if(!string.IsNullOrEmpty(task.WorkItemChild.Remaining) && task.WorkItemChild.Remaining != "0")
+                        remaining +=  float.Parse(task.WorkItemChild.Remaining);
+
                     var activeBoard = string.Empty;
                     if (taskBoard == null)
                         activeBoard = "Open";
                     else
                         activeBoard = taskBoard.Board.BoardName;
-                    Cards.Add(new BindingCards
+
+                    localCards.Add(new BindingCards
                     {
                         InnerId = task.WorkItemChild.Id,
                         Id = $"Task {task.WorkItemChild.Id}",
@@ -449,13 +462,15 @@ namespace Platform.DatabaseHandlers.Contexts
                         Priority = GetCardType(task.WorkItemChild.WorkItemType.TypeName),
                         Type = $"{activeBoard}",
                         Status = activeBoard,
-                        Assignee = $"{x.Title} | Complete {complete} | Remaining {remaining}",
                         Complete = complete.ToString(),
                         Remaining = remaining.ToString(),
                         AssgignedAccount = task.WorkItemChild.AssignedAccountNavigation != null ? task.WorkItemChild.AssignedAccountNavigation.GitUsername : "Unassigned"
                     });
                 });
-
+                localCards.ForEach(y=>{
+                    y.Assignee = $"{x.Title} | Complete {complete} | Remaining {remaining}";
+                    Cards.Add(y);
+                });
             });
 
             return Cards;
