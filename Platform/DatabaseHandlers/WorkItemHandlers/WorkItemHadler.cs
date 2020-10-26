@@ -340,6 +340,12 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
 
 
             }
+
+            if(float.TryParse(databaseItem.Compleated, out var complete))
+            {
+                databaseItem.Remaining = "0";
+                databaseItem.Remaining = "0";
+            }
             databaseItem.StartDate = currentItem.StartDate.Ticks == 0 ? DateTime.Now : currentItem.StartDate;
             databaseItem.EndDate = currentItem.EndDate.Ticks == 0 ? DateTime.Now : currentItem.EndDate;
             databaseItem.DueDate = currentItem.DueDate.Ticks == 0 ? DateTime.Now : currentItem.DueDate;
