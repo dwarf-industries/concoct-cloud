@@ -366,3 +366,32 @@
         width: 30px;
         height: 30px;
     }
+
+    #sidebar-treeview::-webkit-scrollbar {
+        width: 5px;
+    }
+    #sidebar-treeview::-webkit-scrollbar-track {
+        background: #cccccc; 
+        XXborder-radius: 5px;
+    }
+    #sidebar-treeview::-webkit-scrollbar-thumb {
+        XXborder-radius: 5px;
+        background: #1c86c8;
+        border-radius: 10px;
+        width: 4px;
+    }
+
+
+    html::-webkit-scrollbar {
+        width: 10px;
+    }
+    html::-webkit-scrollbar-track {
+        background: #cccccc; 
+        XXborder-radius: 5px;
+    }
+    html::-webkit-scrollbar-thumb {
+        XXborder-radius: 5px;
+        background: #1c86c8;
+        border-radius: 10px;
+        width: 4px;
+    }
