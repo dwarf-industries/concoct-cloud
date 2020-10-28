@@ -342,7 +342,16 @@
         font-size: large;
         height: 30px;
     }
-
+    .PlanningBoards:before {
+        font-family: "e-icons" !important;
+        content: '\eb41';
+        color: #656a70;
+        width: 30px;
+        cursor: pointer;
+        font-size: large;
+        height: 30px;
+    }
+    
 
 
     .Microphone:before {
@@ -381,7 +390,9 @@
         width: 4px;
     }
 
-
+    .e-list-item .e-level-2 .e-hover{
+        color:#e6326f !important;
+    }
     html::-webkit-scrollbar {
         width: 10px;
     }
@@ -395,3 +406,5 @@
         border-radius: 10px;
         width: 4px;
     }
+
+    
