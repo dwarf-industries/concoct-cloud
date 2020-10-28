@@ -183,15 +183,19 @@
     content: '\e7d9';
 }
 
-.e-kanban .e-card .Interactice {
+.e-kanban .e-card .Interactive {
     padding: 2%;
     text-align: center;
+    border-bottom: 0px solid transparent;
+
 }
 
-    .e-kanban .e-card .Interactice:hover {
+    .e-kanban .e-card .Interactive:hover {
         padding: 2%;
         text-align: center;
-        border: 0.4px solid #1c86c8;
+        border-bottom: 0.4px solid #e6326f;
+        cursor: pointer;
+        transition: 1s;
     }
 
 e-kanban .e-card .e-text .col-3 .status:before {
