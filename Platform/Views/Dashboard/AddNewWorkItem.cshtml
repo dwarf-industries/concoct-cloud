@@ -39,7 +39,7 @@
         </div>
         <div id="Content" hidden>
  <div class="container-fluid">
-<div class="row RowContainer">
+<div class="row RowContainer" id="row1">
     <div class="col-md-12">
         <div class="main-card mb-1 card">
             <div class="card-body">
@@ -68,7 +68,7 @@
         </div>
     </div>
 </div>
-<div class="row RowContainer">
+<div class="row RowContainer" id="row2">
     <div class="col-md-12">
         <div class="main-card mb-1 card">
             <div class="card-body">
@@ -141,7 +141,7 @@
         </div>
     </div>
 </div>
-<div class="row RowContainer">
+<div class="row RowContainer" id="row3">
     <div class="col-md-12">
         <div class="main-card mb-1 card">
             <div class="card-body">
@@ -533,9 +533,11 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="row">                                                            
-                                                            <!-- Large modal -->
-                                                        <button type="button" id="ModalBtn" onclick="OpenModal()" class="btn btn-primary" >Add new relation</button>
+                                                    <div class="row">
+                                                        <!-- Large modal -->
+                                                        <button type="button" id="ModalBtn" onclick="OpenModal()" class="btn btn-primary">Add new relation</button>
+                                                        <button type="button" onclick="AddIRDiagram()" class="btn btn-primary">Create ER Diagram</button>
+
                                                         <div class="modal bd-example-modal-lg" id="WorItemsGridPanel" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog modal-lg">
                                                                 <div class="modal-content">
@@ -545,18 +547,17 @@
                                                                                 <p>Relation Type</p>
                                                                             </div>
                                                                             <div class="row">
-                                                                                                
-                                                                                <select class="form-control-sm form-control"  id="WorkItemRelationsGrid">
-                                                                                
+
+                                                                                <select class="form-control-sm form-control" id="WorkItemRelationsGrid">
                                                                                 </select>
-                                                                            
+
                                                                             </div>
                                                                             <div class="row">
-                                                                                
+
                                                                                 <div class="e-input-group e-float-icon-left">
                                                                                     <span class="e-input-group-icon e-input-picture" onclick="CallItemSelect();"></span>
                                                                                     <div class="e-input-in-wrap">
-                                                                                    <input class="e-input" id="workItemInputObj" type="text" placeholder="Upload Picture" />
+                                                                                        <input class="e-input" id="workItemInputObj" type="text" placeholder="Upload Picture" />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -573,14 +574,14 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="row">
-                                                                                <button   id="AcceptWItemChange">Add</button>
-                                                                                <button   id="CancelAddWItemBtn" onclick="CancelGridGlicked()">Cancel</button>
+                                                                                <button id="AcceptWItemChange">Add</button>
+                                                                                <button id="CancelAddWItemBtn" onclick="CancelGridGlicked()">Cancel</button>
 
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-    
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -632,7 +633,9 @@
        
     </div>
     </div>
+<div id="SecondContainer" style="display:none" class="row RowContainer">
 
+</div>
 </div>
 </div>
  
@@ -698,6 +701,9 @@
    //     $('#WorItemsGridPanel').modal('show'); 
 
     }
+   
+
+      
 </script>
 <script>
 
@@ -710,7 +716,7 @@
     var SystemInfo;
     var Description;
     var AcceptanceCriteria;
- 
+    var systemModel;
     var AssociateBuild = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     AssociateBuild.appendTo('#AssociateBuild');
 
@@ -1222,4 +1228,15 @@
     {
         console.log(args);
     }
+
+    function AddIRDiagram() {
+         
+        $("#row1").hide();
+        $("#row2").hide();
+        $("#row3").hide();
+        $("#SecondContainer").show();
+        $("#SecondContainer").load('/Dashboard/OpenERDiagram?id=0');
+
+    }
+
 </script>
