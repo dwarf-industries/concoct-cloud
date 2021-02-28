@@ -42,39 +42,39 @@ namespace Platform.DatabaseHandlers.Contexts
             // var i = 1;
             var result = new List<OutgoingChatItem>();
             result = GetPersonalMessageNavigation(userId, result);
-            Context.AssociatedChatRoomRights
-            .Include(x => x.ChatRoom)
-            .ThenInclude(ChatRoom => ChatRoom.ChatChannels)
-            .Where(x => x.ChatRoom.ProjectId == id && x.Right.AssociatedUserChatRights.Any(y => y.ProjectId == id && y.UserId == userId))
-            .Select(x => x)
-            .Distinct()
-            .ToList().ForEach(x =>
-            {
-                var cItem = new OutgoingChatItem
-                {
-                    InternalId = x.ChatRoomId,
-                    // NodeId = i++,
-                    NodeText = x.ChatRoom.RoomName,
-                    IconCss = "icon-th icon",
-                    Link = "",
-                    ChannelType = 0,
-                    IsParent = true,
-                    ParentId = x.ChatRoomId,
-                    NodeChild = x.ChatRoom.ChatChannels.Select(y => new OutgoingChatItemChild
-                    {
-                        InternalId = y.Id,
-                        // NodeId = i++,
-                        NodeText = y.ChannelName,
-                        ChannelType = y.ChannelType.Value,
-                        IconCss = "icon-circle-thin icon",
-                        Link = "",
-                        IsPersonal = false,
-                        ParentId = x.ChatRoomId
-                    }).ToList()
-                };
+            //Context.AssociatedChatRoomRights
+            //.Include(x => x.ChatRoom)
+            //.ThenInclude(ChatRoom => ChatRoom.ChatChannels)
+            //.Where(x => x.ChatRoom.ProjectId == id && x.Right.AssociatedUserChatRights.Any(y => y.ProjectId == id && y.UserId == userId))
+            //.Select(x => x)
+            //.Distinct()
+            //.ToList().ForEach(x =>
+            //{
+            //    var cItem = new OutgoingChatItem
+            //    {
+            //        InternalId = x.ChatRoomId,
+            //        // NodeId = i++,
+            //        NodeText = x.ChatRoom.RoomName,
+            //        IconCss = "icon-th icon",
+            //        Link = "",
+            //        ChannelType = 0,
+            //        IsParent = true,
+            //        ParentId = x.ChatRoomId,
+            //        NodeChild = x.ChatRoom.ChatChannels.Select(y => new OutgoingChatItemChild
+            //        {
+            //            InternalId = y.Id,
+            //            // NodeId = i++,
+            //            NodeText = y.ChannelName,
+            //            ChannelType = y.ChannelType.Value,
+            //            IconCss = "icon-circle-thin icon",
+            //            Link = "",
+            //            IsPersonal = false,
+            //            ParentId = x.ChatRoomId
+            //        }).ToList()
+            //    };
 
-                result.Add(cItem);
-            });
+            //    result.Add(cItem);
+            //});
 
             return result;
         }
