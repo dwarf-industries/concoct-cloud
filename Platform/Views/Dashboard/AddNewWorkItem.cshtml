@@ -1065,8 +1065,10 @@
             "Rank" :$("#Rank").val() ,
             "StoryPoints" : $("#StoryPoints").val(),
             "SelectedChildren" : selectedChildren,
-            "ParentId": @ParentId
-        }
+            "ParentId": @ParentId,
+            "SystemDesignInfo": systemModel
+          }
+         
         if($("#Description").val() !== undefined)
             dto.Description = $("#Description").children()[0].innerHTML;
         if($("#AcceptanceCriteria").val() !== undefined)
