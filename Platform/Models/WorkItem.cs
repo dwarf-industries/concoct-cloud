@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace Rokono_Control.Models
 {
     public partial class WorkItem
@@ -54,6 +56,7 @@ namespace Rokono_Control.Models
         public string StoryPoints { get; set; }
         public string AcceptanceCriteria { get; set; }
         public int? IsPublic { get; set; }
+        public string SystemDesignInfo { get; set; }
 
         public virtual WorkItemActivity ActivityNavigation { get; set; }
         public virtual WorkItemAreas Area { get; set; }
