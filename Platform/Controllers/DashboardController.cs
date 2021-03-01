@@ -540,8 +540,31 @@ namespace Rokono_Control.Controllers
         //        [ValidateAntiForgeryToken]
         public IActionResult OpenERDiagram(int id)
         {
+            var worItemSystemDesignInfo = string.Empty;
+            using (var workItemContext = new WorkItemsContext(Context, Configuration))
+            {
+                worItemSystemDesignInfo = workItemContext.GetSystemDesignInfo(id);
+            }
             return ViewComponent("DesignerComponents",new IncomingIdRequest { 
-             Id = id
+                Id = id,
+                Phase = worItemSystemDesignInfo
+            });
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "User")]
+        //        [ValidateAntiForgeryToken]
+        public IActionResult EditErDiagram(int id)
+        {
+            var worItemSystemDesignInfo = string.Empty;
+            using(var workItemContext = new WorkItemsContext(Context,Configuration))
+            {
+                worItemSystemDesignInfo = workItemContext.GetSystemDesignInfo(id);
+            }
+            return ViewComponent("DesignerComponents", new IncomingIdRequest
+            {
+                Id = id,
+                Phase = worItemSystemDesignInfo
             });
         }
 

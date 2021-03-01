@@ -1,4 +1,10 @@
-﻿<div class="control-section">
+﻿@{ 
+    var dataSource = ViewData["BindingData"] as string;
+    var workItemId = ViewData["WorkItemId"] as int?;
+    var uniqueName = $"{DateTime.Now.Millisecond}";
+}
+
+<div class="control-section">
     <style>
             .e-file-select-wrap {
                 display: none;
@@ -181,7 +187,7 @@
                     }
                 }
     </style>
-    <div style="width: 100%;height: 10%">
+    <div style="width: 100%;height: 10%" id="navMenu">
         <div id='toolbar' style="width:100%;height: 10%;margin-top: 10px; display:flex;">
             <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="ClearDiagram()">Clear</button>
             <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="SaveDiagram()">Save</button>
@@ -189,11 +195,11 @@
         </div>
     </div>
     <div style="width: 100%;height: 80%">
-        <div id="palette-space" class="sb-mobile-palette">
-            <div id="symbolpalette" style="width:90%;"></div>
+        <div id="palette-space_@uniqueName" class="sb-mobile-palette">
+            <div id="symbolpalette_@uniqueName" style="width:90%;"></div>
         </div>
-        <div id="diagram-space" class="sb-mobile-diagram">
-            <div id="diagram"></div>
+        <div id="diagram-space_@uniqueName" class="sb-mobile-diagram">
+            <div id="diagram_@uniqueName"></div>
         </div>
      </div>
 </div>
@@ -203,6 +209,13 @@
     /**
    * Serialization sample
    */
+    var preview = false;
+    @if (!string.IsNullOrEmpty(dataSource))
+    {
+        @: preview = true;
+
+    }
+
     ej.diagrams.Diagram.Inject(ej.diagrams.UndoRedo);
 
     var diagram;
@@ -253,21 +266,28 @@
         }
     }
     $(document).ready(function () {
-
-      
+        var constraintSettings;
+        debugger
+        if (preview) {
+            DisabledEdit()
+            constraintSettings = [];
+        }
+        else {
+       
+        }
         //Initializes the connector for the diagram
         var connectors = [
             {
-                id: 'connector1', sourceID: 'Start', targetID: 'Alarm'
+        id: 'connector1', sourceID: 'Start', targetID: 'Alarm'
             },
             { id: 'connector2', sourceID: 'Alarm', targetID: 'Ready' },
             {
-                id: 'connector3', sourceID: 'Ready', targetID: 'Climb',
+        id: 'connector3', sourceID: 'Ready', targetID: 'Climb',
                 annotations: [{ content: 'Yes', style: { fill: 'white' } }]
             },
             { id: 'connector4', sourceID: 'Climb', targetID: 'End', },
             {
-                id: 'connector5', sourceID: 'Ready', targetID: 'Hit',
+        id: 'connector5', sourceID: 'Ready', targetID: 'Hit',
                 annotations: [{ content: 'No', style: { fill: 'white' } }]
             },
             { id: 'connector6', sourceID: 'Hit', targetID: 'Relay' },
@@ -279,6 +299,7 @@
         diagram = new ej.diagrams.Diagram({
             width: '100%', height: '845px',
             connectors: connectors,
+            constraints: constraintSettings,
             snapSettings: { horizontalGridlines: gridlines, verticalGridlines: gridlines },
             //set default value for Connectors.
             getConnectorDefaults: function (args) {
@@ -298,7 +319,7 @@
                 }
             }
         });
-        diagram.appendTo('#diagram');
+        diagram.appendTo('#diagram_'+@uniqueName);
         //Initialize the flowshapes for the symbol palatte
         var flowshapes = [
             { id: 'Terminator', shape: { type: 'Flow', shape: 'Terminator' } },
@@ -349,7 +370,12 @@
                 style: { strokeWidth: 2, strokeColor: '#757575' }, targetDecorator: { shape: 'None' }
             },
         ];
-        
+        ClearDiagram();
+        if (preview)
+        {
+            debugger
+             LoadDiagram("@dataSource");
+        }
         //Initializes the symbol palette
         var palette = new ej.diagrams.SymbolPalette({
             expandMode: 'Multiple',
@@ -382,14 +408,14 @@
             },
             width: '100%', height: '845px', symbolHeight: 60, symbolWidth: 60,
         });
-        palette.appendTo('#symbolpalette');
-        
+        palette.appendTo('#symbolpalette_'+@uniqueName);
+
         //Load the diagraming object.
         function loadDiagram(event) {
             diagram.loadDiagram(event.target.result);
         }
 
-    
+
     });
 
     function LoadDiagramFromFile() {
@@ -413,4 +439,9 @@
         diagram.loadDiagram(data);
     }
 
+
+    function DisabledEdit() {
+        $("#navMenu").hide();
+        $("#palette-space_"+@uniqueName).hide();
+    }
 </script>
