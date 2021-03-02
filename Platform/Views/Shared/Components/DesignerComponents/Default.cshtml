@@ -1,8 +1,10 @@
 ﻿@{ 
     var dataSource = ViewData["BindingData"] as string;
     var workItemId = ViewData["WorkItemId"] as int?;
-    var uniqueName = $"{DateTime.Now.Millisecond}";
-}
+    var chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+    var random = new System.Random();
+    var uniqueName = chars[random.Next(chars.Length - 1)];
+ }
 
 <div class="control-section">
     <style>
@@ -187,7 +189,7 @@
                     }
                 }
     </style>
-    <div style="width: 100%;height: 10%" id="navMenu">
+    <div style="width: 100%;height: 10%" id="navMenu_@uniqueName">
         <div id='toolbar' style="width:100%;height: 10%;margin-top: 10px; display:flex;">
             <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="ClearDiagram()">Clear</button>
             <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="SaveDiagram()">Save</button>
@@ -267,13 +269,13 @@
     }
     $(document).ready(function () {
         var constraintSettings;
-        debugger
+
         if (preview) {
             DisabledEdit()
             constraintSettings = [];
         }
         else {
-       
+
         }
         //Initializes the connector for the diagram
         var connectors = [
@@ -293,9 +295,9 @@
             { id: 'connector6', sourceID: 'Hit', targetID: 'Relay' },
             { id: 'connector7', sourceID: 'Relay', targetID: 'Alarm' }];
         var lineinterval;
-        lineinterval = [1, 9, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75];
+        lineinterval = [1,RepladataSourceeReplace 9, 0.25, 9.75, 0.25, 9.75,dataSourceataSourceataSource0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75];
         var gridlines = { lineColor: '#e0e0e0', lineIntervals: lineinterval };
-        //Initializes diagram control
+     dataSource  //Initializes diagram control
         diagram = new ej.diagrams.Diagram({
             width: '100%', height: '845px',
             connectors: connectors,
@@ -319,7 +321,7 @@
                 }
             }
         });
-        diagram.appendTo('#diagram_'+@uniqueName);
+        diagram.appendTo('#diagram_@uniqueName');
         //Initialize the flowshapes for the symbol palatte
         var flowshapes = [
             { id: 'Terminator', shape: { type: 'Flow', shape: 'Terminator' } },
@@ -370,11 +372,15 @@
                 style: { strokeWidth: 2, strokeColor: '#757575' }, targetDecorator: { shape: 'None' }
             },
         ];
-        ClearDiagram();
-        if (preview)
+        debugger
+        if (preview) {
+            ClearDiagram();
+            LoadDiagram();
+        }
+        else
         {
-            debugger
-             LoadDiagram("@dataSource");
+            ClearDiagram();
+
         }
         //Initializes the symbol palette
         var palette = new ej.diagrams.SymbolPalette({
@@ -408,12 +414,8 @@
             },
             width: '100%', height: '845px', symbolHeight: 60, symbolWidth: 60,
         });
-        palette.appendTo('#symbolpalette_'+@uniqueName);
+        palette.appendTo('#symbolpalette_@uniqueName');
 
-        //Load the diagraming object.
-        function loadDiagram(event) {
-            diagram.loadDiagram(event.target.result);
-        }
 
 
     });
@@ -435,13 +437,17 @@
         $("#row3").show();
     }
 
-    function LoadDiagram(data) {
-        diagram.loadDiagram(data);
+    //Todo : Its failing to load the diagram on the screen due to literal corruption serailized string  is being altered over the view engine
+    //Solution: implement a post query to take the result over json so we can avoid this issue.
+    function LoadDiagram() {
+
+        diagram.loadDiagram('@dataSource');
     }
 
 
     function DisabledEdit() {
-        $("#navMenu").hide();
-        $("#palette-space_"+@uniqueName).hide();
+        $("#navMenu_@uniqueName").hide();
+        $("#palette-space_@uniqueName").hide();
     }
+
 </script>

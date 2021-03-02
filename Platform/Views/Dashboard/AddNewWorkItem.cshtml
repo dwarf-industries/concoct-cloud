@@ -1173,21 +1173,23 @@
                     res += "<ul>";
                     response.workItem.forEach(element => 
                     {
-                        if(element.workItemTypeId === 1)
-                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+"&returnUrl="+window.location.href+" \"><i class=\"fas fa-bug\" style=\"padding:3px;\" ></i>"+element.title+"</li>";
-                        else if(element.workItemTypeId === 5)
-                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+"&returnUrl="+window.location.href+" \"><i class=\"fas fa-crown\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
-                        else if(element.workItemTypeId === 6)
-                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+"&returnUrl="+window.location.href+" \"><i class=\"fas fa-exclamation-triangle\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
-                        else if(element.workItemTypeId === 4)
-                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+"&returnUrl="+window.location.href+" \"><i class=\"fas fa-vial\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
-                        else if(element.workItemTypeId === 7)
-                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+"&returnUrl="+window.location.href+" \"><i class=\"fas fa-user-circle\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
-                        else if(element.workItemTypeId === 3)
-                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+"&returnUrl="+window.location.href+" \"><i class=\"fas fa-tasks\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
-                        else if(element.workItemTypeId === 2)
-                            res += "<li value=\"/Dashboard/EditWorkItem?projectId="+@projectId+"&&workItem="+element.id+"&returnUrl="+window.location.href+" \"><i class=\"fas fa-cog\"  style=\"padding:3px;\"></i>"+element.title+"</li>";
-                      
+                        if (element !== null)
+                        {
+                            if (element.workItemTypeId === 1)
+                                res += "<li value=\"/Dashboard/EditWorkItem?projectId=" +@projectId+"&&workItem=" + element.id + "&returnUrl=" + window.location.href + " \"><i class=\"fas fa-bug\" style=\"padding:3px;\" ></i>" + element.title + "</li>";
+                            else if (element.workItemTypeId === 5)
+                                res += "<li value=\"/Dashboard/EditWorkItem?projectId=" +@projectId+"&&workItem=" + element.id + "&returnUrl=" + window.location.href + " \"><i class=\"fas fa-crown\"  style=\"padding:3px;\"></i>" + element.title + "</li>";
+                            else if (element.workItemTypeId === 6)
+                                res += "<li value=\"/Dashboard/EditWorkItem?projectId=" +@projectId+"&&workItem=" + element.id + "&returnUrl=" + window.location.href + " \"><i class=\"fas fa-exclamation-triangle\"  style=\"padding:3px;\"></i>" + element.title + "</li>";
+                            else if (element.workItemTypeId === 4)
+                                res += "<li value=\"/Dashboard/EditWorkItem?projectId=" +@projectId+"&&workItem=" + element.id + "&returnUrl=" + window.location.href + " \"><i class=\"fas fa-vial\"  style=\"padding:3px;\"></i>" + element.title + "</li>";
+                            else if (element.workItemTypeId === 7)
+                                res += "<li value=\"/Dashboard/EditWorkItem?projectId=" +@projectId+"&&workItem=" + element.id + "&returnUrl=" + window.location.href + " \"><i class=\"fas fa-user-circle\"  style=\"padding:3px;\"></i>" + element.title + "</li>";
+                            else if (element.workItemTypeId === 3)
+                                res += "<li value=\"/Dashboard/EditWorkItem?projectId=" +@projectId+"&&workItem=" + element.id + "&returnUrl=" + window.location.href + " \"><i class=\"fas fa-tasks\"  style=\"padding:3px;\"></i>" + element.title + "</li>";
+                            else if (element.workItemTypeId === 2)
+                                res += "<li value=\"/Dashboard/EditWorkItem?projectId=" +@projectId+"&&workItem=" + element.id + "&returnUrl=" + window.location.href + " \"><i class=\"fas fa-cog\"  style=\"padding:3px;\"></i>" + element.title + "</li>";
+                        }
                     });
                     res += "</ul>";
                     res += "</div>";

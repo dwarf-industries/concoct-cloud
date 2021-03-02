@@ -478,6 +478,8 @@ namespace Platform.DatabaseHandlers.Contexts
 
         internal string GetSystemDesignInfo(int id)
         {
+            if (id == 0)
+                return string.Empty;
             return Context.WorkItem.FirstOrDefault(x => x.Id == id).SystemDesignInfo;
         }
 
