@@ -29,6 +29,7 @@ namespace Rokono_Control.Models
         public string OriginalEstimate { get; set; }
         public string ItemRemaining { get; set; }
         public string ItemCompleated { get; set; }
+        public string SystemDesignInfo { get; set; }
         //Epic Related
         public string RiskId { get; set; }
         public string Effort { get; set; }

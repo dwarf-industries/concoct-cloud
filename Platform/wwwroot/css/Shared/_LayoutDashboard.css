@@ -342,7 +342,16 @@
         font-size: large;
         height: 30px;
     }
-
+    .PlanningBoards:before {
+        font-family: "e-icons" !important;
+        content: '\eb41';
+        color: #656a70;
+        width: 30px;
+        cursor: pointer;
+        font-size: large;
+        height: 30px;
+    }
+    
 
 
     .Microphone:before {
@@ -366,3 +375,36 @@
         width: 30px;
         height: 30px;
     }
+
+    #sidebar-treeview::-webkit-scrollbar {
+        width: 5px;
+    }
+    #sidebar-treeview::-webkit-scrollbar-track {
+        background: #cccccc; 
+        XXborder-radius: 5px;
+    }
+    #sidebar-treeview::-webkit-scrollbar-thumb {
+        XXborder-radius: 5px;
+        background: #1c86c8;
+        border-radius: 10px;
+        width: 4px;
+    }
+
+    .e-list-item .e-level-2 .e-hover{
+        color:#e6326f !important;
+    }
+    html::-webkit-scrollbar {
+        width: 10px;
+    }
+    html::-webkit-scrollbar-track {
+        background: #cccccc; 
+        XXborder-radius: 5px;
+    }
+    html::-webkit-scrollbar-thumb {
+        XXborder-radius: 5px;
+        background: #1c86c8;
+        border-radius: 10px;
+        width: 4px;
+    }
+
+    

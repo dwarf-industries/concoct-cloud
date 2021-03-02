@@ -43,9 +43,12 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 dbVersion.Iteration =  int.Parse(currentItem.ItemIteration);
             if(!string.IsNullOrEmpty(currentItem.ItemArea))
             dbVersion.AreaId = int.Parse(currentItem.ItemArea);
-               
 
-            if(currentItem.WorktItemType == 1)
+            if (!string.IsNullOrEmpty(currentItem.SystemDesignInfo))
+                dbVersion.SystemDesignInfo = currentItem.SystemDesignInfo;
+            
+
+            if (currentItem.WorktItemType == 1)
             {
                 if(!string.IsNullOrEmpty(currentItem.ItemPriority))
                 dbVersion.PriorityId = int.Parse(currentItem.ItemPriority);
@@ -242,6 +245,11 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                 databaseItem.AssignedAccount = currentItem.AssignedUser;
                 currentUser = $"{userData.FirstName} {userData.LastName}";
             }
+
+            if(!string.IsNullOrEmpty(currentItem.SystemDesignInfo))
+                databaseItem.SystemDesignInfo = currentItem.SystemDesignInfo;
+            
+
             if(currentItem.WorktItemType != 0)
                 databaseItem.WorkItemTypeId = currentItem.WorktItemType;
             if(!string.IsNullOrEmpty(currentItem.State))
