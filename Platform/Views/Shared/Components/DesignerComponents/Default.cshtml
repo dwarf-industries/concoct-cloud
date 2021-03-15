@@ -294,10 +294,9 @@
             },
             { id: 'connector6', sourceID: 'Hit', targetID: 'Relay' },
             { id: 'connector7', sourceID: 'Relay', targetID: 'Alarm' }];
-        var lineinterval;
-        lineinterval = [1,RepladataSourceeReplace 9, 0.25, 9.75, 0.25, 9.75,dataSourceataSourceataSource0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75];
-        var gridlines = { lineColor: '#e0e0e0', lineIntervals: lineinterval };
-     dataSource  //Initializes diagram control
+        var interval = [1, 9, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75];
+        var gridlines = { lineColor: '#e0e0e0', lineIntervals: interval };
+        //dataSource  //Initializes diagram control
         diagram = new ej.diagrams.Diagram({
             width: '100%', height: '845px',
             connectors: connectors,
@@ -372,7 +371,7 @@
                 style: { strokeWidth: 2, strokeColor: '#757575' }, targetDecorator: { shape: 'None' }
             },
         ];
-        debugger
+         
         if (preview) {
             ClearDiagram();
             LoadDiagram();
@@ -440,8 +439,10 @@
     //Todo : Its failing to load the diagram on the screen due to literal corruption serailized string  is being altered over the view engine
     //Solution: implement a post query to take the result over json so we can avoid this issue.
     function LoadDiagram() {
-
-        diagram.loadDiagram('@dataSource');
+        @if (!string.IsNullOrEmpty(dataSource))
+        {
+            @:  diagram.loadDiagram('@dataSource')
+        }
     }
 
 
