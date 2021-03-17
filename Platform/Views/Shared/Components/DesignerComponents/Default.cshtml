@@ -215,7 +215,6 @@
     @if (!string.IsNullOrEmpty(dataSource))
     {
         @: preview = true;
-
     }
 
     ej.diagrams.Diagram.Inject(ej.diagrams.UndoRedo);
@@ -306,7 +305,7 @@
             getConnectorDefaults: function (args) {
                 args.targetDecorator.height = 5;
                 args.targetDecorator.width = 5;
-                args.style.strokeColor = '#797979';
+                args.style.strokeColor = '#797979';dataSource
                 args.targetDecorator.style = { fill: '#797979', strokeColor: '#797979' };
                 return args;
             },
@@ -371,7 +370,7 @@
                 style: { strokeWidth: 2, strokeColor: '#757575' }, targetDecorator: { shape: 'None' }
             },
         ];
-         
+
         if (preview) {
             ClearDiagram();
             LoadDiagram();
@@ -435,13 +434,20 @@
         $("#row2").show();
         $("#row3").show();
     }
+    var diagramData;
+     @if (!string.IsNullOrEmpty(dataSource))
+     {
+         
+       @:   diagramData = '@dataSource'
+     }
 
-    //Todo : Its failing to load the diagram on the screen due to literal corruption serailized string  is being altered over the view engine
-    //Solution: implement a post query to take the result over json so we can avoid this issue.
+     //Todo : Its failing to load the diagram on the screen due to literal corruption serailized string  is being altered over the view engine
+     //Solution: implement a post query to take the result over json so we can avoid this issue.
     function LoadDiagram() {
-        @if (!string.IsNullOrEmpty(dataSource))
+        if (diagramData !== undefined)
         {
-            @:  diagram.loadDiagram('@dataSource')
+            console.log(diagramData);
+            diagram.loadDiagram(diagramData);
         }
     }
 
