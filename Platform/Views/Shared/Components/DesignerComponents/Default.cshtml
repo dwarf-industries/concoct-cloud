@@ -305,7 +305,7 @@
             getConnectorDefaults: function (args) {
                 args.targetDecorator.height = 5;
                 args.targetDecorator.width = 5;
-                args.style.strokeColor = '#797979';dataSource
+                args.style.strokeColor = '#797979'; 
                 args.targetDecorator.style = { fill: '#797979', strokeColor: '#797979' };
                 return args;
             },
@@ -446,8 +446,9 @@
     function LoadDiagram() {
         if (diagramData !== undefined)
         {
-            console.log(diagramData);
-            diagram.loadDiagram(diagramData);
+            var converted = DeserializeFix(diagramData);
+            //console.log(converted);
+            diagram.loadDiagram(converted);
         }
     }
 
