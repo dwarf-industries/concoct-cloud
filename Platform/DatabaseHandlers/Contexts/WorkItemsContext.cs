@@ -476,6 +476,13 @@ namespace Platform.DatabaseHandlers.Contexts
             return Cards;
         }
 
+        internal string GetSystemDesignInfo(int id)
+        {
+            if (id == 0)
+                return string.Empty;
+            return Context.WorkItem.FirstOrDefault(x => x.Id == id).SystemDesignInfo;
+        }
+
         private bool CheckIfItsParent(List<WorkItem> notSprints, AssociatedBoardWorkItems item)
         {
             return notSprints.Distinct().ToList().Any(currentItem => currentItem.ParentId != null && currentItem.ParentId.Value == item.WorkItem.Id);
