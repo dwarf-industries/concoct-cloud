@@ -663,10 +663,11 @@
                         </div>
                         <div id="tab4_content" style="display: none; min-height:53vh;">
                             @await Component.InvokeAsync("DesignerComponents", new IncomingIdRequest
-                            {
-                                Phase = @SystemDesignInfo,
-                                Id = @WorkItemData.Id
-                            });
+                           {
+                               Phase = @SystemDesignInfo,
+                               Id = @WorkItemData.Id,
+                               UserId = 1
+                           });
 
 
                         </div>
@@ -1296,7 +1297,7 @@
         $("#row2").hide();
         $("#row3").hide();
         $("#SecondContainer").show();
-        $("#SecondContainer").load('/Dashboard/OpenERDiagram?id=@WorkItemData.Id');
+        $("#SecondContainer").load('/Dashboard/OpenERDiagram?id=@WorkItemData.Id&&preview=0');
 
     }
 

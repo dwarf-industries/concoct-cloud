@@ -538,7 +538,7 @@ namespace Rokono_Control.Controllers
         [HttpGet]
         [Authorize(Roles = "User")]
         //        [ValidateAntiForgeryToken]
-        public IActionResult OpenERDiagram(int id)
+        public IActionResult OpenERDiagram(int id, int preview)
         {
             var worItemSystemDesignInfo = string.Empty;
             using (var workItemContext = new WorkItemsContext(Context, Configuration))
@@ -547,7 +547,8 @@ namespace Rokono_Control.Controllers
             }
             return ViewComponent("DesignerComponents",new IncomingIdRequest { 
                 Id = id,
-                Phase = worItemSystemDesignInfo
+                Phase = worItemSystemDesignInfo,
+                UserId = preview
             });
         }
 

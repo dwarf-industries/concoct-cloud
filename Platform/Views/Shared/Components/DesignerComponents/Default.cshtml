@@ -1,12 +1,24 @@
 ﻿@{ 
     var dataSource = ViewData["BindingData"] as string;
     var workItemId = ViewData["WorkItemId"] as int?;
+    var isPreview = ViewData["Mode"] as int?;
     var chars = "abcdefghijklmnopqrstuvwxyz0123456789";
     var random = new System.Random();
     var uniqueName = chars[random.Next(chars.Length - 1)];
  }
+<style>
+    .sb-mobile-palette{
+        width:100%;
+        height:100%;
+    }
 
-<div class="control-section">
+    .diagramControl {
+        width:100%;
+        height:81vh;
+    }
+
+ </style>
+<div class="diagramControl">
     <style>
             .e-file-select-wrap {
                 display: none;
@@ -196,7 +208,7 @@
             <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="LoadDiagramFromFile()">Load</button>
         </div>
     </div>
-    <div style="width: 100%;height: 80%">
+    <div style="width: 100%;height: 80%" id="currentDiagram_@uniqueName">
         <div id="palette-space_@uniqueName" class="sb-mobile-palette">
             <div id="symbolpalette_@uniqueName" style="width:90%;"></div>
         </div>
@@ -212,7 +224,7 @@
    * Serialization sample
    */
     var preview = false;
-    @if (!string.IsNullOrEmpty(dataSource))
+    @if (isPreview.Value == 1)
     {
         @: preview = true;
     }
@@ -297,7 +309,7 @@
         var gridlines = { lineColor: '#e0e0e0', lineIntervals: interval };
         //dataSource  //Initializes diagram control
         diagram = new ej.diagrams.Diagram({
-            width: '100%', height: '845px',
+            width: '100%', height: '100%',
             connectors: connectors,
             constraints: constraintSettings,
             snapSettings: { horizontalGridlines: gridlines, verticalGridlines: gridlines },
@@ -305,7 +317,7 @@
             getConnectorDefaults: function (args) {
                 args.targetDecorator.height = 5;
                 args.targetDecorator.width = 5;
-                args.style.strokeColor = '#797979'; 
+                args.style.strokeColor = '#797979';
                 args.targetDecorator.style = { fill: '#797979', strokeColor: '#797979' };
                 return args;
             },
@@ -324,7 +336,7 @@
         var flowshapes = [
             { id: 'Terminator', shape: { type: 'Flow', shape: 'Terminator' } },
             { id: 'Process', shape: { type: 'Flow', shape: 'Process' } },
-            { id: 'Decision', shape: { type: 'Flow', shape: 'Decision' } },
+            { id: 'Decision', shape: { type: 'uniqueNameniqueNameniqueNameniqueNameniqueNameniqueNamelow', shape: 'Decision' } },
             { id: 'Document', shape: { type: 'Flow', shape: 'Document' } },
             { id: 'PreDefinedProcess', shape: { type: 'Flow', shape: 'PreDefinedProcess' } },
             { id: 'PaperTap', shape: { type: 'Flow', shape: 'PaperTap' } },
@@ -378,6 +390,7 @@
         else
         {
             ClearDiagram();
+            LoadDiagram();
 
         }
         //Initializes the symbol palette
@@ -410,7 +423,7 @@
             getSymbolInfo: function (symbol) {
                 return { fit: true };
             },
-            width: '100%', height: '845px', symbolHeight: 60, symbolWidth: 60,
+            width: '100%', height: '100%', symbolHeight: 60, symbolWidth: 60,
         });
         palette.appendTo('#symbolpalette_@uniqueName');
 
@@ -437,7 +450,7 @@
     var diagramData;
      @if (!string.IsNullOrEmpty(dataSource))
      {
-         
+
        @:   diagramData = '@dataSource'
      }
 
@@ -447,8 +460,52 @@
         if (diagramData !== undefined)
         {
             var converted = DeserializeFix(diagramData);
+            var castObject = JSON.parse(converted);
+            castObject.height = "100%;"
+            //diagram.addLayer(castObject.layers[0]);
             //console.log(converted);
             diagram.loadDiagram(converted);
+            diagram.updateViewPort();
+            ScaleDiagram(diagram);
+
+        }
+    }
+
+    function ScaleDiagram() {
+        var diagramspace =  document.getElementById("diagram-space_@uniqueName");
+        var diagram_ = document.getElementById("diagram_@uniqueName");
+        var diagram_gcontent = document.getElementById("diagram_@uniqueName" + "content");
+        var diagram_g_backgroundLayer_svg = document.getElementById("diagram_@uniqueName" + "_backgroundLayer_svg");
+        var diagram_g_gridline_svg = document.getElementById("diagram_@uniqueName" + "_gridline_svg");
+        var diagram_g_diagramLayer_div = document.getElementById("diagram_@uniqueName" + "_diagramLayer_div");
+        var diagram_g_diagramLayer_svg = document.getElementById("diagram_@uniqueName" + "_diagramLayer_svg");
+        var diagram_g_nativeLayer_svg = document.getElementById("diagram_@uniqueName" + "_nativeLayer_svg");
+        var diagram_g_htmlLayer = document.getElementById("diagram_@uniqueName" + "_htmlLayer");
+        var diagram_g_diagramPorts_svg = document.getElementById("diagram_@uniqueName" + "_diagramPorts_svg");
+        var diagram_g_diagramAdornerLayer = document.getElementById("diagram_@uniqueName" + "_diagramAdornerLayer");
+        var diagram_g_hiddenUserHandleTemplate = document.getElementById("diagram_@uniqueName" + "_hiddenUserHandleTemplate");
+
+
+        SetWidthHeight(diagramspace);
+        SetWidthHeight(diagram_);
+        SetWidthHeight(diagram_gcontent);
+        SetWidthHeight(diagram_g_backgroundLayer_svg);
+        SetWidthHeight(diagram_g_gridline_svg);
+        SetWidthHeight(diagram_g_diagramLayer_div);
+        SetWidthHeight(diagram_g_diagramLayer_svg);
+        SetWidthHeight(diagram_g_nativeLayer_svg);
+        SetWidthHeight(diagram_g_htmlLayer);
+        SetWidthHeight(diagram_g_diagramPorts_svg);
+        SetWidthHeight(diagram_g_diagramAdornerLayer);
+        SetWidthHeight(diagram_g_hiddenUserHandleTemplate);
+ 
+
+    }
+
+    function SetWidthHeight(element) {
+        if (element !== null && element !== undefined) {
+            element.style.setProperty("width", "100%");
+            element.style.setProperty("height", "100%");
         }
     }
 

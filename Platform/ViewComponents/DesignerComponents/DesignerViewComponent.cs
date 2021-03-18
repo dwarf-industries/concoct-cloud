@@ -27,7 +27,7 @@ namespace Platform.ViewComponents
         {
             
           
-            ViewData["User"] = UserId;
+            ViewData["Mode"] = request.UserId;
             ViewData["BindingData"] = request.Phase;
             ViewData["WorkItemId"] = request.Id;
             return View("/Views/Shared/Components/DesignerComponents/Default.cshtml");
