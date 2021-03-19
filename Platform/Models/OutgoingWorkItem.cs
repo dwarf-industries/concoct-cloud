@@ -13,5 +13,6 @@ namespace Rokono_Control.Models
         public string Description { get; set; }
         public string AssignedTo { get; set; }
         public List<OutgoingWorkItem> subtasks { get; set; }
+        public int ParentId { get; set; }
     }
 }

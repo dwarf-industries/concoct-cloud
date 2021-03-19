@@ -283,9 +283,11 @@
 
         if (preview) {
             DisabledEdit()
-            constraintSettings = [];
+            
+            constraintSettings = [ ];
         }
         else {
+            constraintSettings = [];
 
         }
         //Initializes the connector for the diagram
@@ -311,8 +313,9 @@
         diagram = new ej.diagrams.Diagram({
             width: '100%', height: '100%',
             connectors: connectors,
-            constraints: constraintSettings,
-            snapSettings: { horizontalGridlines: gridlines, verticalGridlines: gridlines },
+            snapSettings: { horizontalGridlines: gridlines, verticalGridlines: gridlines, constraints: ej.diagrams.SnapConstraints.None  },
+            getCustomTool: getTool,
+            click: DiagramObjectClicked,
             //set default value for Connectors.
             getConnectorDefaults: function (args) {
                 args.targetDecorator.height = 5;
@@ -323,6 +326,8 @@
             },
             //Sets the Node style for DragEnter element.
             dragEnter: function (args) {
+                if (preview)
+                    return;
                 var obj = args.element;
                 if (obj instanceof ej.diagrams.Node) {
                     var ratio = 100 / obj.width;
@@ -427,7 +432,7 @@
         });
         palette.appendTo('#symbolpalette_@uniqueName');
 
-
+        diagram.fitToPage();
 
     });
 
@@ -439,6 +444,15 @@
 
     }
 
+    //Enable the clone Tool for UserHandle.
+    function getTool(action) {
+        var tool;
+        if (action === 'clone') {
+            tool = new CloneTool(diagram.commandHandler);
+        }
+        return tool;
+    }
+
     function SaveDiagram() {
         systemModel = diagram.saveDiagram();
         console.log(diagram.saveDiagram());
@@ -446,6 +460,11 @@
         $("#row1").show();
         $("#row2").show();
         $("#row3").show();
+    }
+
+    function DiagramObjectClicked(item) {
+        if (preview)
+            return;
     }
     var diagramData;
      @if (!string.IsNullOrEmpty(dataSource))
@@ -466,7 +485,10 @@
             //console.log(converted);
             diagram.loadDiagram(converted);
             diagram.updateViewPort();
-            ScaleDiagram(diagram);
+            if (preview) {
+                ScaleDiagram(diagram);
+
+            }
 
         }
     }

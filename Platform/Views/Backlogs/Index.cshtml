@@ -141,6 +141,7 @@
     </script>
 
     <script>
+    ej.treegrid.TreeGrid.Inject(ej.treegrid.Edit, ej.treegrid.CommandColumn);
 
     var exportDialog;
     var exportContent;
@@ -270,6 +271,7 @@
 
     function InitiliazeGrid(data )
     {
+        debugger
         console.log(data);
 
 
@@ -282,21 +284,24 @@
             recordDoubleClick: EditWorkItem,
             rowSelected: RowSelected,
             rowDeselected: RowDeselected,
-            enableVirtualization: true,
+           // enableVirtualization: true,
             filterSettings: { type: 'Menu' },
             queryCellInfo: customiseCell,
             selectionSettings: { persistSelection: true, type: "Multiple" },
+            childMapping: 'subtasks',
             enableHover: false,
             allowPaging: true,
-            pageSettings: { pageSize: 20 },
-            height:'650px',
+            pageSettings: { pageCount: 16, pageSize:16 },
+
+            height: '650px',
             columns: [
                 { type: "checkbox", field: "", allowFiltering: false, allowSorting: false, width: '20' , textAlign: 'center'},
                 { field: 'workItemType.TypeName', headerText: 'Type', width: '10',customAttributes: {class: "workItemIcon"}, textAlign: 'center' },
                 { field: 'title', headerText: 'Title', width: 125 },
                 { field: 'description', headerText: 'Description', width: 180 },
                 { field: 'assignedTo', headerText: 'AssignedTo', width: 110 },
-            ]
+            ],
+            //pageSettings: { pageSize: 10, pageCount: 2, pageSizes: true }
         });
 
         treeGridObj.appendTo('#TreeGrid');

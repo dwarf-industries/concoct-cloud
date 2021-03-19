@@ -54,16 +54,17 @@ namespace Rokono_Control.Controllers
                 var bData = data.Select(x => x.WorkItem).ToList();
                 bData.ForEach(x =>
                 {
-            
-                        result.Add(new OutgoingWorkItem
-                        {
-                            Id = x.Id,
-                            WorkItemIcon = x.WorkItemType.Icon,
-                            Title = x.Title,
-                            Description = x.Description,
-                            AssignedTo = x.AssignedAccountNavigation == null ? "" : x.AssignedAccountNavigation.Email,
-                            //    subtasks = new List<OutgoingWorkItem>()
-                        });
+
+                    result.Add(new OutgoingWorkItem
+                    {
+                        Id = x.Id,
+                        WorkItemIcon = x.WorkItemType.Icon,
+                        Title = x.Title,
+                        Description = x.Description,
+                        AssignedTo = x.AssignedAccountNavigation == null ? "" : x.AssignedAccountNavigation.Email,
+                        ParentId = 0
+                        //    subtasks = new List<OutgoingWorkItem>()
+                    });
                   
                 });
                 // result = GetChildren(data,result);
