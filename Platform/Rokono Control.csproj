@@ -31,6 +31,8 @@
   </ItemGroup>
  
   <ItemGroup>
+    <Folder Include="wwwroot\css\Themes\Light\" />
+    <Folder Include="wwwroot\css\Themes\Dark\" />
     <Folder Include="wwwroot\Files\Uploads\" />
     <Folder Include="wwwroot\Logo\" />
   </ItemGroup>

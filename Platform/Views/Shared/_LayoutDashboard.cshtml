@@ -7,17 +7,16 @@
 <!doctype html>
 <html>
 <head>
-    <link href="~/css/Shared/_LayoutDashboard.css" rel="stylesheet" />
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
     <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
-    <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
+    <link href="https://cdn.syncfusion.com/ej2/material.css" id="theme" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="~/js/DataHandlers.js" type="text/javascript"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="~/css/Shared/Light/_LayoutDashboard.css" id="themeAdjustments" rel="stylesheet" />
 
-    
 
 </head>
 <body>
@@ -42,6 +41,11 @@
                                 <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="color: white; border-color:white" id="hideTosat"> Hide All </button>
                             </b>
                         </li>
+                        <li class="header-style float-right support border-left" onclick="ChangeTheme()">
+                            <label for="ChangeTheme" id="themeLabel">Light</label>
+                            <input id="ChangeTheme" type="checkbox"  />
+                        </li>
+
 
                     </ul>
                 </div>
@@ -92,9 +96,12 @@
     </div>
 
     <script>
+    var storage = window.localStorage;
+    
 
     var IsOpen = 0;
-
+    var cThemeToggle = new ejs.buttons.Switch({ checked: false });
+    cThemeToggle.appendTo('#ChangeTheme');
     var data;
     // Sidebar Initialization
     var sidebarMenu = new ej.navigations.Sidebar({
@@ -104,7 +111,13 @@
     });
     sidebarMenu.appendTo('#sidebar-treeview');
     //end of Sidebar initialization
-
+         
+    if (storage.getItem("Theme") !== undefined) {
+        SetTheme(storage.getItem("Theme"));
+    }
+    else {
+        storage.setItem("Theme", false);
+    }
 
     // Toggle the Sidebar
     document.getElementById('hamburger').addEventListener('click', function () {
@@ -113,6 +126,47 @@
     });
     // open new tab
 
+
+    function ChangeTheme(args) {
+         
+        cThemeToggle.click();
+        
+        if (cThemeToggle.checked === true)
+        {
+            $("#themeLabel").html("Dark");
+            document.getElementById('theme').href = "/css/Themes/Dark/fabric-dark.min.css";
+            document.getElementById('themeAdjustments').href = "/css/Shared/Dark/_LayoutDashboard.css";
+            storage.setItem("Theme", true);
+
+
+        }
+        else
+        {
+            $("#themeLabel").html("Light");
+            document.getElementById('theme').href = "/css/Themes/Light/material.min.css";
+            document.getElementById('themeAdjustments').href = "/css/Shared/Light/_LayoutDashboard.css";
+            storage.setItem("Theme", false);
+
+        }
+
+    }
+
+    function SetTheme(type)
+    {
+        if (type === "true") {
+            cThemeToggle.click();
+
+            $("#themeLabel").html("Dark");
+            document.getElementById('theme').href = "/css/Themes/Dark/fabric-dark.min.css";
+            document.getElementById('themeAdjustments').href = "/css/Shared/Dark/_LayoutDashboard.css";
+
+        }
+        else {
+            $("#themeLabel").html("Light");
+            document.getElementById('theme').href = "/css/Themes/Light/material.min.css";
+            document.getElementById('themeAdjustments').href = "/css/Shared/Light/_LayoutDashboard.css";
+        }
+    }
 
 
     function CallUrl(url)
