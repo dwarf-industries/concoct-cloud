@@ -1,11 +1,11 @@
-@{
-    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
-    var Project = ViewData["ProjectId"] as int?;
-}
+@{ Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+                var Project = ViewData["ProjectId"] as int?; }
 
 <div class="row" style="margin-left:10px;">
     <div class="col-md-12">
-        <button id="NewQuery" onclick="CallUrl('/Widget/NewQuery?projectId=@Project')"  class="btn btn-primary e-control e-btn e-lib e-outline e-primary">New Query</button>
-        <button id="QueryBtn"  class="btn btn-primary e-control e-btn e-lib e-outline e-primary">New Folder</button>
-     </div>
+        <button id="NewQuery" onclick="CallUrl('/Widget/NewQuery?projectId=@Project')" class="btn btn-primary e-control e-btn e-lib e-outline e-primary">New Query</button>
+        <button id="QueryBtn" class="btn btn-primary e-control e-btn e-lib e-outline e-primary">New Folder</button>
+    </div>
 </div>
+
+@await Component.InvokeAsync("CodeEditor", null)

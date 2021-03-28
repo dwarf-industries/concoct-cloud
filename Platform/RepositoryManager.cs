@@ -34,7 +34,7 @@ namespace Rokono_Control
             return true;
         }
 
-        public static string CommandOutput(string command, string os, string workingDirectory = null)
+        public static string CommandOutput(string os, string command,  string workingDirectory = null)
         {
             switch(os)
             {

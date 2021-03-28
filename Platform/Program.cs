@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Timers;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Platform.Models;
-using Rokono_Control.DatabaseHandlers;
-using Rokono_Control.DataHandlers;
 using RokonoControl.Models;
 
 namespace Rokono_Control
@@ -34,7 +27,7 @@ namespace Rokono_Control
             System.Console.WriteLine(current);
  
 
-            var result = RepositoryManager.CommandOutput($@"git log", @"D:\RokonoControl\RokonoControl", current);
+            var result = RepositoryManager.CommandOutput(current,$@"git log", @"D:\RokonoControl\RokonoControl");
             CreateWebHostBuilder(args).Build().Run();
         }
         
