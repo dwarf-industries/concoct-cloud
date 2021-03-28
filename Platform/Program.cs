@@ -32,6 +32,9 @@ namespace Rokono_Control
      //       InitCron();
             var current = OS.GetCurrent();
             System.Console.WriteLine(current);
+ 
+
+            var result = RepositoryManager.CommandOutput($@"git log", @"D:\RokonoControl\RokonoControl", current);
             CreateWebHostBuilder(args).Build().Run();
         }
         
@@ -50,6 +53,7 @@ namespace Rokono_Control
                     new ConfigBindingData { Name = "LsFiles.sh", Path = "/home/kristifordevelopment/ShellScripts/RokonoControl/LsFiles.sh"},
                     new ConfigBindingData { Name = "GetGitList.sh", Path = "/home/kristifordevelopment/ShellScripts/RokonoControl/GetGitList.sh"},
                     new ConfigBindingData { Name = "GetCommitFile.sh", Path = "/home/kristifordevelopment/ShellScripts/RokonoControl/GetCommitFile.sh"},
+                    new ConfigBindingData { Name = "GetCommitFile.sh", Path = "/home/kristifordevelopment/ShellScripts/RokonoControl"},
 
                 }
             };
@@ -62,6 +66,7 @@ namespace Rokono_Control
                 logWriter.WriteLine(config);
                 logWriter.Dispose();
             }
+         
             return configuration;
          }
 
