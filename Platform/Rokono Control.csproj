@@ -40,6 +40,7 @@
     <Folder Include="wwwroot\css\Themes\Dark\" />
     <Folder Include="wwwroot\Files\Uploads\" />
     <Folder Include="wwwroot\Logo\" />
+    <Folder Include="wwwroot\Icons\" />
   </ItemGroup>
 
 </Project>

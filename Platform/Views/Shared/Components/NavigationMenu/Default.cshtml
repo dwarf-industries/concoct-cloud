@@ -4,6 +4,13 @@
     var defaultDashboard = ViewData["DefaultDashboard"] as int?;
 }
 
+<style>
+
+
+    .GitIcon {
+        background-image: url(../../../../wwwroot/Icons/Git_icon.svg);
+    }
+</style>
 
 <div class="row" style="margin:0;">
     <div>
@@ -37,14 +44,26 @@
 
             ]
         },
-         {
-            nodeId: '03', nodeText: 'Administration', iconCss: 'fas fa-user-cog',expanded: true,
+        {
+            nodeId: '03', nodeText: 'Repos', iconCss: 'fab fa-git-alt',expanded: true,
             nodeChild: [
-                { nodeId: '03-01', nodeText: 'Manage Accounts', iconCss: 'fas fa-user-shield', link:'/Dashboard/ManageAccounts?id=@ProjectId' },
-                { nodeId: '03-02', nodeText: 'Generate Changelog', iconCss: 'fab fa-pied-piper-square', link:'/Dashboard/ChangelogGenerator?projectId=@ProjectId' },
-                { nodeId: '03-03', nodeText: 'API Key Integations', iconCss: 'fab fa-keycdn', link:'/ApiKeySettings/ProjectApiKeys?projectId=@ProjectId' },
-                { nodeId: '03-04', nodeText: 'Documentation', iconCss: 'fas fa-book', link:'/Documentation/Index?Id=@ProjectId' },
-                { nodeId: '03-05', nodeText: 'Survey Management', iconCss: 'fas fa-thumbtack', link:'/Survey/Index?projectId=@ProjectId' },
+                { nodeId: '03-01', nodeText: 'Files', iconCss: 'far fa-file-code', link:'/Repositories/Index?id=@ProjectId' },
+                { nodeId: '03-02', nodeText: 'Commits', iconCss: 'fas fa-train', link: '/Repositories/Commits?projectId=@ProjectId' },
+                { nodeId: '03-03', nodeText: 'Pushes', iconCss: 'fas fa-upload', link: '/Repositories/Index?projectId=@ProjectId' },
+                { nodeId: '03-04', nodeText: 'Branches', iconCss: 'fas fa-code-branch', link: '/Repositories/Index?projectId=@ProjectId' },
+                { nodeId: '03-05', nodeText: 'Tags', iconCss: 'fas fa-tags', link: '/Repositories/Tags?projectId=@ProjectId' },
+                { nodeId: '03-06', nodeText: 'Pull Requests', iconCss: 'fas fa-smog', link: '/Repositories/PullRequests?projectId=@ProjectId' },
+
+            ]  
+        },
+         {
+            nodeId: '04', nodeText: 'Administration', iconCss: 'fas fa-user-cog',expanded: true,
+            nodeChild: [
+                { nodeId: '04-01', nodeText: 'Manage Accounts', iconCss: 'fas fa-user-shield', link:'/Dashboard/ManageAccounts?id=@ProjectId' },
+                { nodeId: '04-02', nodeText: 'Generate Changelog', iconCss: 'fab fa-pied-piper-square', link:'/Dashboard/ChangelogGenerator?projectId=@ProjectId' },
+                { nodeId: '04-03', nodeText: 'API Key Integations', iconCss: 'fab fa-keycdn', link:'/ApiKeySettings/ProjectApiKeys?projectId=@ProjectId' },
+                { nodeId: '04-04', nodeText: 'Documentation', iconCss: 'fas fa-book', link:'/Documentation/Index?Id=@ProjectId' },
+                { nodeId: '05-05', nodeText: 'Survey Management', iconCss: 'fas fa-thumbtack', link:'/Survey/Index?projectId=@ProjectId' },
             ]
         },
 
