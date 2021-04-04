@@ -1,0 +1,260 @@
+﻿@{
+    ViewData["Title"] = "Files";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var ProjectName = ViewData["ProjectName"] as string;
+    var isEmpty = ViewData["IsEmpty"] as bool?;
+    var emptyresult = isEmpty.Value ? "Is empty. Add Some Code" : ".";
+}
+
+
+<style>
+
+    .bg-icons {
+        font-family: 'e-bg-icons' !important;
+        speak: none;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .e-btngrp-star::before {
+        content: '\e710';
+    }
+
+    @@font-face {
+        font-family: 'e-btn-icons';
+        src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAAKAIAAAwAgT1MvMj1tSwYAAAEoAAAAVmNtYXC2r7csAAABvAAAAGBnbHlmOINpWAAAAjwAABucaGVhZBSIWdcAAADQAAAANmhoZWEIVQQQAAAArAAAACRobXR4PAAAAAAAAYAAAAA8bG9jYS+2OFgAAAIcAAAAIG1heHABIQGvAAABCAAAACBuYW1lDSqeBwAAHdgAAAOlcG9zdOuEFvIAACGAAAABRwABAAAEAAAAAFwEAAAAAAAD+AABAAAAAAAAAAAAAAAAAAAADwABAAAAAQAAR5DPnV8PPPUACwQAAAAAANi5CnEAAAAA2LkKcQAAAAAD+AP4AAAACAACAAAAAAAAAAEAAAAPAaMACAAAAAAAAgAAAAoACgAAAP8AAAAAAAAAAQQAAZAABQAAAokCzAAAAI8CiQLMAAAB6wAyAQgAAAIABQMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUGZFZABA5wDoFAQAAAAAXAQAAAAAAAABAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAgAAAAMAAAAUAAMAAQAAABQABABMAAAACAAIAAIAAOcJ5znoFP//AADnAOc56BL//wAAAAAAAAABAAgAGgAaAAAAAQACAAMABAAFAAYABwAIAAkACgALAAwADQAOAAAAAACOAUIDKARuBRwG5AdsCKgJFgmKCeYLxAx8Dc4ABwAAAAAD1AP0AAIACAANABsAMwBTAGoAAAEjNScVMxEhEQMhESchNzMVMz0BLwYjBREfByE1IREzNSMPBiUPBy8HPwcfBicjFSE1Iy8HKwEPBgOGXT+s/ok+AfSs/rhdID4CAwQFBQYGP/3tAQIDAwUFBgcBV/7IHz8GBgUFAwMCAVcBAgIEBQUGBgcGBQQEAwIBAQIDBAQFBgcGBgUFBAICd0QBOUQDBwgKDAwODwcIBw4ODAsJCAGiXhCs/uYBxv38AZer6qvLBgYFBQQDAQEf/VAGBgUFBAMBAT8CcD8BAQMEBQUGOAYGBQUEAwEBAQEDBAUFBgYHBQYEBAMCAQECAwQEBgUZfn4GDQsKCAcEAwEEBQgJCgwAAAAIAAAAAAPUA/QABAAkACgALAA6AFIAcgCJAAAlIScHJzcfBjsBPwYvBisBDwU3ESERAyERIRMzETMRNS8GIwURHwchNSERMzUjDwYlDwcvBz8HHwYnIxUhNSMvBysBDwYCTgEZRDFehQECAwMFBQYHBgYFBQQCAgEBAgIEBQUGBgcGBQUDAwJ8/ok+AfT+DF0gPgIDBAUFBgY//e0BAgMDBQUGBwFX/sgfPwYGBQUDAwIBVwECAgQFBQYGBwYFBAQDAgEBAgMEBAUGBwYGBQUEAgJ3RAE5RAMHCAoMDA4PBwgHDg4MCwkIeWA6hhAGBgYEBAMCAgMEBAYGBgYGBQUEAwICAwQFBQZI/scBOf6JAbYBdv7IAVgGBgUFBAMBAR/9UAYGBQUEAwEBPwJwPwEBAwQFBQY4BgYFBQQDAQEBAQMEBQUGBgcFBgQEAwIBAQIDBAQGBRl+fgYNCwoIBwQDAQQFCAkKDAAFAAAAAAPUA/QArQEpAWsBiwGiAAABDwQfBTsBPwgzHwUPBCMvBQ8HHwczPwcfCzsBPws1LwQjDwgvBj8DMx8GOwE/Bi8HDwgvCysBDwUnDxEdAR8COwEfARUDDwYjLwQjDwUVHwczPw0XMz8CNS8BKwE/Ch8GPwY1LwYjDwUlER8HITcvBz8YPQEvBiMVITUjDwYlDwcvBz8HHwYnIxUhNSMvBysBDwYC1gQDBQMBAQECAgMDAwMBAQICAgMDBQUDBQUFBwYOHxMLBgQDAwMGBAYGBgUFBAMDAQEBAQMEBQUGBgQFBgwNDw4PFQQHBwgEBAUEBQYFBgcFBgUFBQQFBAMEAgQCAQMCAgMFAgEBAgIDBAQFBgUFBQQGDh4fDQQDAwMFBAUDAwMGBQUEAwIBAQEBAwQFBgYIBAUFCwsNDhEdBQYHBAQFBQUGBgYGBwYGBQUFBAU9CQkJCAgIEA0LCQYDBxEoAwICAQIDMwMCATwJBQYFBwgJBwcHFwcGCQYFBAMCAQEDBQcICgoLBwcHBwcPDw4ODAsLCQg4SQEEAwIBAgNHDA0IBQUGBgcJCQoGBgcQBwYGBwYFBgQDAgECBAUHCBAPCgkKCgkJ/YQBAgIEBQUGBgElLwsJCQcGBAMBAQIFBQcJCQsGHQgJCgwJCgoKCwsLDBESPgIDBAUFBgY//ks/BgYFBQQCAgFXAQICBAUFBgYHBgUFAwMCAQECAwMFBQYHBgYFBQQCAndEATlEAwcICgwNDQ8HCAcPDQwLCQgBswUGDQ4QDQUEAwICAQEZEQgFAwIBAgUHDxJELBcLBAECBAwFAwEBAgMFBgYHBwcHBgYEAwIBAgIICw8REx8OGRUQBgUFBAMDAgEBAgIDBAQFBQYGDg8OBgwCAgEBARoRBwUEAgEBAwYICRNEKSUMAwIDDQcFAQECAwQGBgYIBwcGBQQDAgEBAQEGCQwQFScZFRMHBwcFBQMDAgIBAgIDBASrBwgICQkKFhgXGBkDAwUGAgECAwMDAQEBAgT+7SAQDAgGBAICBBEDAgICAwMFBQcHBgYGBQMCAQECAwMJDA0REhUWGBriAQMFBQYFAjQxFgoIBwUEAwEBAQIDCgMCAQECAwQFBQYGCAYFBAQCAgICAwMFBe/9UAYGBQUEAwEB1AQFBwkJCwsMCwsKCQgHBgUCBBQUFRQODQ0LCwsJCQsJEZ0GBgUFBAMBAX19AQEDBAUFBjgGBgUFBAMBAQEBAwQFBQYGBwUGBAQDAgEBAgMEBAYFGX5+Bg0LCggHBAMBBAUICQoMAAAFAAAAAAPUA/QAVwCxAOMBAwEaAAABOwEfDR0BDw4jLwQPBx8FMz8PLxAFFR8PMycrAS8NPQE/DTsBHwQ/By8EMScjDw4DER8HMzU/DyERNS8FKwEVITUjDwYlDwcvBz8HHwYnIxUhNSMvBysBDwYDIRcKCQkJCAgHBwYFBQQDAgICAgMEBQUGBwcICAkJCQqVdAQGBQYGBQYEBAMCAQECAwRGP64QEA8ODg0MCwoJCAYGBAIBAQIEBgYICQoLDA0ODg8IEF3+QgECBAUHCAkKCwwNDg4PCA9fPxgJCQkJCAgHBwYFBQQDAgICAgMEBQUGBwcICAkJCQmWdgQGBQYGBQUFBAMCAQECAwRIQK4PEA8ODg0MCwoJCAcFBAL7AQIDAwUFBgecAQMEBggJCgwNDg8HEREREwEJAgMEBQUGBj/+Sz8GBgUFAwMCAVcBAgIEBQUGBgcGBQQEAwIBAQIDBAQFBgcGBgUFBAICd0QBOUQDBwgKDAwODwcIBw4ODAsJCAEGAgIDBAUFBgcHCAgJCQkKCQoJCAgIBwcGBgQEAwMBAXAEAgIBAQICBAUFBgYGBgUFRD4BAgQFBwgJCgsMDQ0PDw8QEBAPDg4NDAsKCQgGBgMCAQGdCAgPDw4ODQwLCgkIBwUEAQI/AQMDBAUFBgcHCAgICQoJCgkJCQgIBwcGBQUEAwICcQQDAQEBAQMEBQUGBgYGBQVFPwEDAwYGCAkKCwwNDg4PEAKg/VAGBgUFBAICAUUSEhIQEA8ODQwKCQQHBQQCAdUGBgUFBAMCfX0BAQMEBQUGOAYGBQUEAgIBAQICBAUFBgYHBgUEBAMCAQECAwQEBgUZfX0GDQsKCAcEAwEEBQgJCgwABwAAAAAD1AP0AAQAJAAoACwATgBuAIUAACUhJwcnNx8GOwE/Bi8GKwEPBTcRIREDIREhAREfByERMxE1LwYjFSE1Iw8GJQ8HLwc/Bx8GJyMVITUjLwcrAQ8GAk4BGUQxXoUBAgMDBQUGBwYGBQUEAgIBAQICBAUFBgYHBgUFAwMCfP6JPgH0/gz+SgECAwMFBQYHAVf6AgMEBAYGBj7+Sj8GBgUFAwMCAVcBAgIEBQUGBgcGBQQEAwIBAQIDBAQFBgcGBgUFBAICd0QBOUQDBwgKDAwODwcIBw4ODAsJCHlgOoYQBgYGBAQDAgIDBAQGBgYGBgUFBAMCAgMEBQUGSP7HATn+iQG2AZb9UAYGBQUEAwEBAXcBWAYGBQUEAwEBfX0BAQMEBQUGOAYGBQUEAwEBAQEDBAUFBgYHBQYEBAMCAQECAwQEBgUZfn4GDQsKCAcEAwEEBQgJCgwABgAAAAAD1AP0AK0BKQE3AU8BbwGGAAABDwQfBTsBPwgzHwUPBCMvBQ8HHwczPwcfCzsBPws1LwQjDwgvBj8DMx8GOwE/Bi8HDwgvCysBDwUnDxIfAzsBHwEVAw8GIy8EIw8FFR8HMz8NFzM/AjUvASsBPwofBj8GPQEvBSMPBSczFTM9AS8GIwURHwczNSMRMzUjDwYlDwcvBz8HHwYnIxUhNSMvBysBDwYC1gMEBQMBAQIBAgMDAwMBAgECAgMDBQUDBQUFBwYOHxMLBgQDAwMGBAYGBgUFBAMDAQEBAQMEBQUGBgQFBgwNDw4PFQQHBwgEBAUEBQYFBgcFBgUFBQQEBQMDAwQCAQMCAgMGAQEBAgMCBAQGBQUFBQQGDh4fDQQDAwMFBAUDAwMGBQUDBAIBAQECAgQFBgYIBAUFCwsNDhEeBAYHBAQFBQUGBQcGBwYGBQUFBAU9CQkJCAgIDw4LCQYDBxEoAwIBAQEBAQMzAwIBPAgGBQYHBwkIBwYYBgcJBgQEAwMBAQMFBwgKCgsHBwcHBw8PDg4MDAoJCDlIAQQDAgECA0YLDQgFBQYGCAgJCgYGBxAHBgYHBgYFBAMCAwMGBwgPEAoJCgkKCWkgPgIDBAUFBgY//e0BAgMDBQUGB9q7Hz8GBgUFAwMCAVcBAgIEBQUGBgcGBQQEAwIBAQIDBAQFBgcGBgUFBAICd0QBOUQDBwgKDAwODwcIBw4ODAsJCAGzBQYNDhANBQQDAgIBARkRCAUDAgECBQcPEkQsFwsEAQIEDAUDAQECAwUGBgcHBwcGBgQDAgECAggLDxETHw4ZFRAGBQUEAwMCAQECAgMEBAUFBgYODw4GDAICAQEBGhEHBQQCAQEDBggJE0QpJQwDAgMNBwUBAQIDBAYGBggHBwYFBAMCAQEBAQYJDBAVJxkVEwcHBwUFAwMCAgECAgMEBKsHCAgJCQoWGBcYGQMDBQYCAQIDAwMBAQECBP7tIBAMCAYEAgIEEQMCAgIDAwUFBwcGBgYFAwIBAQIDAwkMDRESFRYYGuIBAwUFBgUCNDEWCggHBQQDAQEBAgMKAwIBAQIDBAUFBgYIBgUEBAICAgIDAwUFzz5eBgYFBQQDAQEf/VAGBgUFBAMBAT4CcT8BAQMEBQUGOAYGBQUEAwEBAQEDBAUFBgYHBQYEBAMCAQECAwQEBgUZfn4GDQsKCAcEAwEEBQgJCgwABgAAAAAD1AP0AAIACAANAC8ATwBmAAABIzUnFTMRIREDIREnIQERHwchETM9AS8GIxUhNSMPBiUPBy8HPwcfBicjFSE1Iy8HKwEPBgOGXT+s/ok+AfSs/rj+SgECAwMFBQYHAVf6AgMEBAYGBj7+Sj8GBgUFAwMCAVcBAgIEBQUGBgcGBQQEAwIBAQIDBAQFBgcGBgUFBAICd0QBOUQDBwgKDAwODwcIBw4ODAsJCAGiXhCs/uYBxv38AZerAQr9UAYGBQUEAwEBAgTLBgYFBQQDAQF9fQEBAwQFBQY4BgYFBQQDAQEBAQMEBQUGBgcFBgQEAwIBAQIDBAQGBRl+fgYNCwoIBwQDAQQFCAkKDAAGAAAAAAPUA/QAVwCxAL8A1wD3AQ4AAAE7AR8NHQEPDiMvAysBDwYfBTM/Dy8QBRUfDzMnKwEvDT0BPw07AR8EPwcvBDEnIw8OATMRMxE1LwYjBREfBzM1IxEzNSMPBiUPBy8HPwcfBicjFSE1Iy8HKwEPBgMhFwoJCQkICAcHBgUFBAMCAgICAwQFBQYHBwgICQkJCpV0BAYFBgYFBQUEAwIBAQIDBEY/rhAQDw4ODQwLCgkIBgYEAgEBAgQGBggJCgsMDQ4ODwgQXf5CAQIEBgYICQoLDA0ODg8ID18/GAkJCQkICAcHBgUFBAMCAgICAwQFBQYHBwgICQkJCZZ2BAYFBgYFBQUEAwIBAQIDBEhArg8QDw4ODQwLCgkIBgYEAgEYID4CAwQFBQYGP/3tAQIDAwUFBgeMbR8/BgYFBQMDAgFXAQICBAUFBgYHBgUEBAMCAQECAwQEBQYHBgYFBQQCAndEATlEAwcICgwMDg8HCAcODgwLCQgBBgICAwQFBQYHBwgICQkJCgkKCQgICAcHBgYEBAMDAQFwBAICAgIEBQUGBgYGBQVEPgECBAUHCAkKCwwNDQ8PDxAQEA8ODg0MCwoJCAYGAwIBAZ0ICA8PDg4NDAsKCQgHBQQBAj8BAwMEBQUGBwcICAgJCgkKCQkJCAgHBwYFBQQDAgJxBAMBAQEBAwQFBQYGBgYFBUU/AQMDBgYICQoLDA0ODg8QAoH+WgHFBgYFBQQDAQEf/VAGBgUFBAICAT8CcT4BAQMEBQUGOAYGBQUEAgIBAQICBAUFBgYHBgUEBAMCAQECAwQEBgUZfX0GDQsKCAcEAwEEBQgJCgwAAAMAAAAAAzgDtQAfAD8AVgAAExEfByERLwcjFSE1Iw8GJRUPBi8GPQE/Bh8GJyMVITUjLwgPB8cBAgMEBAYFBwJSAQIDBAQGBQc+/ko+BwUGBAQDAgFXAgMEBQUGBgYGBgQEAwICAwQEBgYGBgYFBQQDAndEAThEAwYJCgsNDg8HCAcODgwLCQgDGf1RBwUGBAQDAgECzwcFBgQEAwIBfX0BAgMEBAYFOAcFBgQEAwIBAQIDBAQGBQcGBgUFBAMBAQEBAwQFBQYZfX0HDAwJCQYFAgEBAQMGBwkLDAADAAAAAAM4A7UAIwBDAFoAABMRHwchES8HIxUzESERMzUrAQ8FJRUPBi8GPQE/Bh8GJyMVITUjLwgPB8cBAgMEBAYFBwJSAQIDBAQGBQc+H/4MHz4HBQYEBAMCAVcCAwQFBQYGBgYGBAQDAgIDBAQGBgYGBgUFBAMCd0QBOEQDBgkKDAwODwcIBw4ODAsJCAMZ/VEHBQYEBAMCAQLPBwUGBAQDAgE//Y8CcT4CAwQEBgU4BwUGBAQDAgEBAgMEBAYFBwYGBQUEAwEBAQEDBAUFBhl9fQcMDAkJBgUCAQEBAwYHCQsMAAAAAgAAAAADUAOyACcATAAANyERIxUPDyEvDzUjMyMVITUjNS8NKwEPDbACoFQBAQMEBQUHBwgICgkLCgwL/ugLDAoLCQoICAcHBQUEAwEBVPxUAVBUAgIDAwQFBgYGBwcICAgJCQgICAcHBgYGBQQDAwICTgMQcAsMCgsJCggIBwcFBQQDAQEBAQMEBQUHBwgICgkLCgwLcHBwCQgICAcHBgYGBQQDAwICAgIDAwQFBgYGBwcICAgAAAQAAAAAA/gD+ACuASoBdgGgAAABDwQdAR8EOwE/CB8GDwQvBg8GHQEfBj8IHww/CzUvBCsBDwcjLwY/AzMfBjsBPwU9AS8GDwgvDA8GJw8SHwM7AR8BFQMPBiMvBCMPBRUfBzM/DRczPwI1LwIjPwk7AR8FPwcvBiMPBQURFSE3Lwc/GDUjHQEPDiMvDzUjNxUfASMVITUjPwE1Lw0rAQ8NAvcDBAIDAwIBAgMDAwMCAQECAgMEBAUGBQUFBgYNIBMLBgQDAwMGBAYGBgUFBAQCAgIDBAUFBgYEBQYMDQ8PDxUEBwcIBAQFBQUFBgYGBgUGBQQFBAgDAwQCAQMCAgMDAwEBAQMCAwMFBQYFBQUEBg4qFwoEAwMDBQQFAwMDBgUFBAMCAgIDBAUGBggEBQULDAwPER0FBgcEBAUFBQYGBgYHBgYFBgQFBD4JCQkJCAgPDgsJBgMHESkDAgEBAQECAjQCAgJACAYFAwcICQcHBxcHBgoGBAQDAgIBAwUHCQkKCwcHCAcHDw8PDQ0LCwkIOUkBBAMCAQIDRxIJBQUGBgYHCAoKBgYHEAcHBQcGBgUFAwEBAQIEBQcJDxAKCQoKCQr9QQGGLwsJCQcGBQMBAQMEBgcICgsGHQgJCgwKCQoLCwsLDBESP18CAwQGBgcICQoKCwwMDQ38DA0MDAsKCgkIBwYGBAMCAV78AgNEATtEBAECAgMEBQYGBggHCQgJCgoJCgkICQcIBgYGBQQDAgIBsgUGBgcOEA0FBAMDAQEBGREIBQQCAQIDBggQFD4sGAoEAgECBAwFAwEBAgMFBgYHCAcGBwUFAwIBAQEDBwwPERMfDhkVEAYGBQQDAgIBAQEBAQMDAwQLBgYODw4GDAICAQEBGhEHBgMDAQMGBwoURDgaCQIBBAwIBQEBAgMFBQYHBwgGBgYEAwIBAQECBggMEBUoGRUTCAcGBQUEAwIBAQEBAQMDAwWtBwgICQoKFhgYFxkDBAUGAgECAwMDAQEBAgT+3x0PCQQGBAEBBBEDAgEDAgQFBQYIBgYGBQMCAQECAwMJDA4QExQXGBvjAQMFBgYFAQFPHw0KCAcFBAMCAgQJBAIBAQIDBAUGBQcHBgYEBAICAgIDAwUFK/5nINYEBQcJCQsLDAsLCgkICAYEAwMVFBUUDg4MDAsLCQkLCRK9fg0MDAwLCgoJCAgGBQQDAgEBAgMEBQYICAkJCwsLDQwNfh8HDgp+fhEPCQoJCAkHCAYGBgUEAwICAgIDBAUGBgYIBwkICQoABgAAAAAD+AP4AAQAJAAoACwAaQCUAAAlMycHJx8IPwcvBw8GNxEhEQMhESElERUzLwcfBjMhETMRIx0BDw4jLw81IzcVHwEjFSE1Iz8CNS8NKwEPDQJ+/D4rVH4BAQMEBQUGBgcGBQUEAwEBAQEDBAUFBgcGBgUFBAMBff6GPwH4/gj+CCAGBgUFAwQCAQIDAwQEBQUGAZn8XwIDBAYGBwgJCgoLDAwNDfwMDQwMCwoKCQgHBgYEAwIBXvwCA0QBO0QBAwECAgMEBQYGBggHCQgJCgoJCgkICQcIBgYGBQQDAgKGaUCUIAYGBQUEAwEBAQEDBAUFBgYHBgUFBAICAQECAgQFBQZY/sUBO/6GAbl+/mYfAQEDAwQFBQYIBQQEAwICAXoBen4NDAwMCwoKCQgIBgUEAwIBAQIDBAUGCAgJCQsLCw0MDX4fBw4Kfn4DDg8JCgkICQcIBgYGBQQDAgICAgMEBQYGBggHCQgJCgAEAAAAAAP4A/gAVwCxAP4BKQAAATMfDw8OKwEvBA8GHQEfBDM/Dy8PIwUVHw8zJysBLw09AT8NOwEfBD8GPQEvAzEnIw8OAREVMyMvBh8GOwE1Pw8hESMdAQ8OIy8PNSM3FR8BIxUhNSM/Ai8OKwEPDQNDFwoJCggICAgGBgYFBAMCAQEBAQIDBAUGBgYICAgICgkKlnUFBQYFBgYFBQQDAgIDBEk9sRAPDw8ODQwLCgkIBwUEAgEBAgQFBwgJCgsNDQ0PDwgPX/4/AQIEBQcICQoLDA0ODw8ID18/GAkKCQgJBwgGBgYFBAMCAgICAwQFBgYGCAcJCAkKCZd3BQUFBgYGBQUEAwICAwRJQa8QDw8PDg0MCwoJCAcFBAL+xB8FBQUFAwMDAQIDAwQEBAUF3QEDBAYICQsLDQ8PBxEREhIBDF8CAwQGBgcICQoKCwwMDQ38DA0MDAsKCgkIBwYGBAMCAV78AgNEATtEAQMBAQECAwQFBgYGCAgICAoJCgkKCQgJBwgGBgYFBAMCAgEEAQECBAQEBgYHBwgICQkJCgkKCQgJBwgGBgYFBAMCAnAEAwEBAQEDBAUFBgYGBgUFRj0BAgQFBwgJCgsMDQ4PDw8REA8PDw4MDQsKCQgHBQQBAp0JCA8PDw4NDAsKCQgHBQQBAj8CAgMEBQYGBggHCQgJCgoJCgkICQcIBgYGBQQDAgJyBAMBAQEBAwQFBQYGBgYFBUY/AQIEBQcICQoLDQ0NDw8PAYn+Zh8CAgMEBAUFCAQEAwICAkUTEhIQEA8ODQwLCQQHBQQCAfh+DQwNCwsLCQkICAYFBAQBAQEBBAQFBggICQkLCwsNDA1+HwcOCn5+Aw4PCQoJCAkHCAYGBgUEAwICAgIDBAUGBgYICAgICgkAAAASAN4AAQAAAAAAAAABAAAAAQAAAAAAAQAnAAEAAQAAAAAAAgAHACgAAQAAAAAAAwAnAC8AAQAAAAAABAAnAFYAAQAAAAAABQALAH0AAQAAAAAABgAnAIgAAQAAAAAACgAsAK8AAQAAAAAACwASANsAAwABBAkAAAACAO0AAwABBAkAAQBOAO8AAwABBAkAAgAOAT0AAwABBAkAAwBOAUsAAwABBAkABABOAZkAAwABBAkABQAWAecAAwABBAkABgBOAf0AAwABBAkACgBYAksAAwABBAkACwAkAqMgRUoyIFNwbGl0IGJ1dHRvbiBwYXN0ZSBpY29ucyBmb3IgdGhlbWVzUmVndWxhckVKMiBTcGxpdCBidXR0b24gcGFzdGUgaWNvbnMgZm9yIHRoZW1lc0VKMiBTcGxpdCBidXR0b24gcGFzdGUgaWNvbnMgZm9yIHRoZW1lc1ZlcnNpb24gMS4wRUoyIFNwbGl0IGJ1dHRvbiBwYXN0ZSBpY29ucyBmb3IgdGhlbWVzRm9udCBnZW5lcmF0ZWQgdXNpbmcgU3luY2Z1c2lvbiBNZXRybyBTdHVkaW93d3cuc3luY2Z1c2lvbi5jb20AIABFAEoAMgAgAFMAcABsAGkAdAAgAGIAdQB0AHQAbwBuACAAcABhAHMAdABlACAAaQBjAG8AbgBzACAAZgBvAHIAIAB0AGgAZQBtAGUAcwBSAGUAZwB1AGwAYQByAEUASgAyACAAUwBwAGwAaQB0ACAAYgB1AHQAdABvAG4AIABwAGEAcwB0AGUAIABpAGMAbwBuAHMAIABmAG8AcgAgAHQAaABlAG0AZQBzAEUASgAyACAAUwBwAGwAaQB0ACAAYgB1AHQAdABvAG4AIABwAGEAcwB0AGUAIABpAGMAbwBuAHMAIABmAG8AcgAgAHQAaABlAG0AZQBzAFYAZQByAHMAaQBvAG4AIAAxAC4AMABFAEoAMgAgAFMAcABsAGkAdAAgAGIAdQB0AHQAbwBuACAAcABhAHMAdABlACAAaQBjAG8AbgBzACAAZgBvAHIAIAB0AGgAZQBtAGUAcwBGAG8AbgB0ACAAZwBlAG4AZQByAGEAdABlAGQAIAB1AHMAaQBuAGcAIABTAHkAbgBjAGYAdQBzAGkAbwBuACAATQBlAHQAcgBvACAAUwB0AHUAZABpAG8AdwB3AHcALgBzAHkAbgBjAGYAdQBzAGkAbwBuAC4AYwBvAG0AAAAAAgAAAAAAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAQIBAwEEAQUBBgEHAQgBCQEKAQsBDAENAQ4BDwEQAA5QYXN0ZV9NYXRlcmlhbBVQYXN0ZVNwZWNpYWxfTWF0ZXJpYWwWUGFzdGVGb3JtdWxhX0Jvb3RzdHJhcBhQYXN0ZUh5cGVybGlua19Cb290c3RyYXAWUGFzdGVTcGVjaWFsX0Jvb3RzdHJhcBVQYXN0ZUZvcm11bGFfTWF0ZXJpYWwPUGFzdGVfQm9vdHN0cmFwF1Bhc3RlSHlwZXJsaW5rX01hdGVyaWFsE1Bhc3RlTWFpbl9Cb290c3RyYXASUGFzdGVNYWluX01hdGVyaWFsBVBhc3RlDlBhc3RlQXNGb3JtdWxhDFBhc3RlU3BlY2lhbBBQYXN0ZUFzSHlwZXJsaW5rAAAA) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    .e-btn-icons {
+        font-family: 'e-btn-icons';
+        font-weight: normal;
+    }
+
+    .e-paste-special::before {
+        content: '\e701';
+    }
+
+    .innerRowFlex {
+        display: flex;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .NoMarginBox {
+        padding: 0;
+        margin: 0;
+    }
+
+    #label_cloneLinkBox {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    #cloneLinkBox {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .e-float-input e-control-wrapper e-outline {
+        padding: 0px;
+        margin: 0px;
+    }
+</style>
+
+<div class="row">
+    <h2 style="margin-left: 18px;">@ProjectName@emptyresult</h2>
+</div>
+<div class="row  card-layout" style="margin-bottom: 10px;">
+    <div class="col-md-12">
+        <!-- Basic Card Layout  -->
+        <div tabindex="0" class="e-card" id="basic_card" style="padding: 22px;">
+            <div class="e-card-header">
+                <h4> Clone to your computer</h4>
+            </div>
+            <div class="e-card-content">
+
+                <div class="page-title-subheading">
+                    <div class="innerRowFlex" style="height:45px;">
+                        <button id="normalbtn" class="e-control e-btn e-lib" onclick="Switch(true)">HTTP</button>
+                        <button id="normalbtn" class="e-control e-btn e-lib" onclick="Switch(false)">SSH</button>
+                        <input id="cloneLinkBox" class="NoMarginBox" />
+                        <button id="copy" class="e-btn-icons e-paste-special"></button>
+                        <h2 class="NoMarginBox">OR</h2>
+                        <button id="cloneBtn"> Clone in </button>
+
+                    </div>
+
+                </div>
+                <div class="innerRowFlex" style="padding-top:20px;width:100%;">
+                    <div id="generateHolder" style="width:30%;">
+                        <button id="normalbtn" class="e-control e-btn e-lib" onclick="GenerateCredentials()">Generate Git Credentials</button>
+                    </div>
+                    <div id="inputHolder" style="display:none; width:30%;">
+                        <div class="innerRowFlex" style="padding:0;margin:0;">
+                            <input id="usernameBox" class="NoMarginBox" />
+                            <button id="copy" class="e-btn-icons e-paste-special"></button>
+                        </div>
+                        <div class="innerRowFlex" style="padding:0;margin:0;">
+                            <input id="passwordBox" class="NoMarginBox" />
+                            <button id="copy" class="e-btn-icons e-paste-special"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row  card-layout" style="margin-bottom: 10px;">
+    <div class="col-md-12">
+        <!-- Basic Card Layout  -->
+        <div tabindex="0" class="e-card" id="basic_card" style="padding: 22px;">
+            <div class="e-card-header">
+                <h4> Push To Origin</h4>
+            </div>
+            <div class="e-card-content">
+                <div class="innerRowFlex" style="height:45px;">
+
+                    <button id="normalbtn" class="e-control e-btn e-lib" onclick="Switch(true)">HTTP</button>
+                    <button id="normalbtn" class="e-control e-btn e-lib" onclick="Switch(false)">SSH</button>
+                 </div>
+                <div class="innerRowFlex" style="width:100%; padding-top:20px;">
+                    <div class="multiline-row" style="width:30%">
+                        <textarea id="pushText" rows='2' required></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row  card-layout" style="margin-bottom: 10px;">
+<div class="col-md-12">
+    <!-- Basic Card Layout  -->
+    <div tabindex="0" class="e-card" id="basic_card" style="padding: 22px;">
+        <div class="e-card-header">
+            <h4> Import a repository</h4>
+        </div>
+        <div class="e-card-content">
+            <div class="innerRowFlex" style="width:100%; ">
+                <button id="normalbtn" class="e-control e-btn e-lib">Import</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    // Card 1 Initialization
+    var cloneLinkBox = new ej.inputs.TextBox({
+        placeholder: 'Clone Repository',
+        cssClass: 'e-outline',
+        floatLabelType: 'Auto'
+    });
+    cloneLinkBox.appendTo('#cloneLinkBox');
+    var usernameBox = new ej.inputs.TextBox({
+        placeholder: 'Username',
+        cssClass: 'e-outline',
+        floatLabelType: 'Always'
+    });
+    usernameBox.appendTo('#usernameBox');
+    var passwordBox = new ej.inputs.TextBox({
+        placeholder: 'Password',
+        cssClass: 'e-outline',
+        floatLabelType: 'Always'
+    });
+    passwordBox.appendTo('#passwordBox');
+
+    var items = [
+        {
+            text: 'Clone in VS Code',
+            iconCss: 'e-btn-icons e-paste-special'
+        },
+        {
+            text: 'Android Studio',
+            iconCss: 'e-btn-icons e-paste-special'
+        },
+        {
+            text: 'CLion',
+            iconCss: 'e-btn-icons e-paste-special'
+        },
+        {
+            text: 'DataLink',
+            iconCss: 'e-btn-icons e-paste-special'
+        },
+        {
+            text: 'Eclipse',
+            iconCss: 'e-btn-icons e-paste-special'
+        },
+        {
+            text: 'Intellij IDEA',
+            iconCss: 'e-btn-icons e-paste-special'
+        },
+        {
+            text: 'PhpStorm',
+            iconCss: 'e-btn-icons e-paste-special'
+        },
+        {
+            text: 'PyCharm',
+            iconCss: 'e-btn-icons e-paste-special'
+        },
+        {
+            text: 'RubyMine',
+            iconCss: 'e-btn-icons e-paste-special'
+        },
+        {
+            text: 'Tower',
+            iconCss: 'e-btn-icons e-paste-special'
+        },
+        {
+            text: 'Visual Studio',
+            iconCss: 'e-btn-icons e-paste-special'
+        },
+        {
+            text: 'VS Code',
+            iconCss: 'e-btn-icons e-paste-special'
+        },
+        {
+            text: 'WebStorm',
+            iconCss: 'e-btn-icons e-paste-special'
+        }
+    ];
+
+    var cloneBtn = new ej.splitbuttons.SplitButton({ items: items, content: 'Vs Code', iconCss: 'e-btn-icons e-paste-special' });
+    cloneBtn.appendTo('#cloneBtn');
+
+
+    var pushText = new ej.inputs.TextBox({
+        placeholder: 'Push Repository Address',
+        floatLabelType: 'Always'
+    });
+    pushText.appendTo('#pushText');
+
+    function GenerateCredentials() {
+        //Implement query to take the data
+
+        $("#usernameBox").val("test name");
+        $("#passwordBox").val("test");
+
+        $("#generateHolder").hide();
+        $("#inputHolder").show();
+    }
+
+    function Switch(networkProtocol) {
+        //Implement switching between network protocols for cloning/pushing
+    }
+
+
+</script>
