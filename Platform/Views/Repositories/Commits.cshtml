@@ -1,0 +1,286 @@
+﻿<style>
+    .fabric .empimg {
+        background-color: #0078d6;
+    }
+
+    .material .empimg {
+        background-color: #e3165b;
+    }
+
+    .highcontrast .empimg {
+        background-color: #ffd939;
+    }
+
+    _:-ms-fullscreen, :root .highcontrast .e-userimg.sf-icon-Male::before,
+    _:-ms-fullscreen, :root .highcontrast .e-userimg.sf-icon-FeMale::before {
+        color: black;
+    }
+
+    .highcontrast .e-userimg.sf-icon-Male::before,
+    .highcontrast .e-userimg.sf-icon-FeMale::before {
+        color: black;
+    }
+
+    .bootstrap .empimg {
+        background-color: #0078d6;
+    }
+
+    .bootstrap4 .empimg {
+        background-color: #0078d6;
+    }
+
+    #Emptext {
+        top: -12px;
+        left: 41px;
+        position: relative;
+    }
+
+    .e-grid.e-rtl #Emptext {
+        top: -12px;
+        left: -41px;
+        position: relative;
+    }
+
+    .empimg {
+        height: 27px;
+        width: 29px;
+        border-radius: 14px;
+    }
+
+
+    .e-userimg.sf-icon-Male::before,
+    .e-userimg.sf-icon-FeMale::before {
+        font-size: 13px;
+    }
+
+    .e-userimg.sf-icon-Male, .e-userimg.sf-icon-FeMale {
+        margin: 0px 8px;
+        line-height: 26px;
+        color: white;
+        font-size: 13px;
+    }
+
+        .e-userimg.sf-icon-Male::before {
+            content: '\e700';
+        }
+
+        .e-userimg.sf-icon-FeMale::before {
+            content: '\e701';
+        }
+
+
+    .highcontrast .e-grid td.e-rowcell.e-selectionbackground.e-active {
+        background-color: transparent;
+        color: white;
+    }
+
+    .e-bigger .e-grid .statustxt {
+        position: relative;
+        top: -2px;
+    }
+
+    .rating .star {
+        font-size: 132%;
+        color: lightgrey;
+    }
+
+        .rating .star.checked {
+            color: #ffa600;
+        }
+
+        .rating .star:before {
+            content: '★';
+        }
+
+    td.e-rowcell.e-selectionbackground.e-active {
+        background-color: transparent;
+    }
+
+    .e-image {
+        height: 13px;
+        width: 14px;
+    }
+
+    td.e-rowcell .statustxt.e-activecolor {
+        color: #00cc00;
+        position: relative;
+        top: 9px;
+    }
+
+    td.e-rowcell .statustxt.e-inactivecolor {
+        color: #e60000;
+        position: relative;
+        top: 9px;
+    }
+
+    .statustemp.e-inactivecolor {
+        background-color: #ffd7cc;
+        width: 64px;
+    }
+
+    .statustemp.e-activecolor {
+        background-color: #ccffcc;
+        width: 57px;
+    }
+
+    .statustxt.e-activecolor {
+        color: #00cc00;
+    }
+
+    .statustxt.e-inactivecolor {
+        color: #e60000;
+    }
+
+    .statustemp {
+        position: relative;
+        height: 19px;
+        border-radius: 5px;
+        text-align: center
+    }
+
+    .highcontrast #msg {
+        color: #FFFFFF
+    }
+
+    #msg {
+        font-family: "Segoe UI", "GeezaPro", "DejaVu Serif", sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        opacity: 0.95;
+        color: #333;
+        float: right;
+        margin-top: 3px;
+    }
+
+    @@media only screen and (max-width: 370px) {
+        #msg {
+            float: left;
+            margin-top: 3px;
+        }
+
+        #Grid {
+            margin-top: 36px;
+        }
+    }
+
+    #samplecontainer {
+        padding-top: 5px;
+    }
+
+    #myProgress {
+        position: relative;
+        height: 18px;
+        width: 10em;
+        text-align: left;
+        background-color: white;
+    }
+
+    .highcontrast .e-grid #myProgress {
+        background-color: black;
+    }
+
+    #myBar {
+        position: absolute;
+        width: 10%;
+        height: 100%;
+        background-color: #00b300;
+    }
+
+        #myBar.progressdisable {
+            background-color: #df2222;
+        }
+
+    #label {
+        position: relative;
+        left: 10px;
+        line-height: 18px;
+        font-size: 10px;
+        color: white;
+    }
+</style>
+
+<div class="row">
+    <div class="control-section">
+        <div class='control-wrapper'>
+            <div style='padding-top:75px;'>
+                <input type="text" tabindex="1" id='branches' />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div>
+        <div class="control-section">
+            <div class="content-wrapper">
+                <div id="commitsGrid"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+
+
+<script>
+
+    // initialize ComboBox component
+    var branches = new ej.dropdowns.ComboBox({
+        // set the local data to dataSource property
+        dataSource: null,//window.ddCountryData, !!! Look into syncfusion for details on the binding model
+        // map the appropriate columns to fields property
+        fields: { text: 'Name', value: 'Code' },
+        // set the placeholder to ComboBox input element
+        placeholder: 'Select a country',
+        // set the height of the popup element
+        popupHeight: '270px',
+        // set true for enable the filtering support.
+        allowFiltering: true,
+        // bind the filtering event
+        filtering: function (e) {
+            var combobox_query = new ej.data.Query();
+            // frame the query based on search string with filter type.
+            combobox_query = (e.text !== '') ? combobox_query.where('Name', 'startswith', e.text, true) : combobox_query;
+            // pass the filter data source, filter query to updateData method.
+            e.updateData(window.ddCountryData, combobox_query);
+        }
+    });
+    branches.appendTo('#branches');
+    //Todo implement query to get the data for the grid.
+    var commitsGrid = new ej.grids.Grid({
+        dataSource: window.getTradeData(1000),
+        allowSelection: true,
+        allowFiltering: true,
+        allowSorting: true,
+        enableVirtualization: true,
+        filterSettings: { type: 'Menu' },
+        enableHover: false,
+        height: "100%",
+        rowHeight: 38,
+        columns: [
+            { field: 'CommitId', visible: false, headerText: 'Commit Id', isPrimaryKey: true, width: '130' },
+            {
+                field: 'Employees', headerText: 'Employee Name', width: '200', clipMode: 'EllipsisWithTooltip',
+                template: '#empTemplate',
+                filter: { type: 'CheckBox' }
+            },
+            { field: 'CommitDate', headerText: 'Date', width: '170', },
+            { field: 'Mail', headerText: 'Mail', width: '230', filter: { type: 'Menu' } },
+            {
+                field: 'Location', width: '140', headerText: 'Location', filter: { type: 'CheckBox' },
+                template: '#coltemplate'
+            },
+            { field: 'CommitTitle', headerText: 'Commit Title', width: '240' },
+            { field: 'PullRequest', headerText: 'Pull Requst', width: '240' },
+
+        ],
+        queryCellInfo: queryCellInfo,
+        dataBound: startTimer,
+        actionComplete: complete
+    });
+ 
+    commitsGrid.appendTo('#commitsGrid');
+ 
+    
+    
+</script>
