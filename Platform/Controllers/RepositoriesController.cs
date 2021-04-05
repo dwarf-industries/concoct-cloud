@@ -44,5 +44,20 @@ namespace Rokono_Control.Controllers
             ViewData["IsEmpty"] = true;
             return View();
         }
+
+
+        public IActionResult Commits(int id)
+        {
+            using (var context = new DatabaseController(Context, Configuration))
+            {
+                ViewData["ProjectId"] = id;
+                ViewData["ProjectName"] = context.GetProjectName(id);
+            }
+            using (var context = new WorkItemsContext(Context, Configuration))
+                ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
+
+            ViewData["IsEmpty"] = true;
+            return View();
+        }
     }
 }

@@ -1,4 +1,11 @@
-﻿<style>
+﻿@{
+    ViewData["Title"] = "Project Commits";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var ProjectName = ViewData["ProjectName"] as string;
+}
+
+
+<style>
     .fabric .empimg {
         background-color: #0078d6;
     }
@@ -197,13 +204,18 @@
         font-size: 10px;
         color: white;
     }
+    .displayFlex{
+        width:100%;
+        display:flex;
+    }
 </style>
 
 <div class="row">
     <div class="control-section">
-        <div class='control-wrapper'>
-            <div style='padding-top:75px;'>
+        <div class='control-wrapper' style="padding: 1%;">
+            <div style='width: 10%;' class="displayFlex">
                 <input type="text" tabindex="1" id='branches' />
+
             </div>
         </div>
     </div>
@@ -219,7 +231,7 @@
     </div>
 </div>
 
- 
+
 
 
 <script>
@@ -246,9 +258,43 @@
         }
     });
     branches.appendTo('#branches');
+
+    var dsSource = [
+        {
+            CommitId: "2fgrc23",
+            Employees:"Kristifor",
+            CommitDate: "24/3/2021",
+            Mail: "Kristiformilchev615@gmail.com",
+            CommitTitle: "Resolving a bug with the carosouel widget",
+            PullRequest: "#234"
+        },
+        {
+            CommitId: "2fgrc23",
+            Employees: "Kristifor",
+            CommitDate: "24/3/2021",
+            Mail: "Kristiformilchev615@gmail.com",
+            CommitTitle: "Resolving a bug with the carosouel widget",
+            PullRequest: "#234"
+        },
+        {
+            CommitId: "2fgrc23",
+            Employees: "George",
+            CommitDate: "24/3/2021",
+            Mail: "Kristiformilchev615@gmail.com",
+            CommitTitle: "Resolving a bug with the carosouel widget",
+            PullRequest: "#234"
+        },
+        {
+            CommitId: "2fgrc23",
+            Employees: "Stevan",
+            CommitDate: "24/3/2021",
+            Mail: "Kristiformilchev615@gmail.com",
+            CommitTitle: "Resolving a bug with the carosouel widget",
+            PullRequest: "#234"
+        }];
     //Todo implement query to get the data for the grid.
     var commitsGrid = new ej.grids.Grid({
-        dataSource: window.getTradeData(1000),
+        dataSource: dsSource,//window.getTradeData(1000),
         allowSelection: true,
         allowFiltering: true,
         allowSorting: true,
@@ -258,29 +304,24 @@
         height: "100%",
         rowHeight: 38,
         columns: [
-            { field: 'CommitId', visible: false, headerText: 'Commit Id', isPrimaryKey: true, width: '130' },
+            { field: 'CommitId', headerText: 'Commit Id', width: '130' },
             {
                 field: 'Employees', headerText: 'Employee Name', width: '200', clipMode: 'EllipsisWithTooltip',
-                template: '#empTemplate',
                 filter: { type: 'CheckBox' }
             },
             { field: 'CommitDate', headerText: 'Date', width: '170', },
             { field: 'Mail', headerText: 'Mail', width: '230', filter: { type: 'Menu' } },
-            {
-                field: 'Location', width: '140', headerText: 'Location', filter: { type: 'CheckBox' },
-                template: '#coltemplate'
-            },
             { field: 'CommitTitle', headerText: 'Commit Title', width: '240' },
             { field: 'PullRequest', headerText: 'Pull Requst', width: '240' },
 
         ],
-        queryCellInfo: queryCellInfo,
-        dataBound: startTimer,
-        actionComplete: complete
+   //     queryCellInfo: queryCellInfo,
+        //dataBound: startTimer,
+     //   actionComplete: complete
     });
- 
+
     commitsGrid.appendTo('#commitsGrid');
- 
-    
-    
+
+
+
 </script>
