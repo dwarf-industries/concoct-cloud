@@ -1,0 +1,346 @@
+﻿@{
+    ViewData["Title"] = "Project Commits";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var ProjectName = ViewData["ProjectName"] as string;
+    var Id = ViewData["ProjectId"] as int?;
+    var defaultBranch = ViewData["Branch"] as string;
+}
+
+
+<style>
+    .fabric .empimg {
+        background-color: #0078d6;
+    }
+
+    .material .empimg {
+        background-color: #e3165b;
+    }
+
+    .highcontrast .empimg {
+        background-color: #ffd939;
+    }
+
+    _:-ms-fullscreen, :root .highcontrast .e-userimg.sf-icon-Male::before,
+    _:-ms-fullscreen, :root .highcontrast .e-userimg.sf-icon-FeMale::before {
+        color: black;
+    }
+
+    .highcontrast .e-userimg.sf-icon-Male::before,
+    .highcontrast .e-userimg.sf-icon-FeMale::before {
+        color: black;
+    }
+
+    .bootstrap .empimg {
+        background-color: #0078d6;
+    }
+
+    .bootstrap4 .empimg {
+        background-color: #0078d6;
+    }
+
+    #Emptext {
+        top: -12px;
+        left: 41px;
+        position: relative;
+    }
+
+    .e-grid.e-rtl #Emptext {
+        top: -12px;
+        left: -41px;
+        position: relative;
+    }
+
+    .empimg {
+        height: 27px;
+        width: 29px;
+        border-radius: 14px;
+    }
+
+
+    .e-userimg.sf-icon-Male::before,
+    .e-userimg.sf-icon-FeMale::before {
+        font-size: 13px;
+    }
+
+    .e-userimg.sf-icon-Male, .e-userimg.sf-icon-FeMale {
+        margin: 0px 8px;
+        line-height: 26px;
+        color: white;
+        font-size: 13px;
+    }
+
+        .e-userimg.sf-icon-Male::before {
+            content: '\e700';
+        }
+
+        .e-userimg.sf-icon-FeMale::before {
+            content: '\e701';
+        }
+
+
+    .highcontrast .e-grid td.e-rowcell.e-selectionbackground.e-active {
+        background-color: transparent;
+        color: white;
+    }
+
+    .e-bigger .e-grid .statustxt {
+        position: relative;
+        top: -2px;
+    }
+
+    .rating .star {
+        font-size: 132%;
+        color: lightgrey;
+    }
+
+        .rating .star.checked {
+            color: #ffa600;
+        }
+
+        .rating .star:before {
+            content: '★';
+        }
+
+    td.e-rowcell.e-selectionbackground.e-active {
+        background-color: transparent;
+    }
+
+    .e-image {
+        height: 13px;
+        width: 14px;
+    }
+
+    td.e-rowcell .statustxt.e-activecolor {
+        color: #00cc00;
+        position: relative;
+        top: 9px;
+    }
+
+    td.e-rowcell .statustxt.e-inactivecolor {
+        color: #e60000;
+        position: relative;
+        top: 9px;
+    }
+
+    .statustemp.e-inactivecolor {
+        background-color: #ffd7cc;
+        width: 64px;
+    }
+
+    .statustemp.e-activecolor {
+        background-color: #ccffcc;
+        width: 57px;
+    }
+
+    .statustxt.e-activecolor {
+        color: #00cc00;
+    }
+
+    .statustxt.e-inactivecolor {
+        color: #e60000;
+    }
+
+    .statustemp {
+        position: relative;
+        height: 19px;
+        border-radius: 5px;
+        text-align: center
+    }
+
+    .highcontrast #msg {
+        color: #FFFFFF
+    }
+
+    #msg {
+        font-family: "Segoe UI", "GeezaPro", "DejaVu Serif", sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        opacity: 0.95;
+        color: #333;
+        float: right;
+        margin-top: 3px;
+    }
+
+    @@media only screen and (max-width: 370px) {
+        #msg {
+            float: left;
+            margin-top: 3px;
+        }
+
+        #Grid {
+            margin-top: 36px;
+        }
+    }
+
+    #samplecontainer {
+        padding-top: 5px;
+    }
+
+    #myProgress {
+        position: relative;
+        height: 18px;
+        width: 10em;
+        text-align: left;
+        background-color: white;
+    }
+
+    .highcontrast .e-grid #myProgress {
+        background-color: black;
+    }
+
+    #myBar {
+        position: absolute;
+        width: 10%;
+        height: 100%;
+        background-color: #00b300;
+    }
+
+        #myBar.progressdisable {
+            background-color: #df2222;
+        }
+
+    #label {
+        position: relative;
+        left: 10px;
+        line-height: 18px;
+        font-size: 10px;
+        color: white;
+    }
+    .displayFlex{
+        width:100%;
+        display:flex;
+    }
+</style>
+
+<div class="row">
+    <div class="control-section">
+        <div class='control-wrapper' style="padding: 1%;">
+            <div style='width: 27%;' class="displayFlex">
+                <input type="text" tabindex="1" id='branches' />
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div>
+        <div class="control-section">
+            <div class="content-wrapper">
+                <div id="commitsGrid"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    var branch = "@defaultBranch";
+    var commitsGrid;
+    // initialize ComboBox component
+    var branches;
+    GetCommits(branch);
+
+     $.ajax({
+            type: 'GET',
+            url: '/Repositories/GetBranchesByProjectId?projectId=@Id',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+         success: function (response) {
+                branches = new ej.dropdowns.ComboBox({
+                    // set the local data to dataSource property
+                    dataSource: response,//window.ddCountryData, !!! Look into syncfusion for details on the binding model
+                    // map the appropriate columns to fields property
+                    fields: { text: 'branchName', value: 'id' },
+                    // set the placeholder to ComboBox input element
+                    placeholder: 'Select Branch',
+                    select:BranchSelected,
+                    // set the height of the popup element
+                    popupHeight: '270px',
+                    // set true for enable the filtering support.
+                    allowFiltering: true,
+                    // bind the filtering event
+                    filtering: function (e) {
+                        var combobox_query = new ej.data.Query();
+                        // frame the query based on search string with filter type.
+                        combobox_query = (e.text !== '') ? combobox_query.where('branchName', 'contains', e.text, true) : combobox_query;
+                        // pass the filter data source, filter query to updateData method.
+                        e.updateData(response, combobox_query);
+                    }
+                });
+                branches.appendTo('#branches');
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr);
+            }
+        });
+
+
+    function GetCommits(currentBranch) {
+
+            var getCommitDTO =
+            {
+                "ProjectId": @Id,
+                "Phase": currentBranch
+            }
+
+            $.ajax({
+            type: 'POST',
+            url: '/Repositories/GetCommitsForBranch',
+            data: JSON.stringify(getCommitDTO),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+
+                if (commitsGrid !== undefined) {
+                    commitsGrid.dataSource = response;
+                    commitsGrid.refresh();
+                }
+                else {
+                    commitsGrid = new ej.grids.Grid({
+                        dataSource: response,//window.getTradeData(1000),
+                        allowSelection: true,
+                        allowFiltering: true,
+                        allowSorting: true,
+                        // enableVirtualization: true,
+                        filterSettings: { type: 'Menu' },
+                        enableHover: true,
+                        height: "80vh",
+                        rowHeight: 38,
+                        columns: [
+                            { field: 'id', headerText: 'Commit Id', width: '130' },
+                            {
+                                field: 'name', headerText: 'Employee Name', width: '200', clipMode: 'EllipsisWithTooltip',
+                                filter: { type: 'CheckBox' }
+                            },
+                            { field: 'date', headerText: 'Date', width: '170', },
+                            { field: 'email', headerText: 'Mail', width: '230', filter: { type: 'Menu' } },
+                            { field: 'subject', headerText: 'Commit Title', width: '240' },
+                            { field: 'signature', headerText: 'Signature', width: '240' },
+
+                        ],
+
+                    });
+
+                    commitsGrid.appendTo('#commitsGrid');
+
+                }
+             
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    
+
+    }
+
+    function BranchSelected(args) {
+        console.log(args);
+        //console.log($("#branches").val());
+        GetCommits(args.itemData.branchName);
+    }
+</script>
