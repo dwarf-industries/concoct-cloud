@@ -112,8 +112,7 @@
                                             @foreach (var state in activities)
                                             {
 
-                                <option value="@state.Id">@state.ActivityName</option>
-}
+                                <option value="@state.Id">@state.ActivityName</option>}
                                         </select>
 
 
@@ -129,8 +128,7 @@
                                             @foreach (var reason in reasons)
                                             {
 
-                                <option value="@reason.Id">@reason.ReasonName</option>
-}
+                                <option value="@reason.Id">@reason.ReasonName</option>}
                                         </select>
                                     </div>
                                 </div>
@@ -145,8 +143,7 @@
                                         <select class="form-control-sm form-control" id="ItemArea" value="@WorkItemData.AreaId">
                                             @foreach (var area in areas)
                                             {
-                                <option value="@area.Id">@area.AreaName</option>
-}
+                                <option value="@area.Id">@area.AreaName</option>}
                                         </select>
                                     </div>
                                 </div>
@@ -159,8 +156,7 @@
                                             @foreach (var iteration in iterations)
                                             {
 
-                                <option value="@iteration.Id">@iteration.IterationName</option>
-}
+                                <option value="@iteration.Id">@iteration.IterationName</option>}
                                         </select>
                                     </div>
                                 </div>
@@ -236,303 +232,289 @@
                                                         {
 
 
-                                        <option value="@priority.Id">@priority.PriorityName</option>
-}
-                                                    </select>
-                                                </div>
-                                                                <div class="row">
-                                                                    <p>Severity</p>
-                                                                    <select class="form-control-sm form-control" id="ItemSeverity" value="@WorkItemData.Severity">
-                                                                        @foreach (var severity in severities)
-                                                                        {
+<option value="@priority.Id">@priority.PriorityName</option>}
+</select>
+</div>
+<div class="row">
+<p>Severity</p>
+<select class="form-control-sm form-control" id="ItemSeverity" value="@WorkItemData.Severity">
+@foreach (var severity in severities)
+{
 
-                                                        <option value="@severity.Id">@severity.SeverityName</option>
-}
-                                                                    </select>
-                                                                </div>
-                                                                                <div class="row">
-                                                                                    <p>Activity</p>
-                                                                                    <select class="form-control-sm form-control" id="ItemActivity" Value="@WorkItemData.Activity">
-                                                                                        @foreach (var activity in activities)
-                                                                                        {
+<option value="@severity.Id">@severity.SeverityName</option>}
+</select>
+</div>
+<div class="row">
+<p>Activity</p>
+<select class="form-control-sm form-control" id="ItemActivity" Value="@WorkItemData.Activity">
+@foreach (var activity in activities)
+{
 
-                                                                        <option value="@activity.Id">@activity.ActivityName</option>
-}
-                                                                                    </select>
-                                                                                </div>
-                                                                                                <div class="row">
-                                                                                                    <h4>Efford Hours</h4>
-                                                                                                    <hr />
-                                                                                                </div>
-                                                                                                                <div class="row">
-                                                                                                                    <div class=" form-group" style="width:100%">
-                                                                                                                        <label for="OriginalEstimate">Original Estimate</label>
-                                                                                                                        <input name="OriginalEstimate" id="OriginalEstimate" value="@WorkItemData.OriginEstitame" placeholder="OriginalEstimate" style="width:100%" class="form-control-sm">
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                                                <div class="row">
-                                                                                                                                    <div class=" form-group" style="width:100%">
-                                                                                                                                        <label for="Remaining">Remaining</label>
-                                                                                                                                        <input name="Remaining" id="ItemRemaining" placeholder="Remaining" value="@WorkItemData.Remaining" style="width:100%" class="form-control-sm">
-                                                                                                                                    </div>
-                                                                                                                                </div>
-                                                                                                                                                <div class="row">
-                                                                                                                                                    <div class=" form-group" style="width:100%">
-                                                                                                                                                        <label for="Compleated">Compleated</label>
-                                                                                                                                                        <input name="Compleated" id="ItemCompleated" placeholder="Compleated" value="@WorkItemData.Compleated" style="width:100%" class="form-control-sm">
-                                                                                                                                                    </div>
-                                                                                                                                                </div> }
-                                                                                                                                            else if (WorkItemType == 2)
-                                                                                                                                            {
-                                                                                                                                <div class="row">
-                                                                                                                                    <h4>Status</h4>
-                                                                                                                                    <hr />
-                                                                                                                                </div>
-                                                                                                                                                <div class="row">
-                                                                                                                                                    <p>Start Date</p>
-                                                                                                                                                    <div id="container">
-                                                                                                                                                        <input id="StartDate" type="text" type="text">
-                                                                                                                                                    </div>
-                                                                                                                                                </div>
-                                                                                                                                                                <div class="row">
-                                                                                                                                                                    <p>End Date</p>
-                                                                                                                                                                    <div id="container">
-                                                                                                                                                                        <input id="EndDate" type="text" type="text">
-                                                                                                                                                                    </div>
-                                                                                                                                                                </div>
-                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                    <h4>Details</h4>
-                                                                                                                                                                                    <hr />
-                                                                                                                                                                                </div>
-                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                    <p>Priority</p>
-                                                                                                                                                                                                    <select class="form-control-sm form-control" id="ItemPriority" value="@WorkItemData.PriorityId">
-                                                                                                                                                                                                        @foreach (var priority in priorities)
-                                                                                                                                                                                                        {
+<option value="@activity.Id">@activity.ActivityName</option>}
+</select>
+</div>
+<div class="row">
+<h4>Efford Hours</h4>
+<hr />
+</div>
+<div class="row">
+<div class=" form-group" style="width:100%">
+<label for="OriginalEstimate">Original Estimate</label>
+<input name="OriginalEstimate" id="OriginalEstimate" value="@WorkItemData.OriginEstitame" placeholder="OriginalEstimate" style="width:100%" class="form-control-sm">
+</div>
+</div>
+<div class="row">
+<div class=" form-group" style="width:100%">
+<label for="Remaining">Remaining</label>
+<input name="Remaining" id="ItemRemaining" placeholder="Remaining" value="@WorkItemData.Remaining" style="width:100%" class="form-control-sm">
+</div>
+</div>
+<div class="row">
+<div class=" form-group" style="width:100%">
+<label for="Compleated">Compleated</label>
+<input name="Compleated" id="ItemCompleated" placeholder="Compleated" value="@WorkItemData.Compleated" style="width:100%" class="form-control-sm">
+</div>
+</div> }
+else if (WorkItemType == 2)
+{
+<div class="row">
+<h4>Status</h4>
+<hr />
+</div>
+<div class="row">
+<p>Start Date</p>
+<div id="container">
+<input id="StartDate" type="text" type="text">
+</div>
+</div>
+<div class="row">
+<p>End Date</p>
+<div id="container">
+<input id="EndDate" type="text" type="text">
+</div>
+</div>
+<div class="row">
+<h4>Details</h4>
+<hr />
+</div>
+<div class="row">
+<p>Priority</p>
+<select class="form-control-sm form-control" id="ItemPriority" value="@WorkItemData.PriorityId">
+@foreach (var priority in priorities)
+{
 
 
-                                                                                                                                                                                        <option value="@priority.Id">@priority.PriorityName</option>
-}
-                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                    <div class=" form-group" style="width:100%">
-                                                                                                                                                                                                                        <label for="Effort">Effort</label>
-                                                                                                                                                                                                                        <input name="Effort" id="Effort" value="@WorkItemData.Effort" placeholder="Effort" style="width:100%" class="form-control-sm">
-                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                    <div class=" form-group" style="width:100%">
-                                                                                                                                                                                                                                        <label for="BValue">Business Value</label>
-                                                                                                                                                                                                                                        <input name="BValue" id="BValue" placeholder="Business Value" value="@WorkItemData.BusinessValue" style="width:100%" class="form-control-sm">
-                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                    <div class=" form-group" style="width:100%">
-                                                                                                                                                                                                                                                        <label for="TimeCriticality">Time Criticality</label>
-                                                                                                                                                                                                                                                        <input name="TimeCriticality" id="TimeCriticality" placeholder="Time Criticality" value="@WorkItemData.TimeCapacity" style="width:100%" class="form-control-sm">
-                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                    <p>Value Area</p>
-                                                                                                                                                                                                                                                                    <select class="form-control-sm form-control" id="ValueArea" value="@WorkItemData.ValueAreaId">
-                                                                                                                                                                                                                                                                        @foreach (var va in ValueAreas)
-                                                                                                                                                                                                                                                                        {
+<option value="@priority.Id">@priority.PriorityName</option>}
+</select>
+</div>
+<div class="row">
+<div class=" form-group" style="width:100%">
+    <label for="Effort">Effort</label>
+    <input name="Effort" id="Effort" value="@WorkItemData.Effort" placeholder="Effort" style="width:100%" class="form-control-sm">
+</div>
+</div>
+                                        <div class="row">
+                                        <div class=" form-group" style="width:100%">
+                                        <label for="BValue">Business Value</label>
+                                        <input name="BValue" id="BValue" placeholder="Business Value" value="@WorkItemData.BusinessValue" style="width:100%" class="form-control-sm">
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <div class=" form-group" style="width:100%">
+                                        <label for="TimeCriticality">Time Criticality</label>
+                                        <input name="TimeCriticality" id="TimeCriticality" placeholder="Time Criticality" value="@WorkItemData.TimeCapacity" style="width:100%" class="form-control-sm">
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <p>Value Area</p>
+                                        <select class="form-control-sm form-control" id="ValueArea" value="@WorkItemData.ValueAreaId">
+                                        @foreach (var va in ValueAreas)
+                                        {
 
-                                                                                                                                                                                                                                                        <option value="@va.Id">@va.ValueAreaName</option>
-}
-                                                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                                                </div> }
-                                                                                                                                                                                                                                                            else if (WorkItemType == 5)
-                                                                                                                                                                                                                                                            {
-                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                    <p>Priority</p>
-                                                                                                                                                                                                                                                    <select class="form-control-sm form-control" id="ItemPriority" value="@WorkItemData.PriorityId">
-                                                                                                                                                                                                                                                        @foreach (var priority in priorities)
-                                                                                                                                                                                                                                                        {
+                                        <option value="@va.Id">@va.ValueAreaName</option>}
+                                        </select>
+                                        </div> }
+                                        else if (WorkItemType == 5)
+                                        {
+                                        <div class="row">
+                                        <p>Priority</p>
+                                        <select class="form-control-sm form-control" id="ItemPriority" value="@WorkItemData.PriorityId">
+                                        @foreach (var priority in priorities)
+                                        {
 
-                                                                                                                                                                                                                                        <option value="@priority.Id">@priority.PriorityName</option>
-}
-                                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                    <p>Risk</p>
-                                                                                                                                                                                                                                                                    <select class="form-control-sm form-control" id="Risk" value="@WorkItemData.RiskId">
-                                                                                                                                                                                                                                                                        @foreach (var risk in Risks)
-                                                                                                                                                                                                                                                                        {
+                                        <option value="@priority.Id">@priority.PriorityName</option>}
+                                        </select>
+                                        </div>
+                                        <div class="row">
+                                        <p>Risk</p>
+                                        <select class="form-control-sm form-control" id="Risk" value="@WorkItemData.RiskId">
+                                        @foreach (var risk in Risks)
+                                        {
 
-                                                                                                                                                                                                                                                        <option value="@risk.Id">@risk.RiskName</option>
-}
-                                                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                    <div class=" form-group" style="width:100%">
-                                                                                                                                                                                                                                                                                        <label for="Effort">Effort</label>
-                                                                                                                                                                                                                                                                                        <input name="Effort" id="Effort" placeholder="Effort" value="@WorkItemData.Effort" style="width:100%" class="form-control-sm">
-                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                    <div class=" form-group" style="width:100%">
-                                                                                                                                                                                                                                                                                                        <label for="BValue">Business Value</label>
-                                                                                                                                                                                                                                                                                                        <input name="BValue" id="BValue" placeholder="Business Value" value="@WorkItemData.BusinessValue" style="width:100%" class="form-control-sm">
-                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                    <div class=" form-group" style="width:100%">
-                                                                                                                                                                                                                                                                                                                        <label for="TimeCriticality">Time Criticality</label>
-                                                                                                                                                                                                                                                                                                                        <input name="TimeCriticality" id="TimeCriticality" placeholder="Time Criticality" value="@WorkItemData.TimeCapacity" style="width:100%" class="form-control-sm">
-                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                    <p>Start Date</p>
-                                                                                                                                                                                                                                                                                                                                    <div id="container">
-                                                                                                                                                                                                                                                                                                                                        <input id="StartDate" type="text" type="text">
-                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                    <p>End Date</p>
-                                                                                                                                                                                                                                                                                                                                                    <div id="container">
-                                                                                                                                                                                                                                                                                                                                                        <input id="EndDate" type="text" type="text">
-                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                                    <h4>Classification</h4>
-                                                                                                                                                                                                                                                                                                                                                                    <hr />
-                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                                                    <p>Value Area</p>
-                                                                                                                                                                                                                                                                                                                                                                                    <select class="form-control-sm form-control" id="ValueArea" value="@WorkItemData.ValueAreaId">
-                                                                                                                                                                                                                                                                                                                                                                                        @foreach (var va in ValueAreas)
-                                                                                                                                                                                                                                                                                                                                                                                        {
+                                        <option value="@risk.Id">@risk.RiskName</option>}
+                                        </select>
+                                        </div>
+                                        <div class="row">
+                                        <div class=" form-group" style="width:100%">
+                                        <label for="Effort">Effort</label>
+                                        <input name="Effort" id="Effort" placeholder="Effort" value="@WorkItemData.Effort" style="width:100%" class="form-control-sm">
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <div class=" form-group" style="width:100%">
+                                        <label for="BValue">Business Value</label>
+                                        <input name="BValue" id="BValue" placeholder="Business Value" value="@WorkItemData.BusinessValue" style="width:100%" class="form-control-sm">
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <div class=" form-group" style="width:100%">
+                                        <label for="TimeCriticality">Time Criticality</label>
+                                        <input name="TimeCriticality" id="TimeCriticality" placeholder="Time Criticality" value="@WorkItemData.TimeCapacity" style="width:100%" class="form-control-sm">
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <p>Start Date</p>
+                                        <div id="container">
+                                        <input id="StartDate" type="text" type="text">
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <p>End Date</p>
+                                        <div id="container">
+                                        <input id="EndDate" type="text" type="text">
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <h4>Classification</h4>
+                                        <hr />
+                                        </div>
+                                        <div class="row">
+                                        <p>Value Area</p>
+                                        <select class="form-control-sm form-control" id="ValueArea" value="@WorkItemData.ValueAreaId">
+                                        @foreach (var va in ValueAreas)
+                                        {
 
-                                                                                                                                                                                                                                                                                                                                                                        <option value="@va.Id">@va.ValueAreaName</option>
-}
-                                                                                                                                                                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                                                                                                                                                                </div> }
-                                                                                                                                                                                                                                                                                                                                                                            else if (WorkItemType == 6)
-                                                                                                                                                                                                                                                                                                                                                                            {
-                                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                                    <div class=" form-group" style="width:100%">
-                                                                                                                                                                                                                                                                                                                                                                        <label for="Rank">Stack Rank</label>
-                                                                                                                                                                                                                                                                                                                                                                        <input name="Rank" id="Rank" placeholder="Stack Rank" value="@WorkItemData.StackRank" style="width:100%" class="form-control-sm">
-                                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                                                    <p>Priority</p>
-                                                                                                                                                                                                                                                                                                                                                                                    <select class="form-control-sm form-control" id="ItemPriority" value="@WorkItemData.PriorityId">
-                                                                                                                                                                                                                                                                                                                                                                                        @foreach (var priority in priorities)
-                                                                                                                                                                                                                                                                                                                                                                                        {
+                                        <option value="@va.Id">@va.ValueAreaName</option>}
+                                        </select>
+                                        </div> }
+                                        else if (WorkItemType == 6)
+                                        {
+                                        <div class="row">
+                                        <div class=" form-group" style="width:100%">
+                                        <label for="Rank">Stack Rank</label>
+                                        <input name="Rank" id="Rank" placeholder="Stack Rank" value="@WorkItemData.StackRank" style="width:100%" class="form-control-sm">
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <p>Priority</p>
+                                        <select class="form-control-sm form-control" id="ItemPriority" value="@WorkItemData.PriorityId">
+                                        @foreach (var priority in priorities)
+                                        {
 
-                                                                                                                                                                                                                                                                                                                                                                        <option value="@priority.Id">@priority.PriorityName</option>
-}
-                                                                                                                                                                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                                                                    <p>Due Date</p>
-                                                                                                                                                                                                                                                                                                                                                                                                    <div id="container" style="width:100%">
-                                                                                                                                                                                                                                                                                                                                                                                                        <input id="DueDate" value="@WorkItemData.DueDate" type="text">
-                                                                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                                                                </div> }
-                                                                                                                                                                                                                                                                                                                                                                                            else if (WorkItemType == 3)
-                                                                                                                                                                                                                                                                                                                                                                                            {
-                                                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                                                    <p>Priority</p>
-                                                                                                                                                                                                                                                                                                                                                                                    <select class="form-control-sm form-control" id="ItemPriority" value="@WorkItemData.PriorityId">
-                                                                                                                                                                                                                                                                                                                                                                                        @foreach (var priority in priorities)
-                                                                                                                                                                                                                                                                                                                                                                                        {
+                                        <option value="@priority.Id">@priority.PriorityName</option>}
+                                        </select>
+                                        </div>
+                                        <div class="row">
+                                        <p>Due Date</p>
+                                        <div id="container" style="width:100%">
+                                        <input id="DueDate" value="@WorkItemData.DueDate" type="text">
+                                        </div>
+                                        </div> }
+                                        else if (WorkItemType == 3)
+                                        {
+                                        <div class="row">
+                                        <p>Priority</p>
+                                        <select class="form-control-sm form-control" id="ItemPriority" value="@WorkItemData.PriorityId">
+                                        @foreach (var priority in priorities)
+                                        {
 
-                                                                                                                                                                                                                                                                                                                                                                        <option value="@priority.Id">@priority.PriorityName</option>
-}
-                                                                                                                                                                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                                                                    <p>Activity</p>
-                                                                                                                                                                                                                                                                                                                                                                                                    <select class="form-control-sm form-control" id="ItemActivity" value="@WorkItemData.Activity">
-                                                                                                                                                                                                                                                                                                                                                                                                        @foreach (var activity in activities)
-                                                                                                                                                                                                                                                                                                                                                                                                        {
+                                        <option value="@priority.Id">@priority.PriorityName</option>}
+                                        </select>
+                                        </div>
+                                        <div class="row">
+                                        <p>Activity</p>
+                                        <select class="form-control-sm form-control" id="ItemActivity" value="@WorkItemData.Activity">
+                                        @foreach (var activity in activities)
+                                        {
 
-                                                                                                                                                                                                                                                                                                                                                                                        <option value="@activity.Id">@activity.ActivityName</option>
-}
-                                                                                                                                                                                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                                                                                    <h4>Efford Hours</h4>
-                                                                                                                                                                                                                                                                                                                                                                                                                    <hr />
-                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class=" form-group" style="width:100%">
-                                                                                                                                                                                                                                                                                                                                                                                                                                        <label for="OriginalEstimate">Original Estimate</label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                        <input name="OriginalEstimate" id="OriginalEstimate" value="@WorkItemData.OriginEstitame" placeholder="OriginalEstimate" style="width:100%" class="form-control-sm">
-                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class=" form-group" style="width:100%">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        <label for="Remaining">Remaining</label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        <input name="Remaining" id="ItemRemaining" placeholder="Remaining" value="@WorkItemData.Remaining" style="width:100%" class="form-control-sm">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class=" form-group" style="width:100%">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <label for="Compleated">Compleated</label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <input name="Compleated" id="ItemCompleated" placeholder="Compleated" value="@WorkItemData.Compleated" style="width:100%" class="form-control-sm">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <h4>Implementation</h4>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <hr />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <p>Integrated in Build</p>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <select class="form-control-sm form-control" id="ItemResolvedBuild" value="@WorkItemData.IntegratedInBuild">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @foreach (var build in builds)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {
+                                        <option value="@activity.Id">@activity.ActivityName</option>}
+                                        </select>
+                                        </div>
+                                        <div class="row">
+                                        <h4>Efford Hours</h4>
+                                        <hr />
+                                        </div>
+                                        <div class="row">
+                                        <div class=" form-group" style="width:100%">
+                                        <label for="OriginalEstimate">Original Estimate</label>
+                                        <input name="OriginalEstimate" id="OriginalEstimate" value="@WorkItemData.OriginEstitame" placeholder="OriginalEstimate" style="width:100%" class="form-control-sm">
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <div class=" form-group" style="width:100%">
+                                        <label for="Remaining">Remaining</label>
+                                        <input name="Remaining" id="ItemRemaining" placeholder="Remaining" value="@WorkItemData.Remaining" style="width:100%" class="form-control-sm">
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <div class=" form-group" style="width:100%">
+                                        <label for="Compleated">Compleated</label>
+                                        <input name="Compleated" id="ItemCompleated" placeholder="Compleated" value="@WorkItemData.Compleated" style="width:100%" class="form-control-sm">
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <h4>Implementation</h4>
+                                        <hr />
+                                        </div>
+                                        <div class="row">
+                                        <p>Integrated in Build</p>
+                                        <select class="form-control-sm form-control" id="ItemResolvedBuild" value="@WorkItemData.IntegratedInBuild">
+                                        @foreach (var build in builds)
+                                        {
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="@build.Id">@build.ReasonName</option>
-}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            else if (WorkItemType == 7)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class=" form-group" style="width:100%">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <label for="StoryPoints">Story Points</label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <input name="StoryPoints" id="StoryPoints" value="@WorkItemData.StoryPoints" placeholder="Story points" style="width:100%" class="form-control-sm">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <p>Priority</p>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <select class="form-control-sm form-control" id="ItemPriority" value="@WorkItemData.PriorityId">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @foreach (var priority in priorities)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {
+                                        <option value="@build.Id">@build.ReasonName</option>}
+                                        </select>
+                                        </div> }
+                                        else if (WorkItemType == 7)
+                                        {
+                                        <div class="row">
+                                        <div class=" form-group" style="width:100%">
+                                        <label for="StoryPoints">Story Points</label>
+                                        <input name="StoryPoints" id="StoryPoints" value="@WorkItemData.StoryPoints" placeholder="Story points" style="width:100%" class="form-control-sm">
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <p>Priority</p>
+                                        <select class="form-control-sm form-control" id="ItemPriority" value="@WorkItemData.PriorityId">
+                                        @foreach (var priority in priorities)
+                                        {
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="@priority.Id">@priority.PriorityName</option>
-}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <p>Risk</p>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <select class="form-control-sm form-control" id="Risk" value="@WorkItemData.RiskId">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @foreach (var risk in Risks)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {
+                                        <option value="@priority.Id">@priority.PriorityName</option>}
+                                        </select>
+                                        </div>
+                                        <div class="row">
+                                        <p>Risk</p>
+                                        <select class="form-control-sm form-control" id="Risk" value="@WorkItemData.RiskId">
+                                        @foreach (var risk in Risks)
+                                        {
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="@risk.Id">@risk.RiskName</option>
-}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <h4>Classification</h4>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <hr />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="row">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <p>Value Area</p>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <select class="form-control-sm form-control" id="ValueArea" value="@WorkItemData.ValueAreaId">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @foreach (var va in ValueAreas)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {
+                                        <option value="@risk.Id">@risk.RiskName</option>}
+                                        </select>
+                                        </div>
+                                        <div class="row">
+                                        <h4>Classification</h4>
+                                        <hr />
+                                        </div>
+                                        <div class="row">
+                                        <p>Value Area</p>
+                                        <select class="form-control-sm form-control" id="ValueArea" value="@WorkItemData.ValueAreaId">
+                                        @foreach (var va in ValueAreas)
+                                        {
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="@va.Id">@va.ValueAreaName</option>
-}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>}
+                                        <option value="@va.Id">@va.ValueAreaName</option>}
+                                        </select>
+                                        </div>
+                                        }
                                         </div>
                                         <div class="col-md-6" style="padding:20px;">
                                             <div class="row">
@@ -554,13 +536,12 @@
                                                 <button type="button" onclick="OpenModal()" class="btn btn-primary" id="relationBtn">Add new relation</button>
 
                                             </div>
-                                            <div class="row" id="listview-defholder">
-                                                <div id="listview-def" tabindex="1">
-                                                    <ul id="RelatedWork" style="list-style-type:none; padding:0px;">
+                                            <div class="row"  >
+                                                <div id="relatedWorkItemsGrid" tabindex="1">
+                                                    <ul style="list-style-type:none; padding:0px;">
                                                         @foreach (var relation in WorkItemData.AssociatedWrorkItemChildrenWorkItem)
                                                         {
-                                                            <li value="@relation.WorkItemChildId">@relation.WorkItemChild.Title</li>
-                                                        }
+                                            <li value="@relation.WorkItemChildId">@relation.WorkItemChild.Title</li>}
                                                     </ul>
                                                 </div>
                                             </div>
@@ -575,12 +556,10 @@
                                                     {
                                                         if (@build.Id == @WorkItemData.FoundInBuild)
                                                         {
-                                        <option value="@build.Id" selected="Selected">@build.ReasonName</option>
-                                                        }               
+                                        <option value="@build.Id" selected="Selected">@build.ReasonName</option> }
                                                         else
-                                                                                            {
-                                                                            <option value="@build.Id">@build.ReasonName</option>
-                                                        }
+                                                        {
+                                        <option value="@build.Id">@build.ReasonName</option>}
                                                     }
                                                 </select>
                                             </div>
@@ -591,13 +570,11 @@
                                                     {
                                                         if (@build.Id == @WorkItemData.FoundInBuild)
                                                         {
-                                        <option value="@build.Id" selected="Selected">@build.ReasonName</option>
- }
-                                    else
-                                    {
-                    <option value="@build.Id">@build.ReasonName</option>
-}
-            }
+                                        <option value="@build.Id" selected="Selected">@build.ReasonName</option> }
+                                                        else
+                                                        {
+                                        <option value="@build.Id">@build.ReasonName</option>}
+                                                    }
                                                 </select>
                                             </div>
                                         </div>
@@ -663,11 +640,11 @@
                         </div>
                         <div id="tab4_content" style="display: none; min-height:53vh;">
                             @await Component.InvokeAsync("DesignerComponents", new IncomingIdRequest
-                           {
-                               Phase = @SystemDesignInfo,
-                               Id = @WorkItemData.Id,
-                               UserId = 1
-                           });
+                            {
+                                Phase = @SystemDesignInfo,
+                                Id = @WorkItemData.Id,
+                                UserId = 1
+                            });
 
 
                         </div>
@@ -761,7 +738,7 @@
     OpenRelationDiagram.appendTo('#OpenRelationDiagram');
 
     //Render initialized ListView component
-    listObj.appendTo('#listview-def');
+    listObj.appendTo('#relatedWorkItemsGrid');
 
     var assignedUser = @WorkItemData.AssignedAccountNavigation.Id;
     var selectedChildren = [];
@@ -1308,7 +1285,7 @@
     WorkItemType = @projectId.Value
 })
 <style>
-    #listview-def,
+    #relatedWorkItemsGrid,
     #listview-grp {
         border: 1px solid #dddddd;
         border-radius: 3px;

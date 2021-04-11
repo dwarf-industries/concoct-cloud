@@ -13,7 +13,7 @@ namespace Rokono_Control.Models
             AssociatedCommitFiles = new HashSet<AssociatedCommitFiles>();
         }
 
-        public int Id { get; set; }
+        public int Id { get; set ; }
         public string CommitData { get; set; }
         public DateTime? DateOfCommit { get; set; }
         public string CommitedBy { get; set; }

@@ -2,6 +2,8 @@
     ViewData["Title"] = "Project Commits";
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
     var ProjectName = ViewData["ProjectName"] as string;
+    var Id = ViewData["ProjectId"] as int?;
+    var defaultBranch = ViewData["Branch"] as string;
 }
 
 
@@ -213,7 +215,7 @@
 <div class="row">
     <div class="control-section">
         <div class='control-wrapper' style="padding: 1%;">
-            <div style='width: 10%;' class="displayFlex">
+            <div style='width: 27%;' class="displayFlex">
                 <input type="text" tabindex="1" id='branches' />
 
             </div>
@@ -235,93 +237,110 @@
 
 
 <script>
-
+    var branch = "@defaultBranch";
+    var commitsGrid;
     // initialize ComboBox component
-    var branches = new ej.dropdowns.ComboBox({
-        // set the local data to dataSource property
-        dataSource: null,//window.ddCountryData, !!! Look into syncfusion for details on the binding model
-        // map the appropriate columns to fields property
-        fields: { text: 'Name', value: 'Code' },
-        // set the placeholder to ComboBox input element
-        placeholder: 'Select a country',
-        // set the height of the popup element
-        popupHeight: '270px',
-        // set true for enable the filtering support.
-        allowFiltering: true,
-        // bind the filtering event
-        filtering: function (e) {
-            var combobox_query = new ej.data.Query();
-            // frame the query based on search string with filter type.
-            combobox_query = (e.text !== '') ? combobox_query.where('Name', 'startswith', e.text, true) : combobox_query;
-            // pass the filter data source, filter query to updateData method.
-            e.updateData(window.ddCountryData, combobox_query);
-        }
-    });
-    branches.appendTo('#branches');
+    var branches;
+    GetCommits(branch);
 
-    var dsSource = [
-        {
-            CommitId: "2fgrc23",
-            Employees:"Kristifor",
-            CommitDate: "24/3/2021",
-            Mail: "Kristiformilchev615@gmail.com",
-            CommitTitle: "Resolving a bug with the carosouel widget",
-            PullRequest: "#234"
-        },
-        {
-            CommitId: "2fgrc23",
-            Employees: "Kristifor",
-            CommitDate: "24/3/2021",
-            Mail: "Kristiformilchev615@gmail.com",
-            CommitTitle: "Resolving a bug with the carosouel widget",
-            PullRequest: "#234"
-        },
-        {
-            CommitId: "2fgrc23",
-            Employees: "George",
-            CommitDate: "24/3/2021",
-            Mail: "Kristiformilchev615@gmail.com",
-            CommitTitle: "Resolving a bug with the carosouel widget",
-            PullRequest: "#234"
-        },
-        {
-            CommitId: "2fgrc23",
-            Employees: "Stevan",
-            CommitDate: "24/3/2021",
-            Mail: "Kristiformilchev615@gmail.com",
-            CommitTitle: "Resolving a bug with the carosouel widget",
-            PullRequest: "#234"
-        }];
-    //Todo implement query to get the data for the grid.
-    var commitsGrid = new ej.grids.Grid({
-        dataSource: dsSource,//window.getTradeData(1000),
-        allowSelection: true,
-        allowFiltering: true,
-        allowSorting: true,
-        enableVirtualization: true,
-        filterSettings: { type: 'Menu' },
-        enableHover: false,
-        height: "100%",
-        rowHeight: 38,
-        columns: [
-            { field: 'CommitId', headerText: 'Commit Id', width: '130' },
-            {
-                field: 'Employees', headerText: 'Employee Name', width: '200', clipMode: 'EllipsisWithTooltip',
-                filter: { type: 'CheckBox' }
+     $.ajax({
+            type: 'GET',
+            url: '/Repositories/GetBranchesByProjectId?projectId=@Id',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+         success: function (response) {
+                branches = new ej.dropdowns.ComboBox({
+                    // set the local data to dataSource property
+                    dataSource: response,//window.ddCountryData, !!! Look into syncfusion for details on the binding model
+                    // map the appropriate columns to fields property
+                    fields: { text: 'branchName', value: 'id' },
+                    // set the placeholder to ComboBox input element
+                    placeholder: 'Select Branch',
+                    select:BranchSelected,
+                    // set the height of the popup element
+                    popupHeight: '270px',
+                    // set true for enable the filtering support.
+                    allowFiltering: true,
+                    // bind the filtering event
+                    filtering: function (e) {
+                        var combobox_query = new ej.data.Query();
+                        // frame the query based on search string with filter type.
+                        combobox_query = (e.text !== '') ? combobox_query.where('branchName', 'contains', e.text, true) : combobox_query;
+                        // pass the filter data source, filter query to updateData method.
+                        e.updateData(response, combobox_query);
+                    }
+                });
+                branches.appendTo('#branches');
             },
-            { field: 'CommitDate', headerText: 'Date', width: '170', },
-            { field: 'Mail', headerText: 'Mail', width: '230', filter: { type: 'Menu' } },
-            { field: 'CommitTitle', headerText: 'Commit Title', width: '240' },
-            { field: 'PullRequest', headerText: 'Pull Requst', width: '240' },
-
-        ],
-   //     queryCellInfo: queryCellInfo,
-        //dataBound: startTimer,
-     //   actionComplete: complete
-    });
-
-    commitsGrid.appendTo('#commitsGrid');
+            error: function (xhr, status, error) {
+                console.log(xhr);
+            }
+        });
 
 
+    function GetCommits(currentBranch) {
 
+            var getCommitDTO =
+            {
+                "ProjectId": @Id,
+                "Phase": currentBranch
+            }
+
+            $.ajax({
+            type: 'POST',
+            url: '/Repositories/GetCommitsForBranch',
+            data: JSON.stringify(getCommitDTO),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+
+                if (commitsGrid !== undefined) {
+                    commitsGrid.dataSource = response;
+                    commitsGrid.refresh();
+                }
+                else {
+                    commitsGrid = new ej.grids.Grid({
+                        dataSource: response,//window.getTradeData(1000),
+                        allowSelection: true,
+                        allowFiltering: true,
+                        allowSorting: true,
+                        // enableVirtualization: true,
+                        filterSettings: { type: 'Menu' },
+                        enableHover: true,
+                        height: "80vh",
+                        rowHeight: 38,
+                        columns: [
+                            { field: 'id', headerText: 'Commit Id', width: '130' },
+                            {
+                                field: 'name', headerText: 'Employee Name', width: '200', clipMode: 'EllipsisWithTooltip',
+                                filter: { type: 'CheckBox' }
+                            },
+                            { field: 'date', headerText: 'Date', width: '170', },
+                            { field: 'email', headerText: 'Mail', width: '230', filter: { type: 'Menu' } },
+                            { field: 'subject', headerText: 'Commit Title', width: '240' },
+                            { field: 'signature', headerText: 'Signature', width: '240' },
+
+                        ],
+
+                    });
+
+                    commitsGrid.appendTo('#commitsGrid');
+
+                }
+             
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    
+
+    }
+
+    function BranchSelected(args) {
+        console.log(args);
+        //console.log($("#branches").val());
+        GetCommits(args.itemData.branchName);
+    }
 </script>

@@ -61,8 +61,13 @@
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+            var projects = new List<Projects>();
+            using(var context = new RokonoControlContext())
+            {
+                 projects = context.Projects.Include(x => x.Repository).ToList();
+            }
 
-           
+            RepositoryManager.InitRepositories(projects, Program.ServerOS);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
