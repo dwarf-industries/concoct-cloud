@@ -1,0 +1,118 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- Authenticationw card start -->
+<div class="login-card card-block auth-body" style="padding: 23%; margin-left:15%; margin-right:15%;">
+
+    <div class="auth-box" style="background-color:#3553575c; padding:5%;">
+        <div class="row">
+            <img src="~/Logo/logo_transparent.png" class="img-responsive" />
+        </div>
+        <hr />
+        <div class="input-group" style="display: inline;">
+            <input id="exampleEmail11" type="email" class="form-control" placeholder="Your Email Address" style="color:red;border-color:red; background-color:#123f56;">
+            <span class="md-line"></span>
+        </div>
+        <div class="input-group" style="display: inline;">
+            <input id="examplePassword11" type="password" class="form-control" placeholder="Password" style="color:red;border-color:red; background-color:#123f56;">
+            <span class="md-line"></span>
+        </div>
+        <div class="row m-t-25 text-left">
+            <div class="col-sm-7 col-xs-12">
+                <div class="checkbox-fade fade-in-primary">
+                    <label>
+                        <input type="checkbox" value="" style="color:azure;">
+                        <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                        <span class="text-inverse" style="color:azure;">Remember me</span>
+                    </label>
+                </div>
+            </div>
+
+        </div>
+        <div class="row m-t-30">
+            <div class="col-md-12" style="text-align:center;">
+                <button type="button" id="loginBtn" onclick="LoginUser()">Sign in</button>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-10">
+                <p class="text-inverse text-left m-b-0" style="text-align:center;color: azure;">Thank you and enjoy our website.</p>
+                <p class="text-inverse text-left" style="text-align:center;color: azure;"><b>Your Autentification Team</b></p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- end of form -->
+</div>
+<!-- Authentication card end -->
+<style>
+    .e-float-input e-control-wrapper e-outline {
+        color: red;
+    }
+
+    .form-control e-control e-textbox e-lib {
+        border: 0;
+        border-width: 0;
+        color: red;
+    }
+</style>
+<script>
+    var loginBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
+    loginBtn.appendTo('#loginBtn');
+
+    var exampleEmail11 = new ej.inputs.TextBox({
+        placeholder: 'Email',
+        cssClass: 'e-outline',
+        floatLabelType: 'Auto'
+    });
+    exampleEmail11.appendTo('#exampleEmail11');
+    var examplePassword11 = new ej.inputs.TextBox({
+        placeholder: 'Password',
+        cssClass: 'e-outline',
+        floatLabelType: 'Auto'
+    });
+    examplePassword11.appendTo('#examplePassword11');
+    $(document).ready(function () {
+        $.ajax({
+            type: 'GET',
+            url: '/Authenication/GetUsers',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                LoadAccounts(response);
+            },
+            error: function (xhr, status, error) {
+
+            }
+        });
+
+    });
+    function LoginUser() {
+        console.log("In");
+        var dto = {
+            "Email": $("#exampleEmail11").val(),
+            "Password": $("#examplePassword11").val(),
+
+        }
+        console.log(dto);
+        $.ajax({
+            type: 'POST',
+            url: '/Authenication/Login',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                window.location = '/Dashboard/Index';
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+
+</script>
