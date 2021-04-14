@@ -287,7 +287,6 @@
 
 
     function ItemSelected(args) {
-        console.log(args);
         CurrentUserImage = args.filesData[0].rawFile.name;
         document.getElementById('UserImage').src=window.location.origin + "/Files/Uploads/"+ args.filesData[0].rawFile.name;
     }
@@ -313,7 +312,6 @@
         }
         if(ValidateInputs())
         {
-            console.log(dto);
             $.ajax({
                 type: 'POST',
                 url: '/Changelog/ConfirmChangelog',
@@ -325,7 +323,7 @@
                     window.location.href = "/Changelog/ViewChangelogs?projectId=@projectId";
                 },
                 error: function (xhr, status, error) {
-                    console.log(error);
+
                 }
             });
         }

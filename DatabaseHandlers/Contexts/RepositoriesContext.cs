@@ -58,6 +58,27 @@ namespace Rokono_Control.DatabaseHandlers.Contexts
             return result;
         }
 
+        internal OutgoingCommitTemp GetCommitDeatails(IncomingIdRequest request)
+        {
+            var project = Context.Projects.Include(x => x.Repository).FirstOrDefault(x => x.Id == request.ProjectId);
+
+            var format = "";
+
+            var getCommitDetails = RepositoryManager.CommandOutput(OS, $"git show {request.Phase} --pretty=format:" + format, Path.Combine(Program.Configuration.LocalRepo, project.Repository.FolderPath));
+            foreach (var line in getCommitDetails.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
+            { 
+                if (!line.Contains("HEAD"))
+                {
+                    //result.Add(new Branches
+                    //{
+                    //    BranchName = line.Substring(9),
+                    //    Id = index++
+                    //});
+                }
+            }
+            return null;
+        }
+
         public List<OutgoingCommitTemp> GetCommitsForProject(int projectId, string branch)
         {
             var result = new List<OutgoingCommitTemp>();

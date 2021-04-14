@@ -279,7 +279,7 @@
 
 
     function GetCommits(currentBranch) {
-
+             
             var getCommitDTO =
             {
                 "ProjectId": @Id,
@@ -305,6 +305,8 @@
                         allowSelection: true,
                         allowFiltering: true,
                         allowSorting: true,
+                        selectionSettings: { type: 'Multiple' },
+                        recordDoubleClick: CommitDoubleClicked,
                         // enableVirtualization: true,
                         filterSettings: { type: 'Menu' },
                         enableHover: true,
@@ -338,9 +340,13 @@
 
     }
 
-    function BranchSelected(args) {
+
+    function CommitDoubleClicked(args) {
         console.log(args);
-        //console.log($("#branches").val());
-        GetCommits(args.itemData.branchName);
+        window.location = "/Repositories/Commit?Id=@Id&&commitId=" + args.rowData.id;
+    }
+
+    function BranchSelected(args) {
+         GetCommits(args.itemData.branchName);
     }
 </script>

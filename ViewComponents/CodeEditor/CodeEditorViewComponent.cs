@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Platform.DataHandlers;
 using Platform.DataHandlers.Interfaces;
+using Rokono_Control.DatabaseHandlers.Contexts;
 using Rokono_Control.Models;
 using System;
 using System.Collections.Generic;
@@ -29,9 +30,15 @@ namespace Rokono_Control.ViewComponents.CodeEditor
             UserId = AutherizationManager.GetCurrentUser(UserId, httpContextAccessor.HttpContext.Request);
         }
 
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(IncomingIdRequest request)
         {
-             
+            if(request == null)
+                return View("/Views/Shared/Components/CodeEditor/Default.cshtml");
+
+            using (var context = new RepositoriesContext(Context, Configuration, new RepositoryManager()))
+            {
+                ViewData["CommitDetails"] = context.GetCommitDeatails(request);
+            }
             return View("/Views/Shared/Components/CodeEditor/Default.cshtml");
         }
     }

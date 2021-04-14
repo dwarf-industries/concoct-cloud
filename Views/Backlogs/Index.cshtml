@@ -151,7 +151,7 @@
     var  boardId = @BoardId;
     function OpenWorkItem(id)
     {
-        console.log(id);
+
     }
     $( document ).ready(function()
     {
@@ -167,7 +167,7 @@
             "Phase" : "@Phase",
             "ProjectId" : @CurrentIteration
         }
-        console.log(dto);
+
         $.ajax({
             type: 'POST',
             url: '/Backlogs/GetWorkItems',
@@ -178,7 +178,7 @@
                 InitiliazeGrid(response);
             },
             error: function (xhr, status, error) {
-                console.log(error);
+
             }
         });
         exportDialog = new ej.popups.Dialog({
@@ -263,17 +263,14 @@
 
     function WorkItemListClicked(args)
     {
-        console.log(args);
         var url = args.properties.url;
         window.location.href = url;
-       // console.log(args);
     }
 
     function InitiliazeGrid(data )
     {
-        debugger
-        console.log(data);
-
+         
+ 
 
         var treeGridObj = new ej.treegrid.TreeGrid({
             dataSource: data,
@@ -311,7 +308,6 @@
     }
 
     function customiseCell(args) {
-        console.log(args);
         if (args.column.headerText === 'Type' ){
             args.cell.setAttribute('class', args.data.workItemIcon);
         } 
@@ -323,12 +319,10 @@
         window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+id+"&boardId="+boardId+"&returnUrl="+window.location.href;
     }
     function WorkItemSelected(args){
-        console.log(args);
     }
 
     function EditWorkItem(args)
     {
-        console.log(args);
         window.location.href = "/Dashboard/EditWorkItem?projectId=@result&&workItem="+args.rowData.id+"&returnUrl="+window.location.href;
     }
     function load(args) {
@@ -336,23 +330,19 @@
     }
     function RowSelected(args)
     {
-        console.log(args);
         selectedRows.push(args.data);
     }
 
     function RowDeselected(args)
     {
-        console.log(args.data);
         var index = selectedRows.indexOf(args.data[0]);
         if (index > -1) {
             selectedRows.splice(index, 1);
         }
-        console.log(selectedRows);
-
+ 
     }
     function DeleteWorkItems()
     {
-        console.log(selectedRows);
         var incomingSprintDTO =
         {
             "Items":  selectedRows
@@ -370,7 +360,6 @@
                window.location.href = window.location;
             },
             error: function(xhr, status, error) {
-                console.log(error);
             }
         });
     }
@@ -397,7 +386,6 @@
         //       window.location.href = window.location;
             },
             error: function(xhr, status, error) {
-                console.log(error);
             }
         });
     }

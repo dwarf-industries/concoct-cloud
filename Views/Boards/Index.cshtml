@@ -118,7 +118,6 @@
                     GenerateKaban(response);
                 },
                 error: function (xhr, status, error) {
-                    console.log(xhr);
                 }
             });
         }
@@ -153,7 +152,6 @@
                     InitliazePUsersGrid(response);
                 },
                 error: function (xhr, status, error) {
-                    console.log(error);
                 }
             });
             $.ajax({
@@ -166,7 +164,6 @@
                     GenerateKaban(response);
                 },
                 error: function (xhr, status, error) {
-                    console.log(xhr);
                 }
             });
          //   var data = ej.DataManager(window.kanbanData).executeLocal(ej.Query().take(20));
@@ -180,7 +177,7 @@
              $("#KanbanHolder").html();
 
             var data = ej.base.extend([], response, null, true); // To maintain the property changes, extend the object.
-            console.log(data);
+
             var kanbanObj = new ej.kanban.Kanban({
                 dataSource: data,
                 dragStop: DragStopped,
@@ -211,14 +208,10 @@
          }
         function CardSelected(args)
         {
-            console.log(args);
-            console.log("/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId);
             window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId+"&returnUrl="+window.location.href;
-
         }
         function CardDropCheck(args)
         {
-            console.log(args);
             if(args.requestType == "cardChanged" && card)
             {
                 card.Board = args.changedRecords[0].status;
@@ -227,7 +220,6 @@
         }
         function ValidateCardChanged()
         {
-            console.log("Posting");
             $.ajax({
                 type: 'POST',
                 url: '/Boards/ChangeWorkItemBoard',
@@ -238,13 +230,11 @@
                     //window.location.href = "/Dashboard/AssignAccountProjects?id="+response;
                 },
                 error: function(xhr, status, error) {
-                    console.log(error);
                 }
             });
         }
          function DragStopped(args)
          {
-            console.log(args);
             card = {
                 "CardId" :args.data[0].innerId,
                 "Board" :args.data[0].status,
@@ -255,11 +245,7 @@
 
         function ChangeOwner(data)
         {
-
             selectedChanging = data;
-            console.log(data);
-        //    selectedChangingId = id;
-            console.log("Changing Owner");
             dialogObj.show();
         }
 
@@ -308,14 +294,12 @@
 
                 },
                 error: function(xhr, status, error) {
-                    console.log(error);
                 }
             });
         }
 
         function InitliazePUsersGrid(data)
         {
-            console.log(data);
             var ProjectUsers = new ej.treegrid.TreeGrid({
                 dataSource: data,
                 allowSelection: true,
@@ -336,7 +320,6 @@
         function UserRowSelected(args)
         {
             selectedRowData = args.data;
-            console.log(args);
         }
         function UserSelected(args)
         {
