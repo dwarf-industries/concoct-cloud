@@ -91,13 +91,13 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (ds) {
-                        console.log(ds);
+                        //console.log(ds);
                         dropDownObj = new ej.dropdowns.DropDownList({
                             dataSource: ds,
                             value: args.values ? args.values.accountId : ds[0].accountId,
                             fields: { text: 'name' },
                             change: function (e) {
-                                console.log(e);
+                                //console.log(e);
                                 qryBldrObj.notifyChange(e.itemData.accountId, e.element);
                             }
                         });
@@ -142,13 +142,13 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (ds) {
-                        console.log(ds);
+                        //console.log(ds);
                         dropDownObjWType = new ej.dropdowns.DropDownList({
                             dataSource: ds,
                             value: args.values ? args.values.id : ds[0].id,
                             fields: { text: 'typeName' },
                             change: function (e) {
-                                console.log(e);
+                                //console.log(e);
                                 qryBldrObj.notifyChange(e.itemData.id, e.element);
                             }
                         });
@@ -193,13 +193,13 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (ds) {
-                        console.log(ds);
+                        //console.log(ds);
                         dropDownObjWType = new ej.dropdowns.DropDownList({
                             dataSource: ds,
                             value: args.values ? args.values.id : ds[0].id,
                             fields: { text: 'stateName' },
                             change: function (e) {
-                                console.log(e);
+                                //console.log(e);
                                 qryBldrObj.notifyChange(e.itemData.id, e.element);
                             }
                         });
@@ -244,13 +244,13 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (ds) {
-                        console.log(ds);
+                        //console.log(ds);
                         dropDownObjWArea = new ej.dropdowns.DropDownList({
                             dataSource: ds,
                             value: args.values ? args.values.id : ds[0].id,
                             fields: { text: 'areaName' },
                             change: function (e) {
-                                console.log(e);
+                                //console.log(e);
                                 qryBldrObj.notifyChange(e.itemData.id, e.element);
                             }
                         });
@@ -295,13 +295,13 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (ds) {
-                        console.log(ds);
+                        //console.log(ds);
                         dropDownObjWSeverity = new ej.dropdowns.DropDownList({
                             dataSource: ds,
                             value: args.values ? args.values.id : ds[0].id,
                             fields: { text: 'severityName' },
                             change: function (e) {
-                                console.log(e);
+                                //console.log(e);
                                 qryBldrObj.notifyChange(e.itemData.id, e.element);
                             }
                         });
@@ -346,13 +346,13 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (ds) {
-                        console.log(ds);
+                        //console.log(ds);
                         dropDownObjWSeverity = new ej.dropdowns.DropDownList({
                             dataSource: ds,
                             value: args.values ? args.values.id : ds[0].id,
                             fields: { text: 'reasonName' },
                             change: function (e) {
-                                console.log(e);
+                                //console.log(e);
                                 qryBldrObj.notifyChange(e.itemData.id, e.element);
                             }
                         });
@@ -397,13 +397,13 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (ds) {
-                        console.log(ds);
+                        //console.log(ds);
                         dropDownObjWSeverity = new ej.dropdowns.DropDownList({
                             dataSource: ds,
                             value: args.values ? args.values.id : ds[0].id,
                             fields: { text: 'iterationName' },
                             change: function (e) {
-                                console.log(e);
+                                //console.log(e);
                                 qryBldrObj.notifyChange(e.itemData.id, e.element);
                             }
                         });
@@ -590,12 +590,12 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (currentReponse) {
-                console.log(currentReponse);
+                //console.log(currentReponse);
                 InitQueryFilter(currentReponse);
 
             },  
             error: function (xhr, status, error) {
-                console.log(error);
+                //console.log(error);
             }
         });
     } *@
@@ -607,7 +607,7 @@
         var result = "<select id=\"TableColumns\" style=\"padding: 5%;\">";
             
         data.forEach(x=>{
-            console.log(x.label);
+            //console.log(x.label);
             result += "<option value="+x.label+">"+x.label+"</option>";
         });
         result += "</select>";
@@ -648,7 +648,7 @@
     }
     function RuleChanged(args)
     {
-        console.log(args);
+        //console.log(args);
         LastRule = args.rule;
     }
 

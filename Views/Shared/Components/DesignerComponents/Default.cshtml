@@ -455,7 +455,7 @@
 
     function SaveDiagram() {
         systemModel = diagram.saveDiagram();
-        console.log(diagram.saveDiagram());
+        //console.log(diagram.saveDiagram());
         $("#SecondContainer").hide();
         $("#row1").show();
         $("#row2").show();
@@ -482,7 +482,7 @@
             var castObject = JSON.parse(converted);
             castObject.height = "100%;"
             //diagram.addLayer(castObject.layers[0]);
-            //console.log(converted);
+            ////console.log(converted);
             diagram.loadDiagram(converted);
             diagram.updateViewPort();
             if (preview) {

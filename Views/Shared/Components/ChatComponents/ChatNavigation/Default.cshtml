@@ -206,7 +206,7 @@ $( document ).ready(function() {
         dataType: "json",
         success: function (response) {
             response.forEach(x=>{
-                console.log(x);
+                //console.log(x);
                 SetRoomNewMessage(x.chatChannelId);
             });
         },
@@ -245,7 +245,7 @@ $( document ).ready(function() {
         $("#ChatTreeViewHolder").html("");
         $("#ChatTreeViewHolder").html("<div id=\"chat-treeview\"></div>");
  
-        console.log(incomingData);
+        //console.log(incomingData);
 
         chatMenuGridObj= new ej.treegrid.TreeGrid({
             dataSource: incomingData,
@@ -266,8 +266,8 @@ $( document ).ready(function() {
     {
         $( "#ChatChannel_"+id ).removeClass("NewMessage");
         ActiveUser.ActiveRoom = id;
-        console.log("in");
-        console.log(id);
+        //console.log("in");
+        //console.log(id);
         $("#MainChatContent").load('/Chat/GetChatRoom?id='+id+'&&projectId='+@ProjectId+'&&isPersonal='+isPersonal);
          @* $.ajax({
             type: 'GET',
@@ -276,7 +276,7 @@ $( document ).ready(function() {
                 
             },
             error: function (xhr, status, error) {
-                console.log(error);
+                //console.log(error);
             }
         }); *@
     }

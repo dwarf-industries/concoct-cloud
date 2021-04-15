@@ -83,7 +83,7 @@ UserControlChatInput.appendTo('#@InputName');
 
 function DeletingTag(currentTag)
 {
-    console.log(currentTag);
+    //console.log(currentTag);
     $("#Tag_"+currentTag).html("");
      var messagesDto = {
         "Id": currentTag,
@@ -135,7 +135,7 @@ function UserKeyPressed(args)
     {
         
         // Cancel the default action, if needed
-        console.log("enter pressed");
+        //console.log("enter pressed");
         var dto = 
         {
             "ProjectId": @ProjectId,

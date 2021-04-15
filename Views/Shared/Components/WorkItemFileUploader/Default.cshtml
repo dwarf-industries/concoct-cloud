@@ -37,13 +37,13 @@
     });
     uploadObj.appendTo('#fileupload');
     function ItemSelected(args) {
-        console.log(args);
+        //console.log(args);
         selectedFiles.push(args);
 
         $("#FileHolder").html("");
         
         var bindingData = AddItems(selectedFiles);     
-        console.log(bindingData);
+        //console.log(bindingData);
         $("#FileHolder").append(bindingData);
     }
     function onFileRemove(args) {

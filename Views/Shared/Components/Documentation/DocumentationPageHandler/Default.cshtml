@@ -124,12 +124,12 @@ InputPageData = new Quill('#InputPageData', {
  
 var image_custom = document.getElementsByClassName('ql-image-custom')[0];
 image_custom.addEventListener('click', function() {
-   console.log("Clicked");
+   //console.log("Clicked");
   $("#File_@random").click();
 });
 var customButton =  document.getElementsByClassName('ql-Table')[0];
 customButton.addEventListener('click', function() {
-    console.log("Clicked");
+    //console.log("Clicked");
      
 
 
@@ -173,10 +173,10 @@ var uploadObj = new ej.inputs.Uploader({
 });
 uploadObj.appendTo('#File_@random');
 function ItemSelected(args) {
-    console.log(args);
+    //console.log(args);
     selectedImage = window.location.origin+"/Files/Uploads/"+args.filesData[0].rawFile.name;
     var length = InputPageData.getLength();
-    console.log(length);
+    //console.log(length);
     activeFiles.push({
         "FileName":args.filesData[0].rawFile.name,
         "Line" : length+1
@@ -187,7 +187,7 @@ function ItemSelected(args) {
 var Delta;
 
 function onFileRemove(args) {
-    console.log(args);
+    //console.log(args);
     args.postRawFile = false;
 }
 
@@ -218,8 +218,8 @@ function SubmitDocumentationPage()
     @:   method = "EditPage";
     }
     
-    console.log(messagesDto);
-    console.log($("#InputPageDataTitle").val());
+    //console.log(messagesDto);
+    //console.log($("#InputPageDataTitle").val());
     if($("#InputPageDataTitle").val())
     {
 
@@ -235,7 +235,7 @@ function SubmitDocumentationPage()
                     CloseDocumentationPage();
                 },
                 error: function (xhr, status, error) {
-                    console.log(error);
+                    //console.log(error);
                 }
         });
     }

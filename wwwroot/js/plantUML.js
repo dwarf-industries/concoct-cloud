@@ -1,5 +1,4 @@
  function GenerateUmlData(data) {
-     console.log(data);
      $("#umlDiagramHolder").attr("uml", data);
      plantuml_runonce();
  }
@@ -54,15 +53,11 @@
  }
 
  var deflater = window.SharedWorker && new SharedWorker('/js/rawdeflate.js');
- console.log(deflater);
  if (deflater) {
-     console.log("Deflater Exists");
      deflater.port.addEventListener('message', done_deflating, false);
      deflater.port.start();
-     console.log(deflater);
 
  } else if (window.Worker) {
-     console.log("starting new worker");
      deflater = new Worker('/js/rawdeflate.js');
      deflater.onmessage = done_deflating;
  }
@@ -81,14 +76,12 @@
          svgObj.setAttribute("data", "https://www.plantuml.com/plantuml/svg/" + encode64(e.data));
          svgObj.setAttribute("type", "image/svg+xml");
          document.getElementById("svg_canvas").appendChild(svgObj);
-         console.log(svgObj);
          done = 1;
      });
      plantuml_runonce();
  }
 
  function plantuml_runonce() {
-     console.log("in");
      var done = 0;
      $("img").each(function() {
          if (done == 1) return;
@@ -96,17 +89,11 @@
          if (u1 != null) return;
          var u2 = $(this).attr("uml");
          if (u2 == "") return;
-         console.log("Next");
          var s = unescape(encodeURIComponent(u2));
-         console.log(s);
          if (deflater) {
-             console.log("Deflater");
              if (deflater.port && deflater.port.postMessage) {
-                 console.log(deflater.port.postMessage);
-                 console.log(deflater);
                  deflater.port.postMessage(s);
              } else {
-                 console.log("Just message");
                  deflater.postMessage(s);
              }
          } else {

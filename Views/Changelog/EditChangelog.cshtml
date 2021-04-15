@@ -42,12 +42,12 @@
         {
             var  content = $("#Description").children()[0].innerHTML;
 
-            console.log($("#ChangelogContent").html());
+            //console.log($("#ChangelogContent").html());
             var dto = {
                 "Id": @changelog.Id,
                 "Content": content
              }
-            console.log(dto);
+            //console.log(dto);
             $.ajax({
                 type: 'POST',
                 url: '/Changelog/EditChangelog',

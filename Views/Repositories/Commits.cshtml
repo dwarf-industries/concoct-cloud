@@ -273,7 +273,7 @@
                 branches.appendTo('#branches');
             },
             error: function (xhr, status, error) {
-                console.log(xhr);
+                //console.log(xhr);
             }
         });
 
@@ -293,8 +293,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.log(response);
-
+ 
                 if (commitsGrid !== undefined) {
                     commitsGrid.dataSource = response;
                     commitsGrid.refresh();
@@ -342,8 +341,7 @@
 
 
     function CommitDoubleClicked(args) {
-        console.log(args);
-        window.location = "/Repositories/Commit?Id=@Id&&commitId=" + args.rowData.id;
+         window.location = "/Repositories/Commit?Id=@Id&&commitId=" + args.rowData.id;
     }
 
     function BranchSelected(args) {

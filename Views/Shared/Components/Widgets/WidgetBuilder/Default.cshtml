@@ -164,7 +164,7 @@
     function ControlSelected(args, customSettings)
     {
         argument = args;
-        console.log(argument);
+        //console.log(argument);
         if(customSettings == 0)
         {
             SaveControlChanges();
@@ -183,7 +183,7 @@
             "WorkItemType" : argument,
             "Phase" : Phase
         }
-        console.log(dto);
+        //console.log(dto);
         $.ajax({
             type: 'POST',
             url: '/Widget/AppendWidget',
@@ -191,7 +191,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.log(response);
+                //console.log(response);
                 AddNewDashboardPanel(response.associatedUserDashboardPremade[0].id, response.id);
             },
             error: function (xhr, status, error) {

@@ -70,7 +70,6 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 LoadCommitGrid(response);
             },
             error: function (xhr, status, error) {
@@ -103,14 +102,12 @@
 
     // call the change event's function after initialized the component.
     function BranchChanged(args) {
-       console.log();
-        $.ajax({
+         $.ajax({
             type: 'GET',
             url: '/Commit/GetCommits?projectId=@ProjectId&branchId='+args.value,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 LoadCommitGrid(response);
             },
             error: function (xhr, status, error) {

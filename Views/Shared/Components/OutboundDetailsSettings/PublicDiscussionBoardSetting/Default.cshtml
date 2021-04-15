@@ -106,9 +106,9 @@
             dataType: "json",
             
             success: function (response) {
-                console.log(response);
+                //console.log(response);
                 response.forEach(x=>{
-                    console.log(x);
+                    //console.log(x);
                     chatGrid.addRecord(x);
                     chatGrid.refresh(); // refresh the Grid.
                 });
@@ -189,7 +189,7 @@
             "SenderName": "Rokono Control Administrator",
             "MessageContent": $("#ChatMessageBar").children()[0].innerHTML
         }
-        console.log(messagesDto);
+        //console.log(messagesDto);
          $.ajax({
             type: 'POST',
             url: '/OutboundDetails/AddNewPublicMessage',
@@ -198,7 +198,7 @@
             dataType: "json",
             
             success: function (response) {
-                console.log(response);
+                //console.log(response);
  
              },
             error: function (xhr, status, error) {

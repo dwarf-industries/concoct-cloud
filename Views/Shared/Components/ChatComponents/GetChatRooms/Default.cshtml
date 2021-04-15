@@ -45,7 +45,7 @@
 
     function CatRoomEditTagSelected(args)
     {
-        console.log(args.data.id);
+        //console.log(args.data.id);
         $("#LoadedChatRoomSetting").load("/Chat/GetChatRoomSettings?chatRoom="+args.data.id+"&&id="+@ProjectId);
 
      }

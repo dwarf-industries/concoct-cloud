@@ -240,7 +240,7 @@ ShowLoader();
              $("#KanbanHolder").html();
 
             var data = ej.base.extend([], response, null, true); // To maintain the property changes, extend the object.
-            console.log(data);
+            //console.log(data);
             var kanbanObj = new ej.kanban.Kanban({
                 dataSource: data,
                 keyField: 'status',
@@ -275,7 +275,7 @@ ShowLoader();
       
          function WorkItemListClicked(args)
          {
-             console.log(args);
+             //console.log(args);
             @*var incomingSprintDTO =
             {
                 "ProjectId": @ProjectId,
@@ -296,7 +296,7 @@ ShowLoader();
                     GenerateKaban(response);
                 },
                 error: function(xhr, status, error) {
-                    console.log(error);
+                    //console.log(error);
                 }
             });*@
          }
@@ -314,7 +314,7 @@ ShowLoader();
     function UserRowSelected(args)
     {
         selectedRowData = args.data;
-        console.log(args);
+        //console.log(args);
     }
     function UserSelected(args)
     {
@@ -324,7 +324,7 @@ ShowLoader();
     }
     function InitiliazeGrid()
     {
-        console.log(data);
+        //console.log(data);
 
 
         var treeGridObj = new ej.treegrid.TreeGrid({

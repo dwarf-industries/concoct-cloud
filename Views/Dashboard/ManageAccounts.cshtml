@@ -93,11 +93,11 @@
         ShowContent();
     }
     function EditClicked(args){
-        console.log(args);
+        //console.log(args);
         window.location.href="/Dashboard/EditAccount?id="+args.rowData.accountId+"&&projectId="+@ProjectId;
     }
     function ActionComplete(args){
-        //console.log(args);
+        ////console.log(args);
         if(args.requestType == "delete")
         {
             selectedDeleteId = args.data[0].accountId;

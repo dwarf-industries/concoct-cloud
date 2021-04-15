@@ -168,18 +168,18 @@
         $("#NewPageModalHodler").html("");
         $("#NewPageModalHodler").load("/Documentation/GetPageModal?id=0&&category=@Category&&projectId=@ProjectId")
         .ajaxSuccess(x => {
-            console.log("Success")
+            //console.log("Success")
         });
         
     }
 
     function OpenEditPageModal(id)
     {
-        console.log(id);
+        //console.log(id);
         $("#NewPageModalHodler").html("");
         $("#NewPageModalHodler").load("/Documentation/GetPageModal?id="+id+"&&category=@Category&&projectId=@ProjectId")
         .ajaxSuccess(x => {
-            console.log("Success")
+            //console.log("Success")
         });
         
     }

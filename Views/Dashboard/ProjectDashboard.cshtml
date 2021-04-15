@@ -250,7 +250,7 @@ $(document).ready(function() {
             "id": id,
 
         }
-        console.log(dto);
+        //console.log(dto);
         $.ajax({
             type: 'POST',
             url: '/Dashboard/GetCommitChartBindingData',
@@ -268,10 +268,10 @@ $(document).ready(function() {
 
 function InitChart(data)
 {
-    console.log(data);
+    //console.log(data);
     var bindingSeries = [];
     data.forEach(function(element) {
-        console.log(element);
+        //console.log(element);
         var bindingItem =
         {
             "x": element.DateOfCommit,

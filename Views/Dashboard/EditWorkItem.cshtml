@@ -826,7 +826,7 @@ else if (WorkItemType == 2)
             "ProjectId":id,
             "WorkItemId": @WorkItemData.Id
         }
-        console.log(dto);
+        //console.log(dto);
         $.ajax({
             type: 'POST',
             url: '/Dashboard/GetUserAccounts',
@@ -997,16 +997,16 @@ else if (WorkItemType == 2)
 
     });
     function StatChange(args){
-        console.log(args);
+        //console.log(args);
         startDate = args.value;
     }
 
     function EndChanged(args){
-        console.log(args);
+        //console.log(args);
         endDate = args.value;
     }
     function DueDateChange(args){
-        console.log(args);
+        //console.log(args);
         dueDateVal = args.value;
     }
 
@@ -1018,10 +1018,10 @@ else if (WorkItemType == 2)
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.log(response);
+                //console.log(response);
                 @* GenerateUmlData(response.umlData); *@
                 response.workItems.forEach(function(element) {
-                    console.log(element.workItem.id);
+                    //console.log(element.workItem.id);
                     AddAssocuatedItem(element.workItem.id);
 
                 });
@@ -1036,11 +1036,11 @@ else if (WorkItemType == 2)
 
     function InitiliazeGrid(data )
     {
-        console.log(data);
+        //console.log(data);
         ej.grids.Grid.Inject(ej.grids.Filter);
         ej.grids.Grid.Inject(ej.grids.Edit, ej.grids.Toolbar);
 
-       console.log(data);
+       //console.log(data);
         var grid = new ej.grids.Grid({
             dataSource: data,
             allowSorting: true,
@@ -1060,7 +1060,7 @@ else if (WorkItemType == 2)
         grid.appendTo('#Grid');
     }
     function WorkItemSelected(args){
-        console.log(args);
+        //console.log(args);
 
        AddAssocuatedItem(args.rowData.id);
     }
@@ -1085,11 +1085,11 @@ else if (WorkItemType == 2)
     }
 
     function ItemSelected(args){
-        console.log(args);
+        //console.log(args);
         assignedUser = args.itemData.id;
     }
     function InitiliazeComboBox(data){
-        console.log(data);
+        //console.log(data);
          var listObj = new ej.dropdowns.ComboBox({
         //set the data to dataSource property
             dataSource: data,
@@ -1114,7 +1114,7 @@ else if (WorkItemType == 2)
     function AddNewWorkItem(){
          var id = @projectId;
          var workItemTypeId = @WorkItemType;
-         console.log($("#ItemReason :selected").val()); // The value of the selected option
+         //console.log($("#ItemReason :selected").val()); // The value of the selected option
          ShowLoader();
 
           var dto = {
@@ -1162,7 +1162,7 @@ else if (WorkItemType == 2)
             dto.RepoSteps =  $("#RepoSteps").children()[0].innerHTML;
         if($("#SystemInfo").val() !== undefined)
             dto.SystemInfo = $("#SystemInfo").children()[0].innerHTML;
-        console.log(dto);
+        //console.log(dto);
         if($("#Title").val()) {
             $.ajax({
                 type: 'POST',
@@ -1193,7 +1193,7 @@ else if (WorkItemType == 2)
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.log(response);
+                //console.log(response);
                  var grid = new ej.grids.Grid({
                     dataSource: response,
                     recordDoubleClick: WorkItemGridDoubleClicked,
@@ -1227,7 +1227,7 @@ else if (WorkItemType == 2)
 
     function tabSelected(args)
     {
-        console.log(args);
+        //console.log(args);
     }
 
     function SendMessage()
@@ -1237,7 +1237,7 @@ else if (WorkItemType == 2)
             "WorkItemId": @WorkItemData.Id,
             "Message": $("#ChatMessageBar").children()[0].innerHTML
         }
-        console.log(messagesDto);
+        //console.log(messagesDto);
          $.ajax({
             type: 'POST',
             url: '/Dashboard/WorkItemAddMessage',
@@ -1246,7 +1246,7 @@ else if (WorkItemType == 2)
             dataType: "json",
 
             success: function (response) {
-                console.log(response);
+                //console.log(response);
 
                 chatGrid.addRecord(response);
                 chatGrid.refresh(); // refresh the Grid.

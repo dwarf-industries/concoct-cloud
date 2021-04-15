@@ -152,7 +152,7 @@ function PostFeedback()
             "SenderName": $("#sFeedbackUser").val(),
             "MessageContent": $("#Feedback").children()[0].innerHTML
         }
-        console.log(messagesDto);
+        //console.log(messagesDto);
         if($("#sFeedbackUser").val() && $("#Feedback").children()[0].innerHTML)
         {
             $.ajax({

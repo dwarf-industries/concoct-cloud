@@ -124,7 +124,7 @@
          var dto = {
             "id": @ProjectId,
         }
-            console.log(dto);
+            //console.log(dto);
 
      
 
@@ -177,7 +177,7 @@
     }
     function InitializePublicBugGrid(data )
     {
-        console.log(data);
+        //console.log(data);
         $("#GridHolder").html("");
         $("#GridHolder").html("<div id=\"TreeGrid\"></div>");
 
@@ -212,7 +212,7 @@
 
     function EditWorkItemBugGrid(args)
     {
-        console.log(args);
+        //console.log(args);
         var dto = {
             "id": args.rowData.id
         }
@@ -225,13 +225,13 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.log(response);
+                //console.log(response);
                 $("#WorkItemTitle").html(response.title);
                 $("#RepoSteps").html(response.repoSteps);
                 var bindingData = "";
                 response.associatedWorkItemFiles.forEach(element => 
                 {
-                    console.log(element.file.fileType);
+                    //console.log(element.file.fileType);
 
                     if(element.file.fileType === 1)
                     {

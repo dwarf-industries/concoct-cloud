@@ -166,7 +166,7 @@
 
     function BurndownOnChanged(args)
     {
-        console.log(args);
+        //console.log(args);
         if(args.value === "1")
         {
             CountWItems.enabled = true;
@@ -189,7 +189,7 @@
     }
     function QueriesChangedChanged(args)
     {
-        console.log(args);
+        //console.log(args);
         QuerySelected = parseInt(args.value);
     }
     function WorkItemTypeChanged(args)
@@ -203,7 +203,7 @@
 
     function SumWItemChanged(args)
     {
-        console.log(args);
+        //console.log(args);
         SumWItemSelected = parseInt(args.value);
     }
     function QueriesChanged(args)
@@ -227,7 +227,7 @@
             "SumWItemSelected" : SumWItemSelected,
             "BurndownOnSelect" : BurndownOnSelect
         }
-        console.log(dto);
+        //console.log(dto);
         $.ajax({
             type: 'POST',
             url: '/Widget/AppendBurndownChart',
@@ -235,7 +235,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.log(response);
+                //console.log(response);
                 AddNewDashboardPanel(response.associatedUserDashboardPremade[0].id, response.id);
             },
             error: function (xhr, status, error) {

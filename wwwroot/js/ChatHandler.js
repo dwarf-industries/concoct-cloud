@@ -31,17 +31,13 @@ chatConnectionBuilder.on("ReciveMessage", (data) => {
 
     var control = "";
     var date = formatAMPM(new Date());
-    // console.log(data);
     //TODO change chat message handler
     var incomingChatHubData = JSON.parse(data);
      
-    console.log(incomingChatHubData);
-    console.log(ActiveUser);
-    console.log(ActiveUser.ActiveRoom === incomingChatHubData.ActiveRoom);
+    
     if(ActiveUser.ActiveRoom === incomingChatHubData.ActiveRoom)
     {
-        console.log("In"); 
-        var msg =   "<div class=\"row ChatMessage\">"+
+         var msg =   "<div class=\"row ChatMessage\">"+
                         "<div class=\"col-md-2\">"+
                             "<img class=\"ResponsiveChatImage\" src=\"https://www.medicinelodge.ca/wp-content/uploads/missing-avatar.jpg\" />"+
                         "</div>"+
@@ -58,11 +54,8 @@ chatConnectionBuilder.on("ReciveMessage", (data) => {
                             "</div>"+
                         "</div>"+
                     "</div>";
-        console.log(msg);
-        console.log("Adding");
-        $("#ChatArea").append(msg).scrollTop($("#ChatArea").prop('scrollHeight'));
-        console.log("Suppose to be added");
-        //setTimeout(
+       $("#ChatArea").append(msg).scrollTop($("#ChatArea").prop('scrollHeight'));
+         //setTimeout(
         //    function () {
 
         //    }, time);
@@ -90,12 +83,10 @@ chatConnectionBuilder.on("UserDisconnected", () => {
  
  
 chatConnectionBuilder.on("ReciveNotification", (data) => {
-    console.log(data);
     var getData = JSON.parse(data);
 
     for (var cData in getData) {
         var item = getData[cData];
-        console.log(item);    
         ShowNotification(item);
 
     }
@@ -104,8 +95,7 @@ chatConnectionBuilder.on("ReciveNotification", (data) => {
 });
   
 chatConnectionBuilder.on("ReciveNewNotification", (data) => {
-    console.log(data);
-    var getData = JSON.parse(data);
+     var getData = JSON.parse(data);
     ShowNotification(getData);
 });
 chatConnectionBuilder.start().catch(x => console.log(x.toString()));
@@ -148,9 +138,7 @@ function SendChatRoomMessage(IsPersonal, ReciverId) {
             "IsPersonal" : IsPersonal,
             "ReciverId" : ReciverId
         };
-        console.log(OutgoingChatHubData);
         var sendingResult =  JSON.stringify(OutgoingChatHubData);
-        console.log(sendingResult);
         $("#ChatArea").append(control).scrollTop($("#ChatArea").prop('scrollHeight'));
         chatConnectionBuilder.invoke("IncomingMessage",sendingResult).catch(x => console.log(x.toString()));
         $("#InputChat").val('');

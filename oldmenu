@@ -203,7 +203,7 @@
         },
       
     ];
-    console.log(data);
+    //console.log(data);
     // TreeView  initialization
     var mainTreeView= new ej.navigations.TreeView({
         fields: { dataSource: data, id: 'nodeId', text: 'nodeText', child: 'nodeChild' },nodeSelected: LinkSelected, expandOn: 'Click'
@@ -213,10 +213,10 @@
 
     function LinkSelected(args)
     {
-        console.log(args);
+        //console.log(args);
         data.forEach(element => 
         {
-            console.log(element);
+            //console.log(element);
             element.nodeChild.forEach(child => 
             {
                 if(child.nodeId === args.nodeData.id)
@@ -224,7 +224,7 @@
             });
         });
 
-      // console.log(data.find(x => x.nodeChild.nodeId === args.nodeData.id));
+      // //console.log(data.find(x => x.nodeChild.nodeId === args.nodeData.id));
     }
 
 </script>

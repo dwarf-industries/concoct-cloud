@@ -27,8 +27,7 @@ $(document).ready(function() {
     //     }
     //     bindingData.push(current);
     // });
-    // console.log(bindingData);
-
+ 
  
     var email = new ej.inputs.TextBox({
         placeholder: 'Email',
