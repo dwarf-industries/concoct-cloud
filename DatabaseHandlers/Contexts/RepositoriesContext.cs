@@ -3,6 +3,7 @@ using CsvHelper.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using ParseDiff;
 using Rokono_Control.Models;
 using System;
 using System.Collections.Generic;
@@ -58,25 +59,30 @@ namespace Rokono_Control.DatabaseHandlers.Contexts
             return result;
         }
 
-        internal OutgoingCommitTemp GetCommitDeatails(IncomingIdRequest request)
+        internal string GetCommitDeatails(IncomingIdRequest request)
         {
             var project = Context.Projects.Include(x => x.Repository).FirstOrDefault(x => x.Id == request.ProjectId);
-
-            var format = "";
-
-            var getCommitDetails = RepositoryManager.CommandOutput(OS, $"git show {request.Phase} --pretty=format:" + format, Path.Combine(Program.Configuration.LocalRepo, project.Repository.FolderPath));
+            var result = string.Empty;
+            var getCommitDetails = RepositoryManager.CommandOutput(OS, $"git show  --name-only {request.Phase}", Path.Combine(Program.Configuration.LocalRepo, project.Repository.FolderPath));
             foreach (var line in getCommitDetails.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
-            { 
-                if (!line.Contains("HEAD"))
-                {
-                    //result.Add(new Branches
-                    //{
-                    //    BranchName = line.Substring(9),
-                    //    Id = index++
-                    //});
-                }
+            {
+                var getFileDifference = RepositoryManager.CommandOutput(OS, $"git show {request.Phase} -- {line}", Path.Combine(Program.Configuration.LocalRepo, project.Repository.FolderPath));
+
+                var files = Diff.Parse(getFileDifference, Environment.NewLine).ToArray();
+                //AreEqual(1, files.Length);
+                //var file = files[0];
+                //AreEqual(FileChangeType.Delete, file.Type);
+                //AreEqual("test", file.From);
+                //AreEqual("/dev/null", file.To);
+                //var chunk = file.Chunks.First();
+                //AreEqual("@@ -1,2 +0,0 @@", chunk.Content);
+                //AreEqual(2, chunk.Changes.Count());
+                //var changes = chunk.Changes.ToArray();
+
             }
-            return null;
+
+
+            return result;
         }
 
         public List<OutgoingCommitTemp> GetCommitsForProject(int projectId, string branch)
