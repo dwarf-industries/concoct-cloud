@@ -33,18 +33,29 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div>
+                <label for="publicCheck" style="padding: 10px 70px 10px 0">Make sign up public</label>
+                <input id="publicCheck" type="checkbox" onchange="MakeSignUpPublic()" />
+                <p id="GeneratedLink"></p>
+            </div>
         </div>
+     </div>
  
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
- <script>
-     var selectedDeleteId;
-    $( document ).ready(function() 
+<script>
+
+    var publicCheck = new ejs.buttons.Switch({ checked: false });
+    publicCheck.appendTo('#publicCheck');
+
+    var selectedDeleteId;
+    $( document ).ready(function()
     {
         var AddNewMember = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
         AddNewMember.appendTo('#AddNewMember');
         GetAccountsData();
-        
+
     });
 
     function GetAccountsData()
@@ -59,7 +70,7 @@
                 LoadAccounts(response);
             },
             error: function (xhr, status, error) {
-    
+
             }
         });
     }
@@ -80,11 +91,11 @@
                 { field: 'type', headerText: 'Account Type', width: 130, format: 'yMd', textAlign: 'Right' },
                 { field: 'createdAt', headerText: 'Created At', width: 130, format: 'yMd', textAlign: 'Right' },
                 { headerText: 'Manage Records', width: 160,
-                commands: 
+                commands:
                     [
                         { type: 'Edit', buttonOption: { iconCss: ' e-icons e-edit', cssClass: 'e-flat' }, click: EditClicked },
                         { type: 'Delete', buttonOption: { iconCss: 'e-icons e-delete', cssClass: 'e-flat' }, click: DeleteClicked },
-   
+
                     ]
                 }
             ]
@@ -126,6 +137,35 @@
                 }
             });
     }
+
+     function MakeSignUpPublic() {
+        var isChecked;
+        if (publicCheck.properties.checked === true)
+             isChecked = 1;
+        else
+            isChecked = 0;
+
+
+          var incomingSprintDTO =
+        {
+            "ProjectId": @ProjectId,
+            "isChecked": isChecked
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Accounts/MakeSignupPublic',
+            data: JSON.stringify(incomingSprintDTO),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(response) {
+                $("#GeneratedLink").html(response.data);
+            },
+            error: function(xhr, status, error) {
+             }
+        });
+     }
+
 
     function CallUrl(url)
     {
