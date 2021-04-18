@@ -135,6 +135,45 @@ namespace Platform.DatabaseHandlers.Contexts
             .ToList();
         }
 
+        internal string SignUpPublic(int projectId, int isChecked, string domain)
+        {
+            var getProject = Context.Projects.FirstOrDefault(x => x.Id == projectId);
+            getProject.AllowPublicControl = isChecked;
+            Context.Attach(getProject);
+            Context.Update(getProject);
+            Context.SaveChanges();
+
+            if (isChecked == 1)
+                return $"https://{domain}/Accounts/ProjectSignup?projectId={projectId}";
+            else
+                return string.Empty;
+        }
+
+        internal bool CheckProjectAssociation(string phase, int projectId)
+        {
+            var account = Context.UserAccounts.FirstOrDefault(x => x.Email == phase);
+            if (account == null)
+                return false;
+
+            return Context.AssociatedProjectMembers.FirstOrDefault(x => x.ProjectId == projectId
+                                                                        && x.UserAccountId == account.Id) != null ? true : false;
+        }
+
+        internal bool CheckProjectSignUpPolicy(int projectId)
+        {
+            var exist = Context.Projects.FirstOrDefault(x => x.Id == projectId);
+
+            if (exist == null)
+                return false;
+
+            return exist.AllowPublicControl != null && exist.AllowPublicControl == 1 ? true : false;
+        }
+
+        internal bool CheckAccountExist(string phase)
+        {
+            return Context.UserAccounts.FirstOrDefault(x => x.Email == phase) != null ? true : false;
+        }
+
         internal void UpdateUserNotificationRight(int userId, int projectId, int id, string phase)
         {
             var right = Context.AssociatedAccountProjectNotificationRights.Include(x => x.Right)
@@ -249,8 +288,8 @@ namespace Platform.DatabaseHandlers.Contexts
                 Email = projectAccount.email,
                 Password = projectAccount.password,
                 ProjectRights = false,
-                FirstName = "Unassigned",
-                LastName = "Unassigned"
+                FirstName = projectAccount.FirstName,
+                LastName = projectAccount.LastName
             });
             var projectRepository = Context.Projects.FirstOrDefault(x=> x.Id == projectAccount.ProjectId).RepositoryId;
             Context.AssociatedProjectMembers.Add(new AssociatedProjectMembers{
@@ -277,9 +316,16 @@ namespace Platform.DatabaseHandlers.Contexts
                      ViewOtherPeoplesWork = Convert.ToInt16(projectAccount.accountRights.ViewWorkItems),
                      ManageUserdays = Convert.ToInt16(projectAccount.accountRights.ScheduleManagement),
                      UpdateUserRights = Convert.ToInt16(projectAccount.accountRights.EditUserRights),
-                     WorkItemRule = Convert.ToInt16(projectAccount.accountRights.WorkItemOption)
+                     WorkItemRule = Convert.ToInt16(projectAccount.accountRights.WorkItemOption),
+                     Documentation = Convert.ToInt16(projectAccount.accountRights.Documentation)
                  }).Entity.Id;
-                Context.SaveChanges();
+                 Context.SaveChanges();
+                commonRightsId = Context.UserRights.FirstOrDefault(x => x.ManageIterations == projectAccount.accountRights.IterationOptions &&
+                                                                        x.ChatChannelsRule == projectAccount.accountRights.ChatChannels &&
+                                                                        x.ManageUserdays == projectAccount.accountRights.ScheduleManagement &&
+                                                                        x.UpdateUserRights == projectAccount.accountRights.EditUserRights &&
+                                                                        x.ViewOtherPeoplesWork == projectAccount.accountRights.ViewWorkItems &&
+                                                                        x.WorkItemRule == projectAccount.accountRights.WorkItemOption).Id;
             }
             Context.AssociatedProjectMemberRights.Add(new AssociatedProjectMemberRights{
                 ProjectId = projectAccount.ProjectId,
