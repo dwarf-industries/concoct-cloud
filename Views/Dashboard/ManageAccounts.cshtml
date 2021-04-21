@@ -3,6 +3,8 @@
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
     var result = ViewData["UserAccounts"] as List<UserAccounts>;
     var ProjectId = ViewData["ProjectId"] as int?;
+    var accessPolicy = ViewData["SignupPolicy"] as int?;
+    var publicSignupUrl = ViewData["PublicUrl"] as string;  
 
 }
 
@@ -37,7 +39,7 @@
             <div>
                 <label for="publicCheck" style="padding: 10px 70px 10px 0">Make sign up public</label>
                 <input id="publicCheck" type="checkbox" onchange="MakeSignUpPublic()" />
-                <p id="GeneratedLink"></p>
+                <p id="GeneratedLink">@publicSignupUrl</p>
             </div>
         </div>
      </div>
@@ -46,7 +48,11 @@
 
 <script>
 
-    var publicCheck = new ejs.buttons.Switch({ checked: false });
+    var signupPolicy = false;
+    if (@accessPolicy == 1) {
+        signupPolicy = true;
+    }
+    var publicCheck = new ejs.buttons.Switch({ checked: signupPolicy});
     publicCheck.appendTo('#publicCheck');
 
     var selectedDeleteId;
