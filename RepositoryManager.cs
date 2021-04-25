@@ -121,8 +121,8 @@ namespace Rokono_Control
         {
             Projects.ForEach(x =>
             {
-                CommandOutput(Os, "git fetch --all");
-                CommandOutput(Os, "git pull --all");
+                CommandOutput(Os, "git fetch --all", Path.Combine(Program.Configuration.LocalRepo, x.Repository.FolderPath));
+                CommandOutput(Os, "git pull --all", Path.Combine(Program.Configuration.LocalRepo, x.Repository.FolderPath));
                 GetAllCommitsForProject(x.Id, Os, x);
             });
         }
@@ -140,7 +140,7 @@ namespace Rokono_Control
                     result = ReadCommandOutputWin(command, workingDirectory);
                     break;
                 case "gnu":
-                    result = ExecuteCmd(workingDirectory, command);
+                    result = ExecuteCmd(command, workingDirectory);
                     break;
             }
             return result;
@@ -206,24 +206,28 @@ namespace Rokono_Control
 
         public static string ExecuteCmd(string arguments, string workingDiectory = null)
         {
-            var process = new Process()
+            var result = string.Empty; 
+            if(workingDiectory != null && Directory.Exists(workingDiectory))
             {
-                StartInfo = new ProcessStartInfo
+                var process = new Process()
                 {
-                    FileName = "/bin/bash",
-                    Arguments = $"-c \"{arguments}\"",
-                    // FileName = "ping",
-                    //  Arguments = $"localhost",
-                    WorkingDirectory = workingDiectory,
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                }
-            };
+                    StartInfo = new ProcessStartInfo
+                    {
+                        FileName = "/bin/bash",
+                        Arguments = $"-c \"{arguments}\"",
+                        // FileName = "ping",
+                        //  Arguments = $"localhost",
+                        WorkingDirectory = workingDiectory,
+                        RedirectStandardOutput = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true,
+                    }
+                };
 
-            process.Start();
-            string result = process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
+                process.Start();
+                result = process.StandardOutput.ReadToEnd();
+                process.WaitForExit();
+            }
             return result;
         }
     }

@@ -21,15 +21,27 @@ namespace Rokono_Control
         public static void Main(string[] args)
         {
             ProjectBranches = new List<ProjectBranches>();
+            Members = new List<HubMappedMembers>();
+            var current = OS.GetCurrent();
+            ServerOS = current;
+
             if(!File.Exists("Configuration.json"))
                 Configuration = CreateFile("Configuration.json");
             else
+            {
                 Configuration = ReadConfig("Configuration.json");
+                switch(ServerOS)
+                {
+                    case "gnu":
+                    Configuration.LocalRepo = "/home/GitRepositories";
+                    break;
+                    case "win":
+                    Configuration.LocalRepo = @"C:\GitRepositories";
+                    break;
+                }
+            }
+                
 
-            Members = new List<HubMappedMembers>();
-     //       InitCron();
-            var current = OS.GetCurrent();
-            ServerOS = current;
             CreateWebHostBuilder(args).Build().Run();
         }
         
@@ -51,7 +63,7 @@ namespace Rokono_Control
                     new ConfigBindingData { Name = "GetCommitFile.sh", Path = "/home/kristifordevelopment/ShellScripts/RokonoControl" },
                 },
                 OS = OS.GetCurrent(),
-                LocalRepo = @"C:\GitRepositories"
+                LocalRepo = ServerOS == "gnu" ? "/home/GitRepositories" : @"C:\GitRepositories"
             };
             var config = JsonConvert.SerializeObject(configuration);
             if(!File.Exists(v))
@@ -64,9 +76,7 @@ namespace Rokono_Control
             }
          
             return configuration;
-         }
-
-
+        }
 
         private static Config ReadConfig(string path)
         {
@@ -74,15 +84,6 @@ namespace Rokono_Control
             var config = File.ReadAllText(path);
             return JsonConvert.DeserializeObject<Config>(config);
         }
-
-        //public static void InitCron(string repoName)
-        //{
-        //    using(var repositoryManager = new GitRepositoryManager())
-        //    {
-        //        repositoryManager.CollectCommits(repoName);
-        //    }
-            
-        //}
 
         private static void timer1_Tick(object sender, EventArgs e)
         {
