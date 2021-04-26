@@ -7,14 +7,13 @@
 
 }
 
-<link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
-  <!-- end of sidebar element -->
+   <!-- end of sidebar element -->
   <script>
 
     function InitializeAssignedGrid(data, assignedId,height)
     {
-        console.log(data);
-        console.log(assignedId);
+        //console.log(data);
+        //console.log(assignedId);
 
         new ej.treegrid.TreeGrid({
             dataSource: data,
@@ -34,7 +33,7 @@
                 { field: 'description', headerText: 'Description' },
             ]
         }).appendTo('#'+assignedId);
-        console.log($("#layout_"+height).height());
+        //console.log($("#layout_"+height).height());
 
          @* ShowContent(); *@
 
@@ -42,7 +41,7 @@
     }
     function EditWorkItem(args)
     {
-        console.log(args);
+        //console.log(args);
         window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.rowData.id+"&returnUrl="+window.location.href;
     }
 
@@ -273,12 +272,12 @@ for (var i = 0; i < closeElement.length; i++) {
         phase += args.element.attributes["data-sizey"].nodeValue;
 
 
-        console.log(args);
+        //console.log(args);
           var dto = {
             "__RequestVerificationToken": args.element.attributes["id"].nodeValue,
             "Phase" : phase
         }
-        console.log(dto);
+        //console.log(dto);
         $.ajax({
             type: 'POST',
             url: '/Widget/WidgetResized',
@@ -286,7 +285,7 @@ for (var i = 0; i < closeElement.length; i++) {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.log(response);
+                //console.log(response);
             },
             error: function (xhr, status, error) {
                 console.log(error);
@@ -303,12 +302,12 @@ for (var i = 0; i < closeElement.length; i++) {
             phase += x.properties.sizeX+",";
             phase += x.properties.sizeY;
 
-            console.log(args);
+            //console.log(args);
             var dto = {
                 "__RequestVerificationToken": x.id,
                 "Phase" : phase
             }
-            console.log(dto);
+            //console.log(dto);
             $.ajax({
                 type: 'POST',
                 url: '/Widget/WidgetResized',
@@ -316,7 +315,7 @@ for (var i = 0; i < closeElement.length; i++) {
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    console.log(response);
+                    //console.log(response);
                  },
                 error: function (xhr, status, error) {
                     console.log(error);
@@ -330,12 +329,12 @@ for (var i = 0; i < closeElement.length; i++) {
             phase += x.properties.sizeX+",";
             phase += x.properties.sizeY;
 
-            console.log(args);
+            //console.log(args);
             var dto = {
                 "__RequestVerificationToken": x.id,
                 "Phase" : phase
             }
-            console.log(dto);
+            //console.log(dto);
             $.ajax({
                 type: 'POST',
                 url: '/Widget/WidgetResized',
@@ -343,7 +342,7 @@ for (var i = 0; i < closeElement.length; i++) {
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    console.log(response);
+                    //console.log(response);
                 },
                 error: function (xhr, status, error) {
                     console.log(error);

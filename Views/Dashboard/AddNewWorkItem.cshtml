@@ -679,7 +679,7 @@
 
     function OpenModal()
     {
-        console.log("Open modal");
+        //console.log("Open modal");
         $.ajax({
             type: 'GET',
             url: '/Dashboard/GetWorkItemRelations',
@@ -687,7 +687,7 @@
             dataType: "json",
             success: function (response) {
                 response.forEach(function(element) {
-                    console.log(element);
+                    //console.log(element);
                     $("#WorkItemRelationsGrid").append("<option value=\""+element.id+"\">"+element.relationName+"</option>");
                 });
                $('#WorItemsGridPanel').modal('show'); 
@@ -796,7 +796,7 @@
             "id": id,
             
         }
-        console.log(dto);
+        //console.log(dto);
         $.ajax({
             type: 'POST',
             url: '/Dashboard/GetUserAccounts',
@@ -819,7 +819,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.log(response);
+                //console.log(response);
                 InitiliazeGrid(response);
             },
             error: function (xhr, status, error) {
@@ -980,7 +980,7 @@
         ej.grids.Grid.Inject(ej.grids.Filter);
         ej.grids.Grid.Inject(ej.grids.Edit, ej.grids.Toolbar);
 
-       //console.log(id);
+       ////console.log(id);
         var grid = new ej.grids.Grid({
             dataSource: data,
             allowSorting: true,
@@ -1032,7 +1032,7 @@
     function AddNewWorkItem(){
          var id = @projectId;
          var workItemTypeId = @WorkItemType;
-         console.log($("#ItemReason :selected").val()); // The value of the selected option
+         //console.log($("#ItemReason :selected").val()); // The value of the selected option
          ShowLoader();
           var dto = {
             "WorktItemType" : workItemTypeId,
@@ -1134,7 +1134,7 @@
 
 
     function WorkItemSelected(args){
-        console.log(args);
+        //console.log(args);
        
        AddAssocuatedItem(args.rowData.id);
     }
@@ -1149,7 +1149,7 @@
             "RelationType" :  $("#WorkItemRelationsGrid :selected").val(),
             "LinkedItems" : selectedChildren
         }
-        console.log(dto);
+        //console.log(dto);
          $.ajax({
             type: 'POST',
             url: '/Dashboard/ValidateSelectedItem',
@@ -1157,7 +1157,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.log(response);
+                //console.log(response);
                 if(response.valid === true)
                 {
 
@@ -1199,7 +1199,7 @@
 
                     //Render initialized ListView component
                     listObj.appendTo('#listview-def');
-                    console.log(response);
+                    //console.log(response);
                  }
                 else
                 {
@@ -1218,7 +1218,7 @@
                 console.log(error);
             }
         });
-        console.log(selectedChildren);
+        //console.log(selectedChildren);
     }
 
 
@@ -1230,7 +1230,7 @@
 
     function tabSelected(args)
     {
-        console.log(args);
+        //console.log(args);
     }
 
     function AddIRDiagram() {

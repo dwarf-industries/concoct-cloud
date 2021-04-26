@@ -11,5 +11,6 @@ namespace Rokono_Control.Models
         public int ViewWorkItems { get; set; }
         public int ScheduleManagement { get; set; }
         public bool Online { get; set; }
+        public int Documentation { get; set; }
     }
 }

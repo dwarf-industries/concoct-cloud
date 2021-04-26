@@ -5,8 +5,7 @@
     var BranchId = ViewData["BranchId"];
     var ProjectId = ViewData["PrijectId"];
 }
-<link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
-   <!-- end of sidebar element -->
+    <!-- end of sidebar element -->
         <!-- main-content declaration -->
 <<<<<<< HEAD:Platform/Views/Commit/CommitData.cshtml
    
@@ -63,7 +62,6 @@ require.config({ paths: { 'vs': '/Syncfusion/node_modules/monaco-editor/min/vs' 
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 LoadCommitHirarchy(response);
             },
             error: function (xhr, status, error) {
@@ -86,9 +84,7 @@ require.config({ paths: { 'vs': '/Syncfusion/node_modules/monaco-editor/min/vs' 
     
     function ItemSelected(args)
     {
-        console.log(args.nodeData.id);
-        BindingData.forEach(function(cData) {
-            console.log(cData );
+         BindingData.forEach(function(cData) {
             if(cData.id === args.nodeData.id)
                 ShowSelectedFile(cData);
             else
@@ -96,7 +92,6 @@ require.config({ paths: { 'vs': '/Syncfusion/node_modules/monaco-editor/min/vs' 
                 if(cData.subChild !== null)
                 {
                     cData.subChild.forEach(function(bData){
-                        console.log(bData);
                         if(bData.id === args.nodeData.id)
                             ShowSelectedFile(bData);
                     });
@@ -114,7 +109,6 @@ require.config({ paths: { 'vs': '/Syncfusion/node_modules/monaco-editor/min/vs' 
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 editor = monaco.editor.create(document.getElementById('container'), {
                     value:  response.data,
                     language:  response.languageType

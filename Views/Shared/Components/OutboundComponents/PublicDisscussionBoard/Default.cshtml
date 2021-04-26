@@ -98,7 +98,7 @@
             "SenderName": $("#sName").val(),
             "MessageContent": $("#ChatMessageBar").children()[0].innerHTML
         }
-        console.log(messagesDto);
+        //console.log(messagesDto);
         if($("#sName").val() && $("#ChatMessageBar").children()[0].innerHTML)
         {
             $.ajax({
@@ -109,7 +109,7 @@
                 dataType: "json",
                 
                 success: function (response) {
-                    console.log(response);
+                    //console.log(response);
 
                     chatGrid.addRecord(response);
                     chatGrid.refresh(); // refresh the Grid.

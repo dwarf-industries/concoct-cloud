@@ -23,7 +23,7 @@ $.ajax({
             InitializeRelateWorkItemsGrid(response);
         },
         error: function (xhr, status, error) {
-            console.log(error);
+            //console.log(error);
         }
     });
 function CallItemSelect()
@@ -42,11 +42,9 @@ function CancelGridGlicked()
 
 function InitializeRelateWorkItemsGrid(data )
 {
-    console.log(data);
     ej.grids.Grid.Inject(ej.grids.Filter);
     ej.grids.Grid.Inject(ej.grids.Edit, ej.grids.Toolbar);
 
-   console.log(data);
     var grid = new ej.grids.Grid({
         dataSource: data,
         allowSorting: true,
@@ -67,8 +65,7 @@ function InitializeRelateWorkItemsGrid(data )
     grid.appendTo('#Grid');
 }
 function WorkItemSelected(args){
-    console.log(args);
- 
+  
    AddAssocuatedItem(args.rowData.id);
 }
 
@@ -84,7 +81,6 @@ function AddAssocuatedItem(id){
         "RelationType" :  $("#WorkItemRelationsGrid :selected").val(),
         "LinkedItems" : selectedChildren
     }
-    console.log(dto);
      $.ajax({
         type: 'POST',
         url: '/Dashboard/ValidateSelectedItem',
@@ -92,7 +88,6 @@ function AddAssocuatedItem(id){
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {
-            console.log(response);
             if(response.valid === true)
             {
 
@@ -138,7 +133,6 @@ function AddAssocuatedItem(id){
 
                 //Render initialized ListView component
                 listObj.appendTo('#listview-def');
-                console.log(response);
              }
             else
             {
@@ -159,13 +153,11 @@ function AddAssocuatedItem(id){
             console.log(error);
         }
     });
-    console.log(selectedChildren);
 }
 
 
 function ChangeWorkItemId(id)
 {
-    console.log("in "+ id);
     wItemId = id;
     AssociationHander.CurrWorkItemId = id;
 }
@@ -177,7 +169,6 @@ function  LoadWorkItemsGrid()
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {
-            console.log(response);
              var grid = new ej.grids.Grid({
                 dataSource: response,
                 recordDoubleClick: WorkItemGridDoubleClicked,
@@ -205,7 +196,6 @@ function WorkItemGridDoubleClicked(args)
 
 function OpenModal()
 {
-    console.log("Open modal");
     $.ajax({
         type: 'GET',
         url: '/Dashboard/GetWorkItemRelations',
@@ -213,7 +203,6 @@ function OpenModal()
         dataType: "json",
         success: function (response) {
             response.forEach(function(element) {
-                console.log(element);
                 $("#WorkItemRelationsGrid").append("<option value=\""+element.id+"\">"+element.relationName+"</option>");
             });
            $('#WorItemsGridPanel').modal('show'); 

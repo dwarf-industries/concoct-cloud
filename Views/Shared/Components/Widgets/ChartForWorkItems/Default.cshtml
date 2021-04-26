@@ -30,7 +30,7 @@ var dto = {
     "SumWItemSelected" : SumWItemSelected,
     "BurndownOnSelect" : BurndownOnSelect
 }
-console.log(dto);
+//console.log(dto);
 $.ajax({
     type: 'POST',
     url: '/Widget/GetPieChartData',
@@ -38,11 +38,11 @@ $.ajax({
     contentType: "application/json; charset=utf-8",
     dataType: "json",
     success: function (response) {
-        console.log(response);
+        //console.log(response);
         InitializeChartForWorkItems(response);
     },
     error: function (xhr, status, error) {
-        console.log(error);
+        //console.log(error);
     }
 });  *@
 @* InitilizeBurdownChart(); *@

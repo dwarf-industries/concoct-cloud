@@ -304,8 +304,7 @@
             CurrentSelected.viewWorkItems = 1;
         else
             CurrentSelected.viewWorkItems = 0;
-        console.log(CurrentSelected);
-        console.log(ActiveUsersGrid);
+         
         ActiveUsersGrid.addRecord(CurrentSelected);
         ActiveUsersGrid.refresh(); // refresh the Grid.
     }
@@ -316,7 +315,6 @@
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {
-            console.log(response);
             LoadActiveUsers(response);
         },
         error: function (xhr, status, error) {
@@ -331,7 +329,6 @@
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {
-            console.log(response);
             LoadAccounts(response);
         },
         error: function (xhr, status, error) {
@@ -339,16 +336,13 @@
         }
     });
     function AccountSelected(args) {
-        console.log(args);
-        console.log(grid.getRows());
-        CurrentSelected = args.data;
+         CurrentSelected = args.data;
  
     }
 
 
     function AssignProjectUser() {
 
-        console.log("in");
         var accountRights =
         {
             "WorkItemOption": WorkItemUserOption.properties.checked === true ? 1: 0,
@@ -367,9 +361,9 @@
             "password":$("#password").val(),
             "accountRights" : accountRights
                 
-         }
-         console.log(dto);
-        $.ajax({
+        }
+
+         $.ajax({
             type: 'POST',
             url: '/Accounts/AssociateNewUserAccount',
             data: JSON.stringify(dto),
@@ -385,7 +379,6 @@
     }
     function InviteProjectMember() {
 
-        console.log("in");
         var dto = {
             "ProjectId": @ProjectId,
             "Accounts": ActiveUsersGrid.dataSource,// get the selected records.
@@ -400,7 +393,6 @@
                 alert("Records have been added!");
             },
             error: function (xhr, status, error) {
-                console.log(error);
             }
         });
     }

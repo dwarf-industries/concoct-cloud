@@ -32,7 +32,7 @@
     function CheckChanged(args)
     {
         var arg = args;
-        console.log($("#"+args).is(':checked'));
+        //console.log($("#"+args).is(':checked'));
         if(active)
             active = 0;
         else
@@ -44,7 +44,7 @@
             "Id" : active    
         }
       
-        console.log(dto);
+        //console.log(dto);
         $.ajax({
             type: 'POST',
             url: '/Accounts/ChangeNotificationRight',

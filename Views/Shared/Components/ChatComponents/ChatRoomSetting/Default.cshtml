@@ -58,7 +58,6 @@
     });
     function ChatRoomTagList(data)
     {
-        console.log(data);
         var ChatRoomTagList = new ej.grids.Grid({
             dataSource: data,
             allowSelection: true,
@@ -77,7 +76,7 @@
 
     function CatRoomTagSelected(args)
     {
-        console.log(args);
+        //console.log(args);
         SelectedRoom = args;
         $("#TagSettingProperties").load('/Chat/GetTagProperties?id='+SelectedRoom+'&&projectId='+@projectId+'&&option=1&&chatRoom='+@ChatRoomId);
     }

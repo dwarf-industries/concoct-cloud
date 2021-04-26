@@ -1,0 +1,28 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var projectId = ViewData["ProjectId"] as int?;
+    var commitId = ViewData["CommitId"] as string;
+    ViewData["Title"] = $"Commit {commitId}";
+
+}
+
+<div class="displayFlex">
+    <h1>Commit message</h1>
+
+    <p>Commit Id <span>Kristifor Milchev</span> commited <span>Day</span> <span>Branch Name</span></p>
+</div>
+
+<div class="row">
+    <div class="col-3">
+
+    </div>
+    <div class="col-8">
+
+        @await Component.InvokeAsync("CodeEditor", new IncomingIdRequest
+        {
+            Phase = commitId,
+            ProjectId = projectId.Value
+        })
+
+    </div>
+</div>

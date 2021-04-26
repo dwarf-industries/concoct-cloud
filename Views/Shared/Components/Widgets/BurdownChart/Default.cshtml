@@ -32,7 +32,7 @@ var dto = {
     "SumWItemSelected" : '@BindingData.SumWItemSelected',
     "BurndownOnSelect" : '@BindingData.BurndownOnSelect'
 }
-console.log(dto);
+//console.log(dto);
 $.ajax({
     type: 'POST',
     url: '/Widget/GetBurndownChartData',
@@ -40,7 +40,7 @@ $.ajax({
     contentType: "application/json; charset=utf-8",
     dataType: "json",
     success: function (response) {
-        console.log(response);
+        //console.log(response);
         InitilizeBurdownChart(response);
     },
     error: function (xhr, status, error) {

@@ -19,8 +19,7 @@
 }
 
 </style>
-<link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
- <!-- end of sidebar element -->
+  <!-- end of sidebar element -->
         <!-- main-content declaration -->
         <div class="main-content" id="main-text" style="height: 94vh;">
             <div class="sidebar-content">
@@ -84,7 +83,6 @@ require.config({ paths: { 'vs': '/Syncfusion/node_modules/monaco-editor/min/vs' 
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 LoadCommitHirarchy(response);
             },
             error: function (xhr, status, error) {
@@ -114,7 +112,6 @@ require.config({ paths: { 'vs': '/Syncfusion/node_modules/monaco-editor/min/vs' 
 
     function BranchChanged(args)
     {
-        console.log(args);
     }
     function LoadCommitHirarchy(data)
     {
@@ -131,13 +128,11 @@ require.config({ paths: { 'vs': '/Syncfusion/node_modules/monaco-editor/min/vs' 
     function ItemSelected(args)
     {
         var data = treeObj.getTreeData(args.node);
-      //  console.log(data);
         ShowSelectedFile(data);
     }
 
     function ShowSelectedFile(file)
     {
-     //   console.log(file[0]);
         $("#CodeHolder").html("");
            $.ajax({
             type: 'GET',
@@ -145,7 +140,6 @@ require.config({ paths: { 'vs': '/Syncfusion/node_modules/monaco-editor/min/vs' 
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-              //  console.log(response);
                 editor = monaco.editor.create(document.getElementById('CodeHolder'), {
                     value:  response.data,
                     language:  response.languageType

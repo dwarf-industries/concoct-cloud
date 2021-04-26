@@ -11,8 +11,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
  
-<link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+ <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
 <!--[if lt IE 9]>
 <script src="../scripts/jquery-1.11.3.min.js" type="text/javascript" ></script>
@@ -240,7 +239,7 @@ ShowLoader();
              $("#KanbanHolder").html();
 
             var data = ej.base.extend([], response, null, true); // To maintain the property changes, extend the object.
-            console.log(data);
+            //console.log(data);
             var kanbanObj = new ej.kanban.Kanban({
                 dataSource: data,
                 keyField: 'status',
@@ -275,7 +274,7 @@ ShowLoader();
       
          function WorkItemListClicked(args)
          {
-             console.log(args);
+             //console.log(args);
             @*var incomingSprintDTO =
             {
                 "ProjectId": @ProjectId,
@@ -296,7 +295,7 @@ ShowLoader();
                     GenerateKaban(response);
                 },
                 error: function(xhr, status, error) {
-                    console.log(error);
+                    //console.log(error);
                 }
             });*@
          }
@@ -314,7 +313,7 @@ ShowLoader();
     function UserRowSelected(args)
     {
         selectedRowData = args.data;
-        console.log(args);
+        //console.log(args);
     }
     function UserSelected(args)
     {
@@ -324,7 +323,7 @@ ShowLoader();
     }
     function InitiliazeGrid()
     {
-        console.log(data);
+        //console.log(data);
 
 
         var treeGridObj = new ej.treegrid.TreeGrid({

@@ -79,7 +79,7 @@
     }
 
     function drop(args) {
-        console.log(draggableId.nodeValue);
+        //console.log(draggableId.nodeValue);
 
         $.get("/Survey/GetElementIds?element=" + draggableId.nodeValue, function (data) {
             var bindingItem = {

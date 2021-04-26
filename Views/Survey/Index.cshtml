@@ -37,7 +37,7 @@
     var dto = {
         "ProjectId" : @ProjectId
     }
-    console.log(dto);
+    //console.log(dto);
     $.ajax({
         type: 'POST',
         url: '/Survey/GetProjectSurveys',
@@ -53,7 +53,7 @@
     });
      function InitiliazeGrid(data )
     {
-        console.log(data);
+        //console.log(data);
 
 
         var treeGridObj = new ej.treegrid.TreeGrid({
@@ -87,36 +87,36 @@
     }
 
     function customiseCell(args) {
-        console.log(args);
+        //console.log(args);
         if (args.column.headerText === 'Type' ){
             args.cell.setAttribute('class', args.data.workItemIcon);
         } 
     }
     function RowSelected(args)
     {
-        console.log(args);
+        //console.log(args);
         selectedRows.push(args.data);
     }
 
     function RowDeselected(args)
     {
-        console.log(args.data);
+        //console.log(args.data);
         var index = selectedRows.indexOf(args.data[0]);
         if (index > -1) {
             selectedRows.splice(index, 1);
         }
-        console.log(selectedRows);
+        //console.log(selectedRows);
 
     }
 
     function EditWorkItem(args)
     {
-        console.log(args);
+        //console.log(args);
         window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&Id="+args.rowData.id;
     }
     function DeleteWorkItems()
     {
-        console.log(selectedRows);
+        //console.log(selectedRows);
         var incomingSprintDTO =
         {
             "Items":  selectedRows

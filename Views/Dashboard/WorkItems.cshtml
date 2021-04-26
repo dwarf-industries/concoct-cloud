@@ -7,8 +7,7 @@
     var CurrentIteration = ViewData["CurrentIteration"] as int?;
  }
 
-<link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
-<style>
+ <style>
 .image {
     height: 55px;
     width: 55px;
@@ -64,7 +63,7 @@
      var ProjectId = @result;
     function OpenWorkItem(id)
     {
-        console.log(id);
+        //console.log(id);
     }
     $( document ).ready(function() 
     {
@@ -75,7 +74,7 @@
             "WorkItemType":5,
             "ProjectId" : @CurrentIteration
         }
-        console.log(dto);
+        //console.log(dto);
         $.ajax({
             type: 'POST',
             url: '/Backlogs/GetWorkItems',
@@ -93,7 +92,7 @@
     });
     function InitiliazeGrid(data )
     {
-        console.log(data);
+        //console.log(data);
         var grid = new ej.grids.Grid({
         dataSource: data,
         recordDoubleClick: recordDoubleClick,
@@ -118,7 +117,7 @@
         window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+id+"&parentId=0&returnUrl="+window.location.href;
     }
     function WorkItemSelected(args){
-        console.log(args);
+        //console.log(args);
     }
     function load(args) {
         this.parentDetails.parentKeyFieldValue = this.parentDetails.parentRowData['id'];
@@ -126,7 +125,7 @@
 
     function recordDoubleClick(args)
     {
-        console.log(args);
+        //console.log(args);
  //       args.rowData.id
         window.location.href = "/Dashboard/EditWorkItem?projectId=@result&&workItem="+args.rowData.id+"&returnUrl="+window.location.href;
     }

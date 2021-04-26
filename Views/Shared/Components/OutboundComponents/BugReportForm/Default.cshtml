@@ -78,7 +78,7 @@
     });
     uploadObj.appendTo('#fileupload');
     function ItemSelected(args) {
-        console.log(args);
+        //console.log(args);
        selectedImage = args.filesData[0].rawFile.name;
     }
     function onFileRemove(args) {
@@ -95,7 +95,7 @@
             "ImagePath": selectedImage,
             "WorkItemId": 0
         }
-        console.log(messagesDto);
+        //console.log(messagesDto);
         if($("#currentSender").val() && $("#BugDescription").children()[0].innerHTML)
         {
             $.ajax({
@@ -106,7 +106,7 @@
                 dataType: "json",
                 
                 success: function (response) {
-                    console.log(response);
+                    //console.log(response);
                     window.location=document.referrer;
 
                 },

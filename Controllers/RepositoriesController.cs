@@ -62,6 +62,22 @@ namespace Rokono_Control.Controllers
             return View();
         }
 
+        public IActionResult Commit(int id, string commitId)
+        {
+            using (var context = new DatabaseController(Context, Configuration))
+            {
+
+                ViewData["ProjectId"] = id;
+                ViewData["ProjectName"] = context.GetProjectName(id);
+            }
+            using (var context = new WorkItemsContext(Context, Configuration))
+                ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
+
+            ViewData["CommitId"] = commitId;
+            ViewData["IsEmpty"] = true;
+            return View();
+        }
+
         [HttpPost]
         public List<OutgoingCommitTemp> GetCommitsForBranch([FromBody] IncomingIdRequest request)
         {

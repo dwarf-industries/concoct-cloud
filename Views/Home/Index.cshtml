@@ -92,13 +92,13 @@
 
     });
     function LoginUser() {
-        console.log("In");
+        //console.log("In");
         var dto = {
             "Email": $("#exampleEmail11").val(),
             "Password": $("#examplePassword11").val(),
 
         }
-        console.log(dto);
+        //console.log(dto);
         $.ajax({
             type: 'POST',
             url: '/Authenication/Login',

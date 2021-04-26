@@ -6,8 +6,7 @@
     var BoardId = ViewData["BoardId"] as int?;
 }
 
-<link href="~/Syncfusion/ej2/material.css" rel="stylesheet" />
-
+ 
 <!-- end of sidebar element -->
 <!-- main-content declaration -->
  
@@ -58,7 +57,7 @@
     var selected;
     function OpenWorkItem(id)
     {
-        console.log(id);
+        //console.log(id);
     }
     $( document ).ready(function()
     {
@@ -68,7 +67,7 @@
             "id": id,
             "WorkItemType": 7
         }
-        console.log(dto);
+        //console.log(dto);
         $.ajax({
             type: 'POST',
             url: '/Backlogs/GetBacklogWorkItems',
@@ -159,16 +158,16 @@
 
     function WorkItemListClicked(args)
     {
-        console.log(args);
+        //console.log(args);
         var url = args.properties.url;
         window.location.href = url;
-       // console.log(args);
+       // //console.log(args);
     }
 
     var onClick = function(args){
         var rowIndex = ej.base.closest(args.target, '.e-row').rowIndex;
         var data = treeGridObj.getCurrentViewRecords();
-        console.log(data[rowIndex]);
+        //console.log(data[rowIndex]);
         if(data[rowIndex].typeId === 5)
             window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+2+"&boardId="+boardId+"&parentId="+data[rowIndex].id+"&returnUrl="+window.location.href;
         if(data[rowIndex].typeId === 2)
@@ -183,7 +182,7 @@
     }
     function InitiliazeGrid(data )
     {
-        console.log(data);
+        //console.log(data);
 
 
         treeGridObj = new ej.treegrid.TreeGrid({
@@ -226,16 +225,16 @@
 
     function GetCurrentRow(args)
     {
-        console.log(args);
+        //console.log(args);
         selected = args.data;
     }
     function WorkItemSelected(args){
-        console.log(args);
+        //console.log(args);
     }
 
     function EditWorkItem(args)
     {
-        console.log(args);
+        //console.log(args);
         window.location.href = "/Dashboard/EditWorkItem?projectId=@result&&workItem="+args.rowData.id+"&returnUrl="+window.location.href;
     }
     function load(args) {
@@ -244,7 +243,7 @@
 
     function AddNewWorkItem(args)
     {
-        console.log(args);
+        //console.log(args);
     }
 
     function dialogClose() {

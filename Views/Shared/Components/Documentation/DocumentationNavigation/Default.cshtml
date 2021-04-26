@@ -199,7 +199,7 @@ $( document ).ready(function() {
  
     function DeleteCategoryField(id)
     {
-        console.log(id);
+        //console.log(id);
         $("#ChatChannelRow_undefined_"+id).hide();
         var dto = 
         {
@@ -250,7 +250,7 @@ $( document ).ready(function() {
         $("#DocumentationTreeViewHolder").html("");
         $("#DocumentationTreeViewHolder").html("<div id=\"documentation-treeview\"></div>");
  
-        console.log(incomingData);
+        //console.log(incomingData);
         LastDataSource = incomingData;
         DocumentationNavigation = new ej.treegrid.TreeGrid({
             dataSource: incomingData,

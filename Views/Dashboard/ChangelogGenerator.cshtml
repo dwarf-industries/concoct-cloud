@@ -104,7 +104,7 @@
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             LoadWorkItems(response);
         //    grid.appendTo('#WorkItemsGrid');
         },
@@ -135,29 +135,29 @@
 
     function WorkItemSelected(args)
     {
-        console.log(args);
+        //console.log(args);
         selectedRecords.push(args.data);
     }
 
     function WorkItemDeselected(args)
     {
-        console.log(args);
+        //console.log(args);
         
         var index = selectedRecords.indexOf(args.data[0]);
         if (index !== -1) selectedRecords.splice(index, 1);
 
-        console.log(selectedRecords);
+        //console.log(selectedRecords);
     }
 
     function GenerateChangelog()
     {
-        console.log(currentGrid);
+        //console.log(currentGrid);
 
          var dto = {
             "Items":  selectedRecords
             
         }
-        console.log(dto);
+        //console.log(dto);
         $.ajax({
             type: 'POST',
             url: '/Changelog/GenerateChangelog',
@@ -186,13 +186,13 @@
 
     function ConfirmChangelog()
     {
-        console.log($("#ChangelogContent").html());
+        //console.log($("#ChangelogContent").html());
           var dto = {
             "Items": selectedRecords,
             "Chagelog": ""+$("#ChangelogContent").html(),
             "projectId" : @projectId
         }
-        console.log(dto);
+        //console.log(dto);
         $.ajax({
             type: 'POST',
             url: '/Changelog/ConfirmChangelog',

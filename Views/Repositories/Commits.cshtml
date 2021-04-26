@@ -273,13 +273,13 @@
                 branches.appendTo('#branches');
             },
             error: function (xhr, status, error) {
-                console.log(xhr);
+                //console.log(xhr);
             }
         });
 
 
     function GetCommits(currentBranch) {
-
+             
             var getCommitDTO =
             {
                 "ProjectId": @Id,
@@ -293,8 +293,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.log(response);
-
+ 
                 if (commitsGrid !== undefined) {
                     commitsGrid.dataSource = response;
                     commitsGrid.refresh();
@@ -305,6 +304,8 @@
                         allowSelection: true,
                         allowFiltering: true,
                         allowSorting: true,
+                        selectionSettings: { type: 'Multiple' },
+                        recordDoubleClick: CommitDoubleClicked,
                         // enableVirtualization: true,
                         filterSettings: { type: 'Menu' },
                         enableHover: true,
@@ -338,9 +339,12 @@
 
     }
 
+
+    function CommitDoubleClicked(args) {
+         window.location = "/Repositories/Commit?Id=@Id&&commitId=" + args.rowData.id;
+    }
+
     function BranchSelected(args) {
-        console.log(args);
-        //console.log($("#branches").val());
-        GetCommits(args.itemData.branchName);
+         GetCommits(args.itemData.branchName);
     }
 </script>

@@ -221,7 +221,7 @@
         "ProjectId": @ProjectId
         
     }
-    console.log(dto);
+    //console.log(dto);
     $.ajax({
         type: 'POST',
         url: '/Notification/GetUserNotifications',
@@ -280,9 +280,9 @@
 
             bindingData.push(x.notification);
         });
-        console.log(toasts);
+        //console.log(toasts);
         InitializeToast();
-        console.log(data);
+        //console.log(data);
         $("#NotificationGridWrapper").html("");
         $("#NotificationGridWrapper").html("<div id=\"NotificationHolderGrid\"></div>");
         var grid = new ej.grids.Grid({
@@ -301,7 +301,7 @@
 
     function RemoveNotification(id)
     {
-        console.log(id);
+        //console.log(id);
         $("#ID_"+id).remove();
         var countA =  $("#NotificationCount").html();
         var newCount = parseInt(countA) -1;

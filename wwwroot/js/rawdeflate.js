@@ -1680,12 +1680,10 @@ var deflate = (function() {
 })();
 
 onmessage = function worker(m) {
-    // this.console.log(m);
-    postMessage(deflate(m.data, 9));
+     postMessage(deflate(m.data, 9));
 };
 
 onconnect = function sharedWorker(e) {
-    //   console.log("Worker connected");
     var port = e.ports[0];
     port.onmessage = function(m) {
         port.postMessage(deflate(m.data, 9));

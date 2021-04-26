@@ -65,8 +65,7 @@ function RowSelected(args) {
             InitializeRiles(response);
         },
         error: function(xhr, status, error) {
-            console.log(error);
-        }
+         }
     });
 }
 
@@ -265,7 +264,6 @@ function AddProjectSelected() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function(response) {
-            console.log(response);
             if (response === true) {
                 $("#ProjectsModal").modal('hide');
                 $('.modal-backdrop').hide();
@@ -279,7 +277,6 @@ function AddProjectSelected() {
 }
 
 function DeleteTest(args) {
-    console.log(args);
     if (args.requestType === 'delete') {
         $("#ProjSettings").hide();
         var dto = {
