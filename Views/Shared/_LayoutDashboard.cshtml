@@ -112,12 +112,12 @@
     sidebarMenu.appendTo('#sidebar-treeview');
     //end of Sidebar initialization
          
-    if (storage.getItem("Theme") !== undefined) {
-        SetTheme(storage.getItem("Theme"));
-    }
-    else {
-        storage.setItem("Theme", false);
-    }
+    //if (storage.getItem("Theme") !== undefined) {
+    //    SetTheme(storage.getItem("Theme"));
+    //}
+    //else {
+    //    storage.setItem("Theme", false);
+    //}
 
     // Toggle the Sidebar
     document.getElementById('hamburger').addEventListener('click', function () {
@@ -127,46 +127,46 @@
     // open new tab
 
 
-    function ChangeTheme(args) {
+    //function ChangeTheme(args) {
          
-        cThemeToggle.click();
+    //    cThemeToggle.click();
         
-        if (cThemeToggle.checked === true)
-        {
-            $("#themeLabel").html("Dark");
-            document.getElementById('theme').href = "/css/Themes/Dark/fabric-dark.min.css";
-            document.getElementById('themeAdjustments').href = "/css/Shared/Dark/_LayoutDashboard.css";
-            storage.setItem("Theme", true);
+    //    if (cThemeToggle.checked === true)
+    //    {
+    //        $("#themeLabel").html("Dark");
+    //        document.getElementById('theme').href = "/css/Themes/Dark/fabric-dark.min.css";
+    //        document.getElementById('themeAdjustments').href = "/css/Shared/Dark/_LayoutDashboard.css";
+    //        storage.setItem("Theme", true);
 
 
-        }
-        else
-        {
-            $("#themeLabel").html("Light");
-            document.getElementById('theme').href = "/css/Themes/Light/material.min.css";
-            document.getElementById('themeAdjustments').href = "/css/Shared/Light/_LayoutDashboard.css";
-            storage.setItem("Theme", false);
+    //    }
+    //    else
+    //    {
+    //        $("#themeLabel").html("Light");
+    //        document.getElementById('theme').href = "/css/Themes/Light/material.min.css";
+    //        document.getElementById('themeAdjustments').href = "/css/Shared/Light/_LayoutDashboard.css";
+    //        storage.setItem("Theme", false);
 
-        }
+    //    }
 
-    }
+    //}
 
-    function SetTheme(type)
-    {
-        if (type === "true") {
-            cThemeToggle.click();
+    //function SetTheme(type)
+    //{
+    //    if (type === "true") {
+    //        cThemeToggle.click();
 
-            $("#themeLabel").html("Dark");
-            document.getElementById('theme').href = "/css/Themes/Dark/fabric-dark.min.css";
-            document.getElementById('themeAdjustments').href = "/css/Shared/Dark/_LayoutDashboard.css";
+    //        $("#themeLabel").html("Dark");
+    //        document.getElementById('theme').href = "/css/Themes/Dark/fabric-dark.min.css";
+    //        document.getElementById('themeAdjustments').href = "/css/Shared/Dark/_LayoutDashboard.css";
 
-        }
-        else {
-            $("#themeLabel").html("Light");
-            document.getElementById('theme').href = "/css/Themes/Light/material.min.css";
-            document.getElementById('themeAdjustments').href = "/css/Shared/Light/_LayoutDashboard.css";
-        }
-    }
+    //    }
+    //    else {
+    //        $("#themeLabel").html("Light");
+    //        document.getElementById('theme').href = "/css/Themes/Light/material.min.css";
+    //        document.getElementById('themeAdjustments').href = "/css/Shared/Light/_LayoutDashboard.css";
+    //    }
+    //}
 
 
     function CallUrl(url)
