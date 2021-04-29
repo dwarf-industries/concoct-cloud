@@ -121,9 +121,29 @@ namespace Rokono_Control
         {
             Projects.ForEach(x =>
             {
-            //    CommandOutput(Os, "git fetch --all", Path.Combine(Program.Configuration.LocalRepo, os == "win" ? x.Repository.FolderPath : x.Repository.LinuxFolderPath));
-            //    CommandOutput(Os, "git pull --all", Path.Combine(Program.Configuration.LocalRepo, os == "win" ? x.Repository.FolderPath : x.Repository.LinuxFolderPath));
-                GetAllCommitsForProject(x.Id, Os, x);
+                try
+                {
+                    var projectPath = Path.Combine(Program.Configuration.LocalRepo, os == "win" ? x.Repository.FolderPath : x.Repository.LinuxFolderPath);
+                    if (!Directory.Exists(projectPath))
+                    {
+                        Program.Logger.Warning($"Directory \"{projectPath}\" doesn't exist");
+                        Program.Logger.Info($"Creating Folder for Project {x.ProjectName}");
+                        CommandOutput(Os, $"mkdir {projectPath}", Program.Configuration.LocalRepo);
+                        Program.Logger.Info($"Cloning Repository {x.Repository.RepositoryLocation}");
+                        CommandOutput(Os, $"git clone {x.Repository.RepositoryLocation}", projectPath);
+                        Program.Logger.Message("Repository cloned");
+                    }
+
+                    Program.Logger.Info($"Fetchign all changes for repository {x.Repository.FolderPath}");
+                    CommandOutput(Os, "git fetch --all", Path.Combine(Program.Configuration.LocalRepo, os == "win" ? x.Repository.FolderPath : x.Repository.LinuxFolderPath));
+                    CommandOutput(Os, "git pull --all", Path.Combine(Program.Configuration.LocalRepo, os == "win" ? x.Repository.FolderPath : x.Repository.LinuxFolderPath));
+                    GetAllCommitsForProject(x.Id, Os, x);
+                }
+                catch(Exception ex)
+                {
+                    Program.Logger.Warning(ex.ToString());
+                }
+               
             });
         }
 

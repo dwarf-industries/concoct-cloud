@@ -1,16 +1,12 @@
 ﻿namespace Rokono_Control
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.HttpsPolicy;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -18,8 +14,9 @@
     using Platform.DataHandlers;
     using Platform.DataHandlers.Interfaces;
     using Platform.Hubs;
+    using Rokono_Control.DataHandlers.Implementations;
+    using Rokono_Control.DataHandlers.Interfaces;
     using Rokono_Control.Models;
-    using RokonoControl;
 
     public class Startup
     {
@@ -57,6 +54,7 @@
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie();
             services.AddScoped<IAutherizationManager, AutherizationManager>();
+            services.AddScoped<ICustomLogger, Logger>();
             services.AddHttpContextAccessor();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
