@@ -64,10 +64,10 @@
             var projects = new List<Projects>();
             using(var context = new RokonoControlContext())
             {
-                 projects = context.Projects.Include(x => x.Repository).ToList();
+                projects = context.Projects.Include(x => x.Repository).ToList();
             }
 
-          //  RepositoryManager.InitRepositories(projects, Program.ServerOS);
+            RepositoryManager.InitRepositories(projects, Program.ServerOS);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

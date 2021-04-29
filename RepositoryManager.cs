@@ -101,7 +101,7 @@ namespace Rokono_Control
         {
             Projects = projects;
             Os = serverOS;
-            FetchDataSources();
+            FetchDataSources(serverOS);
             InitTimer();
         }
 
@@ -117,19 +117,19 @@ namespace Rokono_Control
             _aTimer.Start();
         }
 
-        private static void FetchDataSources()
+        private static void FetchDataSources(string os)
         {
             Projects.ForEach(x =>
             {
-                CommandOutput(Os, "git fetch --all", Path.Combine(Program.Configuration.LocalRepo, x.Repository.FolderPath));
-                CommandOutput(Os, "git pull --all", Path.Combine(Program.Configuration.LocalRepo, x.Repository.FolderPath));
+            //    CommandOutput(Os, "git fetch --all", Path.Combine(Program.Configuration.LocalRepo, os == "win" ? x.Repository.FolderPath : x.Repository.LinuxFolderPath));
+            //    CommandOutput(Os, "git pull --all", Path.Combine(Program.Configuration.LocalRepo, os == "win" ? x.Repository.FolderPath : x.Repository.LinuxFolderPath));
                 GetAllCommitsForProject(x.Id, Os, x);
             });
         }
 
         private static void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            FetchDataSources();
+            FetchDataSources(Program.ServerOS);
         }
         public static string CommandOutput(string os, string command,  string workingDirectory = null)
         {
