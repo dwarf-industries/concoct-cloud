@@ -43,7 +43,8 @@ namespace Rokono_Control.DatabaseHandlers.Contexts
             var result = new List<Branches>();
             var project = Context.Projects.Include(x => x.Repository).FirstOrDefault(x => x.Id == projectId);
             var index = 0;
-            var getCommits = RepositoryManager.CommandOutput(OS, "git branch -r", Path.Combine(Program.Configuration.LocalRepo, project.Repository.FolderPath));
+            var getCommits = RepositoryManager.CommandOutput(OS, "git branch -r", Path.Combine(Program.Configuration.LocalRepo, Program.ServerOS == "win" ?
+                                            $"{project.Repository.FolderPath}\\{GetRepositoryName(project)}" : $"{project.Repository.LinuxFolderPath}/{GetRepositoryName(project)}"));
             foreach (var line in getCommits.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
             {
                 
@@ -63,10 +64,12 @@ namespace Rokono_Control.DatabaseHandlers.Contexts
         {
             var project = Context.Projects.Include(x => x.Repository).FirstOrDefault(x => x.Id == request.ProjectId);
             var result = string.Empty;
-            var getCommitDetails = RepositoryManager.CommandOutput(OS, $"git show  --name-only {request.Phase}", Path.Combine(Program.Configuration.LocalRepo, project.Repository.FolderPath));
+            var getCommitDetails = RepositoryManager.CommandOutput(OS, $"git show  --name-only {request.Phase}", Path.Combine(Program.Configuration.LocalRepo, Program.ServerOS == "win" ?
+                                            $"{project.Repository.FolderPath}\\{GetRepositoryName(project)}" : $"{project.Repository.LinuxFolderPath}/{GetRepositoryName(project)}"));
             foreach (var line in getCommitDetails.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
             {
-                var getFileDifference = RepositoryManager.CommandOutput(OS, $"git show {request.Phase} -- {line}", Path.Combine(Program.Configuration.LocalRepo, project.Repository.FolderPath));
+                var getFileDifference = RepositoryManager.CommandOutput(OS, $"git show {request.Phase} -- {line}", Path.Combine(Program.Configuration.LocalRepo, Program.ServerOS == "win" ?
+                                            $"{project.Repository.FolderPath}\\{GetRepositoryName(project)}" : $"{project.Repository.LinuxFolderPath}/{GetRepositoryName(project)}"));
 
                 var files = Diff.Parse(getFileDifference, Environment.NewLine).ToArray();
                 //AreEqual(1, files.Length);
@@ -109,6 +112,10 @@ namespace Rokono_Control.DatabaseHandlers.Contexts
             }
 
             return result;
+        }
+        private static string GetRepositoryName(Projects x)
+        {
+            return x.Repository.RepositoryLocation.Split("/").ToList().LastOrDefault();
         }
 
         protected virtual void Dispose(bool disposing)

@@ -42,17 +42,16 @@ namespace Rokono_Control
 
         public static void GetAllCommitsForProject(int projectId, string os,Projects project)
         {
-            var format = "commit:%H;subject:%s;body:%b;signature:%GK;author:%aN;email:%ae;date:%aD;branch:%d";
-            if(!Directory.Exists(project.Repository.FolderPath))
-            {
-                //Todo clone the repository if it doesn't exist to watch it.
-              //  CommandOutput($"git clone ")
-            }
-            var getCommits = CommandOutput(os, "git log --all  --pretty=format:" + format, Path.Combine(Program.Configuration.LocalRepo, project.Repository.FolderPath));
+            var format = "commit:%H/r/nsubject:%s/r/nbody:%b/r/nsignature:%GK/r/nauthor:%aN/r/nemail:%ae/r/ndate:%aD/r/nbranch:%d";
+            Program.Logger.Info($"Creating Folder for Project {project.ProjectName}");
+            var getCommits = CommandOutput(os, "git log --branches=*  --pretty=format:" + format, 
+                                            Path.Combine(Program.Configuration.LocalRepo, os == "win" ?
+                                            $"{project.Repository.FolderPath}\\{GetRepositoryName(project)}" : $"{project.Repository.LinuxFolderPath}/{GetRepositoryName(project)}"));
+
             foreach (var line in getCommits.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
             {
 
-                var items = line.Split(";");
+                var items = line.Split("/r/n");
                 var branchName = GetBranchName(items[7]);
 
                 if (Program.ProjectBranches.FirstOrDefault(x => x.ProjectId == projectId && x.BranchName == branchName) != null)
@@ -135,16 +134,21 @@ namespace Rokono_Control
                     }
 
                     Program.Logger.Info($"Fetchign all changes for repository {x.Repository.FolderPath}");
-                    CommandOutput(Os, "git fetch --all", Path.Combine(Program.Configuration.LocalRepo, os == "win" ? x.Repository.FolderPath : x.Repository.LinuxFolderPath));
-                    CommandOutput(Os, "git pull --all", Path.Combine(Program.Configuration.LocalRepo, os == "win" ? x.Repository.FolderPath : x.Repository.LinuxFolderPath));
+                    CommandOutput(Os, "git fetch --all", Path.Combine(Program.Configuration.LocalRepo, os == "win" ? $"{x.Repository.FolderPath}\\{GetRepositoryName(x)}" : $"{x.Repository.LinuxFolderPath}/{GetRepositoryName(x)}"));
+                    CommandOutput(Os, "git pull --all", Path.Combine(Program.Configuration.LocalRepo, os == "win" ? $"{x.Repository.FolderPath}\\{GetRepositoryName(x)}" : $"{x.Repository.LinuxFolderPath}/{GetRepositoryName(x)}"));
                     GetAllCommitsForProject(x.Id, Os, x);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Program.Logger.Warning(ex.ToString());
                 }
                
             });
+        }
+
+        private static string GetRepositoryName(Projects x)
+        {
+            return x.Repository.RepositoryLocation.Split("/").ToList().LastOrDefault();
         }
 
         private static void OnTimedEvent(object source, ElapsedEventArgs e)
