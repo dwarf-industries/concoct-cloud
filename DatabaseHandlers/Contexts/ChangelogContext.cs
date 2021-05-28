@@ -31,7 +31,7 @@ namespace Platform.DatabaseHandlers.Contexts
 
             return Context.WorkItem.Include(x => x.AssociatedWorkItemChangelogs)
                                    .Include(x=>x.WorkItemType)
-                                   .Where(x => !x.AssociatedWorkItemChangelogs.Any(y =>  y.ProjectId == projectId) && x.AssociatedBoardWorkItems.Any(x=>x.Board.BoardType == 4))
+                                   .Where(x => !x.AssociatedWorkItemChangelogs.Any(y =>  y.ProjectId == projectId) && x.AssociatedBoardWorkItems.Any(x=>x.Board.BoardType == 4) && x.AssociatedBoardWorkItems.Any(y=>y.ProjectId == projectId))
                                    .ToList();
         }
         internal void AssociatedChangelogItems(IncomingGenerateChangelog changelog)

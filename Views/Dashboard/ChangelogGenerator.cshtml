@@ -116,8 +116,6 @@
     {
         currentGrid = new ej.grids.Grid({
                 dataSource: data,
-                rowSelected: WorkItemSelected,
-                rowDeselected: WorkItemDeselected,
                 allowSelection: true,
                 filterSettings: { type: 'Menu' },
                 selectionSettings: { persistSelection: true, type: "Multiple" },
@@ -133,27 +131,18 @@
         currentGrid.appendTo('#Grid');
     }
 
-    function WorkItemSelected(args)
-    {
-        //console.log(args);
-        selectedRecords.push(args.data);
-    }
-
-    function WorkItemDeselected(args)
-    {
-        //console.log(args);
-        
-        var index = selectedRecords.indexOf(args.data[0]);
-        if (index !== -1) selectedRecords.splice(index, 1);
-
-        //console.log(selectedRecords);
-    }
+  
+ 
 
     function GenerateChangelog()
     {
-        //console.log(currentGrid);
+        var selectedIndexes = currentGrid.getSelectedRowIndexes()
+        for (var index in selectedIndexes) {
+            var item = currentGrid.dataSource[index];
+             selectedRecords.push(item);
+        }
 
-         var dto = {
+        var dto = {
             "Items":  selectedRecords
             
         }
