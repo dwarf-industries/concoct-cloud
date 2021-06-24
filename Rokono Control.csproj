@@ -4,6 +4,17 @@
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Rokono_Control</RootNamespace>
          <DebugType>portable</DebugType>
+         <PackageId>Concoct Cloud</PackageId>
+         <Authors>CollaborativeSoft</Authors>
+         <Company>CollaborativeSoft</Company>
+         <Product>Concoct Cloud</Product>
+         <Version>1.0.1</Version>
+         <Copyright>CollaborativeSoft</Copyright>
+         <Description>An open source project/product management system with integrated devops, unit testing and communication enviroments.</Description>
+         <PackageProjectUrl>https://concoctcloud.com</PackageProjectUrl>
+         <RepositoryUrl>https://github.com/dwarf-industries/concoct-cloud</RepositoryUrl>
+         <RepositoryType>Open Source</RepositoryType>
+         <PackageTags>Project Management, DevOps, UnitTesting</PackageTags>
 
    </PropertyGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@
     height: 55px;
     min-height: 55px;
     max-height: 55px;
-    background: #1c86c8;
+    background: #41b3d3;
     color: #fff;
 }
 
@@ -109,7 +109,7 @@
 }
 
 #main-text .sidebar-heading {
-    color: #1c86c8;
+    color: #41b3d3;
     margin: 40px 0;
     padding: 2px;
 }
@@ -376,35 +376,64 @@
         height: 30px;
     }
 
-    #sidebar-treeview::-webkit-scrollbar {
-        width: 5px;
-    }
-    #sidebar-treeview::-webkit-scrollbar-track {
-        background: #cccccc; 
-        XXborder-radius: 5px;
-    }
-    #sidebar-treeview::-webkit-scrollbar-thumb {
-        XXborder-radius: 5px;
-        background: #1c86c8;
-        border-radius: 10px;
-        width: 4px;
-    }
+#sidebar-treeview {
+    scrollbar-color: #41b3d3 white;
+    scrollbar-width: thin !important;
+}
+#sidebar-treeview::-webkit-scrollbar {
+    width: 5px;
+    scrollbar-color: #41b3d3 white;
+    scrollbar-width: thin !important;
+}
+#sidebar-treeview::-webkit-scrollbar-track {
+    background: #cccccc;
+    XXborder-radius: 5px;
+    scrollbar-width: 5px;
+    scrollbar-radius: 5px;
+    scrollbar-color: #41b3d3 white;
+    scrollbar-width: thin !important;
+}
+#sidebar-treeview::-webkit-scrollbar-thumb {
+    XXborder-radius: 5px;
+    background: #41b3d3;
+    border-radius: 10px;
+    width: 4px;
+    scrollbar-color: #41b3d3 white;
+    scrollbar-width: thin !important;
+}
 
     .e-list-item .e-level-2 .e-hover{
         color:#e6326f !important;
     }
-    html::-webkit-scrollbar {
-        width: 10px;
-    }
-    html::-webkit-scrollbar-track {
-        background: #cccccc; 
-        XXborder-radius: 5px;
-    }
-    html::-webkit-scrollbar-thumb {
-        XXborder-radius: 5px;
-        background: #1c86c8;
-        border-radius: 10px;
-        width: 4px;
-    }
-
-    
+html::-webkit-scrollbar {
+    width: 10px;
+    scrollbar-color: #41b3d3 white;
+    scrollbar-width: thin !important;
+}
+html::-webkit-scrollbar-track {
+    background: #cccccc;
+    XXborder-radius: 5px;
+    scrollbar-color: #41b3d3 white;
+    scrollbar-width: thin !important;
+}
+html::-webkit-scrollbar-thumb {
+    scrollbar-color: #41b3d3;
+    XXborder-radius: 5px;
+    background: #41b3d3;
+    border-radius: 10px;
+    width: 4px;
+    scrollbar-color: #41b3d3 white;
+    scrollbar-width: thin !important;
+}
+/* Only IE */
+html {
+    scrollbar-face-color: #0064a7;
+    scrollbar-shadow-color: #8ea5b5;
+    scrollbar-highlight-color: #8ea5b5;
+}
+/* Only FireFox */
+html {
+    scrollbar-color: #41b3d3 white;
+    scrollbar-width: thin !important;
+}
+ 

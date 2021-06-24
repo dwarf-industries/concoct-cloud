@@ -1,5 +1,7 @@
 ﻿@{ 
-    var data = ViewData["CommitDetails"] as string;
+    var data = ViewData["CommitDetails"] as (string, string)?;
+    var master = @data.Value.Item1.Replace(" &#xD;&#xA;", Environment.NewLine);
+    var slave = @data.Value.Item2.Replace(" &#xD;&#xA;", Environment.NewLine);
 }
 
 <div style="height:80vh">
@@ -20,14 +22,20 @@
 
 
     // The diff editor offers a navigator to jump between changes. Once the diff is computed the <em>next()</em> and <em>previous()</em> method allow navigation. By default setting the selection in the editor manually resets the navigation state.
-    var originalModel = monaco.editor.createModel("@data", "text/cshtml");
-    var modifiedModel = monaco.editor.createModel("@data", "text/cshtml");
+    var originalModel = monaco.editor.createModel("@master.ToString()", "csharp");
+    var modifiedModel = monaco.editor.createModel("@slave.ToString()", "csharp");
 
 
     var diffEditor = monaco.editor.createDiffEditor(document.getElementById("EditorContainer"));
     diffEditor.setModel({
         original: originalModel,
-        modified: modifiedModel
+        modified: modifiedModel,
+        lineNumbers: "off",
+        roundedSelection: true,
+        scrollBeyondLastLine: false,
+        readOnly: false,
+        theme: "vs-light"
+
     });
 
     var navi = monaco.editor.createDiffNavigator(diffEditor, {

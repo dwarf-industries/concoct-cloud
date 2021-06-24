@@ -148,7 +148,17 @@ namespace Rokono_Control
 
         private static string GetRepositoryName(Projects x)
         {
-            return x.Repository.RepositoryLocation.Split("/").ToList().LastOrDefault();
+            try
+            {
+                return x.Repository.RepositoryLocation.Split("/").ToList().LastOrDefault();
+
+            }
+            catch (Exception ex)
+            {
+                Program.Logger.Error($"Exception thrown while reading RepositoryLocation, repository for project {x.ProjectName} Doesn't exist or could not be found.!!!");
+                Program.Logger.Error(ex.ToString());
+                return null;
+            }
         }
 
         private static void OnTimedEvent(object source, ElapsedEventArgs e)
