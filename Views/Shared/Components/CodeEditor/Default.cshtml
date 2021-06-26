@@ -1,8 +1,8 @@
-﻿@{ 
-    var data = ViewData["CommitDetails"] as (string, string)?;
-    var master = @data.Value.Item1.Replace(" &#xD;&#xA;", Environment.NewLine);
-    var slave = @data.Value.Item2.Replace(" &#xD;&#xA;", Environment.NewLine);
-}
+﻿@{ var data = ViewData["CommitDetails"] as (string, string)?;
+
+
+    var master = @Html.Raw(data.Value.Item1).ToString();
+    var slave = @Html.Raw(data.Value.Item2).ToString(); }
 
 <div style="height:80vh">
 
@@ -20,10 +20,12 @@
 <script>
     debugger
 
-
+    var code1 = `@Html.Raw(data.Value.Item1)`;
+    var code2 = `@Html.Raw(data.Value.Item2)`;
     // The diff editor offers a navigator to jump between changes. Once the diff is computed the <em>next()</em> and <em>previous()</em> method allow navigation. By default setting the selection in the editor manually resets the navigation state.
-    var originalModel = monaco.editor.createModel("@master.ToString()", "csharp");
-    var modifiedModel = monaco.editor.createModel("@slave.ToString()", "csharp");
+    var originalModel = monaco.editor.createModel(code1, "csharp");
+
+    var modifiedModel = monaco.editor.createModel(code2, "csharp");
 
 
     var diffEditor = monaco.editor.createDiffEditor(document.getElementById("EditorContainer"));
@@ -49,3 +51,4 @@
 
 
 </script>
+
