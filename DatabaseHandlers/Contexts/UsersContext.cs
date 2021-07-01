@@ -526,7 +526,7 @@ namespace Platform.DatabaseHandlers.Contexts
             {
                 AccountId = x.Id,
                 Name = $"{x.FirstName} {x.LastName}",
-                Type = x.ProjectRights == 1 ? "Regular" : "Administrator",
+                Type = x.ProjectRights == 1 ? "Administrator" : "User",
                 Email = x.Email,
                 CreationDate = x.CreationDate,
             }).ToList();

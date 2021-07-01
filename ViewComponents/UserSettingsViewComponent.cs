@@ -29,6 +29,8 @@ namespace Platform.ViewComponents
             ViewData["ProjectId"] = projectId;
             using(var context = new UsersContext(Context,Configuration))
                 ViewData["UserData"] = context.GetUserAccount(UserId);
+            using (var context = new WorkItemsContext(Context, Configuration))
+                ViewData["AssignedWorkItemCount"] = context.GetWorkItemsCountForUser(UserId);
             using(var context = new NotificationContext(Context,Configuration))
                 ViewData["Notifications"] = context.GetAllUserNotifications(UserId, projectId);
             return View();

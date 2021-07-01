@@ -1,7 +1,8 @@
 @{
     var Notifications = ViewData["Notifications"] as List<Platform.Models.BindingNotification>;
-    var Account = ViewData["UserAccount"] as UserAccounts;
+    var Account = ViewData["UserData"] as UserAccounts;
     var ProjectId = ViewData["ProjectId"] as int?;
+    var assignedWorkItemCount = ViewData["AssignedWorkItemCount"] as int?;
 }
 
 
@@ -105,14 +106,14 @@
                 </div>
                 <div>
                     <div class="badge-block">
-                        50
+                        @assignedWorkItemCount
                     </div>
                 </div>
                 
             </div>
             <div>
-                <div class="header"  style="margin-right: 43px;font-size: 18px;margin-left: 7px;padding-bottom: 17px;color:#656a70">
-                    Account: Kristifor
+                <div class="header" style="margin-right: 43px;font-size: 18px;margin-left: 7px;padding-bottom: 17px;color:#656a70">
+                    Account: @Account.FirstName @Account.LastName
                 </div>
               
                 

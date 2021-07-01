@@ -28,7 +28,7 @@
     </div>
     <div class="row">
         <div class="content-wrapper">
-            <button  onclick="SendMessage()" id="SendMsgBtn" style="width:100%;"> <i class="fas fa-save"></i> Send</button>
+            <button  onclick="SendMessageOutboundFeeedbackPublic()" id="SendMsgBtn" style="width:100%;"> <i class="fas fa-save"></i> Send</button>
         </div>
     </div>
 </div>
@@ -91,7 +91,7 @@
      
     }
 
-    function SendMessage()
+    function SendMessageOutboundFeeedbackPublic()
     {
         var messagesDto= {
             "ProjectId":@ProjectId,

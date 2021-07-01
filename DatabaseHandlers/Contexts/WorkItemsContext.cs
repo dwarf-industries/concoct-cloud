@@ -72,6 +72,10 @@ namespace Platform.DatabaseHandlers.Contexts
              return items;
         }
 
+        internal int GetWorkItemsCountForUser(int userId)
+        {
+            return Context.WorkItem.Where(x => x.AssignedAccount == userId).Count();
+        }
 
         internal List<AssociatedBoardWorkItems> GetUserWorkItems(int id, int userId)
         {
@@ -387,7 +391,8 @@ namespace Platform.DatabaseHandlers.Contexts
                                                                      .Where(y => y.WorkItemId == x.Id
                                                                                  && y.WorkItemChild.WorkItemTypeId != 7
                                                                                  && y.WorkItemChild.WorkItemTypeId != 2
-                                                                                 && y.WorkItemChild.WorkItemTypeId != 5)
+                                                                                 && y.WorkItemChild.WorkItemTypeId != 5
+                                                                                 && y.WorkItemChild.Iteration == dataRequest.IterationId)
                                                                      .ToList();
                 if(userId != 1 && userId !=0)
                     sprintTasks = sprintTasks.Where(x=> x.WorkItemChild.AssignedAccount == userId).ToList();
@@ -436,14 +441,16 @@ namespace Platform.DatabaseHandlers.Contexts
                 {
                     var taskBoard = Context.AssociatedBoardWorkItems.Include(z => z.Board)
                                                                     .FirstOrDefault(z => z.WorkItemId == task.WorkItemChildId);
-                    if(!string.IsNullOrEmpty(task.WorkItemChild.Compleated) && task.WorkItemChild.Compleated != "0")
+                    var board = Context.Boards.FirstOrDefault(x => taskBoard.BoardId == x.Id);
+
+                    if(!string.IsNullOrEmpty(task.WorkItemChild.Compleated) && task.WorkItemChild.Compleated != "0" && board.BoardName != "Done")
                         complete += float.Parse(task.WorkItemChild.Compleated);
 
                     if(!string.IsNullOrEmpty(task.WorkItemChild.Remaining) && task.WorkItemChild.Remaining != "0" 
-                        && !string.IsNullOrEmpty(task.WorkItemChild.Compleated) && task.WorkItemChild.Compleated != "0")
+                        && !string.IsNullOrEmpty(task.WorkItemChild.Compleated) && task.WorkItemChild.Compleated != "0" && board.BoardName != "Done")
                         remaining +=  (float.Parse(task.WorkItemChild.Remaining) - float.Parse(task.WorkItemChild.Compleated));
 
-                    if(!string.IsNullOrEmpty(task.WorkItemChild.Remaining) && task.WorkItemChild.Remaining != "0")
+                    if(!string.IsNullOrEmpty(task.WorkItemChild.Remaining) && task.WorkItemChild.Remaining != "0" && board.BoardName != "Done")
                         remaining +=  float.Parse(task.WorkItemChild.Remaining);
 
                     var activeBoard = string.Empty;

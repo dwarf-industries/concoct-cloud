@@ -52,7 +52,7 @@
                 <div class="position-relative form-group" style="width:100%;"><label for="ChatMessageBar" class="">Add a comment</label><div name="ChatMessageBar" id="ChatMessageBar" class="form-control"></div></div>
             </div>
             <div class="row">
-                <button  onclick="SendMessage()" id="SendMsgBtn"class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width:100%;"> <i class="fas fa-save"></i>Send</button>
+                <button  onclick="SendMessageOutboundFeeedback()" id="SendMsgBtn"class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width:100%;"> <i class="fas fa-save"></i>Send</button>
             </div>
         </div>
     </div>
@@ -182,7 +182,7 @@
     }
 
 
-    function SendMessage()
+    function SendMessageOutboundFeeedback()
     {
         var messagesDto= {
             "ProjectId":@ProjectId,
