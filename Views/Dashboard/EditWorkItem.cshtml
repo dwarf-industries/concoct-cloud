@@ -599,6 +599,12 @@ else if (WorkItemType == 2)
                         </div>
                         <div id="tab3_content" style="display: none; min-height:53vh;">
                             <div id="FileUploaderHolder">
+                                @await Component.InvokeAsync("WorkItemFileUploader", new IncomingIdRequest
+                                {
+                                    Phase = @SystemDesignInfo,
+                                    Id = @WorkItemData.Id,
+                                    UserId = 1
+                                })
 
                             </div>
 
@@ -710,7 +716,7 @@ else if (WorkItemType == 2)
     }
     var BackBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     BackBtn.appendTo('#BackBtn');
-    $("#FileUploaderHolder").load("/Dashboard/GetWorkItemFileUpload");
+  //  $("#FileUploaderHolder").load("/Dashboard/GetWorkItemFileUpload");
 
     var acceptWItemChange = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     acceptWItemChange.appendTo('#AcceptWItemChange');

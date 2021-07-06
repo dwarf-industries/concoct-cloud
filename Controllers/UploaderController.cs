@@ -21,6 +21,9 @@ namespace Platform.Controllers
         {
             try
             {
+                if (!Directory.Exists(hostingEnv.WebRootPath + $@"/Files/Uploads"))
+                    Directory.CreateDirectory(hostingEnv.WebRootPath + $@"/Files/Uploads");
+
                 foreach (var file in UploadFiles)
                 {
                     if (UploadFiles != null)
