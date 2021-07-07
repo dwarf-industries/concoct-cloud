@@ -88,6 +88,9 @@ namespace RokonoControl.Controllers
                 ViewData["Iteration"] = iteration;
                 ViewData["Person"] = person;
 
+                var projectPublicAccess = context.CheckProjectAccess(projectId, Request.Host.Host);
+                ViewData["PublicProject"] = projectPublicAccess.Item1;
+                ViewData["PublicAddress"] = projectPublicAccess.Item2;
             }
             using(var context = new UsersContext(Context,Configuration))
                 ViewData["GetUserViewRights"] = context.CheckUserViewWorkitemRights(UserId, projectId);

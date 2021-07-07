@@ -64,6 +64,7 @@ namespace Platform.DataHandlers
             result += improvements;
             result += newTests;
             result += breakingChanges;
+            result += bugsData;
             return result;
         }
 

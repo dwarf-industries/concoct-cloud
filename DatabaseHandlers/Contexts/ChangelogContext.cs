@@ -23,6 +23,7 @@ namespace Platform.DatabaseHandlers.Contexts
             return Context.AssociatedProjectChangelogs.Include(x => x.Log)
                                                       .Where(x => x.ProjectId == projectId)
                                                       .Select(x => x.Log)
+                                                      .OrderByDescending(X=>X.Id)
                                                       .ToList();
         }
 

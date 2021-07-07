@@ -7,6 +7,8 @@
     var Iteration = ViewData["Iteration"] as int?;
     var Person = ViewData["Person"] as int?;
     var ViewRights = ViewData["GetUserViewRights"] as int?;
+    var publicSIgnAccess = ViewData["PublicProject"] as int?;
+    var publicSignupUrl = ViewData["PublicAddress"] as string;
  }
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
@@ -55,7 +57,8 @@
             </div>
             <div class="col-md-4">
 
-                @await Component.InvokeAsync("IterationDropdown", new IncomingIdRequest{
+                @await Component.InvokeAsync("IterationDropdown", new IncomingIdRequest
+                {
 
                     ProjectId = @ProjectId.Value,
                     Id = @Iteration.Value,
@@ -63,10 +66,10 @@
                 })
 
                 <button type="button" id="Persons" class="btn btn-primary">Persons</button>
-                <div>
-                    <label for="publicCheck" style="padding: 10px 70px 10px 0">Public</label>
-                    <input id="publicCheck" type="checkbox" onchange="MakeBoardPublic()" />
-                    <p id="GeneratedLink"></p>
+                <div onclick="EnablePublicSignUp()">
+                    <label for="publicCheck" style="padding: 10px 70px 10px 0; position:relative; z-index:-12;">Make sign up public</label>
+                    <input id="publicCheck" type="checkbox" style="position: relative; z-index: -12;" />
+                    <p id="GeneratedLink">@publicSignupUrl</p>
                 </div>
             </div>
 
@@ -144,10 +147,13 @@
 
 
 <script type="text/javascript">
-
+        var signupPolicy = false;
+        if (@publicSIgnAccess == 1) {
+            signupPolicy = true;
+        }
         $("#Rowbtns").hide();
         var workItemName;
-        var publicCheck = new ejs.buttons.Switch({ checked: false });
+    var publicCheck = new ejs.buttons.Switch({ checked: signupPolicy });
         publicCheck.appendTo('#publicCheck');
 
         var dialogObj;
@@ -176,7 +182,7 @@
         issueBtn.appendTo('#issueBtn');
         var bugBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
         bugBtn.appendTo('#bugBtn');
-          
+
         var dialogIterations = new ej.popups.Dialog({
                 width: '90vh',
                 header: 'Attention, closing the active Iteration will move all work items that arent closed to the next iteration pleaes check your planning boards for items that havent been cloed',
@@ -216,7 +222,7 @@
             }
         });
         $(function() {
-            
+
             dialogNewWI = new ej.popups.Dialog({
                 width: '600px',
                 header: 'Choose you the type of work item that you want to associate with the current user story!',
@@ -263,7 +269,7 @@
                 error: function(xhr, status, error) {
                  }
             });
-     
+
             $.ajax({
                 type: 'POST',
                 url: '/Boards/GetPersons',
@@ -279,9 +285,9 @@
                  }
             });
 
-            
-           
-          
+
+
+
 
 
 
@@ -319,20 +325,20 @@
                   swimlaneSettings: {
                     keyField: 'assignee',
                     template: '#swimlaneTemplate',
-                    showEmptyRow: true               
+                    showEmptyRow: true
                 },
             });
 
 
             kanbanObj.appendTo('#Kanban');
-         
+
             ShowContent();
         }
 
         function dialogOpen(args) {
             args.cancel = true;
         }
-      
+
         function CardSelected(args)
         {
             args.cancel = true;
@@ -371,7 +377,7 @@
             }
 
          }
-       
+
 
         function PersonClicked(args) {
             //console.log(args);
@@ -406,7 +412,7 @@
 
     }
     function dialogOpen() {
- 
+
         document.getElementById('AssignModel').style.display = 'block';
     }
 
@@ -449,7 +455,7 @@
         CancelAssign();
         ChangeCardOwner(selectedChanging.id, args.rowData.name);
     }
-    
+
 
     function ChangeCardOwner(id,name)
     {
@@ -466,20 +472,29 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function(response) {
-                
+
             },
             error: function(xhr, status, error) {
              }
         });
     }
 
-    function MakeBoardPublic()
-    {
+     function EnablePublicSignUp() {
+        publicCheck.click();
+        MakeSignUpPublic();
+    }
+
+    function MakeSignUpPublic() {
+        var test = publicCheck.element;
         var isChecked;
-        if (publicCheck.properties.checked === true)
-             isChecked = 1;
-        else
+
+        if (publicCheck.properties.checked === true) {
+            isChecked = 1;
+        }
+        else {
             isChecked = 0;
+        }
+
 
 
           var incomingSprintDTO =
@@ -500,10 +515,11 @@
             error: function(xhr, status, error) {
              }
         });
-    }
+     }
+
     function NewWorkItem(btn)
     {
-         
+
         workItemName = btn.id.split("|")[0];
 
         dialogNewWI.show();

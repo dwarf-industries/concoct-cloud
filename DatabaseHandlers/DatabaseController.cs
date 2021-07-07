@@ -113,6 +113,15 @@ namespace Rokono_Control.DatabaseHandlers
             Context.SaveChanges();
         }
 
+        internal (int, string) CheckProjectAccess(int projectId, string domain)
+        {
+            var getProject = Context.Projects.Include(x=>x.AssociatedProjectIterations).FirstOrDefault(x => x.Id == projectId);
+            if (getProject == null)
+                return (0, "");
+
+            return getProject.PublicBoard == 0 ? (0, "") : (1, $"https://{domain}/Boards/PublicBoard?projectId={getProject.Id}&iteration={getProject.AssociatedProjectIterations.FirstOrDefault(x=>x.ActiveIteration == 1).IterationId}&person=0");
+        }
+
         internal PremadeWidgets SaveWidgetToBoard(IncomingIdRequest request)
         {
             Context.AssociatedUserDashboardPremade.Add(new AssociatedUserDashboardPremade{

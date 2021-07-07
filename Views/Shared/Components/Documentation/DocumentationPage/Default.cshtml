@@ -165,6 +165,7 @@
 <script>
     function OpenNewPageModal()
     {
+        debugger
         $("#NewPageModalHodler").html("");
         $("#NewPageModalHodler").load("/Documentation/GetPageModal?id=0&&category=@Category&&projectId=@ProjectId")
         .ajaxSuccess(x => {

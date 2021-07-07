@@ -562,9 +562,7 @@ namespace Platform.DatabaseHandlers.Contexts
 
         }
 
-
-
-         internal string ChangeProjectBoardStatus(IncomingPublicBoardRequest request, string domain)
+        internal string ChangeProjectBoardStatus(IncomingPublicBoardRequest request, string domain)
         {
             var getProject = Context.Projects.FirstOrDefault(x=>x.Id == request.ProjectId);
             getProject.PublicBoard = request.IsChecked;
