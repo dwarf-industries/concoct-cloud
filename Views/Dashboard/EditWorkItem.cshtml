@@ -585,7 +585,12 @@ else if (WorkItemType == 2)
                             <div class="row">
                                 <div class="control-section">
                                     <div class="content-wrapper">
-                                        <div id="chatGrid"></div>
+                                        @await Component.InvokeAsync("GetDiscussionBoard", new IncomingIdRequest
+                                        {
+                                             Id = @WorkItemData.Id,
+                                             WorkItemType = 1
+                                         })
+
                                     </div>
                                 </div>
                             </div>
@@ -1254,7 +1259,7 @@ else if (WorkItemType == 2)
                 //console.log(response);
 
                 chatGrid.addRecord(response);
-                chatGrid.refresh(); // refresh the Grid.
+           //     chatGrid.refresh(); // refresh the Grid.
             },
             error: function (xhr, status, error) {
                 console.log(error);
@@ -1264,9 +1269,11 @@ else if (WorkItemType == 2)
 
     function ChatActionBegin(args) {
         if (args.requestType === 'save') {
-            chatGrid.dataSource.shift();// Remove the newly added record from first position
+            debugger
             chatGrid.dataSource.push(args.data)// Push the newly added record in data source
             chatGrid.refresh(); // refresh the Grid.
+            chatGrid.dataSource.shift();// Remove the newly added record from first position
+
             $("#ChatMessageBar").children()[0].innerHTML = "";
         }
 

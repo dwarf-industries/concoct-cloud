@@ -1,0 +1,225 @@
+﻿@{
+    var disucssionMessages = ViewData["DiscussionMessages"] as List<OutgoingDiscussionMessage>;
+    var uniqueId = Program.GetUniqueId();
+}
+
+<style>
+    .ChatHolder {
+        padding: 2%;
+    }
+
+
+    .comments-section {
+        overflow-y: auto;
+        position: relative;
+        min-height: 75px;
+    }
+
+    * {
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+    .work-item-view {
+        font-size: 12px;
+    }
+
+    .wit-comment-item .avatar-button-image {
+        height: 28px;
+        width: 28px;
+        border-radius: 14px;
+    }
+
+    .wit-comment-item .cursor-hover-card:hover {
+        cursor: pointer;
+    }
+
+    input, select, textarea, button {
+        color: inherit;
+        font-family: inherit;
+        font-size: inherit;
+    }
+
+    .wit-comment-item .comment-item-right {
+        margin-left: 34px;
+    }
+
+    .wit-comment-viewer {
+        border: 1px solid;
+        border-top-color: currentcolor;
+        border-right-color: currentcolor;
+        border-bottom-color: currentcolor;
+        border-left-color: currentcolor;
+        border-color: rgba(234,234,234,1);
+        border-color: rgba(var(--palette-neutral-8,234, 234, 234),1);
+        border-radius: 5px;
+        padding-top: 8px;
+        padding-left: 12px;
+        padding-right: 12px;
+        overflow-x: hidden;
+    }
+
+        .wit-comment-viewer .comment-header {
+            overflow-x: auto;
+            overflow-y: hidden;
+            position: relative;
+            height: 34px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .wit-comment-viewer .comment-header-left {
+            display: flex;
+            justify-content: flex-start;
+            max-width: 85%;
+            margin-top: 4px;
+            min-width: 0;
+        }
+
+            .wit-comment-viewer .comment-header-left .user-display-name {
+                margin-right: 5px;
+                color: rgba(0,0,0,.55);
+                color: var(--text-secondary-color,rgba(0, 0, 0, .55));
+                font-weight: bold;
+                flex: 1 1 auto;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+    .setInline {
+        display: inline;
+    }
+
+    * {
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+
+
+    .wit-comment-viewer .comment-header-left .user-display-name {
+        color: rgba(0,0,0,.55);
+        color: var(--text-secondary-color,rgba(0, 0, 0, .55));
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    .wit-comment-viewer .comment-header {
+        font-size: 14px;
+    }
+
+    .wit-comment-viewer .comment-header-left .comment-timestamp {
+        flex: 0 0 100%;
+        font-size: 85%;
+        color: rgba(0,0,0,.55);
+        color: var(--text-secondary-color,rgba(0, 0, 0, .55));
+        line-height: 17px;
+        white-space: nowrap;
+    }
+
+    .wit-comment-viewer .comment-header-right {
+        white-space: nowrap;
+        font-size: 14px;
+        margin: 4px;
+    }
+
+    .wit-comment-viewer .comment-content {
+        color: rgba(0,0,0,.9);
+        color: var(--text-primary-color,rgba(0, 0, 0, .9));
+        word-wrap: break-word;
+        font-size: 14px;
+        word-wrap: break-word;
+        margin-bottom: 20px;
+    }
+
+        .wit-comment-viewer .comment-content > :last-child:not(.bolt-table) {
+            margin-bottom: 0;
+        }
+
+        .wit-comment-viewer .comment-content > :first-child:not(.bolt-table) {
+            margin-top: 0;
+        }
+
+        .wit-comment-viewer .comment-content > * {
+            margin: 0;
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+
+    .comment-item-left {
+        position: relative;
+        top: 34px;
+    }
+</style>
+<div id="template_@uniqueId" style="display:none">
+    <div class="comments-section">
+        <div>
+            <div class="wit-comment-item">
+                <div class="comment-item-right">
+                    <div class="wit-comment-viewer">
+                        <div class="comment-header">
+                            <div class="comment-header-left">
+                                <span class="user-display-name">
+                                    <div class="cc-TooltipHost  ">Kristifor Milchev</div>
+                                </span>
+                                <div class="cc-TooltipHost  ">
+                                    <span class="comment-timestamp">commented 25.06</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="comment-content" data-comment-id="10319511">
+                            <div>3 loads when the screen initially renders, then subsequent loads are only 1.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ChatHolder" id="ChatHolder_@uniqueId">
+    @if (disucssionMessages != null)
+    {
+        @foreach (var item in @disucssionMessages)
+        {
+            <div id="template_x">
+                <div class="comments-section">
+                    <div>
+                        <div class="wit-comment-item">
+                            <div class="comment-item-right">
+                                <div class="wit-comment-viewer">
+                                    <div class="comment-header">
+                                        <div class="comment-header-left">
+                                            <span class="user-display-name">
+                                                <div class="cc-TooltipHost  ">@item.Name</div>
+                                            </span>
+                                            <div class="cc-TooltipHost  ">
+                                                <span class="comment-timestamp">commented @item.DateTime.Day/@item.DateTime.Month/@item.DateTime.Year </span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="comment-content" data-comment-id="10319511">
+                                        <div>@Html.Raw(item.Message)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+
+<script>
+    var messageTemplate = document.getElementById("template_@uniqueId");
+
+</script>

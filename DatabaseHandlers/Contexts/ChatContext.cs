@@ -78,6 +78,18 @@ namespace Platform.DatabaseHandlers.Contexts
 
             return result;
         }
+
+        internal List<OutgoingDiscussionMessage> GetWorkItemDiscussions(IncomingIdRequest request)
+        {
+            return Context.AssociatedWorkItemMessages.Include(x=>x.Message).ThenInclude(Message => Message.Sender).Where(x => x.WorkItemId == request.Id).Select(x=>  new OutgoingDiscussionMessage { 
+                AccountId = x.Message.Sender.Id,
+                Name = $"{x.Message.Sender.FirstName} {x.Message.Sender.LastName}",
+                DateTime = x.Message.DateOfMessage.Value,
+                Message = x.Message.Content,
+                Icon = ""
+            }).ToList();
+        }
+
         internal List<ChatRoomRights> GetUserChatRights(int id, int projectId)
         {
             return Context.AssociatedUserChatRights.Include(x => x.Right)

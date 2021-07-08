@@ -113,6 +113,14 @@ namespace Rokono_Control
             return JsonConvert.DeserializeObject<Config>(config);
         }
 
+        public static char GetUniqueId()
+        {
+            var chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+            var random = new System.Random();
+            var uniqueName = chars[random.Next(chars.Length - 1)];
+            return uniqueName;
+        }
+
         private static void timer1_Tick(object sender, EventArgs e)
         {
             
