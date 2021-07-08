@@ -583,23 +583,24 @@ else if (WorkItemType == 2)
                         </div>
                         <div id="tab2_content" style="display: none; min-height:53vh;">
                             <div class="row">
-                                <div class="control-section">
-                                    <div class="content-wrapper">
-                                        @await Component.InvokeAsync("GetDiscussionBoard", new IncomingIdRequest
-                                        {
-                                             Id = @WorkItemData.Id,
-                                             WorkItemType = 1
-                                         })
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="position-relative form-group" style="width:100%;"><label for="ChatMessageBar" class="">Add a comment</label><div name="ChatMessageBar" id="ChatMessageBar" class="form-control"></div></div>
                             </div>
                             <div class="row">
                                 <button onclick="SendMessage()" id="SendMsgBtn" style="width:100%;"> <i class="fas fa-save"></i>Send</button>
                             </div>
+                            <div class="row">
+                                <div class="control-section">
+                                    <div class="content-wrapper" style="height:40vh; overflow:auto;">
+                                        @await Component.InvokeAsync("GetDiscussionBoard", new IncomingIdRequest
+                                        {
+                                            Id = @WorkItemData.Id,
+                                            WorkItemType = 1
+                                        })
+
+                                    </div>
+                                </div>
+                            </div>
+
 
                         </div>
                         <div id="tab3_content" style="display: none; min-height:53vh;">

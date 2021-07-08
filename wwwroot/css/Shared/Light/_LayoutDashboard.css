@@ -436,4 +436,7 @@ html {
     scrollbar-color: #41b3d3 white;
     scrollbar-width: thin !important;
 }
- 
+
+.e-card {
+    box-shadow: 1px 10px 19px 4px rgba(0,0,0,0.1) !important
+}
