@@ -11,7 +11,7 @@ namespace Platform.Models
         public string Link { get; set; }
         public bool IsParent { get; set; }
         public int ChannelType { get; set; }
-        public int IsExand { get; set; }
+        public int IsExpand { get; set; }
         public int ParentId {get; set;}
         public List<OutgoingChatItemChild> NodeChild { get; set; }
     }

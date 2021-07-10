@@ -1,130 +1,137 @@
 
-@{
-    ViewData["Title"] = "Backlog";
-    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
-    var result = ViewData["ProjectId"] as int?;
-    var BoardId = ViewData["BoardId"] as int?;
-    var CurrentIteration = ViewData["Iteration"] as int?;
-    var Phase  = ViewData["Phase"] as string;
-    
-}
+@{ ViewData["Title"] = "Backlog";
+                Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+                var result = ViewData["ProjectId"] as int?;
+                var BoardId = ViewData["BoardId"] as int?;
+                var CurrentIteration = ViewData["Iteration"] as int?;
+                var Phase = ViewData["Phase"] as string; }
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script>
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 <!-- Main Quill library -->
 <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
 <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
- 
+
 <style>
-    #main-text{
+    #main-text {
         height: 90vh;
     }
-    .fa-bug:before{
+
+    .fa-bug:before {
         font-family: "e-icons" !important;
         content: '\e191';
         color: #1f818c;
         width: 30px;
         height: 30px;
     }
-    .fa-cog:before{
+
+    .fa-cog:before {
         font-family: "e-icons" !important;
         content: '\e679';
         color: #1f818c;
         width: 30px;
         height: 30px;
     }
-    .fa-tasks:before{
+
+    .fa-tasks:before {
         font-family: "e-icons" !important;
         content: '\e728';
         color: #1f818c;
         width: 30px;
         height: 30px;
     }
-    .fa-vial:before{
+
+    .fa-vial:before {
         font-family: "e-icons" !important;
         content: '\e664';
         color: #1f818c;
         width: 30px;
         height: 30px;
     }
-    .fa-crown:before{
+
+    .fa-crown:before {
         font-family: "e-icons" !important;
         content: '\e824';
         color: #1f818c;
         width: 30px;
         height: 30px;
     }
-    .fa-exclamation-triangle:before{
+
+    .fa-exclamation-triangle:before {
         font-family: "e-icons" !important;
         content: '\e74c';
         color: #1f818c;
         width: 30px;
         height: 30px;
     }
-    .fa-user-circle:before{
+
+    .fa-user-circle:before {
         font-family: "e-icons" !important;
         content: '\e193';
         color: #1f818c;
         width: 30px;
         height: 30px;
     }
-
 </style>
 
 
 <!-- end of sidebar element -->
 <!-- main-content declaration -->
- 
-        <div id="spinner">
-            <div id="loader"></div>
-        </div>
-        <div id="Content" hidden>
-            <div class="row" style="margin:0px;">
-                <div class="col-md-12">
-                    <div class="main-card mb-3 card">
-                        <div class="card-body">
-                            <h5 class="card-title text-center">Select a project</h5>
-                            <div class="row" style="margin-left:10px;">
 
-                                <div class="btn-group dropdown-split-primary">
-                                    <button type="button" id="iconbtn" class="btn btn-primary">New Work Item</button>
+<div id="spinner">
+    <div id="loader"></div>
+</div>
+<div id="Content" hidden>
+    <div class="row" style="margin:0px;">
+        <div class="col-md-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Select a project</h5>
+                    <div class="row" style="margin-left:10px;">
 
-
-
-
-                                    <button id="QueryBtn">Open In Query</button>
-                                    <button id="ImportWorkItemBtn" onclick="ImportNewWorkItems()"></i>Import Work Items</button>
-                                    <button id="ExportWorkItemBtn">Export Work Items</button>
-                                    <button Id="RecycleBtn" onclick="DeleteWorkItems()">Recycle Work Items</button>
-                                     @await Component.InvokeAsync("IterationDropdown", new IncomingIdRequest{
-                                        ProjectId = @result.Value,
-                                        Id = @CurrentIteration.Value,
-                                        Phase = "Backlogs/Index"
-                                    })
+                        <div class="btn-group dropdown-split-primary">
+                            <button type="button" id="iconbtn" class="btn btn-primary">New Work Item</button>
 
 
 
-                                </div>
-                                <div class="control-section" style="height:97vh;">
-                                    <div class="content-wrapper">
-                                        <div id="TreeGrid"></div>
-                                    </div>
-                                </div>
+
+                            <button id="QueryBtn">Open In Query</button>
+                            <button id="ImportWorkItemBtn" onclick="ImportNewWorkItems()"></i>Import Work Items</button>
+                            <button id="ExportWorkItemBtn">Export Work Items</button>
+                            <button Id="RecycleBtn" onclick="DeleteWorkItems()">Recycle Work Items</button>
+                            @await Component.InvokeAsync("IterationDropdown", new IncomingIdRequest
+                            {
+                                ProjectId = @result.Value,
+                                Id = @CurrentIteration.Value,
+                                Phase = "Backlogs/Index"
+                            })
+
+
+
+                        </div>
+                        <div class="control-section" style="height:97vh;">
+                            <div class="content-wrapper">
+                                <div id="TreeGrid"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-             <div id="exportDialog">
-                <div class="row">
-                    <button id="importWorkItemsBtn" style="width: 100%;" onclick="ImportItems()">Import Items</button>
-                </div>
-                <div class="row" style="padding:2%;">
-                    <div class="position-relative form-group" style="width:100%;height:300px;" ><label for="exportContent"  class="">Manual Creation Script</label><div name="exportContent" id="exportContent"  style="max-height: 400px;"  class="form-control"></div></div>
-                </div>
-                
-            </div>
- 
+    <div id="exportDialog">
+        <div class="row">
+            <button id="importWorkItemsBtn" style="width: 100%;" onclick="ImportItems()">Import Items</button>
+        </div>
+        <div class="row" style="padding:2%;">
+            <div class="position-relative form-group" style="width:100%;height:300px;"><label for="exportContent" class="">Manual Creation Script</label><div name="exportContent" id="exportContent" style="max-height: 400px;" class="form-control"></div></div>
+        </div>
+
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -268,8 +275,8 @@
 
     function InitiliazeGrid(data )
     {
-         
- 
+
+
 
         var treeGridObj = new ej.treegrid.TreeGrid({
             dataSource: data,
@@ -316,7 +323,7 @@
 
         }
     }
-    
+
     function CreateNewWorkItem(id){
         ProjectId = @result;
         boardId = @BoardId;
@@ -343,7 +350,7 @@
         if (index > -1) {
             selectedRows.splice(index, 1);
         }
- 
+
     }
     function DeleteWorkItems()
     {

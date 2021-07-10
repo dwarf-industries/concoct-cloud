@@ -1,6 +1,7 @@
 ﻿@{
     var disucssionMessages = ViewData["DiscussionMessages"] as List<OutgoingDiscussionMessage>;
-    var uniqueId = Program.GetUniqueId();
+    disucssionMessages = disucssionMessages == null ? new List<OutgoingDiscussionMessage>() : disucssionMessages.OrderByDescending(x=>x.DateTime).ToList();
+    var uniqueId = ViewData["GetUniqueId"] as string;
 }
 
 <style>
@@ -165,16 +166,16 @@
                         <div class="comment-header">
                             <div class="comment-header-left">
                                 <span class="user-display-name">
-                                    <div class="cc-TooltipHost  ">Kristifor Milchev</div>
+                                    <div class="cc-TooltipHost  " data-info="sender">Kristifor Milchev</div>
                                 </span>
                                 <div class="cc-TooltipHost  ">
-                                    <span class="comment-timestamp">commented 25.06</span>
+                                    <span class="comment-timestamp">commented  <span data-info="date">25.06</span></span>
                                 </div>
                             </div>
 
                         </div>
                         <div class="comment-content" data-comment-id="10319511">
-                            <div>3 loads when the screen initially renders, then subsequent loads are only 1.</div>
+                            <div data-info="content">3 loads when the screen initially renders, then subsequent loads are only 1.</div>
                         </div>
                     </div>
                 </div>
@@ -220,6 +221,24 @@
 </div>
 
 <script>
-    var messageTemplate = document.getElementById("template_@uniqueId");
+    var messageTemplate;
+
+    function AddDiscussionMessage(sender, incomingMessage, date, identifier) {
+        debugger
+        messageTemplate = document.getElementById("template_" + identifier);
+
+        var chatComponent = $("#ChatHolder_"+identifier).html()
+        var message = messageTemplate.cloneNode(true);
+        message.querySelector("[data-info='sender']").innerHTML = sender;
+        message.querySelector("[data-info='date']").innerHTML = date;
+        message.querySelector("[data-info='content']").innerHTML = incomingMessage;
+        message.style.setProperty("display", "");
+         
+        var chatData = message.outerHTML;
+        if (chatComponent !== undefined)
+            chatData += chatComponent;
+
+        $("#ChatHolder_@uniqueId").html(chatData);
+    }
 
 </script>

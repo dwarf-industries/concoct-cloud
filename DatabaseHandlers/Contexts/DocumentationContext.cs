@@ -47,17 +47,17 @@ namespace Platform.DatabaseHandlers.Contexts
                     InternalId = x.Id,
                     // NodeId = i++,
                     NodeText = x.CategoryName,
-                    IconCss = "icon-th icon",
+                    IconCss = "fa-list-alt",
                     Link = "",
                     ChannelType = 0,
                     IsParent = true,
                     ParentId = x.Id,
-                    IsExand = 1,
+                    IsExpand = 1,
                     NodeChild = x.DocumentationCategoryField.Select(y=> new OutgoingChatItemChild{
                         InternalId = y.Id,
                         // NodeId = i++,
                         NodeText = y.PageName,
-                        IconCss = "icon-circle-thin icon",
+                        IconCss = "fa fa-file",
                         Link = "",
                         ParentId = y.CategoryId.Value
                     }).ToList()

@@ -1,6 +1,7 @@
- @{
-     var ProjectId = ViewData["ProjectId"] as int?;
- }
+@{ var ProjectId = ViewData["ProjectId"] as int?; }
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script>
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <!-- Main Quill library -->
 <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
@@ -9,7 +10,7 @@
     .sliderwrap .label-text {
         font-weight: 500;
     }
-    
+
     .content-wrapper {
         width: 80%;
         margin: 0 auto;
@@ -62,7 +63,7 @@
         color: #333;
     }
 
-    .e-tooltip-cutomization.e-slider-tooltip.e-tooltip-wrap.e-popup .e-arrow-tip-inner{
+    .e-tooltip-cutomization.e-slider-tooltip.e-tooltip-wrap.e-popup .e-arrow-tip-inner {
         color: #ffd939;
     }
 
@@ -79,6 +80,7 @@
         background-color: #e3165b;
         z-index: unset;
     }
+
     .e-tooltip-cutomization.e-slider-tooltip.e-tooltip-wrap.e-popup.e-material-default.e-slider-horizontal-after,
     .e-tooltip-cutomization.e-slider-tooltip.e-tooltip-wrap.e-popup.e-material-default.e-slider-horizontal-before,
     .e-tooltip-cutomization.e-slider-tooltip.e-tooltip-wrap.e-popup {
@@ -89,7 +91,7 @@
     .bootstrap .e-tooltip-cutomization.e-slider-tooltip.e-tooltip-wrap.e-popup .e-arrow-tip-outer {
         border-top-color: #ffd939;
     }
- 
+
     .bootstrap .e-tooltip-cutomization.e-slider-tooltip.e-tooltip-wrap.e-popup .e-arrow-tip-inner {
         color: #ffd939;
     }
@@ -98,7 +100,7 @@
 
 <div class="col-lg-12 control-section">
     <div class="content-wrapper">
-         
+
         <div class="sliderwrap">
             <label class="labeltext userselect">
                 <span class="label-text">Rate your feedback score</span>
@@ -116,7 +118,7 @@
 </div>
 <div class="col-lg-12 control-section">
     <div class="row">
-        <div class="position-relative form-group" style="width:100%;" ><label for="Feedback" class="">Feedback</label><div name="Feedback" style="min-height:400px;" id="Feedback" class="form-control"></div></div>
+        <div class="position-relative form-group" style="width:100%;"><label for="Feedback" class="">Feedback</label><div name="Feedback" style="min-height:400px;" id="Feedback" class="form-control"></div></div>
     </div>
 </div>
 <div class="col-lg-12 control-section text-center">
@@ -161,7 +163,7 @@ function PostFeedback()
                 data: JSON.stringify(messagesDto),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                
+
                 success: function (response) {
                     window.location=document.referrer;
 

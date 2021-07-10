@@ -36,8 +36,12 @@
                     case 1:
                         ViewData["DiscussionMessages"] = context.GetWorkItemDiscussions(request);
                         break;
+                    case 2:
+                        ViewData["DiscussionMessages"] = context.GetAllPublicMessagesForProject(request.Id, 2);
+                        break;
                 }
             }
+            ViewData["GetUniqueId"] = request.Phase;
             return View("/Views/Shared/Components/Discussion/Default.cshtml");
         }
     }

@@ -12,5 +12,6 @@ namespace Rokono_Control.Models
         public DateTime DateTime { get; set; }
         public string Icon { get; set; }
         public string Name { get; set; }
+        public int IsNew { get; set; }
     }
 }

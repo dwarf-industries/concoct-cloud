@@ -14,10 +14,10 @@
         padding:3px;
         font-size: 13px;
     }
-    .ChatChannelIcon:before{
-        content:'\e99a';
+    .ChatChannelIcon:before {
+        content: '\eb4c';
         font-family: e-icons;
-        padding:3px;
+        padding: 3px;
         font-size: 13px;
     }
     .TreeNewItem:before{
@@ -26,9 +26,9 @@
         font-family: e-icons;
         font-size: 13px;
     }
-    .CategoryIcon:before{
-        padding:3px;
-        content:'\e714';
+    .CategoryIcon:before {
+        padding: 3px;
+        content: '\e89e';
         font-family: e-icons;
         font-size: 13px;
     }
@@ -106,13 +106,15 @@
     {
         display: block;
     }
-
+    #documentation-treeview_gridcontrol_content_table{
+        overflow:hidden;
+    }
 </style>
 <div class="row" style="margin:0;">
     <div id="DocumentationTreeViewHolder">
         @* <ul id="documentation-treeview" style="margin: 0; padding: 0;">
         </ul> *@
-                <div id="documentation-treeview"></div>
+                <div id="documentation-treeview" style="width:96%"></div>
     </div>
 </div>
 
@@ -279,14 +281,16 @@ $( document ).ready(function() {
     }
     function Expand(args)
     {
-        LastDataSource.forEach(x=>{
+        
+        LastDataSource.forEach(x => {
+             
             var expand =false;
-            if(x.internalId === args && x.isExpand === 1)
+            if (x.internalId === args && x.isExpand === 1)
             {
                 x.isExpand = 0;
                 expand = false;
             }
-            else
+            else if (x.internalId === args && x.isExpand === 0)
             {
                 x.isExpand = 1;
                 expand = true;

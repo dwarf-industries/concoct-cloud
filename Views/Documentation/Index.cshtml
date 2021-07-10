@@ -3,7 +3,7 @@
     var ProjectId = ViewData["ProjectId"] as int?;
     var Rights = ViewData["UserRights"] as UserRights;
 }
-<div class="row">
+<div class="row" id="activeDocumentationPageHeader">
     <div class="col-md-9" id="BreadCrumbHolder">
         @await Component.InvokeAsync("DocumentationBreadcrum", new IncomingIdRequest{
             ProjectId = @ProjectId.Value,
