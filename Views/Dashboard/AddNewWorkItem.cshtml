@@ -30,6 +30,43 @@
     .modal-backdrop {
         background-color: transparent;
     }
+
+
+    .Task:before {
+        font-family: "e-icons" !important;
+        content: '\e728';
+        color: #e5c310;
+    }
+
+    .Bug:before {
+        font-family: "e-icons" !important;
+        content: '\ec1a';
+        color: #990000;
+    }
+
+    .Epic:before {
+        font-family: "e-icons" !important;
+        content: '\e35d';
+        color: #8f3400
+    }
+
+    .Sprint:before {
+        font-family: "e-icons" !important;
+        content: '\ea93';
+        color: #22478b;
+    }
+
+    .Issue:before {
+        font-family: "e-icons" !important;
+        content: '\ec09';
+        color: #ff7b0088;
+    }
+
+    .Test:before {
+        font-family: "e-icons" !important;
+        content: '\e344';
+        color: #0df7ff;
+    }
 </style>
 
 <!-- end of sidebar element -->
@@ -44,7 +81,7 @@
                 <div class="main-card mb-1 card">
                     <div class="card-body">
                         <div class="col-md-2">
-                            <h2>Work Items:</h2>
+                            <h2>Work Item</h2>
                         </div>
                         <div class="col-md-9">
                             <button id="BackBtn" onclick="ReturnBack()"><i class="fas fa-reply"></i>  Back</button>
@@ -56,7 +93,7 @@
                 <div class="main-card mb-1 card">
                     <div class="card-body">
 
-                        <p>New  @WorkItemTypeName <i class="fas fa-exclamation-circle"></i> Field 'Title' cannot be empty.</p>
+                        <p>New  @WorkItemTypeName <span class="@WorkItemTypeName"></span> Field 'Title' cannot be empty.</p>
                         <div class="row">
                             <input name="Title" id="Title" placeholder="Title" style="width:100%" class="form-control-sm" />
                         </div>

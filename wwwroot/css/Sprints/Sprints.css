@@ -136,8 +136,8 @@
 
 .card-template .e-search.Task:before {
     font-family: "e-icons" !important;
-    content: '\e526';
-    color: #ffd600;
+    content: '\e728';
+    color: #e5c310;
 }
 
 .card-template .e-search.Bug:before {
