@@ -258,3 +258,11 @@ e-kanban .e-card .e-text .col-3 .status:before {
         color: red;
         cursor: pointer;
     }
+
+.ql-toolbar.ql-snow {
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    padding: 8px;
+    border-radius: 5px;
+}

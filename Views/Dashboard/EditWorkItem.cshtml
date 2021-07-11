@@ -1,34 +1,34 @@
 @{ ViewData["Title"] = "New Work Item";
-                Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
-                var result = ViewData["Projects"] as List<Projects>;
-                var userName = ViewData["Name"] as string;
-                var WorkItemFiles = ViewData["WorkItemFiles"] as List<SystemFiles>;
-                var priorities = ViewData["Priorities"] as List<WorkItemPriorities>;
-                var areas = ViewData["Areas"] as List<WorkItemAreas>;
-                var iterations = ViewData["Iterations"] as List<WorkItemIterations>;
-                var severities = ViewData["Severities"] as List<WorkItemSeverities>;
-                var activities = ViewData["Activities"] as List<WorkItemActivity>;
-                var reasons = ViewData["Reasons"] as List<WorkItemReasons>;
-                var builds = ViewData["Builds"] as List<Builds>;
-                var WorkItemTypeName = ViewData["WorkItemTypeName"] as string;
-                var ValueAreas = ViewData["ValueAreas"] as List<ValueAreas>;
-                var repositoryMembers = ViewData["RepositoryMembers"] as List<UserAccounts>;
-                var Risks = ViewData["Risks"] as List<Risks>;
-                var projectId = ViewData["ProjectId"] as int?;
-                var WorkItemType = ViewData["WorkItemType"] as int?;
-                var WorkItemData = ViewData["WorkItemData"] as WorkItem;
-                var cState = @WorkItemData.StateId.HasValue != true ? "0" : @WorkItemData.StateId.Value.ToString();
-                var cIteration = @WorkItemData.Iteration.HasValue != true ? "0" : @WorkItemData.Iteration.Value.ToString();
-                var cArea = @WorkItemData.AreaId.HasValue != true ? "0" : @WorkItemData.AreaId.Value.ToString();
-                var cReason = @WorkItemData.ReasonId.HasValue != true ? "0" : @WorkItemData.ReasonId.Value.ToString();
-                var cPriority = @WorkItemData.PriorityId.HasValue != true ? "0" : @WorkItemData.PriorityId.Value.ToString();
-                var cSeverity = @WorkItemData.Severity.HasValue != true ? "0" : @WorkItemData.Severity.Value.ToString();
-                var cActivity = @WorkItemData.Activity.HasValue != true ? "0" : @WorkItemData.Activity.Value.ToString();
-                var cValueArea = @WorkItemData.ValueAreaId.HasValue != true ? "0" : @WorkItemData.ValueAreaId.Value.ToString();
-                var cRisk = @WorkItemData.RiskId.HasValue != true ? "0" : @WorkItemData.RiskId.Value.ToString();
-                var SystemDesignInfo = @WorkItemData.SystemDesignInfo as string;
-                var ReturnPath = ViewData["ReturnPath"] as string;
-                var pageUniueIdentifier = Program.GetUniqueId().ToString(); }
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var result = ViewData["Projects"] as List<Projects>;
+    var userName = ViewData["Name"] as string;
+    var WorkItemFiles = ViewData["WorkItemFiles"] as List<SystemFiles>;
+    var priorities = ViewData["Priorities"] as List<WorkItemPriorities>;
+    var areas = ViewData["Areas"] as List<WorkItemAreas>;
+    var iterations = ViewData["Iterations"] as List<WorkItemIterations>;
+    var severities = ViewData["Severities"] as List<WorkItemSeverities>;
+    var activities = ViewData["Activities"] as List<WorkItemActivity>;
+    var reasons = ViewData["Reasons"] as List<WorkItemReasons>;
+    var builds = ViewData["Builds"] as List<Builds>;
+    var WorkItemTypeName = ViewData["WorkItemTypeName"] as string;
+    var ValueAreas = ViewData["ValueAreas"] as List<ValueAreas>;
+    var repositoryMembers = ViewData["RepositoryMembers"] as List<UserAccounts>;
+    var Risks = ViewData["Risks"] as List<Risks>;
+    var projectId = ViewData["ProjectId"] as int?;
+    var WorkItemType = ViewData["WorkItemType"] as int?;
+    var WorkItemData = ViewData["WorkItemData"] as WorkItem;
+    var cState = @WorkItemData.StateId.HasValue != true ? "0" : @WorkItemData.StateId.Value.ToString();
+    var cIteration = @WorkItemData.Iteration.HasValue != true ? "0" : @WorkItemData.Iteration.Value.ToString();
+    var cArea = @WorkItemData.AreaId.HasValue != true ? "0" : @WorkItemData.AreaId.Value.ToString();
+    var cReason = @WorkItemData.ReasonId.HasValue != true ? "0" : @WorkItemData.ReasonId.Value.ToString();
+    var cPriority = @WorkItemData.PriorityId.HasValue != true ? "0" : @WorkItemData.PriorityId.Value.ToString();
+    var cSeverity = @WorkItemData.Severity.HasValue != true ? "0" : @WorkItemData.Severity.Value.ToString();
+    var cActivity = @WorkItemData.Activity.HasValue != true ? "0" : @WorkItemData.Activity.Value.ToString();
+    var cValueArea = @WorkItemData.ValueAreaId.HasValue != true ? "0" : @WorkItemData.ValueAreaId.Value.ToString();
+    var cRisk = @WorkItemData.RiskId.HasValue != true ? "0" : @WorkItemData.RiskId.Value.ToString();
+    var SystemDesignInfo = @WorkItemData.SystemDesignInfo as string;
+    var ReturnPath = ViewData["ReturnPath"] as string;
+    var pageUniueIdentifier = Program.GetUniqueId().ToString(); }
 <style>
     .e-input-picture:before {
         content: '\e30d';
@@ -52,11 +52,14 @@
         max-height: 500px;
         overflow-y: auto;
     }
+    #ChatMessageBar {
+        height: 42vh;
+    }
 </style>
 <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/default.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script>
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<link href="~/css/Shared/quill/quillsnow.css" rel="stylesheet">
 <!-- Main Quill library -->
 <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
 <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
@@ -115,8 +118,7 @@
                                             @foreach (var state in activities)
                                             {
 
-                                <option value="@state.Id">@state.ActivityName</option>
-}
+                                <option value="@state.Id">@state.ActivityName</option>}
                                         </select>
 
 
@@ -132,8 +134,7 @@
                                             @foreach (var reason in reasons)
                                             {
 
-                                <option value="@reason.Id">@reason.ReasonName</option>
-}
+                                <option value="@reason.Id">@reason.ReasonName</option>}
                                         </select>
                                     </div>
                                 </div>
@@ -148,8 +149,7 @@
                                         <select class="form-control-sm form-control" id="ItemArea" value="@WorkItemData.AreaId">
                                             @foreach (var area in areas)
                                             {
-                                <option value="@area.Id">@area.AreaName</option>
-}
+                                <option value="@area.Id">@area.AreaName</option>}
                                         </select>
                                     </div>
                                 </div>
@@ -162,8 +162,7 @@
                                             @foreach (var iteration in iterations)
                                             {
 
-                                <option value="@iteration.Id">@iteration.IterationName</option>
-}
+                                <option value="@iteration.Id">@iteration.IterationName</option>}
                                         </select>
                                     </div>
                                 </div>
@@ -239,8 +238,7 @@
                                                         {
 
 
-                                        <option value="@priority.Id">@priority.PriorityName</option>
-}
+                                        <option value="@priority.Id">@priority.PriorityName</option>}
                                                     </select>
                                                 </div>
                                                                 <div class="row">
@@ -249,8 +247,7 @@
                                                                         @foreach (var severity in severities)
                                                                         {
 
-                                                        <option value="@severity.Id">@severity.SeverityName</option>
-}
+                                                        <option value="@severity.Id">@severity.SeverityName</option>}
                                                                     </select>
                                                                 </div>
                                                                                 <div class="row">
@@ -259,8 +256,7 @@
                                                                                         @foreach (var activity in activities)
                                                                                         {
 
-                                                                        <option value="@activity.Id">@activity.ActivityName</option>
-}
+                                                                        <option value="@activity.Id">@activity.ActivityName</option>}
                                                                                     </select>
                                                                                 </div>
                                                                                                 <div class="row">
@@ -314,8 +310,7 @@
                                                                                                                                                                                                         {
 
 
-                                                                                                                                                                                        <option value="@priority.Id">@priority.PriorityName</option>
-}
+                                                                                                                                                                                        <option value="@priority.Id">@priority.PriorityName</option>}
                                                                                                                                                                                                     </select>
                                                                                                                                                                                                 </div>
                                                                                                                                                                                                                 <div class="row">
@@ -342,8 +337,7 @@
                                                                                                                                                                                                                                                                         @foreach (var va in ValueAreas)
                                                                                                                                                                                                                                                                         {
 
-                                                                                                                                                                                                                                                        <option value="@va.Id">@va.ValueAreaName</option>
-}
+                                                                                                                                                                                                                                                        <option value="@va.Id">@va.ValueAreaName</option>}
                                                                                                                                                                                                                                                                     </select>
                                                                                                                                                                                                                                                                 </div> }
                                                                                                                                                                                                                                                             else if (WorkItemType == 5)
@@ -354,8 +348,7 @@
                                                                                                                                                                                                                                                         @foreach (var priority in priorities)
                                                                                                                                                                                                                                                         {
 
-                                                                                                                                                                                                                                        <option value="@priority.Id">@priority.PriorityName</option>
-}
+                                                                                                                                                                                                                                        <option value="@priority.Id">@priority.PriorityName</option>}
                                                                                                                                                                                                                                                     </select>
                                                                                                                                                                                                                                                 </div>
                                                                                                                                                                                                                                                                 <div class="row">
@@ -364,8 +357,7 @@
                                                                                                                                                                                                                                                                         @foreach (var risk in Risks)
                                                                                                                                                                                                                                                                         {
 
-                                                                                                                                                                                                                                                        <option value="@risk.Id">@risk.RiskName</option>
-}
+                                                                                                                                                                                                                                                        <option value="@risk.Id">@risk.RiskName</option>}
                                                                                                                                                                                                                                                                     </select>
                                                                                                                                                                                                                                                                 </div>
                                                                                                                                                                                                                                                                                 <div class="row">
@@ -408,8 +400,7 @@
                                                                                                                                                                                                                                                                                                                                                                                         @foreach (var va in ValueAreas)
                                                                                                                                                                                                                                                                                                                                                                                         {
 
-                                                                                                                                                                                                                                                                                                                                                                        <option value="@va.Id">@va.ValueAreaName</option>
-}
+                                                                                                                                                                                                                                                                                                                                                                        <option value="@va.Id">@va.ValueAreaName</option>}
                                                                                                                                                                                                                                                                                                                                                                                     </select>
                                                                                                                                                                                                                                                                                                                                                                                 </div> }
                                                                                                                                                                                                                                                                                                                                                                             else if (WorkItemType == 6)
@@ -426,8 +417,7 @@
                                                                                                                                                                                                                                                                                                                                                                                         @foreach (var priority in priorities)
                                                                                                                                                                                                                                                                                                                                                                                         {
 
-                                                                                                                                                                                                                                                                                                                                                                        <option value="@priority.Id">@priority.PriorityName</option>
-}
+                                                                                                                                                                                                                                                                                                                                                                        <option value="@priority.Id">@priority.PriorityName</option>}
                                                                                                                                                                                                                                                                                                                                                                                     </select>
                                                                                                                                                                                                                                                                                                                                                                                 </div>
                                                                                                                                                                                                                                                                                                                                                                                                 <div class="row">
@@ -444,8 +434,7 @@
                                                                                                                                                                                                                                                                                                                                                                                         @foreach (var priority in priorities)
                                                                                                                                                                                                                                                                                                                                                                                         {
 
-                                                                                                                                                                                                                                                                                                                                                                        <option value="@priority.Id">@priority.PriorityName</option>
-}
+                                                                                                                                                                                                                                                                                                                                                                        <option value="@priority.Id">@priority.PriorityName</option>}
                                                                                                                                                                                                                                                                                                                                                                                     </select>
                                                                                                                                                                                                                                                                                                                                                                                 </div>
                                                                                                                                                                                                                                                                                                                                                                                                 <div class="row">
@@ -454,8 +443,7 @@
                                                                                                                                                                                                                                                                                                                                                                                                         @foreach (var activity in activities)
                                                                                                                                                                                                                                                                                                                                                                                                         {
 
-                                                                                                                                                                                                                                                                                                                                                                                        <option value="@activity.Id">@activity.ActivityName</option>
-}
+                                                                                                                                                                                                                                                                                                                                                                                        <option value="@activity.Id">@activity.ActivityName</option>}
                                                                                                                                                                                                                                                                                                                                                                                                     </select>
                                                                                                                                                                                                                                                                                                                                                                                                 </div>
                                                                                                                                                                                                                                                                                                                                                                                                                 <div class="row">
@@ -490,8 +478,7 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @foreach (var build in builds)
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         {
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="@build.Id">@build.ReasonName</option>
-}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="@build.Id">@build.ReasonName</option>}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </select>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </div> }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             else if (WorkItemType == 7)
@@ -508,8 +495,7 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @foreach (var priority in priorities)
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         {
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="@priority.Id">@priority.PriorityName</option>
-}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="@priority.Id">@priority.PriorityName</option>}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </select>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </div>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <div class="row">
@@ -518,8 +504,7 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @foreach (var risk in Risks)
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         {
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="@risk.Id">@risk.RiskName</option>
-}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="@risk.Id">@risk.RiskName</option>}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </select>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </div>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <div class="row">
@@ -532,8 +517,7 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @foreach (var va in ValueAreas)
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         {
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="@va.Id">@va.ValueAreaName</option>
-}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="@va.Id">@va.ValueAreaName</option>}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </select>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </div>}
                                         </div>
@@ -562,8 +546,7 @@
                                                     <ul style="list-style-type:none; padding:0px;">
                                                         @foreach (var relation in WorkItemData.AssociatedWrorkItemChildrenWorkItem)
                                                         {
-                                            <li value="@relation.WorkItemChildId">@relation.WorkItemChild.Title</li>
-}
+                                            <li value="@relation.WorkItemChildId">@relation.WorkItemChild.Title</li>}
                                                     </ul>
                                                 </div>
                                             </div>
@@ -578,13 +561,11 @@
                                                     {
                                                         if (@build.Id == @WorkItemData.FoundInBuild)
                                                         {
-                                        <option value="@build.Id" selected="Selected">@build.ReasonName</option>
- }
-                                    else
-                                    {
-                    <option value="@build.Id">@build.ReasonName</option>
-}
-            }
+                                        <option value="@build.Id" selected="Selected">@build.ReasonName</option> }
+                                                        else
+                                                        {
+                                        <option value="@build.Id">@build.ReasonName</option>}
+                                                    }
                                                 </select>
                                             </div>
                                             <div class="row">
@@ -594,13 +575,11 @@
                                                     {
                                                         if (@build.Id == @WorkItemData.FoundInBuild)
                                                         {
-                                        <option value="@build.Id" selected="Selected">@build.ReasonName</option>
- }
-                                    else
-                                    {
-                    <option value="@build.Id">@build.ReasonName</option>
-}
-            }
+                                        <option value="@build.Id" selected="Selected">@build.ReasonName</option> }
+                                                        else
+                                                        {
+                                        <option value="@build.Id">@build.ReasonName</option>}
+                                                    }
                                                 </select>
                                             </div>
                                         </div>
@@ -609,26 +588,30 @@
                             </div>
                         </div>
                         <div id="tab2_content" style="display: none; min-height:53vh;">
-                            <div class="row">
-                                <div class="position-relative form-group" style="width:100%;"><label for="ChatMessageBar" class="">Add a comment</label><div name="ChatMessageBar" id="ChatMessageBar" class="form-control"></div></div>
-                            </div>
-                            <div class="row">
-                                <button onclick="SendMessage()" id="SendMsgBtn" style="width:100%;"> <i class="fas fa-save"></i>Send</button>
-                            </div>
-                            <div class="row">
-                                <div class="control-section">
-                                    <div class="content-wrapper" style="height:40vh; overflow:auto;">
-                                        @await Component.InvokeAsync("GetDiscussionBoard", new IncomingIdRequest
-                                        {
-                                            Id = @WorkItemData.Id,
-                                            WorkItemType = 1,
-                                            Phase = @pageUniueIdentifier
-                                        })
+                            <div style="display:flex">
+                                <div style="width: 30%; height: 50vh;">
+                                    <div class="row" style=" height: 50vh; " >
+                                        <div class="position-relative form-group" style="width: 100%; "><label for="ChatMessageBar" class="">Add a comment</label><div name="ChatMessageBar" id="ChatMessageBar" class="form-control"></div></div>
+                                    </div>
+                                    <div class="row">
+                                        <button onclick="SendMessage()" id="SendMsgBtn" style="width:100%;"> <i class="fas fa-save"></i>Send</button>
+                                    </div>
+                                </div>
 
+                                <div style="width:100%;">
+                                    <div class="control-section">
+                                        <div class="content-wrapper" style="height:53vh; overflow:auto;">
+                                            @await Component.InvokeAsync("GetDiscussionBoard", new IncomingIdRequest
+                                            {
+                                                Id = @WorkItemData.Id,
+                                                WorkItemType = 1,
+                                                Phase = @pageUniueIdentifier
+                                            })
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
 
                         </div>
                         <div id="tab3_content" style="display: none; min-height:53vh;">
