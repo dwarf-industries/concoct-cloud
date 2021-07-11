@@ -43,7 +43,7 @@
                         </li>
                         <li class="header-style float-right support border-left" onclick="ChangeTheme()">
                             <label for="ChangeTheme" id="themeLabel">Light</label>
-                            <input id="ChangeTheme" type="checkbox"  />
+                            <input id="ChangeTheme" type="checkbox" />
                         </li>
 
 
@@ -94,10 +94,11 @@
         </div>
 
     </div>
-
+    <script src="~/lib/@@aspnet/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/ChatHandler.js"></script>
     <script>
     var storage = window.localStorage;
-    
+
 
     var IsOpen = 0;
     var cThemeToggle = new ejs.buttons.Switch({ checked: false });
@@ -111,7 +112,7 @@
     });
     sidebarMenu.appendTo('#sidebar-treeview');
     //end of Sidebar initialization
-         
+
     if (storage.getItem("Theme") !== undefined) {
         SetTheme(storage.getItem("Theme"));
     }
@@ -128,9 +129,9 @@
 
 
     function ChangeTheme(args) {
-         
+
         cThemeToggle.click();
-        
+
         if (cThemeToggle.checked === true)
         {
             $("#themeLabel").html("Dark");
@@ -206,9 +207,7 @@
         return token;
    }
     </script>
-    <script src="https://kit.fontawesome.com/a076d05399.js">
-
-    </script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
     <style>
         .sb-mobile-diagram {
@@ -216,7 +215,6 @@
             height: 100%;
             float: left;
         }
-
     </style>
 </body>
 </html>

@@ -237,3 +237,24 @@ e-kanban .e-card .e-text .col-3 .status:before {
     padding: 5%;
     border-right: 0.2px solid black;
 }
+.e-header-wrap{
+    width:100%;
+}
+
+.NewWorkItemBtn:before {
+    font-family: "e-icons" !important;
+    content: '\e814';
+    font-size: 26px;
+    margin-right: 8px;
+    color: #ff5790;
+    cursor: pointer;
+}
+
+    .NewWorkItemBtn:before:hover {
+        font-family: "e-icons" !important;
+        content: '\e814';
+        font-size: 26px;
+        margin-right: 8px;
+        color: red;
+        cursor: pointer;
+    }

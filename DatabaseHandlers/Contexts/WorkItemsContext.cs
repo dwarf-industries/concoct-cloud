@@ -6,7 +6,9 @@ namespace Platform.DatabaseHandlers.Contexts
     using System.Text;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
+    using Platform.Hubs;
     using Platform.Models;
+    using Rokono_Control;
     using Rokono_Control.Models;
     using RokonoControl.DatabaseHandlers.WorkItemHandlers;
     using RokonoControl.Models;
@@ -276,7 +278,7 @@ namespace Platform.DatabaseHandlers.Contexts
             return iteration.IterationId;
         }
 
-        internal void ChangeWorkItemBoard(IncomingCardRequest card)
+        internal void ChangeWorkItemBoard(IncomingCardRequest card, Microsoft.AspNetCore.SignalR.IHubContext<Hubs.MessageHub> messageContext, int userId)
         {
             var newBoardAssociation = Context.AssociatedProjectBoards.Include(x => x.Board).FirstOrDefault(x => x.ProjectId == card.ProjectId
                                                                                       && x.Board.BoardName == card.Board);
@@ -286,7 +288,13 @@ namespace Platform.DatabaseHandlers.Contexts
             Context.Attach(currentAssociation);
             Context.Update(currentAssociation);
             Context.SaveChanges();
+            var username = Context.UserAccounts.FirstOrDefault(x=> x.Id == userId).Email;
+            var reciverData = Program.Members.Where(x=>x.Name != username).ToList();
 
+            reciverData.ForEach(x =>
+            {
+                MessageHub.SendCardDetailChange(messageContext, x, null);
+            });
 
         }
         internal WorkItem GetWorkItemById(int parse)

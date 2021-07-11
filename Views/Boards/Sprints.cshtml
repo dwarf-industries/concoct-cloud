@@ -252,23 +252,32 @@
                 "WorkItemTypeId": $("#ItemPriority :selected").val(),
                 "IterationId": @Iteration,
                 "PersonId": @Person,
-                "All" : @ViewRights
+                "All": @ViewRights
+            };
+
+
+            chatConnectionBuilder.on("CardStatusUpdated", (data) => {
+                debugger
+                IncomignBoardUpdate();
+            });
+            IncomignBoardUpdate();
+
+            function IncomignBoardUpdate() {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Boards/GetSprints',
+                    data: JSON.stringify(incomingSprintDTO),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        GenerateKaban(response);
+                    },
+                    error: function (xhr, status, error) {
+                    }
+                });
             }
 
-
-
-             $.ajax({
-                type: 'POST',
-                url: '/Boards/GetSprints',
-                data: JSON.stringify(incomingSprintDTO),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(response) {
-                    GenerateKaban(response);
-                },
-                error: function(xhr, status, error) {
-                 }
-            });
+          
 
             $.ajax({
                 type: 'POST',
@@ -304,7 +313,7 @@
                 dataSource: data,
                 dragStop: DragStopped,
                 actionComplete: CardDropCheck,
-                actionBegin: SwimlineBegin,
+               // actionBegin: SwimlineBegin,
                 cardDoubleClick: CardSelected,
                 dialogOpen: dialogOpen,
 
@@ -374,8 +383,7 @@
                 "CardId" :args.data[0].innerId,
                 "Board" :args.data[0].status,
                 "ProjectId" : @ProjectId
-            }
-
+             } 
          }
 
 
@@ -526,9 +534,7 @@
 
     }
 
-    function SwimlineBegin(args)
-    {
-     }
+   
     function ChangeIteration()
     {
         dialogIterations.show();
@@ -610,9 +616,8 @@
 </script>
 
 <script id="swimlaneTemplate" type="text/x-jsrender">
-    <div style="width:100%; display:inline-block">
-        <span>${textField}</span>
-        <button class="e-control e-btn e-lib e-outline e-primary" style="margin-left:10px;" id="${textField}"  onclick='NewWorkItem(this)' ><span class="e-icons plus">New Work Item</span></button>
-
-    </div>  
+    <div style="width:100%; display:flex">
+        <span class="NewWorkItemBtn" style="margin-left:10px;" id="${textField}" onclick='NewWorkItem(this)'></span>
+        <span style=" margin-top:2px">${textField}</span>
+     </div>  
 </script>
