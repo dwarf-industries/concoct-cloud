@@ -127,6 +127,7 @@ namespace Rokono_Control
                     {
                         Program.Logger.Warning($"Directory \"{projectPath}\" doesn't exist");
                         Program.Logger.Info($"Creating Folder for Project {x.ProjectName}");
+                        Directory.CreateDirectory(projectPath);
                         CommandOutput(Os, $"mkdir {projectPath}", Program.Configuration.LocalRepo);
                         Program.Logger.Info($"Cloning Repository {x.Repository.RepositoryLocation}");
                         CommandOutput(Os, $"git clone {x.Repository.RepositoryLocation}", projectPath);
