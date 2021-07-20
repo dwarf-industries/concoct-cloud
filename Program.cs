@@ -21,14 +21,16 @@ namespace Rokono_Control
         public static List<HubMappedMembers> Members { get; set; }
         public static string ServerOS { get; set; }
         public static List<ProjectBranches> ProjectBranches { get; set; }
-  
+        public static List<(string, List<(string, string, string)>)> AccountEditorPages { get; set; }
+
+
         public static void Main(string[] args)
         {
             ProjectBranches = new List<ProjectBranches>();
             Members = new List<HubMappedMembers>();
             var current = OS.GetCurrent();
             ServerOS = current;
-
+            AccountEditorPages = new List<(string, List<(string, string, string)>)>();
             Logger = new Logger();
 
             Logger.Info($"Server is starting at {DateTime.Now} Loading config files");

@@ -60,10 +60,10 @@ namespace Rokono_Control.DatabaseHandlers.Contexts
             return result;
         }
 
-        internal (string,string) GetCommitDeatails(IncomingIdRequest request)
+        internal List<(string,string, string)> GetCommitDeatails(IncomingIdRequest request)
         {
+            var result = new List<(string, string, string)>();
             var project = Context.Projects.Include(x => x.Repository).FirstOrDefault(x => x.Id == request.ProjectId);
-            var result = string.Empty;
             var first = true;
             var masterVersion = string.Empty;
             var revVersion = string.Empty;
@@ -94,16 +94,14 @@ namespace Rokono_Control.DatabaseHandlers.Contexts
                         //Get rev version of the file REVGUID:FILEPATH
                         revVersion = RepositoryManager.CommandOutput(OS, $"git show \"{request.Phase}:{line}\" ", lookupPath);
 
+                        result.Add(new(masterVersion, revVersion, line));
                     }
 
                 }
-
-
-                //TODO add both files to a branch relation
             }
 
 
-            return (master: masterVersion, commit: revVersion);
+            return result;
         }
  
         internal string GetCommitDeatailSubHistory(string fileName, string folderPath, string lookupFile)
