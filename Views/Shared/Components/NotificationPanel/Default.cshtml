@@ -229,6 +229,7 @@
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {
+             
             InitiliazeNotificationGrid(response);
         },
         error: function (xhr, status, error) {
@@ -281,7 +282,7 @@
             bindingData.push(x.notification);
         });
         //console.log(toasts);
-        InitializeToast();
+        
         //console.log(data);
         $("#NotificationGridWrapper").html("");
         $("#NotificationGridWrapper").html("<div id=\"NotificationHolderGrid\"></div>");
@@ -296,6 +297,7 @@
             ]
         });
         grid.appendTo('#NotificationHolderGrid');
+        InitializeToast();
     }
 
 
@@ -337,7 +339,12 @@
         toastObj.appendTo('#toast_type');
 
         toasts.forEach(x=>{
-            toastObj.show(x);
+            ShowNotification({
+                title: x.title,
+                content: x.content.replaceAll("\"", ""),
+                cssClass: x.cssClass,
+                icon: x.icon
+            });
         });
     }
     
@@ -384,11 +391,13 @@
         }
      }
    
-    function onBeforeOpen (){
+    function onBeforeOpen() {
+        debugger
         document.getElementById('hideTosat').style.display = 'inline-block';
      }
 
     document.getElementById('hideTosat').onclick = function () {
+        debugger
         toastObj.hide('All');
     };
    

@@ -13,7 +13,7 @@
 
 <link rel="stylesheet"
       data-name="vs/editor/editor.main"
-      href="../node_modules/monaco-editor/dev/vs/editor/editor.main.css" />
+      href="https://cdn.jsdelivr.net/npm/monaco-editor@0.26.1/min/vs/editor/editor.main.css" />
 <script src="../node_modules/monaco-editor/dev/vs/loader.js"></script>
 <script src="../node_modules/monaco-editor/dev/vs/editor/editor.main.nls.js"></script>
 <script src="../node_modules/monaco-editor/dev/vs/editor/editor.main.js"></script>
@@ -32,9 +32,9 @@
     }
 
     // The diff editor offers a navigator to jump between changes. Once the diff is computed the <em>next()</em> and <em>previous()</em> method allow navigation. By default setting the selection in the editor manually resets the navigation state.
-    var originalModel = monaco.editor.createModel(code1, "csharp");
+    var originalModel = monaco.editor.createModel(code1, "html");
     var navi;
-    var modifiedModel = monaco.editor.createModel(code2, "csharp");
+    var modifiedModel = monaco.editor.createModel(code2, "html");
     InitializeCodeEditor();
     function InitializeCodeEditor() {
 
@@ -54,8 +54,10 @@
             followsCaret: true, // resets the navigator state when the user selects something in the editor
             ignoreCharChanges: true // jump from line to line
         });
+        monaco.editor.colorizeElement(document.getElementById("EditorContainer"));
     }
 
+ 
     window.setInterval(function () {
         navi.next();
     }, 2000);

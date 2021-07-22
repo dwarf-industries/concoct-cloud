@@ -6,17 +6,39 @@
     var defaultItem = ViewData["DefaultItem"] as (string, string)?;
 }
 
+<style>
+    .ListRow {
+        padding: 1%;
+        border-top: 1px solid;
+        cursor: pointer;
+    }
+
+    .ListRow:hover {
+        box-shadow: 1px 4px #41b3d3;
+    }
+
+    .ListRowActive {
+        box-shadow: 1px 4px #41b3d3;
+    }
+    .ListItem {
+        padding: 4px;
+        font-size: 17px;
+        font-family: Roboto inherit;
+        width: 100%;
+    }
+</style>
+
 <div class="displayFlex">
     <h1>Commit message</h1>
     <p>Commit Id <span>Kristifor Milchev</span> commited <span>Day</span> <span>Branch Name</span></p>
 </div>
 
-<div class="row" style="display:flex">
-    <div class="col-md-3">
+<div class="row " style="display:flex">
+    <div class="col-md-3" style="height: 80vh; overflow: auto;">
         @foreach (var item in Items)
         {
-<div class="row">
-    <span  onclick="UpdateEditorContentData('@item.Item3')">
+<div class="row ListRow" id="@item.Item3" onclick="UpdateEditorContentData('@item.Item3')">
+    <span  class="ListItem">
         @item.Item3
     </span>
 </div>            }
@@ -33,9 +55,18 @@
 
 
 <script>
+    var lastId;
     function UpdateEditorContentData(id) {
-        debugger
+        
         $("#CodeArea").html("");
         $("#CodeArea").load("/Repositories/UpdateEditorContent?id=" + id);
+        $("#" + lastId).removeClass("ListRowActive");
+        var lastSelected = document.getElementById(lastId);
+        currentSelected.classList.remove("ListRowActive");
+
+        var currentSelected = document.getElementById(id);
+        currentSelected.classList.add("ListRowActive");
+ 
+        lastId = id;
      }
 </script>
