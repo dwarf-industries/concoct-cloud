@@ -22,12 +22,14 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
-The project is created using asp.net core 3.1, its not based on blazor because its a version that is being migrated from asp.net core v 1.0 so you need to get the proper runtime from Microsoft.
+The project is created using asp.net core 5.0, its not based on blazor because its a version that is being migrated from asp.net core v 3.1 so you need to get the proper runtime from Microsoft.
 The Database Layer is written in entity framework core using Database First approach.
 Currently we offer two database files that are inside the RokonoContol/Platform directory MSSQLGenerationScript.sql contains the creations scripts for MSSQL server
 and MySqlDatabaseGenerationScript.sql contains the scripts for MySql databases, currently the default database that is used for testing is MSSQL so if you're doing a clone make sure to scaffold your proper database.
 
 In order to install .net core runtime go to this link https://dotnet.microsoft.com/download all UI components are delivered trough CDN but if you'd like you can go and download them from Syncfusion 
+
+Install Node.js . For more information use this link https://nodejs.org/en/download/ .
 
 Database of your choice either MSSQL or MySql.
 
