@@ -239,7 +239,7 @@
   height: 55px;
   min-height: 55px;
   max-height: 55px;
-  background: #41b3d3;
+  background: #1c86c8;
   color: #fff;
   }
 
