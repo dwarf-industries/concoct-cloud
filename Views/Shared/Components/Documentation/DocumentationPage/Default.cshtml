@@ -166,11 +166,11 @@
         $("#activeDocumentationPageHeader").hide();
 
 
-        debugger
+         
         $("#NewPageModalHodler").html("");
         $("#NewPageModalHodler").load("/Documentation/GetPageModal?id=0&&category=@Category&&projectId=@ProjectId")
             .ajaxSuccess(x => {
-            debugger
+             
             //console.log("Success")
         });
 
