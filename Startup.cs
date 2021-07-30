@@ -77,6 +77,7 @@
               //  ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
+            app.UseExceptionHandler("/home/error");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
