@@ -1,69 +1,58 @@
 ﻿@{ var data = ViewData["CurrentCommitDetails"] as (string, string, string)?;
 
-
-    var master = data != null ? @Html.Raw(data.Value.Item1).ToString() : "";
-    var slave = data != null ? @Html.Raw(data.Value.Item2).ToString(): "";
 }
+<div id="myDiffElement" style="width:100%;"></div>
+<link href="~/js/Difftool/bundles/css/diff2html.min.css" rel="stylesheet" />
+<script src="~/js/Difftool/bundles/js/diff2html.min.js"></script>
 
-<div style="height:80vh">
-
-    <div id="EditorContainer" style="height:100%;"></div>
-
-</div>
-
-<link rel="stylesheet"
-      data-name="vs/editor/editor.main"
-      href="https://cdn.jsdelivr.net/npm/monaco-editor@0.26.1/min/vs/editor/editor.main.css" />
-<script src="../node_modules/monaco-editor/dev/vs/loader.js"></script>
-<script src="../node_modules/monaco-editor/dev/vs/editor/editor.main.nls.js"></script>
-<script src="../node_modules/monaco-editor/dev/vs/editor/editor.main.js"></script>
-
+<script src="~/js/Difftool/bundles/js/diff2html-ui.min.js"></script>
 <script>
-     
-    @if(data != null)
-    {
-        @:   var code1 =  `@Html.Raw(data.Value.Item1)`;
-        @:   var code2 = `@Html.Raw(data.Value.Item2)`;
-    }
-    else
-    {
-        @: var code1 = "";
-        @: var code2 = "";
-    }
 
-    // The diff editor offers a navigator to jump between changes. Once the diff is computed the <em>next()</em> and <em>previous()</em> method allow navigation. By default setting the selection in the editor manually resets the navigation state.
-    var originalModel = monaco.editor.createModel(code1, "html");
-    var navi;
-    var modifiedModel = monaco.editor.createModel(code2, "html");
-    InitializeCodeEditor();
-    function InitializeCodeEditor() {
 
-        var diffEditor = monaco.editor.createDiffEditor(document.getElementById("EditorContainer"));
-        diffEditor.setModel({
-            original: originalModel,
-            modified: modifiedModel,
-            lineNumbers: "off",
-            roundedSelection: true,
-            scrollBeyondLastLine: false,
-            readOnly: false,
-            theme: "vs-light"
 
-        });
+    document.addEventListener('DOMContentLoaded', () => {
+        var strInput = `diff --git a/Controllers/RepositoriesController.cs b/Controllers/RepositoriesController.cs
+index f57b4e04..093f8717 100644
+--- a/Controllers/RepositoriesController.cs
++++ b/Controllers/RepositoriesController.cs
+@@ -45,6 +45,21 @@ namespace Rokono_Control.Controllers
+         }
 
-        navi = monaco.editor.createDiffNavigator(diffEditor, {
-            followsCaret: true, // resets the navigator state when the user selects something in the editor
-            ignoreCharChanges: true // jump from line to line
-        });
-        monaco.editor.colorizeElement(document.getElementById("EditorContainer"));
-    }
 
- 
-    window.setInterval(function () {
-        navi.next();
-    }, 2000);
-
- 
-
++        public IActionResult PullRequests(int id)
++        {
++            using (var context = new DatabaseController(Context, Configuration))
++            {
++                ViewData["ProjectId"] = id;
++                ViewData["ProjectName"] = context.GetProjectName(id);
++            }
++            using (var context = new WorkItemsContext(Context, Configuration))
++                ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
++
++            ViewData["IsEmpty"] = true;
++            return View();
++        }
++
++
+         public IActionResult Commits(int id)
+         {
+             using (var context = new DatabaseController(Context, Configuration))`;
+        var targetElement = document.getElementById('myDiffElement');
+        var configuration = {
+            drawFileList: true,
+            fileListToggle: true,
+            fileListStartVisible: true,
+            fileContentToggle: false,
+            matching: 'lines',
+            outputFormat: 'side-by-side',
+            synchronisedScroll: true,
+            highlight: true,
+            renderNothingWhenEmpty: false,
+        };
+        var diff2htmlUi = new Diff2HtmlUI(targetElement, strInput, configuration);
+        diff2htmlUi.draw();
+        diff2htmlUi.highlightCode();
+    });
 
 </script>
 

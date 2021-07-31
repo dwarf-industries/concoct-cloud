@@ -34,23 +34,24 @@
 </div>
 
 <div class="row " style="display:flex">
-    <div class="col-md-3" style="height: 80vh; overflow: auto;">
-        @foreach (var item in Items)
-        {
-<div class="row ListRow" id="@item.Item3" onclick="UpdateEditorContentData('@item.Item3')">
-    <span  class="ListItem">
-        @item.Item3
-    </span>
-</div>            }
-    </div>
-    <div class="col-md-8" id="CodeArea">
+    @await Component.InvokeAsync("CodeEditor", new IncomingIdRequest
+    {
+        Data = defaultItem,
+    })
+    @*<div class="col-md-3" style="height: 80vh; overflow: auto;">
+                @foreach (var item in Items)
+                {
+        <div class="row ListRow" id="@item.Item3" onclick="UpdateEditorContentData('@item.Item3')">
+            <span  class="ListItem">
+                @item.Item3
+            </span>
+        </div>            }
+            </div>
+            <div class="col-md-8" id="CodeArea">
 
-        @await Component.InvokeAsync("CodeEditor", new IncomingIdRequest
-       {
-           Data = defaultItem,
-       })
 
-    </div>
+
+            </div>*@
 </div>
 
 

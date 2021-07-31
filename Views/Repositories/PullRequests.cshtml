@@ -1,0 +1,59 @@
+﻿@{ 
+    ViewData["Title"] = "Pull Requests";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<style>
+    .RowCardBody{
+        cursor:pointer;
+        display:flex;
+        padding:15px;
+    }
+
+        .RowCardBody:hover {
+            background: #f8f8f8;
+        }
+</style>
+
+<div class="row  card-layout" style="margin-bottom: 10px;">
+    <div class="col-md-12">
+        <!-- Basic Card Layout  -->
+        <div tabindex="0" class="e-card" id="basic_card" style="padding: 22px;">
+            <div class="e-card-header">
+                <h4>Created By me</h4>
+            </div>
+            <div class="e-card-content">
+                <div class="RowCardBody">
+                    <div style="width:5%">
+
+                    </div>   
+                    <div style="display:block; width:100%">
+                        <p>
+                            Some Title
+                            <span>Caption</span>
+                        </p>
+                        <p>
+                            <span>User </span>
+                            Request
+                            <span>ID</span>
+                            into 
+                            <span>Icon</span>
+                            <span>Branch</span>
+                        </p>                    
+                    </div>
+                    <div style="width: 30%; text-align: center;">
+                        People
+                    </div>
+                    <div style="width: 9%; text-align: center;">
+                        Comments
+                    </div>
+                    <div style="width: 21%; text-align: center;">
+                        Date
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
