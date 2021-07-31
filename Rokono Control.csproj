@@ -17,6 +17,10 @@
          <PackageTags>Project Management, DevOps, UnitTesting</PackageTags>
 
    </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="package-lock.json" />
+  </ItemGroup>
   <ItemGroup>
     
     
