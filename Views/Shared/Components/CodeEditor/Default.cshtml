@@ -6,6 +6,7 @@
 <script src="~/js/Difftool/bundles/js/diff2html.min.js"></script>
 
 <script src="~/js/Difftool/bundles/js/diff2html-ui.min.js"></script>
+ 
 <script>
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -26,6 +27,10 @@
         diff2htmlUi.draw();
         diff2htmlUi.highlightCode();
     });
-
+    $('table').on('click', 'tr', function () {
+        alert($(this).text());
+    });
+ 
+ 
 </script>
 

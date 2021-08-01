@@ -471,7 +471,7 @@ namespace Platform.DatabaseHandlers.Contexts
                     {
                         InnerId = task.WorkItemChild.Id,
                         Id = $"Task {task.WorkItemChild.Id}",
-                        Summary = $"Description: {task.WorkItemChild.Description} <br/> Acceptence creteria: {task.WorkItemChild.AcceptanceCriteria} ",
+                        Summary = $"Description: {task.WorkItemChild.Description} {task.WorkItemChild.RepoSteps} <br/> Acceptence creteria: {task.WorkItemChild.AcceptanceCriteria}  ",
                         Title = task.WorkItemChild.Title,
                         Tags = $"{task.WorkItemChild.WorkItemType.TypeName}",
                         Priority = GetCardType(task.WorkItemChild.WorkItemType.TypeName),
