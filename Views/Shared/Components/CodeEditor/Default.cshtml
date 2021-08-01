@@ -1,5 +1,5 @@
-﻿@{ var data = ViewData["CurrentCommitDetails"] as (string, string, string)?;
-
+﻿@{
+    var data = ViewData["CurrentCommitDetails"] as string;
 }
 <div id="myDiffElement" style="width:100%;"></div>
 <link href="~/js/Difftool/bundles/css/diff2html.min.css" rel="stylesheet" />
@@ -8,35 +8,8 @@
 <script src="~/js/Difftool/bundles/js/diff2html-ui.min.js"></script>
 <script>
 
-
-
     document.addEventListener('DOMContentLoaded', () => {
-        var strInput = `diff --git a/Controllers/RepositoriesController.cs b/Controllers/RepositoriesController.cs
-index f57b4e04..093f8717 100644
---- a/Controllers/RepositoriesController.cs
-+++ b/Controllers/RepositoriesController.cs
-@@ -45,6 +45,21 @@ namespace Rokono_Control.Controllers
-         }
 
-
-+        public IActionResult PullRequests(int id)
-+        {
-+            using (var context = new DatabaseController(Context, Configuration))
-+            {
-+                ViewData["ProjectId"] = id;
-+                ViewData["ProjectName"] = context.GetProjectName(id);
-+            }
-+            using (var context = new WorkItemsContext(Context, Configuration))
-+                ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
-+
-+            ViewData["IsEmpty"] = true;
-+            return View();
-+        }
-+
-+
-         public IActionResult Commits(int id)
-         {
-             using (var context = new DatabaseController(Context, Configuration))`;
         var targetElement = document.getElementById('myDiffElement');
         var configuration = {
             drawFileList: true,
@@ -49,7 +22,7 @@ index f57b4e04..093f8717 100644
             highlight: true,
             renderNothingWhenEmpty: false,
         };
-        var diff2htmlUi = new Diff2HtmlUI(targetElement, strInput, configuration);
+        var diff2htmlUi = new Diff2HtmlUI(targetElement, `@Html.Raw(@data.Replace("</script>", "script"))`, configuration);
         diff2htmlUi.draw();
         diff2htmlUi.highlightCode();
     });

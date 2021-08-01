@@ -36,17 +36,12 @@ namespace Rokono_Control.ViewComponents.CodeEditor
             if(request == null)
                 return View("/Views/Shared/Components/CodeEditor/Default.cshtml");
 
-            if(request.Data as (string,string, string)? is null)
+            if(!string.IsNullOrEmpty(request.Phase))
             {
+                ViewData["CurrentCommitDetails"] = request.Phase;
                 return View("/Views/Shared/Components/CodeEditor/Default.cshtml");
-
             }
-
-            using (var context = new RepositoriesContext(Context, Configuration, new RepositoryManager()))
-            {
-
-                ViewData["CurrentCommitDetails"] = request.Data;
-            }
+ 
             return View("/Views/Shared/Components/CodeEditor/Default.cshtml");
         }
     }

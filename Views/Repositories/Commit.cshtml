@@ -2,7 +2,7 @@
     var projectId = ViewData["ProjectId"] as int?;
     var commitId = ViewData["CommitId"] as string;
     ViewData["Title"] = $"Commit {commitId}";
-    var Items = ViewData["CommitDetails"] as List<(string, string, string)>;
+    var Items = ViewData["CommitDetails"] as string;
     var defaultItem = ViewData["DefaultItem"] as (string, string)?;
 }
 
@@ -36,7 +36,7 @@
 <div class="row " style="display:flex">
     @await Component.InvokeAsync("CodeEditor", new IncomingIdRequest
     {
-        Data = defaultItem,
+        Phase = Items
     })
     @*<div class="col-md-3" style="height: 80vh; overflow: auto;">
                 @foreach (var item in Items)

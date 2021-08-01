@@ -58,7 +58,17 @@ namespace Rokono_Control.DatabaseHandlers.Contexts
             }
             return result;
         }
+        public string GetCommitDetailsRaw(IncomingIdRequest request)
+        {
+            var project = Context.Projects.Include(x => x.Repository).FirstOrDefault(x => x.Id == request.ProjectId);
+            var masterVersion = string.Empty;
+            var revVersion = string.Empty;
+            var lookupPath = Path.Combine(Program.Configuration.LocalRepo, Program.ServerOS == "win" ?
+                                            $"{project.Repository.FolderPath}\\{GetRepositoryName(project)}" : $"{project.Repository.LinuxFolderPath}/{GetRepositoryName(project)}");
+            var result = RepositoryManager.CommandOutput(OS, $"git show \"{request.Phase}\" ", lookupPath);
 
+            return result;
+        }
         internal List<(string,string, string)> GetCommitDeatails(IncomingIdRequest request)
         {
             var result = new List<(string, string, string)>();
@@ -84,6 +94,7 @@ namespace Rokono_Control.DatabaseHandlers.Contexts
                     {
                         //Get version of master master:file
                         masterVersion = RepositoryManager.CommandOutput(OS, $"git show \"master:{line}\"", lookupPath);
+                        var res = RepositoryManager.CommandOutput(OS, $"git show \"{request.Phase}\" ", lookupPath);
 
                         //Does a reverse loookup in git to get the file after it was renamed.
                         if (masterVersion.Contains("does not exist in 'master'"))

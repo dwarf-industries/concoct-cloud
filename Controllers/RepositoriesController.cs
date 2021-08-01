@@ -87,13 +87,13 @@ namespace Rokono_Control.Controllers
 
             using (var context = new RepositoriesContext(Context, Configuration, new RepositoryManager()))
             {
-                var items = context.GetCommitDeatails(new IncomingIdRequest
+                var items = context.GetCommitDetailsRaw(new IncomingIdRequest
                 {
                     Phase = commitId,
                     ProjectId = id,
                 });
                 ViewData["CommitDetails"] = items;
-                Program.AccountEditorPages.Add(new(User.ToString(), items));
+               // Program.AccountEditorPages.Add(new(User.ToString(), items));
               //  ViewBag["CommitDetails"] = items;
 
             }
