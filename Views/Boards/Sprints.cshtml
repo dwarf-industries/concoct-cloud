@@ -1,13 +1,13 @@
 @{ ViewData["Title"] = "Board";
-                Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
-                var ProjectId = ViewData["ProjectId"] as int?;
-                var WorkItemTypes = ViewData["WorkItemTypes"] as List<WorkItemTypes>;
-                var ProjectName = ViewData["ProjectName"] as string;
-                var Iteration = ViewData["Iteration"] as int?;
-                var Person = ViewData["Person"] as int?;
-                var ViewRights = ViewData["GetUserViewRights"] as int?;
-                var publicSIgnAccess = ViewData["PublicProject"] as int?;
-                var publicSignupUrl = ViewData["PublicAddress"] as string; }
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var ProjectId = ViewData["ProjectId"] as int?;
+    var WorkItemTypes = ViewData["WorkItemTypes"] as List<WorkItemTypes>;
+    var ProjectName = ViewData["ProjectName"] as string;
+    var Iteration = ViewData["Iteration"] as int?;
+    var Person = ViewData["Person"] as int?;
+    var ViewRights = ViewData["GetUserViewRights"] as int?;
+    var publicSIgnAccess = ViewData["PublicProject"] as int?;
+    var publicSignupUrl = ViewData["PublicAddress"] as string; }
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -152,7 +152,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
 <script type="text/javascript">
-        var signupPolicy = false;
+    var signupPolicy = false;
+    var kanbanObj;
+    var loaded = false;
         if (@publicSIgnAccess == 1) {
             signupPolicy = true;
         }
@@ -327,8 +329,6 @@
         });
 
         var currentDate = new Date();
-
-        debugger
         while (d1.getTime() < d2.getTime()) {
             d1 = d1.addDays(1);
 
@@ -408,115 +408,125 @@
             options: chartOptions
         });
     }
-         function GenerateKaban(response)
-         {
-             $("#KanbanHolder").html("<div id=\"Kanban\"></div>");
-             $("#KanbanHolder").html();
+    function GenerateKaban(response)
+    {
 
-            var data = ej.base.extend([], response, null, true); // To maintain the property changes, extend the object.
-             var kanbanObj = new ej.kanban.Kanban({
-                dataSource: data,
-                dragStop: DragStopped,
-                actionComplete: CardDropCheck,
-               // actionBegin: SwimlineBegin,
-                cardDoubleClick: CardSelected,
-                dialogOpen: dialogOpen,
+        var data = ej.base.extend([], response, null, true); // To maintain the property changes, extend the object.
 
-                keyField: 'status',
-                enableTooltip: true,
-                columns: [
-                    { headerText: 'To Do', keyField: 'Open', template: '#headerTemplate', allowToggle: true },
-                    { headerText: 'In Progress', keyField: 'InProgress', template: '#headerTemplate', allowToggle: true },
-                    { headerText: 'In Review', keyField: 'Testing', template: '#headerTemplate', allowToggle: true },
-                    { headerText: 'Done', keyField: 'Done', template: '#headerTemplate', allowToggle: true }
-                ],
-                cardSettings: {
-                    contentField: 'summary',
-                    headerField: 'id',
-                    template: '#cardTemplate',
-                    selectionType: 'Multiple'
-                },
-                  swimlaneSettings: {
-                    keyField: 'assignee',
-                    template: '#swimlaneTemplate',
-                    showEmptyRow: true
-                },
-            });
+        if (loaded === true) {
 
+        // $("#Kanban").ejKanban("dataSource", response.d.d);
+            kanbanObj.dataSource = data;
+            kanbanObj.refresh();
 
-            kanbanObj.appendTo('#Kanban');
-             InitChart(response, [200, 160, 160, 140, 90, 90, 80], // burndown data
-                 [0, 0, 0, 0, 0, 32, 0, 0, 0, 0] );
-            ShowContent();
+            return;
         }
 
-        function sumArrayUpTo(arrData, index) {
-            var total = 0;
-            for (var i = 0; i <= index; i++) {
-                if (arrData.length > i) {
-                    total += arrData[i];
+        $("#KanbanHolder").html("<div id=\"Kanban\"></div>");
+        $("#KanbanHolder").html();
+
+        kanbanObj = new ej.kanban.Kanban({
+        dataSource: data,
+        dragStop: DragStopped,
+        actionComplete: CardDropCheck,
+        // actionBegin: SwimlineBegin,
+        cardDoubleClick: CardSelected,
+        dialogOpen: dialogOpen,
+        keyField: 'status',
+        enableTooltip: true,
+        columns: [
+            { headerText: 'To Do', keyField: 'Open', template: '#headerTemplate', allowToggle: true },
+            { headerText: 'In Progress', keyField: 'InProgress', template: '#headerTemplate', allowToggle: true },
+            { headerText: 'In Review', keyField: 'Testing', template: '#headerTemplate', allowToggle: true },
+            { headerText: 'Done', keyField: 'Done', template: '#headerTemplate', allowToggle: true }
+        ],
+        cardSettings: {
+                contentField: 'summary',
+                headerField: 'id',
+                template: '#cardTemplate',
+                selectionType: 'Multiple'
+            },
+            swimlaneSettings: {
+                keyField: 'assignee',
+                template: '#swimlaneTemplate',
+                showEmptyRow: true
+            },
+        });
+
+        loaded = true;
+        kanbanObj.appendTo('#Kanban');
+        InitChart(response, [200, 160, 160, 140, 90, 90, 80], // burndown data
+        [0, 0, 0, 0, 0, 32, 0, 0, 0, 0] );
+        ShowContent();
+    }
+
+    function sumArrayUpTo(arrData, index) {
+        var total = 0;
+        for (var i = 0; i <= index; i++) {
+            if (arrData.length > i) {
+                total += arrData[i];
+            }
+        }
+        return total;
+    }
+
+    function dialogOpen(args) {
+        args.cancel = true;
+    }
+
+    function CardSelected(args)
+    {
+        args.cancel = true;
+        window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId+"&returnUrl="+window.location.href;
+
+    }
+    function CardDropCheck(args)
+    {
+            if(args.requestType == "cardChanged" && card)
+        {
+            card.Board = args.changedRecords[0].status;
+            ValidateCardChanged();
+        }
+    }
+    function ValidateCardChanged()
+    {
+            $.ajax({
+            type: 'POST',
+            url: '/Boards/ChangeWorkItemBoard',
+            data: JSON.stringify(card),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(response) {
+                //window.location.href = "/Dashboard/AssignAccountProjects?id="+response;
+            },
+            error: function(xhr, status, error) {
                 }
-            }
-            return total;
+        });
+    }
+
+    function DragStopped(args)
+    {
+        card = {
+        "CardId" :args.data[0].innerId,
+        "Board" :args.data[0].status,
+        "ProjectId" : @ProjectId
         }
-
-        function dialogOpen(args) {
-            args.cancel = true;
-        }
-
-        function CardSelected(args)
-        {
-            args.cancel = true;
-            window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId+"&returnUrl="+window.location.href;
-
-        }
-        function CardDropCheck(args)
-        {
-             if(args.requestType == "cardChanged" && card)
-            {
-                card.Board = args.changedRecords[0].status;
-                ValidateCardChanged();
-            }
-        }
-        function ValidateCardChanged()
-        {
-             $.ajax({
-                type: 'POST',
-                url: '/Boards/ChangeWorkItemBoard',
-                data: JSON.stringify(card),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(response) {
-                    //window.location.href = "/Dashboard/AssignAccountProjects?id="+response;
-                },
-                error: function(xhr, status, error) {
-                 }
-            });
-        }
-         function DragStopped(args)
-         {
-             card = {
-                "CardId" :args.data[0].innerId,
-                "Board" :args.data[0].status,
-                "ProjectId" : @ProjectId
-             }
-         }
+    }
 
 
-        function PersonClicked(args) {
-            //console.log(args);
-        }
+    function PersonClicked(args)
+    {
 
-        function ChangeOwner(data)
-        {
+    }
 
-            selectedChanging = data;
-         //    selectedChangingId = id;
-             dialogObj.show();
-        }
+    function ChangeOwner(data)
+    {
+        selectedChanging = data;
+        dialogObj.show();
+    }
 
-         function CallUrl(url) {
-             window.location.href = url;
+    function CallUrl(url) {
+        window.location.href = url;
     }
 
     function AssignNewUser()
@@ -525,16 +535,19 @@
         ChangeCardOwner(selectedChanging.id, selectedRowData.name);
         CancelAssign();
     }
+
     function CancelAssign()
     {
         dialogClose();
         dialogObj.hide();
 
     }
+
     function dialogClose() {
             document.getElementById('AssignModel').style.display = 'none';
 
     }
+
     function dialogOpen() {
 
         document.getElementById('AssignModel').style.display = 'block';
@@ -569,10 +582,12 @@
 
         ProjectUsers.appendTo('#ProjectUsers');
     }
+
     function UserRowSelected(args)
     {
         selectedRowData = args.data;
-     }
+    }
+
     function UserSelected(args)
     {
         selectedChanging.textContent = args.rowData.name;
