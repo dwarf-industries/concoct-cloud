@@ -239,55 +239,10 @@
 
     function InitiliazeNotificationGrid(data)
     {
-        
-        var bindingData  = [];
-        data.forEach(x=>{
-            var currentData;
-            if(x.notification.notificationType === 1)
-               currentData = {
-                    title: "Personal Message",
-                    content: x.notification.content, 
-                    cssClass: 'e-toast-info',
-                    icon: 'PM',
-                    id:x.notification.id
-                };
-            if(x.notification.notificationType === 2)
-                currentData = {
-                    title: "Assigned Item",
-                    content: x.notification.content, 
-                    cssClass: 'e-toast-success',
-                    icon: 'AI',
-                    id:x.notification.id
-                };
-
-            if(x.notification.notificationType === 3)
-                 currentData ={
-                    title: "Created Work Item",
-                    content: x.notification.content, 
-                    cssClass: 'e-toast-warning',
-                    icon: 'CW',
-                    id:x.notification.id
-                };
-            if(x.notification.notificationType === 4)
-                currentData ={
-                    title: "Updated Work Item",
-                    content: x.notification.content, 
-                    cssClass: 'e-toast-danger',
-                    icon: 'UW',
-                    id:x.notification.id
-                };
-            if(x.isRead === 0)
-                toasts.push(currentData);
-
-            bindingData.push(x.notification);
-        });
-        //console.log(toasts);
-        
-        //console.log(data);
         $("#NotificationGridWrapper").html("");
         $("#NotificationGridWrapper").html("<div id=\"NotificationHolderGrid\"></div>");
         var grid = new ej.grids.Grid({
-            dataSource: bindingData,
+            dataSource: data,
             rowTemplate: '#currentTemplate',
             height: $("#sidebar-treeview").height,
             width: 'auto',
@@ -297,7 +252,6 @@
             ]
         });
         grid.appendTo('#NotificationHolderGrid');
-        InitializeToast();
     }
 
 
@@ -326,27 +280,7 @@
             }
         });
     }
-    //Toast initialization 
-    function InitializeToast()
-    {
-        toastObj = new ej.notifications.Toast({
-            position: {
-                X: 'Right'
-            }, target: document.body,
-            close: onclose,
-            beforeOpen: onBeforeOpen
-        });
-        toastObj.appendTo('#toast_type');
-
-        toasts.forEach(x=>{
-            ShowNotification({
-                title: x.title,
-                content: x.content.replaceAll("\"", ""),
-                cssClass: x.cssClass,
-                icon: x.icon
-            });
-        });
-    }
+ 
     
     function ShowAlert(text)
     {
