@@ -10,10 +10,10 @@ namespace Platform.ViewComponents.SurveyComponents.SurveyQuestionList
     [ViewComponent(Name = "SurveyQuestionListSettings")]
     public class SurveyQuestionListSettingsViewComponent : ViewComponent
     {
-        private readonly RokonoControlContext Context;
+        private readonly RokonocontrolContext Context;
         private readonly IConfiguration Configuration;
 
-        public SurveyQuestionListSettingsViewComponent(RokonoControlContext context, IConfiguration configuration)
+        public SurveyQuestionListSettingsViewComponent(RokonocontrolContext context, IConfiguration configuration)
         {
             Context = context;
             Configuration = configuration;

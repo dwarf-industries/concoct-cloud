@@ -8,10 +8,10 @@ namespace Platform.ViewComponents
 
     public class IterationManagerViewComponent : ViewComponent
     {
-        private readonly RokonoControlContext Context;
+        private readonly RokonocontrolContext Context;
         private readonly IConfiguration Configuration;
 
-        public IterationManagerViewComponent(RokonoControlContext context, IConfiguration config)
+        public IterationManagerViewComponent(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;

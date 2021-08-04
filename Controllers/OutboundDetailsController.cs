@@ -12,10 +12,10 @@ namespace Platform.Controllers
 
     public class OutboundDetailsController : Controller
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
 
-        public OutboundDetailsController(RokonoControlContext context, IConfiguration config)
+        public OutboundDetailsController(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;

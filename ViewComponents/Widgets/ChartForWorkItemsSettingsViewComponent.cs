@@ -12,10 +12,10 @@ namespace Platform.ViewComponents.Widgets
     [ViewComponent(Name = "ChartForWorkItemsSettings")]
     public class ChartForWorkItemsSettingsViewComponent : ViewComponent
     {
-                private readonly RokonoControlContext Context;
+                private readonly RokonocontrolContext Context;
         private readonly IConfiguration Configuration;
 
-        public ChartForWorkItemsSettingsViewComponent(RokonoControlContext context, IConfiguration config)
+        public ChartForWorkItemsSettingsViewComponent(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;

@@ -9,11 +9,11 @@ namespace Platform.DatabaseHandlers.Contexts
     using Rokono_Control.Models;
     public class ChangelogContext : IDisposable
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private bool disposedValue;
 
-        public ChangelogContext(RokonoControlContext context, IConfiguration config)
+        public ChangelogContext(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;

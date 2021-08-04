@@ -12,11 +12,11 @@ namespace Platform.DatabaseHandlers.Contexts
 
     public class UsersContext  : IDisposable
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private bool disposedValue;
 
-        public UsersContext(RokonoControlContext context, IConfiguration config)
+        public UsersContext(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;

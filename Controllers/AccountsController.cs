@@ -14,12 +14,12 @@
 
     public class AccountsController : Controller
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         AutherizationManager AutherizationManager {get; set;}
         private int UserId {get; set;}
 
-        public AccountsController(RokonoControlContext context, IConfiguration config,  IAutherizationManager autherizationManager,IHttpContextAccessor httpContextAccessor)
+        public AccountsController(RokonocontrolContext context, IConfiguration config,  IAutherizationManager autherizationManager,IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;

@@ -10,12 +10,12 @@ namespace Platform.DatabaseHandlers.Contexts
 {
     public class WidgetContext : IDisposable
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private bool disposedValue;
         private bool disposedValue1;
 
-        public WidgetContext(RokonoControlContext context, IConfiguration config)
+        public WidgetContext(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;

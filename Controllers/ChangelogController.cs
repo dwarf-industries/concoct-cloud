@@ -14,11 +14,11 @@ namespace Platform.Controllers
 
     public class ChangelogController : Controller
     {
-        RokonoControlContext Context {get; set;}
+        RokonocontrolContext Context {get; set;}
         IConfiguration Config { get; set;}
         AutherizationManager AutherizationManager {get; set;}
         private int UserId {get; set;}
-        public ChangelogController(RokonoControlContext context,IConfiguration currentConfig, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
+        public ChangelogController(RokonocontrolContext context,IConfiguration currentConfig, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Config = currentConfig;

@@ -11,10 +11,10 @@ namespace Platform.ViewComponents.SurveyComponents.SurveyOpenQuestion
     [ViewComponent(Name = "SurveyOpenQuestion")]
     public class SurveyOpenQuestionViewComponent : ViewComponent
     {
-        private readonly RokonoControlContext Context;
+        private readonly RokonocontrolContext Context;
         private readonly IConfiguration Configuration;
 
-        public SurveyOpenQuestionViewComponent(RokonoControlContext context, IConfiguration configuration)
+        public SurveyOpenQuestionViewComponent(RokonocontrolContext context, IConfiguration configuration)
         {
             Context = context;
             Configuration = configuration;

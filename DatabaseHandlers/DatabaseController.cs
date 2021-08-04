@@ -15,7 +15,7 @@ namespace Rokono_Control.DatabaseHandlers
 
     public class DatabaseController : IDisposable
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         public DatabaseController(int i, int internalId) 
         {
@@ -25,7 +25,7 @@ namespace Rokono_Control.DatabaseHandlers
         }
         private int I { get; set; }
         private int InternalId { get; set; }
-        public DatabaseController(RokonoControlContext context, IConfiguration config)
+        public DatabaseController(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;

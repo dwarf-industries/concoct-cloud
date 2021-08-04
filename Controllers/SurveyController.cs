@@ -14,11 +14,11 @@ namespace Platform.Controllers
 
     public class SurveyController : Controller
     {
-        RokonoControlContext Context {get; set;}
+        RokonocontrolContext Context {get; set;}
         IConfiguration Config { get; set;}
         AutherizationManager AutherizationManager {get; set;}
         private int UserId {get; set;}
-        public SurveyController(RokonoControlContext context,IConfiguration currentConfig, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
+        public SurveyController(RokonocontrolContext context,IConfiguration currentConfig, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Config = currentConfig;

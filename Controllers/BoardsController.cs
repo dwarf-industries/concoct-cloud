@@ -19,7 +19,7 @@ namespace RokonoControl.Controllers
 
     public class BoardsController : Controller
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         IHubContext<MessageHub> MessageContext;
 
@@ -27,7 +27,7 @@ namespace RokonoControl.Controllers
         private int UserId {get; set;}
 
 
-        public BoardsController(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager,IHttpContextAccessor httpContextAccessor, IHubContext<MessageHub> hubContext)
+        public BoardsController(RokonocontrolContext context, IConfiguration config, IAutherizationManager autherizationManager,IHttpContextAccessor httpContextAccessor, IHubContext<MessageHub> hubContext)
         {
             Context = context;
             Configuration = config;

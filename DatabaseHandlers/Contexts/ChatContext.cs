@@ -9,11 +9,11 @@ namespace Platform.DatabaseHandlers.Contexts
     using Rokono_Control.Models;
     public class ChatContext : IDisposable
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private bool disposedValue;
 
-        public ChatContext(RokonoControlContext context, IConfiguration config)
+        public ChatContext(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;

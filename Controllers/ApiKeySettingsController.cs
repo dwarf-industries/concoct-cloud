@@ -8,10 +8,10 @@ namespace Platform.Controllers
     using Rokono_Control.Models;
     public class ApiKeySettingsController : Controller
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
 
-        public ApiKeySettingsController(RokonoControlContext context, IConfiguration config)
+        public ApiKeySettingsController(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;

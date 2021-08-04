@@ -10,10 +10,10 @@
 
     public class SurveyQuestionListViewComponent : ViewComponent
     {
-        private readonly RokonoControlContext Context;
+        private readonly RokonocontrolContext Context;
         private readonly IConfiguration Configuration;
 
-        public SurveyQuestionListViewComponent(RokonoControlContext context, IConfiguration configuration)
+        public SurveyQuestionListViewComponent(RokonocontrolContext context, IConfiguration configuration)
         {
             Context = context;
             Configuration = configuration;

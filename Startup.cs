@@ -46,9 +46,9 @@
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             }));
-            System.Console.WriteLine(StartConfiguration.ConnectionStrings.RokonoControlContext);
-            services.AddDbContext<RokonoControlContext>(options =>
-                options.UseSqlServer(StartConfiguration.ConnectionStrings.RokonoControlContext)
+            System.Console.WriteLine(StartConfiguration.ConnectionStrings.RokonocontrolContext);
+            services.AddDbContext<RokonocontrolContext>(options =>
+                options.UseSqlServer(StartConfiguration.ConnectionStrings.RokonocontrolContext)
             );
             services.AddRazorPages();
             services.AddSignalR();
@@ -61,7 +61,7 @@
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
             var projects = new List<Projects>();
-            using(var context = new RokonoControlContext())
+            using(var context = new RokonocontrolContext())
             {
                 projects = context.Projects.Include(x => x.Repository).ToList();
             }

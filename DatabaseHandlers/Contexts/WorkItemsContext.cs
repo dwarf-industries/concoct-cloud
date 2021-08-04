@@ -16,12 +16,12 @@ namespace Platform.DatabaseHandlers.Contexts
     public class WorkItemsContext : IDisposable
     {
 
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private bool disposedValue;
         private bool disposedValue1;
 
-        public WorkItemsContext(RokonoControlContext context, IConfiguration config)
+        public WorkItemsContext(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;

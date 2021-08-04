@@ -13,11 +13,11 @@ namespace Platform.Controllers
     public class NotificationController :Controller
     {
 
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private  AutherizationManager AutherizationManager;
         private int UserId;
-        public NotificationController(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
+        public NotificationController(RokonocontrolContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;

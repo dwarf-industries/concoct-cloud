@@ -19,12 +19,12 @@ namespace Platform.Hubs
 
     public class MessageHub : Hub
     {
-        RokonoControlContext DatabaseContext;
+        RokonocontrolContext DatabaseContext;
         IConfiguration Configuration;
         private  AutherizationManager AutherizationManager;
         private int UserId;
  
-        public MessageHub(RokonoControlContext dbContext, IConfiguration config,IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
+        public MessageHub(RokonocontrolContext dbContext, IConfiguration config,IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             DatabaseContext = dbContext;
             Configuration = config;

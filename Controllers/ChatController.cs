@@ -16,12 +16,12 @@ namespace Platform.Controllers
     using Rokono_Control.Models;
     public class ChatController : Controller
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         AutherizationManager AutherizationManager;
         public int UserId;
         private IHubContext<MessageHub> HubContext { get; set; }
-        public ChatController(RokonoControlContext context,
+        public ChatController(RokonocontrolContext context,
                               IConfiguration config,
                               IAutherizationManager autherizationManager,
                               IHttpContextAccessor httpContextAccessor,

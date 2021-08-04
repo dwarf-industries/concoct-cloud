@@ -13,12 +13,12 @@ namespace Platform.Controllers {
     using Rokono_Control.Models;
 
     public class WidgetController : Controller {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         AutherizationManager AutherizationManager { get; set; } 
         private int UserId { get; set; }
 
-        public WidgetController (RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor) {
+        public WidgetController (RokonocontrolContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor) {
             Context = context;
             Configuration = config;
             AutherizationManager = (AutherizationManager) autherizationManager;

@@ -10,10 +10,10 @@ namespace Platform.ViewComponents.Widgets
     [ViewComponent(Name = "WidgetBuilder")]
     public class WidgetBuilderViewComponent : ViewComponent
     {
-        private readonly RokonoControlContext Context;
+        private readonly RokonocontrolContext Context;
         private readonly IConfiguration Configuration;
 
-        public WidgetBuilderViewComponent(RokonoControlContext context, IConfiguration config)
+        public WidgetBuilderViewComponent(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;

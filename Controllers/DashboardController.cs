@@ -21,12 +21,12 @@ namespace Rokono_Control.Controllers
 
     public class DashboardController : Controller
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private readonly AutherizationManager AutherizationManager;
         private int UserId;
 
-        public DashboardController(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
+        public DashboardController(RokonocontrolContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;

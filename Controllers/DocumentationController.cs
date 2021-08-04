@@ -12,11 +12,11 @@ namespace Platform.Controllers
     using Rokono_Control.Models;
     public class DocumentationController : Controller
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private  AutherizationManager AutherizationManager;
         private int UserId;
-        public DocumentationController(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
+        public DocumentationController(RokonocontrolContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;
