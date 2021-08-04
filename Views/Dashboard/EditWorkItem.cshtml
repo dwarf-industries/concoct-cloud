@@ -1305,6 +1305,8 @@
 
             success: function (response) {
                 AddDiscussionMessage("@userName", $("#ChatMessageBar").children()[0].innerHTML, new Date(), "@pageUniueIdentifier");
+                // deleting already sended text from the input box 
+               $("#ChatMessageBar").children()[0].innerHTML="";
             },
             error: function (xhr, status, error) {
                 console.log(error);
