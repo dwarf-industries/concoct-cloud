@@ -282,6 +282,10 @@
                     alert("Project public access not enabled, please contact the system administrator!");
                     window.location = "/home";
                 }
+
+                if (response.EmailError){
+                    alert("Email is already in use. Please use different email");
+                }
             },
             error: function(xhr, status, error) {
              }

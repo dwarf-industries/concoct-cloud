@@ -159,15 +159,19 @@ namespace Platform.DatabaseHandlers.Contexts
                                                                         && x.UserAccountId == account.Id) != null ? true : false;
         }
 
-        internal bool CheckProjectSignUpPolicy(int projectId)
+        internal  (bool,bool) CheckProjectSignUpPolicy(int projectId, string email)
         {
             var exist = Context.Projects.FirstOrDefault(x => x.Id == projectId);
-
+            var accountName = Context.UserAccounts.FirstOrDefault(x => x.Email == email);
+            if (accountName != null)
+                return (false,true);
             if (exist == null)
-                return false;
+                return (false,false);
 
-            return exist.AllowPublicControl != null && exist.AllowPublicControl == 1 ? true : false;
+            return (exist.AllowPublicControl != null && exist.AllowPublicControl == 1 ? true : false,false);
         }
+
+            
 
         internal bool CheckAccountExist(string phase)
         {
