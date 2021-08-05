@@ -141,7 +141,7 @@ namespace Rokono_Control.Controllers
             using (var context = new UsersContext(Context, Configuration))
             {
                 var domain = Request.Host.Host;
-                var policy = context.CheckProjectSignUpPolicy(id);
+                var policy = context.CheckProjectSignUpPolicy(id,string.Empty).Item1;
                 ViewData["SignupPolicy"] = policy ? 1 : 0;
                 ViewData["PublicUrl"] = policy == true ? $"https://{domain}/Accounts/ProjectSignup?projectId={id}" : "";
                 ViewData["UserAccounts"] = context.GetUserAccounts();

@@ -168,8 +168,8 @@
 
             using (var context = new UsersContext(Context, Configuration))
             {
-                var result = context.CheckProjectSignUpPolicy(request.ProjectId);
-                if (result == true)
+                var result = context.CheckProjectSignUpPolicy(request.ProjectId,request.email);
+                if (result.Item1 && !result.Item2 )
                 {
                     request.accountRights = new OutgoingUserAccounts
                     {
@@ -187,7 +187,8 @@
                 }
                 else
                 {
-                    cResult.Error = true;
+                    cResult.Error = result.Item1;
+                    cResult.EmailError = result.Item2;
                     return cResult;
                 }
             }
@@ -201,7 +202,7 @@
 
             using (var context = new UsersContext(Context, Configuration))
             {
-                var result = context.CheckProjectSignUpPolicy(request.ProjectId);
+                var result = context.CheckProjectSignUpPolicy(request.ProjectId,string.Empty).Item1;
                 if (result == true)
                 {
                     var getUserAccountByEmail = context.GetUserAccountByName(request.email);
