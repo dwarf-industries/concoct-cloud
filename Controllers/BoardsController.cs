@@ -101,7 +101,12 @@ namespace RokonoControl.Controllers
                 ViewData["GetUserViewRights"] = context.CheckUserViewWorkitemRights(UserId, projectId);
 
             using(var context = new WorkItemsContext(Context,Configuration))
+            {
+                var dates = context.GetActiveSprintDates(projectId, iteration);
                 ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
+                ViewData["StartDate"] = dates.Item1;
+                ViewData["EndDate"] = dates.Item2;
+            }
             return View();
         }
 

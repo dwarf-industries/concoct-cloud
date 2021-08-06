@@ -7,7 +7,10 @@
     var Person = ViewData["Person"] as int?;
     var ViewRights = ViewData["GetUserViewRights"] as int?;
     var publicSIgnAccess = ViewData["PublicProject"] as int?;
-    var publicSignupUrl = ViewData["PublicAddress"] as string; }
+    var publicSignupUrl = ViewData["PublicAddress"] as string;
+    var startDate = ViewData["StartDate"] as DateTime?;
+    var endDate = ViewData["EndDate"] as DateTime?;
+}
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -154,6 +157,8 @@
 <script type="text/javascript">
     var signupPolicy = false;
     var kanbanObj;
+    var startDate = new Date("@startDate");
+    var endDate = new Date("@endDate");
     var loaded = false;
         if (@publicSIgnAccess == 1) {
             signupPolicy = true;
@@ -349,8 +354,18 @@
         const idealHoursPerDay = totalHoursInSprint / 9;
         i = 0;
 
+        var dateDays = [];
+
+        debugger
+        var day = 1;
+        while (startDate < endDate) {
+            dateDays.push("Day "+day);
+            startDate = startDate.addDays(1);
+            day++;
+        }
+        
         var speedData = {
-            labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7", "Day 8", "Day 9", "Day 10"],
+            labels: dateDays,
             datasets: [
                 {
                     label: "Burndown",
