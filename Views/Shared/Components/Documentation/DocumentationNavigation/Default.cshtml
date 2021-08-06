@@ -119,7 +119,7 @@
 </div>
 
 
-@if(UserRights.Documentation == 1)
+@if(UserRights != null && UserRights.Documentation == 1)
 {
     <script id="DocumentationGridRow" type="text/x-template" >
         <tr id="ChatChannelRow_${isParent}_${internalId}" >

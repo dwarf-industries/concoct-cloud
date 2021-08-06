@@ -28,7 +28,14 @@ namespace Platform.Controllers
         public IActionResult Index(int Id)
         {
             ViewData["ProjectId"] = Id;
- 
+            if(UserId == 0)
+            {
+                var canView = default(bool);
+                using (var context = new DocumentationContext(Context, Configuration))
+                    canView = context.CheckDocumentationPublicAccess(Id);
+                if(!canView)
+                    return View("Error");
+            }
             using(var context = new UsersContext(Context,Configuration))
                 ViewData["UserRights"] = context.GetUserRights(UserId,Id);
             
@@ -81,8 +88,7 @@ namespace Platform.Controllers
         }
 
         [HttpPost]
-        [Authorize (Roles = "ChatAdministrator")]
-//        [ValidateAntiForgeryToken]
+ //        [ValidateAntiForgeryToken]
         public List<OutgoingChatItem> AddNewPage([FromBody] AssociatedDocumentationCategoryPage request)
         {
           
@@ -154,8 +160,7 @@ namespace Platform.Controllers
             return result;
         }
         [HttpGet]
-        [Authorize (Roles = "ChatAdministrator")]
-//        [ValidateAntiForgeryToken]
+ //        [ValidateAntiForgeryToken]
         public IActionResult DocumentationPage(int id, int projectId) 
         {
             return ViewComponent("DocumentationPage", new IncomingIdRequest{

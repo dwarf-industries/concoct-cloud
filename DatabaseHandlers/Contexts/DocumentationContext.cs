@@ -66,6 +66,17 @@ namespace Platform.DatabaseHandlers.Contexts
             });
             return result;
         }
+
+        internal bool CheckDocumentationPublicAccess(int id)
+        {
+            var result = default(bool);
+            var projectDetais = Context.Projects.FirstOrDefault(x => x.Id == id);
+            if (projectDetais != null)
+                result = projectDetais.AllowPublicControl == 1 ? true : false;
+
+            return result;
+        }
+
         internal void DeleteCategoryField(int id)
         {
             var category = Context.DocumentationCategoryField.FirstOrDefault(x=>x.Id == id);

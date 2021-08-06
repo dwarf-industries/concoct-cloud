@@ -1,5 +1,6 @@
 @{
     var ProjectId = ViewData["ProjectId"] as int?;
+    var manageRights = ViewData["ManagementRights"] as bool?;
 }
 
 <style>
@@ -13,18 +14,24 @@
     }
 </style>
 
-<div class="row">
-    <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="OpenNewCategoryModal(1)" id="OpenNewCategoryModal">Add new Category</button>
-</div>
-<div id="DocumentationAddNewCategory"  >
+@if(manageRights.Value)
+{
     <div class="row">
-            <input id="InputNewChatCategory" />
+        <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="OpenNewCategoryModal(1)" id="OpenNewCategoryModal">Add new Category</button>
     </div>
-    <div class="row InlineFlex">
-        <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="SaveNewCategory()">Submit</button>
-        <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="CloseNewCategoryModal()">Cancel</button>
-    </div>
+}
 
+<div id="DocumentationAddNewCategory">
+    <div class="row">
+        <input id="InputNewChatCategory" />
+    </div>
+    @if (manageRights.Value)
+    {
+        <div class="row InlineFlex">
+            <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="SaveNewCategory()">Submit</button>
+            <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="CloseNewCategoryModal()">Cancel</button>
+        </div>
+    }
 </div>
 
  

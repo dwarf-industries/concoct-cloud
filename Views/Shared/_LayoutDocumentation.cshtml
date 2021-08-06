@@ -46,12 +46,7 @@
                         </li>
                      
                         <li class="header-style float-right support border-left" onclick="ReturnToCaller()"><b>Return</b></li>
-                        <li class="header-style float-right support border-left" style="margin:0;">
-                            <b>
-                                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" id="hideTosat"> Hide All </button>
-                            </b>
-                             
-                        </li>
+                       
                         
                     </ul>
                 </div>
@@ -61,11 +56,13 @@
                     <aside id="sidebar-documentation" style="overflow-x:hidden;">
                         <div class="main-menu">
                             <div class="table-content" style="padding:0;">
-                                @if(UserRights.Documentation == 1)
+
+                                @await Component.InvokeAsync("DocumentationCategory", new IncomingIdRequest
                                 {
-                                    @await Component.InvokeAsync("DocumentationCategory", @ProjectId)
-                                }
-                                <div class="row">   
+                                    Id = @ProjectId.Value,
+                                    Data = UserRights
+                                })
+                                <div class="row">
                                     @await Component.InvokeAsync("DocumentationNavigation", @ProjectId)
                                 </div>
 
