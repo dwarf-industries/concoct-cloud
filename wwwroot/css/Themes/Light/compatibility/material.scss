@@ -1,3 +1,7 @@
+$css: '.e-css'!default;
+$imported-modules: () !default;
+.e-lib {
+ @at-root {
 $primary: rgba(32,149,242,1);
 $primary-font: #fff;
 $accent: rgba(255,103,103,1);
@@ -138,7 +142,7 @@ $imported-modules: () !default;
       }
     }
 
-  #{&} .e-icons {
+  .e-lib .e-icons {
     font-family: 'e-icons';
     font-style: normal;
     font-variant: normal;
@@ -193,7 +197,7 @@ $imported-modules: () !default;
     color: $warning;
     }
 
-  #{&} .e-error {
+  .e-lib .e-error {
     color: $error-font-color;
     font-family: $font-family;
     font-size: $font-size;
@@ -211,12 +215,12 @@ $imported-modules: () !default;
     outline: none;
     }
 
-  #{&} .e-rtl {
+  .e-lib .e-rtl {
     direction: rtl;
     text-align: right;
     }
 
-  #{&} .e-overlay {
+  .e-lib .e-overlay {
     background-color: $overlay-bg-color;
     filter: alpha(opacity=50);
     height: 100%;
@@ -226,42 +230,42 @@ $imported-modules: () !default;
     width: 100%;
     }
 
-  #{&} .e-hidden {
+  .e-lib .e-hidden {
     display: none;
     }
 
-  #{&} .e-blazor-hidden {
+  .e-lib .e-blazor-hidden {
     visibility: hidden;
     }
 
-  #{&} .e-disabled {
+  .e-lib .e-disabled {
     background-image: none;
     cursor: default;
     filter: alpha(Opacity=35);
     opacity: .35;
     }
 
-  #{&} .e-ul {
+  .e-lib .e-ul {
     list-style-type: none;
     }
 
-  #{&} .e-prevent-select {
+  .e-lib .e-prevent-select {
     user-select: none;
     }
 
-  #{&} .e-warning {
+  .e-lib .e-warning {
     color: $warning-font-color;
     }
 
-  #{&} .e-success {
+  .e-lib .e-success {
     color: $success-font-color;
     }
 
-  #{&} .e-information {
+  .e-lib .e-information {
     color: $information-font-color;
     }
 
-  #{&} .e-block-touch {
+  .e-lib .e-block-touch {
     touch-action: pinch-zoom;
     }
 }
@@ -762,8 +766,8 @@ $imported-modules: () !default;
     }
   }
 
-  #{&} .e-ripple,
-  #{&} .e-ripple-style {
+  .e-lib .e-ripple,
+  .e-lib .e-ripple-style {
     overflow: hidden;
     position: relative;
     transform: translate3d(0, 0, 0);
@@ -771,8 +775,8 @@ $imported-modules: () !default;
 
   $ripple-background: rgba(0, 0, 0, .1);
 
-  #{&} .e-ripple-element,
-  #{&} .e-ripple-style::after {
+  .e-lib .e-ripple-element,
+  .e-lib .e-ripple-style::after {
     background-color: $ripple-background;
     border-radius: 100%;
     overflow: hidden;
@@ -782,7 +786,7 @@ $imported-modules: () !default;
     transition: opacity, transform 0ms cubic-bezier(0, .1, .2, 1);
   }
 
-  #{&} .e-ripple-style {
+  .e-lib .e-ripple-style {
     $ripple-style-background: rgba(0, 0, 0, .3);
 
     &::after {
@@ -879,7 +883,7 @@ $acrdn-border-size: $border-size !default;
 //enddefault
 @include export-module('accordion-material-icons') {
   /*! accordion icons */
-  #{&}.e-accordion {
+  .e-lib.e-accordion {
 
     .e-tgl-collapse-icon {
 
@@ -1892,12 +1896,12 @@ $ddl-bigger-small-list-font-size: 13px !default;
     color: $ddl-active-font-color;
   }
 
-  .e-input-group:not(.e-disabled) .e-control#{&}.e-dropdownlist ~ .e-ddl-icon:active,
-  .e-input-group:not(.e-disabled) .e-control#{&}.e-dropdownlist ~ .e-ddl-icon:hover,
+  .e-input-group:not(.e-disabled) .e-control.e-lib.e-dropdownlist ~ .e-ddl-icon:active,
+  .e-input-group:not(.e-disabled) .e-control.e-lib.e-dropdownlist ~ .e-ddl-icon:hover,
   .e-input-group:not(.e-disabled) .e-back-icon:active,
   .e-input-group:not(.e-disabled) .e-back-icon:hover,
-  #{&}.e-popup.e-ddl .e-input-group:not(.e-disabled) .e-clear-icon:active,
-  #{&}.e-popup.e-ddl .e-input-group:not(.e-disabled) .e-clear-icon:hover {
+  .e-lib.e-popup.e-ddl .e-input-group:not(.e-disabled) .e-clear-icon:active,
+  .e-lib.e-popup.e-ddl .e-input-group:not(.e-disabled) .e-clear-icon:hover {
     background: transparent;
   }
 
@@ -1905,21 +1909,21 @@ $ddl-bigger-small-list-font-size: 13px !default;
     animation: none;
   }
 
-  .e-ddl#{&}.e-popup {
+  .e-ddl.e-lib.e-popup {
     border: 0;
     box-shadow: $ddl-popup-shadow;
     margin-top: 2px;
   }
 
-  #{&}.e-popup.e-ddl .e-dropdownbase {
+  .e-lib.e-popup.e-ddl .e-dropdownbase {
     min-height: 26px;
   }
 
-  .e-bigger #{&}.e-popup.e-ddl-device-filter .e-input-group.e-input-focus:not(.e-success):not(.e-warning):not(.e-error) {
+  .e-bigger .e-lib.e-popup.e-ddl-device-filter .e-input-group.e-input-focus:not(.e-success):not(.e-warning):not(.e-error) {
     border-color: $ddl-default-border-color;
   }
 
-  .e-bigger #{&}.e-popup.e-ddl-device-filter {
+  .e-bigger .e-lib.e-popup.e-ddl-device-filter {
     margin-top: 0;
   }
 
@@ -1937,21 +1941,21 @@ $ddl-bigger-small-list-font-size: 13px !default;
     background-color: $grey-100;
   }
 
-  #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-input-group .e-clear-icon {
+  .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-input-group .e-clear-icon {
     margin: 6px 6px 5px;
     min-height: 12px;
     min-width: 12px;
     padding: 6px;
   }
 
-  .e-bigger #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-input-group .e-clear-icon,
-  .e-bigger#{&}.e-popup.e-ddl:not(.e-ddl-device) .e-input-group .e-clear-icon {
+  .e-bigger .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-input-group .e-clear-icon,
+  .e-bigger.e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-input-group .e-clear-icon {
     min-height: 16px;
     min-width: 16px;
   }
 
-  .e-bigger #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-filter,
-  .e-bigger#{&}.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-filter {
+  .e-bigger .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-filter,
+  .e-bigger.e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-filter {
     padding: 8px 16px 8px 0;
   }
 
@@ -1967,43 +1971,43 @@ $ddl-bigger-small-list-font-size: 13px !default;
   }
 
   // small size
-  #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-input-group.e-small .e-clear-icon,
-  .e-small #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-input-group .e-clear-icon,
-  .e-small#{&}.e-popup.e-ddl:not(.e-ddl-device) .e-input-group .e-clear-icon,
-  #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-input-group.e-input-focus.e-small .e-clear-icon,
-  .e-small #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-input-group.e-input-focus .e-clear-icon,
-  .e-small#{&}.e-popup.e-ddl:not(.e-ddl-device) .e-input-group.e-input-focus .e-clear-icon {
+  .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-input-group.e-small .e-clear-icon,
+  .e-small .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-input-group .e-clear-icon,
+  .e-small.e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-input-group .e-clear-icon,
+  .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-input-group.e-input-focus.e-small .e-clear-icon,
+  .e-small .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-input-group.e-input-focus .e-clear-icon,
+  .e-small.e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-input-group.e-input-focus .e-clear-icon {
     margin: 0;
   }
 
-  .e-small #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group .e-input-filter,
-  .e-small#{&}.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group .e-input-filter,
-  #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group.e-small .e-input-filter,
-  .e-small #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group.e-input-focus .e-input-filter,
-  .e-small#{&}.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group.e-input-focus .e-input-filter,
-  #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group.e-small.e-input-focus .e-input-filter {
+  .e-small .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group .e-input-filter,
+  .e-small.e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group .e-input-filter,
+  .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group.e-small .e-input-filter,
+  .e-small .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group.e-input-focus .e-input-filter,
+  .e-small.e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group.e-input-focus .e-input-filter,
+  .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group.e-small.e-input-focus .e-input-filter {
     padding: 5px 5px 5px 12px;
   }
 
   // Touch Small
-  .e-bigger.e-small #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-input-group .e-clear-icon,
-  .e-bigger.e-small#{&}.e-popup.e-ddl:not(.e-ddl-device) .e-input-group .e-clear-icon,
-  .e-bigger #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-input-group.e-small .e-clear-icon,
-  .e-bigger#{&}.e-popup.e-ddl:not(.e-ddl-device) .e-input-group.e-small .e-clear-icon,
-  .e-small #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-input-group.e-bigger .e-clear-icon,
-  .e-small#{&}.e-popup.e-ddl:not(.e-ddl-device) .e-input-group.e-bigger .e-clear-icon,
-  #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-input-group.e-bigger.e-small .e-clear-icon {
+  .e-bigger.e-small .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-input-group .e-clear-icon,
+  .e-bigger.e-small.e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-input-group .e-clear-icon,
+  .e-bigger .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-input-group.e-small .e-clear-icon,
+  .e-bigger.e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-input-group.e-small .e-clear-icon,
+  .e-small .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-input-group.e-bigger .e-clear-icon,
+  .e-small.e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-input-group.e-bigger .e-clear-icon,
+  .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-input-group.e-bigger.e-small .e-clear-icon {
     min-height: 18px;
     min-width: 18px;
   }
 
-  .e-bigger.e-small #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group .e-input-filter,
-  .e-bigger.e-small#{&}.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group .e-input-filter,
-  .e-bigger #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group.e-small .e-input-filter,
-  .e-bigger#{&}.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group.e-small .e-input-filter,
-  .e-small #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group.e-bigger .e-input-filter,
-  .e-small#{&}.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group.e-bigger .e-input-filter,
-  #{&}.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group.e-bigger.e-small .e-input-filter {
+  .e-bigger.e-small .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group .e-input-filter,
+  .e-bigger.e-small.e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group .e-input-filter,
+  .e-bigger .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group.e-small .e-input-filter,
+  .e-bigger.e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group.e-small .e-input-filter,
+  .e-small .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group.e-bigger .e-input-filter,
+  .e-small.e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group.e-bigger .e-input-filter,
+  .e-lib.e-popup.e-ddl:not(.e-ddl-device) .e-filter-parent .e-input-group.e-bigger.e-small .e-input-filter {
     padding: 8px 16px;
   }
 
@@ -2035,7 +2039,7 @@ $ddl-bigger-small-list-font-size: 13px !default;
     }
   }
 
-  .e-bigger .e-ddl#{&}.e-popup {
+  .e-bigger .e-ddl.e-lib.e-popup {
     #{if(&, '&', '*')} .e-list-item,
     #{if(&, '&', '*')} .e-list-group-item {
       font-size: $ddl-bigger-list-font-size;
@@ -2046,7 +2050,7 @@ $ddl-bigger-small-list-font-size: 13px !default;
     }
   }
 
-  .e-bigger.e-ddl#{&}.e-popup {
+  .e-bigger.e-ddl.e-lib.e-popup {
     #{if(&, '&', '*')} .e-list-item,
     #{if(&, '&', '*')} .e-list-group-item {
       font-size: $ddl-bigger-list-font-size;
@@ -2101,7 +2105,7 @@ $ddl-bigger-small-list-font-size: 13px !default;
     cursor: pointer;
   }
 
-  .e-ddl#{&}.e-popup.e-ddl-device-filter {
+  .e-ddl.e-lib.e-popup.e-ddl-device-filter {
     @at-root {
       #{if(&, '&', '*')} .e-input-group.e-input-focus::before,
       #{if(&, '&', '*')} .e-input-group.e-input-focus::after {
@@ -2110,7 +2114,7 @@ $ddl-bigger-small-list-font-size: 13px !default;
      }
    }
 
-  .e-ddl#{&}.e-popup {
+  .e-ddl.e-lib.e-popup {
     background: $ddl-popup-background-color;
     @if $skin-name != 'material' {
       border: 1px solid $ddl-default-border-color;
@@ -2226,7 +2230,7 @@ $ddl-bigger-small-list-font-size: 13px !default;
 
   // Small Size 
 
-  .e-small .e-ddl#{&}.e-popup,
+  .e-small .e-ddl.e-lib.e-popup,
   .e-input-group.e-ddl.e-small {
     #{if(&, '&', '*')} .e-list-item,
     #{if(&, '&', '*')} .e-list-group-item {
@@ -2234,7 +2238,7 @@ $ddl-bigger-small-list-font-size: 13px !default;
     }
   }
 
-  .e-small.e-ddl#{&}.e-popup,
+  .e-small.e-ddl.e-lib.e-popup,
   .e-input-group.e-ddl.e-small {
     #{if(&, '&', '*')} .e-list-item,
     #{if(&, '&', '*')} .e-list-group-item {
@@ -2243,7 +2247,7 @@ $ddl-bigger-small-list-font-size: 13px !default;
   }
 
   //touch small
-  .e-bigger.e-small .e-ddl#{&}.e-popup,
+  .e-bigger.e-small .e-ddl.e-lib.e-popup,
   .e-bigger .e-input-group.e-ddl.e-small {
     #{if(&, '&', '*')} .e-list-item,
     #{if(&, '&', '*')} .e-list-group-item {
@@ -2251,7 +2255,7 @@ $ddl-bigger-small-list-font-size: 13px !default;
     }
   }
 
-  .e-bigger.e-small.e-ddl#{&}.e-popup,
+  .e-bigger.e-small.e-ddl.e-lib.e-popup,
   .e-bigger .e-input-group.e-ddl.e-small {
     #{if(&, '&', '*')} .e-list-item,
     #{if(&, '&', '*')} .e-list-group-item {
@@ -2277,7 +2281,7 @@ $ddl-bigger-small-list-font-size: 13px !default;
   }
 }
 @include export-module('dropdownlist-theme') {
-  #{&}.e-popup {
+  .e-lib.e-popup {
     border-color: $ddl-default-border-color;
   }
 
@@ -18254,7 +18258,7 @@ $ddl-small-list-header-font-size: $ddl-group-list-font-size !default;
     position: relative;
   }
 
-  #{&}.e-popup.e-ddl .e-dropdownbase.e-nodata {
+  .e-lib.e-popup.e-ddl .e-dropdownbase.e-nodata {
     color: $ddl-nodata-font-color;
     cursor: default;
     font-family: $ddl-list-font-family;
@@ -18407,14 +18411,14 @@ $ddl-small-list-header-font-size: $ddl-group-list-font-size !default;
     }
   }
 
-  .e-multi-column#{&}.e-ddl#{&}.e-popup#{&}.e-popup-open table {
+  .e-multi-column.e-lib.e-ddl.e-lib.e-popup.e-lib.e-popup-open table {
     border-collapse: collapse;
     table-layout: fixed;
     width: 100%;
   }
 
-  .e-multi-column#{&}.e-ddl#{&}.e-popup#{&}.e-popup-open th,
-  .e-multi-column#{&}.e-ddl#{&}.e-popup#{&}.e-popup-open td {
+  .e-multi-column.e-lib.e-ddl.e-lib.e-popup.e-lib.e-popup-open th,
+  .e-multi-column.e-lib.e-ddl.e-lib.e-popup.e-lib.e-popup-open td {
     display: table-cell;
     overflow: hidden;
     padding-right: 16px;
@@ -18422,12 +18426,12 @@ $ddl-small-list-header-font-size: $ddl-group-list-font-size !default;
     text-overflow: ellipsis;
   }
 
-  .e-multi-column#{&}.e-ddl#{&}.e-popup#{&}.e-popup-open th {
+  .e-multi-column.e-lib.e-ddl.e-lib.e-popup.e-lib.e-popup-open th {
     line-height: 36px;
     text-align: left;
   }
 
-  .e-multi-column#{&}.e-ddl#{&}.e-popup#{&}.e-popup-open .e-ddl-header {
+  .e-multi-column.e-lib.e-ddl.e-lib.e-popup.e-lib.e-popup-open .e-ddl-header {
     background-color: $ddl-list-bg-color;
     border-color: $ddl-multi-column-border-color;
     border-style: solid;
@@ -18439,28 +18443,28 @@ $ddl-small-list-header-font-size: $ddl-group-list-font-size !default;
     text-indent: 10px;
   }
 
-  .e-multi-column#{&}.e-ddl#{&}.e-popup#{&}.e-popup-open .e-dropdownbase .e-list-item {
+  .e-multi-column.e-lib.e-ddl.e-lib.e-popup.e-lib.e-popup-open .e-dropdownbase .e-list-item {
     padding-right: 0;
   }
 
-  .e-multi-column#{&}.e-ddl#{&}.e-popup#{&}.e-popup-open#{&}.e-scroller .e-ddl-header {
+  .e-multi-column.e-lib.e-ddl.e-lib.e-popup.e-lib.e-popup-open.e-lib.e-scroller .e-ddl-header {
     padding-right: 16px;
   }
 
-  .e-multi-column#{&}.e-ddl#{&}.e-popup#{&}.e-popup-open .e-ddl-header,
-  .e-multi-column#{&}.e-ddl#{&}.e-popup#{&}.e-popup-open#{&}.e-ddl-device .e-ddl-header {
+  .e-multi-column.e-lib.e-ddl.e-lib.e-popup.e-lib.e-popup-open .e-ddl-header,
+  .e-multi-column.e-lib.e-ddl.e-lib.e-popup.e-lib.e-popup-open.e-lib.e-ddl-device .e-ddl-header {
     padding-right: 0;
   }
 
-  .e-multi-column#{&}.e-ddl#{&}.e-popup#{&}.e-popup-open .e-text-center {
+  .e-multi-column.e-lib.e-ddl.e-lib.e-popup.e-lib.e-popup-open .e-text-center {
     text-align: center;
   }
 
-  .e-multi-column#{&}.e-ddl#{&}.e-popup#{&}.e-popup-open .e-text-right {
+  .e-multi-column.e-lib.e-ddl.e-lib.e-popup.e-lib.e-popup-open .e-text-right {
     text-align: right;
   }
 
-  .e-multi-column#{&}.e-ddl#{&}.e-popup#{&}.e-popup-open .e-text-left {
+  .e-multi-column.e-lib.e-ddl.e-lib.e-popup.e-lib.e-popup-open .e-text-left {
     text-align: left;
   }
 
@@ -21541,11 +21545,11 @@ $calendar-small-font-size: 12px !default;
 
 @include export-module('calendar-layout') { /*! calendar layout */
 
-  #{&}ejs-calendar {
+  .e-libejs-calendar {
     display: block;
   }
 
-  #{&}.e-calendar.e-disabled {
+  .e-lib.e-calendar.e-disabled {
     #{if(&, '&', '*')} .e-header {
       #{if(&, '&', '*')} .e-prev,
       #{if(&, '&', '*')} .e-next {
@@ -21572,8 +21576,8 @@ $calendar-small-font-size: 12px !default;
 }
 }
 
-  #{&}.e-calendar,
-  .e-bigger.e-small #{&}.e-calendar {
+  .e-lib.e-calendar,
+  .e-bigger.e-small .e-lib.e-calendar {
     // sass-lint:disable no-vendor-prefixes
     -webkit-tap-highlight-color: transparent;
     border-radius: $calendar-wrapper-border-radius;
@@ -21725,8 +21729,8 @@ $calendar-small-font-size: 12px !default;
     }
 
   //normal style
-  #{&}.e-calendar,
-  .e-bigger.e-small #{&}.e-calendar {
+  .e-lib.e-calendar,
+  .e-bigger.e-small .e-lib.e-calendar {
     max-width: $calendar-normal-max-width;
     min-width:  $calendar-normal-min-width;
     padding: $calendar-popup-padding;
@@ -21813,8 +21817,8 @@ $calendar-small-font-size: 12px !default;
 }
 }
 
-  .e-small.e-bigger#{&}.e-calendar,
-  .e-small.e-bigger #{&}.e-calendar {
+  .e-small.e-bigger.e-lib.e-calendar,
+  .e-small.e-bigger .e-lib.e-calendar {
     #{if(&, '&', '*')} .e-content.e-year {
       #{if(&, '&', '*')} span.e-day {
         font-size: $calendar-bigger-small-yeardecade-font-size;
@@ -21827,8 +21831,8 @@ $calendar-small-font-size: 12px !default;
   }
 
   //bigger style
-  .e-bigger#{&}.e-calendar,
-  #{if(&, '&', '*')}.e-bigger #{&}.e-calendar {
+  .e-bigger.e-lib.e-calendar,
+  #{if(&, '&', '*')}.e-bigger .e-lib.e-calendar {
     max-width: $calendar-bigger-max-width;
     min-width: $calendar-bigger-min-width;
     padding: $calendar-popup-bigger-padding;
@@ -21919,8 +21923,8 @@ $calendar-small-font-size: 12px !default;
   }
 
   // Mouse small style
-  .e-small#{&}.e-calendar,
-  .e-small #{&}.e-calendar {
+  .e-small.e-lib.e-calendar,
+  .e-small .e-lib.e-calendar {
     max-width: $calendar-small-max-width;
     min-width:  $calendar-small-min-width;
     padding: $calendar-small-popup-padding;
@@ -21969,7 +21973,7 @@ $calendar-small-font-size: 12px !default;
     }
   }
 
-  #{&}.e-calendar {
+  .e-lib.e-calendar {
     #{if(&, '&', '*')} .e-btn.e-today.e-flat.e-disabled,
     #{if(&, '&', '*')} .e-btn.e-today.e-flat.e-disabled:hover,
     #{if(&, '&', '*')} .e-btn.e-today.e-flat.e-disabled:active,
@@ -21999,8 +22003,8 @@ $calendar-small-font-size: 12px !default;
   }
 }
 @include export-module('calendar-theme') {
-  #{&}.e-calendar,
-  .e-bigger.e-small #{&}.e-calendar {
+  .e-lib.e-calendar,
+  .e-bigger.e-small .e-lib.e-calendar {
     background-color: $calendar-bg-color;
     border: $calendar-border-style;
     box-shadow: $calendar-box-shadow;#{if(&, '&', '*')} .e-date-icon-prev,
@@ -22186,8 +22190,8 @@ $calendar-small-font-size: 12px !default;
 }
 }
 
-  .e-small#{&}.e-calendar,
-  .e-small #{&}.e-calendar {
+  .e-small.e-lib.e-calendar,
+  .e-small .e-lib.e-calendar {
     #{if(&, '&', '*')} .e-header {
       #{if(&, '&', '*')} .e-title {
         color: $calendar-small-title-font-color;
@@ -24088,7 +24092,7 @@ $chip-outline-danger-active-border-color: transparent !default;
 $chip-outline-danger-focus-active-border-color: $chip-outline-danger-focus-border-color !default;
 $chip-outline-danger-pressed-border-color: transparent !default;
 $chip-outline-danger-disabled-border-color: $chip-outline-disabled-border-color !default;
-#{&}.e-chip-list {
+.e-lib.e-chip-list {
   .e-chip-delete {
     &.e-dlt-btn::before {
       content: '\e208';
@@ -32148,8 +32152,8 @@ $datepicker-bigger-small-icon-font-size: 18px !default;
     }
   }
 
-  #{&}.e-datepicker.e-bigger,
-  .e-bigger #{&}.e-datepicker {
+  .e-lib.e-datepicker.e-bigger,
+  .e-bigger .e-lib.e-datepicker {
     #{if(&, '&', '*')}.e-popup-wrapper {
       @if $skin-name == 'tailwind' or $skin-name == 'tailwind-dark' {
         margin-top: $datepicker-popup-bigger-margin-top;
@@ -32157,7 +32161,7 @@ $datepicker-bigger-small-icon-font-size: 18px !default;
     }
   }
 
-  #{&}.e-datepicker {
+  .e-lib.e-datepicker {
 
     #{if(&, '&', '*')} .e-calendar {
 
@@ -32257,8 +32261,8 @@ $datepicker-bigger-small-icon-font-size: 18px !default;
   }
 }
 @include export-module('datepicker-theme') {
-  #{&}.e-datepicker,
-  .e-bigger.e-small #{&}.e-datepicker {
+  .e-lib.e-datepicker,
+  .e-bigger.e-small .e-lib.e-datepicker {
     #{if(&, '&', '*')}.e-popup-wrapper {
       border: $datepicker-popup-border;
       box-shadow: $datepicker-popup-box-shadow;
@@ -34143,8 +34147,8 @@ $listview-template-multiline-avatar-top: 1.0666em !default;
 
 @include export-module('listview-layout') {
   // sass-lint:disable no-vendor-prefixes
-  .e-bigger #{&}.e-listview,
-  #{&}.e-listview.e-bigger {
+  .e-bigger .e-lib.e-listview,
+  .e-lib.e-listview.e-bigger {
     @if ($skin-name == 'bootstrap4') {
       font-size: 16px;
     }
@@ -34942,7 +34946,7 @@ $listview-template-multiline-avatar-top: 1.0666em !default;
 
 
 @include export-module('sortable-layout') {
-  #{&}.e-sortable {
+  .e-lib.e-sortable {
     outline: none;
     position: relative;
     user-select: none;
@@ -35281,8 +35285,8 @@ $range-bigger-small-icon-font-size: 18px !default;
     width: 0;
   }
 
-  #{&}.e-daterangepicker,
-  .e-bigger.e-small #{&}.e-daterangepicker {
+  .e-lib.e-daterangepicker,
+  .e-bigger.e-small .e-lib.e-daterangepicker {
     #{if(&, '&', '*')}.e-popup {
       border: $range-popup-border;
       border-radius: $range-popup-border-radius;
@@ -35469,8 +35473,8 @@ $range-bigger-small-icon-font-size: 18px !default;
     }
   }
 
-  .e-bigger #{&}.e-daterangepicker.e-range-modal,
-  #{if(&, '&', '*')}.e-device#{&}.e-daterangepicker.e-range-modal {
+  .e-bigger .e-lib.e-daterangepicker.e-range-modal,
+  #{if(&, '&', '*')}.e-device.e-lib.e-daterangepicker.e-range-modal {
     background-color: $range-overlay;
     height: 100%;
     left: 0;
@@ -35482,15 +35486,15 @@ $range-bigger-small-icon-font-size: 18px !default;
     z-index: 999;
   }
 
-  .e-bigger.e-small #{&}.e-daterangepicker #{&}.e-calendar {
+  .e-bigger.e-small .e-lib.e-daterangepicker .e-lib.e-calendar {
     max-width: $calendar-bigger-small-max-width;
   }
 
   //bigger style
 
-  .e-bigger #{&}.e-daterangepicker,
-  #{if(&, '&', '*')}.e-bigger#{&}.e-daterangepicker,
-  #{if(&, '&', '*')}.e-device#{&}.e-daterangepicker {
+  .e-bigger .e-lib.e-daterangepicker,
+  #{if(&, '&', '*')}.e-bigger.e-lib.e-daterangepicker,
+  #{if(&, '&', '*')}.e-device.e-lib.e-daterangepicker {
     #{if(&, '&', '*')}.e-popup {
       #{if(&, '&', '*')}.e-preset-wrapper {
         max-width: $range-bigger-max-width;
@@ -35639,8 +35643,8 @@ $range-bigger-small-icon-font-size: 18px !default;
     }
   }
 
-  .e-small #{&}.e-daterangepicker,
-  #{if(&, '&', '*')}.e-small#{&}.e-daterangepicker {
+  .e-small .e-lib.e-daterangepicker,
+  #{if(&, '&', '*')}.e-small.e-lib.e-daterangepicker {
     #{if(&, '&', '*')}.e-popup {
       #{if(&, '&', '*')} .e-range-header {
         margin: $range-control-small-header-margin;
@@ -35736,8 +35740,8 @@ $range-bigger-small-icon-font-size: 18px !default;
     }
   }
 
-  #{&}.e-daterangepicker,
-  .e-bigger.e-small #{&}.e-daterangepicker {
+  .e-lib.e-daterangepicker,
+  .e-bigger.e-small .e-lib.e-daterangepicker {
     #{if(&, '&', '*')}.e-popup {
       background: $range-background;
 
@@ -35823,9 +35827,9 @@ $range-bigger-small-icon-font-size: 18px !default;
   }
 
   //bigger style
-  .e-bigger #{&}.e-daterangepicker,
-  #{if(&, '&', '*')}.e-bigger#{&}.e-daterangepicker,
-  #{if(&, '&', '*')}.e-device#{&}.e-daterangepicker {
+  .e-bigger .e-lib.e-daterangepicker,
+  #{if(&, '&', '*')}.e-bigger.e-lib.e-daterangepicker,
+  #{if(&, '&', '*')}.e-device.e-lib.e-daterangepicker {
     background-color: $range-bg-color;
     padding: $range-popup-padding;
 
@@ -36021,7 +36025,7 @@ $datetime-icon-bigger-small-font-size: 18px !default;
     }
   }
 
-  #{&}.e-datetimepicker.e-time-modal {
+  .e-lib.e-datetimepicker.e-time-modal {
     background-color: $datetime-default-overlay;
     height: 100%;
     left: 0;
@@ -36033,7 +36037,7 @@ $datetime-icon-bigger-small-font-size: 18px !default;
     z-index: 999;
 	}
 
-  #{&}.e-datetimepicker.e-popup {
+  .e-lib.e-datetimepicker.e-popup {
     border-style: solid;
     border-width: 1px;
     overflow: auto;
@@ -36066,7 +36070,7 @@ $datetime-icon-bigger-small-font-size: 18px !default;
 
   //normal styles
 
-  #{&}.e-datetimepicker.e-popup {
+  .e-lib.e-datetimepicker.e-popup {
     #{if(&, '&', '*')} .e-list-parent.e-ul .e-list-item {
       line-height: $datetime-list-normal-line-height;
       text-indent: $datetime-list-normal-text-indent;
@@ -36097,8 +36101,8 @@ $datetime-icon-bigger-small-font-size: 18px !default;
     }
   }
 
-  .e-bigger #{&}.e-datetimepicker.e-popup,
-  #{if(&, '&', '*')}.e-bigger#{&}.e-datetimepicker.e-popup {
+  .e-bigger .e-lib.e-datetimepicker.e-popup,
+  #{if(&, '&', '*')}.e-bigger.e-lib.e-datetimepicker.e-popup {
     #{if(&, '&', '*')} .e-list-parent.e-ul {
       padding: $datetime-list-bigger-padding 0;
 
@@ -36110,8 +36114,8 @@ $datetime-icon-bigger-small-font-size: 18px !default;
     }
   }
 
-  .e-small #{&}.e-datetimepicker.e-popup,
-  #{if(&, '&', '*')}.e-small#{&}.e-datetimepicker.e-popup {
+  .e-small .e-lib.e-datetimepicker.e-popup,
+  #{if(&, '&', '*')}.e-small.e-lib.e-datetimepicker.e-popup {
     #{if(&, '&', '*')} .e-list-parent.e-ul .e-list-item {
       font-size: $datetime-list-small-font-size;
       line-height: $datetime-list-small-line-height;
@@ -36119,8 +36123,8 @@ $datetime-icon-bigger-small-font-size: 18px !default;
     }
   }
 
-  .e-small.e-bigger #{&}.e-datetimepicker.e-popup,
-  #{if(&, '&', '*')}.e-small.e-bigger#{&}.e-datetimepicker.e-popup {
+  .e-small.e-bigger .e-lib.e-datetimepicker.e-popup,
+  #{if(&, '&', '*')}.e-small.e-bigger.e-lib.e-datetimepicker.e-popup {
     #{if(&, '&', '*')} .e-list-parent.e-ul .e-list-item {
       font-size: $datetime-list-bigger-small-font-size;
       line-height: $datetime-list-bigger-small-line-height;
@@ -36212,20 +36216,20 @@ $mask-font-family: Arial, $font-family !default;
 
 @include export-module('maskedtextbox-layout') {
   /*! maskedtextbox layout */
-  .e-control-wrapper.e-mask #{&}.e-maskedtextbox {
+  .e-control-wrapper.e-mask .e-lib.e-maskedtextbox {
     @if $skin-name != 'bootstrap' {
       font-family: $mask-font-family;
       font-size: $mask-font-size;
        }
     }
 
-  .e-bigger .e-control-wrapper.e-mask #{&}.e-maskedtextbox {
+  .e-bigger .e-control-wrapper.e-mask .e-lib.e-maskedtextbox {
     @if $skin-name != 'bootstrap' {
       font-size: $mask-bigger-font-size;
         }
      }
 
-  .e-control-wrapper.e-mask.e-bigger #{&}.e-maskedtextbox {
+  .e-control-wrapper.e-mask.e-bigger .e-lib.e-maskedtextbox {
     @if $skin-name != 'bootstrap' {
       font-size: $mask-bigger-font-size;
         }
@@ -36244,7 +36248,7 @@ $mask-font-family: Arial, $font-family !default;
 }
 @include export-module('maskedit-theme') {
   /*! maskedtextbox theme */
-  .e-control-wrapper.e-mask.e-error #{&}.e-maskedtextbox {
+  .e-control-wrapper.e-mask.e-error .e-lib.e-maskedtextbox {
     @if $skin-name != 'bootstrap' {
       color: $mask-error-color;
       }
@@ -38199,7 +38203,7 @@ $hscroll-ribble-animation-shadow-frame-end: 0 0 0 200px rgba(255, 255, 255, .12)
  }
 @include export-module('hscroll-material-icons') {
   /*! hscroll icons */
-  #{&}.e-hscroll {
+  .e-lib.e-hscroll {
 
     &.e-rtl {
 
@@ -38250,8 +38254,8 @@ $hscroll-ribble-animation-shadow-frame-end: 0 0 0 200px rgba(255, 255, 255, .12)
 @include export-module('h-scroll') {
   /*! h-scroll layout */
 
-  .e-bigger #{&}.e-hscroll,
-  #{&}.e-hscroll.e-bigger {
+  .e-bigger .e-lib.e-hscroll,
+  .e-lib.e-hscroll.e-bigger {
     min-height: $hscroll-nav-bgr-minheight;
 
     &:not(.e-scroll-device) {
@@ -38289,7 +38293,7 @@ $hscroll-ribble-animation-shadow-frame-end: 0 0 0 200px rgba(255, 255, 255, .12)
 
   }
 
-  #{&}.e-hscroll {
+  .e-lib.e-hscroll {
     display: block;
     position: relative;
     width: inherit;
@@ -38452,7 +38456,7 @@ $hscroll-ribble-animation-shadow-frame-end: 0 0 0 200px rgba(255, 255, 255, .12)
 }
 @include export-module('h-scroll-theme') {
   /*! h-scroll theme */
-  #{&}.e-hscroll {
+  .e-lib.e-hscroll {
 
     .e-icons {
       color: $hscroll-default-icon-color;
@@ -38692,7 +38696,7 @@ $vscroll-ribble-animation-shadow-frame-end: 0 0 0 200px rgba(255, 255, 255, .12)
 }
 @include export-module('vscroll-material-icons') {
   /*! vscroll icons */
-  #{&}.e-vscroll {
+  .e-lib.e-vscroll {
 
     &.e-scroll-device {
 
@@ -38720,8 +38724,8 @@ $vscroll-ribble-animation-shadow-frame-end: 0 0 0 200px rgba(255, 255, 255, .12)
 @include export-module('v-scroll') {
   /*! v-scroll layout */
 
-  .e-bigger #{&}.e-vscroll,
-  #{&}.e-vscroll.e-bigger {
+  .e-bigger .e-lib.e-vscroll,
+  .e-lib.e-vscroll.e-bigger {
 
     &:not(.e-scroll-device) {
       padding: $vscroll-bgr-padding;
@@ -38747,7 +38751,7 @@ $vscroll-ribble-animation-shadow-frame-end: 0 0 0 200px rgba(255, 255, 255, .12)
     }
   }
 
-  #{&}.e-vscroll {
+  .e-lib.e-vscroll {
     display: block;
     position: relative;
     width: inherit;
@@ -38881,7 +38885,7 @@ $vscroll-ribble-animation-shadow-frame-end: 0 0 0 200px rgba(255, 255, 255, .12)
 }
 @include export-module('v-scroll-theme') {
   /*! v-scroll theme */
-  #{&}.e-vscroll {
+  .e-lib.e-vscroll {
 
     .e-icons {
       color: $vscroll-default-icon-color;
@@ -39179,7 +39183,7 @@ $tbar-ribble-animation-shadow-frame-end: 0 0 0 200px rgba(255, 255, 255, .12) !d
  }
 @include export-module('toolbar-material-icons') {
   /*! toolbar icons */
-  #{&}.e-toolbar {
+  .e-lib.e-toolbar {
 
     .e-popup-down-icon::before {
       content: '\e916';
@@ -41578,7 +41582,7 @@ $tab-v-rtl-nrml-close-icon-top-bottom-left: -18px !default;
 $tab-v-pop-focus-outline: 0 !default;
 @include export-module('tab-material-icons') {
   /*! tab icons */
-  #{&}.e-tab {
+  .e-lib.e-tab {
 
     .e-tab-header {
 
@@ -52250,8 +52254,8 @@ $filled-multiselect-chip-bg-color: darken($grey-300, 7%) !default;
   }
 }
 
-#{&}.e-multiselect.e-rtl .e-multi-select-wrapper .e-mob-chip.e-chips>.e-chipcontent,
-.e-bigger #{&}.e-multiselect.e-rtl .e-multi-select-wrapper .e-chips>.e-chipcontent {
+.e-lib.e-multiselect.e-rtl .e-multi-select-wrapper .e-mob-chip.e-chips>.e-chipcontent,
+.e-bigger .e-lib.e-multiselect.e-rtl .e-multi-select-wrapper .e-chips>.e-chipcontent {
   padding: $ddl-rtl-chip-mobile-content-padding;
 }
 
@@ -52456,8 +52460,8 @@ $filled-multiselect-chip-bg-color: darken($grey-300, 7%) !default;
   padding-left: $ddl-remains-padding-left;
 }
 
-#{&}.e-multiselect.e-disabled .e-multi-select-wrapper,
-#{&}.e-multiselect.e-disabled .e-multi-select-wrapper .e-chips .e-chips-close::before {
+.e-lib.e-multiselect.e-disabled .e-multi-select-wrapper,
+.e-lib.e-multiselect.e-disabled .e-multi-select-wrapper .e-chips .e-chips-close::before {
   cursor: not-allowed;
 }
 
@@ -52483,13 +52487,13 @@ $filled-multiselect-chip-bg-color: darken($grey-300, 7%) !default;
   content: '';
 }
 
-#{&}.e-multiselect.e-rtl .e-multi-select-wrapper.e-delimiter {
+.e-lib.e-multiselect.e-rtl .e-multi-select-wrapper.e-delimiter {
   .e-searcher {
     float: none;
   }
 }
 
-#{&}.e-multiselect.e-rtl {
+.e-lib.e-multiselect.e-rtl {
   .e-multi-select-wrapper.e-close-icon-hide {
     padding-left: 0;
   }
@@ -53725,7 +53729,7 @@ ejs-multiselect {
   background-color: $ddl-sel-hover-chip-bg-color;
 }
 
-#{&}.e-multiselect {
+.e-lib.e-multiselect {
   box-sizing: border-box;
 }
 
@@ -53788,85 +53792,85 @@ ejs-multiselect {
   height: $ddl-chip-mobile-height;
 }
 
-#{&}.e-popup.e-multi-select-list-wrapper {
+.e-lib.e-popup.e-multi-select-list-wrapper {
   box-shadow: $ddl-popup-shadow-value;
   box-sizing: content-box;
   overflow: initial;
 }
 
-#{&}.e-popup.e-multi-select-list-wrapper .e-list-item.e-active {
+.e-lib.e-popup.e-multi-select-list-wrapper .e-list-item.e-active {
   border-bottom: $ddl-popup-active-border-width solid transparent;
   border-left: $ddl-popup-active-border-width solid $ddl-popup-active-focus-bg-color;
   border-right: $ddl-popup-active-border-width solid $ddl-popup-active-focus-bg-color;
   border-top: $ddl-popup-active-border-width solid $ddl-popup-active-border-color;
 }
 
-#{&}.e-popup.e-multi-select-list-wrapper.e-checkbox .e-list-item.e-active {
+.e-lib.e-popup.e-multi-select-list-wrapper.e-checkbox .e-list-item.e-active {
   background-color: transparent;
   border-color: transparent;
   color: $ddl-multi-list-default-font-color;
 }
 
-#{&}.e-popup.e-multi-select-list-wrapper.e-multiselect-group.e-checkbox .e-list-group-item.e-active {
+.e-lib.e-popup.e-multi-select-list-wrapper.e-multiselect-group.e-checkbox .e-list-group-item.e-active {
   background-color: transparent;
   border-color: transparent;
   color: $ddl-multi-list-default-font-color;
 }
 
-#{&}.e-popup.e-multi-select-list-wrapper.e-checkbox .e-list-item.e-active.e-item-focus {
+.e-lib.e-popup.e-multi-select-list-wrapper.e-checkbox .e-list-item.e-active.e-item-focus {
   @if $ddl-multiselect-skin-name != 'highcontrast' {
     color: $ddl-multi-list-default-font-color;
   }
 }
 
-#{&}.e-popup.e-multi-select-list-wrapper.e-multiselect-group.e-checkbox .e-list-group-item.e-active.e-item-focus {
+.e-lib.e-popup.e-multi-select-list-wrapper.e-multiselect-group.e-checkbox .e-list-group-item.e-active.e-item-focus {
   @if $ddl-multiselect-skin-name != 'highcontrast' {
     color: $ddl-multi-list-default-font-color;
   }
 }
 
-#{&}.e-popup.e-multi-select-list-wrapper.e-checkbox .e-list-item.e-active.e-hover {
+.e-lib.e-popup.e-multi-select-list-wrapper.e-checkbox .e-list-item.e-active.e-hover {
   background-color: $ddl-multi-list-hover-bg-color;
 }
 
-#{&}.e-popup.e-multi-select-list-wrapper.e-multiselect-group.e-checkbox .e-list-group-item.e-active.e-hover {
+.e-lib.e-popup.e-multi-select-list-wrapper.e-multiselect-group.e-checkbox .e-list-group-item.e-active.e-hover {
   background-color: $ddl-multi-list-hover-bg-color;
 }
 
-#{&}.e-popup.e-multi-select-list-wrapper .e-list-item.e-active:first-child {
+.e-lib.e-popup.e-multi-select-list-wrapper .e-list-item.e-active:first-child {
   border-bottom: $ddl-popup-active-border-width solid transparent;
   border-top: $ddl-popup-active-border-width solid transparent;
 }
 
-#{&}.e-popup.e-multi-select-list-wrapper .e-list-item.e-active:last-child {
+.e-lib.e-popup.e-multi-select-list-wrapper .e-list-item.e-active:last-child {
   border-bottom: $ddl-popup-active-border-width solid transparent;
 }
 
-#{&}.e-popup.e-multi-select-list-wrapper .e-list-item.e-active.e-item-focus + li.e-active {
+.e-lib.e-popup.e-multi-select-list-wrapper .e-list-item.e-active.e-item-focus + li.e-active {
   @if $ddl-multiselect-skin-name != 'highcontrast' {
     border-top: $ddl-popup-active-border-width solid transparent;
   }
 }
 
-#{&}.e-popup.e-multi-select-list-wrapper .e-list-item.e-active.e-item-focus {
+.e-lib.e-popup.e-multi-select-list-wrapper .e-list-item.e-active.e-item-focus {
   background-color: $ddl-popup-active-focus-bg-color;
   border: $ddl-popup-active-focus-border-width solid $ddl-popup-active-focus-border-color;
   box-shadow: $ddl-popup-active-focus-shadow-item;
   color: $ddl-popup-active-focus-font-color;
 }
 
-#{&}.e-popup.e-multi-select-list-wrapper.e-multiselect-group .e-list-group-item.e-active.e-item-focus {
+.e-lib.e-popup.e-multi-select-list-wrapper.e-multiselect-group .e-list-group-item.e-active.e-item-focus {
   background-color: $ddl-popup-active-focus-bg-color;
   border: $ddl-popup-active-focus-border-width solid $ddl-popup-active-focus-border-color;
   box-shadow: $ddl-popup-active-focus-shadow-item;
   color: $ddl-popup-active-focus-font-color;
 }
 
-#{&}.e-popup.e-multi-select-list-wrapper .e-list-item {
+.e-lib.e-popup.e-multi-select-list-wrapper .e-list-item {
   border: $ddl-popup-normal-border-width solid transparent;
 }
 
-#{&}.e-popup.e-multi-select-list-wrapper.e-multiselect-group .e-list-group-item {
+.e-lib.e-popup.e-multi-select-list-wrapper.e-multiselect-group .e-list-group-item {
   border: $ddl-popup-normal-border-width solid transparent;
 }
 
@@ -62994,7 +62998,7 @@ $pager-bigger-dropdown-heigh: 40px !default;
 @include export-module('pager-material-icons') {
   /*! component icons */
 
-  #{&}.e-pager,
+  .e-lib.e-pager,
   .e-grid-menu {
 
     .e-icon-last::before {
@@ -63035,8 +63039,8 @@ $pager-bigger-dropdown-heigh: 40px !default;
 
 @include export-module('pager-layout') {
   /*! Pager layout */
-  .e-bigger  #{&}.e-pager,
-  #{&}.e-pager.e-bigger {
+  .e-bigger  .e-lib.e-pager,
+  .e-lib.e-pager.e-bigger {
     font-size: $pager-bigger-font-size;
     padding: $pager-bigger-padding;
 
@@ -63160,7 +63164,7 @@ $pager-bigger-dropdown-heigh: 40px !default;
     }
    }
 
-  #{&}.e-pager {
+  .e-lib.e-pager {
     border-style: $pager-border-type;
     border-width: 1px;
     display: inline-block;
@@ -63616,7 +63620,7 @@ $pager-bigger-dropdown-heigh: 40px !default;
 }
 @include export-module('pager-theme') {
   /*! Pager theme */
-  #{&}.e-pager {
+  .e-lib.e-pager {
     background-color: $pager-bg-color;
     border-color: $pager-border-color;
     color: $pager-color;
@@ -63810,7 +63814,7 @@ $grid-xlfl-dlg-content-top-padding: 0 !default;
     content: '\e7ff';
   }
 
-  #{&}.e-excelfilter {
+  .e-lib.e-excelfilter {
     .e-icon-filter::before {
       content: '\e7ee';
     }
@@ -63883,7 +63887,7 @@ $grid-xlfl-dlg-content-top-padding: 0 !default;
     width: unset;
   }
 
-  #{&}.e-xlflmenu {
+  .e-lib.e-xlflmenu {
     min-height: $grid-xlfl-min-height;
 
     .e-xlfl-dlgfields {
@@ -63949,7 +63953,7 @@ $grid-xlfl-dlg-content-top-padding: 0 !default;
     opacity: 0;
   }
 
-  #{&}.e-xlflmenu.e-rtl {
+  .e-lib.e-xlflmenu.e-rtl {
     .e-xlfl-optr :first-child {
       padding-left: $grid-xlfl-dropdown-padding-right;
     }
@@ -63965,7 +63969,7 @@ $grid-xlfl-dlg-content-top-padding: 0 !default;
     }
   }
 
-  .e-bigger #{&}.e-xlflmenu {
+  .e-bigger .e-lib.e-xlflmenu {
     min-height: $grid-bigger-xlfl-min-height;
 
     .e-xlfl-table {
@@ -64019,8 +64023,8 @@ $grid-xlfl-dlg-content-top-padding: 0 !default;
     }
   }
 
-  .e-bigger #{&}.e-excelfilter,
-  #{&}.e-excelfilter.e-bigger {
+  .e-bigger .e-lib.e-excelfilter,
+  .e-lib.e-excelfilter.e-bigger {
     .e-xlflmenu {
       min-height: $grid-bigger-xlfl-min-height;
     }
@@ -64071,7 +64075,7 @@ $grid-xlfl-dlg-content-top-padding: 0 !default;
           }
   }
 
-  #{&}.e-excelfilter {
+  .e-lib.e-excelfilter {
     .e-checkboxlist {
       height: 200px;
       margin-top: 5px;
@@ -64231,7 +64235,7 @@ $grid-xlfl-dlg-content-top-padding: 0 !default;
 }
 @include export-module('excel-filter-theme') {
   /*! Excel-Filter theme */
-  #{&}.e-excelfilter {
+  .e-lib.e-excelfilter {
     .e-footer-content {
       border-color: $grid-columnchooser-footer-border-color;
       opacity: $grid-columnchooser-footer-border-opacity;
@@ -64808,7 +64812,7 @@ $grid-column-chooser-cancel-icon-size: 11px !default;
     content: '\e7ff';
   }
 
-  #{&}.e-grid,
+  .e-lib.e-grid,
   .e-grid-menu {
 
     .e-group-animate .e-drag.e-icon-drag::before {
@@ -65044,8 +65048,8 @@ $grid-column-chooser-cancel-icon-size: 11px !default;
     padding: $grid-flmenu-device-padding;
   }
 
-  .e-bigger #{&}.e-grid,
-  #{&}.e-grid.e-bigger  {
+  .e-bigger .e-lib.e-grid,
+  .e-lib.e-grid.e-bigger  {
     font-size: $grid-bigger-font-size;
 
     .e-toolbar-items .e-toolbar-item.e-search-wrapper {
@@ -65533,7 +65537,7 @@ $grid-column-chooser-cancel-icon-size: 11px !default;
     }
   }
 
-  #{&}.e-grid {
+  .e-lib.e-grid {
     border-radius: $grid-border-radius;
     border-style: none $grid-border-type $grid-border-type;
     border-width: $grid-border-size;
@@ -68071,7 +68075,7 @@ $grid-column-chooser-cancel-icon-size: 11px !default;
   }
 }
 
-#{&}.e-grid-min-height {
+.e-lib.e-grid-min-height {
   .e-rowcell {
     line-height: 0;
     padding-bottom: 0;
@@ -68095,7 +68099,7 @@ $grid-column-chooser-cancel-icon-size: 11px !default;
   }
 }
 
-#{&}.e-grid-min-height .e-grid-height {
+.e-lib.e-grid-min-height .e-grid-height {
   .e-rowcell {
     line-height: $grid-rowcell-line-height;
     padding: $grid-content-padding $grid-content-right-padding;
@@ -68557,7 +68561,7 @@ $grid-column-chooser-cancel-icon-size: 11px !default;
 }
 @include export-module('grid-theme') {
   /*! Grid theme */
-  #{&}.e-grid {
+  .e-lib.e-grid {
     border-color: $grid-header-border-color;
 
     .e-content {
@@ -73495,7 +73499,7 @@ $gantt-collapse-progress-width: 0px !important;
 $rangecontainer-border-color: #FC7A05;
 $gantt-range-container-arc-radius: 2px !default;
 @include export-module('gantt-material-icons') {
-  #{&}.e-gantt {
+  .e-lib.e-gantt {
     .e-add::before {
       content: '\e7f9';
     }
@@ -73594,7 +73598,7 @@ $gantt-range-container-arc-radius: 2px !default;
     }
   }
 
-  #{&}.e-gantt.e-device {
+  .e-lib.e-gantt.e-device {
     .e-backarrowspan::before,
     .e-icon-dlg-close::before {
       content: '\e85b';
@@ -73608,7 +73612,7 @@ $gantt-range-container-arc-radius: 2px !default;
 }
 
 @include export-module('gantt-layout') {
-  #{&}.e-gantt {
+  .e-lib.e-gantt {
     display: block;
     width: 100%;
 
@@ -75285,7 +75289,7 @@ $gantt-range-container-arc-radius: 2px !default;
   }
 }
 
-#{&} .e-icons {
+.e-lib .e-icons {
   font-family: "e-icons";
   font-style: normal;
   font-variant: normal;
@@ -82782,7 +82786,7 @@ $timepicker-icon-bigger-small-font-size: 18px !default;
     }
   }
 
-  #{&}.e-timepicker.e-time-modal {
+  .e-lib.e-timepicker.e-time-modal {
     background-color: $timepicker-default-overlay;
     height: 100%;
     left: 0;
@@ -82794,7 +82798,7 @@ $timepicker-icon-bigger-small-font-size: 18px !default;
     z-index: 999;
 	}
 
-  #{&}.e-timepicker.e-popup {
+  .e-lib.e-timepicker.e-popup {
     border-style: solid;
     border-width: 1px;
     overflow: auto;
@@ -82826,7 +82830,7 @@ $timepicker-icon-bigger-small-font-size: 18px !default;
 
   //normal styles
 
-  #{&}.e-timepicker.e-popup {
+  .e-lib.e-timepicker.e-popup {
     #{if(&, '&', '*')} .e-list-parent.e-ul .e-list-item {
       line-height: $timepicker-list-normal-line-height;
       text-indent: $timepicker-list-normal-text-indent;
@@ -82848,8 +82852,8 @@ $timepicker-icon-bigger-small-font-size: 18px !default;
     }
   }
 
-  .e-bigger #{&}.e-timepicker.e-popup,
-  #{if(&, '&', '*')}.e-bigger#{&}.e-timepicker.e-popup {
+  .e-bigger .e-lib.e-timepicker.e-popup,
+  #{if(&, '&', '*')}.e-bigger.e-lib.e-timepicker.e-popup {
 
     #{if(&, '&', '*')} .e-list-parent.e-ul {
       padding: $timepicker-list-bigger-padding 0;
@@ -82863,8 +82867,8 @@ $timepicker-icon-bigger-small-font-size: 18px !default;
   }
 
   //mouse small size
-  .e-small #{&}.e-timepicker.e-popup,
-  #{if(&, '&', '*')}.e-small#{&}.e-timepicker.e-popup {
+  .e-small .e-lib.e-timepicker.e-popup,
+  #{if(&, '&', '*')}.e-small.e-lib.e-timepicker.e-popup {
 
     #{if(&, '&', '*')} .e-list-parent.e-ul {
       #{if(&, '&', '*')} .e-list-item {
@@ -82886,8 +82890,8 @@ $timepicker-icon-bigger-small-font-size: 18px !default;
   }
 
   //mouse small size
-  .e-small.e-bigger #{&}.e-timepicker.e-popup,
-  #{if(&, '&', '*')}.e-small.e-bigger#{&}.e-timepicker.e-popup {
+  .e-small.e-bigger .e-lib.e-timepicker.e-popup,
+  #{if(&, '&', '*')}.e-small.e-bigger.e-lib.e-timepicker.e-popup {
 
     #{if(&, '&', '*')} .e-list-parent.e-ul {
       #{if(&, '&', '*')} .e-list-item {
@@ -82963,7 +82967,7 @@ $timepicker-icon-bigger-small-font-size: 18px !default;
     }
   }
 
-  #{&}.e-timepicker.e-popup {
+  .e-lib.e-timepicker.e-popup {
     border: $timepicker-list-border-color;
     border-radius: $timepicker-popup-border-radius;
     box-shadow: $timepicker-popup-shadow;
@@ -83003,10 +83007,10 @@ $timepicker-icon-bigger-small-font-size: 18px !default;
     }
   }
 
-  .e-small #{&}.e-timepicker.e-popup,
-  #{if(&, '&', '*')}.e-small#{&}.e-timepicker.e-popup,
-  .e-bigger.e-small #{&}.e-timepicker.e-popup,
-  #{if(&, '&', '*')}.e-bigger.e-small#{&}.e-timepicker.e-popup {
+  .e-small .e-lib.e-timepicker.e-popup,
+  #{if(&, '&', '*')}.e-small.e-lib.e-timepicker.e-popup,
+  .e-bigger.e-small .e-lib.e-timepicker.e-popup,
+  #{if(&, '&', '*')}.e-bigger.e-small.e-lib.e-timepicker.e-popup {
 
     #{if(&, '&', '*')} .e-list-parent.e-ul {
       #{if(&, '&', '*')} .e-list-item {
@@ -104314,4 +104318,10 @@ $mac-scrollbar-background: rgba(0, 0, 0, .5) !default;
       opacity: .45;
     }
   }
+}
+
+ }
+ & .e-js [class^='e-'], & .e-js [class*=' e-'] {
+     box-sizing: content-box;
+ }
 }
