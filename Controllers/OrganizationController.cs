@@ -30,7 +30,14 @@ namespace Rokono_Control.Controllers
         public IActionResult Index(string data)
         {
             using (var context = new DatabaseController(Context, Configuration))
-                ViewData["ProjectId"] = context.GetProjectByOrganization(data);
+            {
+                var projectId = context.GetProjectByOrganization(data);
+                ViewData["ProjectId"] = projectId;
+
+                if (projectId == 0)
+                    return View("Error");
+
+            }
 
             var buildData = System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString();
             ViewData["OrganizationName"] = data;
