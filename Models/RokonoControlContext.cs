@@ -12,13 +12,13 @@ namespace Rokono_Control.Models
     public partial class RokonocontrolContext : DbContext
     {
 
-        public RokonocontrolContext() 
-        { 
-        
+        public RokonocontrolContext()
+        {
+
         }
         public RokonocontrolContext(DbContextOptions<RokonocontrolContext> options) : base(options)
         {
- 
+
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -29,7 +29,6 @@ namespace Rokono_Control.Models
                 optionsBuilder.UseSqlServer(StartConfiguration.ConnectionStrings.RokonocontrolContext);
             }
         }
-
 
 
         public virtual DbSet<ApiKeys> ApiKeys { get; set; }

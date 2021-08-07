@@ -9,14 +9,15 @@
     .common-img-bg {
         background: rgb(28, 134, 200);
     }
+
     .card-control-section.basic_card_layout #weather_card.e-card {
         background-image: url('./src/card/images/weather.png');
     }
 
-    .card-control-section.basic_card_layout #weather_card.e-card .e-card-header-caption .e-card-header-title,
-    .card-control-section.basic_card_layout #weather_card.e-card .e-card-header-caption .e-card-sub-title {
-        color: white;
-    }
+        .card-control-section.basic_card_layout #weather_card.e-card .e-card-header-caption .e-card-header-title,
+        .card-control-section.basic_card_layout #weather_card.e-card .e-card-header-caption .e-card-sub-title {
+            color: white;
+        }
 
     .highcontrast .card-control-section.basic_card_layout #weather_card.e-card .e-card-header.weather_report .e-card-header-image {
         border: none;
@@ -62,27 +63,18 @@
                         <div class="e-card-header">
                             <div class="e-card-header-caption">
                                 <div class="e-card-header-title">Public access to @ProjectName</div>
-                                <div class="e-card-sub-title">Powered By Concoct Cloud | @buildNumber </div>
+                                <div class="e-card-sub-title">
+                                    Powered By Concoct Cloud | @buildNumber
+                                </div>
                             </div>
                         </div>
                         <div class="e-card-content">
                             <div id="GetAccount">
                                 <input id="loginMail" />
                             </div>
-                            <div id="Register" style="display:none;">
-                                <div class="e-card-sub-title">Login Details</div>
-                                
-                                <input id="loginMailR" />
-                                <input id="Password"  type="password"/>
-                                <br/>
-                                <div class="e-card-sub-title">Account Details</div>
-                                <hr />
-                                <input id="FirstName" />
-                                <input id="LastName" />
-                                <input id="GitUsername" />
-                            </div>
+                            
                             <div id="AuthorizeAccount" style="display:none;">
-                                <input id="PasswordLogin"  type="password" />
+                                <input id="PasswordLogin" type="password" />
                             </div>
                         </div>
                         <div class="e-card-actions">
@@ -90,12 +82,8 @@
                             <button id="initButton" class="e-btn e-outline e-primary" onclick="CheckAccountExist()">
                                 Next
                             </button>
-                            <button id="registerBtn" style="display:none;" onclick="RegisterPublic()" class="e-btn e-outline e-primary">
-                                Register
-                            </button>
-                            <button id="AuthorizeBtn" style="display:none;" onclick="RequestAccess()" class="e-btn e-outline e-primary">
-                                Request Access
-                            </button>
+                         
+                            
                             <button id="authenicateBtn" style="display:none;" onclick="Login()" class="e-btn e-outline e-primary">
                                 Login
                             </button>
@@ -107,7 +95,7 @@
         </div>
     </div>
 </div>
- 
+
 
 <script>
     var loginMail = new ej.inputs.TextBox({
@@ -124,82 +112,13 @@
 
     PasswordLogin.appendTo('#PasswordLogin');
 
-    var loginMailR = new ej.inputs.TextBox({
-        placeholder: 'Email',
-        floatLabelType: 'Auto'
-    });
-
-    loginMailR.appendTo('#loginMailR');
-    var Password = new ej.inputs.TextBox({
-        placeholder: 'Password',
-        floatLabelType: 'Auto'
-    });
-
-    Password.appendTo('#Password');
-
-
-    var FirstName = new ej.inputs.TextBox({
-        placeholder: 'First Name',
-        floatLabelType: 'Auto'
-    });
-
-    FirstName.appendTo('#FirstName');
-
-
-    var LastName = new ej.inputs.TextBox({
-        placeholder: 'Last Name',
-        floatLabelType: 'Auto'
-    });
-
-    LastName.appendTo('#LastName');
-
-    var GitUsername = new ej.inputs.TextBox({
-        placeholder: 'Git Username',
-        floatLabelType: 'Auto'
-    });
-
-    GitUsername.appendTo('#GitUsername');
-
-
     function CheckAccountExist()
     {
 
-        var incomingSprintDTO =
-        {
-            "ProjectId": @ProjectId,
-            "Phase": $("#loginMail").val()
-        }
-
-        $.ajax({
-            type: 'POST',
-            url: '/Accounts/CheckAccountExists',
-            data: JSON.stringify(incomingSprintDTO),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function(response) {
-                console.log(response);
-                if (response.existInAccounts === true && response.existInProject === false) {
-                    $("#GetAccount").hide();
-                    $("#AuthorizeAccount").show();
-                    $("#initButton").hide();
-                    $("#AuthorizeBtn").show();
-                }
-                else if (response.existInAccounts === true && response.existInProject === true) {
-                    $("#GetAccount").hide();
-                    $("#AuthorizeAccount").show();
-                    $("#initButton").hide();
-                    $("#authenicateBtn").show();
-                }
-                else {
-                    $("#GetAccount").hide();
-                    $("#initButton").hide();
-                    $("#Register").show();
-                    $("#registerBtn").show();
-                }
-            },
-            error: function(xhr, status, error) {
-             }
-        });
+        $("#GetAccount").hide();
+        $("#AuthorizeAccount").show();
+        $("#initButton").hide();
+        $("#authenicateBtn").show();
     }
 
     function Login() {
@@ -254,42 +173,5 @@
              }
         });
     }
-
-    function RegisterPublic() {
-        var incomingSprintDTO =
-        {
-            "ProjectId": @ProjectId,
-            "email": $("#loginMailR").val(),
-            "password": $("#Password").val(),
-            "FirstName": $("#FirstName").val(),
-            "LastName": $("#LastName").val(),
-            "Username": $("#GitUsername").val()
-        }
-
-        $.ajax({
-            type: 'POST',
-            url: '/Accounts/RegisterPublic',
-            data: JSON.stringify(incomingSprintDTO),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function(response) {
-                console.log(response);
-                if (response.Success) {
-                    alert("Account Created, please check your email activate the account then login!");
-                    window.location = "/home";
-                }
-
-                if (response.Error) {
-                    alert("Project public access not enabled, please contact the system administrator!");
-                    window.location = "/home";
-                }
-
-                if (response.EmailError){
-                    alert("Email is already in use. Please use different email");
-                }
-            },
-            error: function(xhr, status, error) {
-             }
-        });
-    }
+ 
 </script>

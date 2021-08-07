@@ -151,7 +151,7 @@ namespace Rokono_Control
         {
             try
             {
-                return x.Repository.RepositoryLocation.Split("/").ToList().LastOrDefault();
+                return x.Repository.RepositoryLocation != null ? x.Repository.RepositoryLocation.Split("/").ToList().LastOrDefault() : "";
 
             }
             catch (Exception ex)

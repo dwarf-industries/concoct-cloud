@@ -63,6 +63,20 @@ namespace Rokono_Control.DatabaseHandlers
             return tableNames;
         }
 
+        internal int GetProjectByOrganization(string data)
+        {
+            var project = Context.Projects.FirstOrDefault(x => x.OrganizationName == data);
+            if (project == null)
+                return 0;
+
+            return project.Id;
+        }
+
+        internal Projects GetOrganizationName(int projectId)
+        {
+            return Context.Projects.FirstOrDefault(x => x.Id == projectId);
+        }
+
         internal string GetPremadeName(int id) => Context.PremadeWidgets.FirstOrDefault(x => x.Id == id).ViewComponentName;
 
         internal List<BindingQueryProperty> GetTableProperties(string phase)

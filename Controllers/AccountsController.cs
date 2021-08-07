@@ -48,6 +48,14 @@
 
         public IActionResult ProjectSignup(int projectId)
         {
+            var buildData = System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString();
+            ViewData["BuildVersion"] = buildData;
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                var project = context.GetOrganizationName(projectId);
+                if(project != null)
+                    ViewData["OrganizationName"] = project.OrganizationName;
+            }
             ViewData["ProjectId"] = projectId;
             return View();
         }

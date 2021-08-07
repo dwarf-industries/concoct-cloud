@@ -97,7 +97,9 @@
                 endpoint.MapHub<MessageHub>("/messageHub");
                 endpoint.MapRazorPages();
                 endpoint.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
-                
+                endpoint.MapControllerRoute(name: "Login",
+                pattern: "/{*data}",
+                defaults: new { controller = "Organization", action = "Index" });
             });
 
        }
