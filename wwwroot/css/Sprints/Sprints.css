@@ -246,7 +246,7 @@ e-kanban .e-card .e-text .col-3 .status:before {
     content: '\e814';
     font-size: 26px;
     margin-right: 8px;
-    color: #ff5790;
+    color: #ff7979;
     cursor: pointer;
 }
 

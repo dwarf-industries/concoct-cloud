@@ -153,7 +153,7 @@
         }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-
+<script src="~/js/API/DataHandlers.js"></script>
 <script type="text/javascript">
     var signupPolicy = false;
     var kanbanObj;
@@ -313,11 +313,6 @@
 
         });
 
-    Date.prototype.addDays = function (days) {
-        var date = new Date(this.valueOf());
-        date.setDate(date.getDate() + days);
-        return date;
-    }
 
     function InitChart(data, burndownData, scopeChange = []) {
         var series1 = [];
@@ -328,9 +323,33 @@
         var d1 = new Date("2/7/2021");
         var d2 = new Date("2/8/2021");
         var time = 0;
+        var closedData = {};
+         
+        var totalHoursInSprint = 0;
 
         data.forEach(x => {
-            time += parseInt(x.remaining);
+            if (closedData[x.closedAt] === undefined)
+                closedData[x.closedAt] = 0;
+            if (!isNaN(parseInt(x.remaining))) {
+                totalHoursInSprint += parseInt(x.remaining);
+                if (x.status !== "Done") {
+                    if (parseInt(x.complete) == "0") {
+                        closedData[x.closedAt] += parseInt(x.remaining);
+                    }
+                    else
+                    {
+                        closedData[x.closedAt] += parseInt(x.remaining) - parseInt(x.complete);
+                    }
+                } 
+            }
+
+            if (x.status === "Done")
+            {
+                if (parseInt(x.complete) == "0")
+                    closedData[x.closedAt] -= parseInt(x.remaining);
+                else
+                    closedData[x.closedAt] -= parseInt(x.complete);
+            }
         });
 
         var currentDate = new Date();
@@ -349,21 +368,41 @@
 
         Chart.defaults.global.defaultFontFamily = "Arial";
         Chart.defaults.global.defaultFontSize = 14;
+        // To calculate the time difference of two dates
+        debugger
+        var Difference_In_Time = endDate.getTime() - startDate.getTime();
 
-        const totalHoursInSprint = burndownData[0];
-        const idealHoursPerDay = totalHoursInSprint / 9;
+        // To calculate the no. of days between two dates
+        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+        const idealHoursPerDay = totalHoursInSprint / (Math.round(Difference_In_Days)+1);
         i = 0;
 
         var dateDays = [];
-
-        debugger
-        var day = 1;
-        while (startDate < endDate) {
-            dateDays.push("Day "+day);
-            startDate = startDate.addDays(1);
-            day++;
-        }
         
+        burndownData = [];
+        var day = 0;
+        var prev = totalHoursInSprint;
+        var IdeaTrendData = [];
+         
+        for (day; day < Math.round(Difference_In_Days); day++) {
+            var cDate = formatDate(startDate, "d/MM/yyyy");
+            var point = closedData[cDate];
+
+            if (point !== undefined) {
+                prev = point;
+                burndownData.push(prev);
+            }
+            else
+                burndownData.push(prev);
+
+            IdeaTrendData.push(Math.round(totalHoursInSprint - (idealHoursPerDay * day))); // 1
+
+            dateDays.push("Day " + day);
+            startDate = startDate.addDays(1);
+        }
+
+ 
         var speedData = {
             labels: dateDays,
             datasets: [
@@ -382,18 +421,7 @@
                     lineTension: 0,
                     borderDash: [5, 5],
                     fill: false,
-                    data: [
-                        Math.round(totalHoursInSprint - (idealHoursPerDay * i++) + sumArrayUpTo(scopeChange, 0)), // 1
-                        Math.round(totalHoursInSprint - (idealHoursPerDay * i++) + sumArrayUpTo(scopeChange, 1)), // 2
-                        Math.round(totalHoursInSprint - (idealHoursPerDay * i++) + sumArrayUpTo(scopeChange, 2)), // 3
-                        Math.round(totalHoursInSprint - (idealHoursPerDay * i++) + sumArrayUpTo(scopeChange, 3)), // 4
-                        Math.round(totalHoursInSprint - (idealHoursPerDay * i++) + sumArrayUpTo(scopeChange, 4)), // 5
-                        Math.round(totalHoursInSprint - (idealHoursPerDay * i++) + sumArrayUpTo(scopeChange, 5)), // 6
-                        Math.round(totalHoursInSprint - (idealHoursPerDay * i++) + sumArrayUpTo(scopeChange, 6)), // 7
-                        Math.round(totalHoursInSprint - (idealHoursPerDay * i++) + sumArrayUpTo(scopeChange, 7)), // 8
-                        Math.round(totalHoursInSprint - (idealHoursPerDay * i++) + sumArrayUpTo(scopeChange, 8)), // 9
-                        Math.round(totalHoursInSprint - (idealHoursPerDay * i++) + sumArrayUpTo(scopeChange, 9))  // 10
-                    ]
+                    data: IdeaTrendData
                 },
             ]
         };

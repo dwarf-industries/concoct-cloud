@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace RokonoControl.Models
@@ -17,6 +18,7 @@ namespace RokonoControl.Models
         public string Title { get; set; }
         public string Complete {get; set;}
         public string Remaining {get; set;}
-     //   public List<RelatedItems> Children { get; set; }
+        public string ClosedAt { get; set; }
+        //   public List<RelatedItems> Children { get; set; }
     }
 }

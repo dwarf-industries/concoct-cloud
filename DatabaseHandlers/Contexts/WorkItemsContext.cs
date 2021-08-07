@@ -290,6 +290,30 @@ namespace Platform.DatabaseHandlers.Contexts
         {
             var newBoardAssociation = Context.AssociatedProjectBoards.Include(x => x.Board).FirstOrDefault(x => x.ProjectId == card.ProjectId
                                                                                       && x.Board.BoardName == card.Board);
+            if(newBoardAssociation.Board.BoardType == 4)
+            {
+                var workItem = Context.WorkItem.FirstOrDefault(x => x.Id == card.CardId);
+                if(workItem.Compleated == string.Empty)
+                {
+                    workItem.Compleated = workItem.OriginEstitame;
+                    workItem.Remaining = "0";
+                   
+                }
+                workItem.ClosedDated = DateTime.Now;
+                Context.Attach(workItem);
+                Context.Update(workItem);
+                Context.SaveChanges();
+            }
+            else
+            {
+                var workItem = Context.WorkItem.FirstOrDefault(x => x.Id == card.CardId);
+                workItem.Compleated = "";
+                workItem.Remaining = workItem.OriginEstitame;
+                workItem.ClosedDated = null;
+                Context.Attach(workItem);
+                Context.Update(workItem);
+                Context.SaveChanges();
+            }
             var currentAssociation = Context.AssociatedBoardWorkItems.FirstOrDefault(x => x.WorkItemId == card.CardId);
 
             currentAssociation.BoardId = newBoardAssociation.Board.Id;
@@ -462,11 +486,11 @@ namespace Platform.DatabaseHandlers.Contexts
                     if(!string.IsNullOrEmpty(task.WorkItemChild.Compleated) && task.WorkItemChild.Compleated != "0" && board.BoardName != "Done")
                         complete += float.Parse(task.WorkItemChild.Compleated);
 
-                    if(!string.IsNullOrEmpty(task.WorkItemChild.Remaining) && task.WorkItemChild.Remaining != "0" 
+                    if (!string.IsNullOrEmpty(task.WorkItemChild.Remaining) && task.WorkItemChild.Remaining != "0"
                         && !string.IsNullOrEmpty(task.WorkItemChild.Compleated) && task.WorkItemChild.Compleated != "0" && board.BoardName != "Done")
-                        remaining +=  (float.Parse(task.WorkItemChild.Remaining) - float.Parse(task.WorkItemChild.Compleated));
+                        remaining += (float.Parse(task.WorkItemChild.Remaining) - float.Parse(task.WorkItemChild.Compleated));
 
-                    if(!string.IsNullOrEmpty(task.WorkItemChild.Remaining) && task.WorkItemChild.Remaining != "0" && board.BoardName != "Done")
+                    if (!string.IsNullOrEmpty(task.WorkItemChild.Remaining) && task.WorkItemChild.Remaining != "0" && board.BoardName != "Done")
                         remaining +=  float.Parse(task.WorkItemChild.Remaining);
 
                     var activeBoard = string.Empty;
@@ -487,6 +511,7 @@ namespace Platform.DatabaseHandlers.Contexts
                         Status = activeBoard,
                         Complete = complete.ToString(),
                         Remaining = remaining.ToString(),
+                        ClosedAt = task.WorkItemChild.ClosedDated != null ? task.WorkItemChild.ClosedDated.Value.ToShortDateString() :  DateTime.Now.ToShortDateString(),
                         AssgignedAccount = task.WorkItemChild.AssignedAccountNavigation != null ? task.WorkItemChild.AssignedAccountNavigation.GitUsername : "Unassigned"
                     });
                 });
