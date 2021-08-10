@@ -11,7 +11,6 @@ namespace Rokono_Control.Models
 {
     public partial class RokonocontrolContext : DbContext
     {
-
         public RokonocontrolContext()
         {
 
@@ -707,6 +706,8 @@ namespace Rokono_Control.Models
 
             modelBuilder.Entity<Documentation>(entity =>
             {
+                entity.Property(e => e.Apikey).HasColumnName("APIKey");
+
                 entity.HasOne(d => d.Project)
                     .WithMany(p => p.Documentation)
                     .HasForeignKey(d => d.ProjectId)

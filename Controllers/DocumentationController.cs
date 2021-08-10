@@ -72,6 +72,49 @@ namespace Platform.Controllers
 
 
         [HttpPost]
+        public List<dynamic> GetProjectDocumentation([FromBody] IncomingIdRequest request)
+        {
+
+            var eResult = new List<dynamic>();
+            var result = new List<OutgoingChatItem>();
+
+            using (var context = new DocumentationContext(Context, Configuration))
+            {
+                var getDocumentationidByKey = context.GetProjectIdByDocumentationKey(request.Phase);
+                if(getDocumentationidByKey == 0)
+                {
+                    dynamic errorModel = new System.Dynamic.ExpandoObject();
+                    errorModel.Error = "Not authorized exception, please check your API key!";
+                    eResult.Add(errorModel);
+                    return eResult;
+                }
+
+                result = GetNavigation(request, context);
+
+                result.ForEach(x =>
+                {
+                    dynamic cResult = new System.Dynamic.ExpandoObject();
+                    var vResult = new List<dynamic>();
+
+                    cResult.CategoryName = x.NodeText;
+                    cResult.ParentId = "";
+
+                    x.NodeChild.ForEach(y =>
+                    {
+                        var bResult = new System.Dynamic.ExpandoObject();
+                        var getPage = context.GetDocumentationPage(y.InternalId);
+                        vResult.Add(bResult);
+                    });
+                    cResult.PageContents = vResult;
+                    eResult.Add(cResult);
+                });
+
+            }
+            return eResult;
+        }
+
+
+        [HttpPost]
         [Authorize (Roles = "ChatAdministrator")]
 //        [ValidateAntiForgeryToken]
         public List<OutgoingChatItem> AddNewCategoryField([FromBody] IncomingIdRequest request)

@@ -86,6 +86,17 @@ namespace Platform.DatabaseHandlers.Contexts
             Context.DocumentationCategoryField.Remove(category);
             Context.SaveChanges();       
         }
+
+        internal int GetProjectIdByDocumentationKey(string phase)
+        {
+            var getDocObject = Context.Documentation.FirstOrDefault(x=>x.Apikey == phase);
+
+            if(getDocObject == null)
+                return 0;
+
+            return getDocObject.ProjectId.Value;
+        }
+
         internal string GetDocumentationCategoryName(int id)
         {
             var result = Context.DocumentationCategoryField.FirstOrDefault(x=>x.Id == id);

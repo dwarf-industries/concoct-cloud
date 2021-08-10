@@ -15,6 +15,7 @@ namespace Rokono_Control.Models
 
         public int Id { get; set; }
         public int? ProjectId { get; set; }
+        public string Apikey { get; set; }
 
         public virtual Projects Project { get; set; }
         public virtual ICollection<DocumentationCategory> DocumentationCategory { get; set; }
