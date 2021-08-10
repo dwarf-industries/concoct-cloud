@@ -6,38 +6,43 @@
 
     public class Logger : ICustomLogger
     {
-        void ICustomLogger.Error(string message)
+        void ICustomLogger.Error(string message, string errorCode)
         {
-            var logData = $"{DateTime.Now.ToString()}: {message}";
-            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine($"{DateTime.Now.ToString()}: [Error => {errorCode}]");
+            Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(logData);
+            Console.WriteLine(message);
             Console.ResetColor();
         }
 
         void ICustomLogger.Info(string message)
         {
-            var logData = $"{DateTime.Now.ToString()}: {message}";
-            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"{DateTime.Now.ToString()}: [Information]");
+            Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(logData);
+            Console.WriteLine(message);
             Console.ResetColor();
         }
 
         void ICustomLogger.Message(string message)
         {
-            var logData = $"{DateTime.Now.ToString()}: {message}"; 
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine($"{DateTime.Now.ToString()}: [Message]");
+            Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(logData);
+            Console.WriteLine(message);
             Console.ResetColor();
         }
 
-        void ICustomLogger.Warning(string message)
+        void ICustomLogger.Warning(string message, string warningCode)
         {
-            var logData = $"{DateTime.Now.ToString()}: {message}";
-            Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{DateTime.Now.ToString()}: [Warning => {warningCode}]");
+            Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(logData);
+            Console.WriteLine(message);
             Console.ResetColor();
         }
 

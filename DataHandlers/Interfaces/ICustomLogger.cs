@@ -8,8 +8,8 @@ namespace Rokono_Control.DataHandlers.Interfaces
     public interface ICustomLogger
     {
         void Message(string message);
-        void Error(string message);
-        void Warning(string message);
+        void Error(string message, string errorCode);
+        void Warning(string message, string warningCode);
         void Info(string message);
     }
 }

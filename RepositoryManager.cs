@@ -125,7 +125,7 @@ namespace Rokono_Control
                     var projectPath = Path.Combine(Program.Configuration.LocalRepo, os == "win" ? x.Repository.FolderPath : x.Repository.LinuxFolderPath);
                     if (!Directory.Exists(projectPath))
                     {
-                        Program.Logger.Warning($"Directory \"{projectPath}\" doesn't exist");
+                        Program.Logger.Warning($"Directory \"{projectPath}\" doesn't exist", "991");
                         Program.Logger.Info($"Creating Folder for Project {x.ProjectName}");
                         Directory.CreateDirectory(projectPath);
                         CommandOutput(Os, $"mkdir {projectPath}", Program.Configuration.LocalRepo);
@@ -141,7 +141,7 @@ namespace Rokono_Control
                 }
                 catch (Exception ex)
                 {
-                    Program.Logger.Warning(ex.ToString());
+                    Program.Logger.Warning(ex.ToString(), "992");
                 }
                
             });
@@ -156,8 +156,7 @@ namespace Rokono_Control
             }
             catch (Exception ex)
             {
-                Program.Logger.Error($"Exception thrown while reading RepositoryLocation, repository for project {x.ProjectName} Doesn't exist or could not be found.!!!");
-                Program.Logger.Error(ex.ToString());
+                Program.Logger.Error($"Exception thrown while reading RepositoryLocation, repository for project {x.ProjectName} Doesn't exist or could not be found.!!!/r/n {ex.ToString()}", "993");
                 return null;
             }
         }
