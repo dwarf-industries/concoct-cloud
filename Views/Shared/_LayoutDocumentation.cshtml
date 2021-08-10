@@ -31,7 +31,7 @@
         padding:0px;
     }
     </style>
-     <div class="stackblitz-container material">
+    <div class="stackblitz-container material">
         <div class="control-section">
 
             <!-- sample level element  -->
@@ -44,14 +44,14 @@
                         <li class="float-left header-style nav-pane">
                             <b>Rokono Control</b>
                         </li>
-                     
+
                         <li class="header-style float-right support border-left" onclick="ReturnToCaller()"><b>Return</b></li>
-                       
-                        
+
+
                     </ul>
                 </div>
                 <!-- end of header-section -->
-                <div id="PlatformElement" >
+                <div id="PlatformElement">
                     <!-- sidebar element declaration -->
                     <aside id="sidebar-documentation" style="overflow-x:hidden;">
                         <div class="main-menu">
@@ -80,12 +80,13 @@
                         </div>
                     </div>
                 </div>
-           
+
 
             </div>
 
 
         </div>
+        @await Component.InvokeAsync("Notifications")
 
     </div>
 

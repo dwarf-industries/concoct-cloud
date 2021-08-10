@@ -22,9 +22,11 @@
 		<!-- website content -->
 		<div class="content">
 			<!-- content container -->
-			<div class="container-fluid">
-				@RenderBody();
-			</div>
+            <div class="container-fluid">
+                @RenderBody();
+                @await Component.InvokeAsync("Notifications")
+
+            </div>
 		</div>
 	</div>
   

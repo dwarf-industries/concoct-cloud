@@ -36,7 +36,7 @@
 
                         <li class="header-style float-right support border-left" onclick="CallUrl(https://platform.concoctcloud.com/OutboundDetails/RelatedProject?projectId=5012)"><b>Support</b></li>
                         <li class="header-style float-right support border-left" onclick="ChatToggle(1)"><b>Open Chat</b></li>
-               
+
                         <li class="header-style float-right support border-left" onclick="ChangeTheme()">
                             <label for="ChangeTheme" id="themeLabel">Light</label>
                             <input id="ChangeTheme" type="checkbox" />
@@ -83,6 +83,7 @@
                     @await Component.InvokeAsync("ChatSidebar", @ProjectId)
 
                 </div>
+                @await Component.InvokeAsync("Notifications")
 
             </div>
 
