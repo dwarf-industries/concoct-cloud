@@ -65,7 +65,7 @@ namespace Rokono_Control.DatabaseHandlers
 
         internal int GetProjectByOrganization(string data)
         {
-            var project = Context.Projects.FirstOrDefault(x => x.OrganizationName == data);
+            var project = Context.Projects.FirstOrDefault(x => x.OrganizationName.ToLower() == data.ToLower()); ;
             if (project == null)
                 return 0;
 
