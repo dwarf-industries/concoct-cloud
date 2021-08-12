@@ -80,8 +80,9 @@ Please read [CONTRIBUTING.md](https://github.com/dwarf-industries/concoct-cloud/
 For a list of planned features and tasks you can view the project public board at:
 
 
-[Public Taskboard] (https://portal.concoctcloud.com/Boards/PublicBoard?projectId=5012&iteration=1005&person=0) 
-
+[Public Taskboard] <iframe src="https://portal.concoctcloud.com/Boards/PublicBoard?projectId=5028&iteration=1005&person=0" 
+    width="100%" height="400" style="border:none;">
+    </iframe>
 
 ## Authors
 
