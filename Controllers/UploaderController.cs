@@ -3,11 +3,14 @@ namespace Platform.Controllers
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Net;
+    using System.Net.Http;
     using System.Net.Http.Headers;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Mvc;
+    using Platform.DataHandlers;
 
     public partial class UploaderController : Controller
     {
@@ -16,6 +19,7 @@ namespace Platform.Controllers
         {
             this.hostingEnv = env;
         }
+
         [AcceptVerbs("Post")]
         public IActionResult Save(IList<IFormFile> UploadFiles)
         {
@@ -86,5 +90,14 @@ namespace Platform.Controllers
         {
             return View();
         }
+
+        public FileContentResult Download(string currentFile)
+        {
+            var file = FileProcessor.GetFile(currentFile, hostingEnv.WebRootPath);
+             
+            return File(file.Item1, "application/octet-stream", currentFile);
+        }
     }
+
+ 
 }

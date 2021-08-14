@@ -667,31 +667,33 @@
                                 {
                                     if (currentfile.FileType == 1)
                                     {
-                    <div class="col-md-4">
-                        <div class="row">
-                            <img src="~/Files/Uploads/@currentfile.FileLocation" style="width: 100%;height: 153px;" />
-                        </div>
-                        <p style="text-align: center;">@currentfile.FileLocation</p>
-                        <div class="row" style="text-align: center;">
-                            <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary">
-                                Download
-                            </button>
-                        </div>
-                    </div> }
-                else
-                {
-<div class="col-md-4">
-    <div class="row" style="text-align: center;">
-        <span class="FileIcon"></span>
-    </div>
-    <p style="text-align: center;">@currentfile.FileLocation</p>
-    <div class="row" style="text-align: center;">
-        <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary">
-            Download
-        </button>
-    </div>
-</div>}
-}
+                                        <div class="col-md-4">
+                                            <div class="row">
+                                                <img src="~/Files/Uploads/@currentfile.FileLocation" style="width: 100%;height: 153px;" />
+                                            </div>
+                                            <p style="text-align: center;">@currentfile.FileLocation</p>
+                                            <div class="row" style="text-align: center;">
+                                                <button href="/Uploader/Download?currentFile=@currentfile.FileLocation" class="btn btn-primary e-control e-btn e-lib e-outline e-primary">
+                                                    Download
+                                                </button>
+                                            </div>
+                                        </div> 
+                                    }
+                                    else
+                                    {
+                                    <div class="col-md-4">
+                                        <div class="row" style="text-align: center;">
+                                            <span class="FileIcon"></span>
+                                        </div>
+                                        <p style="text-align: center;">@currentfile.FileLocation</p>
+                                        <div class="row" style="text-align: center;">
+                                            <a href="/Uploader/Download?currentFile=@currentfile.FileLocation" class="btn btn-primary e-control e-btn e-lib e-outline e-primary">
+                                                Download
+                                            </a>
+                                        </div>
+                                    </div>
+                                    }
+                                 }
 
                             </div>
 
