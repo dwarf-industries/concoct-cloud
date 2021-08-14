@@ -23,7 +23,7 @@
 <div id="spinner">
     <div id="loader"></div>
 </div>
-<div id="Content" hidden>
+<div id="Content" onchange="ContentChanged" hidden>
 
     <div class="main-card mb-12 card">
         <div class="card-body text-center">
@@ -157,6 +157,7 @@
 <script type="text/javascript">
     var signupPolicy = false;
     var kanbanObj;
+    var FocusId;
     var startDate = new Date("@startDate");
     var endDate = new Date("@endDate");
     var loaded = false;
@@ -206,7 +207,7 @@
             });
         dialogIterations.appendTo('#dialogIterations');
 
-
+ 
         ej.base.enableRipple(true);
         var selectedChanging;
         var selectedRowData;
@@ -269,11 +270,14 @@
 
 
             chatConnectionBuilder.on("CardStatusUpdated", (data) => {
-                IncomignBoardUpdate();
+                var id = data.split('"');
+                 
+                IncomignBoardUpdate(id[1]);
+             
             });
-            IncomignBoardUpdate();
+            IncomignBoardUpdate(null);
 
-            function IncomignBoardUpdate() {
+            function  IncomignBoardUpdate(item) {
                 $.ajax({
                     type: 'POST',
                     url: '/Boards/GetSprints',
@@ -281,7 +285,7 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (response) {
-                        GenerateKaban(response);
+                        return GenerateKaban(response, item);
                     },
                     error: function (xhr, status, error) {
                     }
@@ -369,7 +373,7 @@
         Chart.defaults.global.defaultFontFamily = "Arial";
         Chart.defaults.global.defaultFontSize = 14;
         // To calculate the time difference of two dates
-        debugger
+         
         var Difference_In_Time = endDate.getTime() - startDate.getTime();
 
         // To calculate the no. of days between two dates
@@ -451,7 +455,15 @@
             options: chartOptions
         });
     }
-    function GenerateKaban(response)
+    setInterval(function () {
+        var selector = '[data-id="Task ' + parseInt(FocusId) + '"]';
+        if (document.querySelector(selector) !== null) {
+            document.querySelector(selector).focus();
+            window.clearInterval(timerVariable)
+            FocusId = null;
+         }
+    }, 3000);
+    async function GenerateKaban(response,item)
     {
 
         var data = ej.base.extend([], response, null, true); // To maintain the property changes, extend the object.
@@ -460,9 +472,10 @@
 
         // $("#Kanban").ejKanban("dataSource", response.d.d);
             kanbanObj.dataSource = data;
-            kanbanObj.refresh();
-
-            return;
+            await kanbanObj.refresh();
+            FocusId = item;
+       
+            return 200;
         }
 
         $("#KanbanHolder").html("<div id=\"Kanban\"></div>");
@@ -474,6 +487,7 @@
         actionComplete: CardDropCheck,
         // actionBegin: SwimlineBegin,
         cardDoubleClick: CardSelected,
+        created:KanbanCreated,
         dialogOpen: dialogOpen,
         keyField: 'status',
         enableTooltip: true,
@@ -496,13 +510,30 @@
             },
         });
 
-        loaded = true;
         kanbanObj.appendTo('#Kanban');
-        InitChart(response, [200, 160, 160, 140, 90, 90, 80], // burndown data
-        [0, 0, 0, 0, 0, 32, 0, 0, 0, 0] );
-        ShowContent();
+        if (!loaded) {
+            InitChart(response, [200, 160, 160, 140, 90, 90, 80], // burndown data
+                [0, 0, 0, 0, 0, 32, 0, 0, 0, 0]);
+            ShowContent();
+        }
+        loaded = true;
+
+        return 200;
     }
 
+ 
+    function FocusCard(item) {
+         
+        var selector = '[data-id="Task ' + parseInt(item) + '"]';
+        if (document.querySelector(selector) !== null) {
+            document.querySelector(selector).focus();
+            window.clearInterval(timerVariable)
+            clearInterval(refReshCallback);
+        }
+        else {
+            setInterval(FocusCard(item), 10000);
+        }
+    }
     function sumArrayUpTo(arrData, index) {
         var total = 0;
         for (var i = 0; i <= index; i++) {
@@ -523,9 +554,16 @@
         window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId+"&returnUrl="+window.location.href;
 
     }
+
+    function KanbanCreated(args) {
+
+         
+    }
+
     function CardDropCheck(args)
     {
-            if(args.requestType == "cardChanged" && card)
+        
+         if(args.requestType == "cardChanged" && card)
         {
             card.Board = args.changedRecords[0].status;
             ValidateCardChanged();

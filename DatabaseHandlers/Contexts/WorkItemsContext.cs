@@ -325,7 +325,7 @@ namespace Platform.DatabaseHandlers.Contexts
 
             reciverData.ForEach(x =>
             {
-                MessageHub.SendCardDetailChange(messageContext, x, null);
+                MessageHub.SendCardDetailChange(messageContext, x, card.CardId.ToString());
             });
 
         }

@@ -88,7 +88,7 @@ namespace Platform.Hubs
                         JsonConvert.SerializeObject(notification));
         }
 
-        public static void SendCardDetailChange(IHubContext<MessageHub> hubContext, HubMappedMembers reciverData, BindingCards cardData)
+        public static void SendCardDetailChange(IHubContext<MessageHub> hubContext, HubMappedMembers reciverData, string cardData)
         {
             if (reciverData != null)
                 hubContext.Clients

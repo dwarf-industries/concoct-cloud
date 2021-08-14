@@ -316,7 +316,7 @@ namespace RokonoControl.Controllers
 
             reciverData.ForEach(x =>
             {
-                MessageHub.SendCardDetailChange(MessageContext, x, null);
+                MessageHub.SendCardDetailChange(MessageContext, x, card.CardId);
             });
 
             return true;
