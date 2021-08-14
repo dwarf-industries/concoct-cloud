@@ -1,7 +1,9 @@
+using System;
 using System.Linq;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Platform.DatabaseHandlers.Contexts;
 using Platform.DataHandlers.Interfaces;
-using Rokono_Control.DatabaseHandlers;
 using Rokono_Control.Models;
 
 namespace Platform.DataHandlers
@@ -48,6 +50,11 @@ namespace Platform.DataHandlers
             }
 
             return currentUser;
+        }
+
+        internal async void SignOut(HttpContext context)
+        {
+            await context.SignOutAsync();
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Rokono_Control.Controllers
         IConfiguration Configuration;
         AutherizationManager AutherizationManager { get; set; }
         private int UserId { get; set; }
+        HttpContext HttpContext { get; set; }
 
         public OrganizationController(RokonocontrolContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
@@ -25,6 +26,7 @@ namespace Rokono_Control.Controllers
             Configuration = config;
             AutherizationManager = (AutherizationManager)autherizationManager;
             UserId = AutherizationManager.GetCurrentUser(UserId, httpContextAccessor.HttpContext.Request);
+            HttpContext = httpContextAccessor.HttpContext;
         }
 
         public IActionResult Index(string data)
@@ -33,6 +35,7 @@ namespace Rokono_Control.Controllers
             {
                 var projectId = context.GetProjectByOrganization(data);
                 ViewData["ProjectId"] = projectId;
+                AutherizationManager.SignOut(HttpContext);
 
                 if (projectId == 0)
                     return View("Error");
