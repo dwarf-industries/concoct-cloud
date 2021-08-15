@@ -6,6 +6,7 @@ namespace Platform.DatabaseHandlers.Contexts
     using System.Text;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
+    using Platform.DataHandlers;
     using Platform.Hubs;
     using Platform.Models;
     using Rokono_Control;
@@ -242,6 +243,15 @@ namespace Platform.DatabaseHandlers.Contexts
             Context.Attach(currentCard);
             Context.Update(currentCard);
             Context.SaveChanges();
+
+            var getProject = Context.AssociatedBoardWorkItems.FirstOrDefault(x => x.WorkItemId == currentCard.Id).ProjectId;
+            var getUser = Context.UserAccounts.FirstOrDefault(x => x.Id == currentCard.AssignedAccount);
+            var getProjectDetails = Context.Projects.FirstOrDefault(x => x.Id == getProject);
+            var receivers = new List<UserAccounts>();
+            receivers.Add(getUser);
+            using (var emailContext = new NotificationHandler(Configuration))
+                emailContext.GenerateNewWorkItemNotification(currentCard, getUser, getProjectDetails.ProjectName, receivers, $"Concoct Cloud work assigned - {currentCard.Id}");
+
         }
         public WorkItemIterations AssignProjectDefaultIterations(int projectId)
         {
@@ -327,6 +337,15 @@ namespace Platform.DatabaseHandlers.Contexts
             {
                 MessageHub.SendCardDetailChange(messageContext, x, card.CardId.ToString());
             });
+
+            var getUpdated = Context.WorkItem.FirstOrDefault(x => x.Id == card.CardId);
+            var getUser = Context.UserAccounts.FirstOrDefault(x => x.Id == getUpdated.AssignedAccount);
+            var getProjectDetails = Context.Projects.FirstOrDefault(x => x.Id == card.ProjectId);
+            var receivers = new List<UserAccounts>();
+            receivers.Add(getUser);
+            using (var context = new NotificationHandler(Configuration))
+                context.GenerateNewWorkItemNotification(getUpdated, getUser, getProjectDetails.ProjectName, receivers, $"Concoct Cloud work moved - {getUpdated.Id}");
+
 
         }
         internal WorkItem GetWorkItemById(int parse)
@@ -629,11 +648,33 @@ namespace Platform.DatabaseHandlers.Contexts
         {
             return Context.WorkItem.FirstOrDefault(x=>x.Title == title && x.WorkItemTypeId == 7);
         }
-        internal bool UpdateWorkItem(IncomingWorkItem currentItem) => WorkItemHadler.UpdateWorkItem(currentItem, Context);
+        internal bool UpdateWorkItem(IncomingWorkItem currentItem)
+        {
+
+            var result = WorkItemHadler.UpdateWorkItem(currentItem, Context);
+            var getUpdated = Context.WorkItem.FirstOrDefault(x => x.Id == currentItem.WorkItemId);
+            var getUser = Context.UserAccounts.FirstOrDefault(x => x.Id == getUpdated.AssignedAccount);
+            var getProjectDetails = Context.Projects.FirstOrDefault(x => x.Id == currentItem.ProjectId);
+            var receivers = new List<UserAccounts>();
+            receivers.Add(getUser);
+            using (var context = new NotificationHandler(Configuration))
+                context.GenerateNewWorkItemNotification(getUpdated, getUser, getProjectDetails.ProjectName, receivers, $"Concoct Cloud work item updated - {getUpdated.Id}");
+
+            return result;
+
+        }
         internal OutgoingJsonData AddNewWorkItem(IncomingWorkItem currentItem,int userId)
         {
             var result = WorkItemHadler.AddNewWorkItem(currentItem, Context, Configuration, userId);
-            if(result)
+            var getUpdated = Context.WorkItem.FirstOrDefault(x => x.Id == result.Id);
+            var getUser = Context.UserAccounts.FirstOrDefault(x => x.Id == getUpdated.AssignedAccount);
+            var getProjectDetails = Context.Projects.FirstOrDefault(x => x.Id == currentItem.ProjectId);
+            var receivers = new List<UserAccounts>();
+            receivers.Add(getUser);
+            using (var context = new NotificationHandler(Configuration))
+                context.GenerateNewWorkItemNotification(getUpdated, getUser, getProjectDetails.ProjectName, receivers, $"Concoct Cloud work item created - {getUpdated.Id}");
+
+            if (result != null)
                 return new OutgoingJsonData{ Data = "true"};
             else
                 return new OutgoingJsonData{ Data = "false"};

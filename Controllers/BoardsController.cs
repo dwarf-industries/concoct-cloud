@@ -306,8 +306,9 @@ namespace RokonoControl.Controllers
                 var getId = card.CardId.Split(" ");
                 var parse = int.Parse(getId[1]);
                 workItem = context.GetWorkItemById(parse);
+
             }
-            using(var context = new UsersContext(Context,Configuration))
+            using (var context = new UsersContext(Context,Configuration))
                 getUserByName = context.GetUserAccountByName(card.Name);
             using (var context = new NotificationContext(Context,Configuration))
                 context.AddNewUserNotification(1,workItem,getUserByName.Id);
@@ -319,6 +320,7 @@ namespace RokonoControl.Controllers
                 MessageHub.SendCardDetailChange(MessageContext, x, card.CardId);
             });
 
+           
             return true;
         }
 

@@ -221,7 +221,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
         }
 
 
-        public static bool AddNewWorkItem (IncomingWorkItem currentItem, RokonocontrolContext Context,IConfiguration configuration, int userId)
+        public static WorkItem AddNewWorkItem (IncomingWorkItem currentItem, RokonocontrolContext Context,IConfiguration configuration, int userId)
         {
             var currentUser = "Unassigned";
 
@@ -449,7 +449,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                     Context.SaveChanges();
                 });
 
-            return true;
+            return databaseItem;
         }
     }
 }
