@@ -9,6 +9,7 @@ namespace Platform.Controllers
     using Platform.DataHandlers;
     using Platform.DataHandlers.Interfaces;
     using Platform.Models;
+    using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
     public class DocumentationController : Controller
     {
@@ -40,6 +41,31 @@ namespace Platform.Controllers
                 ViewData["UserRights"] = context.GetUserRights(UserId,Id);
             
             return View();
+        }
+
+        public IActionResult Organization(string Id)
+        {
+            var projectId = default(int);
+            using (var context = new DatabaseController(Context, Configuration))
+                projectId = context.GetProjectByOrganization(Id);
+
+            if(projectId == 0)
+                return View("Error");
+
+            ViewData["ProjectId"] = projectId;
+
+            if (UserId == 0)
+            {
+                var canView = default(bool);
+                using (var context = new DocumentationContext(Context, Configuration))
+                    canView = context.CheckDocumentationPublicAccess(projectId);
+                if (!canView)
+                    return View("Error");
+            }
+            using (var context = new UsersContext(Context, Configuration))
+                ViewData["UserRights"] = context.GetUserRights(UserId, projectId);
+
+            return View("~/Views/Documentation/Index.cshtml");
         }
 
         [HttpPost]

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
@@ -22,7 +23,7 @@ namespace Rokono_Control
         public static string ServerOS { get; set; }
         public static List<ProjectBranches> ProjectBranches { get; set; }
         public static List<(string, List<(string, string, string)>)> AccountEditorPages { get; set; }
-
+        private static List<string> ActiveUniqueIds { get; set; }
 
         public static void Main(string[] args)
         {
@@ -32,6 +33,7 @@ namespace Rokono_Control
             ServerOS = current;
             AccountEditorPages = new List<(string, List<(string, string, string)>)>();
             Logger = new Logger();
+            ActiveUniqueIds = new List<string>();
 
             Logger.Info($"Server is starting at {DateTime.Now} Loading config files");
             if(!File.Exists("Configuration.json"))
@@ -115,11 +117,16 @@ namespace Rokono_Control
             return JsonConvert.DeserializeObject<Config>(config);
         }
 
-        public static char GetUniqueId()
+        public static string GetUniqueId()
         {
             var chars = "abcdefghijklmnopqrstuvwxyz0123456789";
             var random = new System.Random();
-            var uniqueName = chars[random.Next(chars.Length - 1)];
+            var uniqueName = $"{Guid.NewGuid().ToString().Split('-').FirstOrDefault()}{chars[random.Next(chars.Length - 1)]}{chars[random.Next(chars.Length + 1)]}{chars[random.Next(chars.Length - 2)]}";
+            if(ActiveUniqueIds.Any(x=> x == uniqueName))
+                ActiveUniqueIds.Add($"{uniqueName}{chars[random.Next(chars.Length - 1)]}");
+            else
+                ActiveUniqueIds.Add(uniqueName);
+
             return uniqueName;
         }
 

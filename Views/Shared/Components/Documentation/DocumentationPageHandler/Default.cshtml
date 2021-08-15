@@ -1,8 +1,10 @@
-@{ var CategoryFieldId = ViewData["CategoryField"] as int?;
-                var PageData = ViewData["PageData"] as AssociatedDocumentationCategoryPage;
-                var ModalType = ViewData["Modal"] as int?;
-                var random = Guid.NewGuid().ToString().Split('-').FirstOrDefault().ToString();
-                var ProjectId = ViewData["ProjectId"] as int?; }
+@{ 
+    var CategoryFieldId = ViewData["CategoryField"] as int?;
+    var PageData = ViewData["PageData"] as AssociatedDocumentationCategoryPage;
+    var ModalType = ViewData["Modal"] as int?;
+    var random = Program.GetUniqueId();
+    var ProjectId = ViewData["ProjectId"] as int?;
+}
 <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/default.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script>
@@ -71,11 +73,11 @@
     }
 </style>
 
-<div id="SaveDocumentationPage">
+<div id="SaveDocumentationPage_@random">
     <div class="container-fluid" style="display:flex;">
         <div style="width:50%;">
             <div class="row">
-                <input id="InputPageDataTitle" />
+                <input id="InputPageDataTitle_@random" />
             </div>
             <div class="row" style="display: none;">
                 <div class="control_wrapper">
@@ -84,10 +86,11 @@
                 </div>
             </div>
             <div class="row">
-                <div style="min-height: 61vh;" id="InputPageData"   class="form-control">
+                <div style="min-height: 61vh;" id="InputPageData_@random"   class="form-control">
                     @if (PageData != null)
                     {
-        @Html.Raw(@PageData.Content)}
+                        @Html.Raw(@PageData.Content)
+                    }
                 </div>
 
             </div>
@@ -116,9 +119,9 @@ var InputPageDataTitle = new ej.inputs.TextBox({
   @:  InputPageDataTitle.value = "@PageData.Title"
 }
 
-InputPageDataTitle.appendTo('#InputPageDataTitle');
+InputPageDataTitle.appendTo('#InputPageDataTitle_@random');
 
-    InputPageData = new Quill('#InputPageData', {
+    InputPageData = new Quill('#InputPageData_@random', {
         theme: 'snow',
          modules:
         {
@@ -139,7 +142,7 @@ InputPageDataTitle.appendTo('#InputPageDataTitle');
         }
     });
     InputPageData.on('text-change', function (delta, oldDelta, source) {
-        var result = $("#InputPageData").children()[0].innerHTML;
+        var result = $("#InputPageData_@random").children()[0].innerHTML;
         $("#ContentPreview").html(result);
     });
     
@@ -178,7 +181,7 @@ SaveDocumentationPageModal = new ej.popups.Dialog({
     animationSettings: { effect: 'None' },
     visible: false
 });
-SaveDocumentationPageModal.appendTo('#SaveDocumentationPage');
+SaveDocumentationPageModal.appendTo('#SaveDocumentationPage_@random');
 SaveDocumentationPageModal.show();
 var dropElement = document.getElementsByClassName('control-fluid')[0];
 
@@ -216,7 +219,6 @@ function onFileRemove(args) {
 
 function CloseDocumentationPage()
 {
-
     $("#DocumentationPageControl").load('/Documentation/DocumentationPage?id=@CategoryFieldId&&projectId=@ProjectId');
     SaveDocumentationPageModal.hide();
     $("#activeDocumentationPage").show();
@@ -226,12 +228,13 @@ function CloseDocumentationPage()
    
 function SubmitDocumentationPage()
 {
+    debugger
     var method;
     var messagesDto = {
         "Id" : 0,
-        "Title" : $("#InputPageDataTitle").val(),
+        "Title" : $("#InputPageDataTitle_@random").val(),
         "CategoryField" : @CategoryFieldId,
-        "Content" :  $("#InputPageData").children()[0].innerHTML
+        "Content" :  $("#InputPageData_@random").children()[0].innerHTML
     }
     @if(PageData == null)
     {
@@ -245,7 +248,7 @@ function SubmitDocumentationPage()
 
     //console.log(messagesDto);
     //console.log($("#InputPageDataTitle").val());
-    if($("#InputPageDataTitle").val())
+    if($("#InputPageDataTitle_@random").val())
     {
 
         $.ajax({
