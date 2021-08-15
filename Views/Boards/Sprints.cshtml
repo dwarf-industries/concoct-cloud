@@ -330,30 +330,50 @@
         var closedData = {};
          
         var totalHoursInSprint = 0;
-
+        var prevDate;
         data.forEach(x => {
-            if (closedData[x.closedAt] === undefined)
-                closedData[x.closedAt] = 0;
-            if (!isNaN(parseInt(x.remaining))) {
-                totalHoursInSprint += parseInt(x.remaining);
-                if (x.status !== "Done") {
-                    if (parseInt(x.complete) == "0") {
-                        closedData[x.closedAt] += parseInt(x.remaining);
+            if (closedData[x.closedAt] === undefined) {
+
+                if (!isNaN(parseInt(x.remaining)) || !isNaN(parseInt(x.complete))) {
+                    if (!isNaN(parseInt(x.remaining)) && parseInt(x.remaining) > 0)
+                        closedData[x.closedAt] = closedData[prevDate] + parseInt(x.remaining);
+                    else if (!isNaN(parseInt(x.complete)) && parseInt(x.complete) > 0)
+                        closedData[x.closedAt] = closedData[prevDate] + parseInt(x.complete);
+                    else {
+                        if (prevDate === undefined)
+                            closedData[x.closedAt] = 0;
+                        else
+                            closedData[x.closedAt] = closedData[prevDate];
+
                     }
+
+                }
+
+                prevDate = x.closedAt;
+
+            }
+            else {
+                if (!isNaN(parseInt(x.remaining))) {
+                    totalHoursInSprint += parseInt(x.remaining);
+                    if (x.status !== "Done") {
+                        if (parseInt(x.complete) == "0") {
+                            closedData[x.closedAt] += parseInt(x.remaining);
+                        }
+                        else {
+                            closedData[x.closedAt] += parseInt(x.remaining) - parseInt(x.complete);
+                        }
+                    }
+                }
+
+                if (x.status === "Done") {
+                    if (parseInt(x.complete) == "0")
+                        closedData[x.closedAt] -= parseInt(x.remaining);
                     else
-                    {
-                        closedData[x.closedAt] += parseInt(x.remaining) - parseInt(x.complete);
-                    }
-                } 
+                        closedData[x.closedAt] -= parseInt(x.complete);
+                }
             }
 
-            if (x.status === "Done")
-            {
-                if (parseInt(x.complete) == "0")
-                    closedData[x.closedAt] -= parseInt(x.remaining);
-                else
-                    closedData[x.closedAt] -= parseInt(x.complete);
-            }
+           
         });
 
         var currentDate = new Date();
@@ -390,15 +410,21 @@
         var IdeaTrendData = [];
          
         for (day; day < Math.round(Difference_In_Days); day++) {
+               
             var cDate = formatDate(startDate, "d/MM/yyyy");
+
             var point = closedData[cDate];
 
             if (point !== undefined) {
                 prev = point;
-                burndownData.push(prev);
+                if (startDate.getTime() < new Date().getTime())
+                    burndownData.push(prev);
             }
-            else
-                burndownData.push(prev);
+            else {
+                if (startDate.getTime() < new Date().getTime())
+                    burndownData.push(prev);
+
+            }
 
             IdeaTrendData.push(Math.round(totalHoursInSprint - (idealHoursPerDay * day))); // 1
 
