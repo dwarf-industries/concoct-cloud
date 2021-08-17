@@ -202,8 +202,9 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                             FileType = fileType == "" ? 2 : 1,
                             SenderName  = "System" 
                         });
-                        fileId = files.Entity.Id;
                         Context.SaveChanges();
+                        fileId = files.Entity.Id;
+
                     }
                     else
                     {
