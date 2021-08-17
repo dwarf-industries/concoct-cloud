@@ -8,8 +8,8 @@
     var ViewRights = ViewData["GetUserViewRights"] as int?;
     var publicSIgnAccess = ViewData["PublicProject"] as int?;
     var publicSignupUrl = ViewData["PublicAddress"] as string;
-    var startDate = ViewData["StartDate"] as DateTime?;
-    var endDate = ViewData["EndDate"] as DateTime?;
+    var startDate = ViewData["StartDate"] as int?;
+    var endDate = ViewData["EndDate"] as int?;
 }
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
@@ -158,8 +158,10 @@
     var signupPolicy = false;
     var kanbanObj;
     var FocusId;
-    var startDate = new Date("@startDate");
-    var endDate = new Date("@endDate");
+    var d1S = new Date(0).setUTCSeconds(parseInt("@startDate"));
+    var d2S = new Date(0).setUTCSeconds(parseInt("@endDate"));
+    var startDate = new Date(d1S);
+    var endDate = new Date(d2S);
     var loaded = false;
         if (@publicSIgnAccess == 1) {
             signupPolicy = true;
@@ -207,7 +209,7 @@
             });
         dialogIterations.appendTo('#dialogIterations');
 
- 
+
         ej.base.enableRipple(true);
         var selectedChanging;
         var selectedRowData;
@@ -271,9 +273,9 @@
 
             chatConnectionBuilder.on("CardStatusUpdated", (data) => {
                 var id = data.split('"');
-                 
+
                 IncomignBoardUpdate(id[1]);
-             
+
             });
             IncomignBoardUpdate(null);
 
@@ -328,7 +330,7 @@
         var d2 = new Date("2/8/2021");
         var time = 0;
         var closedData = {};
-         
+
         var totalHoursInSprint = 0;
         var prevDate;
         data.forEach(x => {
@@ -373,27 +375,18 @@
                 }
             }
 
-           
+
         });
 
         var currentDate = new Date();
-        while (d1.getTime() < d2.getTime()) {
-            d1 = d1.addDays(1);
 
-
-            if (d1.getTime() < currentDate.getTime())
-            {
-                point1 = { x: d1, y: time };
-                series1.push(point1);
-            }
-        }
 
         var speedCanvas = document.getElementById("burndown43");
 
         Chart.defaults.global.defaultFontFamily = "Arial";
         Chart.defaults.global.defaultFontSize = 14;
         // To calculate the time difference of two dates
-         
+
         var Difference_In_Time = endDate.getTime() - startDate.getTime();
 
         // To calculate the no. of days between two dates
@@ -403,14 +396,14 @@
         i = 0;
 
         var dateDays = [];
-        
+
         burndownData = [];
         var day = 0;
         var prev = totalHoursInSprint;
         var IdeaTrendData = [];
-         
+
         for (day; day < Math.round(Difference_In_Days); day++) {
-               
+
             var cDate = formatDate(startDate, "d/MM/yyyy");
 
             var point = closedData[cDate];
@@ -432,7 +425,7 @@
             startDate = startDate.addDays(1);
         }
 
- 
+
         var speedData = {
             labels: dateDays,
             datasets: [
@@ -500,7 +493,7 @@
             kanbanObj.dataSource = data;
             await kanbanObj.refresh();
             FocusId = item;
-       
+
             return 200;
         }
 
@@ -547,9 +540,9 @@
         return 200;
     }
 
- 
+
     function FocusCard(item) {
-         
+
         var selector = '[data-id="Task ' + parseInt(item) + '"]';
         if (document.querySelector(selector) !== null) {
             document.querySelector(selector).focus();
@@ -583,12 +576,12 @@
 
     function KanbanCreated(args) {
 
-         
+
     }
 
     function CardDropCheck(args)
     {
-        
+
          if(args.requestType == "cardChanged" && card)
         {
             card.Board = args.changedRecords[0].status;

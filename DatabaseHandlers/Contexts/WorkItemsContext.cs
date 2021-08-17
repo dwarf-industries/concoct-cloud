@@ -103,11 +103,11 @@ namespace Platform.DatabaseHandlers.Contexts
             return items;
         }
 
-        internal (DateTime,DateTime) GetActiveSprintDates(int projectId, int iteration)
+        internal (int,int) GetActiveSprintDates(int projectId, int iteration)
         {
             var sprint = Context.WorkItemIterations.FirstOrDefault(x => x.Id == iteration);
             if (sprint == null)
-                return (new DateTime(), new DateTime());
+                return (0, 0);
 
             return (sprint.StartDate.Value, sprint.EndDate.Value);
         }

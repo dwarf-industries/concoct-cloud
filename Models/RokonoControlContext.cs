@@ -30,6 +30,7 @@ namespace Rokono_Control.Models
         }
 
 
+
         public virtual DbSet<ApiKeys> ApiKeys { get; set; }
         public virtual DbSet<AssociatedAccountNotes> AssociatedAccountNotes { get; set; }
         public virtual DbSet<AssociatedAccountProjectNotificationRights> AssociatedAccountProjectNotificationRights { get; set; }
@@ -1078,13 +1079,9 @@ namespace Rokono_Control.Models
 
             modelBuilder.Entity<WorkItemIterations>(entity =>
             {
-                entity.Property(e => e.EndDate).HasColumnType("datetime");
-
                 entity.Property(e => e.IterationName)
                     .IsRequired()
                     .HasMaxLength(255);
-
-                entity.Property(e => e.StartDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<WorkItemMessage>(entity =>
