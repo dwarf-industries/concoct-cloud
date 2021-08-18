@@ -414,7 +414,8 @@
             var split = startDate.toISOString().split("T")[0].split("-");
             
             console.log(split);
-            var parseDateVal = new Date(parseInt(split[0]), parseInt(split[1]), parseInt(split[2]));
+            new Date()
+            var parseDateVal = new Date(parseInt(split[0]), parseInt(split[1]) -1, parseInt(split[2]));
             var cDate = parseDateVal.getTime();
             console.log(cDate);
 
