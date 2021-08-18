@@ -1,0 +1,31 @@
+@{
+    var result = ViewData["ProjectId"] as int?;
+    ViewData["Title"] = $"View Changelogs {result}";
+
+    var changelogs = ViewData["Changelogs"] as List<Changelogs>;
+}
+ 
+        
+@foreach (var log in  changelogs)
+{
+    var currentId = $"#editChangelog{@log.Id}";
+    <div class="row  card-layout" style="margin-bottom: 10px;">
+        <div class="col-md-12">
+            <!-- Basic Card Layout  -->
+            <div tabindex="0" class="e-card" id="basic_card">
+                <div class="e-card-header">
+                    Manually fill up a changelog
+                </div>
+                <div class="e-card-content" style="padding:6%">
+                    <div class="row">
+                        @Html.Raw(log.LogDetails)
+                    </div>
+                             
+                </div>
+            </div>
+        </div>
+    </div>
+}
+      
+
+ 

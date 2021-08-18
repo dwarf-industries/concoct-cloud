@@ -58,6 +58,16 @@ namespace Platform.DatabaseHandlers.Contexts
                 Context.SaveChanges();
             });
         }
+
+        internal List<Changelogs> GetProjectChangelogsPublic(int projectId)
+        {
+            return Context.AssociatedProjectChangelogs.Include(x => x.Log)
+                                                    .Where(x => x.ProjectId == projectId)
+                                                    .Select(x => x.Log)
+                                                    .OrderByDescending(X => X.Id)
+                                                    .ToList();
+        }
+
         internal void EditChangelog(ChangelogEditRequest changelog)
         {
             var current = Context.Changelogs.FirstOrDefault(x=>x.Id == changelog.Id);

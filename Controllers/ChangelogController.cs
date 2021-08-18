@@ -41,6 +41,17 @@ namespace Platform.Controllers
             return View();
         }
 
+        public IActionResult ViewChangelogsPublic(int projectId)
+        {
+            using (var context = new ChangelogContext(Context, Config))
+            {
+                ViewData["ProjectId"] = projectId;
+                ViewData["Changelogs"] = context.GetProjectChangelogsPublic(projectId);
+            }
+    
+            return View();
+        }
+
         [HttpPost]
         [EnableCors("ApiPolicy")]
         public List<Changelogs> GetPublicChangelogs([FromBody] IncomingApiAuthenicationRequest request)
