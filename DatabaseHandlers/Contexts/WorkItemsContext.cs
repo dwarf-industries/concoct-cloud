@@ -2,6 +2,7 @@ namespace Platform.DatabaseHandlers.Contexts
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Text;
     using Microsoft.EntityFrameworkCore;
@@ -530,7 +531,7 @@ namespace Platform.DatabaseHandlers.Contexts
                         Status = activeBoard,
                         Complete = complete.ToString(),
                         Remaining = remaining.ToString(),
-                        ClosedAt = task.WorkItemChild.ClosedDated != null ? task.WorkItemChild.ClosedDated.Value.ToShortDateString() :  DateTime.Now.ToShortDateString(),
+                        ClosedAt = task.WorkItemChild.ClosedDated != null ? task.WorkItemChild.ClosedDated.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) :  DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                         AssgignedAccount = task.WorkItemChild.AssignedAccountNavigation != null ? task.WorkItemChild.AssignedAccountNavigation.GitUsername : "Unassigned"
                     });
                 });
