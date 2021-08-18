@@ -334,24 +334,31 @@
         var totalHoursInSprint = 0;
         var prevDate;
         data.forEach(x => {
-            if (closedData[x.closedAt] === undefined) {
-
+            var split = x.closedAt.split("/");
+            var year = parseInt(split[2]);
+            var month = parseInt(split[1]);
+            var day = parseInt(split[0]);
+            var newDate = new Date(year, month, day);
+            var dateFormated = newDate.getTime();
+             
+            
+            if (closedData[dateFormated] === undefined) {
                 if (!isNaN(parseInt(x.remaining)) || !isNaN(parseInt(x.complete))) {
                     if (!isNaN(parseInt(x.remaining)) && parseInt(x.remaining) > 0)
-                        closedData[x.closedAt] = closedData[prevDate] + parseInt(x.remaining);
+                        closedData[dateFormated] = closedData[prevDate] + parseInt(x.remaining);
                     else if (!isNaN(parseInt(x.complete)) && parseInt(x.complete) > 0)
-                        closedData[x.closedAt] = closedData[prevDate] + parseInt(x.complete);
+                        closedData[dateFormated] = closedData[prevDate] + parseInt(x.complete);
                     else {
                         if (prevDate === undefined)
-                            closedData[x.closedAt] = 0;
+                            closedData[dateFormated] = 0;
                         else
-                            closedData[x.closedAt] = closedData[prevDate];
+                            closedData[dateFormated] = closedData[prevDate];
 
                     }
 
                 }
 
-                prevDate = x.closedAt;
+                prevDate = dateFormated;
 
             }
             else {
@@ -359,19 +366,19 @@
                     totalHoursInSprint += parseInt(x.remaining);
                     if (x.status !== "Done") {
                         if (parseInt(x.complete) == "0") {
-                            closedData[x.closedAt] += parseInt(x.remaining);
+                            closedData[dateFormated] += parseInt(x.remaining);
                         }
                         else {
-                            closedData[x.closedAt] += parseInt(x.remaining) - parseInt(x.complete);
+                            closedData[dateFormated] += parseInt(x.remaining) - parseInt(x.complete);
                         }
                     }
                 }
 
                 if (x.status === "Done") {
                     if (parseInt(x.complete) == "0")
-                        closedData[x.closedAt] -= parseInt(x.remaining);
+                        closedData[dateFormated] -= parseInt(x.remaining);
                     else
-                        closedData[x.closedAt] -= parseInt(x.complete);
+                        closedData[dateFormated] -= parseInt(x.complete);
                 }
             }
 
@@ -401,15 +408,20 @@
         var day = 0;
         var prev = totalHoursInSprint;
         var IdeaTrendData = [];
-
+        
         for (day; day < Math.round(Difference_In_Days); day++) {
-
-            var cDate = formatDate(startDate, "d/MM/yyyy");
+       
+            var split = startDate.toISOString().split("T")[0].split("-");
+            
+            console.log(split);
+            var parseDateVal = new Date(parseInt(split[0]), parseInt(split[1]), parseInt(split[2]));
+            var cDate = parseDateVal.getTime();
+            console.log(cDate);
 
             var point = closedData[cDate];
 
             if (point !== undefined) {
-                prev = point;
+                prev =  point;
                 if (startDate.getTime() < new Date().getTime())
                     burndownData.push(prev);
             }
