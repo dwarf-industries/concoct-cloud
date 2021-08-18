@@ -338,7 +338,7 @@
             var year = parseInt(split[2]);
             var month = parseInt(split[1]);
             var day = parseInt(split[0]);
-            var newDate = new Date(year, month, day);
+            var newDate = new Date(year, month -1, day);
             var dateFormated = newDate.getTime();
              
             
