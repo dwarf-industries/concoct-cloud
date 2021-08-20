@@ -11,12 +11,12 @@ namespace Platform.ViewComponents
 
     public class NotesViewComponent : ViewComponent
     {
-        private readonly RokonoControlContext Context;
+        private readonly RokonocontrolContext Context;
         private readonly IConfiguration Configuration;
         private  AutherizationManager AutherizationManager;
         private int UserId;
  
-        public NotesViewComponent(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
+        public NotesViewComponent(RokonocontrolContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;

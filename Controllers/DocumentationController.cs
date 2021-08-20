@@ -9,14 +9,15 @@ namespace Platform.Controllers
     using Platform.DataHandlers;
     using Platform.DataHandlers.Interfaces;
     using Platform.Models;
+    using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
     public class DocumentationController : Controller
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private  AutherizationManager AutherizationManager;
         private int UserId;
-        public DocumentationController(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
+        public DocumentationController(RokonocontrolContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;
@@ -28,11 +29,43 @@ namespace Platform.Controllers
         public IActionResult Index(int Id)
         {
             ViewData["ProjectId"] = Id;
- 
+            if(UserId == 0)
+            {
+                var canView = default(bool);
+                using (var context = new DocumentationContext(Context, Configuration))
+                    canView = context.CheckDocumentationPublicAccess(Id);
+                if(!canView)
+                    return View("Error");
+            }
             using(var context = new UsersContext(Context,Configuration))
                 ViewData["UserRights"] = context.GetUserRights(UserId,Id);
             
             return View();
+        }
+
+        public IActionResult Organization(string Id)
+        {
+            var projectId = default(int);
+            using (var context = new DatabaseController(Context, Configuration))
+                projectId = context.GetProjectByOrganization(Id);
+
+            if(projectId == 0)
+                return View("Error");
+
+            ViewData["ProjectId"] = projectId;
+
+            if (UserId == 0)
+            {
+                var canView = default(bool);
+                using (var context = new DocumentationContext(Context, Configuration))
+                    canView = context.CheckDocumentationPublicAccess(projectId);
+                if (!canView)
+                    return View("Error");
+            }
+            using (var context = new UsersContext(Context, Configuration))
+                ViewData["UserRights"] = context.GetUserRights(UserId, projectId);
+
+            return View("~/Views/Documentation/Index.cshtml");
         }
 
         [HttpPost]
@@ -65,6 +98,49 @@ namespace Platform.Controllers
 
 
         [HttpPost]
+        public List<dynamic> GetProjectDocumentation([FromBody] IncomingIdRequest request)
+        {
+
+            var eResult = new List<dynamic>();
+            var result = new List<OutgoingChatItem>();
+
+            using (var context = new DocumentationContext(Context, Configuration))
+            {
+                var getDocumentationidByKey = context.GetProjectIdByDocumentationKey(request.Phase);
+                if(getDocumentationidByKey == 0)
+                {
+                    dynamic errorModel = new System.Dynamic.ExpandoObject();
+                    errorModel.Error = "Not authorized exception, please check your API key!";
+                    eResult.Add(errorModel);
+                    return eResult;
+                }
+
+                result = GetNavigation(request, context);
+
+                result.ForEach(x =>
+                {
+                    dynamic cResult = new System.Dynamic.ExpandoObject();
+                    var vResult = new List<dynamic>();
+
+                    cResult.CategoryName = x.NodeText;
+                    cResult.ParentId = "";
+
+                    x.NodeChild.ForEach(y =>
+                    {
+                        var bResult = new System.Dynamic.ExpandoObject();
+                        var getPage = context.GetDocumentationPage(y.InternalId);
+                        vResult.Add(bResult);
+                    });
+                    cResult.PageContents = vResult;
+                    eResult.Add(cResult);
+                });
+
+            }
+            return eResult;
+        }
+
+
+        [HttpPost]
         [Authorize (Roles = "ChatAdministrator")]
 //        [ValidateAntiForgeryToken]
         public List<OutgoingChatItem> AddNewCategoryField([FromBody] IncomingIdRequest request)
@@ -81,8 +157,7 @@ namespace Platform.Controllers
         }
 
         [HttpPost]
-        [Authorize (Roles = "ChatAdministrator")]
-//        [ValidateAntiForgeryToken]
+ //        [ValidateAntiForgeryToken]
         public List<OutgoingChatItem> AddNewPage([FromBody] AssociatedDocumentationCategoryPage request)
         {
           
@@ -154,8 +229,7 @@ namespace Platform.Controllers
             return result;
         }
         [HttpGet]
-        [Authorize (Roles = "ChatAdministrator")]
-//        [ValidateAntiForgeryToken]
+ //        [ValidateAntiForgeryToken]
         public IActionResult DocumentationPage(int id, int projectId) 
         {
             return ViewComponent("DocumentationPage", new IncomingIdRequest{

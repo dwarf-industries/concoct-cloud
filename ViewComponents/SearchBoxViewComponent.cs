@@ -7,10 +7,10 @@ namespace Platform.ViewComponents
 
     public class SearchBoxViewComponent : ViewComponent
     {
-        private readonly RokonoControlContext Context;
+        private readonly RokonocontrolContext Context;
         private readonly IConfiguration Configuration;
 
-        public SearchBoxViewComponent(RokonoControlContext context, IConfiguration config)
+        public SearchBoxViewComponent(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;

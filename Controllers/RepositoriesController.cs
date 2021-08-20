@@ -16,14 +16,13 @@ namespace Rokono_Control.Controllers
 {
     public class RepositoriesController : Controller
     {
-
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         AutherizationManager AutherizationManager { get; set; }
         private int UserId { get; set; }
 
 
-        public RepositoriesController(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
+        public RepositoriesController(RokonocontrolContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;
@@ -32,6 +31,21 @@ namespace Rokono_Control.Controllers
         }
 
         public IActionResult Index(int id)
+        {
+            using (var context = new DatabaseController(Context, Configuration))
+            {
+                ViewData["ProjectId"] = id;
+                ViewData["ProjectName"] = context.GetProjectName(id);
+            }
+            using (var context = new WorkItemsContext(Context, Configuration))
+                ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
+
+            ViewData["IsEmpty"] = true;
+            return View();
+        }
+
+
+        public IActionResult PullRequests(int id)
         {
             using (var context = new DatabaseController(Context, Configuration))
             {
@@ -70,12 +84,37 @@ namespace Rokono_Control.Controllers
                 ViewData["ProjectId"] = id;
                 ViewData["ProjectName"] = context.GetProjectName(id);
             }
+
+            using (var context = new RepositoriesContext(Context, Configuration, new RepositoryManager()))
+            {
+                var items = context.GetCommitDetailsRaw(new IncomingIdRequest
+                {
+                    Phase = commitId,
+                    ProjectId = id,
+                });
+                ViewData["CommitDetails"] = items;
+               // Program.AccountEditorPages.Add(new(User.ToString(), items));
+              //  ViewBag["CommitDetails"] = items;
+
+            }
+
             using (var context = new WorkItemsContext(Context, Configuration))
                 ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
 
             ViewData["CommitId"] = commitId;
             ViewData["IsEmpty"] = true;
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult UpdateEditorContent(string id)
+        {
+            var items = Program.AccountEditorPages.FirstOrDefault(x => x.Item1 == User.ToString()).Item2;
+            var item = items.FirstOrDefault(x => x.Item3 == id);
+            return ViewComponent("CodeEditor", new IncomingIdRequest
+            {
+                Data = item
+            });
         }
 
         [HttpPost]

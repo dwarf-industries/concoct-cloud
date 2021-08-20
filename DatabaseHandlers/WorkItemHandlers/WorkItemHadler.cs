@@ -10,7 +10,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
     public class WorkItemHadler
     {
         
-        internal static bool UpdateWorkItem(IncomingWorkItem currentItem,  RokonoControlContext Context)
+        internal static bool UpdateWorkItem(IncomingWorkItem currentItem,  RokonocontrolContext Context)
         {
             var dbVersion = Context.WorkItem.FirstOrDefault(x=>x.Id == currentItem.WorkItemId);
             Context.Attach(dbVersion);
@@ -202,8 +202,9 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                             FileType = fileType == "" ? 2 : 1,
                             SenderName  = "System" 
                         });
-                        fileId = files.Entity.Id;
                         Context.SaveChanges();
+                        fileId = files.Entity.Id;
+
                     }
                     else
                     {
@@ -221,7 +222,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
         }
 
 
-        public static bool AddNewWorkItem (IncomingWorkItem currentItem, RokonoControlContext Context,IConfiguration configuration, int userId)
+        public static WorkItem AddNewWorkItem (IncomingWorkItem currentItem, RokonocontrolContext Context,IConfiguration configuration, int userId)
         {
             var currentUser = "Unassigned";
 
@@ -449,7 +450,7 @@ namespace RokonoControl.DatabaseHandlers.WorkItemHandlers
                     Context.SaveChanges();
                 });
 
-            return true;
+            return databaseItem;
         }
     }
 }

@@ -13,12 +13,12 @@ namespace Rokono_Control.Controllers
 
     public class BacklogsController : Controller
     {
-       RokonoControlContext Context;
+       RokonocontrolContext Context;
         IConfiguration Configuration;
 
         AutherizationManager AutherizationManager {get; set;}
         private int UserId {get; set;}
-        public BacklogsController(RokonoControlContext context, IConfiguration config,   IAutherizationManager autherizationManager,IHttpContextAccessor httpContextAccessor)
+        public BacklogsController(RokonocontrolContext context, IConfiguration config,   IAutherizationManager autherizationManager,IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;

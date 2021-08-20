@@ -9,11 +9,11 @@ namespace Platform.DatabaseHandlers.Contexts
     using Rokono_Control.Models;
     public class ChatContext : IDisposable
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private bool disposedValue;
 
-        public ChatContext(RokonoControlContext context, IConfiguration config)
+        public ChatContext(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;
@@ -78,6 +78,18 @@ namespace Platform.DatabaseHandlers.Contexts
 
             return result;
         }
+
+        internal List<OutgoingDiscussionMessage> GetWorkItemDiscussions(IncomingIdRequest request)
+        {
+            return Context.AssociatedWorkItemMessages.Include(x=>x.Message).ThenInclude(Message => Message.Sender).Where(x => x.WorkItemId == request.Id).Select(x=>  new OutgoingDiscussionMessage { 
+                AccountId = x.Message.Sender.Id,
+                Name = $"{x.Message.Sender.FirstName} {x.Message.Sender.LastName}",
+                DateTime = x.Message.DateOfMessage.Value,
+                Message = x.Message.Content,
+                Icon = ""
+            }).ToList();
+        }
+
         internal List<ChatRoomRights> GetUserChatRights(int id, int projectId)
         {
             return Context.AssociatedUserChatRights.Include(x => x.Right)
@@ -245,14 +257,20 @@ namespace Platform.DatabaseHandlers.Contexts
             Context.SaveChanges();
         }
 
-        internal List<PublicMessages> GetAllPublicMessagesForProject(int id, int v)
+        internal List<OutgoingDiscussionMessage> GetAllPublicMessagesForProject(int id, int v)
         {
             if(v == 1)
             {
                 var result = Context.AssociatedProjectPublicDiscussions.Include(x => x.PublicMessage)
                                                                 .Where(x => x.ProjectId == id && x.PublicMessage.IsNew == 1)
-                                                                .Select(x => x.PublicMessage)
-                                                                .ToList();
+                                                                 .Select(x => new OutgoingDiscussionMessage
+                                                                 {
+                                                                     AccountId = x.PublicMessage.SenderId != null ? x.PublicMessage.SenderId.Value : -1,
+                                                                     DateTime = x.PublicMessage.DateOfMessage != null ? x.PublicMessage.DateOfMessage.Value : new DateTime(),
+                                                                     Name = x.PublicMessage.SenderName,
+                                                                     Message = x.PublicMessage.MessageContent,
+                                                                     IsNew = x.PublicMessage.IsNew != null ? x.PublicMessage.IsNew.Value : 0
+                                                                 }).ToList();
                 result.ForEach(x=>{
                     x.IsNew = 0;
                     Context.Attach(x);
@@ -264,8 +282,14 @@ namespace Platform.DatabaseHandlers.Contexts
             else
             {
                 var allMesages = Context.AssociatedProjectPublicDiscussions.Include(x => x.PublicMessage)
-                                                                .Where(x => x.ProjectId == id )
-                                                                .Select(x => x.PublicMessage)
+                                                                .Where(x => x.ProjectId == id)
+                                                                .Select(x => new OutgoingDiscussionMessage
+                                                                {
+                                                                    AccountId = x.PublicMessage.SenderId != null ? x.PublicMessage.SenderId.Value : -1,
+                                                                    DateTime = x.PublicMessage.DateOfMessage != null ? x.PublicMessage.DateOfMessage.Value : new DateTime(),
+                                                                    Name = x.PublicMessage.SenderName,
+                                                                    Message = x.PublicMessage.MessageContent
+                                                                })
                                                                 .ToList();
                 
                 return allMesages;

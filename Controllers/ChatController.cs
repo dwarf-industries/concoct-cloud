@@ -16,12 +16,12 @@ namespace Platform.Controllers
     using Rokono_Control.Models;
     public class ChatController : Controller
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         AutherizationManager AutherizationManager;
         public int UserId;
         private IHubContext<MessageHub> HubContext { get; set; }
-        public ChatController(RokonoControlContext context,
+        public ChatController(RokonocontrolContext context,
                               IConfiguration config,
                               IAutherizationManager autherizationManager,
                               IHttpContextAccessor httpContextAccessor,
@@ -192,20 +192,22 @@ namespace Platform.Controllers
         [HttpPost]
         public List<PublicMessages> GetAllPublicMessages([FromBody] IncomingIdRequest request)
         {
+            //Temporary disable due to changes over the new dicussions widget
             var result = new List<PublicMessages>();
             using(var context = new ChatContext(Context,Configuration))
             {   
-                result = context.GetAllPublicMessagesForProject(request.Id,0);
+              //  result = context.GetAllPublicMessagesForProject(request.Id,0);
             }
             return result;
         }
         [HttpPost]
         public List<PublicMessages> GetPublicMessages([FromBody] IncomingIdRequest request)
         {
+            //Temporary disable due to changes over the new dicussions widget
             var result = new List<PublicMessages>();
             using(var context = new ChatContext(Context,Configuration))
             {   
-                result = context.GetAllPublicMessagesForProject(request.Id,1);
+                //result = context.GetAllPublicMessagesForProject(request.Id,1);
             }
             return result;
         }

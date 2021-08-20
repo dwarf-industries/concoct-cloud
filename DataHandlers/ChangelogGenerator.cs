@@ -8,8 +8,8 @@ namespace Platform.DataHandlers
 {
     public class ChangelogGenerator :IDisposable
     {
-        RokonoControlContext Context;
-        public ChangelogGenerator(RokonoControlContext context)
+        RokonocontrolContext Context;
+        public ChangelogGenerator(RokonocontrolContext context)
         {
             Context = context;
         }
@@ -64,6 +64,7 @@ namespace Platform.DataHandlers
             result += improvements;
             result += newTests;
             result += breakingChanges;
+            result += bugsData;
             return result;
         }
 

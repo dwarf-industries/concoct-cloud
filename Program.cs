@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Platform.Models;
+using Rokono_Control.DataHandlers.Implementations;
+using Rokono_Control.DataHandlers.Interfaces;
 using Rokono_Control.Models;
 using RokonoControl.Models;
 
@@ -12,19 +16,26 @@ namespace Rokono_Control
 {
     public class Program
     {
+        public static ICustomLogger Logger { get; set; }
         public static bool HasCompleate { get; set; }
         public static Config Configuration {get; set;}
         public static List<HubMappedMembers> Members { get; set; }
         public static string ServerOS { get; set; }
         public static List<ProjectBranches> ProjectBranches { get; set; }
-  
+        public static List<(string, List<(string, string, string)>)> AccountEditorPages { get; set; }
+        private static List<string> ActiveUniqueIds { get; set; }
+
         public static void Main(string[] args)
         {
             ProjectBranches = new List<ProjectBranches>();
             Members = new List<HubMappedMembers>();
             var current = OS.GetCurrent();
             ServerOS = current;
+            AccountEditorPages = new List<(string, List<(string, string, string)>)>();
+            Logger = new Logger();
+            ActiveUniqueIds = new List<string>();
 
+            Logger.Info($"Server is starting at {DateTime.Now} Loading config files");
             if(!File.Exists("Configuration.json"))
                 Configuration = CreateFile("Configuration.json");
             else
@@ -47,6 +58,11 @@ namespace Rokono_Control
         
         private static Config CreateFile(string v)
         {
+            if(OS.GetCurrent() == "gnu")
+                CreateLinuxDefault();
+            else
+                CreateWindowsDefault();
+
             var configuration = new Config
             {
                 ShellScripts = new List<ConfigBindingData>
@@ -78,11 +94,40 @@ namespace Rokono_Control
             return configuration;
         }
 
+        private static void CreateWindowsDefault()
+        {
+            if (!Directory.Exists(@"C:\GitRepositories"))
+            {
+                Directory.CreateDirectory(@"C:\GitRepositories");
+            }
+        }
+
+        private static void CreateLinuxDefault()
+        {
+            if (!Directory.Exists("/home/GitRepositories"))
+            {
+                Directory.CreateDirectory("/home/GitRepositories");
+            }
+        }
+
         private static Config ReadConfig(string path)
         {
             
             var config = File.ReadAllText(path);
             return JsonConvert.DeserializeObject<Config>(config);
+        }
+
+        public static string GetUniqueId()
+        {
+            var chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+            var random = new System.Random();
+            var uniqueName = $"{Guid.NewGuid().ToString().Split('-').FirstOrDefault()}{chars[random.Next(chars.Length - 1)]}{chars[random.Next(chars.Length + 1)]}{chars[random.Next(chars.Length - 2)]}";
+            if(ActiveUniqueIds.Any(x=> x == uniqueName))
+                ActiveUniqueIds.Add($"{uniqueName}{chars[random.Next(chars.Length - 1)]}");
+            else
+                ActiveUniqueIds.Add(uniqueName);
+
+            return uniqueName;
         }
 
         private static void timer1_Tick(object sender, EventArgs e)
@@ -93,7 +138,7 @@ namespace Rokono_Control
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseUrls("http://localhost:6005")
-                 .UseStartup<Startup>();
+            .UseUrls("http://localhost:6005")
+            .UseStartup<Startup>();
     }
 }

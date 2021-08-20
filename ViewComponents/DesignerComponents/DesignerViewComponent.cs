@@ -10,12 +10,12 @@ namespace Platform.ViewComponents
     [ViewComponent(Name = "DesignerComponents")]
     public class DesignerViewComponent : ViewComponent
     {
-        private readonly RokonoControlContext Context;
+        private readonly RokonocontrolContext Context;
         private readonly IConfiguration Configuration;
         private  AutherizationManager AutherizationManager;
         private int UserId;
  
-        public DesignerViewComponent(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
+        public DesignerViewComponent(RokonocontrolContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;

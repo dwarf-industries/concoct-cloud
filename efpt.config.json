@@ -1,0 +1,360 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "RokonocontrolContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "ProjectRootNamespace": "Rokono_Control",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[ApiKeys]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedAccountNotes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedAccountProjectNotificationRights]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedBoardWorkItems]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedBranchCommits]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedChatChannelMessages]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedChatPersonalMessages]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedChatRoomRights]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedCommitFiles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedDocumentationCategoryPage]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedPageSurveyComponents]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedProjectApiKeys]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedProjectBoards]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedProjectBuilds]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedProjectChangelogs]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedProjectFeedback]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedProjectIterations]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedProjectMemberRights]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedProjectMembers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedProjectNotifications]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedProjectPublicDiscussions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedProjectPublicMessages]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedRepositoryBranches]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedUserChatNotifications]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedUserChatRights]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedUserDashboardItemComponent]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedUserDashboardPremade]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedUserNotifications]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedWorkItemChangelogs]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedWorkItemFiles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedWorkItemMessages]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AssociatedWrorkItemChildren]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Boards]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Branches]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Builds]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Changelogs]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ChatChannels]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ChatChannelTypes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ChatRoomRights]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ChatRooms]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Commits]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Documentation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[DocumentationCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[DocumentationCategoryField]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Efforts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Files]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[FileTypes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NotificationRights]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Notifications]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NotificationTypes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PremadeWidgets]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Projects]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PublicMessage]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PublicMessages]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Repository]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Risks]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SurveyComponent]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SurveyPage]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Surveys]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SystemFiles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TeamDashboards]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Teams]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserAccounts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserDashboardItem]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserDashboardItemComponent]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserDashboards]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserNotes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserQueries]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserRights]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ValueAreas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WorkItem]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WorkItemActivity]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WorkItemAreas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WorkItemIterations]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WorkItemMessage]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WorkItemPriorities]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WorkItemRealtionshipType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WorkItemReasons]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WorkItemRelations]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WorkItemSeverities]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WorkItemStates]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WorkItemTypes]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "6ce9cc47ca08.RokonoControl",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseNoConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

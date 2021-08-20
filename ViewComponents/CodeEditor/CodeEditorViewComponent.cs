@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Platform.DataHandlers;
 using Platform.DataHandlers.Interfaces;
 using Rokono_Control.DatabaseHandlers.Contexts;
@@ -17,12 +18,12 @@ namespace Rokono_Control.ViewComponents.CodeEditor
     public class CodeEditorViewComponent : ViewComponent
     {
 
-        private readonly RokonoControlContext Context;
+        private readonly RokonocontrolContext Context;
         private readonly IConfiguration Configuration;
         private AutherizationManager AutherizationManager;
         private int UserId;
 
-        public CodeEditorViewComponent(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
+        public CodeEditorViewComponent(RokonocontrolContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;
@@ -35,10 +36,12 @@ namespace Rokono_Control.ViewComponents.CodeEditor
             if(request == null)
                 return View("/Views/Shared/Components/CodeEditor/Default.cshtml");
 
-            using (var context = new RepositoriesContext(Context, Configuration, new RepositoryManager()))
+            if(!string.IsNullOrEmpty(request.Phase))
             {
-                ViewData["CommitDetails"] = context.GetCommitDeatails(request);
+                ViewData["CurrentCommitDetails"] = request.Phase;
+                return View("/Views/Shared/Components/CodeEditor/Default.cshtml");
             }
+ 
             return View("/Views/Shared/Components/CodeEditor/Default.cshtml");
         }
     }

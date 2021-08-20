@@ -1,112 +1,26 @@
-@{
+@{ 
     ViewData["Title"] = "Page Not Found";
-    Layout = "~/Views/Shared/_LayoutProjects.cshtml";
-
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+ 
 <style>
-	body {
-  background-color: #2F3242;
-}
-svg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -250px;
-  margin-left: -400px;
-}
-.message-box {
-  height: 200px;
-  width: 380px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -100px;
-  margin-left: 50px;
-  color: #FFF;
-  font-family: Roboto;
-  font-weight: 300;
-}
-.message-box h1 {
-  font-size: 60px;
-  line-height: 46px;
-  margin-bottom: 40px;
-}
-.buttons-con .action-link-wrap {
-  margin-top: 40px;
-}
-.buttons-con .action-link-wrap a {
-  background: #68c950;
-  padding: 8px 25px;
-  border-radius: 4px;
-  color: #FFF;
-  font-weight: bold;
-  font-size: 14px;
-  transition: all 0.3s linear;
-  cursor: pointer;
-  text-decoration: none;
-  margin-right: 10px
-}
-.buttons-con .action-link-wrap a:hover {
-  background: #5A5C6C;
-  color: #fff;
-}
-
-#Polygon-1 , #Polygon-2 , #Polygon-3 , #Polygon-4 , #Polygon-4, #Polygon-5 {
-  animation: float 1s infinite ease-in-out alternate;
-}
-#Polygon-2 {
-  animation-delay: .2s; 
-}
-#Polygon-3 {
-  animation-delay: .4s; 
-}
-#Polygon-4 {
-  animation-delay: .6s; 
-}
-#Polygon-5 {
-  animation-delay: .8s; 
-}
-
-@@keyframes float {
-	100% {
-    transform: translateY(20px);
-  }
-}
-@@media (max-width: 450px) {
-  svg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -250px;
-    margin-left: -190px;
-  }
-  .message-box {
-    top: 50%;
-    left: 50%;
-    margin-top: -100px;
-    margin-left: -190px;
-    text-align: center;
-  }
-}
+    h1, p {
+        color: #caf0ff !important;
+    }
 </style>
 
-<svg width="380px" height="500px" viewBox="0 0 837 1045" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <path d="M353,9 L626.664028,170 L626.664028,487 L353,642 L79.3359724,487 L79.3359724,170 L353,9 Z" id="Polygon-1" stroke="#007FB2" stroke-width="6" sketch:type="MSShapeGroup"></path>
-        <path d="M78.5,529 L147,569.186414 L147,648.311216 L78.5,687 L10,648.311216 L10,569.186414 L78.5,529 Z" id="Polygon-2" stroke="#EF4A5B" stroke-width="6" sketch:type="MSShapeGroup"></path>
-        <path d="M773,186 L827,217.538705 L827,279.636651 L773,310 L719,279.636651 L719,217.538705 L773,186 Z" id="Polygon-3" stroke="#795D9C" stroke-width="6" sketch:type="MSShapeGroup"></path>
-        <path d="M639,529 L773,607.846761 L773,763.091627 L639,839 L505,763.091627 L505,607.846761 L639,529 Z" id="Polygon-4" stroke="#F2773F" stroke-width="6" sketch:type="MSShapeGroup"></path>
-        <path d="M281,801 L383,861.025276 L383,979.21169 L281,1037 L179,979.21169 L179,861.025276 L281,801 Z" id="Polygon-5" stroke="#36B455" stroke-width="6" sketch:type="MSShapeGroup"></path>
-    </g>
-</svg>
-<div class="message-box">
-  <h1>404</h1>
-  <p>Page not found</p>
-  <div class="buttons-con">
-    <div class="action-link-wrap">
-      <a onclick="history.back(-1)" class="link-button link-back-button">Go Back</a>
-      <a href="/" class="link-button">Go to Home Page</a>
-    </div>
-  </div>
+<!-- Authenticationw card start -->
+<div class="login-card card-block auth-body" style="text-align: center; margin-top: 25%; border-top: 1px solid #caf0ff; border-bottom: 1px solid #caf0ff; ">
+    <h1 style="padding-top:50px;">Collaborativesoft Concoct Cloud</h1>
+    <p>Oops, something went wrong </p>
+    <p>This is likely to an issue with the settings of your organization, please contact your system administrator.</p>
+    <p>Code</p>
+    <svg id="Layer_1" enable-background="new 0 0 512.004 512.004" height="250" viewBox="0 0 512.004 512.004" width="250" xmlns="http://www.w3.org/2000/svg">
+        <g>
+            <path fill="#caf0ff" d="m356.827 41.913c-22.858-15.731-49.646-24.047-77.47-24.047-51.626 0-98.316 28.587-121.851 74.605-3.798 7.43-10.626 6.496-17.287 6.496-41.146 0-77.746 26.147-91.074 65.064-1.178 3.441-4.061 6.19-7.907 7.542-25.688 9.029-42.242 33.406-41.19 60.659 1.281 33.263 29.427 59.271 62.868 59.271h22.527v27.112h-21.936c-3.135-9.245-11.89-15.92-22.181-15.92-12.914 0-23.421 10.506-23.421 23.42 0 12.915 10.507 23.421 23.421 23.421 10.291 0 19.047-6.675 22.181-15.921h29.436c4.143 0 7.5-3.358 7.5-7.5v-34.612h67.795v100.124h-44.964c-3.254-11.163-13.572-19.346-25.772-19.346-14.804 0-26.847 12.043-26.847 26.846s12.043 26.846 26.847 26.846c12.2 0 22.518-8.183 25.772-19.346h52.464c4.143 0 7.5-3.358 7.5-7.5v-107.624h67.693v139.745c-13.979 3.383-24.395 15.992-24.395 30.995 0 17.587 14.308 31.895 31.895 31.895s31.895-14.308 31.895-31.895c0-15.004-10.416-27.613-24.395-30.995v-139.745h16.347c4.143 0 7.5-3.358 7.5-7.5s-3.357-7.5-7.5-7.5h-219.362c-25.447 0-46.927-20.119-47.88-44.849-.796-20.638 11.732-39.095 31.177-45.929 8.207-2.885 14.448-9.021 17.124-16.834 11.251-32.852 42.147-54.924 76.883-54.924 5.147 0 22.151 1.942 30.643-14.666 20.957-40.979 62.529-66.435 108.495-66.435 24.772 0 48.62 7.401 68.966 21.403 3.413 2.349 8.082 1.486 10.43-1.926 2.347-3.412 1.485-8.082-1.927-10.43zm-315.501 292.623c-4.644 0-8.421-3.778-8.421-8.421s3.777-8.42 8.421-8.42c4.643 0 8.42 3.777 8.42 8.42s-3.778 8.421-8.42 8.421zm56.176 76.437c-6.532 0-11.847-5.314-11.847-11.846s5.314-11.846 11.847-11.846c6.531 0 11.846 5.314 11.846 11.846s-5.314 11.846-11.846 11.846zm177.824 51.271c0 9.316-7.579 16.895-16.895 16.895-9.315 0-16.895-7.579-16.895-16.895s7.579-16.895 16.895-16.895 16.895 7.579 16.895 16.895z" />
+            <path fill="#caf0ff" d="m412.193 276.503h-94.915c-4.143 0-7.5 3.358-7.5 7.5s3.357 7.5 7.5 7.5h16.348v107.624c0 4.142 3.357 7.5 7.5 7.5h52.463c3.254 11.163 13.572 19.346 25.773 19.346 14.803 0 26.846-12.043 26.846-26.846s-12.043-26.846-26.846-26.846c-12.2 0-22.519 8.183-25.773 19.346h-44.963v-100.124h63.567c1.575 0 3.147-.041 4.716-.117v34.729c0 4.142 3.357 7.5 7.5 7.5h29.435c3.135 9.246 11.891 15.921 22.182 15.921 12.914 0 23.421-10.506 23.421-23.421 0-12.914-10.507-23.42-23.421-23.42-10.291 0-19.047 6.675-22.182 15.92h-21.935v-29.108c45.637-9.282 81.006-49.397 80.077-97.937-1.047-54.681-46.681-98.044-101.431-96.051-4.496.166-8.86-2.327-11.055-6.342-4.295-7.86-9.397-15.342-15.167-22.237-2.658-3.178-7.389-3.598-10.564-.939-3.177 2.658-3.598 7.388-.939 10.564 5.139 6.143 9.684 12.805 13.507 19.804 4.74 8.677 14.012 14.158 23.816 14.158.313 0 .628-.006.943-.017 46.273-1.674 85.004 34.964 85.892 81.348.898 46.846-38.546 84.645-84.795 84.645zm7.168 110.778c6.531 0 11.846 5.314 11.846 11.846s-5.314 11.846-11.846 11.846-11.847-5.314-11.847-11.846 5.315-11.846 11.847-11.846zm56.665-69.587c4.644 0 8.421 3.777 8.421 8.42s-3.777 8.421-8.421 8.421-8.421-3.778-8.421-8.421 3.777-8.42 8.421-8.42z" />
+        </g>
+    </svg>
+    <!-- end of form -->
 </div>

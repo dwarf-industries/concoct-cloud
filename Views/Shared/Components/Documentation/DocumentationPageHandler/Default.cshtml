@@ -1,42 +1,51 @@
-@{
+@{ 
     var CategoryFieldId = ViewData["CategoryField"] as int?;
     var PageData = ViewData["PageData"] as AssociatedDocumentationCategoryPage;
-    var ModalType = ViewData["Modal"]  as int?;
-    var random = Guid.NewGuid().ToString().Split('-').FirstOrDefault().ToString();
+    var ModalType = ViewData["Modal"] as int?;
+    var random = Program.GetUniqueId();
     var ProjectId = ViewData["ProjectId"] as int?;
 }
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script>
 <link href="https://unpkg.com/quill-better-table@1.2.8/dist/quill-better-table.css" rel="stylesheet">
- 
+
 
 <style>
-   .ql-snow .ql-editor pre.ql-syntax {
-	background-color: #6a97a8;
-	color: #f8f8f2;
-	overflow: visible;
+    .ql-snow .ql-editor pre.ql-syntax {
+        background-color: #6a97a8;
+        color: #f8f8f2;
+        overflow: visible;
     }
-    #SaveDocumentationPage_title{
+
+    #SaveDocumentationPage_title {
         text-align: center;
         width: 100%;
     }
+
     .e-upload {
         width: 100%;
         position: relative;
         margin-top: 15px;
         float: none;
     }
-    .e-upload .e-upload-actions {
-        float: none;
-        text-align: right;
-    }
+
+        .e-upload .e-upload-actions {
+            float: none;
+            text-align: right;
+        }
+
     .control_wrapper .e-upload .e-upload-drag-hover {
         margin: 0;
     }
-    button:hover{
+
+    button:hover {
         color: #e6326f;
     }
-    .ql-Table:before{
+
+    .ql-Table:before {
         font-family: "e-icons" !important;
-        content:'\e705';
+        content: '\e705';
         border: none;
         cursor: pointer;
         float: left;
@@ -44,41 +53,54 @@
         padding: 3px 5px;
         width: 28px;
     }
-    .ql-image-custom:before{
+
+    .ql-image-custom:before {
         font-family: "e-icons" !important;
-        content:'\e776';
+        content: '\e776';
         border: none;
         cursor: pointer;
         float: left;
         height: 24px;
         padding: 3px 5px;
         width: 28px;
+    }
+
+    .DocumentationPreviewSample {
+        width: 50%;
+        padding: 2%;
+        overflow: auto;
+        word-break: break-all;
     }
 </style>
 
-<div id="SaveDocumentationPage"  >
-    <div class="container-fluid">
-        <div class="row">
-            <input id="InputPageDataTitle" />
-        </div>
-         <div class="row" style="display: none;">
-            <div class="control_wrapper">
-                <!-- Initialize Uploader -->
-                <input type='file' id='File_@random' name='UploadFiles'/>
+<div id="SaveDocumentationPage_@random">
+    <div class="container-fluid" style="display:flex;">
+        <div style="width:50%;">
+            <div class="row">
+                <input id="InputPageDataTitle_@random" />
+            </div>
+            <div class="row" style="display: none;">
+                <div class="control_wrapper">
+                    <!-- Initialize Uploader -->
+                    <input type='file' id='File_@random' name='UploadFiles' />
+                </div>
+            </div>
+            <div class="row">
+                <div style="min-height: 61vh;" id="InputPageData_@random"   class="form-control">
+                    @if (PageData != null)
+                    {
+                        @Html.Raw(@PageData.Content)
+                    }
+                </div>
+
+            </div>
+            <div class="row InlineFlex">
+                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="SubmitDocumentationPage()">Submit</button>
+                <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="CloseDocumentationPage()">Cancel</button>
             </div>
         </div>
-        <div class="row">
-            <div style="min-height: 51vh;" id="InputPageData" class="form-control">
-                @if(PageData != null)
-                {
-                    @Html.Raw(@PageData.Content)
-                }
-            </div>
-         
-        </div>
-        <div class="row InlineFlex">
-            <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="SubmitDocumentationPage()">Submit</button>
-            <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 50%;" onclick="CloseDocumentationPage()">Cancel</button>
+        <div  class="DocumentationPreviewSample" id="ContentPreview">
+
         </div>
     </div>
 
@@ -97,11 +119,11 @@ var InputPageDataTitle = new ej.inputs.TextBox({
   @:  InputPageDataTitle.value = "@PageData.Title"
 }
 
-InputPageDataTitle.appendTo('#InputPageDataTitle');
+InputPageDataTitle.appendTo('#InputPageDataTitle_@random');
 
-InputPageData = new Quill('#InputPageData', {
+    InputPageData = new Quill('#InputPageData_@random', {
         theme: 'snow',
-        modules: 
+         modules:
         {
             table: false,  // disable table module
             history: {
@@ -109,19 +131,22 @@ InputPageData = new Quill('#InputPageData', {
                 maxStack: 500,
                 userOnly: true
             },
-            
             syntax: true,              // Include syntax module
-            toolbar: 
-            [
-            [{ header: [1, 2, false] }],
-            ["bold", "italic", "underline"],
-            [{ 'list' : 'ordered' }, { 'list' : 'bullet' }],
-            ["image-custom", "code-block",'Table']
-            ]
+            toolbar:
+                [
+                    [{ header: [1, 2, false] }],
+                    ["bold", "italic", "underline"],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    ["image-custom", "code-block", 'Table']
+                ]
         }
-}); 
+    });
+    InputPageData.on('text-change', function (delta, oldDelta, source) {
+        var result = $("#InputPageData_@random").children()[0].innerHTML;
+        $("#ContentPreview").html(result);
+    });
+    
 
- 
 var image_custom = document.getElementsByClassName('ql-image-custom')[0];
 image_custom.addEventListener('click', function() {
    //console.log("Clicked");
@@ -130,7 +155,7 @@ image_custom.addEventListener('click', function() {
 var customButton =  document.getElementsByClassName('ql-Table')[0];
 customButton.addEventListener('click', function() {
     //console.log("Clicked");
-     
+
 
 
     var html = InputPageData.root.innerHTML;
@@ -141,10 +166,10 @@ customButton.addEventListener('click', function() {
     html += '|value|value|value|';
     html += '\n';
     html += '#closetable';
- 
+
     var delta = InputPageData.clipboard.convert(html);
     InputPageData.setContents(delta, 'silent');
-     
+
 });
 var method;
 var SaveDocumentationPageModal;
@@ -156,7 +181,7 @@ SaveDocumentationPageModal = new ej.popups.Dialog({
     animationSettings: { effect: 'None' },
     visible: false
 });
-SaveDocumentationPageModal.appendTo('#SaveDocumentationPage');
+SaveDocumentationPageModal.appendTo('#SaveDocumentationPage_@random');
 SaveDocumentationPageModal.show();
 var dropElement = document.getElementsByClassName('control-fluid')[0];
 
@@ -191,22 +216,25 @@ function onFileRemove(args) {
     args.postRawFile = false;
 }
 
- 
+
 function CloseDocumentationPage()
 {
     $("#DocumentationPageControl").load('/Documentation/DocumentationPage?id=@CategoryFieldId&&projectId=@ProjectId');
     SaveDocumentationPageModal.hide();
-
+    $("#activeDocumentationPage").show();
+    $("#activeDocumentationPageHeader").show();
 }
 
+   
 function SubmitDocumentationPage()
 {
+    debugger
     var method;
     var messagesDto = {
         "Id" : 0,
-        "Title" : $("#InputPageDataTitle").val(),
+        "Title" : $("#InputPageDataTitle_@random").val(),
         "CategoryField" : @CategoryFieldId,
-        "Content" :  $("#InputPageData").children()[0].innerHTML
+        "Content" :  $("#InputPageData_@random").children()[0].innerHTML
     }
     @if(PageData == null)
     {
@@ -217,10 +245,10 @@ function SubmitDocumentationPage()
     @:   messagesDto.Id = @PageData.Id;
     @:   method = "EditPage";
     }
-    
+
     //console.log(messagesDto);
     //console.log($("#InputPageDataTitle").val());
-    if($("#InputPageDataTitle").val())
+    if($("#InputPageDataTitle_@random").val())
     {
 
         $.ajax({
@@ -229,9 +257,9 @@ function SubmitDocumentationPage()
                 data: JSON.stringify(messagesDto),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                
+
                 success: function (response) {
-                     
+
                     CloseDocumentationPage();
                 },
                 error: function (xhr, status, error) {

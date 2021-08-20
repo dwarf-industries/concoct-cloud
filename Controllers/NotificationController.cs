@@ -13,11 +13,11 @@ namespace Platform.Controllers
     public class NotificationController :Controller
     {
 
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private  AutherizationManager AutherizationManager;
         private int UserId;
-        public NotificationController(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
+        public NotificationController(RokonocontrolContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;
@@ -104,9 +104,9 @@ namespace Platform.Controllers
         }
 
         [HttpPost]
-        public List<BindingNotification> GetUserNotifications([FromBody] IncomingNoteRequest note)
+        public List<Notifications> GetUserNotifications([FromBody] IncomingNoteRequest note)
         {
-            var result = new List<BindingNotification>();
+            var result = new List<Notifications>();
  
             using(var context = new NotificationContext(Context, Configuration))
             {

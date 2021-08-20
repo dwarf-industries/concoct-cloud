@@ -1,6 +1,5 @@
 ﻿namespace Rokono_Control
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -9,8 +8,6 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.HttpsPolicy;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -18,8 +15,9 @@
     using Platform.DataHandlers;
     using Platform.DataHandlers.Interfaces;
     using Platform.Hubs;
+    using Rokono_Control.DataHandlers.Implementations;
+    using Rokono_Control.DataHandlers.Interfaces;
     using Rokono_Control.Models;
-    using RokonoControl;
 
     public class Startup
     {
@@ -48,26 +46,32 @@
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             }));
-            System.Console.WriteLine(StartConfiguration.ConnectionStrings.RokonoControlContext);
-            services.AddDbContext<RokonoControlContext>(options =>
-                options.UseSqlServer(StartConfiguration.ConnectionStrings.RokonoControlContext)
-            );
+            System.Console.WriteLine(StartConfiguration.ConnectionStrings.RokonocontrolContext);
+            services.AddEntityFrameworkSqlServer()
+         .  AddDbContext<RokonocontrolContext>((serviceProvider, options) =>
+            options.UseSqlServer(StartConfiguration.ConnectionStrings.RokonocontrolContext)
+                .UseInternalServiceProvider(serviceProvider));
+
+
+ 
             services.AddRazorPages();
             services.AddSignalR();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie();
             services.AddScoped<IAutherizationManager, AutherizationManager>();
+            services.AddScoped<ICustomLogger, Logger>();
             services.AddHttpContextAccessor();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
             var projects = new List<Projects>();
-            using(var context = new RokonoControlContext())
+ 
+            using (var context = new RokonocontrolContext())
             {
-                 projects = context.Projects.Include(x => x.Repository).ToList();
+                projects = context.Projects.Include(x => x.Repository).ToList();
             }
 
-          //  RepositoryManager.InitRepositories(projects, Program.ServerOS);
+            Task.Run(() => RepositoryManager.InitRepositories(projects, Program.ServerOS));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,6 +82,7 @@
               //  ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
+            app.UseExceptionHandler("/home/error");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -92,7 +97,9 @@
                 endpoint.MapHub<MessageHub>("/messageHub");
                 endpoint.MapRazorPages();
                 endpoint.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
-                
+                endpoint.MapControllerRoute(name: "Login",
+                pattern: "/{*data}",
+                defaults: new { controller = "Organization", action = "Index" });
             });
 
        }

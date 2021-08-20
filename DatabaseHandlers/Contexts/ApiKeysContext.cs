@@ -9,12 +9,12 @@ namespace Platform.DatabaseHandlers.Contexts
     using Rokono_Control.Models;
     public class ApiKeysContext : IDisposable
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private bool disposedValue;
         private bool disposedValue1;
 
-        public ApiKeysContext(RokonoControlContext context, IConfiguration config)
+        public ApiKeysContext(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;

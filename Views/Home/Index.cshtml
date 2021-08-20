@@ -2,117 +2,25 @@
     ViewData["Title"] = "Home Page";
 }
 
-<!-- Authenticationw card start -->
-<div class="login-card card-block auth-body" style="padding: 23%; margin-left:15%; margin-right:15%;">
-
-    <div class="auth-box" style="background-color:#3553575c; padding:5%;">
-        <div class="row">
-            <img src="~/Logo/logo_transparent.png" class="img-responsive" />
-        </div>
-        <hr />
-        <div class="input-group" style="display: inline;">
-            <input id="exampleEmail11" type="email" class="form-control" placeholder="Your Email Address" style="color:red;border-color:red; background-color:#123f56;">
-            <span class="md-line"></span>
-        </div>
-        <div class="input-group" style="display: inline;">
-            <input id="examplePassword11" type="password" class="form-control" placeholder="Password" style="color:red;border-color:red; background-color:#123f56;">
-            <span class="md-line"></span>
-        </div>
-        <div class="row m-t-25 text-left">
-            <div class="col-sm-7 col-xs-12">
-                <div class="checkbox-fade fade-in-primary">
-                    <label>
-                        <input type="checkbox" value="" style="color:azure;">
-                        <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
-                        <span class="text-inverse" style="color:azure;">Remember me</span>
-                    </label>
-                </div>
-            </div>
-
-        </div>
-        <div class="row m-t-30">
-            <div class="col-md-12" style="text-align:center;">
-                <button type="button" id="loginBtn" onclick="LoginUser()">Sign in</button>
-            </div>
-        </div>
-        <hr />
-        <div class="row">
-            <div class="col-md-10">
-                <p class="text-inverse text-left m-b-0" style="text-align:center;color: azure;">Thank you and enjoy our website.</p>
-                <p class="text-inverse text-left" style="text-align:center;color: azure;"><b>Your Autentification Team</b></p>
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- end of form -->
-</div>
-<!-- Authentication card end -->
 <style>
-    .e-float-input e-control-wrapper e-outline {
-        color: red;
-    }
-
-    .form-control e-control e-textbox e-lib {
-        border: 0;
-        border-width: 0;
-        color: red;
+    h1, p {
+        color:#caf0ff !important;
     }
 </style>
-<script>
-    var loginBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
-    loginBtn.appendTo('#loginBtn');
 
-    var exampleEmail11 = new ej.inputs.TextBox({
-        placeholder: 'Email',
-        cssClass: 'e-outline',
-        floatLabelType: 'Auto'
-    });
-    exampleEmail11.appendTo('#exampleEmail11');
-    var examplePassword11 = new ej.inputs.TextBox({
-        placeholder: 'Password',
-        cssClass: 'e-outline',
-        floatLabelType: 'Auto'
-    });
-    examplePassword11.appendTo('#examplePassword11');
-    $(document).ready(function () {
-        $.ajax({
-            type: 'GET',
-            url: '/Authenication/GetUsers',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-                LoadAccounts(response);
-            },
-            error: function (xhr, status, error) {
+<!-- Authenticationw card start -->
+<div class="login-card card-block auth-body" style="text-align: center; margin-top: 25%; border-top: 1px solid #caf0ff; border-bottom: 1px solid #caf0ff; ">
+    <h1 style="padding-top:50px;">Collaborativesoft Concoct Cloud</h1>
+    <p>Oops, it appears that you're trying to reach a page that doesn't have an instance.</p>
+    <p>This is likely to an issue with the domain name of your organization, please contact your system administrator.</p>
 
-            }
-        });
-
-    });
-    function LoginUser() {
-        //console.log("In");
-        var dto = {
-            "Email": $("#exampleEmail11").val(),
-            "Password": $("#examplePassword11").val(),
-
-        }
-        //console.log(dto);
-        $.ajax({
-            type: 'POST',
-            url: '/Authenication/Login',
-            data: JSON.stringify(dto),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-                window.location = '/Dashboard/Index';
-            },
-            error: function (xhr, status, error) {
-                console.log(error);
-            }
-        });
-    }
-
-
-</script>
+    <svg id="Layer_1" enable-background="new 0 0 512.004 512.004" height="250" viewBox="0 0 512.004 512.004" width="250" xmlns="http://www.w3.org/2000/svg">
+        <g>
+            <path fill="#caf0ff" d="m356.827 41.913c-22.858-15.731-49.646-24.047-77.47-24.047-51.626 0-98.316 28.587-121.851 74.605-3.798 7.43-10.626 6.496-17.287 6.496-41.146 0-77.746 26.147-91.074 65.064-1.178 3.441-4.061 6.19-7.907 7.542-25.688 9.029-42.242 33.406-41.19 60.659 1.281 33.263 29.427 59.271 62.868 59.271h22.527v27.112h-21.936c-3.135-9.245-11.89-15.92-22.181-15.92-12.914 0-23.421 10.506-23.421 23.42 0 12.915 10.507 23.421 23.421 23.421 10.291 0 19.047-6.675 22.181-15.921h29.436c4.143 0 7.5-3.358 7.5-7.5v-34.612h67.795v100.124h-44.964c-3.254-11.163-13.572-19.346-25.772-19.346-14.804 0-26.847 12.043-26.847 26.846s12.043 26.846 26.847 26.846c12.2 0 22.518-8.183 25.772-19.346h52.464c4.143 0 7.5-3.358 7.5-7.5v-107.624h67.693v139.745c-13.979 3.383-24.395 15.992-24.395 30.995 0 17.587 14.308 31.895 31.895 31.895s31.895-14.308 31.895-31.895c0-15.004-10.416-27.613-24.395-30.995v-139.745h16.347c4.143 0 7.5-3.358 7.5-7.5s-3.357-7.5-7.5-7.5h-219.362c-25.447 0-46.927-20.119-47.88-44.849-.796-20.638 11.732-39.095 31.177-45.929 8.207-2.885 14.448-9.021 17.124-16.834 11.251-32.852 42.147-54.924 76.883-54.924 5.147 0 22.151 1.942 30.643-14.666 20.957-40.979 62.529-66.435 108.495-66.435 24.772 0 48.62 7.401 68.966 21.403 3.413 2.349 8.082 1.486 10.43-1.926 2.347-3.412 1.485-8.082-1.927-10.43zm-315.501 292.623c-4.644 0-8.421-3.778-8.421-8.421s3.777-8.42 8.421-8.42c4.643 0 8.42 3.777 8.42 8.42s-3.778 8.421-8.42 8.421zm56.176 76.437c-6.532 0-11.847-5.314-11.847-11.846s5.314-11.846 11.847-11.846c6.531 0 11.846 5.314 11.846 11.846s-5.314 11.846-11.846 11.846zm177.824 51.271c0 9.316-7.579 16.895-16.895 16.895-9.315 0-16.895-7.579-16.895-16.895s7.579-16.895 16.895-16.895 16.895 7.579 16.895 16.895z" />
+            <path fill="#caf0ff" d="m412.193 276.503h-94.915c-4.143 0-7.5 3.358-7.5 7.5s3.357 7.5 7.5 7.5h16.348v107.624c0 4.142 3.357 7.5 7.5 7.5h52.463c3.254 11.163 13.572 19.346 25.773 19.346 14.803 0 26.846-12.043 26.846-26.846s-12.043-26.846-26.846-26.846c-12.2 0-22.519 8.183-25.773 19.346h-44.963v-100.124h63.567c1.575 0 3.147-.041 4.716-.117v34.729c0 4.142 3.357 7.5 7.5 7.5h29.435c3.135 9.246 11.891 15.921 22.182 15.921 12.914 0 23.421-10.506 23.421-23.421 0-12.914-10.507-23.42-23.421-23.42-10.291 0-19.047 6.675-22.182 15.92h-21.935v-29.108c45.637-9.282 81.006-49.397 80.077-97.937-1.047-54.681-46.681-98.044-101.431-96.051-4.496.166-8.86-2.327-11.055-6.342-4.295-7.86-9.397-15.342-15.167-22.237-2.658-3.178-7.389-3.598-10.564-.939-3.177 2.658-3.598 7.388-.939 10.564 5.139 6.143 9.684 12.805 13.507 19.804 4.74 8.677 14.012 14.158 23.816 14.158.313 0 .628-.006.943-.017 46.273-1.674 85.004 34.964 85.892 81.348.898 46.846-38.546 84.645-84.795 84.645zm7.168 110.778c6.531 0 11.846 5.314 11.846 11.846s-5.314 11.846-11.846 11.846-11.847-5.314-11.847-11.846 5.315-11.846 11.847-11.846zm56.665-69.587c4.644 0 8.421 3.777 8.421 8.42s-3.777 8.421-8.421 8.421-8.421-3.778-8.421-8.421 3.777-8.42 8.421-8.42z" />
+       </g>
+    </svg>
+    <!-- end of form -->
+</div>
+ 
+ 

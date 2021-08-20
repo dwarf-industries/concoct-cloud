@@ -1,0 +1,187 @@
+﻿@{ 
+    var ProjectName = ViewData["OrganizationName"];
+    var ProjectId = ViewData["ProjectId"] as int?;
+    var buildNumber = ViewData["BuildVersion"] as string;
+}
+
+<style>
+    /* Weather Card Layout Customization */
+    .common-img-bg {
+        background: rgb(28, 134, 200);
+    }
+
+    .card-control-section.basic_card_layout #weather_card.e-card {
+        background-image: url('./src/card/images/weather.png');
+    }
+
+        .card-control-section.basic_card_layout #weather_card.e-card .e-card-header-caption .e-card-header-title,
+        .card-control-section.basic_card_layout #weather_card.e-card .e-card-header-caption .e-card-sub-title {
+            color: white;
+        }
+
+    .highcontrast .card-control-section.basic_card_layout #weather_card.e-card .e-card-header.weather_report .e-card-header-image {
+        border: none;
+    }
+
+    .card-control-section.basic_card_layout #weather_card.e-card .weather_report .e-card-header-caption {
+        text-align: right;
+    }
+
+    .card-control-section.basic_card_layout #weather_card.e-card .e-card-header.weather_report .e-card-header-image {
+        background-image: url('./src/card/images/rainy.svg');
+    }
+
+    .card-control-section.basic_card_layout .col-xs-6.col-sm-6.col-lg-6.col-md-6 {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .card-control-section.basic_card_layout .card-layout {
+        margin: auto;
+        max-width: 400px;
+    }
+
+    @@media (min-width: 870px) {
+        .card-control-section.basic_card_layout .col-xs-6.col-sm-6.col-lg-6.col-md-6 {
+            width: 50%;
+        }
+
+        .card-control-section.basic_card_layout .card-layout {
+            max-width: 870px;
+        }
+    }
+</style>
+
+<div class="col-lg-12 control-section card-control-section basic_card_layout">
+    <div class="e-card-resize-container">
+        <div class='row'>
+            <div class="row card-layout" style="margin:30%">
+
+                <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                    <!-- Basic Card Layout  -->
+                    <div tabindex="0" class="e-card" id="basic_card">
+                        <div class="e-card-header">
+                            <div class="e-card-header-caption">
+                                <div class="e-card-header-title">Public access to @ProjectName</div>
+                                <div class="e-card-sub-title">
+                                    Powered By Concoct Cloud | @buildNumber
+                                </div>
+                            </div>
+                        </div>
+                        <div class="e-card-content">
+                            <div id="GetAccount">
+                                <input id="loginMail" />
+                            </div>
+                            
+                            <div id="AuthorizeAccount" style="display:none;">
+                                <input id="PasswordLogin" type="password" />
+                            </div>
+                        </div>
+                        <div class="e-card-actions">
+
+                            <button id="initButton" class="e-btn e-outline e-primary" onclick="CheckAccountExist()">
+                                Next
+                            </button>
+                         
+                            
+                            <button id="authenicateBtn" style="display:none;" onclick="Login()" class="e-btn e-outline e-primary">
+                                Login
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var loginMail = new ej.inputs.TextBox({
+        placeholder: 'Email',
+        floatLabelType: 'Auto'
+    });
+
+    loginMail.appendTo('#loginMail');
+
+    var PasswordLogin = new ej.inputs.TextBox({
+        placeholder: 'Password',
+        floatLabelType: 'Auto'
+    });
+
+    PasswordLogin.appendTo('#PasswordLogin');
+
+    function CheckAccountExist()
+    {
+
+        $("#GetAccount").hide();
+        $("#AuthorizeAccount").show();
+        $("#initButton").hide();
+        $("#authenicateBtn").show();
+    }
+
+    const deleteAllCookies = () => {
+        const cookies = document.cookie.split(";");
+        for (const cookie of cookies) {
+            const eqPos = cookie.indexOf("=");
+            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
+    }
+
+    function Login() {
+         
+        deleteAllCookies();
+        var dto = {
+            "Email": $("#loginMail").val(),
+            "Password": $("#PasswordLogin").val(),
+
+        }
+        //console.log(dto);
+        $.ajax({
+            type: 'POST',
+            url: '/Authenication/Login',
+            data: JSON.stringify(dto),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                window.location = '/Dashboard/Index';
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function RequestAccess() {
+         var incomingSprintDTO =
+        {
+            "ProjectId": @ProjectId,
+            "email": $("#loginMailR").val(),
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Accounts/RequestAccess',
+            data: JSON.stringify(incomingSprintDTO),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+                if (response.Success) {
+                    alert("Account has been added to the project list");
+                    window.location = "/home";
+                }
+
+                if (response.Error) {
+                    alert("Project public access not enabled, please contact the system administrator!");
+                    window.location = "/home";
+                }
+            },
+            error: function(xhr, status, error) {
+             }
+        });
+    }
+ 
+</script>

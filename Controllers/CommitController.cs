@@ -15,12 +15,12 @@ namespace RokonoControl.Controllers
     public class CommitController : Controller
     {
 
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         AutherizationManager AutherizationManager;
         private int UserId;
  
-        public CommitController(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
+        public CommitController(RokonocontrolContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;

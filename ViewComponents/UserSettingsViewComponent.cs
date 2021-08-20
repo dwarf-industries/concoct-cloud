@@ -11,12 +11,12 @@ namespace Platform.ViewComponents
     public class UserSettingsViewComponent : ViewComponent
     {
         
-        private readonly RokonoControlContext Context;
+        private readonly RokonocontrolContext Context;
         private readonly IConfiguration Configuration;
         private  AutherizationManager AutherizationManager;
         private int UserId;
  
-        public UserSettingsViewComponent(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
+        public UserSettingsViewComponent(RokonocontrolContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;
@@ -29,8 +29,10 @@ namespace Platform.ViewComponents
             ViewData["ProjectId"] = projectId;
             using(var context = new UsersContext(Context,Configuration))
                 ViewData["UserData"] = context.GetUserAccount(UserId);
-            using(var context = new NotificationContext(Context,Configuration))
-                ViewData["Notifications"] = context.GetAllUserNotifications(UserId, projectId);
+            using (var context = new WorkItemsContext(Context, Configuration))
+                ViewData["AssignedWorkItemCount"] = context.GetWorkItemsCountForUser(UserId);
+            using (var context = new NotificationContext(Context, Configuration))
+                ViewData["Notifications"] = context.GetAllUserNotifications(UserId, projectId).Count;
             return View();
         }
     }

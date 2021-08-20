@@ -3,7 +3,7 @@
     var ProjectId = ViewData["ProjectId"] as int?;
     var Rights = ViewData["UserRights"] as UserRights;
 }
-<div class="row">
+<div class="row" id="activeDocumentationPageHeader">
     <div class="col-md-9" id="BreadCrumbHolder">
         @await Component.InvokeAsync("DocumentationBreadcrum", new IncomingIdRequest{
             ProjectId = @ProjectId.Value,
@@ -11,7 +11,7 @@
         })
     </div>
     <div class="col-md-3">
-        <input id="InputSeatchDocumentation"  style="margin: 5px;"/>
+        <input id="InputDocumentation"  style="margin: 5px;"/>
     </div>
 </div>
 <div class="row" id="DocumentationPageControl">
@@ -24,8 +24,8 @@
 
 <script>
 var InputSeatchDocumentation = new ej.inputs.TextBox({
-    placeholder: "What's on your mind",
+    placeholder: "Search a section",
     floatLabelType: 'Auto'
 });
-InputSeatchDocumentation.appendTo('#InputSeatchDocumentation');
+    InputSeatchDocumentation.appendTo('#InputDocumentation');
 </script>

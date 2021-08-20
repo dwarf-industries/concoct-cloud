@@ -18,7 +18,7 @@
     }
 
  </style>
-<div class="diagramControl">
+<div class="diagramControl"  id="diagram-space_Control_@uniqueName">
     <style>
             .e-file-select-wrap {
                 display: none;
@@ -89,10 +89,10 @@
                     content: "\e710";
                 }
 
-                .e-open::before {
+                /*.e-open::before {
                     content: "\e713";
                 }
-
+*/
                 .material .e-new::before {
                     content: "\e704";
                 }
@@ -101,9 +101,9 @@
                     content: "\e705";
                 }
 
-                .material .e-open::before {
+               /* .material .e-open::before {
                     content: "\e708";
-                }
+                }*/
 
                 .bootstrap .e-new::before {
                     content: "\e71c";
@@ -202,7 +202,7 @@
                 }
     </style>
     <div style="width: 100%;height: 10%" id="navMenu_@uniqueName">
-        <div id='toolbar' style="width:100%;height: 10%;margin-top: 10px; display:flex;">
+        <div id='toolbar' style="width:100%;height: 35px;margin-top: 10px; display:flex;">
             <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="ClearDiagram()">Clear</button>
             <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="SaveDiagram()">Save</button>
             <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="LoadDiagramFromFile()">Load</button>
@@ -212,7 +212,7 @@
         <div id="palette-space_@uniqueName" class="sb-mobile-palette">
             <div id="symbolpalette_@uniqueName" style="width:90%;"></div>
         </div>
-        <div id="diagram-space_@uniqueName" class="sb-mobile-diagram">
+        <div id="diagram-space_@uniqueName" style="width: 84.6%;" class="sb-mobile-diagram">
             <div id="diagram_@uniqueName"></div>
         </div>
      </div>
@@ -283,7 +283,7 @@
 
         if (preview) {
             DisabledEdit()
-            
+
             constraintSettings = [ ];
         }
         else {
@@ -489,6 +489,10 @@
                 ScaleDiagram(diagram);
 
             }
+            else {
+                var diagramspaceControl = document.getElementById("diagram-space_Control_@uniqueName");
+                diagramspaceControl.style.setProperty("height", "89vh");
+            }
 
         }
     }
@@ -507,7 +511,6 @@
         var diagram_g_diagramAdornerLayer = document.getElementById("diagram_@uniqueName" + "_diagramAdornerLayer");
         var diagram_g_hiddenUserHandleTemplate = document.getElementById("diagram_@uniqueName" + "_hiddenUserHandleTemplate");
 
-
         SetWidthHeight(diagramspace);
         SetWidthHeight(diagram_);
         SetWidthHeight(diagram_gcontent);
@@ -520,7 +523,7 @@
         SetWidthHeight(diagram_g_diagramPorts_svg);
         SetWidthHeight(diagram_g_diagramAdornerLayer);
         SetWidthHeight(diagram_g_hiddenUserHandleTemplate);
- 
+
 
     }
 

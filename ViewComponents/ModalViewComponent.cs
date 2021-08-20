@@ -6,10 +6,10 @@ namespace Platform.ViewComponents
     using Rokono_Control.Models;
     public class ModalViewComponent : ViewComponent
     {
-        private readonly RokonoControlContext Context;
+        private readonly RokonocontrolContext Context;
         private readonly IConfiguration Configuration;
 
-        public ModalViewComponent(RokonoControlContext context, IConfiguration config)
+        public ModalViewComponent(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;

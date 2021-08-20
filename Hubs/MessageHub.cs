@@ -15,14 +15,16 @@ namespace Platform.Hubs
     using Rokono_Control;
     using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
+    using RokonoControl.Models;
+
     public class MessageHub : Hub
     {
-        RokonoControlContext DatabaseContext;
+        RokonocontrolContext DatabaseContext;
         IConfiguration Configuration;
         private  AutherizationManager AutherizationManager;
         private int UserId;
  
-        public MessageHub(RokonoControlContext dbContext, IConfiguration config,IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
+        public MessageHub(RokonocontrolContext dbContext, IConfiguration config,IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             DatabaseContext = dbContext;
             Configuration = config;
@@ -75,21 +77,35 @@ namespace Platform.Hubs
             return Clients.Caller.SendAsync("ReciveNotification", res);
         }
         
-       public static void SendNewNotification(IHubContext<MessageHub> hubContext, HubMappedMembers reciverData, Notifications notification)
-       {
-           notification.AssociatedProjectNotifications = null;
-           notification.AssociatedUserNotifications = null;
-           if(reciverData != null)
+        public static void SendNewNotification(IHubContext<MessageHub> hubContext, HubMappedMembers reciverData, Notifications notification)
+        {
+            notification.AssociatedProjectNotifications = null;
+            notification.AssociatedUserNotifications = null;
+            if(reciverData != null)
+                hubContext.Clients
+                        .Client(reciverData.Id)
+                        .SendAsync("ReciveNewNotification",
+                        JsonConvert.SerializeObject(notification));
+        }
+
+        public static void SendCardDetailChange(IHubContext<MessageHub> hubContext, HubMappedMembers reciverData, string cardData)
+        {
+            if (reciverData != null)
                 hubContext.Clients
                       .Client(reciverData.Id)
-                      .SendAsync("ReciveNewNotification",
-                      JsonConvert.SerializeObject(notification));
-       }
+                      .SendAsync("CardStatusUpdated",
+                      JsonConvert.SerializeObject(cardData));
+        }
         public override Task OnConnectedAsync()
         {
             
            string name = Context.User.Claims.FirstOrDefault().Value;
            Groups.AddToGroupAsync(Context.ConnectionId, name);
+            using(var context = new UsersContext(DatabaseContext,Configuration))
+            {
+                var userProject = context.GetUserProjects(UserId);
+            }
+
             Program.Members.Add(new Models.HubMappedMembers{
                 Id = Context.ConnectionId,
                 Name = name

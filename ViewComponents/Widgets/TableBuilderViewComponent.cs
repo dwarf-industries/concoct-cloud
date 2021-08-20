@@ -9,10 +9,10 @@ namespace Platform.ViewComponents.Widgets
     [ViewComponent(Name = "TableBuilder")]
     public class TableBuilderViewComponent : ViewComponent
     {
-        private readonly RokonoControlContext Context;
+        private readonly RokonocontrolContext Context;
         private readonly IConfiguration Configuration;
 
-        public TableBuilderViewComponent(RokonoControlContext context, IConfiguration config)
+        public TableBuilderViewComponent(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;

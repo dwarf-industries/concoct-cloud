@@ -12,12 +12,12 @@ namespace Platform.ViewComponents
 
     public class ChatUserPersonaBoxViewComponent : ViewComponent
     {
-        private readonly RokonoControlContext Context;
+        private readonly RokonocontrolContext Context;
         private readonly IConfiguration Configuration;
         private  AutherizationManager AutherizationManager;
         private int UserId;
         private UserRights Rights;
-        public ChatUserPersonaBoxViewComponent(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
+        public ChatUserPersonaBoxViewComponent(RokonocontrolContext context, IConfiguration config, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;

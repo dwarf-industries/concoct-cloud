@@ -1,67 +1,68 @@
 
-@{
-    ViewData["Title"] = "Backlog";
+@{ ViewData["Title"] = "Backlog";
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
     var result = ViewData["ProjectId"] as int?;
     var WorkItemType = ViewData["WorkItemType"] as int?;
     var WorkItemTypeName = ViewData["GetSelectedWorkItem"] as string;
     var returnUrl = ViewData["ReturnUrl"] as string;
-    var currentIteration = ViewData["CurrentIteration"] as int?;
-}
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    var currentIteration = ViewData["CurrentIteration"] as int?; }
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script>
+<link href="~/css/Shared/quill/quillsnow.css" rel="stylesheet">
 <!-- Main Quill library -->
 <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
 <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
- 
+
 <style>
-    .e-gridcontent{
+    .e-gridcontent {
         max-height: 80vh;
     }
-    .e-grid .e-gridcontent{
+
+    .e-grid .e-gridcontent {
         max-height: 68vh;
         overflow: auto;
     }
 </style>
 
- <!-- end of sidebar element -->
- 
- 
-        <div id="spinner">
-             <div id="loader"></div>
-        </div>
-        <div id="Content" style="display: none;">
-            <div class="col-md-12">
-                <div class="main-card mb-3 card">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Select a project</h5>
-                        <div class="row" style="margin-left:10px;">
+<!-- end of sidebar element -->
 
-                            <div class="col-md-5">
-                                <button type="button" id="iconbtn" class="btn btn-primary">New Work Item</button>
 
-                                <button id="QueryBtn">View as board</button>
-                                <button id="ImportWorkItemBtn" onclick="GenerateMailModal()"></i>Email report</button>
-                                <button id="ExportWorkItemBtn" onclick="ExportWorkItems()">Export Work Items</button>
-                            </div>
-                            <div class="col-md-3">
+<div id="spinner">
+    <div id="loader"></div>
+</div>
+<div id="Content" style="display: none;">
+    <div class="col-md-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <h5 class="card-title text-center">Select a project</h5>
+                <div class="row" style="margin-left:10px;">
 
-                            </div>
-                            <div class="col-md-4">
-                                @await Component.InvokeAsync("IterationDropdown", new IncomingIdRequest{
+                    <div class="col-md-5">
+                        <button type="button" id="iconbtn" class="btn btn-primary">New Work Item</button>
 
-                                    ProjectId = @result.Value,
-                                    Id = @currentIteration.Value,
-                                    Phase = "Boards/ProjectBacklog"
-                                })
-                                <button id="WorkItemTypeBtnFilter" class="btn btn-primary">@WorkItemTypeName</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="control-section" style="height:82vh;">
-                                <div class="content-wrapper">
-                                    <div id="TreeGrid"></div>
-                                </div>
-                            </div>
+                        <button id="QueryBtn">View as board</button>
+                        <button id="ImportWorkItemBtn" onclick="GenerateMailModal()"></i>Email report</button>
+                        <button id="ExportWorkItemBtn" onclick="ExportWorkItems()">Export Work Items</button>
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+                    <div class="col-md-4">
+                        @await Component.InvokeAsync("IterationDropdown", new IncomingIdRequest
+                        {
+
+                            ProjectId = @result.Value,
+                            Id = @currentIteration.Value,
+                            Phase = "Boards/ProjectBacklog"
+                        })
+                        <button id="WorkItemTypeBtnFilter" class="btn btn-primary">@WorkItemTypeName</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="control-section" style="height:82vh;">
+                        <div class="content-wrapper">
+                            <div id="TreeGrid"></div>
                         </div>
                     </div>
                 </div>
@@ -69,43 +70,45 @@
         </div>
     </div>
 </div>
+    </div>
+</div>
 
-    <div id="modalDialog">
-        <div class="btn-group dropdown-split-primary" style="text-align:center;">
-             <button   id="taskBtn" onclick="NewTask()">Task</button>
-            <button   id="issueBtn" onclick="NewIssue()"></i>Issue</button>
-            <button   id="bugBtn" onclick="NewBug()">Bug</button>
+<div id="modalDialog">
+    <div class="btn-group dropdown-split-primary" style="text-align:center;">
+        <button id="taskBtn" onclick="NewTask()">Task</button>
+        <button id="issueBtn" onclick="NewIssue()"></i>Issue</button>
+        <button id="bugBtn" onclick="NewBug()">Bug</button>
+    </div>
+</div>
+<div id="emailReport">
+    <div class="row" style="padding:2%;">
+        <p>
+            Are you sure that you want to take the current baclog and generate a email report for all the items inside?
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-md-6" style="text-align: center;">
+            <button id="CancelEmailReport" onclick="CancelEmailConfirm()">Cancel</button>
+        </div>
+        <div class="col-md-6" style="text-align: center;">
+            <button id="GenerateReport" onclick="EmailConfirm()">Confirm</button>
         </div>
     </div>
-    <div id="emailReport">
-        <div class="row" style="padding:2%;">
-            <p>
-                Are you sure that you want to take the current baclog and generate a email report for all the items inside?
-            </p>
-        </div>
-        <div class="row">
-                <div class="col-md-6" style="text-align: center;">
-                <button id="CancelEmailReport" onclick="CancelEmailConfirm()">Cancel</button>
-            </div>
-            <div class="col-md-6" style="text-align: center;">
-                <button id="GenerateReport" onclick="EmailConfirm()">Confirm</button>
-            </div>
-        </div>
+</div>
+<div id="exportDialog">
+    <div class="row">
+        <button id="CancelExportBtn" style="width: 100%;" onclick="CancelExport()">Close</button>
     </div>
-    <div id="exportDialog">
-        <div class="row">
-            <button id="CancelExportBtn" style="width: 100%;" onclick="CancelExport()">Close</button>
-        </div>
-        <div class="row" style="padding:2%;">
-            <div class="position-relative form-group" style="width:100%;height:300px;" ><label for="exportContent"  class="">Manual Creation Script</label><div name="exportContent" id="exportContent"  style="max-height: 400px;"  class="form-control"></div></div>
-        </div>
- 
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <div class="row" style="padding:2%;">
+        <div class="position-relative form-group" style="width:100%;height:300px;"><label for="exportContent" class="">Manual Creation Script</label><div name="exportContent" id="exportContent" style="max-height: 400px;" class="form-control"></div></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="~/Syncfusion/ej2/dist/ej2.min.js"></script>
 
- <script>
+    <script>
     ej.treegrid.TreeGrid.Inject(ej.treegrid.Edit, ej.treegrid.CommandColumn);
     var exportContent;
     var treeGridObj;
@@ -119,14 +122,14 @@
     {
         //console.log(id);
     }
-    $( document ).ready(function() 
+    $( document ).ready(function()
     {
         exportContent = new Quill('#exportContent', {
             theme: 'snow',
             height: '300px'
         });
         var id = @result;
-        
+
           var dto = {
             "id": id,
             "WorkItemType": @WorkItemType,
@@ -181,7 +184,7 @@
         dialogObj.hide();
        exportDialog.hide();
         emailDialog.hide();
-        
+
     });
 
 
@@ -197,7 +200,7 @@
     recycleBtn.appendTo('#RecycleBtn');
 
 
-    
+
     //Dialog btns
     var taskBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     taskBtn.appendTo('#taskBtn');
@@ -219,7 +222,7 @@
         {
             text: 'Feature',
             iconCss: 'e-ddb-icons e-dashboard',
-          
+
             url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+2+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
         },
         {
@@ -250,7 +253,7 @@
             iconCss: 'e-ddb-icons e-logout',
             url:"/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+4+"&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
          }
-        
+
         ];
 
     var btnObj = new ej.splitbuttons.DropDownButton({ items: items, iconCss: 'e-ddb-icons e-profile',cssClass: 'e-outline', select:WorkItemListClicked });
@@ -265,7 +268,7 @@
         {
             text: 'Feature',
             iconCss: 'e-ddb-icons e-dashboard',
-          
+
             url:" /Boards/ProjectBacklog?projectId="+ProjectId+"&workItemType="+2+"&iteration=@currentIteration&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
         },
         {
@@ -274,8 +277,8 @@
             url:" /Boards/ProjectBacklog?projectId="+ProjectId+"&workItemType="+7+"&iteration=@currentIteration&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
 
         },
-       
-        
+
+
         ];
 
         var WorkItemTypeBtnFilter = new ej.splitbuttons.DropDownButton({ items: workItemCollection, iconCss: 'e-ddb-icons e-profile',cssClass: 'e-outline', select:WorkItemListClicked });
@@ -289,7 +292,7 @@
        // //console.log(args);
     }
 
-    var onClick = function(args){ 
+    var onClick = function(args){
         var rowIndex = ej.base.closest(args.target, '.e-row').rowIndex;
         var data = treeGridObj.getCurrentViewRecords();
         //console.log(data[rowIndex]);
@@ -299,7 +302,7 @@
             window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+7+"&boardId="+boardId+"&parentId="+data[rowIndex].id+"&&returnUrl="+window.location.href;
         if(data[rowIndex].typeId === 7)
             CallChoiceMenu(data[rowIndex]);
-     } 
+     }
     function CallChoiceMenu(row)
     {
         selected = row;
@@ -350,13 +353,13 @@
         ShowContent();
     }
 
-     
+
     function CreateNewWorkItem(id){
         ProjectId = @result;
         boardId = 0;
         window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+id+"&boardId="+boardId+"&parentId=0&&returnUrl="+window.location.href;
     }
-    
+
     function GetCurrentRow(args)
     {
         //console.log(args);
@@ -434,7 +437,7 @@
     function EmailConfirm()
     {
         var id = @result;
-        
+
         var dto = {
             "ProjectId": id,
             "Items": treeGridObj.dataSource
@@ -457,7 +460,7 @@
     function ExportWorkItems()
     {
         var id = @result;
-    
+
         var dto = {
             "ProjectId": id,
          }
@@ -488,6 +491,6 @@
     {
         exportDialog.hide();
     }
- </script>
+    </script>
 
 

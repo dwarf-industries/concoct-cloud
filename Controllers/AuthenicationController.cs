@@ -14,10 +14,10 @@ namespace Rokono_Control.Controllers
 
     public class AuthenicationController : Controller
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
 
-        public AuthenicationController(RokonoControlContext context,IConfiguration config)
+        public AuthenicationController(RokonocontrolContext context,IConfiguration config)
         {
             Context = context;
             Configuration = config;

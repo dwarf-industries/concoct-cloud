@@ -5,30 +5,35 @@ namespace RokonoControl.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.SignalR;
     using Microsoft.Extensions.Configuration;
     using Platform.DatabaseHandlers.Contexts;
     using Platform.DataHandlers;
     using Platform.DataHandlers.Interfaces;
+    using Platform.Hubs;
     using Platform.Models;
+    using Rokono_Control;
     using Rokono_Control.DatabaseHandlers;
     using Rokono_Control.Models;
     using RokonoControl.Models;
 
     public class BoardsController : Controller
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
+        IHubContext<MessageHub> MessageContext;
 
         AutherizationManager AutherizationManager {get; set;}
         private int UserId {get; set;}
 
 
-        public BoardsController(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager,IHttpContextAccessor httpContextAccessor)
+        public BoardsController(RokonocontrolContext context, IConfiguration config, IAutherizationManager autherizationManager,IHttpContextAccessor httpContextAccessor, IHubContext<MessageHub> hubContext)
         {
             Context = context;
             Configuration = config;
             AutherizationManager = (AutherizationManager) autherizationManager;
             UserId = AutherizationManager.GetCurrentUser(UserId,httpContextAccessor.HttpContext.Request);
+            MessageContext = hubContext;
         }
 
         public IActionResult Index(int projectId)
@@ -88,12 +93,20 @@ namespace RokonoControl.Controllers
                 ViewData["Iteration"] = iteration;
                 ViewData["Person"] = person;
 
+                var projectPublicAccess = context.CheckProjectAccess(projectId, Request.Host.Host);
+                ViewData["PublicProject"] = projectPublicAccess.Item1;
+                ViewData["PublicAddress"] = projectPublicAccess.Item2;
             }
             using(var context = new UsersContext(Context,Configuration))
                 ViewData["GetUserViewRights"] = context.CheckUserViewWorkitemRights(UserId, projectId);
 
             using(var context = new WorkItemsContext(Context,Configuration))
+            {
+                var dates = context.GetActiveSprintDates(projectId, iteration);
                 ViewData["WorkItemTypes"] = context.GetAllWorkItemTypes();
+                ViewData["StartDate"] = dates.Item1;
+                ViewData["EndDate"] = dates.Item2;
+            }
             return View();
         }
 
@@ -253,6 +266,9 @@ namespace RokonoControl.Controllers
             {
                 if (userRights != null)
                     result = context.GetProjectSprints(dataRequest, userRights.AssociatedProjectMemberRights.FirstOrDefault().Rights.ViewOtherPeoplesWork == 1 ? true : false, dataRequest.PersonId);
+                var remainingDone =  result.Where(x=>x.Status == "Done").Sum(x => int.Parse(x.Remaining));
+                var remaining = result.Where(x => x.Status != "Done").Sum(x => int.Parse(x.Remaining));
+
             }
             return result;
         }
@@ -273,8 +289,9 @@ namespace RokonoControl.Controllers
         {
             using (var context = new WorkItemsContext(Context,Configuration))
             {
-                context.ChangeWorkItemBoard(card);
+                context.ChangeWorkItemBoard(card, MessageContext, UserId);
             }
+          
             return true;
         }
 
@@ -289,12 +306,20 @@ namespace RokonoControl.Controllers
                 var getId = card.CardId.Split(" ");
                 var parse = int.Parse(getId[1]);
                 workItem = context.GetWorkItemById(parse);
+
             }
-            using(var context = new UsersContext(Context,Configuration))
+            using (var context = new UsersContext(Context,Configuration))
                 getUserByName = context.GetUserAccountByName(card.Name);
             using (var context = new NotificationContext(Context,Configuration))
                 context.AddNewUserNotification(1,workItem,getUserByName.Id);
-            
+
+            var reciverData = Program.Members.Where(x => x.Name != getUserByName.Email).ToList();
+
+            reciverData.ForEach(x =>
+            {
+                MessageHub.SendCardDetailChange(MessageContext, x, card.CardId);
+            });
+
            
             return true;
         }

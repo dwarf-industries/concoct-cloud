@@ -15,7 +15,7 @@ namespace Rokono_Control.DatabaseHandlers
 
     public class DatabaseController : IDisposable
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         public DatabaseController(int i, int internalId) 
         {
@@ -25,7 +25,7 @@ namespace Rokono_Control.DatabaseHandlers
         }
         private int I { get; set; }
         private int InternalId { get; set; }
-        public DatabaseController(RokonoControlContext context, IConfiguration config)
+        public DatabaseController(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;
@@ -61,6 +61,20 @@ namespace Rokono_Control.DatabaseHandlers
                 connection.Close();
             }
             return tableNames;
+        }
+
+        internal int GetProjectByOrganization(string data)
+        {
+            var project = Context.Projects.FirstOrDefault(x => x.OrganizationName.ToLower() == data.ToLower());
+            if (project == null)
+                return 0;
+
+            return project.Id;
+        }
+
+        internal Projects GetOrganizationName(int projectId)
+        {
+            return Context.Projects.FirstOrDefault(x => x.Id == projectId);
         }
 
         internal string GetPremadeName(int id) => Context.PremadeWidgets.FirstOrDefault(x => x.Id == id).ViewComponentName;
@@ -111,6 +125,15 @@ namespace Rokono_Control.DatabaseHandlers
             Context.Attach(association);
             Context.Update(association);
             Context.SaveChanges();
+        }
+
+        internal (int, string) CheckProjectAccess(int projectId, string domain)
+        {
+            var getProject = Context.Projects.Include(x=>x.AssociatedProjectIterations).FirstOrDefault(x => x.Id == projectId);
+            if (getProject == null)
+                return (0, "");
+
+            return getProject.PublicBoard == 0 ? (0, "") : (1, $"https://{domain}/Boards/PublicBoard?projectId={getProject.Id}&iteration={getProject.AssociatedProjectIterations.FirstOrDefault(x=>x.ActiveIteration == 1).IterationId}&person=0");
         }
 
         internal PremadeWidgets SaveWidgetToBoard(IncomingIdRequest request)

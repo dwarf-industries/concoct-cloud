@@ -8,5 +8,6 @@ namespace Rokono_Control.Models
         public int ProjectId { get; set; }
         public int UserId { get; set; }
         public string __RequestVerificationToken { get; set; }
+        public object Data { get; set; }
     }
 }

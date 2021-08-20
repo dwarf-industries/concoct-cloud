@@ -1,28 +1,73 @@
-﻿@{ 
-    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+﻿@{ Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
     var projectId = ViewData["ProjectId"] as int?;
     var commitId = ViewData["CommitId"] as string;
     ViewData["Title"] = $"Commit {commitId}";
-
+    var Items = ViewData["CommitDetails"] as string;
+    var defaultItem = ViewData["DefaultItem"] as (string, string)?;
 }
+
+<style>
+    .ListRow {
+        padding: 1%;
+        border-top: 1px solid;
+        cursor: pointer;
+    }
+
+    .ListRow:hover {
+        box-shadow: 1px 4px #1c86c8;
+    }
+
+    .ListRowActive {
+        box-shadow: 1px 4px #1c86c8;
+    }
+    .ListItem {
+        padding: 4px;
+        font-size: 17px;
+        font-family: Roboto inherit;
+        width: 100%;
+    }
+</style>
 
 <div class="displayFlex">
     <h1>Commit message</h1>
-
     <p>Commit Id <span>Kristifor Milchev</span> commited <span>Day</span> <span>Branch Name</span></p>
 </div>
 
-<div class="row">
-    <div class="col-3">
+<div class="row " style="display:flex">
+    @await Component.InvokeAsync("CodeEditor", new IncomingIdRequest
+    {
+        Phase = Items
+    })
+    @*<div class="col-md-3" style="height: 80vh; overflow: auto;">
+                @foreach (var item in Items)
+                {
+        <div class="row ListRow" id="@item.Item3" onclick="UpdateEditorContentData('@item.Item3')">
+            <span  class="ListItem">
+                @item.Item3
+            </span>
+        </div>            }
+            </div>
+            <div class="col-md-8" id="CodeArea">
 
-    </div>
-    <div class="col-8">
 
-        @await Component.InvokeAsync("CodeEditor", new IncomingIdRequest
-        {
-            Phase = commitId,
-            ProjectId = projectId.Value
-        })
 
-    </div>
+            </div>*@
 </div>
+
+
+<script>
+    var lastId;
+    function UpdateEditorContentData(id) {
+        
+        $("#CodeArea").html("");
+        $("#CodeArea").load("/Repositories/UpdateEditorContent?id=" + id);
+        $("#" + lastId).removeClass("ListRowActive");
+        var lastSelected = document.getElementById(lastId);
+        currentSelected.classList.remove("ListRowActive");
+
+        var currentSelected = document.getElementById(id);
+        currentSelected.classList.add("ListRowActive");
+ 
+        lastId = id;
+     }
+</script>

@@ -9,11 +9,11 @@ namespace Platform.DatabaseHandlers.Contexts
     using Rokono_Control.Models;
     public class DocumentationContext : IDisposable
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private bool disposedValue;
 
-        public DocumentationContext(RokonoControlContext context, IConfiguration config)
+        public DocumentationContext(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;
@@ -47,17 +47,17 @@ namespace Platform.DatabaseHandlers.Contexts
                     InternalId = x.Id,
                     // NodeId = i++,
                     NodeText = x.CategoryName,
-                    IconCss = "icon-th icon",
+                    IconCss = "fa-list-alt",
                     Link = "",
                     ChannelType = 0,
                     IsParent = true,
                     ParentId = x.Id,
-                    IsExand = 1,
+                    IsExpand = 1,
                     NodeChild = x.DocumentationCategoryField.Select(y=> new OutgoingChatItemChild{
                         InternalId = y.Id,
                         // NodeId = i++,
                         NodeText = y.PageName,
-                        IconCss = "icon-circle-thin icon",
+                        IconCss = "fa fa-file",
                         Link = "",
                         ParentId = y.CategoryId.Value
                     }).ToList()
@@ -66,6 +66,17 @@ namespace Platform.DatabaseHandlers.Contexts
             });
             return result;
         }
+
+        internal bool CheckDocumentationPublicAccess(int id)
+        {
+            var result = default(bool);
+            var projectDetais = Context.Projects.FirstOrDefault(x => x.Id == id);
+            if (projectDetais != null)
+                result = projectDetais.AllowPublicControl == 1 ? true : false;
+
+            return result;
+        }
+
         internal void DeleteCategoryField(int id)
         {
             var category = Context.DocumentationCategoryField.FirstOrDefault(x=>x.Id == id);
@@ -75,6 +86,17 @@ namespace Platform.DatabaseHandlers.Contexts
             Context.DocumentationCategoryField.Remove(category);
             Context.SaveChanges();       
         }
+
+        internal int GetProjectIdByDocumentationKey(string phase)
+        {
+            var getDocObject = Context.Documentation.FirstOrDefault(x=>x.Apikey == phase);
+
+            if(getDocObject == null)
+                return 0;
+
+            return getDocObject.ProjectId.Value;
+        }
+
         internal string GetDocumentationCategoryName(int id)
         {
             var result = Context.DocumentationCategoryField.FirstOrDefault(x=>x.Id == id);

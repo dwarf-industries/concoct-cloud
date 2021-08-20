@@ -12,10 +12,10 @@ namespace Platform.Controllers
 
     public class OutboundDetailsController : Controller
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
 
-        public OutboundDetailsController(RokonoControlContext context, IConfiguration config)
+        public OutboundDetailsController(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;
@@ -37,10 +37,11 @@ namespace Platform.Controllers
         [HttpPost]
         public List<PublicMessages> GetPublicDiscussions([FromBody] IncomingIdRequest request)
         {
+            //Temporary disable due to changes over the new dicussions widget
             var result = new List<PublicMessages>();
             using(var context = new ChatContext(Context,Configuration))
             {
-                result = context.GetAllPublicMessagesForProject(request.Id,0);
+             //   result = context.GetAllPublicMessagesForProject(request.Id,0);
             }
             return result;
         }

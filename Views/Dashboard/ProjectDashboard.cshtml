@@ -1,17 +1,14 @@
-@{
-
-    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
-    ViewData["Title"] = $"Add New User";
-    var Project = ViewData["Project"] as Projects;
-    var ProjectMembers = ViewData["ProjectMembers"] as List<BindingUserAccount>;
-    var ProjectId = ViewData["ProjectId"] as int?;
-    var ProjectInitials = ViewData["Initials"] as string;
-    var CreatedCount = ViewData["WorkItemsCreated"] as int?;
-    var NewCount = ViewData["WorkItemsNew"] as int?;
-    var ActiveCount = ViewData["WorkItemsActive"] as int?;
-    var TestingCount = ViewData["WorkItemsTesting"] as int?;
-    var CompleatedCount = ViewData["WorkItemsCompleated"] as int?;
-}
+@{ Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+                ViewData["Title"] = $"Add New User";
+                var Project = ViewData["Project"] as Projects;
+                var ProjectMembers = ViewData["ProjectMembers"] as List<BindingUserAccount>;
+                var ProjectId = ViewData["ProjectId"] as int?;
+                var ProjectInitials = ViewData["Initials"] as string;
+                var CreatedCount = ViewData["WorkItemsCreated"] as int?;
+                var NewCount = ViewData["WorkItemsNew"] as int?;
+                var ActiveCount = ViewData["WorkItemsActive"] as int?;
+                var TestingCount = ViewData["WorkItemsTesting"] as int?;
+                var CompleatedCount = ViewData["WorkItemsCompleated"] as int?; }
 <style>
     object[type="image/svg+xml"] {
         vertical-align: middle;
@@ -58,182 +55,183 @@
     .e-font:before {
         content: '\e34c';
     }
-    .e-card{
+
+    .e-card {
         height: 515px;
         max-height: 515px;
     }
-</style>
-<link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
 
+    .landingCardMargin {
+        margin-top: 5%
+    }
+</style>
+ 
 <!-- end of sidebar element -->
 <!-- main-content declaration -->
- 
-        <div class="row  card-layout">
-            <div class="col-md-12">
-                <!-- Basic Card Layout  -->
-                <div tabindex="0" class="e-card" id="basic_card" style="height: 200px;">
-                    <div class="e-card-header">
+
+<div class="row  card-layout">
+    <div class="col-md-12">
+        <!-- Basic Card Layout  -->
+        <div tabindex="0" class="e-card" id="basic_card" style="height: 200px;">
+            <div class="e-card-header">
+
+            </div>
+            <div class="e-card-content">
+                <div class="row" style="height:87px">
+                    <div class="col-md-1">
+                        <div class="Thumbwrapper">
+                            <p style="color:white;font-size:48px;text-align:center;">@ProjectInitials</p>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <h3 style="font-size:48px; margin-top:2px;"> @Project.ProjectName</h3>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" id="Persons" class="btn btn-primary" style="margin-top:2px;" onclick="CallUrl('/Dashboard/ManageAccounts?id=@ProjectId')">Manage members</button>
 
                     </div>
-                    <div class="e-card-content">
-                        <div class="row" style="height:87px">
-                            <div class="col-md-1">
-                                <div class="Thumbwrapper">
-                                    <p style="color:white;font-size:48px;text-align:center;">@ProjectInitials</p>
-                                </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row  card-layout">
+    <div class="col-md-4 landingCardMargin">
+        <!-- Basic Card Layout  -->
+        <div tabindex="0" class="e-card" id="basic_card">
+            <div class="e-card-header">
+
+                <h3 class="center">About the Project</h3>
+
+            </div>
+            <div class="e-card-content">
+                <div class="row innerRow">
+                    <h2>Summary</h2>
+                </div>
+                <hr />
+
+                <div class="row innerRow">
+                    <p style=" word-break: break-word; word-wrap: break-word;"> @Project.ProjectDescription </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-4 landingCardMargin">
+        <!-- Basic Card Layout  -->
+        <div tabindex="0" class="e-card" id="basic_card">
+            <div class="e-card-header">
+
+                <h3 class="center">Project Stats</h3>
+
+            </div>
+            <div class="e-card-content">
+                <div class="row innerRow">
+                    <p>Boards</p>
+                </div>
+                <hr />
+                <div class="row innerRow">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span class="e-icons e-workitem"></span>
                             </div>
                             <div class="col-md-8">
-                                <h3 style="font-size:48px; margin-top:2px;"> @Project.ProjectName</h3>
-                            </div>
-                            <div class="col-md-3">
-                                <button type="button" id="Persons" class="btn btn-primary" style="margin-top:2px;" onclick="CallUrl('/Dashboard/ManageAccounts?id=@ProjectId')">Manage members</button>
-
+                                <div class="row">
+                                    @CreatedCount
+                                </div>
+                                <div class="row">
+                                    Work items created
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span class="e-icons e-workitem"></span>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    @CompleatedCount
+                                </div>
+                                <div class="row">
+                                    Work items compleated
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row innerRow">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span class="e-icons e-workitem"></span>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    @ActiveCount
+                                </div>
+                                <div class="row">
+                                    Work items active
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span class="e-icons e-workitem"></span>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    @TestingCount
+                                </div>
+                                <div class="row">
+                                    Work items testing
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row innerRow">
 
                 </div>
             </div>
+
         </div>
+    </div>
+    <div class="col-md-4 landingCardMargin">
+        <!-- Basic Card Layout  -->
+        <div tabindex="0" class="e-card" id="basic_card">
+            <div class="e-card-header">
 
-        <div class="row  card-layout">
-            <div class="col-md-4">
-                <!-- Basic Card Layout  -->
-                <div tabindex="0" class="e-card" id="basic_card">
-                    <div class="e-card-header">
+                <h3 class="center">Project Members</h3>
 
-                        <h3 class="center">About the Project</h3>
+            </div>
+            <div class="e-card-content">
 
-                    </div>
-                    <div class="e-card-content">
-                        <div class="row innerRow">
-                            <h2>Summary</h2>
-                        </div>
-                        <hr />
-
-                        <div class="row innerRow">
-                            <p style=" word-break: break-word; word-wrap: break-word;"> @Project.ProjectDescription </p>
-                        </div>
-                    </div>
-
+                <hr />
+                <div class="row innerRow">
+                    @{ foreach (var member in ProjectMembers)
+                                    {
+                        <div class="circle">
+                            <a href="#">@member.AliasName</a>
+                        </div> } }
+                </div>
+                <hr />
+                <div class="row innerRow">
+                    <p>Project members count: @ProjectMembers.Count</p>
                 </div>
             </div>
-            <div class="col-md-4">
-                <!-- Basic Card Layout  -->
-                <div tabindex="0" class="e-card" id="basic_card">
-                    <div class="e-card-header">
 
-                        <h3 class="center">Project Stats</h3>
-
-                    </div>
-                    <div class="e-card-content">
-                        <div class="row innerRow">
-                            <p>Boards</p>
-                        </div>
-                        <hr />
-                        <div class="row innerRow">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <span class="e-icons e-workitem"></span>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="row">
-                                            @CreatedCount
-                                        </div>
-                                        <div class="row">
-                                            Work items created
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <span class="e-icons e-workitem"></span>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="row">
-                                            @CompleatedCount
-                                        </div>
-                                        <div class="row">
-                                            Work items compleated
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row innerRow">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <span class="e-icons e-workitem"></span>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="row">
-                                            @ActiveCount
-                                        </div>
-                                        <div class="row">
-                                            Work items active
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <span class="e-icons e-workitem"></span>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="row">
-                                            @TestingCount
-                                        </div>
-                                        <div class="row">
-                                            Work items testing
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row innerRow">
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-4">
-                <!-- Basic Card Layout  -->
-                <div tabindex="0" class="e-card" id="basic_card">
-                    <div class="e-card-header">
-
-                        <h3 class="center">Project Members</h3>
-
-                    </div>
-                    <div class="e-card-content">
-
-                        <hr />
-                        <div class="row innerRow">
-                            @{
-                                foreach (var member in ProjectMembers)
-                                {
-                                    <div class="circle">
-                                        <a href="#">@member.AliasName</a>
-                                    </div>
-                                }
-                            }
-                        </div>
-                        <hr />
-                        <div class="row innerRow">
-                            <p>Project members count: @ProjectMembers.Count</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
         </div>
+    </div>
+</div>
 
- 
+
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>

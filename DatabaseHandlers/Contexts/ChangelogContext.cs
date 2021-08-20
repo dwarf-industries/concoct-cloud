@@ -9,11 +9,11 @@ namespace Platform.DatabaseHandlers.Contexts
     using Rokono_Control.Models;
     public class ChangelogContext : IDisposable
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private bool disposedValue;
 
-        public ChangelogContext(RokonoControlContext context, IConfiguration config)
+        public ChangelogContext(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;
@@ -23,6 +23,7 @@ namespace Platform.DatabaseHandlers.Contexts
             return Context.AssociatedProjectChangelogs.Include(x => x.Log)
                                                       .Where(x => x.ProjectId == projectId)
                                                       .Select(x => x.Log)
+                                                      .OrderByDescending(X=>X.Id)
                                                       .ToList();
         }
 
@@ -31,7 +32,7 @@ namespace Platform.DatabaseHandlers.Contexts
 
             return Context.WorkItem.Include(x => x.AssociatedWorkItemChangelogs)
                                    .Include(x=>x.WorkItemType)
-                                   .Where(x => !x.AssociatedWorkItemChangelogs.Any(y =>  y.ProjectId == projectId) && x.AssociatedBoardWorkItems.Any(x=>x.Board.BoardType == 4))
+                                   .Where(x => !x.AssociatedWorkItemChangelogs.Any(y =>  y.ProjectId == projectId) && x.AssociatedBoardWorkItems.Any(x=>x.Board.BoardType == 4) && x.AssociatedBoardWorkItems.Any(y=>y.ProjectId == projectId))
                                    .ToList();
         }
         internal void AssociatedChangelogItems(IncomingGenerateChangelog changelog)
@@ -57,6 +58,16 @@ namespace Platform.DatabaseHandlers.Contexts
                 Context.SaveChanges();
             });
         }
+
+        internal List<Changelogs> GetProjectChangelogsPublic(int projectId)
+        {
+            return Context.AssociatedProjectChangelogs.Include(x => x.Log)
+                                                    .Where(x => x.ProjectId == projectId)
+                                                    .Select(x => x.Log)
+                                                    .OrderByDescending(X => X.Id)
+                                                    .ToList();
+        }
+
         internal void EditChangelog(ChangelogEditRequest changelog)
         {
             var current = Context.Changelogs.FirstOrDefault(x=>x.Id == changelog.Id);

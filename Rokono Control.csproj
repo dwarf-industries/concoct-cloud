@@ -4,8 +4,25 @@
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Rokono_Control</RootNamespace>
          <DebugType>portable</DebugType>
+         <PackageId>Concoct Cloud</PackageId>
+         <Authors>CollaborativeSoft</Authors>
+         <Company>CollaborativeSoft</Company>
+         <Product>Concoct Cloud</Product>
+         <Version>1.0.1</Version>
+         <Copyright>CollaborativeSoft</Copyright>
+         <Description>An open source project/product management system with integrated devops, unit testing and communication enviroments.</Description>
+         <PackageProjectUrl>https://concoctcloud.com</PackageProjectUrl>
+         <RepositoryUrl>https://github.com/dwarf-industries/concoct-cloud</RepositoryUrl>
+         <RepositoryType>Open Source</RepositoryType>
+         <PackageTags>Project Management, DevOps, UnitTesting</PackageTags>
+         <ApplicationIcon />
+         <Win32Resource />
 
    </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="package-lock.json" />
+  </ItemGroup>
   <ItemGroup>
     
     
@@ -33,10 +50,7 @@
      <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
  
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.0" />
- 
-    <PackageReference Include="ParseDiff" Version="1.0.15322.1101" />
- 
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.0" /> 
     <PackageReference Include="SSH.NET" Version="2016.1.0" />
   </ItemGroup>
  
@@ -45,6 +59,7 @@
     <Folder Include="wwwroot\css\Themes\Light\" />
     <Folder Include="wwwroot\css\Themes\Dark\" />
     <Folder Include="wwwroot\Files\Uploads\" />
+    <Folder Include="wwwroot\js\Difftool\" />
     <Folder Include="wwwroot\Logo\" />
     <Folder Include="wwwroot\Icons\" />
   </ItemGroup>

@@ -2,11 +2,15 @@ namespace Platform.DatabaseHandlers.Contexts
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Text;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
+    using Platform.DataHandlers;
+    using Platform.Hubs;
     using Platform.Models;
+    using Rokono_Control;
     using Rokono_Control.Models;
     using RokonoControl.DatabaseHandlers.WorkItemHandlers;
     using RokonoControl.Models;
@@ -14,12 +18,12 @@ namespace Platform.DatabaseHandlers.Contexts
     public class WorkItemsContext : IDisposable
     {
 
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private bool disposedValue;
         private bool disposedValue1;
 
-        public WorkItemsContext(RokonoControlContext context, IConfiguration config)
+        public WorkItemsContext(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;
@@ -72,6 +76,10 @@ namespace Platform.DatabaseHandlers.Contexts
              return items;
         }
 
+        internal int GetWorkItemsCountForUser(int userId)
+        {
+            return Context.WorkItem.Where(x => x.AssignedAccount == userId).Count();
+        }
 
         internal List<AssociatedBoardWorkItems> GetUserWorkItems(int id, int userId)
         {
@@ -96,6 +104,14 @@ namespace Platform.DatabaseHandlers.Contexts
             return items;
         }
 
+        internal (int,int) GetActiveSprintDates(int projectId, int iteration)
+        {
+            var sprint = Context.WorkItemIterations.FirstOrDefault(x => x.Id == iteration);
+            if (sprint == null)
+                return (0, 0);
+
+            return (sprint.StartDate.Value, sprint.EndDate.Value);
+        }
 
         internal List<AssociatedBoardWorkItems> GetPublicBugReports(int id)
         {
@@ -228,6 +244,15 @@ namespace Platform.DatabaseHandlers.Contexts
             Context.Attach(currentCard);
             Context.Update(currentCard);
             Context.SaveChanges();
+
+            var getProject = Context.AssociatedBoardWorkItems.FirstOrDefault(x => x.WorkItemId == currentCard.Id).ProjectId;
+            var getUser = Context.UserAccounts.FirstOrDefault(x => x.Id == currentCard.AssignedAccount);
+            var getProjectDetails = Context.Projects.FirstOrDefault(x => x.Id == getProject);
+            var receivers = new List<UserAccounts>();
+            receivers.Add(getUser);
+            using (var emailContext = new NotificationHandler(Configuration))
+                emailContext.GenerateNewWorkItemNotification(currentCard, getUser, getProjectDetails.ProjectName, receivers, $"Concoct Cloud work assigned - {currentCard.Id}");
+
         }
         public WorkItemIterations AssignProjectDefaultIterations(int projectId)
         {
@@ -272,16 +297,55 @@ namespace Platform.DatabaseHandlers.Contexts
             return iteration.IterationId;
         }
 
-        internal void ChangeWorkItemBoard(IncomingCardRequest card)
+        internal void ChangeWorkItemBoard(IncomingCardRequest card, Microsoft.AspNetCore.SignalR.IHubContext<Hubs.MessageHub> messageContext, int userId)
         {
             var newBoardAssociation = Context.AssociatedProjectBoards.Include(x => x.Board).FirstOrDefault(x => x.ProjectId == card.ProjectId
                                                                                       && x.Board.BoardName == card.Board);
+            if(newBoardAssociation.Board.BoardType == 4)
+            {
+                var workItem = Context.WorkItem.FirstOrDefault(x => x.Id == card.CardId);
+                if(workItem.Compleated == string.Empty)
+                {
+                    workItem.Compleated = workItem.OriginEstitame;
+                    workItem.Remaining = "0";
+                   
+                }
+                workItem.ClosedDated = DateTime.Now;
+                Context.Attach(workItem);
+                Context.Update(workItem);
+                Context.SaveChanges();
+            }
+            else
+            {
+                var workItem = Context.WorkItem.FirstOrDefault(x => x.Id == card.CardId);
+                workItem.Compleated = "";
+                workItem.Remaining = workItem.OriginEstitame;
+                workItem.ClosedDated = null;
+                Context.Attach(workItem);
+                Context.Update(workItem);
+                Context.SaveChanges();
+            }
             var currentAssociation = Context.AssociatedBoardWorkItems.FirstOrDefault(x => x.WorkItemId == card.CardId);
 
             currentAssociation.BoardId = newBoardAssociation.Board.Id;
             Context.Attach(currentAssociation);
             Context.Update(currentAssociation);
             Context.SaveChanges();
+            var username = Context.UserAccounts.FirstOrDefault(x=> x.Id == userId).Email;
+            var reciverData = Program.Members.Where(x=>x.Name != username).ToList();
+
+            reciverData.ForEach(x =>
+            {
+                MessageHub.SendCardDetailChange(messageContext, x, card.CardId.ToString());
+            });
+
+            var getUpdated = Context.WorkItem.FirstOrDefault(x => x.Id == card.CardId);
+            var getUser = Context.UserAccounts.FirstOrDefault(x => x.Id == getUpdated.AssignedAccount);
+            var getProjectDetails = Context.Projects.FirstOrDefault(x => x.Id == card.ProjectId);
+            var receivers = new List<UserAccounts>();
+            receivers.Add(getUser);
+            using (var context = new NotificationHandler(Configuration))
+                context.GenerateNewWorkItemNotification(getUpdated, getUser, getProjectDetails.ProjectName, receivers, $"Concoct Cloud work moved - {getUpdated.Id}");
 
 
         }
@@ -387,7 +451,8 @@ namespace Platform.DatabaseHandlers.Contexts
                                                                      .Where(y => y.WorkItemId == x.Id
                                                                                  && y.WorkItemChild.WorkItemTypeId != 7
                                                                                  && y.WorkItemChild.WorkItemTypeId != 2
-                                                                                 && y.WorkItemChild.WorkItemTypeId != 5)
+                                                                                 && y.WorkItemChild.WorkItemTypeId != 5
+                                                                                 && y.WorkItemChild.Iteration == dataRequest.IterationId)
                                                                      .ToList();
                 if(userId != 1 && userId !=0)
                     sprintTasks = sprintTasks.Where(x=> x.WorkItemChild.AssignedAccount == userId).ToList();
@@ -436,14 +501,16 @@ namespace Platform.DatabaseHandlers.Contexts
                 {
                     var taskBoard = Context.AssociatedBoardWorkItems.Include(z => z.Board)
                                                                     .FirstOrDefault(z => z.WorkItemId == task.WorkItemChildId);
-                    if(!string.IsNullOrEmpty(task.WorkItemChild.Compleated) && task.WorkItemChild.Compleated != "0")
+                    var board = Context.Boards.FirstOrDefault(x => taskBoard.BoardId == x.Id);
+
+                    if(!string.IsNullOrEmpty(task.WorkItemChild.Compleated) && task.WorkItemChild.Compleated != "0" && board.BoardName != "Done")
                         complete += float.Parse(task.WorkItemChild.Compleated);
 
-                    if(!string.IsNullOrEmpty(task.WorkItemChild.Remaining) && task.WorkItemChild.Remaining != "0" 
-                        && !string.IsNullOrEmpty(task.WorkItemChild.Compleated) && task.WorkItemChild.Compleated != "0")
-                        remaining +=  (float.Parse(task.WorkItemChild.Remaining) - float.Parse(task.WorkItemChild.Compleated));
+                    if (!string.IsNullOrEmpty(task.WorkItemChild.Remaining) && task.WorkItemChild.Remaining != "0"
+                        && !string.IsNullOrEmpty(task.WorkItemChild.Compleated) && task.WorkItemChild.Compleated != "0" && board.BoardName != "Done")
+                        remaining += (float.Parse(task.WorkItemChild.Remaining) - float.Parse(task.WorkItemChild.Compleated));
 
-                    if(!string.IsNullOrEmpty(task.WorkItemChild.Remaining) && task.WorkItemChild.Remaining != "0")
+                    if (!string.IsNullOrEmpty(task.WorkItemChild.Remaining) && task.WorkItemChild.Remaining != "0" && board.BoardName != "Done")
                         remaining +=  float.Parse(task.WorkItemChild.Remaining);
 
                     var activeBoard = string.Empty;
@@ -456,7 +523,7 @@ namespace Platform.DatabaseHandlers.Contexts
                     {
                         InnerId = task.WorkItemChild.Id,
                         Id = $"Task {task.WorkItemChild.Id}",
-                        Summary = $"Description: {task.WorkItemChild.Description} <br/> Acceptence creteria: {task.WorkItemChild.AcceptanceCriteria} ",
+                        Summary = $"Description: {task.WorkItemChild.Description} {task.WorkItemChild.RepoSteps} <br/> Acceptence creteria: {task.WorkItemChild.AcceptanceCriteria}  ",
                         Title = task.WorkItemChild.Title,
                         Tags = $"{task.WorkItemChild.WorkItemType.TypeName}",
                         Priority = GetCardType(task.WorkItemChild.WorkItemType.TypeName),
@@ -464,6 +531,7 @@ namespace Platform.DatabaseHandlers.Contexts
                         Status = activeBoard,
                         Complete = complete.ToString(),
                         Remaining = remaining.ToString(),
+                        ClosedAt = task.WorkItemChild.ClosedDated != null ? task.WorkItemChild.ClosedDated.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) :  DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                         AssgignedAccount = task.WorkItemChild.AssignedAccountNavigation != null ? task.WorkItemChild.AssignedAccountNavigation.GitUsername : "Unassigned"
                     });
                 });
@@ -555,9 +623,7 @@ namespace Platform.DatabaseHandlers.Contexts
 
         }
 
-
-
-         internal string ChangeProjectBoardStatus(IncomingPublicBoardRequest request, string domain)
+        internal string ChangeProjectBoardStatus(IncomingPublicBoardRequest request, string domain)
         {
             var getProject = Context.Projects.FirstOrDefault(x=>x.Id == request.ProjectId);
             getProject.PublicBoard = request.IsChecked;
@@ -583,11 +649,33 @@ namespace Platform.DatabaseHandlers.Contexts
         {
             return Context.WorkItem.FirstOrDefault(x=>x.Title == title && x.WorkItemTypeId == 7);
         }
-        internal bool UpdateWorkItem(IncomingWorkItem currentItem) => WorkItemHadler.UpdateWorkItem(currentItem, Context);
+        internal bool UpdateWorkItem(IncomingWorkItem currentItem)
+        {
+
+            var result = WorkItemHadler.UpdateWorkItem(currentItem, Context);
+            var getUpdated = Context.WorkItem.FirstOrDefault(x => x.Id == currentItem.WorkItemId);
+            var getUser = Context.UserAccounts.FirstOrDefault(x => x.Id == getUpdated.AssignedAccount);
+            var getProjectDetails = Context.Projects.FirstOrDefault(x => x.Id == currentItem.ProjectId);
+            var receivers = new List<UserAccounts>();
+            receivers.Add(getUser);
+            using (var context = new NotificationHandler(Configuration))
+                context.GenerateNewWorkItemNotification(getUpdated, getUser, getProjectDetails.ProjectName, receivers, $"Concoct Cloud work item updated - {getUpdated.Id}");
+
+            return result;
+
+        }
         internal OutgoingJsonData AddNewWorkItem(IncomingWorkItem currentItem,int userId)
         {
             var result = WorkItemHadler.AddNewWorkItem(currentItem, Context, Configuration, userId);
-            if(result)
+            var getUpdated = Context.WorkItem.FirstOrDefault(x => x.Id == result.Id);
+            var getUser = Context.UserAccounts.FirstOrDefault(x => x.Id == getUpdated.AssignedAccount);
+            var getProjectDetails = Context.Projects.FirstOrDefault(x => x.Id == currentItem.ProjectId);
+            var receivers = new List<UserAccounts>();
+            receivers.Add(getUser);
+            using (var context = new NotificationHandler(Configuration))
+                context.GenerateNewWorkItemNotification(getUpdated, getUser, getProjectDetails.ProjectName, receivers, $"Concoct Cloud work item created - {getUpdated.Id}");
+
+            if (result != null)
                 return new OutgoingJsonData{ Data = "true"};
             else
                 return new OutgoingJsonData{ Data = "false"};

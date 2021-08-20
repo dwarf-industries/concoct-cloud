@@ -1,6 +1,7 @@
 ﻿@{ 
-    var ProjectName = "Test Project";
+    var ProjectName = ViewData["OrganizationName"];
     var ProjectId = ViewData["ProjectId"] as int?;
+    var buildNumber = ViewData["BuildVersion"] as string;
 }
 
 <style>
@@ -61,7 +62,7 @@
                         <div class="e-card-header">
                             <div class="e-card-header-caption">
                                 <div class="e-card-header-title">Public access to @ProjectName</div>
-                                <div class="e-card-sub-title">Powered By RokonoControl | BuildNumber </div>
+                                <div class="e-card-sub-title">Powered By Concoct Cloud | @buildNumber </div>
                             </div>
                         </div>
                         <div class="e-card-content">
@@ -201,7 +202,17 @@
         });
     }
 
+    const deleteAllCookies = () => {
+        const cookies = document.cookie.split(";");
+        for (const cookie of cookies) {
+            const eqPos = cookie.indexOf("=");
+            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
+    }
+
     function Login() {
+        deleteAllCookies();
         //console.log("In");
         var dto = {
             "Email": $("#loginMail").val(),
@@ -281,6 +292,10 @@
                 if (response.Error) {
                     alert("Project public access not enabled, please contact the system administrator!");
                     window.location = "/home";
+                }
+
+                if (response.EmailError){
+                    alert("Email is already in use. Please use different email");
                 }
             },
             error: function(xhr, status, error) {

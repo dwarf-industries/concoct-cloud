@@ -14,11 +14,11 @@ namespace Platform.Controllers
 
     public class ChangelogController : Controller
     {
-        RokonoControlContext Context {get; set;}
+        RokonocontrolContext Context {get; set;}
         IConfiguration Config { get; set;}
         AutherizationManager AutherizationManager {get; set;}
         private int UserId {get; set;}
-        public ChangelogController(RokonoControlContext context,IConfiguration currentConfig, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
+        public ChangelogController(RokonocontrolContext context,IConfiguration currentConfig, IAutherizationManager autherizationManager, IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Config = currentConfig;
@@ -38,6 +38,17 @@ namespace Platform.Controllers
             }
             using(var context = new UsersContext(Context,Config))
                 ViewData["Name"] = context.GetUsername(UserId);
+            return View();
+        }
+
+        public IActionResult ViewChangelogsPublic(int projectId)
+        {
+            using (var context = new ChangelogContext(Context, Config))
+            {
+                ViewData["ProjectId"] = projectId;
+                ViewData["Changelogs"] = context.GetProjectChangelogsPublic(projectId);
+            }
+    
             return View();
         }
 

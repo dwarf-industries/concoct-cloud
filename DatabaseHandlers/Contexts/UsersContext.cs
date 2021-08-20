@@ -12,11 +12,11 @@ namespace Platform.DatabaseHandlers.Contexts
 
     public class UsersContext  : IDisposable
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private bool disposedValue;
 
-        public UsersContext(RokonoControlContext context, IConfiguration config)
+        public UsersContext(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;
@@ -159,15 +159,19 @@ namespace Platform.DatabaseHandlers.Contexts
                                                                         && x.UserAccountId == account.Id) != null ? true : false;
         }
 
-        internal bool CheckProjectSignUpPolicy(int projectId)
+        internal  (bool,bool) CheckProjectSignUpPolicy(int projectId, string email)
         {
             var exist = Context.Projects.FirstOrDefault(x => x.Id == projectId);
-
+            var accountName = Context.UserAccounts.FirstOrDefault(x => x.Email == email);
+            if (accountName != null)
+                return (false,true);
             if (exist == null)
-                return false;
+                return (false,false);
 
-            return exist.AllowPublicControl != null && exist.AllowPublicControl == 1 ? true : false;
+            return (exist.AllowPublicControl != null && exist.AllowPublicControl == 1 ? true : false,false);
         }
+
+            
 
         internal bool CheckAccountExist(string phase)
         {
@@ -526,7 +530,7 @@ namespace Platform.DatabaseHandlers.Contexts
             {
                 AccountId = x.Id,
                 Name = $"{x.FirstName} {x.LastName}",
-                Type = x.ProjectRights == 1 ? "Regular" : "Administrator",
+                Type = x.ProjectRights == 1 ? "Administrator" : "User",
                 Email = x.Email,
                 CreationDate = x.CreationDate,
             }).ToList();

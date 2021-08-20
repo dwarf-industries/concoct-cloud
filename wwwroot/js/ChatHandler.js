@@ -1,6 +1,4 @@
-
-
-﻿const chatConnectionBuilder = new signalR.HubConnectionBuilder().withUrl("/messageHub")
+const chatConnectionBuilder = new signalR.HubConnectionBuilder().withUrl("/messageHub")
 
     .configureLogging(signalR.LogLevel.Information)
     .build();
@@ -98,6 +96,8 @@ chatConnectionBuilder.on("ReciveNewNotification", (data) => {
      var getData = JSON.parse(data);
     ShowNotification(getData);
 });
+
+
 chatConnectionBuilder.start().catch(x => console.log(x.toString()));
 
 

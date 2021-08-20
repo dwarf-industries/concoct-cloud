@@ -8,10 +8,10 @@ namespace Platform.ViewComponents.LayoutComponents
     [ViewComponent(Name = "GetProjectName")]
     public class GetActiveProjectNameViewComponent : ViewComponent
     {
-        private readonly RokonoControlContext Context;
+        private readonly RokonocontrolContext Context;
         private readonly IConfiguration Configuration;
 
-        public GetActiveProjectNameViewComponent(RokonoControlContext context, IConfiguration configuration)
+        public GetActiveProjectNameViewComponent(RokonocontrolContext context, IConfiguration configuration)
         {
             Context = context;
             Configuration = configuration;

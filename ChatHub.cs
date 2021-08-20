@@ -15,13 +15,13 @@ namespace RokonoControl
 {
     public class ChatHub : Hub
     {
-        RokonoControlContext RokonoContext;
+        RokonocontrolContext RokonoContext;
         IConfiguration Configuration;
 
         public AutherizationManager AutherizationManager { get; }
         public int UserId { get; }
 
-        public ChatHub(RokonoControlContext context, IConfiguration config, IAutherizationManager autherizationManager,IHttpContextAccessor httpContextAccessor)
+        public ChatHub(RokonocontrolContext context, IConfiguration config, IAutherizationManager autherizationManager,IHttpContextAccessor httpContextAccessor)
         {
             RokonoContext = context;
             Configuration = config;

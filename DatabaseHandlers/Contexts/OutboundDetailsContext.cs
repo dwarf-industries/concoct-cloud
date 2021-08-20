@@ -9,11 +9,11 @@ namespace Platform.DatabaseHandlers.Contexts
     public class OutboundDetailsContext : IDisposable
     {
         
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private bool disposedValue;
 
-        public OutboundDetailsContext(RokonoControlContext context, IConfiguration config)
+        public OutboundDetailsContext(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;

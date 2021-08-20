@@ -10,10 +10,10 @@ namespace Platform.ViewComponents.Documentation
 
     public class DocumentationPageHandlerViewComponent : ViewComponent
     {
-        private readonly RokonoControlContext Context;
+        private readonly RokonocontrolContext Context;
         private readonly IConfiguration Configuration;
 
-        public DocumentationPageHandlerViewComponent(RokonoControlContext context, IConfiguration configuration)
+        public DocumentationPageHandlerViewComponent(RokonocontrolContext context, IConfiguration configuration)
         {
             Context = context;
             Configuration = configuration;

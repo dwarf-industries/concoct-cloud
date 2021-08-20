@@ -136,8 +136,8 @@
 
 .card-template .e-search.Task:before {
     font-family: "e-icons" !important;
-    content: '\e526';
-    color: #ffd600;
+    content: '\e728';
+    color: #e5c310;
 }
 
 .card-template .e-search.Bug:before {
@@ -236,4 +236,33 @@ e-kanban .e-card .e-text .col-3 .status:before {
 .leftcontainer {
     padding: 5%;
     border-right: 0.2px solid black;
+}
+.e-header-wrap{
+    width:100%;
+}
+
+.NewWorkItemBtn:before {
+    font-family: "e-icons" !important;
+    content: '\e814';
+    font-size: 26px;
+    margin-right: 8px;
+    color: #ff7979;
+    cursor: pointer;
+}
+
+    .NewWorkItemBtn:before:hover {
+        font-family: "e-icons" !important;
+        content: '\e814';
+        font-size: 26px;
+        margin-right: 8px;
+        color: red;
+        cursor: pointer;
+    }
+
+.ql-toolbar.ql-snow {
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    padding: 8px;
+    border-radius: 5px;
 }

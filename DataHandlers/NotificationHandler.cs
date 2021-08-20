@@ -30,15 +30,18 @@ namespace Platform.DataHandlers
         }
 
 
-        internal void GenerateNewWorkItemNotification(WorkItem workItem, UserAccounts accounts, string project)
+        internal void GenerateNewWorkItemNotification(WorkItem workItem, UserAccounts accounts, string project, List<UserAccounts> receives, string subject)
         {
           
             // var configurationDetails = configData;
-            var msgBody =$"<h1>Automatic Message from Rokono Control, licensed to {Config.CompanyName}</h1>";
+            var msgBody =$"<h1>Automatic Message from Concoct Cloud, licensed to {Config.CompanyName}</h1>";
             msgBody += $"<p> a new work item has been assigned to your account {accounts.GitUsername}, you can review it at your dasboard page for project {project}</p>";
             msgBody += $"<div style = 'width:300px;border-left:3px solid {GetCardColor(workItem.WorkItemTypeId)}; padding:2%;'> <h3 style='text-align:center;'> {workItem.Title} <h3> {GetWorkItemText(workItem)} </div>";
-            accounts.Email = "kristiformilchev615@gmail.com";
-            SendEmail(Config, $"{accounts.FirstName} {accounts.LastName}", accounts.Email,  "Rokono Control new work item assigned", msgBody);
+            receives.ForEach(x =>
+            {
+                SendEmail(Config, $"{x.FirstName} {x.LastName}", x.Email, subject, msgBody);
+
+            });
 
         }
 
@@ -139,7 +142,7 @@ namespace Platform.DataHandlers
         private bool SendEmail(RokonoConfig configurationDetails, string name, string email, string Subject, string body)
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Rokono Control", configurationDetails.Username));
+            message.From.Add(new MailboxAddress(Subject, configurationDetails.Username));
             message.To.Add(new MailboxAddress(name, email));
             message.Subject =Subject;
             

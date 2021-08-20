@@ -11,10 +11,10 @@ namespace Platform.ViewComponents.Widgets
     [ViewComponent(Name = "BurdownChartSettings")]
     public class BurndownChartSettingsViewComponent : ViewComponent
     {
-        private readonly RokonoControlContext Context;
+        private readonly RokonocontrolContext Context;
         private readonly IConfiguration Configuration;
 
-        public BurndownChartSettingsViewComponent(RokonoControlContext context, IConfiguration config)
+        public BurndownChartSettingsViewComponent(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;

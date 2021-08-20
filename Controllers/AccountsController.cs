@@ -14,12 +14,12 @@
 
     public class AccountsController : Controller
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         AutherizationManager AutherizationManager {get; set;}
         private int UserId {get; set;}
 
-        public AccountsController(RokonoControlContext context, IConfiguration config,  IAutherizationManager autherizationManager,IHttpContextAccessor httpContextAccessor)
+        public AccountsController(RokonocontrolContext context, IConfiguration config,  IAutherizationManager autherizationManager,IHttpContextAccessor httpContextAccessor)
         {
             Context = context;
             Configuration = config;
@@ -48,6 +48,14 @@
 
         public IActionResult ProjectSignup(int projectId)
         {
+            var buildData = System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString();
+            ViewData["BuildVersion"] = buildData;
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                var project = context.GetOrganizationName(projectId);
+                if(project != null)
+                    ViewData["OrganizationName"] = project.OrganizationName;
+            }
             ViewData["ProjectId"] = projectId;
             return View();
         }
@@ -168,8 +176,8 @@
 
             using (var context = new UsersContext(Context, Configuration))
             {
-                var result = context.CheckProjectSignUpPolicy(request.ProjectId);
-                if (result == true)
+                var result = context.CheckProjectSignUpPolicy(request.ProjectId,request.email);
+                if (result.Item1 && !result.Item2 )
                 {
                     request.accountRights = new OutgoingUserAccounts
                     {
@@ -187,7 +195,8 @@
                 }
                 else
                 {
-                    cResult.Error = true;
+                    cResult.Error = result.Item1;
+                    cResult.EmailError = result.Item2;
                     return cResult;
                 }
             }
@@ -201,7 +210,7 @@
 
             using (var context = new UsersContext(Context, Configuration))
             {
-                var result = context.CheckProjectSignUpPolicy(request.ProjectId);
+                var result = context.CheckProjectSignUpPolicy(request.ProjectId,string.Empty).Item1;
                 if (result == true)
                 {
                     var getUserAccountByEmail = context.GetUserAccountByName(request.email);

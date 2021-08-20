@@ -9,16 +9,16 @@ namespace Platform.DatabaseHandlers.Contexts
     using Rokono_Control.Models;
     public class NotificationContext : IDisposable
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private bool disposedValue;
 
-        public NotificationContext(RokonoControlContext context, IConfiguration config)
+        public NotificationContext(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;
         }
-        internal List<BindingNotification> GetAllUserNotifications(int accountId, int projectId)
+        internal List<Notifications> GetAllUserNotifications(int accountId, int projectId)
         {
             var projectNotifications = Context.AssociatedProjectNotifications.Include(x => x.Notification)
                                                                              .ThenInclude(Notification => Notification.NotificationTypeNavigation)
@@ -31,16 +31,10 @@ namespace Platform.DatabaseHandlers.Contexts
                                                                        .ToList();
            
             
-            var notifications = new List<BindingNotification>();
-            notifications.AddRange(projectNotifications.Select(x=>new BindingNotification{
-                Notification =x.Notification,
-                IsRead = x.IsRead.Value
-            }).ToList());
-            notifications.AddRange(userNotifications.Where( x => !projectNotifications.Any(y => y.NotificationId == x.NotificationId)).Select(x=>new BindingNotification{
-                Notification =x.Notification,
-                IsRead = x.IsRead.Value
-            }).ToList());
- 
+            var notifications = new List<Notifications>();
+            notifications.AddRange(projectNotifications.Select(x=> x.Notification).ToList());
+            notifications.AddRange(userNotifications.Where( x => !projectNotifications.Any(y => y.NotificationId == x.NotificationId)).Select(x=> x.Notification).ToList());
+
             return notifications;
         }
         internal object GetNewNotifications(object value)

@@ -10,11 +10,11 @@ namespace Platform.DatabaseHandlers.Contexts
 
     public class NotesContext : IDisposable
     {
-        RokonoControlContext Context;
+        RokonocontrolContext Context;
         IConfiguration Configuration;
         private bool disposedValue;
 
-        public NotesContext(RokonoControlContext context, IConfiguration config)
+        public NotesContext(RokonocontrolContext context, IConfiguration config)
         {
             Context = context;
             Configuration = config;

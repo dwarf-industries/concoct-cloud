@@ -21,8 +21,8 @@ namespace Rokono_Control.Models
 
     public partial class ConnectionStrings
     {
-        [JsonProperty("RokonoControlContext")]
-        public string RokonoControlContext { get; set; }
+        [JsonProperty("RokonocontrolContext")]
+        public string RokonocontrolContext { get; set; }
     }
 
     public partial class EmailConfiguration

@@ -10,10 +10,10 @@ namespace Platform.ViewComponents.SurveyComponents.SurveyDropdown
     [ViewComponent(Name = "SurveyDropdown")]
     public class SurveyDropdownViewComponent: ViewComponent
     {
-        private readonly RokonoControlContext Context;
+        private readonly RokonocontrolContext Context;
         private readonly IConfiguration Configuration;
 
-        public SurveyDropdownViewComponent(RokonoControlContext context, IConfiguration configuration)
+        public SurveyDropdownViewComponent(RokonocontrolContext context, IConfiguration configuration)
         {
             Context = context;
             Configuration = configuration;

@@ -1,5 +1,4 @@
-@{
-    ViewData["Title"] = "Board";
+@{ ViewData["Title"] = "Board";
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
     var ProjectId = ViewData["ProjectId"] as int?;
     var WorkItemTypes = ViewData["WorkItemTypes"] as List<WorkItemTypes>;
@@ -7,7 +6,11 @@
     var Iteration = ViewData["Iteration"] as int?;
     var Person = ViewData["Person"] as int?;
     var ViewRights = ViewData["GetUserViewRights"] as int?;
- }
+    var publicSIgnAccess = ViewData["PublicProject"] as int?;
+    var publicSignupUrl = ViewData["PublicAddress"] as string;
+    var startDate = ViewData["StartDate"] as int?;
+    var endDate = ViewData["EndDate"] as int?;
+}
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -15,76 +18,84 @@
 
 <link href="~/css/Sprints/Sprints.css" rel="stylesheet" />
 <!-- end of sidebar element -->
- 
- 
-        <div id="spinner">
-            <div id="loader"></div>
-        </div>
-        <div id="Content" hidden>
+
+
+<div id="spinner">
+    <div id="loader"></div>
+</div>
+<div id="Content" onchange="ContentChanged" hidden>
 
     <div class="main-card mb-12 card">
-            <div class="card-body text-center">
+        <div class="card-body text-center">
 
-                <div class="page-title-heading">
-                    <div class="page-title-icon">
-                        <i class="pe-7s-graph text-success">
-                        </i>
-                    </div>
-                    <div>
-                        Project Dashboard
-                        <div class="page-title-subheading">
-                            @ProjectName
-                        </div>
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-graph text-success">
+                    </i>
+                </div>
+                <div>
+                    Project Dashboard
+                    <div class="page-title-subheading">
+                        @ProjectName
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
+    </div>
+    <div class="row">
 
 
-            <div class="col-md-5">
+        <div class="col-md-5">
+            <div class="row" style="margin:0;">
                 <button type="button" id="iconbtn" class="btn btn-primary" onclick="CallUrl('/Dashboard/AddNewWorkItem?projectId='+@ProjectId+'&workItemType='+7+'&boardId='+0+'&parentId=0&returnUrl='+window.location.href+')">New Sprint</button>
                 <button id="backlogBtn" onclick="CallUrl('/Boards/ProjectBacklog?projectId='+@ProjectId+'&&workItemType=7')">View as backlog</button>
                 <button id="capacityBtn" onclick="CallUrl()">Capacity</button>
                 <button id="analitycsBtn" onclick="CallUrl()">Analitycs</button>
                 <button id="CloseIteration" onclick="ChangeIteration()">Close Iteration</button>
-
-            </div>
-            <div class="col-md-3">
-
-            </div>
-            <div class="col-md-4">
-
-                @await Component.InvokeAsync("IterationDropdown", new IncomingIdRequest{
-
-                    ProjectId = @ProjectId.Value,
-                    Id = @Iteration.Value,
-                    Phase = "Sprints"
-                })
-
-                <button type="button" id="Persons" class="btn btn-primary">Persons</button>
-                <div>
-                    <label for="publicCheck" style="padding: 10px 70px 10px 0">Public</label>
-                    <input id="publicCheck" type="checkbox" onchange="MakeBoardPublic()" />
-                    <p id="GeneratedLink"></p>
-                </div>
             </div>
 
-
-
-
-        </div>
-        <div class="row">
-            <div class="cols-sample-area" id="board">
-
-                <div id="KanbanHolder">
-                    <div id="Kanban"></div>
-                </div>
+            <div class="row">
+                <div style="width:800px;"><canvas id="burndown43"></canvas></div>
 
             </div>
         </div>
-    
-     
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-4">
+
+            @await Component.InvokeAsync("IterationDropdown", new IncomingIdRequest
+            {
+
+                ProjectId = @ProjectId.Value,
+                Id = @Iteration.Value,
+                Phase = "Sprints"
+            })
+
+            <button type="button" id="Persons" class="btn btn-primary">Persons</button>
+            <div onclick="EnablePublicSignUp()">
+                <label for="publicCheck" style="padding: 10px 70px 10px 0; position:relative; z-index:-12;">Make sign up public</label>
+                <input id="publicCheck" type="checkbox" style="position: relative; z-index: -12;" />
+                <p id="GeneratedLink">@publicSignupUrl</p>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+    <div class="row">
+        <div class="cols-sample-area" id="board">
+
+            <div id="KanbanHolder">
+                <div id="Kanban"></div>
+            </div>
+
+        </div>
+    </div>
+
+
     <!-- Modals -->
     <div id="AssignModel">
         <div class="btn-group dropdown-split-primary" style="text-align:center;">
@@ -92,8 +103,8 @@
                 <div id="ProjectUsers"></div>
             </div>
             <div class="row">
-                <button   id="assignBtn" onclick="AssignNewUser()">Assign</button>
-                <button   id="cancelBtn" onclick="CancelAssign()">Cancel</button>
+                <button id="assignBtn" onclick="AssignNewUser()">Assign</button>
+                <button id="cancelBtn" onclick="CancelAssign()">Cancel</button>
 
             </div>
         </div>
@@ -101,17 +112,17 @@
 
     <div id="newWorkItemModal">
         <div class="btn-group dropdown-split-primary" style="text-align:center;">
-             <button   id="taskBtn" onclick="NewTask()">Task</button>
-            <button   id="issueBtn" onclick="NewIssue()"></i>Issue</button>
-            <button   id="bugBtn"  onclick="NewBug()">Bug</button>
+            <button id="taskBtn" onclick="NewTask()">Task</button>
+            <button id="issueBtn" onclick="NewIssue()"></i>Issue</button>
+            <button id="bugBtn" onclick="NewBug()">Bug</button>
         </div>
     </div>
 
     <div id="dialogIterations">
         <div id="IterationContent">
-            
+
         </div>
-        <div  class="row">
+        <div class="row">
             <div id="Rowbtn">
                 <button class="btn btn-primary e-control e-btn e-lib e-outline e-primary" style="width: 100%;" onclick="CloseIterationModal()">Cancel</button>
             </div>
@@ -124,30 +135,40 @@
 
     </div>
 
-        </div>
-    
- 
+</div>
+
+
 <style>
-       .swimlane-template {
+    .swimlane-template {
         display: inline-block;
         font-size: 15px;
         font-weight: 500;
         width: 95%;
     }
 
-  
 
-    .swimlane-template span {
-        padding-left: 10px;
-    }
+
+        .swimlane-template span {
+            padding-left: 10px;
+        }
 </style>
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="~/js/API/DataHandlers.js"></script>
 <script type="text/javascript">
-
+    var signupPolicy = false;
+    var kanbanObj;
+    var FocusId;
+    var d1S = new Date(0).setUTCSeconds(parseInt("@startDate"));
+    var d2S = new Date(0).setUTCSeconds(parseInt("@endDate"));
+    var startDate = new Date(d1S);
+    var endDate = new Date(d2S);
+    var loaded = false;
+        if (@publicSIgnAccess == 1) {
+            signupPolicy = true;
+        }
         $("#Rowbtns").hide();
         var workItemName;
-        var publicCheck = new ejs.buttons.Switch({ checked: false });
+    var publicCheck = new ejs.buttons.Switch({ checked: signupPolicy });
         publicCheck.appendTo('#publicCheck');
 
         var dialogObj;
@@ -176,7 +197,7 @@
         issueBtn.appendTo('#issueBtn');
         var bugBtn = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
         bugBtn.appendTo('#bugBtn');
-          
+
         var dialogIterations = new ej.popups.Dialog({
                 width: '90vh',
                 header: 'Attention, closing the active Iteration will move all work items that arent closed to the next iteration pleaes check your planning boards for items that havent been cloed',
@@ -216,7 +237,7 @@
             }
         });
         $(function() {
-            
+
             dialogNewWI = new ej.popups.Dialog({
                 width: '600px',
                 header: 'Choose you the type of work item that you want to associate with the current user story!',
@@ -246,24 +267,35 @@
                 "WorkItemTypeId": $("#ItemPriority :selected").val(),
                 "IterationId": @Iteration,
                 "PersonId": @Person,
-                "All" : @ViewRights
+                "All": @ViewRights
+            };
+
+
+            chatConnectionBuilder.on("CardStatusUpdated", (data) => {
+                var id = data.split('"');
+
+                IncomignBoardUpdate(id[1]);
+
+            });
+            IncomignBoardUpdate(null);
+
+            function  IncomignBoardUpdate(item) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Boards/GetSprints',
+                    data: JSON.stringify(incomingSprintDTO),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        return GenerateKaban(response, item);
+                    },
+                    error: function (xhr, status, error) {
+                    }
+                });
             }
 
 
 
-             $.ajax({
-                type: 'POST',
-                url: '/Boards/GetSprints',
-                data: JSON.stringify(incomingSprintDTO),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(response) {
-                    GenerateKaban(response);
-                },
-                error: function(xhr, status, error) {
-                 }
-            });
-     
             $.ajax({
                 type: 'POST',
                 url: '/Boards/GetPersons',
@@ -279,114 +311,335 @@
                  }
             });
 
+
+
+
+
+
+
+        });
+
+
+    function InitChart(data, burndownData, scopeChange = []) {
+        var series1 = [];
+        var yValue = [7.66, 8.03, 8.41, 8.97, 8.77, 8.20, 8.16, 7.89, 8.68, 9.48, 10.11, 11.36, 12.34, 12.60, 12.95,
+            13.91, 16.21, 17.50, 22.72, 28.14, 31.26, 31.39, 32.43, 35.52, 36.36,
+            41.33, 43.12, 45.00, 47.23, 48.62, 46.60, 45.28, 44.01, 45.17, 41.20, 43.41, 48.32, 45.65, 46.61, 53.34, 58.53];
+        var point1;
+        var d1 = new Date("2/7/2021");
+        var d2 = new Date("2/8/2021");
+        var time = 0;
+        var closedData = {};
+
+        var totalHoursInSprint = 0;
+        var prevDate;
+        data.forEach(x => {
+            var split = x.closedAt.split("/");
+            var year = parseInt(split[2]);
+            var month = parseInt(split[1]);
+            var day = parseInt(split[0]);
+            var newDate = new Date(year, month -1, day);
+            var dateFormated = newDate.getTime();
+             
             
-           
-          
+            if (closedData[dateFormated] === undefined) {
+                if (!isNaN(parseInt(x.remaining)) || !isNaN(parseInt(x.complete))) {
+                    if (!isNaN(parseInt(x.remaining)) && parseInt(x.remaining) > 0)
+                        closedData[dateFormated] = closedData[prevDate] + parseInt(x.remaining);
+                    else if (!isNaN(parseInt(x.complete)) && parseInt(x.complete) > 0)
+                        closedData[dateFormated] = closedData[prevDate] + parseInt(x.complete);
+                    else {
+                        if (prevDate === undefined)
+                            closedData[dateFormated] = 0;
+                        else
+                            closedData[dateFormated] = closedData[prevDate];
+
+                    }
+
+                }
+
+                prevDate = dateFormated;
+
+            }
+            else {
+                if (!isNaN(parseInt(x.remaining))) {
+                    totalHoursInSprint += parseInt(x.remaining);
+                    if (x.status !== "Done") {
+                        if (parseInt(x.complete) == "0") {
+                            closedData[dateFormated] += parseInt(x.remaining);
+                        }
+                        else {
+                            closedData[dateFormated] += parseInt(x.remaining) - parseInt(x.complete);
+                        }
+                    }
+                }
+
+                if (x.status === "Done") {
+                    if (parseInt(x.complete) == "0")
+                        closedData[dateFormated] -= parseInt(x.remaining);
+                    else
+                        closedData[dateFormated] -= parseInt(x.complete);
+                }
+            }
 
 
+        });
 
-		 });
+        var currentDate = new Date();
 
 
-         function GenerateKaban(response)
-         {
-             $("#KanbanHolder").html("<div id=\"Kanban\"></div>");
-             $("#KanbanHolder").html();
+        var speedCanvas = document.getElementById("burndown43");
 
-            var data = ej.base.extend([], response, null, true); // To maintain the property changes, extend the object.
-             var kanbanObj = new ej.kanban.Kanban({
-                dataSource: data,
-                dragStop: DragStopped,
-                actionComplete: CardDropCheck,
-                actionBegin: SwimlineBegin,
-                cardDoubleClick: CardSelected,
-                dialogOpen: dialogOpen,
+        Chart.defaults.global.defaultFontFamily = "Arial";
+        Chart.defaults.global.defaultFontSize = 14;
+        // To calculate the time difference of two dates
 
-                keyField: 'status',
-                enableTooltip: true,
-                columns: [
-                    { headerText: 'To Do', keyField: 'Open', template: '#headerTemplate', allowToggle: true },
-                    { headerText: 'In Progress', keyField: 'InProgress', template: '#headerTemplate', allowToggle: true },
-                    { headerText: 'In Review', keyField: 'Testing', template: '#headerTemplate', allowToggle: true },
-                    { headerText: 'Done', keyField: 'Done', template: '#headerTemplate', allowToggle: true }
-                ],
-                cardSettings: {
-                    contentField: 'summary',
-                    headerField: 'id',
-                    template: '#cardTemplate',
-                    selectionType: 'Multiple'
+        var Difference_In_Time = endDate.getTime() - startDate.getTime();
+
+        // To calculate the no. of days between two dates
+        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+        const idealHoursPerDay = totalHoursInSprint / (Math.round(Difference_In_Days)+1);
+        i = 0;
+
+        var dateDays = [];
+
+        burndownData = [];
+        var day = 0;
+        var prev = totalHoursInSprint;
+        var IdeaTrendData = [];
+        
+        for (day; day < Math.round(Difference_In_Days); day++) {
+       
+            var split = startDate.toISOString().split("T")[0].split("-");
+            
+            console.log(split);
+            new Date()
+            var parseDateVal = new Date(parseInt(split[0]), parseInt(split[1]) -1, parseInt(split[2]));
+            var cDate = parseDateVal.getTime();
+            console.log(cDate);
+
+            var point = closedData[cDate];
+
+            if (point !== undefined) {
+                prev =  point;
+                if (startDate.getTime() < new Date().getTime())
+                    burndownData.push(prev);
+            }
+            else {
+                if (startDate.getTime() < new Date().getTime())
+                    burndownData.push(prev);
+
+            }
+
+            IdeaTrendData.push(Math.round(totalHoursInSprint - (idealHoursPerDay * day))); // 1
+
+            dateDays.push("Day " + day);
+            startDate = startDate.addDays(1);
+        }
+
+
+        var speedData = {
+            labels: dateDays,
+            datasets: [
+                {
+                    label: "Burndown",
+                    data: burndownData,
+                    fill: false,
+                    borderColor: "#EE6868",
+                    backgroundColor: "#EE6868",
+                    lineTension: 0,
                 },
-                  swimlaneSettings: {
-                    keyField: 'assignee',
-                    template: '#swimlaneTemplate',
-                    showEmptyRow: true               
+                {
+                    label: "Ideal",
+                    borderColor: "#6C8893",
+                    backgroundColor: "#6C8893",
+                    lineTension: 0,
+                    borderDash: [5, 5],
+                    fill: false,
+                    data: IdeaTrendData
                 },
-            });
+            ]
+        };
 
+        var chartOptions = {
+            legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                    boxWidth: 80,
+                    fontColor: 'black'
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: Math.round(burndownData[0] * 1.1)
+                    }
+                }]
+            }
+        };
 
-            kanbanObj.appendTo('#Kanban');
-         
+        var lineChart = new Chart(speedCanvas, {
+            type: 'line',
+            data: speedData,
+            options: chartOptions
+        });
+    }
+    setInterval(function () {
+        var selector = '[data-id="Task ' + parseInt(FocusId) + '"]';
+        if (document.querySelector(selector) !== null) {
+            document.querySelector(selector).focus();
+            window.clearInterval(timerVariable)
+            FocusId = null;
+         }
+    }, 3000);
+    async function GenerateKaban(response,item)
+    {
+
+        var data = ej.base.extend([], response, null, true); // To maintain the property changes, extend the object.
+
+        if (loaded === true) {
+
+        // $("#Kanban").ejKanban("dataSource", response.d.d);
+            kanbanObj.dataSource = data;
+            await kanbanObj.refresh();
+            FocusId = item;
+
+            return 200;
+        }
+
+        $("#KanbanHolder").html("<div id=\"Kanban\"></div>");
+        $("#KanbanHolder").html();
+
+        kanbanObj = new ej.kanban.Kanban({
+        dataSource: data,
+        dragStop: DragStopped,
+        actionComplete: CardDropCheck,
+        // actionBegin: SwimlineBegin,
+        cardDoubleClick: CardSelected,
+        created:KanbanCreated,
+        dialogOpen: dialogOpen,
+        keyField: 'status',
+        enableTooltip: true,
+        columns: [
+            { headerText: 'To Do', keyField: 'Open', template: '#headerTemplate', allowToggle: true },
+            { headerText: 'In Progress', keyField: 'InProgress', template: '#headerTemplate', allowToggle: true },
+            { headerText: 'In Review', keyField: 'Testing', template: '#headerTemplate', allowToggle: true },
+            { headerText: 'Done', keyField: 'Done', template: '#headerTemplate', allowToggle: true }
+        ],
+        cardSettings: {
+                contentField: 'summary',
+                headerField: 'id',
+                template: '#cardTemplate',
+                selectionType: 'Multiple'
+            },
+            swimlaneSettings: {
+                keyField: 'assignee',
+                template: '#swimlaneTemplate',
+                showEmptyRow: true
+            },
+        });
+
+        kanbanObj.appendTo('#Kanban');
+        if (!loaded) {
+            InitChart(response, [200, 160, 160, 140, 90, 90, 80], // burndown data
+                [0, 0, 0, 0, 0, 32, 0, 0, 0, 0]);
             ShowContent();
         }
+        loaded = true;
 
-        function dialogOpen(args) {
-            args.cancel = true;
-        }
-      
-        function CardSelected(args)
-        {
-            args.cancel = true;
-            window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId+"&returnUrl="+window.location.href;
+        return 200;
+    }
 
+
+    function FocusCard(item) {
+
+        var selector = '[data-id="Task ' + parseInt(item) + '"]';
+        if (document.querySelector(selector) !== null) {
+            document.querySelector(selector).focus();
+            window.clearInterval(timerVariable)
+            clearInterval(refReshCallback);
         }
-        function CardDropCheck(args)
-        {
-             if(args.requestType == "cardChanged" && card)
-            {
-                card.Board = args.changedRecords[0].status;
-                ValidateCardChanged();
+        else {
+            setInterval(FocusCard(item), 10000);
+        }
+    }
+    function sumArrayUpTo(arrData, index) {
+        var total = 0;
+        for (var i = 0; i <= index; i++) {
+            if (arrData.length > i) {
+                total += arrData[i];
             }
         }
-        function ValidateCardChanged()
+        return total;
+    }
+
+    function dialogOpen(args) {
+        args.cancel = true;
+    }
+
+    function CardSelected(args)
+    {
+        args.cancel = true;
+        window.location.href = "/Dashboard/EditWorkItem?projectId=@ProjectId&&workItem="+args.data.innerId+"&returnUrl="+window.location.href;
+
+    }
+
+    function KanbanCreated(args) {
+
+
+    }
+
+    function CardDropCheck(args)
+    {
+
+         if(args.requestType == "cardChanged" && card)
         {
-             $.ajax({
-                type: 'POST',
-                url: '/Boards/ChangeWorkItemBoard',
-                data: JSON.stringify(card),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(response) {
-                    //window.location.href = "/Dashboard/AssignAccountProjects?id="+response;
-                },
-                error: function(xhr, status, error) {
-                 }
-            });
+            card.Board = args.changedRecords[0].status;
+            ValidateCardChanged();
         }
-         function DragStopped(args)
-         {
-             card = {
-                "CardId" :args.data[0].innerId,
-                "Board" :args.data[0].status,
-                "ProjectId" : @ProjectId
-            }
+    }
+    function ValidateCardChanged()
+    {
+            $.ajax({
+            type: 'POST',
+            url: '/Boards/ChangeWorkItemBoard',
+            data: JSON.stringify(card),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(response) {
+                //window.location.href = "/Dashboard/AssignAccountProjects?id="+response;
+            },
+            error: function(xhr, status, error) {
+                }
+        });
+    }
 
-         }
-       
-
-        function PersonClicked(args) {
-            //console.log(args);
+    function DragStopped(args)
+    {
+        card = {
+        "CardId" :args.data[0].innerId,
+        "Board" :args.data[0].status,
+        "ProjectId" : @ProjectId
         }
+    }
 
-        function ChangeOwner(data)
-        {
 
-            selectedChanging = data;
-         //    selectedChangingId = id;
-             dialogObj.show();
-        }
+    function PersonClicked(args)
+    {
 
-         function CallUrl(url) {
-             window.location.href = url;
+    }
+
+    function ChangeOwner(data)
+    {
+        selectedChanging = data;
+        dialogObj.show();
+    }
+
+    function CallUrl(url) {
+        window.location.href = url;
     }
 
     function AssignNewUser()
@@ -395,18 +648,21 @@
         ChangeCardOwner(selectedChanging.id, selectedRowData.name);
         CancelAssign();
     }
+
     function CancelAssign()
     {
         dialogClose();
         dialogObj.hide();
 
     }
+
     function dialogClose() {
             document.getElementById('AssignModel').style.display = 'none';
 
     }
+
     function dialogOpen() {
- 
+
         document.getElementById('AssignModel').style.display = 'block';
     }
 
@@ -439,17 +695,19 @@
 
         ProjectUsers.appendTo('#ProjectUsers');
     }
+
     function UserRowSelected(args)
     {
         selectedRowData = args.data;
-     }
+    }
+
     function UserSelected(args)
     {
         selectedChanging.textContent = args.rowData.name;
         CancelAssign();
         ChangeCardOwner(selectedChanging.id, args.rowData.name);
     }
-    
+
 
     function ChangeCardOwner(id,name)
     {
@@ -466,20 +724,29 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function(response) {
-                
+
             },
             error: function(xhr, status, error) {
              }
         });
     }
 
-    function MakeBoardPublic()
-    {
+     function EnablePublicSignUp() {
+        publicCheck.click();
+        MakeSignUpPublic();
+    }
+
+    function MakeSignUpPublic() {
+        var test = publicCheck.element;
         var isChecked;
-        if (publicCheck.properties.checked === true)
-             isChecked = 1;
-        else
+
+        if (publicCheck.properties.checked === true) {
+            isChecked = 1;
+        }
+        else {
             isChecked = 0;
+        }
+
 
 
           var incomingSprintDTO =
@@ -500,19 +767,18 @@
             error: function(xhr, status, error) {
              }
         });
-    }
+     }
+
     function NewWorkItem(btn)
     {
-         
+
         workItemName = btn.id.split("|")[0];
 
         dialogNewWI.show();
 
     }
 
-    function SwimlineBegin(args)
-    {
-     }
+
     function ChangeIteration()
     {
         dialogIterations.show();
@@ -594,9 +860,8 @@
 </script>
 
 <script id="swimlaneTemplate" type="text/x-jsrender">
-    <div style="width:100%; display:inline-block">
-        <span>${textField}</span>
-        <button class="e-control e-btn e-lib e-outline e-primary" style="margin-left:10px;" id="${textField}"  onclick='NewWorkItem(this)' ><span class="e-icons plus">New Work Item</span></button>
-
-    </div>  
+    <div style="width:100%; display:flex">
+        <span class="NewWorkItemBtn" style="margin-left:10px;" id="${textField}" onclick='NewWorkItem(this)'></span>
+        <span style=" margin-top:2px">${textField}</span>
+    </div>
 </script>
