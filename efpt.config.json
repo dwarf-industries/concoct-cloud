@@ -26,6 +26,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[AssociatedBlogPosts]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[AssociatedBoardWorkItems]",
          "ObjectType": 0
       },
@@ -139,6 +143,14 @@
       },
       {
          "Name": "[dbo].[AssociatedWrorkItemChildren]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[BlogPostCategories]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[BlogPosts]",
          "ObjectType": 0
       },
       {

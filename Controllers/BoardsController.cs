@@ -266,8 +266,8 @@ namespace RokonoControl.Controllers
             {
                 if (userRights != null)
                     result = context.GetProjectSprints(dataRequest, userRights.AssociatedProjectMemberRights.FirstOrDefault().Rights.ViewOtherPeoplesWork == 1 ? true : false, dataRequest.PersonId);
-                var remainingDone =  result.Where(x=>x.Status == "Done").Sum(x => int.Parse(x.Remaining));
-                var remaining = result.Where(x => x.Status != "Done").Sum(x => int.Parse(x.Remaining));
+                var remainingDone =  result.Where(x=>x.Status == "Done").Sum(x => float.Parse(x.Remaining));
+                var remaining = result.Where(x => x.Status != "Done").Sum(x => float.Parse(x.Remaining));
 
             }
             return result;

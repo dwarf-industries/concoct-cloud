@@ -1,5 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
+   <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Rokono_Control</RootNamespace>
@@ -55,7 +58,6 @@
   </ItemGroup>
  
   <ItemGroup>
-    <Folder Include="bin\Debug\net5.0\" />
     <Folder Include="wwwroot\css\Themes\Light\" />
     <Folder Include="wwwroot\css\Themes\Dark\" />
     <Folder Include="wwwroot\Files\Uploads\" />

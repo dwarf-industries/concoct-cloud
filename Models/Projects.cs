@@ -28,6 +28,8 @@ namespace Rokono_Control.Models
             AssociatedUserChatNotifications = new HashSet<AssociatedUserChatNotifications>();
             AssociatedUserChatRights = new HashSet<AssociatedUserChatRights>();
             AssociatedWorkItemChangelogs = new HashSet<AssociatedWorkItemChangelogs>();
+            BlogPostCategories = new HashSet<BlogPostCategories>();
+            BlogPosts = new HashSet<BlogPosts>();
             Branches = new HashSet<Branches>();
             ChatRoomRights = new HashSet<ChatRoomRights>();
             ChatRooms = new HashSet<ChatRooms>();
@@ -71,6 +73,8 @@ namespace Rokono_Control.Models
         public virtual ICollection<AssociatedUserChatNotifications> AssociatedUserChatNotifications { get; set; }
         public virtual ICollection<AssociatedUserChatRights> AssociatedUserChatRights { get; set; }
         public virtual ICollection<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
+        public virtual ICollection<BlogPostCategories> BlogPostCategories { get; set; }
+        public virtual ICollection<BlogPosts> BlogPosts { get; set; }
         public virtual ICollection<Branches> Branches { get; set; }
         public virtual ICollection<ChatRoomRights> ChatRoomRights { get; set; }
         public virtual ICollection<ChatRooms> ChatRooms { get; set; }
