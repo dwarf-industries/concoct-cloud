@@ -263,18 +263,18 @@
         {
             text: 'Epic',
             iconCss: 'e-ddb-icons e-dashboard',
-            url:" /Boards/ProjectBacklog?projectId="+ProjectId+"&workItemType="+5+"&iteration=@currentIteration&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
+            url:" /Boards/ProjectBacklog?projectId="+ProjectId+"&workItemType="+5+"&iteration=@currentIteration&boardId="+boardId+"&parentId= 
         },
         {
             text: 'Feature',
             iconCss: 'e-ddb-icons e-dashboard',
 
-            url:" /Boards/ProjectBacklog?projectId="+ProjectId+"&workItemType="+2+"&iteration=@currentIteration&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
+            url:" /Boards/ProjectBacklog?projectId="+ProjectId+"&workItemType="+2+"&iteration=@currentIteration&boardId="+boardId+"&parentId= 
         },
         {
             text: 'User Story',
             iconCss: 'e-ddb-icons e-notifications',
-            url:" /Boards/ProjectBacklog?projectId="+ProjectId+"&workItemType="+7+"&iteration=@currentIteration&boardId="+boardId+"&parentId=0&returnUrl="+window.location.href
+            url:" /Boards/ProjectBacklog?projectId="+ProjectId+"&workItemType="+7+"&iteration=@currentIteration&boardId="+boardId+"&parentId= 
 
         },
 
@@ -305,6 +305,7 @@
      }
     function CallChoiceMenu(row)
     {
+        debugger
         selected = row;
         dialogObj.show();
     }
@@ -362,6 +363,7 @@
 
     function GetCurrentRow(args)
     {
+        debugger
         //console.log(args);
         selected = args.data;
     }
@@ -405,14 +407,17 @@
     }
 
 
-    function NewTask(){
-        window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+3+"&boardId="+boardId+"&parentId="+selected.id+"&&returnUrl="+window.location.href;
+        function NewTask() {
+        debugger
+        window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+3+"&boardId="+boardId+"&parentId="+selected.id;
     }
-    function NewIssue(){
-        window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+6+"&boardId="+boardId+"&parentId="+selected.id+"&&returnUrl="+window.location.href;
+        function NewIssue() {
+        debugger
+        window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+6+"&boardId="+boardId+"&parentId="+selected.id;
     }
-    function NewBug(){
-        window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+1+"&boardId="+boardId+"&parentId="+selected.id+"&&returnUrl="+window.location.href;
+        function NewBug() {
+        debugger
+        window.location.href = "/Dashboard/AddNewWorkItem?projectId="+ProjectId+"&workItemType="+1+"&boardId="+boardId+"&parentId="+selected.id;
     }
 
 

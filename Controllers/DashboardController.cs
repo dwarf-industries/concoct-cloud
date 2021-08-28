@@ -70,7 +70,8 @@ namespace Rokono_Control.Controllers
 
             using (var context = new WorkItemsContext(Context, Configuration))
             {
-                var workItemBytitle = context.GetWorkItemByTitle(title);
+                var activeIteration = context.GetProjectDefautIteration(projectId);
+                var workItemBytitle = context.GetWorkItemByTitle(title, activeIteration);
                 if (workItemBytitle != null && parentId == 0)
                     parentId = workItemBytitle.Id;
                 ViewData["Priorities"] = context.GetProjectPriorities(projectId);
@@ -87,7 +88,7 @@ namespace Rokono_Control.Controllers
                                                       .TypeName;
                 ViewData["ProjectId"] = projectId;
                 ViewData["ParentId"] = parentId;
-                ViewData["ActiveIteration"] = context.GetProjectDefautIteration(projectId);
+                ViewData["ActiveIteration"] = activeIteration;
                 ViewData["ReturnPath"] = returnUrl;
                 ViewData["SystemInfoData"] = Request.Headers["User-Agent"].ToString();
 
