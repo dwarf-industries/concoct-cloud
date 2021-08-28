@@ -29,11 +29,10 @@ namespace Rokono_Control.Models
             }
         }
 
-
-
         public virtual DbSet<ApiKeys> ApiKeys { get; set; }
         public virtual DbSet<AssociatedAccountNotes> AssociatedAccountNotes { get; set; }
         public virtual DbSet<AssociatedAccountProjectNotificationRights> AssociatedAccountProjectNotificationRights { get; set; }
+        public virtual DbSet<AssociatedBlogPosts> AssociatedBlogPosts { get; set; }
         public virtual DbSet<AssociatedBoardWorkItems> AssociatedBoardWorkItems { get; set; }
         public virtual DbSet<AssociatedBranchCommits> AssociatedBranchCommits { get; set; }
         public virtual DbSet<AssociatedChatChannelMessages> AssociatedChatChannelMessages { get; set; }
@@ -63,6 +62,8 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedWorkItemFiles> AssociatedWorkItemFiles { get; set; }
         public virtual DbSet<AssociatedWorkItemMessages> AssociatedWorkItemMessages { get; set; }
         public virtual DbSet<AssociatedWrorkItemChildren> AssociatedWrorkItemChildren { get; set; }
+        public virtual DbSet<BlogPostCategories> BlogPostCategories { get; set; }
+        public virtual DbSet<BlogPosts> BlogPosts { get; set; }
         public virtual DbSet<Boards> Boards { get; set; }
         public virtual DbSet<Branches> Branches { get; set; }
         public virtual DbSet<Builds> Builds { get; set; }
@@ -160,6 +161,21 @@ namespace Rokono_Control.Models
                     .WithMany(p => p.AssociatedAccountProjectNotificationRights)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK__Associate__UserI__278EDA44");
+            });
+
+            modelBuilder.Entity<AssociatedBlogPosts>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.BlogPost)
+                    .WithMany(p => p.AssociatedBlogPostsBlogPost)
+                    .HasForeignKey(d => d.BlogPostId)
+                    .HasConstraintName("FK_AssociatedBlogPosts_BlogPosts");
+
+                entity.HasOne(d => d.RelatedPost)
+                    .WithMany(p => p.AssociatedBlogPostsRelatedPost)
+                    .HasForeignKey(d => d.RelatedPostId)
+                    .HasConstraintName("FK_AssociatedBlogPosts_BlogPosts1");
             });
 
             modelBuilder.Entity<AssociatedBoardWorkItems>(entity =>
@@ -618,6 +634,31 @@ namespace Rokono_Control.Models
                     .WithMany(p => p.AssociatedWrorkItemChildrenWorkItem)
                     .HasForeignKey(d => d.WorkItemId)
                     .HasConstraintName("FK__Associate__WorkI__1D7B6025");
+            });
+
+            modelBuilder.Entity<BlogPostCategories>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.BlogPostCategories)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK_BlogPostCategories_Projects");
+            });
+
+            modelBuilder.Entity<BlogPosts>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.CategoryNavigation)
+                    .WithMany(p => p.BlogPosts)
+                    .HasForeignKey(d => d.Category)
+                    .HasConstraintName("FK_BlogPosts_BlogPostCategories");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.BlogPosts)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK_BlogPosts_Projects");
             });
 
             modelBuilder.Entity<Boards>(entity =>

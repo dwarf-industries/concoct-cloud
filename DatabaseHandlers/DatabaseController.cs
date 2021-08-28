@@ -919,7 +919,8 @@ namespace Rokono_Control.DatabaseHandlers
                         ProjectName = currentProject.ProjectName,
                         ProjectTitle = "",
                         RepositoryId = repository.Entity.Id,
-                        BoardId = boardBacklog.Entity.Id
+                        BoardId = boardBacklog.Entity.Id,
+                        OrganizationName = currentProject.OrganizationName
                     });
                     Context.SaveChanges();
                     var first = default(int);
@@ -928,11 +929,19 @@ namespace Rokono_Control.DatabaseHandlers
                         var iteration = x;
                         iteration.IsActive = first == 0 ? 1 : 0; 
                         var currentIteration = Context.WorkItemIterations.Add(iteration);
+                        if(iteration.IsActive == 1)
+                        {
+                            int unixTimestampStart = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+                            var endTime = (int)(DateTime.UtcNow.AddMonths(1).Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+                            iteration.StartDate = unixTimestampStart;
+                            iteration.EndDate = endTime;
+                        }
                         Context.SaveChanges();
                         Context.AssociatedProjectIterations.Add(new AssociatedProjectIterations
                         {
                             ProjectId = project.Entity.Id,
                             IterationId = currentIteration.Entity.Id,
+                            ActiveIteration = first == 0 ? 1 : 0
                         });
                         Context.SaveChanges();
                         first++;

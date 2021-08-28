@@ -8,6 +8,7 @@ using MimeKit;
 using MimeKit.Text;
 using Newtonsoft.Json;
 using Platform.Models;
+using Rokono_Control;
 using Rokono_Control.Models;
 
 namespace Platform.DataHandlers
@@ -150,14 +151,26 @@ namespace Platform.DataHandlers
             bodyBuilder.HtmlBody = body;
            // bodyBuilder.TextBody = "Hello World!";
             message.Body = bodyBuilder.ToMessageBody();
-            using (var client = new SmtpClient())
+            try
             {
-                client.Connect(configurationDetails.SMTP, int.Parse(configurationDetails.SmtpPort), true);
-                client.Authenticate(configurationDetails.Username, configurationDetails.Password);
-          
-                client.Send(message);
-                client.Disconnect(true);
+                using (var client = new SmtpClient())
+                {
+                    client.Connect(configurationDetails.SMTP, int.Parse(configurationDetails.SmtpPort), true);
+                    client.Authenticate(configurationDetails.Username, configurationDetails.Password);
+                    client.Send(message);
+                    client.Disconnect(true);
+                    Program.Logger.Info($"Sending email for {email}, {name}, {Subject} successs");
+
+                }
             }
+            catch (Exception ex)
+            {
+
+                Program.Logger.Error($"Email for {email}, {name}, {Subject} failed", "51");
+                Program.Logger.Error(ex.ToString(), "51");
+
+            }
+
             return true;
         }
 

@@ -79,7 +79,7 @@ namespace Rokono_Control
                     new ConfigBindingData { Name = "GetCommitFile.sh", Path = "/home/kristifordevelopment/ShellScripts/RokonoControl" },
                 },
                 OS = OS.GetCurrent(),
-                LocalRepo = ServerOS == "gnu" ? "/home/GitRepositories" : @"C:\GitRepositories"
+                LocalRepo = ServerOS == "gnu" ? "/home/ConcoctRepositories" : @"C:\GitRepositories"
             };
             var config = JsonConvert.SerializeObject(configuration);
             if(!File.Exists(v))

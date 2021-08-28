@@ -288,13 +288,20 @@ namespace Platform.DatabaseHandlers.Contexts
 
         internal void AddProjectInvitation(IncomingProjectAccount projectAccount)
         {
-            var accountId = AddUserAccount(new IncomingNewUserAccount{
-                Email = projectAccount.email,
-                Password = projectAccount.password,
-                ProjectRights = false,
-                FirstName = projectAccount.FirstName,
-                LastName = projectAccount.LastName
-            });
+            var getExistingAccount = Context.UserAccounts.FirstOrDefault(x => x.Email == projectAccount.email);
+            var accountId = default(int);
+            if (getExistingAccount != null)
+                accountId = getExistingAccount.Id;
+            else
+                accountId = AddUserAccount(new IncomingNewUserAccount
+                {
+                    Email = projectAccount.email,
+                    Password = projectAccount.password,
+                    ProjectRights = false,
+                    FirstName = projectAccount.FirstName,
+                    LastName = projectAccount.LastName
+                });
+
             var projectRepository = Context.Projects.FirstOrDefault(x=> x.Id == projectAccount.ProjectId).RepositoryId;
             Context.AssociatedProjectMembers.Add(new AssociatedProjectMembers{
                 ProjectId = projectAccount.ProjectId,
@@ -538,6 +545,9 @@ namespace Platform.DatabaseHandlers.Contexts
         internal string GetUsername(int currentId)
         {
             var account = Context.UserAccounts.FirstOrDefault(x => x.Id == currentId);
+            account.FirstName = string.IsNullOrEmpty(account.FirstName) ? "--" : account.FirstName;
+            account.LastName = string.IsNullOrEmpty(account.LastName) ? "--" : account.LastName;
+
             return $"{account.FirstName} {account.LastName}";
         }
 

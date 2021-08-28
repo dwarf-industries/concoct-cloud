@@ -36,7 +36,7 @@ namespace Rokono_Control.Controllers
         }
 
         #region PageRenders
-        public IActionResult Index()
+        public IActionResult Index(string organization)
         {
 
             using (var context = new WorkItemsContext(Context, Configuration))
@@ -49,15 +49,18 @@ namespace Rokono_Control.Controllers
 
 
             }
+            ViewData["Organization"] = organization;
+
             return View();
         }
-        public IActionResult AddNewProject(string user)
+        public IActionResult AddNewProject(string user, string organization)
         {
 
 
             using (var context = new UsersContext(Context, Configuration))
             {
                 ViewData["User"] = context.GetUsername(UserId);
+                ViewData["Organization"] = organization;
             }
             return View();
         }
@@ -70,7 +73,8 @@ namespace Rokono_Control.Controllers
 
             using (var context = new WorkItemsContext(Context, Configuration))
             {
-                var workItemBytitle = context.GetWorkItemByTitle(title);
+                var activeIteration = context.GetProjectDefautIteration(projectId);
+                var workItemBytitle = context.GetWorkItemByTitle(title, activeIteration);
                 if (workItemBytitle != null && parentId == 0)
                     parentId = workItemBytitle.Id;
                 ViewData["Priorities"] = context.GetProjectPriorities(projectId);
@@ -87,7 +91,7 @@ namespace Rokono_Control.Controllers
                                                       .TypeName;
                 ViewData["ProjectId"] = projectId;
                 ViewData["ParentId"] = parentId;
-                ViewData["ActiveIteration"] = context.GetProjectDefautIteration(projectId);
+                ViewData["ActiveIteration"] = activeIteration;
                 ViewData["ReturnPath"] = returnUrl;
                 ViewData["SystemInfoData"] = Request.Headers["User-Agent"].ToString();
 

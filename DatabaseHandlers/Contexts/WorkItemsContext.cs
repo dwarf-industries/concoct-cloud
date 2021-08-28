@@ -645,9 +645,9 @@ namespace Platform.DatabaseHandlers.Contexts
         internal int GetCreatedWorkItemCount(int id) => Context.AssociatedBoardWorkItems.Where(x => x.ProjectId == id)
                                                                                         .Count();
 
-        internal WorkItem GetWorkItemByTitle(string title)
+        internal WorkItem GetWorkItemByTitle(string title, int iteration)
         {
-            return Context.WorkItem.FirstOrDefault(x=>x.Title == title && x.WorkItemTypeId == 7);
+            return Context.WorkItem.FirstOrDefault(x=>x.Title == title && x.WorkItemTypeId == 7 && x.Iteration == iteration);
         }
         internal bool UpdateWorkItem(IncomingWorkItem currentItem)
         {
@@ -672,8 +672,18 @@ namespace Platform.DatabaseHandlers.Contexts
             var getProjectDetails = Context.Projects.FirstOrDefault(x => x.Id == currentItem.ProjectId);
             var receivers = new List<UserAccounts>();
             receivers.Add(getUser);
-            using (var context = new NotificationHandler(Configuration))
-                context.GenerateNewWorkItemNotification(getUpdated, getUser, getProjectDetails.ProjectName, receivers, $"Concoct Cloud work item created - {getUpdated.Id}");
+            try
+            {
+                using (var context = new NotificationHandler(Configuration))
+                    context.GenerateNewWorkItemNotification(getUpdated, getUser, getProjectDetails.ProjectName, receivers, $"Concoct Cloud work item created - {getUpdated.Id}");
+
+            }
+            catch (Exception ex)
+            {
+                Program.Logger.Error($"Failed to generate a notification {getProjectDetails.ProjectName}, {getUser}", "41");
+                Program.Logger.Error(ex.ToString(), "41");
+
+            }
 
             if (result != null)
                 return new OutgoingJsonData{ Data = "true"};

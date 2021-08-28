@@ -98,7 +98,7 @@
                 </div>
             </div>
 
-            <div class="row innerRow">
+            <div class="row innerRow" style="display:none;">
                 <div tabindex="0" class="e-card" id="basic_card">
                     <div class="e-card-header">
                         <h2 style="text-align:center;">Or add a member with existing account</h2>
@@ -168,7 +168,7 @@
                         </div>
                     </div>
                     <div class="row innerRow">
-                        <button id="AssignPUsers" onclick="InviteProjectMember()" style="width:100%;">Assign Users</button>
+                        <button  onclick="InviteProjectMember()" style="width:100%;">Assign Users</button>
 
                     </div>
                 </div>
@@ -215,7 +215,7 @@
     var SelectUser = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
     SelectUser.appendTo('#SelectUser');
     var AssignPUsers = new ej.buttons.Button({ cssClass: 'e-outline', isPrimary: true });
-    AssignPUsers.appendTo('#AssignPUsers');
+    AssignPUsers.appendTo('#Persons');
 
 
     var WorkItemUserOption = new ejs.buttons.Switch({ checked: true });
@@ -389,7 +389,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                alert("Records have been added!");
+                ShowInfo("Records have been added!");
             },
             error: function (xhr, status, error) {
             }
