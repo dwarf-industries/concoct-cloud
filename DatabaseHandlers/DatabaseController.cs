@@ -882,7 +882,7 @@ namespace Rokono_Control.DatabaseHandlers
                 {
                     var repository = Context.Repository.Add(new Repository
                     {
-                        FolderPath = $"/home/GitRepositories/{currentProject.ProjectName}"
+                        FolderPath = $"{Program.Configuration.LocalRepo}/{currentProject.ProjectName}"
                     });
                     Context.SaveChanges();
 
