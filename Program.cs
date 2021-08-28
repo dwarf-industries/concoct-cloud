@@ -44,7 +44,7 @@ namespace Rokono_Control
                 switch(ServerOS)
                 {
                     case "gnu":
-                    Configuration.LocalRepo = "/home/GitRepositories";
+                    Configuration.LocalRepo = "/home/ConcoctRepositories";
                     break;
                     case "win":
                     Configuration.LocalRepo = @"C:\GitRepositories";
@@ -104,9 +104,9 @@ namespace Rokono_Control
 
         private static void CreateLinuxDefault()
         {
-            if (!Directory.Exists("/home/GitRepositories"))
+            if (!Directory.Exists("/home/ConcoctRepositories"))
             {
-                Directory.CreateDirectory("/home/GitRepositories");
+                Directory.CreateDirectory("/home/ConcoctRepositories");
             }
         }
 
