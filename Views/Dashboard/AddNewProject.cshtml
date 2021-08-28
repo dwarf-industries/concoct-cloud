@@ -1,6 +1,8 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿ 
+@{ 
+   var organization = ViewData["Organization"] as string;
+
+}
 
 
 <link href="https://cdn.syncfusion.com/ej2/ej2-base/styles/material.css" rel="stylesheet" type="text/css" />
@@ -233,7 +235,7 @@
         });
 
 
-       
+
     });
 
     function LoadIterations(data) {
@@ -292,7 +294,8 @@
             "ProjectName": $("#ProjectName").val(),
             "ProjectDescription": $("#RepoSteps").val(),
             "Users": ActiveUsersGrid.dataSource,// get the selected records.
-            "Iterations": GridIterations.dataSource
+            "Iterations": GridIterations.dataSource,
+            "OrganizationName": "@organization"
         }
         $.ajax({
             type: 'POST',
@@ -301,7 +304,8 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                window.location.href = "/Dashboard/Index";
+                ShowInfo("Project Created");
+                window.location.href = "/Dashboard/Index?organization=@organization";
             },
             error: function (xhr, status, error) {
                 console.log(error);

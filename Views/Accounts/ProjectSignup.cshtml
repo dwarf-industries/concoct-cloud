@@ -227,7 +227,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                window.location = '/Dashboard/Index';
+                window.location = '/Dashboard/Index?organization=@ProjectName';
             },
             error: function (xhr, status, error) {
                 console.log(error);

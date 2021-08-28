@@ -36,7 +36,7 @@ namespace Rokono_Control.Controllers
         }
 
         #region PageRenders
-        public IActionResult Index()
+        public IActionResult Index(string organization)
         {
 
             using (var context = new WorkItemsContext(Context, Configuration))
@@ -49,15 +49,18 @@ namespace Rokono_Control.Controllers
 
 
             }
+            ViewData["Organization"] = organization;
+
             return View();
         }
-        public IActionResult AddNewProject(string user)
+        public IActionResult AddNewProject(string user, string organization)
         {
 
 
             using (var context = new UsersContext(Context, Configuration))
             {
                 ViewData["User"] = context.GetUsername(UserId);
+                ViewData["Organization"] = organization;
             }
             return View();
         }

@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_LayoutProjects.cshtml";
     var result = ViewData["Projects"] as List<Projects>;
     var userName =  ViewData["Name"] as string;
+    var organization = ViewData["Organization"] as string;
 }
    <!-- end of sidebar element -->
        
@@ -35,7 +36,7 @@
 
                 </div>
                 <div class="e-card-content">
-                    <button id="outlinebtn" onclick="CallProject('/Dashboard/AddNewProject?user=@userName')" style="width: 100%;"> Create New Project</button>
+                    <button id="outlinebtn" onclick="CallProject('/Dashboard/AddNewProject?organization=@organization&&user=@userName')" style="width: 100%;"> Create New Project</button>
                 </div>
 
             </div>

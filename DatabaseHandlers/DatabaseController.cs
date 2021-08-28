@@ -919,7 +919,8 @@ namespace Rokono_Control.DatabaseHandlers
                         ProjectName = currentProject.ProjectName,
                         ProjectTitle = "",
                         RepositoryId = repository.Entity.Id,
-                        BoardId = boardBacklog.Entity.Id
+                        BoardId = boardBacklog.Entity.Id,
+                        OrganizationName = currentProject.OrganizationName
                     });
                     Context.SaveChanges();
                     var first = default(int);
