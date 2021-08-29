@@ -21,13 +21,13 @@ namespace Platform.DataHandlers
         {
             Configuration = configuration;
             Config = new RokonoConfig();
-            Config.Username = Configuration.GetValue<string>("EmailConfiguration:Username"); 
-            Config.Password = Configuration.GetValue<string>("EmailConfiguration:Password"); 
-            Config.SMTP =   Configuration.GetValue<string>("EmailConfiguration:SMTP");
-            Config.IMAP =  Configuration.GetValue<string>("EmailConfiguration:IMAP");
-            Config.SmtpPort=  Configuration.GetValue<string>("EmailConfiguration:SmtpPort");  
-            Config.ImapPort = Configuration.GetValue<string>("EmailConfiguration:ImapPort");  
-            Config.CompanyName = Configuration.GetValue<string>("EmailConfiguration:CompanyName");
+            Config.Username = Startup.Config.EmailConfiguration.Username;
+            Config.Password = Startup.Config.EmailConfiguration.Password;
+            Config.SMTP = Startup.Config.EmailConfiguration.Smtp;
+            Config.IMAP = Startup.Config.EmailConfiguration.Imap;
+            Config.SmtpPort= Startup.Config.EmailConfiguration.SmtpPort.ToString();
+            Config.ImapPort = Startup.Config.EmailConfiguration.ImapPort.ToString();
+            Config.CompanyName = Startup.Config.EmailConfiguration.CompanyName;
         }
 
 
@@ -142,6 +142,9 @@ namespace Platform.DataHandlers
 
         private bool SendEmail(RokonoConfig configurationDetails, string name, string email, string Subject, string body)
         {
+            Program.Logger.Info(name);
+            Program.Logger.Info(email);
+            Program.Logger.Info(configurationDetails.Username);
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress(Subject, configurationDetails.Username));
             message.To.Add(new MailboxAddress(name, email));
