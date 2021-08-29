@@ -27,13 +27,14 @@
         }
         public StartupConfig StartConfiguration {get; set;}
         public IConfiguration Configuration;
-
+        public static StartupConfig Config { get; set; }
  
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             var fileData = File.ReadAllText("appsettings.Development.json");
             StartConfiguration = JsonConvert.DeserializeObject<StartupConfig>(fileData);
+            Config = StartConfiguration;
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
