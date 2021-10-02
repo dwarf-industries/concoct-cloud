@@ -28,6 +28,7 @@ namespace Rokono_Control.Models
                 optionsBuilder.UseSqlServer(StartConfiguration.ConnectionStrings.RokonocontrolContext);
             }
         }
+
         public virtual DbSet<ApiKeys> ApiKeys { get; set; }
         public virtual DbSet<AssociatedAccountNotes> AssociatedAccountNotes { get; set; }
         public virtual DbSet<AssociatedAccountProjectNotificationRights> AssociatedAccountProjectNotificationRights { get; set; }
@@ -60,6 +61,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
         public virtual DbSet<AssociatedWorkItemFiles> AssociatedWorkItemFiles { get; set; }
         public virtual DbSet<AssociatedWorkItemMessages> AssociatedWorkItemMessages { get; set; }
+        public virtual DbSet<AssociatedWorkItemTags> AssociatedWorkItemTags { get; set; }
         public virtual DbSet<AssociatedWrorkItemChildren> AssociatedWrorkItemChildren { get; set; }
         public virtual DbSet<BlogPostCategories> BlogPostCategories { get; set; }
         public virtual DbSet<BlogPosts> BlogPosts { get; set; }
@@ -91,6 +93,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<SurveyPage> SurveyPage { get; set; }
         public virtual DbSet<Surveys> Surveys { get; set; }
         public virtual DbSet<SystemFiles> SystemFiles { get; set; }
+        public virtual DbSet<Tags> Tags { get; set; }
         public virtual DbSet<TeamDashboards> TeamDashboards { get; set; }
         public virtual DbSet<Teams> Teams { get; set; }
         public virtual DbSet<UserAccounts> UserAccounts { get; set; }
@@ -615,6 +618,19 @@ namespace Rokono_Control.Models
                     .HasForeignKey(d => d.WorkItemId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Associate__WorkI__7CD98669");
+            });
+
+            modelBuilder.Entity<AssociatedWorkItemTags>(entity =>
+            {
+                entity.HasOne(d => d.Tag)
+                    .WithMany(p => p.AssociatedWorkItemTags)
+                    .HasForeignKey(d => d.TagId)
+                    .HasConstraintName("FK_AssociatedWorkItemTags_Tags");
+
+                entity.HasOne(d => d.WorkItem)
+                    .WithMany(p => p.AssociatedWorkItemTags)
+                    .HasForeignKey(d => d.WorkItemId)
+                    .HasConstraintName("FK_AssociatedWorkItemTags_WorkItem");
             });
 
             modelBuilder.Entity<AssociatedWrorkItemChildren>(entity =>

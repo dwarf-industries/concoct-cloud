@@ -142,6 +142,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[AssociatedWorkItemTags]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[AssociatedWrorkItemChildren]",
          "ObjectType": 0
       },
@@ -263,6 +267,10 @@
       },
       {
          "Name": "[dbo].[SystemFiles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Tags]",
          "ObjectType": 0
       },
       {

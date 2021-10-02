@@ -14,6 +14,7 @@ namespace Rokono_Control.Models
             AssociatedWorkItemChangelogs = new HashSet<AssociatedWorkItemChangelogs>();
             AssociatedWorkItemFiles = new HashSet<AssociatedWorkItemFiles>();
             AssociatedWorkItemMessages = new HashSet<AssociatedWorkItemMessages>();
+            AssociatedWorkItemTags = new HashSet<AssociatedWorkItemTags>();
             AssociatedWrorkItemChildrenWorkItem = new HashSet<AssociatedWrorkItemChildren>();
             AssociatedWrorkItemChildrenWorkItemChild = new HashSet<AssociatedWrorkItemChildren>();
         }
@@ -76,6 +77,7 @@ namespace Rokono_Control.Models
         public virtual ICollection<AssociatedWorkItemChangelogs> AssociatedWorkItemChangelogs { get; set; }
         public virtual ICollection<AssociatedWorkItemFiles> AssociatedWorkItemFiles { get; set; }
         public virtual ICollection<AssociatedWorkItemMessages> AssociatedWorkItemMessages { get; set; }
+        public virtual ICollection<AssociatedWorkItemTags> AssociatedWorkItemTags { get; set; }
         public virtual ICollection<AssociatedWrorkItemChildren> AssociatedWrorkItemChildrenWorkItem { get; set; }
         public virtual ICollection<AssociatedWrorkItemChildren> AssociatedWrorkItemChildrenWorkItemChild { get; set; }
     }
