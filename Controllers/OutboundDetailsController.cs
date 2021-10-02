@@ -3,6 +3,7 @@ namespace Platform.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Platform.DatabaseHandlers.Contexts;
@@ -34,18 +35,36 @@ namespace Platform.Controllers
             return View();
         }
         
-        public (bool, List<Projects>) AuthenicateCB(string key)
+        public (bool, List<System.Dynamic.ExpandoObject>, List<string>) AuthenicateCB(string key, string username, string password)
         {
             var attempt = false;
-            var result = new List<Projects>();
-            using(var context = new DatabaseController(Context, Configuration))
+            var projects = new List<Projects>();
+            var cResult = new List<System.Dynamic.ExpandoObject>();
+            var organizations = new List<string>();
+            using (var context = new DatabaseController(Context, Configuration))
             {
-                result = context.AuthenicatedUser(key);
-                if (result != null)
+                projects = context.AuthenicatedUser(key,username,password);
+                if(projects != null)
+                {
+                    projects.ForEach(x =>
+                    {
+
+                        var workItems = context.GetAllWorkItemsForProject(x.Id);
+                        dynamic extendable = new System.Dynamic.ExpandoObject();
+
+                        extendable.ProjectName = x.ProjectName;
+                        extendable.ProjectId = x.Id;
+                        extendable.WorkItems = projects;
+
+                        cResult.Add(extendable);
+                    });
+                    organizations = projects.Select(x => x.OrganizationName).Distinct().ToList();
                     attempt = true;
+
+                }
             }
 
-            return (attempt, result);
+            return (attempt, cResult, organizations);
         }
 
         [HttpPost]

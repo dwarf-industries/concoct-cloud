@@ -5,6 +5,7 @@ namespace Rokono_Control.DatabaseHandlers
     using System.Data;
     using System.IO;
     using System.Linq;
+    using Microsoft.AspNetCore.Cryptography.KeyDerivation;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
@@ -63,9 +64,40 @@ namespace Rokono_Control.DatabaseHandlers
             return tableNames;
         }
 
-        internal List<Projects> AuthenicatedUser(string key)
+        internal List<WorkItem> GetAllWorkItemsForProject(int id)
         {
-            var user = Context.UserAccounts.FirstOrDefault(x => x.AccessToken == key);
+            return Context.AssociatedBoardWorkItems.Include(x => x.WorkItem)
+                                                   .Where(x => x.ProjectId == id)
+                                                   .Select(x => x.WorkItem)
+                                                   .ToList(); 
+        }
+
+        internal List<Projects> AuthenicatedUser(string key, string username, string password)
+        {
+            var user = default(UserAccounts);
+            if(!string.IsNullOrEmpty(key))
+                user = Context.UserAccounts.FirstOrDefault(x => x.AccessToken == key);
+            else
+            {
+                user = Context.UserAccounts
+                                .FirstOrDefault(x => x.Email == username);
+
+                if (user == null)
+                    return null;
+
+                string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                  password: password,
+                  salt: Convert.FromBase64String(user.Salt),
+                  prf: KeyDerivationPrf.HMACSHA1,
+                  iterationCount: 10000,
+                  numBytesRequested: 256 / 8));
+
+
+
+                if (hashed != user.Password)
+                    user = null;
+            }
+
             if (user == null)
                 return null;
 
