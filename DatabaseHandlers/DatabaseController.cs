@@ -63,6 +63,20 @@ namespace Rokono_Control.DatabaseHandlers
             return tableNames;
         }
 
+        internal List<Projects> AuthenicatedUser(string key)
+        {
+            var user = Context.UserAccounts.FirstOrDefault(x => x.AccessToken == key);
+            if (user == null)
+                return null;
+
+            var userProjects = Context.AssociatedProjectMembers.Include(x => x.Project)
+                                                               .Include(x => x.UserAccount)
+                                                               .Where(x => x.UserAccountId == user.Id)
+                                                               .Select(x => x.Project)
+                                                               .ToList();
+            return userProjects;
+        }
+
         internal int GetProjectByOrganization(string data)
         {
             var project = Context.Projects.FirstOrDefault(x => x.OrganizationName.ToLower() == data.ToLower());

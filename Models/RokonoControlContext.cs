@@ -28,7 +28,6 @@ namespace Rokono_Control.Models
                 optionsBuilder.UseSqlServer(StartConfiguration.ConnectionStrings.RokonocontrolContext);
             }
         }
-
         public virtual DbSet<ApiKeys> ApiKeys { get; set; }
         public virtual DbSet<AssociatedAccountNotes> AssociatedAccountNotes { get; set; }
         public virtual DbSet<AssociatedAccountProjectNotificationRights> AssociatedAccountProjectNotificationRights { get; set; }

@@ -34,6 +34,20 @@ namespace Platform.Controllers
             return View();
         }
         
+        public (bool, List<Projects>) AuthenicateCB(string key)
+        {
+            var attempt = false;
+            var result = new List<Projects>();
+            using(var context = new DatabaseController(Context, Configuration))
+            {
+                result = context.AuthenicatedUser(key);
+                if (result != null)
+                    attempt = true;
+            }
+
+            return (attempt, result);
+        }
+
         [HttpPost]
         public List<PublicMessages> GetPublicDiscussions([FromBody] IncomingIdRequest request)
         {
