@@ -54,7 +54,13 @@ namespace Platform.Controllers
 
                         extendable.ProjectName = x.ProjectName;
                         extendable.ProjectId = x.Id;
-                        extendable.WorkItems = projects;
+                        extendable.WorkItems = workItems.Select(x => new
+                        {
+                            Id = x.Id,
+                            WorkItemType = x.WorkItemTypeId,
+                            Title = x.Title,
+                            SprintId = x.Iteration
+                        }).ToList();
 
                         cResult.Add(extendable);
                     });
