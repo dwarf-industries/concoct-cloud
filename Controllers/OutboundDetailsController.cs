@@ -54,6 +54,7 @@ namespace Platform.Controllers
 
                         extendable.ProjectName = x.ProjectName;
                         extendable.ProjectId = x.Id;
+                        extendable.OrganizationName = x.OrganizationName;
                         extendable.WorkItems = workItems.Select(x => new
                         {
                             Id = x.Id,
