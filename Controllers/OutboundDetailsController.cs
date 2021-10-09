@@ -62,7 +62,8 @@ namespace Platform.Controllers
                             Title = x.Title,
                             SprintId = x.Iteration
                         }).ToList();
-
+                        
+                        extendable.GetOrganizationTags = context.GetORganizationTags(projects.Select(x => x.OrganizationName).Distinct().ToList());
                         cResult.Add(extendable);
                     });
                     organizations = projects.Select(x => x.OrganizationName).Distinct().ToList();

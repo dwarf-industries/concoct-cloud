@@ -109,6 +109,25 @@ namespace Rokono_Control.DatabaseHandlers
             return userProjects;
         }
 
+        internal List<System.Dynamic.ExpandoObject> GetORganizationTags(List<string> list)
+        {
+            dynamic extendable = new System.Dynamic.ExpandoObject();
+
+            var result = new List<System.Dynamic.ExpandoObject>();
+            list.ForEach(organization =>
+            {
+                var tagsData = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem).ThenInclude(WorkItem => WorkItem.AssociatedWorkItemTags).ThenInclude(AssociatedWorkItemTags => AssociatedWorkItemTags.Tag)
+                                    .Where(x => x.Project.OrganizationName == organization).Select(x => new
+                                    {
+                                        Tags = x.WorkItem.AssociatedWorkItemTags.Select(y => y.Tag.Name),
+                                        Organization = organization
+                                    }).ToList();
+                extendable = tagsData;
+                result.Add(extendable);
+            });
+            return result;
+        }
+
         internal int GetProjectByOrganization(string data)
         {
             var project = Context.Projects.FirstOrDefault(x => x.OrganizationName.ToLower() == data.ToLower());
