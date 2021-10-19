@@ -218,6 +218,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Layouts]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[NotificationRights]",
          "ObjectType": 0
       },

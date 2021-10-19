@@ -112,20 +112,42 @@ namespace Rokono_Control.DatabaseHandlers
         internal List<System.Dynamic.ExpandoObject> GetORganizationTags(List<string> list)
         {
             dynamic extendable = new System.Dynamic.ExpandoObject();
-
             var result = new List<System.Dynamic.ExpandoObject>();
             list.ForEach(organization =>
             {
                 var tagsData = Context.AssociatedBoardWorkItems.Include(x => x.WorkItem).ThenInclude(WorkItem => WorkItem.AssociatedWorkItemTags).ThenInclude(AssociatedWorkItemTags => AssociatedWorkItemTags.Tag)
-                                    .Where(x => x.Project.OrganizationName == organization).Select(x => new
+                                    .Where(x => x.Project.OrganizationName.ToLower() == organization).Select(x => new
                                     {
                                         Tags = x.WorkItem.AssociatedWorkItemTags.Select(y => y.Tag.Name),
                                         Organization = organization
                                     }).ToList();
-                extendable = tagsData;
+                var tpmList = new List<(string organization, List<string> data)>();
+                tagsData.ForEach(x =>
+                {
+                    var tags = x.Tags.ToList();
+                    var org = tpmList.Any(x => x.organization == organization);
+                   
+                    if (org)
+                    {
+                        tpmList.FirstOrDefault(x => x.organization == organization).data.AddRange(tags);
+                    }
+                    else
+                    {
+                        tpmList.Add(ConstuctOrganizationTag(organization.ToLower(), tags));
+                    }
+
+                });
+
+                extendable.Organization = tpmList.FirstOrDefault().organization;
+                extendable.Tags = tpmList.FirstOrDefault().data;
                 result.Add(extendable);
             });
             return result;
+        }
+
+        private (string, List<string>) ConstuctOrganizationTag(string name, List<string> tags)
+        {
+            return (name, tags);
         }
 
         internal int GetProjectByOrganization(string data)

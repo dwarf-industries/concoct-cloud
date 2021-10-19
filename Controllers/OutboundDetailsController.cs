@@ -6,6 +6,7 @@ namespace Platform.Controllers
     using System.Linq;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
     using Platform.DatabaseHandlers.Contexts;
     using Platform.Models;
     using Rokono_Control.DatabaseHandlers;
@@ -35,11 +36,12 @@ namespace Platform.Controllers
             return View();
         }
         
-        public (bool, List<System.Dynamic.ExpandoObject>, List<string>) AuthenicateCB(string key, string username, string password)
+        public (bool, List<System.Dynamic.ExpandoObject>, List<string>, List<System.Dynamic.ExpandoObject>) AuthenicateCB(string key, string username, string password)
         {
             var attempt = false;
             var projects = new List<Projects>();
             var cResult = new List<System.Dynamic.ExpandoObject>();
+            var GetOrganizationTags = new List<System.Dynamic.ExpandoObject>();
             var organizations = new List<string>();
             using (var context = new DatabaseController(Context, Configuration))
             {
@@ -63,17 +65,30 @@ namespace Platform.Controllers
                             SprintId = x.Iteration
                         }).ToList();
                         
-                        extendable.GetOrganizationTags = context.GetORganizationTags(projects.Select(x => x.OrganizationName).Distinct().ToList());
                         cResult.Add(extendable);
                     });
                     organizations = projects.Select(x => x.OrganizationName).Distinct().ToList();
                     attempt = true;
 
                 }
+                GetOrganizationTags = context.GetORganizationTags(projects.Select(x => x.OrganizationName.ToLower()).Distinct().ToList());
+
             }
 
-            return (attempt, cResult, organizations);
+            return (attempt, cResult, organizations, GetOrganizationTags);
         }
+
+        [HttpPost]
+        public IActionResult ConcoctBuilderSync([FromBody] IncomingIdRequest request)
+        {
+            using(var context = new WorkItemsContext(Context,Configuration))
+            {
+                var deserialize = JsonConvert.DeserializeObject<Layouts>(request.Phase);
+                context.AddUpdateLayout(deserialize);
+            }
+            return Ok();
+        }
+
 
         [HttpPost]
         public List<PublicMessages> GetPublicDiscussions([FromBody] IncomingIdRequest request)

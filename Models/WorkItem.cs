@@ -17,6 +17,7 @@ namespace Rokono_Control.Models
             AssociatedWorkItemTags = new HashSet<AssociatedWorkItemTags>();
             AssociatedWrorkItemChildrenWorkItem = new HashSet<AssociatedWrorkItemChildren>();
             AssociatedWrorkItemChildrenWorkItemChild = new HashSet<AssociatedWrorkItemChildren>();
+            Layouts = new HashSet<Layouts>();
         }
 
         public int Id { get; set; }
@@ -80,5 +81,6 @@ namespace Rokono_Control.Models
         public virtual ICollection<AssociatedWorkItemTags> AssociatedWorkItemTags { get; set; }
         public virtual ICollection<AssociatedWrorkItemChildren> AssociatedWrorkItemChildrenWorkItem { get; set; }
         public virtual ICollection<AssociatedWrorkItemChildren> AssociatedWrorkItemChildrenWorkItemChild { get; set; }
+        public virtual ICollection<Layouts> Layouts { get; set; }
     }
 }

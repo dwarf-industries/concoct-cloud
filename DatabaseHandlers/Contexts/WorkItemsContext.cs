@@ -76,6 +76,34 @@ namespace Platform.DatabaseHandlers.Contexts
              return items;
         }
 
+        internal void AddUpdateLayout(Layouts deserialize)
+        {
+            var exists = Context.Layouts.FirstOrDefault(x => x.Name == deserialize.Name && x.ProjectId == deserialize.ProjectId);
+            if (exists == null)
+            {
+                Context.Layouts.Add(new Layouts
+                {
+                    Name = deserialize.Name,
+                    LayoutThumnail = deserialize.LayoutThumnail,
+                    CreatedAt = deserialize.CreatedAt,
+                    UpdatedAt = deserialize.UpdatedAt,
+                    ProjectId = deserialize.ProjectId,
+                    WorkItemId = deserialize.WorkItemId,
+                    WorkItemResult = deserialize.WorkItemResult
+                });
+                Context.SaveChanges();
+            }
+            else
+            {
+                exists.LayoutThumnail = deserialize.LayoutThumnail;
+                exists.WorkItemResult = deserialize.WorkItemResult;
+                exists.UpdatedAt = deserialize.UpdatedAt;
+                Context.Attach(exists);
+                Context.Update(exists);
+                Context.SaveChanges();
+            }
+        }
+
         internal int GetWorkItemsCountForUser(int userId)
         {
             return Context.WorkItem.Where(x => x.AssignedAccount == userId).Count();

@@ -80,6 +80,7 @@ namespace Rokono_Control.Models
         public virtual DbSet<Efforts> Efforts { get; set; }
         public virtual DbSet<FileTypes> FileTypes { get; set; }
         public virtual DbSet<Files> Files { get; set; }
+        public virtual DbSet<Layouts> Layouts { get; set; }
         public virtual DbSet<NotificationRights> NotificationRights { get; set; }
         public virtual DbSet<NotificationTypes> NotificationTypes { get; set; }
         public virtual DbSet<Notifications> Notifications { get; set; }
@@ -806,6 +807,19 @@ namespace Rokono_Control.Models
             modelBuilder.Entity<Files>(entity =>
             {
                 entity.Property(e => e.DateOfFile).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<Layouts>(entity =>
+            {
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.Layouts)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK_Layouts_Projects");
+
+                entity.HasOne(d => d.WorkItem)
+                    .WithMany(p => p.Layouts)
+                    .HasForeignKey(d => d.WorkItemId)
+                    .HasConstraintName("FK_Layouts_WorkItem");
             });
 
             modelBuilder.Entity<NotificationRights>(entity =>
