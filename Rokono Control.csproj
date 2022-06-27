@@ -50,7 +50,7 @@
        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
      </PackageReference>
      <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
  
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.0" /> 
     <PackageReference Include="SSH.NET" Version="2020.0.2" />
