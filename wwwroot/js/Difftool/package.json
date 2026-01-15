@@ -81,7 +81,7 @@
     ]
   },
   "dependencies": {
-    "diff": "5.0.0",
+    "diff": "8.0.3",
     "hogan.js": "3.0.2"
   },
   "optionalDependencies": {
