@@ -1,3 +1,6 @@
+# Archive - This version of the software is no longer maintained
+The project is not abandoned, bue over the years i have came to the conclusion that interfaces like this one do more harm than good to both engineers and managers, they introduce attack vectors and require the people working to get away of what's important, this is why i am going to focus the project into a more of a integrated enviroment for project management than the other clone of Notion, Jira, DevOps and the likes.
+The new client will be easy to get going and as simple as they come, once i have something that's ready to show i will update this repository. Till then i really hope that nobody uses this abomination, but everyone had to start somewhere and if you do and it works for you, i can still provide some updates but the new focus is going to be on something much cooler and useful.
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FKristiforMilchev%2FRokonoControl.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FKristiforMilchev%2FRokonoControl?ref=badge_shield)
 
